@@ -53,8 +53,7 @@ setup(
     packages=find_packages(exclude=("tests", "tests.*")),
     entry_points={
         "console_scripts": [
-            "amaranth-rpc = amaranth.rpc:main",
-            "nmigen-rpc = nmigen.rpc:main",
+            "torii-rpc = torii.rpc:main",
         ]
     },
     project_urls={
