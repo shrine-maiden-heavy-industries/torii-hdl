@@ -3,7 +3,7 @@ import ctypes
 import tempfile
 import unittest
 
-from amaranth._toolchain.cxx import *
+from torii._toolchain.cxx import *
 
 
 class ToolchainCxxTestCase(unittest.TestCase):

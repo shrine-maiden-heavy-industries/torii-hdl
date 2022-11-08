@@ -1,7 +1,7 @@
-from amaranth.back.pysim import *
-from amaranth.back.pysim import __all__
+from torii.back.pysim import *
+from torii.back.pysim import __all__
 
 
 import warnings
-warnings.warn("instead of nmigen.back.pysim, use amaranth.back.pysim",
+warnings.warn("instead of nmigen.back.pysim, use torii.back.pysim",
               DeprecationWarning, stacklevel=2)

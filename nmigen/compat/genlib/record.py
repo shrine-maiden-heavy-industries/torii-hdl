@@ -1,6 +1,6 @@
-from amaranth.compat.genlib.record import *
+from torii.compat.genlib.record import *
 
 
 import warnings
-warnings.warn("instead of nmigen.compat.genlib.record, use amaranth.compat.genlib.record",
+warnings.warn("instead of nmigen.compat.genlib.record, use torii.compat.genlib.record",
               DeprecationWarning, stacklevel=2)

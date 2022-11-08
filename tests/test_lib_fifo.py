@@ -1,9 +1,9 @@
 # amaranth: UnusedElaboratable=no
 
-from amaranth.hdl import *
-from amaranth.asserts import *
-from amaranth.sim import *
-from amaranth.lib.fifo import *
+from torii.hdl import *
+from torii.asserts import *
+from torii.sim import *
+from torii.lib.fifo import *
 
 from .utils import *
 

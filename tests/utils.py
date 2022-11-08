@@ -6,10 +6,10 @@ import textwrap
 import traceback
 import unittest
 
-from amaranth.hdl.ast import *
-from amaranth.hdl.ir import *
-from amaranth.back import rtlil
-from amaranth._toolchain import require_tool
+from torii.hdl.ast import *
+from torii.hdl.ir import *
+from torii.back import rtlil
+from torii._toolchain import require_tool
 
 
 __all__ = ["FHDLTestCase"]

@@ -1,7 +1,7 @@
-from amaranth.hdl import *
-from amaranth.asserts import *
-from amaranth.sim import *
-from amaranth.lib.coding import *
+from torii.hdl import *
+from torii.asserts import *
+from torii.sim import *
+from torii.lib.coding import *
 
 from .utils import *
 

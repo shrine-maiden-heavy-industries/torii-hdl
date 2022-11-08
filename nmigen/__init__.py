@@ -1,7 +1,7 @@
-from amaranth import *
-from amaranth import __all__
+from torii import *
+from torii import __all__
 
 
 import warnings
-warnings.warn("instead of nmigen, use amaranth",
+warnings.warn("instead of nmigen, use torii",
               DeprecationWarning, stacklevel=2)

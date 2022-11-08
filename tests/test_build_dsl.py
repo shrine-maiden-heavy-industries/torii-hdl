@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from amaranth.build.dsl import *
+from torii.build.dsl import *
 
 from .utils import *
 

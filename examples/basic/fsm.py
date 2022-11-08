@@ -1,5 +1,5 @@
-from amaranth import *
-from amaranth.cli import main
+from torii import *
+from torii.cli import main
 
 
 class UARTReceiver(Elaboratable):

@@ -1,6 +1,6 @@
 import bisect
 
-from amaranth.utils import bits_for
+from torii.utils import bits_for
 
 
 __all__ = ["ResourceInfo", "MemoryMap"]

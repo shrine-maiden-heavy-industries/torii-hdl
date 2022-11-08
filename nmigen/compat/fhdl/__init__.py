@@ -1,6 +1,6 @@
-from amaranth.compat.fhdl import *
+from torii.compat.fhdl import *
 
 
 import warnings
-warnings.warn("instead of nmigen.compat.fhdl, use amaranth.compat.fhdl",
+warnings.warn("instead of nmigen.compat.fhdl, use torii.compat.fhdl",
               DeprecationWarning, stacklevel=2)

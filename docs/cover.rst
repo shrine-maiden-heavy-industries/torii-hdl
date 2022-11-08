@@ -1,8 +1,8 @@
-Amaranth HDL documentation
+Torii HDL documentation
 ##########################
 
 .. toctree::
    :maxdepth: 1
 
    index
-   Board definitions <https://amaranth-lang.org/docs/amaranth-boards/latest/>
+   Board definitions <https://torii-lang.org/docs/torii-boards/latest/>

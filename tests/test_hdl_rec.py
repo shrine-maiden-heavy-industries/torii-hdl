@@ -1,7 +1,7 @@
 from enum import Enum
 
-from amaranth.hdl.ast import *
-from amaranth.hdl.rec import *
+from torii.hdl.ast import *
+from torii.hdl.rec import *
 
 from .utils import *
 

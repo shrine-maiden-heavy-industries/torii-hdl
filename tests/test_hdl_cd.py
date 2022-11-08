@@ -1,4 +1,4 @@
-from amaranth.hdl.cd import *
+from torii.hdl.cd import *
 
 from .utils import *
 

@@ -2,10 +2,10 @@
 
 import unittest
 
-from amaranth import *
-from amaranth.lib.fifo import SyncFIFO
-from amaranth.lib.io import pin_layout
-from amaranth.back.pysim import *
+from torii import *
+from torii.lib.fifo import SyncFIFO
+from torii.lib.io import pin_layout
+from torii.back.pysim import *
 
 from ..serial import *
 

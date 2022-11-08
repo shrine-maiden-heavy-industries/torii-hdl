@@ -1,10 +1,10 @@
 # amaranth: UnusedElaboratable=no
 
-from amaranth import *
-from amaranth.hdl.rec import *
-from amaranth.lib.io import *
-from amaranth.build.dsl import *
-from amaranth.build.res import *
+from torii import *
+from torii.hdl.rec import *
+from torii.lib.io import *
+from torii.build.dsl import *
+from torii.build.res import *
 
 from .utils import *
 

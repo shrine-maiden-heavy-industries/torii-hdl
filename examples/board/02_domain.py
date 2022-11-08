@@ -2,7 +2,7 @@
 # explicitly, which overrides the default behavior. Any other clock domains could also be
 # independently created in addition to the main "sync" domain.
 
-from amaranth import *
+from torii import *
 from amaranth_boards.ice40_hx1k_blink_evn import *
 
 

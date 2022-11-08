@@ -1,7 +1,7 @@
-from amaranth.compat.fhdl.specials import *
-from amaranth.compat.fhdl.specials import __all__
+from torii.compat.fhdl.specials import *
+from torii.compat.fhdl.specials import __all__
 
 
 import warnings
-warnings.warn("instead of nmigen.compat.fhdl.specials, use amaranth.compat.fhdl.specials",
+warnings.warn("instead of nmigen.compat.fhdl.specials, use torii.compat.fhdl.specials",
               DeprecationWarning, stacklevel=2)

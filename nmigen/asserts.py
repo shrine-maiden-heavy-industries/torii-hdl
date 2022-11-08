@@ -1,6 +1,6 @@
-from amaranth.asserts import *
+from torii.asserts import *
 
 
 import warnings
-warnings.warn("instead of nmigen.asserts, use amaranth.asserts",
+warnings.warn("instead of nmigen.asserts, use torii.asserts",
               DeprecationWarning, stacklevel=2)

@@ -1,8 +1,8 @@
-(* generator = "Amaranth" *)
+(* generator = "Torii" *)
 module top(clk, rst, en, ovf);
-  (* src = "<amaranth-root>/amaranth/hdl/ir.py:526" *)
+  (* src = "<torii-root>/torii/hdl/ir.py:526" *)
   input clk;
-  (* src = "<amaranth-root>/amaranth/hdl/ir.py:526" *)
+  (* src = "<torii-root>/torii/hdl/ir.py:526" *)
   input rst;
   (* src = "up_counter.py:26" *)
   input en;
@@ -38,7 +38,7 @@ module top(clk, rst, en, ovf);
                 \count$next  = \$3 [15:0];
           endcase
     endcase
-    (* src = "<amaranth-root>/amaranth/hdl/xfrm.py:518" *)
+    (* src = "<torii-root>/torii/hdl/xfrm.py:518" *)
     casez (rst)
       1'h1:
           \count$next  = 16'h0000;

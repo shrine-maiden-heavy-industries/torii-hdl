@@ -1,6 +1,6 @@
 import unittest
 
-from amaranth import Signal, Module, Elaboratable
+from torii import Signal, Module, Elaboratable
 
 from .support import SimCase
 

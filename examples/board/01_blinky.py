@@ -1,7 +1,7 @@
 # If the design does not create a "sync" clock domain, it is created by the Amaranth build system
 # using the platform default clock (and default reset, if any).
 
-from amaranth import *
+from torii import *
 from amaranth_boards.ice40_hx1k_blink_evn import *
 
 

@@ -1,7 +1,7 @@
-from amaranth.back.verilog import *
-from amaranth.back.verilog import __all__
+from torii.back.verilog import *
+from torii.back.verilog import __all__
 
 
 import warnings
-warnings.warn("instead of nmigen.back.verilog, use amaranth.back.verilog",
+warnings.warn("instead of nmigen.back.verilog, use torii.back.verilog",
               DeprecationWarning, stacklevel=2)

@@ -1,8 +1,8 @@
 # amaranth: UnusedElaboratable=no
 
 import unittest
-from amaranth import *
-from amaranth.back.pysim import *
+from torii import *
+from torii.back.pysim import *
 
 from ..event import *
 

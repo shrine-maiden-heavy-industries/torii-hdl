@@ -1,9 +1,9 @@
 Intel
 #####
 
-.. py:module:: amaranth.vendor.intel
+.. py:module:: torii.vendor.intel
 
-The :mod:`amaranth.vendor.intel` module provides a base platform to support Intel toolchains.
+The :mod:`torii.vendor.intel` module provides a base platform to support Intel toolchains.
 
 The Quartus and Mistral toolchains are supported.
 

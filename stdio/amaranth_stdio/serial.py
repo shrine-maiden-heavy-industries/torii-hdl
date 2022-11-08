@@ -1,6 +1,6 @@
-from amaranth import *
-from amaranth.lib.cdc import FFSynchronizer
-from amaranth.utils import bits_for
+from torii import *
+from torii.lib.cdc import FFSynchronizer
+from torii.utils import bits_for
 
 
 __all__ = ["AsyncSerialRX", "AsyncSerialTX", "AsyncSerial"]

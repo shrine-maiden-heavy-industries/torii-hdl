@@ -1,6 +1,6 @@
-from amaranth.compat import *
+from torii.compat import *
 
 
 import warnings
-warnings.warn("instead of nmigen.compat, use amaranth.compat",
+warnings.warn("instead of nmigen.compat, use torii.compat",
               DeprecationWarning, stacklevel=2)

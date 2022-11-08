@@ -1,6 +1,6 @@
-from amaranth import *
-from amaranth.lib.cdc import FFSynchronizer
-from amaranth.cli import main
+from torii import *
+from torii.lib.cdc import FFSynchronizer
+from torii.cli import main
 
 
 i, o = Signal(name="i"), Signal(name="o")

@@ -1,6 +1,6 @@
-from amaranth import *
-from amaranth.sim import *
-from amaranth.back import verilog
+from torii import *
+from torii.sim import *
+from torii.back import verilog
 
 
 class Counter(Elaboratable):

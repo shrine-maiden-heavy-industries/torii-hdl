@@ -1,5 +1,5 @@
-from amaranth.hdl.ir import Fragment
-from amaranth.compat import *
+from torii.hdl.ir import Fragment
+from torii.compat import *
 
 from .utils import *
 

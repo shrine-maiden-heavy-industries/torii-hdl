@@ -1,7 +1,7 @@
 Changelog
 #########
 
-This document describes changes to the public interfaces in the Amaranth language and standard library. It does not include most bug fixes or implementation changes.
+This document describes changes to the public interfaces in the Torii language and standard library. It does not include most bug fixes or implementation changes.
 
 
 Next version

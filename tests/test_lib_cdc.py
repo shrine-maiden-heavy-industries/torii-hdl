@@ -1,8 +1,8 @@
 # amaranth: UnusedElaboratable=no
 
-from amaranth.hdl import *
-from amaranth.sim import *
-from amaranth.lib.cdc import *
+from torii.hdl import *
+from torii.sim import *
+from torii.lib.cdc import *
 
 from .utils import *
 

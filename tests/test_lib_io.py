@@ -1,7 +1,7 @@
-from amaranth.hdl import *
-from amaranth.hdl.rec import *
-from amaranth.sim import *
-from amaranth.lib.io import *
+from torii.hdl import *
+from torii.hdl.rec import *
+from torii.sim import *
+from torii.lib.io import *
 
 from .utils import *
 

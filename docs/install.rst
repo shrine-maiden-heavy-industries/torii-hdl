@@ -6,13 +6,13 @@ System requirements
 
 .. |yosys-version| replace:: 0.10 (or newer)
 
-Amaranth HDL requires Python 3.7; it works on CPython_ 3.7 (or newer), and works faster on PyPy3.7_ 7.3.3 (or newer).
+Torii HDL requires Python 3.7; it works on CPython_ 3.7 (or newer), and works faster on PyPy3.7_ 7.3.3 (or newer).
 
-For most workflows, Amaranth requires Yosys_ |yosys-version|. A compatible version of Yosys is distributed via PyPI_ for most popular platforms.
+For most workflows, Torii requires Yosys_ |yosys-version|. A compatible version of Yosys is distributed via PyPI_ for most popular platforms.
 
-Simulating Amaranth code requires no additional software. However, a waveform viewer like GTKWave_ is invaluable for debugging.
+Simulating Torii code requires no additional software. However, a waveform viewer like GTKWave_ is invaluable for debugging.
 
-Synthesizing, placing and routing an Amaranth design for an FPGA requires the FPGA family specific toolchain.
+Synthesizing, placing and routing an Torii design for an FPGA requires the FPGA family specific toolchain.
 
 .. TODO: Link to FPGA family docs here
 
@@ -94,10 +94,10 @@ Installing prerequisites
 
 .. _install:
 
-Installing Amaranth
+Installing Torii
 ===================
 
-The latest release of Amaranth should work well for most applications. A development snapshot---any commit from the ``main`` branch of Amaranth---should be similarly reliable, but is likely to include experimental API changes that will be in flux until the next release. With that in mind, development snapshots can be used to try out new functionality or to avoid bugs fixed since the last release.
+The latest release of Torii should work well for most applications. A development snapshot---any commit from the ``main`` branch of Torii---should be similarly reliable, but is likely to include experimental API changes that will be in flux until the next release. With that in mind, development snapshots can be used to try out new functionality or to avoid bugs fixed since the last release.
 
 
 .. _install-release:
@@ -105,7 +105,7 @@ The latest release of Amaranth should work well for most applications. A develop
 Latest release
 --------------
 
-.. |release:install| replace:: To install the latest release of Amaranth, run:
+.. |release:install| replace:: To install the latest release of Torii, run:
 
 .. platform-picker::
 
@@ -116,7 +116,7 @@ Latest release
 
       .. code-block:: doscon
 
-         > pip install --upgrade amaranth[builtin-yosys]
+         > pip install --upgrade torii[builtin-yosys]
 
    .. platform-choice:: macos
       :title: macOS
@@ -125,22 +125,22 @@ Latest release
 
       .. code-block:: console
 
-         $ pip install --user --upgrade 'amaranth[builtin-yosys]'
+         $ pip install --user --upgrade 'torii[builtin-yosys]'
 
    .. platform-choice:: linux
       :title: Linux
 
-      If you **did not** install Yosys manually in the :ref:`previous step <install-deps>`, to install the latest release of Amaranth, run:
+      If you **did not** install Yosys manually in the :ref:`previous step <install-deps>`, to install the latest release of Torii, run:
 
       .. code-block:: console
 
-         $ pip3 install --user --upgrade 'amaranth[builtin-yosys]'
+         $ pip3 install --user --upgrade 'torii[builtin-yosys]'
 
       If you **did** install Yosys manually in the previous step, run:
 
       .. code-block:: console
 
-         $ pip3 install --user --upgrade amaranth
+         $ pip3 install --user --upgrade torii
 
    .. platform-choice:: arch
       :altname: linux
@@ -150,7 +150,7 @@ Latest release
 
       .. code-block:: console
 
-         $ sudo pacman -S python-amaranth
+         $ sudo pacman -S python-torii
 
 
 .. _install-snapshot:
@@ -158,7 +158,7 @@ Latest release
 Development snapshot
 --------------------
 
-.. |snapshot:install| replace:: To install the latest development snapshot of Amaranth, run:
+.. |snapshot:install| replace:: To install the latest development snapshot of Torii, run:
 
 .. platform-picker::
 
@@ -169,7 +169,7 @@ Development snapshot
 
       .. code-block:: doscon
 
-         > pip install git+https://github.com/amaranth-lang/amaranth.git#egg=amaranth[builtin-yosys]
+         > pip install git+https://github.com/torii-lang/torii.git#egg=torii[builtin-yosys]
 
    .. platform-choice:: macos
       :title: macOS
@@ -178,22 +178,22 @@ Development snapshot
 
       .. code-block:: console
 
-         $ pip install --user 'git+https://github.com/amaranth-lang/amaranth.git#egg=amaranth[builtin-yosys]'
+         $ pip install --user 'git+https://github.com/torii-lang/torii.git#egg=torii[builtin-yosys]'
 
    .. platform-choice:: linux
       :title: Linux
 
-      If you **did not** install Yosys manually in the :ref:`previous step <install-deps>`, to install the latest release of Amaranth, run:
+      If you **did not** install Yosys manually in the :ref:`previous step <install-deps>`, to install the latest release of Torii, run:
 
       .. code-block:: console
 
-         $ pip3 install --user 'git+https://github.com/amaranth-lang/amaranth.git#egg=amaranth[builtin-yosys]'
+         $ pip3 install --user 'git+https://github.com/torii-lang/torii.git#egg=torii[builtin-yosys]'
 
       If you **did** install Yosys manually in the previous step, run:
 
       .. code-block:: console
 
-         $ pip3 install --user 'git+https://github.com/amaranth-lang/amaranth.git#egg=amaranth'
+         $ pip3 install --user 'git+https://github.com/torii-lang/torii.git#egg=torii'
 
 
 .. _install-develop:
@@ -201,9 +201,9 @@ Development snapshot
 Editable development snapshot
 -----------------------------
 
-.. |develop:first-time| replace:: To install an editable development snapshot of Amaranth for the first time, run:
-.. |develop:update| replace:: Any changes made to the ``amaranth`` directory will immediately affect any code that uses Amaranth. To update the snapshot, run:
-.. |develop:reinstall| replace:: each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Amaranth may misbehave or crash with an ``ImportError``.
+.. |develop:first-time| replace:: To install an editable development snapshot of Torii for the first time, run:
+.. |develop:update| replace:: Any changes made to the ``torii`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
+.. |develop:reinstall| replace:: each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
 
 .. platform-picker::
 
@@ -214,15 +214,15 @@ Editable development snapshot
 
       .. code-block:: doscon
 
-         > git clone https://github.com/amaranth-lang/amaranth
-         > cd amaranth
+         > git clone https://github.com/torii-lang/torii
+         > cd torii
          > pip install --editable .[builtin-yosys]
 
       |develop:update|
 
       .. code-block:: doscon
 
-         > cd amaranth
+         > cd torii
          > git pull --ff-only origin main
          > pip install --editable .[builtin-yosys]
 
@@ -235,15 +235,15 @@ Editable development snapshot
 
       .. code-block:: console
 
-         $ git clone https://github.com/amaranth-lang/amaranth
-         $ cd amaranth
+         $ git clone https://github.com/torii-lang/torii
+         $ cd torii
          $ pip install --user --editable '.[builtin-yosys]'
 
       |develop:update|
 
       .. code-block:: console
 
-         $ cd amaranth
+         $ cd torii
          $ git pull --ff-only origin main
          $ pip install --user --editable '.[builtin-yosys]'
 
@@ -258,15 +258,15 @@ Editable development snapshot
 
       .. code-block:: console
 
-         $ git clone https://github.com/amaranth-lang/amaranth
-         $ cd amaranth
+         $ git clone https://github.com/torii-lang/torii
+         $ cd torii
          $ pip3 install --user --editable '.[builtin-yosys]'
 
       |develop:update|
 
       .. code-block:: console
 
-         $ cd amaranth
+         $ cd torii
          $ git pull --ff-only origin main
          $ pip3 install --user --editable '.[builtin-yosys]'
 
@@ -278,4 +278,4 @@ Installing board definitions
 
 .. todo::
 
-	 Explain how to install `<https://github.com/amaranth-lang/amaranth-boards>`_.
+	 Explain how to install `<https://github.com/torii-lang/torii-boards>`_.

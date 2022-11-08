@@ -2,10 +2,10 @@
 
 import unittest
 
-from amaranth.hdl import *
-from amaranth.asserts import *
-from amaranth.sim import *
-from amaranth.lib.scheduler import *
+from torii.hdl import *
+from torii.asserts import *
+from torii.sim import *
+from torii.lib.scheduler import *
 
 from .utils import *
 

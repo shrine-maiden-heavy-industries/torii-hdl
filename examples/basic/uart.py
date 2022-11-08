@@ -1,4 +1,4 @@
-from amaranth import *
+from torii import *
 
 
 class UART(Elaboratable):
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if args.action == "simulate":
-        from amaranth.sim import Simulator, Passive
+        from torii.sim import Simulator, Passive
 
         sim = Simulator(uart)
         sim.add_clock(1e-6)
@@ -147,6 +147,6 @@ if __name__ == "__main__":
             sim.run()
 
     if args.action == "generate":
-        from amaranth.back import verilog
+        from torii.back import verilog
 
         print(verilog.convert(uart, ports=ports))

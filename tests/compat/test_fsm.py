@@ -1,7 +1,7 @@
 import unittest
 
-from amaranth.compat import *
-from amaranth.compat.genlib.fsm import FSM
+from torii.compat import *
+from torii.compat.genlib.fsm import FSM
 
 from .support import SimCase
 

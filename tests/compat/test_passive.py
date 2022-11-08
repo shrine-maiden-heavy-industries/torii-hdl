@@ -1,6 +1,6 @@
 import unittest
 
-from amaranth.compat import *
+from torii.compat import *
 
 
 class PassiveCase(unittest.TestCase):

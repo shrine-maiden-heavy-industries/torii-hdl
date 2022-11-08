@@ -30,11 +30,11 @@ def doc_version():
 
 
 setup(
-    name="amaranth",
+    name="torii-hdl",
     use_scm_version=scm_version(),
-    author="whitequark",
-    author_email="whitequark@whitequark.org",
-    description="Amaranth hardware definition language",
+    author="",
+    author_email="",
+    description="Torii hardware definition language",
     #long_description="""TODO""",
     license="BSD",
     python_requires="~=3.7",
@@ -58,8 +58,8 @@ setup(
         ]
     },
     project_urls={
-        "Documentation": "https://amaranth-lang.org/docs/amaranth/{}".format(doc_version()),
-        "Source Code": "https://github.com/amaranth-lang/amaranth",
-        "Bug Tracker": "https://github.com/amaranth-lang/amaranth/issues",
+        "Documentation": "",
+        "Source Code": "https://github.com/shrine-maiden-heavy-industries/torii-hdl",
+        "Bug Tracker": "https://github.com/shrine-maiden-heavy-industries/torii-hdl",
     },
 )

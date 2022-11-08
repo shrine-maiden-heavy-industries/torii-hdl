@@ -1,7 +1,7 @@
-from amaranth.rpc import *
-from amaranth.rpc import __all__
+from torii.rpc import *
+from torii.rpc import __all__
 
 
 import warnings
-warnings.warn("instead of nmigen.rpc, use amaranth.rpc",
+warnings.warn("instead of nmigen.rpc, use torii.rpc",
               DeprecationWarning, stacklevel=2)

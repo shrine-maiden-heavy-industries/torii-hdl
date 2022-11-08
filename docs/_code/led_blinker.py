@@ -1,4 +1,4 @@
-from amaranth import *
+from torii import *
 
 
 class LEDBlinker(Elaboratable):
@@ -18,7 +18,7 @@ class LEDBlinker(Elaboratable):
 
         return m
 # --- BUILD ---
-from amaranth_boards.icestick import *
+from torii_boards.icestick import *
 
 
 ICEStickPlatform().build(LEDBlinker(), do_program=True)

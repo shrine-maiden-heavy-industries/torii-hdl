@@ -2,11 +2,11 @@
 
 import warnings
 
-from amaranth.hdl.ast import *
-from amaranth.hdl.cd import *
-from amaranth.hdl.ir import *
-from amaranth.hdl.xfrm import *
-from amaranth.hdl.mem import *
+from torii.hdl.ast import *
+from torii.hdl.cd import *
+from torii.hdl.ir import *
+from torii.hdl.xfrm import *
+from torii.hdl.mem import *
 
 from .utils import *
 

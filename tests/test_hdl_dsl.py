@@ -3,9 +3,9 @@
 from collections import OrderedDict
 from enum import Enum
 
-from amaranth.hdl.ast import *
-from amaranth.hdl.cd import *
-from amaranth.hdl.dsl import *
+from torii.hdl.ast import *
+from torii.hdl.cd import *
+from torii.hdl.dsl import *
 
 from .utils import *
 

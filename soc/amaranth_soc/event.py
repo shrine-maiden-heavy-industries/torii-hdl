@@ -1,7 +1,7 @@
 import enum
 from collections import OrderedDict
 
-from amaranth import *
+from torii import *
 
 
 __all__ = ["Source", "EventMap", "Monitor"]

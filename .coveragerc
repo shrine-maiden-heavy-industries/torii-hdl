@@ -1,9 +1,9 @@
 [run]
 branch = True
 include =
-  amaranth/*
+  torii/*
 omit =
-  amaranth/test/*
+  torii/test/*
 
 [report]
 exclude_lines =

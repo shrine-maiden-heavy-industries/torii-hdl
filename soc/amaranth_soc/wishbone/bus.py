@@ -1,7 +1,7 @@
 from enum import Enum
-from amaranth import *
-from amaranth.hdl.rec import Direction
-from amaranth.utils import log2_int
+from torii import *
+from torii.hdl.rec import Direction
+from torii.utils import log2_int
 
 from ..memory import MemoryMap
 

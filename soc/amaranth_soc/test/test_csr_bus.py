@@ -1,9 +1,9 @@
 # amaranth: UnusedElaboratable=no
 
 import unittest
-from amaranth import *
-from amaranth.hdl.rec import Layout
-from amaranth.back.pysim import *
+from torii import *
+from torii.hdl.rec import Layout
+from torii.back.pysim import *
 
 from ..csr.bus import *
 from ..memory import MemoryMap

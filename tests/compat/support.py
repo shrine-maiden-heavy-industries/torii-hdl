@@ -1,6 +1,6 @@
-from amaranth.compat import *
-from amaranth.compat.fhdl import verilog
-from amaranth._utils import _ignore_deprecated
+from torii.compat import *
+from torii.compat.fhdl import verilog
+from torii._utils import _ignore_deprecated
 
 
 class SimCase:

@@ -1,14 +1,14 @@
 import os
 from contextlib import contextmanager
 
-from amaranth._utils import flatten
-from amaranth.hdl.ast import *
-from amaranth.hdl.cd import  *
-from amaranth.hdl.mem import *
-from amaranth.hdl.rec import *
-from amaranth.hdl.dsl import  *
-from amaranth.hdl.ir import *
-from amaranth.sim import *
+from torii._utils import flatten
+from torii.hdl.ast import *
+from torii.hdl.cd import  *
+from torii.hdl.mem import *
+from torii.hdl.rec import *
+from torii.hdl.dsl import  *
+from torii.hdl.ir import *
+from torii.sim import *
 
 from .utils import *
 

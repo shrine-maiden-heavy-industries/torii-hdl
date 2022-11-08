@@ -1,12 +1,12 @@
 import os, sys
 sys.path.insert(0, os.path.abspath("."))
 
-import amaranth
+import torii
 
-project = "Amaranth HDL toolchain"
-version = amaranth.__version__
+project = "Torii-HDL"
+version = torii.__version__
 release = version.split("+")[0]
-copyright = "2020—2021, Amaranth HDL developers"
+copyright = "2022, Shrine Maiden Heavy Industries"
 
 extensions = [
 	"sphinx.ext.intersphinx",

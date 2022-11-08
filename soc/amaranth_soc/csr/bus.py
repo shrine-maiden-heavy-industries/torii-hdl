@@ -1,6 +1,6 @@
 import enum
-from amaranth import *
-from amaranth.utils import log2_int
+from torii import *
+from torii.utils import log2_int
 
 from ..memory import MemoryMap
 

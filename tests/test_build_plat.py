@@ -1,5 +1,5 @@
-from amaranth import *
-from amaranth.build.plat import *
+from torii import *
+from torii.build.plat import *
 
 from .utils import *
 

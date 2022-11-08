@@ -1,7 +1,7 @@
 import unittest
 
-from amaranth._utils import _ignore_deprecated
-from amaranth.compat import *
+from torii._utils import _ignore_deprecated
+from torii.compat import *
 
 
 def _same_slices(a, b):
