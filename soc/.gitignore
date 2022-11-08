@@ -1,0 +1,13 @@
+# Python
+*.pyc
+/*.egg-info
+/.eggs
+/dist
+
+# coverage
+/.coverage
+/htmlcov
+
+# tests
+*.vcd
+*.gtkw
