@@ -1,6 +1,6 @@
-from torii import *
-from torii.lib.cdc import FFSynchronizer
-from torii.utils import bits_for
+from ... import *
+from ..cdc import FFSynchronizer
+from ...utils import bits_for
 
 
 __all__ = ["AsyncSerialRX", "AsyncSerialTX", "AsyncSerial"]
