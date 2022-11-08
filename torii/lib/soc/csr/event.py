@@ -1,6 +1,6 @@
 # amaranth: UnusedElaboratable=no
 
-from torii import *
+from .... import *
 
 from . import Element, Multiplexer
 from .. import event

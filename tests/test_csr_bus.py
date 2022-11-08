@@ -5,8 +5,8 @@ from torii import *
 from torii.hdl.rec import Layout
 from torii.back.pysim import *
 
-from ..csr.bus import *
-from ..memory import MemoryMap
+from torii.lib.soc.csr.bus import *
+from torii.lib.soc.memory import MemoryMap
 
 
 class ElementTestCase(unittest.TestCase):

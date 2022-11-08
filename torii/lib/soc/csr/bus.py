@@ -1,6 +1,6 @@
 import enum
-from torii import *
-from torii.utils import log2_int
+from .... import *
+from ....utils import log2_int
 
 from ..memory import MemoryMap
 

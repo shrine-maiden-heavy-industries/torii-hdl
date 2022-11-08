@@ -1,6 +1,6 @@
 import bisect
 
-from torii.utils import bits_for
+from ...utils import bits_for
 
 
 __all__ = ["ResourceInfo", "MemoryMap"]

@@ -1,6 +1,6 @@
 import unittest
 
-from ..memory import _RangeMap, ResourceInfo, MemoryMap
+from torii.lib.soc.memory import _RangeMap, ResourceInfo, MemoryMap
 
 
 class RangeMapTestCase(unittest.TestCase):

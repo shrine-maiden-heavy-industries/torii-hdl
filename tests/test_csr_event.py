@@ -4,8 +4,8 @@ import unittest
 from torii import *
 from torii.back.pysim import *
 
-from ..csr import *
-from .. import event
+from torii.lib.soc.csr import *
+from torii.lib.soc import event
 
 
 def simulation_test(dut, process):

@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from collections.abc import Mapping
 
-from torii.utils import bits_for
+from ...utils import bits_for
 
 from .memory import MemoryMap
 from . import event

@@ -4,8 +4,8 @@ import unittest
 from torii import *
 from torii.back.pysim import *
 
-from .. import csr
-from ..csr.wishbone import *
+from torii.lib.soc import csr
+from torii.lib.soc.csr.wishbone import *
 
 
 class MockRegister(Elaboratable):

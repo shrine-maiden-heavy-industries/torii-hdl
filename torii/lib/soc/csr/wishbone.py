@@ -1,5 +1,5 @@
-from torii import *
-from torii.utils import log2_int
+from .... import *
+from ....utils import log2_int
 
 from . import Interface as CSRInterface
 from ..wishbone import Interface as WishboneInterface

@@ -1,8 +1,8 @@
 import unittest
 
-from ..periph import *
-from ..memory import MemoryMap
-from .. import event
+from torii.lib.soc.periph import *
+from torii.lib.soc.memory import MemoryMap
+from torii.lib.soc import event
 
 
 class ConstantBoolTestCase(unittest.TestCase):

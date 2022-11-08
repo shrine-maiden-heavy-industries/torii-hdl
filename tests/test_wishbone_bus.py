@@ -5,8 +5,8 @@ from torii import *
 from torii.hdl.rec import *
 from torii.back.pysim import *
 
-from ..wishbone.bus import *
-from ..memory import MemoryMap
+from torii.lib.soc.wishbone.bus import *
+from torii.lib.soc.memory import MemoryMap
 
 
 class InterfaceTestCase(unittest.TestCase):
