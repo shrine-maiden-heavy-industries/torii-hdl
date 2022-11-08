@@ -74,12 +74,6 @@ setup(
 		)
 	),
 
-	entry_points     = {
-		'console_scripts': [
-			'torii-rpc = torii.rpc:main',
-		]
-	},
-
 	classifiers       = [
 		'Development Status :: 4 - Beta',
 
