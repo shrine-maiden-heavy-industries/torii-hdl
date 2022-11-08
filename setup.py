@@ -1,64 +1,114 @@
-from setuptools import setup, find_packages
+#!/usr/bin/env python3
+# SPDX-License-Identifier: BSD-2-Clause
 
+from setuptools import setup, find_packages
+from pathlib    import Path
+
+REPO_ROOT   = Path(__file__).parent
+README_FILE = (REPO_ROOT / 'README.md')
 
 def scm_version():
-    def local_scheme(version):
-        if version.tag and not version.distance:
-            return version.format_with("")
-        else:
-            return version.format_choice("+{node}", "+{node}.dirty")
-    return {
-        "relative_to": __file__,
-        "version_scheme": "guess-next-dev",
-        "local_scheme": local_scheme
-    }
+	def local_scheme(version):
+		if version.tag and not version.distance:
+			return version.format_with('')
+		else:
+			return version.format_choice('+{node}', '+{node}.dirty')
+	return {
+		'relative_to'   : __file__,
+		'version_scheme': 'guess-next-dev',
+		'local_scheme'  : local_scheme
+	}
 
 
 def doc_version():
-    try:
-        from setuptools_scm.git import parse as parse_git
-    except ImportError:
-        return ""
+	try:
+		from setuptools_scm.git import parse as parse_git
+	except ImportError:
+		return ''
 
-    git = parse_git(".")
-    if not git:
-        return ""
-    elif git.exact:
-        return git.format_with("v{tag}")
-    else:
-        return "latest"
+	git = parse_git('.')
+	if not git:
+		return ''
+	elif git.exact:
+		return git.format_with('v{tag}')
+	else:
+		return 'latest'
 
 
 setup(
-    name="torii-hdl",
-    use_scm_version=scm_version(),
-    author="",
-    author_email="",
-    description="Torii hardware definition language",
-    #long_description="""TODO""",
-    license="BSD",
-    python_requires="~=3.7",
-    setup_requires=["wheel", "setuptools", "setuptools_scm"],
-    install_requires=[
-        "importlib_metadata; python_version<'3.8'",  # for __version__ and amaranth._toolchain.yosys
-        "importlib_resources; python_version<'3.9'", # for amaranth._toolchain.yosys
-        "pyvcd>=0.2.2,<0.4", # for amaranth.pysim
-        "Jinja2~=3.0",  # for amaranth.build
-    ],
-    extras_require={
-        # this version requirement needs to be synchronized with the one in amaranth.back.verilog!
-        "builtin-yosys": ["amaranth-yosys>=0.10.*"],
-        "remote-build": ["paramiko~=2.7"],
-    },
-    packages=find_packages(exclude=("tests", "tests.*")),
-    entry_points={
-        "console_scripts": [
-            "torii-rpc = torii.rpc:main",
-        ]
-    },
-    project_urls={
-        "Documentation": "",
-        "Source Code": "https://github.com/shrine-maiden-heavy-industries/torii-hdl",
-        "Bug Tracker": "https://github.com/shrine-maiden-heavy-industries/torii-hdl",
-    },
+	name             = 'torii-hdl',
+	use_scm_version  = scm_version(),
+	author           = '',
+	author_email     = '',
+	description      = 'Torii hardware definition language',
+	license          = ' BSD-2-Clause',
+	python_requires  = '~=3.9',
+	zip_safe         = True,
+	url              = 'https://github.com/shrine-maiden-heavy-industries/torii-hdl',
+
+	long_description = README_FILE.read_text(),
+	long_description_content_type = 'text/markdown',
+
+	setup_requires   = [
+		'wheel',
+		'setuptools',
+		'setuptools_scm'
+	],
+
+	install_requires = [
+		'pyvcd>=0.2.2,<0.4',
+		'Jinja2~=3.0',
+	],
+
+	extras_require   = {
+		'remote-build': [
+			'paramiko~=2.7'
+		],
+	},
+
+	packages         = find_packages(
+		where   = '.',
+		exclude = (
+			'tests',
+			'tests.*'
+		)
+	),
+
+	entry_points     = {
+		'console_scripts': [
+			'torii-rpc = torii.rpc:main',
+		]
+	},
+
+	classifiers       = [
+		'Development Status :: 4 - Beta',
+
+		'Intended Audience :: Developers',
+		'Intended Audience :: Information Technology',
+		'Intended Audience :: Science/Research',
+
+		'License :: OSI Approved :: BSD License',
+
+		'Operating System :: MacOS :: MacOS X',
+		'Operating System :: Microsoft :: Windows',
+		'Operating System :: POSIX :: Linux',
+
+		'Programming Language :: Python :: 3.9',
+		'Programming Language :: Python :: 3.10',
+		'Programming Language :: Python :: 3.11',
+
+		'Topic :: Scientific/Engineering',
+		'Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)',
+		'Topic :: Software Development',
+		'Topic :: Software Development :: Embedded Systems',
+		'Topic :: Software Development :: Libraries',
+
+		'Typing :: Typed',
+	],
+
+	project_urls     = {
+		'Documentation': '',
+		'Source Code'  : 'https://github.com/shrine-maiden-heavy-industries/torii-hdl',
+		'Bug Tracker'  : 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues',
+	},
 )
