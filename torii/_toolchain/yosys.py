@@ -67,7 +67,9 @@ class YosysBinary:
 		raise NotImplementedError
 
 	@classmethod
-	def run(cls, args : List[str], stdin : str = '') -> str:
+	def run(
+		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+	) -> str:
 		'''Run Yosys process.
 
 		Parameters
@@ -76,6 +78,10 @@ class YosysBinary:
 			Arguments, not including the program name.
 		stdin : str
 			Standard input.
+		ignore_warnings : bool
+			Ignore any warnings produce
+		src_loc_at : int
+			Source location
 
 		Returns
 		-------
