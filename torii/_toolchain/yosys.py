@@ -5,11 +5,11 @@ import sys
 import re
 import subprocess
 import warnings
-import pathlib
-
+from pathlib   import Path
 from importlib import metadata, resources
+from typing    import List, Tuple, Callable, Optional
 
-from . import has_tool, require_tool
+from .         import has_tool, require_tool
 
 __all__ = (
 	'YosysError',
@@ -27,7 +27,7 @@ class YosysWarning(Warning):
 
 class YosysBinary:
 	@classmethod
-	def available(cls):
+	def available(cls) -> bool:
 		'''Check for Yosys availability.
 
 		Returns
@@ -39,7 +39,7 @@ class YosysBinary:
 		raise NotImplementedError
 
 	@classmethod
-	def version(cls):
+	def version(cls) -> Optional[Tuple[int, int, int]]:
 		'''Get Yosys version.
 
 		Returns
@@ -56,7 +56,7 @@ class YosysBinary:
 		raise NotImplementedError
 
 	@classmethod
-	def data_dir(cls):
+	def data_dir(cls) -> Path:
 		'''Get Yosys data directory.
 
 		Returns
@@ -67,7 +67,7 @@ class YosysBinary:
 		raise NotImplementedError
 
 	@classmethod
-	def run(cls, args, stdin=''):
+	def run(cls, args : List[str], stdin : str = '') -> str:
 		'''Run Yosys process.
 
 		Parameters
@@ -91,7 +91,9 @@ class YosysBinary:
 		raise NotImplementedError
 
 	@classmethod
-	def _process_result(cls, returncode, stdout, stderr, ignore_warnings, src_loc_at):
+	def _process_result(
+		cls, returncode : int, stdout : str, stderr : str, ignore_warnings : bool, src_loc_at : int
+	) -> str:
 		if returncode:
 			raise YosysError(stderr.strip())
 		if not ignore_warnings:
@@ -105,7 +107,7 @@ class _BuiltinYosys(YosysBinary):
 	YOSYS_PACKAGE = 'amaranth_yosys'
 
 	@classmethod
-	def available(cls):
+	def available(cls) -> bool:
 		try:
 			metadata.version(cls.YOSYS_PACKAGE)
 			return True
@@ -113,19 +115,21 @@ class _BuiltinYosys(YosysBinary):
 			return False
 
 	@classmethod
-	def version(cls):
+	def version(cls) -> Tuple[int, int, int]:
 		version = metadata.version(cls.YOSYS_PACKAGE)
 		match = re.match(r'^(\d+)\.(\d+)(?:\.post(\d+))?', version)
 		return (int(match[1]), int(match[2]), int(match[3] or 0))
 
 	@classmethod
-	def data_dir(cls):
+	def data_dir(cls) -> Path:
 		return resources.files(cls.YOSYS_PACKAGE) / 'share'
 
 	@classmethod
-	def run(cls, args, stdin = '', *, ignore_warnings = False, src_loc_at = 0):
+	def run(
+		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+	) -> str:
 		popen = subprocess.Popen(
-			[sys.executable, '-m', cls.YOSYS_PACKAGE, *args],
+			[ sys.executable, '-m', cls.YOSYS_PACKAGE, *args ],
 			stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE,
 			encoding = 'utf-8'
 		)
@@ -137,11 +141,11 @@ class _SystemYosys(YosysBinary):
 	YOSYS_BINARY = 'yosys'
 
 	@classmethod
-	def available(cls):
+	def available(cls) -> bool:
 		return has_tool(cls.YOSYS_BINARY)
 
 	@classmethod
-	def version(cls):
+	def version(cls) -> Optional[Tuple[int, int, int]]:
 		version = cls.run(['-V'])
 		match = re.match(r'^Yosys (\d+)\.(\d+)(?:\+(\d+))?', version)
 		if match:
@@ -150,7 +154,7 @@ class _SystemYosys(YosysBinary):
 			return None
 
 	@classmethod
-	def data_dir(cls):
+	def data_dir(cls) -> Path:
 		popen = subprocess.Popen(
 			[require_tool(cls.YOSYS_BINARY) + '-config', '--datdir'],
 			stdout = subprocess.PIPE, stderr = subprocess.PIPE,
@@ -159,12 +163,14 @@ class _SystemYosys(YosysBinary):
 		stdout, stderr = popen.communicate()
 		if popen.returncode:
 			raise YosysError(stderr.strip())
-		return pathlib.Path(stdout.strip())
+		return Path(stdout.strip())
 
 	@classmethod
-	def run(cls, args, stdin = '', *, ignore_warnings = False, src_loc_at = 0):
+	def run(
+		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+	) -> str:
 		popen = subprocess.Popen(
-			[require_tool(cls.YOSYS_BINARY), *args],
+			[ require_tool(cls.YOSYS_BINARY), *args ],
 			stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE,
 			encoding = 'utf-8'
 		)
@@ -178,7 +184,7 @@ class _SystemYosys(YosysBinary):
 		return cls._process_result(popen.returncode, stdout, stderr, ignore_warnings, src_loc_at)
 
 
-def find_yosys(requirement):
+def find_yosys(requirement : Callable[[Optional[Tuple[int, int, int]]], bool]) -> YosysBinary:
 	'''Find an available Yosys executable of required version.
 
 	Parameters
@@ -204,8 +210,9 @@ def find_yosys(requirement):
 		elif clause == 'system':
 			proxies.append(_SystemYosys)
 		else:
-			raise YosysError('The TORII_USE_YOSYS environment variable contains '
-							 f'an unrecognized clause {clause!r}')
+			raise YosysError(
+				f'The TORII_USE_YOSYS environment variable contains an unrecognized clause {clause!r}'
+			)
 	for proxy in proxies:
 		if proxy.available():
 			version = proxy.version()
@@ -213,8 +220,9 @@ def find_yosys(requirement):
 				return proxy
 	else:
 		if 'TORII_USE_YOSYS' in os.environ:
-			raise YosysError('Could not find an acceptable Yosys binary. Searched: {}'
-							 .format(', '.join(clauses)))
+			raise YosysError(f'Could not find an acceptable Yosys binary. Searched: {", ".join(clauses)}')
 		else:
-			raise YosysError('Could not find an acceptable Yosys binary. The `amaranth-yosys` PyPI '
-							 'package, if available for this platform, can be used as fallback')
+			raise YosysError(
+				'Could not find an acceptable Yosys binary. The `amaranth-yosys` PyPI '
+				'package, if available for this platform, can be used as fallback'
+			)
