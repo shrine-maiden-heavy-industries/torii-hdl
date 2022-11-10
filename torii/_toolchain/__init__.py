@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import os
-import shutil
+from os     import environ
+from shutil import which
 
 __all__ = (
 	'ToolNotFound',
@@ -13,28 +13,28 @@ __all__ = (
 class ToolNotFound(Exception):
 	pass
 
-
-def tool_env_var(name):
+def tool_env_var(name : str) -> str:
 	return name.upper().replace('-', '_').replace('+', 'X')
 
+def _get_tool(name : str) -> str:
+	return environ.get(tool_env_var(name), name)
 
-def _get_tool(name):
-	return os.environ.get(tool_env_var(name), name)
+def has_tool(name : str) -> bool:
+	return which(_get_tool(name)) is not None
 
-
-def has_tool(name):
-	return shutil.which(_get_tool(name)) is not None
-
-
-def require_tool(name):
+def require_tool(name : str) -> str:
 	env_var = tool_env_var(name)
 	path = _get_tool(name)
-	if shutil.which(path) is None:
-		if env_var in os.environ:
-			raise ToolNotFound(f'Could not find required tool {name} in {path} as '
-							   f'specified via the {env_var} environment variable')
+	if which(path) is None:
+		if env_var in environ:
+			raise ToolNotFound(
+				f'Could not find required tool {name} in {path} as specified via '
+				f'the {env_var} environment variable'
+			)
 		else:
-			raise ToolNotFound(f'Could not find required tool {name} in PATH. Place '
-							   'it directly in PATH or specify path explicitly '
-							   f'via the {env_var} environment variable')
+			raise ToolNotFound(
+				f'Could not find required tool {name} in PATH. Place '
+				'it directly in PATH or specify path explicitly '
+				f'via the {env_var} environment variable'
+			)
 	return path
