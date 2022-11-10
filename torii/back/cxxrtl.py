@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .._toolchain.yosys import *
+from typing             import Dict, Tuple, Optional
+
+from .._toolchain.yosys import find_yosys, YosysError
+from ..hdl.ast          import SignalDict
 from .                  import rtlil
 
 __all__ = (
@@ -9,7 +12,9 @@ __all__ = (
 	'convert_fragment',
 )
 
-def _convert_rtlil_text(rtlil_text, black_boxes, *, src_loc_at = 0):
+def _convert_rtlil_text(
+	rtlil_text : str, black_boxes : Optional[Dict[str, str]], *, src_loc_at : int = 0
+) -> str:
 	if black_boxes is not None:
 		if not isinstance(black_boxes, dict):
 			raise TypeError('CXXRTL black boxes must be a dictionary, not {black_boxes!r}')
@@ -31,11 +36,11 @@ def _convert_rtlil_text(rtlil_text, black_boxes, *, src_loc_at = 0):
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
 
-def convert_fragment(*args, black_boxes=None, **kwargs):
+def convert_fragment(*args, black_boxes : Optional[Dict[str, str]] = None, **kwargs) -> Tuple[str, SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
-	return _convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map
+	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
 
 
-def convert(*args, black_boxes = None, **kwargs):
+def convert(*args, black_boxes : Optional[Dict[str, str]] = None, **kwargs) -> str:
 	rtlil_text = rtlil.convert(*args, **kwargs)
 	return _convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1)
