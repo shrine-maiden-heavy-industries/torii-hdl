@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
-from typing             import Tuple
+from typing             import Tuple, Union
 
 from .._toolchain.yosys import find_yosys, YosysError
 from ..hdl              import ir, ast
@@ -51,7 +51,7 @@ def convert_fragment(*args, strip_internal_attrs : bool = False, **kwargs) -> Tu
 
 
 def convert(
-	elaboratable, name : str = 'top', platform = None, ports = None,
+	elaboratable : Union[ir.Fragment, ir.Elaboratable], name : str = 'top', platform = None, ports = None,
 	*, emit_src : bool = True, strip_internal_attrs : bool = False, **kwargs
 ) -> str:
 	# TODO(amaranth-0.4): remove
