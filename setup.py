@@ -64,6 +64,9 @@ setup(
 		'remote-build': [
 			'paramiko~=2.7'
 		],
+		'dev': [
+			'nox'
+		],
 	},
 
 	packages         = find_packages(
