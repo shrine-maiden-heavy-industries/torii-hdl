@@ -12,7 +12,7 @@ __all__ = (
 	'FIFOInterface',
 	'SyncFIFO',
 	'SyncFIFOBuffered',
-	'AsyncFIFO"'
+	'AsyncFIFO',
 	'AsyncFIFOBuffered',
 )
 

@@ -3,7 +3,7 @@
 from .core import *
 
 __all__ = (
-	'Settle"'
+	'Settle',
 	'Delay',
 	'Tick',
 	'Passive',

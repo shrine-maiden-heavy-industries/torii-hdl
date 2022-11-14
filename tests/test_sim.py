@@ -1,3 +1,5 @@
+# torii: UnusedElaboratable=no
+
 import os
 from contextlib import contextmanager
 

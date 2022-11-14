@@ -221,7 +221,7 @@ class RecordTestCase(FHDLTestCase):
 
         # __bool__
         with self.assertRaisesRegex(TypeError,
-                r"^Attempted to convert Amaranth value to Python boolean$"):
+                r"^Attempted to convert Torii value to Python boolean$"):
             not r1
 
         # __invert__, __neg__

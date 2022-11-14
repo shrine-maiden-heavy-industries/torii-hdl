@@ -336,7 +336,7 @@ class _LHSValueCompiler(_ValueCompiler):
 			gen_index = self.emitter.def_var('index', f'{self.rrhs(value.index)} & {index_mask:#x}')
 			if value.elems:
 				if _USE_PATTERN_MATCHING:
-					self.emitter.append(f'match {gen_index}:"')
+					self.emitter.append(f'match {gen_index}:')
 					with self.emitter.indent():
 						for index, elem in enumerate(value.elems):
 							self.emitter.append(f'case {index}:')

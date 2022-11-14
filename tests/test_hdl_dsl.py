@@ -1,4 +1,4 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 from collections import OrderedDict
 from enum import Enum

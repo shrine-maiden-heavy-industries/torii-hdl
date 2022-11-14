@@ -311,7 +311,7 @@ class Fragment:
 
 			names = [n for f, n, i in subfrags]
 			if not all(names):
-				names = sorted(f'<unnamed #{i}>' if n is None else '\'{n}\'' for f, n, i in subfrags)
+				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
 				raise DomainError(f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\'; '
 								  'it is necessary to either rename subfragment domains '
 								  'explicitly, or give names to subfragments')
@@ -369,7 +369,7 @@ class Fragment:
 					defined = new_fragment.domains.keys()
 					raise DomainError(
 						'Fragment returned by missing domain callback does not define '
-						f'requested domain \'{domain_name}\' (defines {", ".join("\'{}\'".format(n) for n in defined)}).')
+						f'requested domain \'{domain_name}\' (defines {", ".join("`{}`".format(n) for n in defined)}).')
 				self.add_subfragment(new_fragment, f'cd_{domain_name}')
 				self.add_domains(new_fragment.domains.values())
 		return new_domains

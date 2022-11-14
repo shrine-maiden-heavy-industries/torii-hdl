@@ -416,7 +416,7 @@ class _ValueCompiler(xfrm.ValueVisitor):
 		if value.start == value.stop:
 			return '{}'
 		elif value.start + 1 == value.stop:
-			return '{sigspec} [{value.start}]'
+			return f'{sigspec} [{value.start}]'
 		else:
 			return f'{sigspec} [{value.stop - 1}:{value.start}]'
 

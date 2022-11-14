@@ -172,7 +172,7 @@ class Subsignal:
 				else:
 					raise TypeError(f'Clock constraint can only be applied to Pins or DiffPairs, not {self.ios[-1]!r}')
 			else:
-				raise TypeError('Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, not {arg!r}')
+				raise TypeError(f'Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, not {arg!r}')
 
 	def _content_repr(self) -> str:
 		parts = []

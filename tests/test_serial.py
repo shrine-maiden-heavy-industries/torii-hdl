@@ -1,11 +1,11 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 import unittest
 
 from torii import *
 from torii.lib.fifo import SyncFIFO
 from torii.lib.io import pin_layout
-from torii.back.pysim import *
+from torii.sim import *
 
 from torii.lib.stdio.serial import *
 

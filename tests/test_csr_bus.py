@@ -1,9 +1,9 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 import unittest
 from torii import *
 from torii.hdl.rec import Layout
-from torii.back.pysim import *
+from torii.sim import *
 
 from torii.lib.soc.csr.bus import *
 from torii.lib.soc.memory import MemoryMap
@@ -57,7 +57,7 @@ class ElementTestCase(unittest.TestCase):
 
     def test_access_wrong(self):
         with self.assertRaisesRegex(ValueError,
-                r"Access mode must be one of \"r\", \"w\", or \"rw\", not 'wo'"):
+                r"Access mode must be one of \'r\', \'w\', or \'rw\', not 'wo'"):
             Element(width=1, access="wo")
 
 

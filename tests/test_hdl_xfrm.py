@@ -1,4 +1,4 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 import warnings
 

@@ -109,7 +109,7 @@ class PyCoroProcess(BaseProcess):
                     self.passive = False
 
                 elif command is None: # only possible if self.default_cmd is None
-                    raise TypeError(f'Received default command from process {self.src_loc(!r} that was added '
+                    raise TypeError(f'Received default command from process {self.src_loc()!r} that was added '
                                     'with add_process(); did you mean to add this process with '
                                     'add_sync_process() instead?')
 

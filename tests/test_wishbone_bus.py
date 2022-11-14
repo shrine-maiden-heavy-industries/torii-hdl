@@ -1,9 +1,9 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 import unittest
 from torii import *
 from torii.hdl.rec import *
-from torii.back.pysim import *
+from torii.sim import *
 
 from torii.lib.soc.wishbone.bus import *
 from torii.lib.soc.memory import MemoryMap

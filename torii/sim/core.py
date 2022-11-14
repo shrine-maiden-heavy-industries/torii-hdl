@@ -128,7 +128,7 @@ class Simulator:
 		elif if_exists:
 			return
 		else:
-			raise ValueError('Domain {domain!r} is not present in simulation')
+			raise ValueError(f'Domain {domain!r} is not present in simulation')
 		if domain in self._clocked:
 			raise ValueError(f'Domain {domain.name!r} already has a clock driving it')
 

@@ -71,7 +71,7 @@ class Memory:
 	def init(self, new_init):
 		self._init = [] if new_init is None else list(new_init)
 		if len(self.init) > self.depth:
-			raise ValueError(f'Memory initialization value count exceed memory depth ({len(self.init)} > {self.dept})')
+			raise ValueError(f'Memory initialization value count exceed memory depth ({len(self.init)} > {self.depth})')
 
 		try:
 			for addr in range(len(self._array)):

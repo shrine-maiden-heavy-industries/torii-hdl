@@ -1,4 +1,4 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 from collections import OrderedDict
 
@@ -322,7 +322,7 @@ class FragmentPortsTestCase(FHDLTestCase):
             f.prepare(ports=1)
         with self.assertRaisesRegex(TypeError,
                 (r"^`ports` must be either a list or a tuple, not \(const 1'd1\)"
-                    r" \(did you mean `ports=\(<signal>,\)`, rather than `ports=<signal>`\?\)$")):
+                    r" \(did you mean `ports = \(<signal>,\)`, rather than `ports = <signal>`\?\)$")):
             f.prepare(ports=Const(1))
 
 class FragmentDomainsTestCase(FHDLTestCase):
@@ -555,7 +555,7 @@ class FragmentDomainsTestCase(FHDLTestCase):
 
         with self.assertRaisesRegex(DomainError,
                 (r"^Fragment returned by missing domain callback does not define requested "
-                    r"domain 'sync' \(defines 'foo'\)\.$")):
+                    r"domain 'sync' \(defines `foo`\)\.$")):
             f1._propagate_domains(missing_domain=lambda name: f2)
 
 
@@ -796,14 +796,14 @@ class InstanceTestCase(FHDLTestCase):
         s = Signal()
         with self.assertRaisesRegex(NameError,
                 (r"^Instance argument \('', 's1', \(sig s\)\) should be a tuple "
-                    r"\(kind, name, value\) where kind is one of \"a\", \"p\", \"i\", \"o\", or \"io\"$")):
+                    r"\(kind, name, value\) where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\'$")):
             Instance("foo", ("", "s1", s))
 
     def test_wrong_construct_kwarg(self):
         s = Signal()
         with self.assertRaisesRegex(NameError,
-                (r"^Instance keyword argument x_s1=\(sig s\) does not start with one of "
-                    r"\"a_\", \"p_\", \"i_\", \"o_\", or \"io_\"$")):
+                (r"^Instance keyword argument x_s1 = \(sig s\) does not start with one of "
+                    r"\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\'$")):
             Instance("foo", x_s1=s)
 
     def setUp_cpu(self):

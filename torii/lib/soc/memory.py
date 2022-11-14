@@ -308,7 +308,7 @@ class MemoryMap:
 		if not isinstance(name, str) or not name:
 			raise TypeError(f'Name must be a non-empty string, not {name!r}')
 		if name in self._namespace:
-			raise ValueError(f'Name {anem} is already used by {self._namespace[name]!r}')
+			raise ValueError(f'Name {name} is already used by {self._namespace[name]!r}')
 
 		if alignment is not None:
 			if not isinstance(alignment, int) or alignment < 0:

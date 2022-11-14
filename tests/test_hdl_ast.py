@@ -141,7 +141,7 @@ class ShapeTestCase(FHDLTestCase):
 
     def test_cast_bad(self):
         with self.assertRaisesRegex(TypeError,
-                r"^Object 'foo' cannot be converted to an Amaranth shape$"):
+                r"^Object 'foo' cannot be converted to a Torii shape$"):
             Shape.cast("foo")
 
 
@@ -188,7 +188,7 @@ class ValueTestCase(FHDLTestCase):
         c = Const(0)
         self.assertIs(Value.cast(c), c)
         with self.assertRaisesRegex(TypeError,
-                r"^Object 'str' cannot be converted to an Amaranth value$"):
+                r"^Object 'str' cannot be converted to a Torii value$"):
             Value.cast("str")
 
     def test_cast_enum(self):
@@ -206,7 +206,7 @@ class ValueTestCase(FHDLTestCase):
 
     def test_bool(self):
         with self.assertRaisesRegex(TypeError,
-                r"^Attempted to convert Amaranth value to Python boolean$"):
+                r"^Attempted to convert Torii value to Python boolean$"):
             if Const(0):
                 pass
 
@@ -773,7 +773,7 @@ class CatTestCase(FHDLTestCase):
 
     def test_str_wrong(self):
         with self.assertRaisesRegex(TypeError,
-                r"^Object 'foo' cannot be converted to an Amaranth value$"):
+                r"^Object 'foo' cannot be converted to a Torii value$"):
             Cat("foo")
 
     def test_int_01(self):

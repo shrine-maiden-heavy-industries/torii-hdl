@@ -114,7 +114,7 @@ class Shape:
 			elif isinstance(obj, ShapeCastable):
 				new_obj = obj.as_shape()
 			else:
-				raise TypeError(f'Object {obj!r} cannot be converted to an Torii shape')
+				raise TypeError(f'Object {obj!r} cannot be converted to a Torii shape')
 			if new_obj is obj:
 				raise RecursionError(f'Shape-castable object {obj!r} casts to itself')
 			obj = new_obj
@@ -170,7 +170,7 @@ class Value(metaclass=ABCMeta):
 			elif isinstance(obj, ValueCastable):
 				new_obj = obj.as_value()
 			else:
-				raise TypeError(f'Object {obj!r} cannot be converted to an Torii value')
+				raise TypeError(f'Object {obj!r} cannot be converted to a Torii value')
 			if new_obj is obj:
 				raise RecursionError(f'Value-castable object {obj!r} casts to itself')
 			obj = new_obj
@@ -425,7 +425,7 @@ class Value(metaclass=ABCMeta):
 				raise SyntaxError(f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may include whitespace')
 			if (isinstance(pattern, str) and
 					len("".join(pattern.split())) != len(self)):
-				raise SyntaxError(f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)}')
+				raise SyntaxError(f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)})')
 
 			if isinstance(pattern, int) and bits_for(pattern) > len(self):
 				warnings.warn(f'Match pattern \'{pattern:b}\' is wider than match value (which has width {len(self)}); comparison will never be true',
@@ -525,7 +525,7 @@ class Value(metaclass=ABCMeta):
 			If the amount is positive, the input rotated right. Otherwise, the input rotated right.
 		'''
 		if not isinstance(amount, int):
-			raise TypeError('Rotate amount must be an integer, not {amount!r}')
+			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
 		amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
@@ -1459,7 +1459,7 @@ class Property(Statement, MustUse):
 			self._check = Signal(reset_less = True, name = f'${self._kind}$check')
 			self._check.src_loc = self.src_loc
 		if _en is None:
-			self._en = Signal(reset_less = True, name = f'${self._king}$en')
+			self._en = Signal(reset_less = True, name = f'${self._kind}$en')
 			self._en.src_loc = self.src_loc
 
 	def _lhs_signals(self):

@@ -1,8 +1,8 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 import unittest
 from torii import *
-from torii.back.pysim import *
+from torii.sim import *
 
 from torii.lib.soc.event import *
 

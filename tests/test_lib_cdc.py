@@ -1,4 +1,4 @@
-# amaranth: UnusedElaboratable=no
+# torii: UnusedElaboratable=no
 
 from torii.hdl import *
 from torii.sim import *

@@ -41,7 +41,7 @@ def test(session: nox.Session) -> None:
 	session.install('.')
 	session.run(
 		'python', '-m', 'unittest', 'discover',
-		'-s', 'tests'
+		'-s', '.'
 	)
 
 @nox.session
