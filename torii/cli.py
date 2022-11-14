@@ -1,18 +1,20 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import argparse
+from argparse import ArgumentParser, FileType, Namespace
+from typing   import Optional, Union, Tuple
 
-from .hdl.ir import Fragment
-from .back   import rtlil, cxxrtl, verilog
-from .sim    import Simulator
+from .hdl.ir  import Fragment, Elaboratable, Signal
+from .build   import Platform
+from .back    import rtlil, cxxrtl, verilog
+from .sim     import Simulator
 
 __all__ = (
 	'main',
 )
 
-def main_parser(parser = None):
+def main_parser(parser : Optional[ArgumentParser] = None) -> ArgumentParser:
 	if parser is None:
-		parser = argparse.ArgumentParser()
+		parser = ArgumentParser()
 
 	p_action = parser.add_subparsers(dest = 'action')
 
@@ -37,7 +39,7 @@ def main_parser(parser = None):
 	p_generate.add_argument(
 		'generate_file',
 		metavar = 'FILE',
-		type    = argparse.FileType('w'),
+		type    = FileType('w'),
 		nargs   = '?',
 		help    = 'write generated code to FILE'
 	)
@@ -49,13 +51,13 @@ def main_parser(parser = None):
 	p_simulate.add_argument(
 		'-v', '--vcd-file',
 		metavar = 'VCD-FILE',
-		type    = argparse.FileType('w'),
+		type    = FileType('w'),
 		help    = 'write execution trace to VCD-FILE'
 	)
 	p_simulate.add_argument(
 		'-w', '--gtkw-file',
 		metavar = 'GTKW-FILE',
-		type    = argparse.FileType('w'),
+		type    = FileType('w'),
 		help    = 'write GTKWave configuration to GTKW-FILE'
 	)
 	p_simulate.add_argument(
@@ -78,7 +80,10 @@ def main_parser(parser = None):
 	return parser
 
 
-def main_runner(parser, args, design, platform = None, name = 'top', ports = ()):
+def main_runner(
+	parser : ArgumentParser, args : Namespace, design : Union[Fragment, Elaboratable],
+	platform : Platform = None, name : str = 'top', ports : Tuple[Signal] = ()
+) -> None:
 	if args.action == 'generate':
 		fragment = Fragment.get(design, platform)
 		generate_type = args.generate_type
@@ -110,6 +115,6 @@ def main_runner(parser, args, design, platform = None, name = 'top', ports = ())
 			sim.run_until(args.sync_period * args.sync_clocks, run_passive = True)
 
 
-def main(*args, **kwargs):
+def main(*args, **kwargs) -> None:
 	parser = main_parser()
 	main_runner(parser, parser.parse_args(), *args, **kwargs)
