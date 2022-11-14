@@ -5,7 +5,7 @@ __all__ = (
 	'bits_for',
 )
 
-def log2_int(n, need_pow2 = True):
+def log2_int(n : int, need_pow2 : bool = True) -> int:
 	if n == 0:
 		return 0
 	r = (n - 1).bit_length()
@@ -14,7 +14,7 @@ def log2_int(n, need_pow2 = True):
 	return r
 
 
-def bits_for(n, require_sign_bit = False):
+def bits_for(n : int, require_sign_bit : bool = False) -> int:
 	if n > 0:
 		r = log2_int(n + 1, False)
 	else:
