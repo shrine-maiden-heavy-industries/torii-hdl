@@ -8,6 +8,8 @@ import re
 
 from collections     import OrderedDict
 from collections.abc import Iterable
+from typing          import Union, Type, Dict
+
 
 from .utils import *
 
@@ -45,6 +47,7 @@ def union(i, start = None):
 
 def memoize(f):
 	memo = OrderedDict()
+
 	@functools.wraps(f)
 	def g(*args):
 		if args not in memo:
@@ -60,7 +63,7 @@ def final(cls):
 	return cls
 
 
-def deprecated(message, stacklevel = 2):
+def deprecated(message : str, stacklevel : int = 2):
 	def decorator(f):
 		@functools.wraps(f)
 		def wrapper(*args, **kwargs):
@@ -70,7 +73,7 @@ def deprecated(message, stacklevel = 2):
 	return decorator
 
 
-def _ignore_deprecated(f=None):
+def _ignore_deprecated(f = None):
 	if f is None:
 		@contextlib.contextmanager
 		def context_like():
@@ -97,7 +100,7 @@ def extend(cls):
 	return decorator
 
 
-def get_linter_options(filename):
+def get_linter_options(filename : str) -> Dict[str, Union[int, str]]:
 	first_line = linecache.getline(filename, 1)
 	if first_line:
 		match = re.match(r'^#\s*amaranth:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$', first_line)
@@ -111,7 +114,9 @@ def get_linter_options(filename):
 	return dict()
 
 
-def get_linter_option(filename, name, type, default):
+def get_linter_option(
+	filename : str , name : str, type : Union[Type[bool], Type[int]], default : Union[bool, int]
+) -> Union[bool, int]:
 	options = get_linter_options(filename)
 	if name not in options:
 		return default
