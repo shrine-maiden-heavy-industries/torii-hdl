@@ -1,0 +1,49 @@
+name: "Torii Tests"
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request: {}
+
+jobs:
+  test-torii:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ '3.9', '3.10', '3.11', ]
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Initialize Env
+        shell: bash
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: |
+          echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
+          echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup OSS CAD Suite
+        uses: YosysHQ/setup-oss-cad-suite@v1
+
+      - name: Setup
+        shell: bash
+        run: |
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys FA8E1301F4D3932C
+          sudo add-apt-repository 'deb http://ppa.launchpad.net/sri-csl/formal-methods/ubuntu bionic main'
+          sudo apt-get update
+          sudo pip3 install --upgrade pip setuptools wheel setuptools_scm nox
+          sudo apt-get install yices2
+
+      - name: Run Tests
+        shell: bash
+        run: |
+          nox -s test
