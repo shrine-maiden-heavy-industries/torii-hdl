@@ -2,6 +2,7 @@
 
 import sys
 from opcode import opname
+from typing import Union, Tuple, Optional
 
 __all__ = (
 	'NameNotFound',
@@ -14,7 +15,7 @@ class NameNotFound(Exception):
 
 _raise_exception = object()
 
-def get_var_name(depth = 2, default = _raise_exception):
+def get_var_name(depth : int = 2, default : Optional[Union[str, object]] = _raise_exception) -> Union[str, object]:
 	frame = sys._getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
@@ -43,8 +44,10 @@ def get_var_name(depth = 2, default = _raise_exception):
 			if sys.version_info >= (3, 11):
 				name_index -= code.co_nlocals
 			return code.co_cellvars[name_index]
-		elif opc in ('LOAD_GLOBAL', 'LOAD_NAME', 'LOAD_ATTR', 'LOAD_FAST', 'LOAD_DEREF',
-					 'DUP_TOP', 'BUILD_LIST', 'CACHE', 'COPY'):
+		elif opc in (
+			'LOAD_GLOBAL', 'LOAD_NAME', 'LOAD_ATTR', 'LOAD_FAST',
+			'LOAD_DEREF', 'DUP_TOP', 'BUILD_LIST', 'CACHE', 'COPY'
+		):
 			index += 2
 		else:
 			if default is _raise_exception:
@@ -53,7 +56,7 @@ def get_var_name(depth = 2, default = _raise_exception):
 				return default
 
 
-def get_src_loc(src_loc_at = 0):
+def get_src_loc(src_loc_at : int = 0) -> Tuple[str, int]:
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
