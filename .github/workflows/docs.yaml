@@ -30,12 +30,12 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo pip3 install --upgrade pip setuptools wheel setuptools_scm nox
+          python -m pip install --user --upgrade pip setuptools wheel setuptools_scm nox
 
       - name: Build Docs
         shell: bash
         run: |
-          nox -s build_docs
+          nox -s docs
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
