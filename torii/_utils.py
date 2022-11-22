@@ -101,16 +101,23 @@ def extend(cls):
 
 
 def get_linter_options(filename : str) -> Dict[str, Union[int, str]]:
-	first_line = linecache.getline(filename, 1)
-	if first_line:
-		match = re.match(r'^#\s*amaranth:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$', first_line)
-		if match:
+	# Check the first five lines of the file
+	magic_comments = (
+		re.compile(r'^#\s*amaranth:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$'),
+		re.compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$'),
+	)
+
+	lines = linecache.getlines(filename)[0:5]
+	if len(lines) > 0:
+		matches = list(filter(lambda m: m is not None, map(magic_comments[0].match, lines)))
+		if len(matches) > 0:
 			warnings.warn_explicit('Use `# torii:` annotation instead of `# amaranth:`',
 				DeprecationWarning, filename, 1)
 		else:
-			match = re.match(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$', first_line)
-		if match:
-			return dict(map(lambda s: s.strip().split('=', 2), match.group(1).split(',')))
+			matches = list(filter(lambda m: m is not None, map(magic_comments[1].match, lines)))
+
+		if len(matches) > 0:
+			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))
 	return dict()
 
 
