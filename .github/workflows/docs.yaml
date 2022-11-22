@@ -1,4 +1,4 @@
-name: "Torii Docs"
+name: "Torii-HDL Docs"
 on:
   push:
     branches:

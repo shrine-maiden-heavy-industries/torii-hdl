@@ -1,4 +1,4 @@
-name: "Torii Tests"
+name: "Torii-HDL Tests"
 on:
   push:
     branches:
