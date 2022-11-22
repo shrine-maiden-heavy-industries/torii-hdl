@@ -38,8 +38,14 @@ def doc_version():
 setup(
 	name             = 'torii-hdl',
 	use_scm_version  = scm_version(),
-	author           = '',
-	author_email     = '',
+	author           = ', '.join([
+		'Aki Van Ness',
+		'Rachel Mant',
+	]),
+	author_email     = ', '.join([
+		'aki@lethalbit.net',
+		'git@dragonmux.network',
+	]),
 	description      = 'Torii hardware definition language',
 	license          = ' BSD-2-Clause',
 	python_requires  = '~=3.9',
