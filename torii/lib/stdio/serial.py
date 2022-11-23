@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ...      import *
+from typing   import Literal, Optional, Union, List, Tuple
+
+from ...      import Elaboratable, Module, Signal, Const, Record, Cat
 from ..cdc    import FFSynchronizer
+from ..io     import Pin
 from ...utils import bits_for
 
 __all__ = (
@@ -11,24 +14,26 @@ __all__ = (
 )
 
 
-def _check_divisor(divisor, bound):
+def _check_divisor(divisor : int, bound : int):
 	if divisor < bound:
 		raise ValueError(f'Invalid divisor {divisor!r}; must be greater than or equal to {bound}')
 
 
-def _check_parity(parity):
+def _check_parity(parity : Literal['none', 'mark', 'space', 'even', 'odd']):
 	choices = ( 'none', 'mark', 'space', 'even', 'odd' )
 	if parity not in choices:
 		raise ValueError(f'Invalid parity {parity!r}; must be one of {", ".join(choices)}')
 
 
-def _compute_parity_bit(data, parity):
+def _compute_parity_bit(
+	data : Record , parity : Literal['none', 'mark', 'space', 'even', 'odd']
+) -> Union[Const, Record, bool]:
 	if parity == 'none':
-		return C(0, 0)
+		return Const(0, 0)
 	if parity == 'mark':
-		return C(1, 1)
+		return Const(1, 1)
 	if parity == 'space':
-		return C(0, 1)
+		return Const(0, 1)
 	if parity == 'even':
 		return data.xor()
 	if parity == 'odd':
@@ -36,7 +41,9 @@ def _compute_parity_bit(data, parity):
 	assert False
 
 
-def _wire_layout(data_bits, parity = 'none'):
+def _wire_layout(
+	data_bits : int, parity : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none'
+) -> List[Tuple[str, int]]:
 	return [
 		('start',  1),
 		('data',   data_bits),
@@ -80,7 +87,11 @@ class AsyncSerialRX(Elaboratable):
 	i : Signal, in
 		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
 	'''
-	def __init__(self, *, divisor, divisor_bits  =None, data_bits = 8, parity = 'none', pins = None):
+	def __init__(
+		self, *, divisor : int, divisor_bits : Optional[int] = None, data_bits : int = 8,
+		parity : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
+		pins : Optional[Pin] = None
+	) -> None:
 		_check_parity(parity)
 		self._parity = parity
 
@@ -102,7 +113,7 @@ class AsyncSerialRX(Elaboratable):
 
 		self._pins = pins
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		timer = Signal.like(self.divisor)
@@ -138,8 +149,9 @@ class AsyncSerialRX(Elaboratable):
 					m.d.sync += [
 						self.data.eq(shreg.data),
 						self.err.frame .eq(~((shreg.start == 0) & (shreg.stop == 1))),
-						self.err.parity.eq(~(shreg.parity ==
-											 _compute_parity_bit(shreg.data, self._parity))),
+						self.err.parity.eq(~(
+							shreg.parity == _compute_parity_bit(shreg.data, self._parity)
+						)),
 					]
 				m.d.sync += self.err.overflow.eq(~self.ack)
 				m.next = 'IDLE'
@@ -179,7 +191,11 @@ class AsyncSerialTX(Elaboratable):
 	o : Signal, out
 		Serial output. If ``pins`` has been specified, it drives ``pins.tx.o``.
 	'''
-	def __init__(self, *, divisor, divisor_bits = None, data_bits = 8, parity = 'none', pins = None):
+	def __init__(
+		self, *, divisor : int, divisor_bits : Optional[int] = None, data_bits : int = 8,
+		parity  : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
+		pins : Optional[Pin] = None
+	) -> None:
 		_check_parity(parity)
 		self._parity = parity
 
@@ -194,7 +210,7 @@ class AsyncSerialTX(Elaboratable):
 
 		self._pins = pins
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		timer = Signal.like(self.divisor)
@@ -258,13 +274,15 @@ class AsyncSerial(Elaboratable):
 	tx : :class:`AsyncSerialTX`
 		See :class:`AsyncSerialTX`.
 	'''
-	def __init__(self, *, divisor, divisor_bits = None, **kwargs):
+	def __init__(
+		self, *, divisor : int, divisor_bits : Optional[int] = None, **kwargs
+	) -> None:
 		self.divisor = Signal(divisor_bits or bits_for(divisor), reset = divisor)
 
 		self.rx = AsyncSerialRX(divisor = divisor, divisor_bits = divisor_bits, **kwargs)
 		self.tx = AsyncSerialTX(divisor = divisor, divisor_bits = divisor_bits, **kwargs)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.submodules.rx = self.rx
 		m.submodules.tx = self.tx
