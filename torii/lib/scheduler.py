@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .. import *
-
+from ..      import Elaboratable, Signal, Module
 
 __all__ = (
 	'RoundRobin',
@@ -36,7 +35,7 @@ class RoundRobin(Elaboratable):
 		Asserted if grant corresponds to an active request. Deasserted
 		otherwise, i.e. if no requests are active.
 	'''
-	def __init__(self, *, count):
+	def __init__(self, *, count : int) -> None:
 		if not isinstance(count, int) or count < 0:
 			raise ValueError(f'Count must be a non-negative integer, not {count!r}')
 		self.count    = count
@@ -45,7 +44,7 @@ class RoundRobin(Elaboratable):
 		self.grant    = Signal(range(count))
 		self.valid    = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		with m.Switch(self.grant):
