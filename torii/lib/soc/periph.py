@@ -2,12 +2,12 @@
 
 from collections     import OrderedDict
 from collections.abc import Mapping
+from typing          import Optional, Dict, Generator
 
 from ...utils        import bits_for
 
 from .memory         import MemoryMap
 from .               import event
-
 
 __all__ = (
 	'ConstantValue',
@@ -30,16 +30,16 @@ class ConstantBool(ConstantValue):
 	value : bool
 		Constant value.
 	'''
-	def __init__(self, value):
+	def __init__(self, value : bool) -> None:
 		if not isinstance(value, bool):
 			raise TypeError(f'Value must be a bool, not {value!r}')
 		self._value = value
 
 	@property
-	def value(self):
+	def value(self) -> bool:
 		return self._value
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'ConstantBool({self.value})'
 
 
@@ -55,7 +55,9 @@ class ConstantInt(ConstantValue):
 	signed : bool
 		Signedness. Optional. ``value < 0`` by default.
 	'''
-	def __init__(self, value, *, width=None, signed=None):
+	def __init__(
+		self, value : int, *, width : Optional[int] = None, signed : Optional[bool] = None
+	) -> None:
 		if not isinstance(value, int):
 			raise TypeError(f'Value must be an integer, not {value!r}')
 		self._value = value
@@ -75,18 +77,18 @@ class ConstantInt(ConstantValue):
 		self._signed = signed
 
 	@property
-	def value(self):
+	def value(self) -> int:
 		return self._value
 
 	@property
-	def width(self):
+	def width(self) -> int:
 		return self._width
 
 	@property
-	def signed(self):
+	def signed(self) -> bool:
 		return self._signed
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'ConstantInt({self.value}, width={self.width}, signed={self.signed})'
 
 
@@ -105,7 +107,7 @@ class ConstantMap(Mapping):
 	>>> ConstantMap(RX_FIFO_DEPTH=16)
 	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width=5, signed=False))])
 	'''
-	def __init__(self, **constants):
+	def __init__(self, **constants : Dict[str, ConstantValue]) -> None:
 		self._storage = OrderedDict()
 		for key, value in constants.items():
 			if isinstance(value, bool):
@@ -116,16 +118,16 @@ class ConstantMap(Mapping):
 				raise TypeError(f'Constant value must be an instance of ConstantValue, not {value!r}')
 			self._storage[key] = value
 
-	def __getitem__(self, key):
+	def __getitem__(self, key) -> ConstantValue:
 		return self._storage[key]
 
-	def __iter__(self):
+	def __iter__(self) -> Generator[ConstantValue, None, None]:
 		yield from self._storage
 
-	def __len__(self):
+	def __len__(self) -> int:
 		return len(self._storage)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'ConstantMap({list(self._storage.items())})'
 
 
@@ -144,7 +146,10 @@ class PeripheralInfo:
 	constant_map : :class:`ConstantMap`
 		Constant map of the peripheral. Optional.
 	'''
-	def __init__(self, *, memory_map, irq = None, constant_map = None):
+	def __init__(
+		self, *, memory_map : MemoryMap, irq : Optional[event.Source] = None,
+		constant_map : Optional[ConstantMap] = None
+	) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')
 		memory_map.freeze()
@@ -161,7 +166,7 @@ class PeripheralInfo:
 		self._constant_map = constant_map
 
 	@property
-	def memory_map(self):
+	def memory_map(self) -> MemoryMap:
 		'''Memory map.
 
 		Return value
@@ -171,7 +176,7 @@ class PeripheralInfo:
 		return self._memory_map
 
 	@property
-	def irq(self):
+	def irq(self) -> event.Source:
 		'''IRQ line.
 
 		Return value
@@ -188,7 +193,7 @@ class PeripheralInfo:
 		return self._irq
 
 	@property
-	def constant_map(self):
+	def constant_map(self) -> ConstantMap:
 		'''Constant map.
 
 		Return value

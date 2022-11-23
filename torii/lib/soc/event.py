@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import enum
-from collections import OrderedDict
 
-from ...         import *
+from collections import OrderedDict
+from enum        import Enum
+from typing      import Optional, Tuple, Generator
+
+from ...         import Record, Elaboratable, Module, Signal
 
 __all__ = (
 	'Source',
@@ -13,7 +15,7 @@ __all__ = (
 
 
 class Source(Record):
-	class Trigger(enum.Enum):
+	class Trigger(Enum):
 		'''Event trigger mode.'''
 		LEVEL = 'level'
 		RISE  = 'rise'
@@ -35,7 +37,9 @@ class Source(Record):
 	trg : Signal()
 		Event trigger. Asserted when an event occurs, according to the trigger mode.
 	'''
-	def __init__(self, *, trigger = 'level', name = None, src_loc_at = 0):
+	def __init__(
+		self, *, trigger : Trigger = 'level', name : Optional[str] = None, src_loc_at : int = 0
+	) -> None:
 		choices = ("level", 'rise', 'fall')
 		if not isinstance(trigger, Source.Trigger) and trigger not in choices:
 			raise ValueError(f'Invalid trigger mode {trigger!r}; must be one of {", ".join(choices)}')
@@ -48,7 +52,7 @@ class Source(Record):
 		], name = name, src_loc_at = 1 + src_loc_at)
 
 	@property
-	def event_map(self):
+	def event_map(self) -> 'EventMap':
 		'''Event map.
 
 		Return value
@@ -64,7 +68,7 @@ class Source(Record):
 		return self._map
 
 	@event_map.setter
-	def event_map(self, event_map):
+	def event_map(self, event_map : 'EventMap') -> None:
 		if not isinstance(event_map, EventMap):
 			raise TypeError(f'Event map must be an instance of EventMap, not {event_map!r}')
 		event_map.freeze()
@@ -81,12 +85,12 @@ class EventMap:
 	and can be queried later to determine their index. Event indexing is done implicitly by
 	increment, starting at 0.
 	'''
-	def __init__(self):
+	def __init__(self) -> None:
 		self._sources = OrderedDict()
 		self._frozen  = False
 
 	@property
-	def size(self):
+	def size(self) -> int:
 		'''Size of the event map.
 
 		Return value
@@ -95,14 +99,14 @@ class EventMap:
 		'''
 		return len(self._sources)
 
-	def freeze(self):
+	def freeze(self) -> None:
 		'''Freeze the event map.
 
 		Once the event map is frozen, sources cannot be added anymore.
 		'''
 		self._frozen = True
 
-	def add(self, src):
+	def add(self, src : Source) -> None:
 		'''Add an event source.
 
 		Arguments
@@ -121,7 +125,7 @@ class EventMap:
 		if src not in self._sources:
 			self._sources[src] = self.size
 
-	def index(self, src):
+	def index(self, src : Source) -> int:
 		'''Get the index corresponding to an event source.
 
 		Arguments
@@ -141,7 +145,7 @@ class EventMap:
 			raise TypeError(f'Event source must be an instance of event.Source, not {src!r}')
 		return self._sources[src]
 
-	def sources(self):
+	def sources(self) -> Generator[Tuple[Source, int], None, None]:
 		'''Iterate event sources.
 
 		Yield values
@@ -149,7 +153,7 @@ class EventMap:
 		A tuple ``src, index`` corresponding to an event source and its index.
 		'''
 		for src, index in self._sources.items():
-			yield src, index
+			yield (src, index)
 
 
 class Monitor(Elaboratable):
@@ -175,7 +179,7 @@ class Monitor(Elaboratable):
 	clear : Signal(event_map.size), bit mask, in
 		Clear selected pending events.
 	'''
-	def __init__(self, event_map, *, trigger = 'level'):
+	def __init__(self, event_map : EventMap, *, trigger : Source.Trigger = 'level') -> None:
 		self.src = Source(trigger = trigger)
 		self.src.event_map = event_map
 
@@ -183,7 +187,7 @@ class Monitor(Elaboratable):
 		self.pending = Signal(event_map.size)
 		self.clear   = Signal(event_map.size)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		for sub, index in self.src.event_map.sources():
@@ -194,7 +198,7 @@ class Monitor(Elaboratable):
 			if sub.trigger == Source.Trigger.LEVEL:
 				m.d.comb += sub.trg.eq(sub.i)
 			elif sub.trigger == Source.Trigger.RISE:
-				m.d.comb += sub.trg.eq(~sub_i_r &  sub.i)
+				m.d.comb += sub.trg.eq(~sub_i_r & sub.i)
 			elif sub.trigger == Source.Trigger.FALL:
 				m.d.comb += sub.trg.eq( sub_i_r & ~sub.i)
 			else:
