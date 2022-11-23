@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .. import *
+from typing  import Optional, Literal
+
+from ..      import Elaboratable, Module, Signal, ClockDomain, ClockSignal, ResetSignal
 
 __all__ = (
 	'FFSynchronizer',
@@ -10,7 +12,7 @@ __all__ = (
 )
 
 
-def _check_stages(stages):
+def _check_stages(stages : int):
 	if not isinstance(stages, int) or stages < 1:
 		raise TypeError(f'Synchronization stage count must be a positive integer, not {stages!r}')
 	if stages < 2:
@@ -66,9 +68,11 @@ class FFSynchronizer(Elaboratable):
 	------------------
 	Define the ``get_ff_sync`` platform method to override the implementation of
 	:class:`FFSynchronizer`, e.g. to instantiate library cells directly.
-	'''
-	def __init__(self, i, o, *, o_domain = 'sync', reset = 0, reset_less = True, stages = 2,
-				 max_input_delay = None):
+	''' # noqa: E101
+	def __init__(
+		self, i : Signal, o : Signal, *, o_domain : str = 'sync', reset : int = 0,
+		reset_less : bool = True, stages : int = 2, max_input_delay : Optional[float] = None
+	) -> None:
 		_check_stages(stages)
 
 		self.i = i
@@ -81,7 +85,7 @@ class FFSynchronizer(Elaboratable):
 
 		self._max_input_delay = max_input_delay
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		if hasattr(platform, 'get_ff_sync'):
 			return platform.get_ff_sync(self)
 
@@ -129,7 +133,10 @@ class AsyncFFSynchronizer(Elaboratable):
 	Define the ``get_async_ff_sync`` platform method to override the implementation of
 	:class:`AsyncFFSynchronizer`, e.g. to instantiate library cells directly.
 	'''
-	def __init__(self, i, o, *, o_domain = 'sync', stages = 2, async_edge = 'pos', max_input_delay = None):
+	def __init__(
+		self, i : Signal, o : Signal, *, o_domain : str = 'sync', stages : int = 2,
+		async_edge : Literal['pos', 'neg'] = 'pos', max_input_delay : Optional[float] = None
+	) -> None:
 		_check_stages(stages)
 
 		if len(i) != 1:
@@ -150,12 +157,14 @@ class AsyncFFSynchronizer(Elaboratable):
 
 		self._max_input_delay = max_input_delay
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		if hasattr(platform, 'get_async_ff_sync'):
 			return platform.get_async_ff_sync(self)
 
 		if self._max_input_delay is not None:
-			raise NotImplementedError(f'Platform \'{type(platform).__name__}\' does not support constraining input delay for AsyncFFSynchronizer')
+			raise NotImplementedError(
+				f'Platform \'{type(platform).__name__}\' does not support constraining input delay for AsyncFFSynchronizer'
+			)
 
 		m = Module()
 		m.domains += ClockDomain('async_ff', async_reset = True, local = True)
@@ -209,7 +218,10 @@ class ResetSynchronizer(Elaboratable):
 	Define the ``get_reset_sync`` platform method to override the implementation of
 	:class:`ResetSynchronizer`, e.g. to instantiate library cells directly.
 	'''
-	def __init__(self, arst, *, domain = 'sync', stages = 2, max_input_delay = None):
+	def __init__(
+		self, arst : Signal, *, domain : str = 'sync', stages : int = 2,
+		max_input_delay : Optional[float] = None
+	) -> None:
 		_check_stages(stages)
 
 		self.arst = arst
@@ -219,7 +231,7 @@ class ResetSynchronizer(Elaboratable):
 
 		self._max_input_delay = max_input_delay
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> AsyncFFSynchronizer:
 		return AsyncFFSynchronizer(
 			self.arst,
 			ResetSignal(self._domain),
@@ -247,7 +259,7 @@ class PulseSynchronizer(Elaboratable):
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased deassertion latency.
 	'''
-	def __init__(self, i_domain, o_domain, *, stages = 2):
+	def __init__(self, i_domain : str, o_domain : str, *, stages : int = 2) -> None:
 		_check_stages(stages)
 
 		self.i = Signal()
@@ -257,14 +269,15 @@ class PulseSynchronizer(Elaboratable):
 		self._o_domain = o_domain
 		self._stages = stages
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		i_toggle = Signal()
 		o_toggle = Signal()
 		r_toggle = Signal()
-		ff_sync = m.submodules.ff_sync = \
-			FFSynchronizer(i_toggle, o_toggle, o_domain = self._o_domain, stages = self._stages)
+		ff_sync = m.submodules.ff_sync = FFSynchronizer(
+			i_toggle, o_toggle, o_domain = self._o_domain, stages = self._stages
+		)
 
 		m.d[self._i_domain] += i_toggle.eq(i_toggle ^ self.i)
 		m.d[self._o_domain] += r_toggle.eq(o_toggle)
