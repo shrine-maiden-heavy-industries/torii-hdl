@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ..        import *
-from ..hdl.rec import *
+from typing    import Literal, Optional
+
+from ..        import Record
+from ..hdl.rec import Layout
 
 __all__ = (
 	'pin_layout',
@@ -9,7 +11,7 @@ __all__ = (
 )
 
 
-def pin_layout(width, dir, xdr = 0):
+def pin_layout(width : int, dir : Literal['i', 'o', 'oe', 'io'], xdr : int = 0) -> Layout:
 	'''
 	Layout of the platform interface of a pin or several pins, which may be used inside
 	user-defined records.
@@ -108,9 +110,15 @@ class Pin(Record):
 		cannot change direction more than once per cycle, so at most one output enable signal
 		is present.
 	'''
-	def __init__(self, width, dir, *, xdr = 0, name = None, src_loc_at = 0):
+	def __init__(
+		self, width : int, dir : Literal['i', 'o', 'oe', 'io'], *,
+		xdr : int = 0, name : Optional[str] = None, src_loc_at : int = 0
+	) -> None:
 		self.width = width
 		self.dir   = dir
 		self.xdr   = xdr
 
-		super().__init__(pin_layout(self.width, self.dir, self.xdr),  name = name, src_loc_at = src_loc_at + 1)
+		super().__init__(
+			pin_layout(self.width, self.dir, self.xdr),
+			name = name, src_loc_at = src_loc_at + 1
+		)
