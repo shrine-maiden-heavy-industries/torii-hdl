@@ -22,7 +22,7 @@ nox.options.sessions = (
 	'mypy'
 )
 
-def usb_construct_version() -> str:
+def torii_version() -> str:
 	def scheme(version: ScmVersion) -> str:
 		if version.tag and not version.distance:
 			return version.format_with('')
@@ -59,13 +59,14 @@ def mypy(session: nox.Session) -> None:
 	session.install('lxml')
 	session.install('.')
 	session.run('mypy', '--non-interactive', '--install-types')
-	session.run('mypy', '-p', 'usb_construct', '--html-report', str(out_dir.resolve()))
+	session.run('mypy', '-p', 'torii', '--html-report', str(out_dir.resolve()))
 
 @nox.session
 def flake8(session: nox.Session) -> None:
 	session.install('flake8')
-	session.run('flake8', './usb_construct')
+	session.run('flake8', './torii')
 	session.run('flake8', './examples')
+	session.run('flake8', './tests')
 
 @nox.session
 def build_dists(session: nox.Session) -> None:
