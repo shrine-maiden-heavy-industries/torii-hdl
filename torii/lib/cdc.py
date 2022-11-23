@@ -275,7 +275,7 @@ class PulseSynchronizer(Elaboratable):
 		i_toggle = Signal()
 		o_toggle = Signal()
 		r_toggle = Signal()
-		ff_sync = m.submodules.ff_sync = FFSynchronizer(
+		ff_sync = m.submodules.ff_sync = FFSynchronizer( # noqa: F841
 			i_toggle, o_toggle, o_domain = self._o_domain, stages = self._stages
 		)
 
