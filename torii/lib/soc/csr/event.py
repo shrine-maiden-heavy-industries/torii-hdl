@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from .... import *
-from .    import Element, Multiplexer
-from ..   import event
+from .      import Element, Multiplexer
+from .bus   import Interface
+from ..     import event
+from ....   import Elaboratable, Module
 
 __all__ = (
 	'EventMonitor',
@@ -31,7 +32,9 @@ class EventMonitor(Elaboratable):
 	trigger : :class:`..event.Source.Trigger`
 		Trigger mode. See :class:`..event.Source`.
 	'''
-	def __init__(self, *, data_width, alignment = 0, trigger = 'level'):
+	def __init__(
+		self, *, data_width : int, alignment : int = 0, trigger : event.Source.Trigger = 'level'
+	) -> None:
 		choices = ('level', 'rise', 'fall')
 		if not isinstance(trigger, event.Source.Trigger) and trigger not in choices:
 			raise ValueError(f'Invalid trigger mode {trigger!r}; must be one of {", ".join(choices)}')
@@ -44,7 +47,7 @@ class EventMonitor(Elaboratable):
 		self._mux     = Multiplexer(addr_width = 1, data_width = data_width, alignment = alignment)
 		self._frozen  = False
 
-	def freeze(self):
+	def freeze(self) -> None:
 		'''Freeze the event monitor.
 
 		Once the event monitor is frozen, subordinate sources cannot be added anymore.
@@ -59,7 +62,7 @@ class EventMonitor(Elaboratable):
 		self._frozen  = True
 
 	@property
-	def src(self):
+	def src(self) -> event.Source:
 		'''Event source.
 
 		Return value
@@ -71,7 +74,7 @@ class EventMonitor(Elaboratable):
 		return self._monitor.src
 
 	@property
-	def bus(self):
+	def bus(self) -> Interface:
 		'''CSR bus interface.
 
 		Return value
@@ -81,14 +84,14 @@ class EventMonitor(Elaboratable):
 		self.freeze()
 		return self._mux.bus
 
-	def add(self, src):
+	def add(self, src : event.Source) -> None:
 		'''Add a subordinate event source.
 
 		See :meth:`..event.EventMap.add` for details.
 		'''
 		self._map.add(src)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		self.freeze()
 
 		m = Module()

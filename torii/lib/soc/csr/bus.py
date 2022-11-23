@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import enum
-from ....      import *
-from ....utils import log2_int
+from enum     import Enum
+from typing   import Optional, Tuple
 
-from ..memory  import MemoryMap
+from ..memory import MemoryMap
+from ....     import Record, Elaboratable, Module, Signal, Mux
 
 __all__ = (
 	'Element',
@@ -14,7 +14,7 @@ __all__ = (
 )
 
 class Element(Record):
-	class Access(enum.Enum):
+	class Access(Enum):
 		'''Register access mode.
 
 		Coarse access mode for the entire register. Individual fields can have more restrictive
@@ -24,10 +24,10 @@ class Element(Record):
 		W  = 'w'
 		RW = 'rw'
 
-		def readable(self):
+		def readable(self) -> bool:
 			return self == self.R or self == self.RW
 
-		def writable(self):
+		def writable(self) -> bool:
 			return self == self.W or self == self.RW
 
 	'''Peripheral-side CSR interface.
@@ -58,7 +58,9 @@ class Element(Record):
 		Write strobe. Registers should update their value or perform the write side effect when
 		this strobe is asserted.
 	'''
-	def __init__(self, width, access, *, name=None, src_loc_at=0):
+	def __init__(
+		self, width : int, access : Access, *, name : Optional[str] = None, src_loc_at : int = 0
+	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise ValueError(f'Width must be a non-negative integer, not {width!r}')
 		if not isinstance(access, Element.Access) and access not in ('r', 'w', 'rw'):
@@ -130,7 +132,7 @@ class Interface(Record):
 		nothing.
 	'''
 
-	def __init__(self, *, addr_width, data_width, name=None):
+	def __init__(self, *, addr_width : int, data_width : int, name : Optional[str] = None) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
 		if not isinstance(data_width, int) or data_width <= 0:
@@ -148,19 +150,25 @@ class Interface(Record):
 		], name = name, src_loc_at = 1)
 
 	@property
-	def memory_map(self):
+	def memory_map(self) -> MemoryMap:
 		if self._map is None:
 			raise NotImplementedError(f'Bus interface {self!r} does not have a memory map')
 		return self._map
 
 	@memory_map.setter
-	def memory_map(self, memory_map):
+	def memory_map(self, memory_map : MemoryMap) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')
 		if memory_map.addr_width != self.addr_width:
-			raise ValueError(f'Memory map has address width {memory_map.addr_width}, which is not the same as bus interface address width {self.addr_width}')
+			raise ValueError(
+				f'Memory map has address width {memory_map.addr_width}, '
+				f'which is not the same as bus interface address width {self.addr_width}'
+			)
 		if memory_map.data_width != self.data_width:
-			raise ValueError(f'Memory map has data width {memory_map.data_width}, which is not the same as bus interface data width {self.data_width}')
+			raise ValueError(
+				f'Memory map has data width {memory_map.data_width}, '
+				f'which is not the same as bus interface data width {self.data_width}'
+			)
 		memory_map.freeze()
 		self._map = memory_map
 
@@ -214,30 +222,39 @@ class Multiplexer(Elaboratable):
 	----------
 	bus : :class:`Interface`
 		CSR bus providing access to registers.
-	'''
-	def __init__(self, *, addr_width, data_width, alignment = 0, name = None):
-		self._map = MemoryMap(addr_width = addr_width, data_width = data_width, alignment = alignment,
-							  name = name)
+	''' # noqa: E101
+	def __init__(
+		self, *, addr_width : int, data_width : int, alignment : int = 0, name : Optional[str] = None
+	) -> None:
+		self._map = MemoryMap(
+			addr_width = addr_width, data_width = data_width,
+			alignment = alignment, name = name
+		)
 		self._bus = None
 
 	@property
-	def bus(self):
+	def bus(self) -> Interface:
 		if self._bus is None:
 			self._map.freeze()
-			self._bus = Interface(addr_width = self._map.addr_width,
-								  data_width = self._map.data_width,
-								  name = 'csr')
+			self._bus = Interface(
+				addr_width = self._map.addr_width,
+				data_width = self._map.data_width,
+				name = 'csr'
+			)
 			self._bus.memory_map = self._map
 		return self._bus
 
-	def align_to(self, alignment):
+	def align_to(self, alignment : int) -> int:
 		'''Align the implicit address of the next register.
 
 		See :meth:`MemoryMap.align_to` for details.
 		'''
 		return self._map.align_to(alignment)
 
-	def add(self, element, *, addr = None, alignment = None, extend = False):
+	def add(
+		self, element : Element, *, addr : Optional[int] = None, alignment : Optional[int] = None,
+		extend : bool = False
+	) -> Tuple[int, int]:
 		'''Add a register.
 
 		See :meth:`MemoryMap.add_resource` for details.
@@ -246,10 +263,12 @@ class Multiplexer(Elaboratable):
 			raise TypeError(f'Element must be an instance of csr.Element, not {element!r}')
 
 		size = (element.width + self._map.data_width - 1) // self._map.data_width
-		return self._map.add_resource(element, size = size, addr = addr, alignment = alignment,
-									  extend = extend, name = element.name)
+		return self._map.add_resource(
+			element, size = size, addr = addr, alignment = alignment,
+			extend = extend, name = element.name
+		)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		# Instead of a straightforward multiplexer for reads, use a per-element address comparator,
@@ -332,30 +351,38 @@ class Decoder(Elaboratable):
 	bus : :class:`Interface`
 		CSR bus providing access to subordinate buses.
 	'''
-	def __init__(self, *, addr_width, data_width, alignment = 0, name = None):
-		self._map  = MemoryMap(addr_width = addr_width, data_width = data_width, alignment = alignment,
-							   name = name)
+	def __init__(
+		self, *, addr_width : int, data_width : int, alignment : int = 0, name : Optional[str] = None
+	) -> None:
+		self._map  = MemoryMap(
+			addr_width = addr_width, data_width = data_width,
+			alignment = alignment, name = name,
+		)
 		self._bus  = None
 		self._subs = dict()
 
 	@property
-	def bus(self):
+	def bus(self) -> Interface:
 		if self._bus is None:
 			self._map.freeze()
-			self._bus = Interface(addr_width = self._map.addr_width,
-								  data_width = self._map.data_width,
-								  name = 'csr')
+			self._bus = Interface(
+				addr_width = self._map.addr_width,
+				data_width = self._map.data_width,
+				name = 'csr'
+			)
 			self._bus.memory_map = self._map
 		return self._bus
 
-	def align_to(self, alignment):
+	def align_to(self, alignment : int) -> int:
 		'''Align the implicit address of the next window.
 
 		See :meth:`MemoryMap.align_to` for details.
 		'''
 		return self._map.align_to(alignment)
 
-	def add(self, sub_bus, *, addr = None, extend = False):
+	def add(
+		self, sub_bus : Interface, *, addr : Optional[int] = None, extend : bool = False
+	) -> Tuple[int, int, int]:
 		'''Add a window to a subordinate bus.
 
 		See :meth:`MemoryMap.add_resource` for details.
@@ -363,11 +390,14 @@ class Decoder(Elaboratable):
 		if not isinstance(sub_bus, Interface):
 			raise TypeError(f'Subordinate bus must be an instance of csr.Interface, not {sub_bus!r}')
 		if sub_bus.data_width != self._map.data_width:
-			raise ValueError(f'Subordinate bus has data width {sub_bus.data_width}, which is not the same as decoder data width {self._map.data_width}')
+			raise ValueError(
+				f'Subordinate bus has data width {sub_bus.data_width}, '
+				f'which is not the same as decoder data width {self._map.data_width}'
+			)
 		self._subs[sub_bus.memory_map] = sub_bus
 		return self._map.add_window(sub_bus.memory_map, addr = addr, extend = extend)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		# See Multiplexer.elaborate above.

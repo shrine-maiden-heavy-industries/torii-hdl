@@ -1,5 +1,8 @@
+# SPDX-License-Identifier: BSD-2-Clause
 
-from ....       import *
+from typing     import Optional
+
+from ....       import Elaboratable, Module, Signal, Cat
 from ....utils  import log2_int
 
 from .          import Interface as CSRInterface
@@ -36,7 +39,9 @@ class WishboneCSRBridge(Elaboratable):
 	wb_bus : :class:`..wishbone.Interface`
 		Wishbone bus provided by the bridge.
 	'''
-	def __init__(self, csr_bus, *, data_width=None, name=None):
+	def __init__(
+		self, csr_bus : CSRInterface, *, data_width : Optional[int] = None, name : Optional[str] = None
+	) -> None:
 		if not isinstance(csr_bus, CSRInterface):
 			raise ValueError(f'CSR bus must be an instance of CSRInterface, not {csr_bus!r}')
 		if csr_bus.data_width not in (8, 16, 32, 64):
@@ -49,16 +54,20 @@ class WishboneCSRBridge(Elaboratable):
 			addr_width = max(0, csr_bus.addr_width - log2_int(data_width // csr_bus.data_width)),
 			data_width = data_width,
 			granularity = csr_bus.data_width,
-			name = 'wb')
+			name = 'wb'
+		)
 
-		wb_map = MemoryMap(addr_width = csr_bus.addr_width, data_width = csr_bus.data_width,
-						   name = name)
+		wb_map = MemoryMap(
+			addr_width = csr_bus.addr_width,
+			data_width = csr_bus.data_width,
+			name = name
+		)
 		# Since granularity of the Wishbone interface matches the data width of the CSR bus,
 		# no width conversion is performed, even if the Wishbone data width is greater.
 		wb_map.add_window(self.csr_bus.memory_map)
 		self.wb_bus.memory_map = wb_map
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		csr_bus = self.csr_bus
 		wb_bus  = self.wb_bus
 
