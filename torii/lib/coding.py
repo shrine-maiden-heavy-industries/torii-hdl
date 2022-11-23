@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .. import *
+from ..      import Elaboratable, Module, Signal, Const
 
 __all__ = (
 	'Encoder', 'Decoder',
@@ -29,14 +29,14 @@ class Encoder(Elaboratable):
 	n : Signal, out
 		Invalid: either none or multiple input bits are asserted.
 	'''
-	def __init__(self, width):
+	def __init__(self, width : int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
 		self.o = Signal(range(width))
 		self.n = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		with m.Switch(self.i):
 			for j in range(self.width):
@@ -68,14 +68,14 @@ class PriorityEncoder(Elaboratable):
 	n : Signal, out
 		Invalid: no input bits are asserted.
 	'''
-	def __init__(self, width):
+	def __init__(self, width : int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
 		self.o = Signal(range(width))
 		self.n = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		for j in reversed(range(self.width)):
 			with m.If(self.i[j]):
@@ -104,14 +104,14 @@ class Decoder(Elaboratable):
 	n : Signal, in
 		Invalid, no output bits are to be asserted.
 	'''
-	def __init__(self, width):
+	def __init__(self, width : int) -> None:
 		self.width = width
 
 		self.i = Signal(range(width))
 		self.n = Signal()
 		self.o = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		with m.Switch(self.i):
 			for j in range(len(self.o)):
@@ -144,13 +144,13 @@ class GrayEncoder(Elaboratable):
 	o : Signal(width), out
 		Encoded Gray code.
 	'''
-	def __init__(self, width):
+	def __init__(self, width : int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
 		self.o = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.comb += self.o.eq(self.i ^ self.i[1:])
 		return m
@@ -171,13 +171,13 @@ class GrayDecoder(Elaboratable):
 	o : Signal(width), out
 		Decoded natural binary.
 	'''
-	def __init__(self, width):
+	def __init__(self, width : int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
 		self.o = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		rhs = Const(0)
 		for i in reversed(range(self.width)):
