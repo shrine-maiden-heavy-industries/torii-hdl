@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractproperty
+from typing    import Union
 
-from ..hdl     import *
+from ..hdl     import (
+	Instance, Const, Signal, Module, ClockDomain, ClockSignal
+)
+from ..build   import TemplatedPlatform, Clock
 from ..lib.cdc import ResetSynchronizer
-from ..build   import *
+
 __all__ = (
 	'QuicklogicPlatform',
 )
@@ -137,16 +141,16 @@ class QuicklogicPlatform(TemplatedPlatform):
 	# Common logic
 
 	@property
-	def default_clk_constraint(self):
+	def default_clk_constraint(self) -> Clock:
 		if self.default_clk == 'sys_clk0':
 			return Clock(self.osc_freq / self.osc_div)
 		return super().default_clk_constraint
 
-	def add_clock_constraint(self, clock, frequency):
+	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'TRUE'
 
-	def create_missing_domain(self, name):
+	def create_missing_domain(self, name : str) -> Module:
 		if name == 'sync' and self.default_clk is not None:
 			m = Module()
 			if self.default_clk == 'sys_clk0':
@@ -160,11 +164,15 @@ class QuicklogicPlatform(TemplatedPlatform):
 					raise ValueError(f'OSC frequency (osc_freq) must be an integer between 2100000 and 80000000, not {self.osc_freq!r}')
 				clk_i = Signal()
 				sys_clk0 = Signal()
-				m.submodules += Instance('qlal4s3b_cell_macro',
-										 o_Sys_Clk0 = sys_clk0)
-				m.submodules += Instance('gclkbuff',
-										 o_A = sys_clk0,
-										 o_Z = clk_i)
+				m.submodules += Instance(
+					'qlal4s3b_cell_macro',
+					o_Sys_Clk0 = sys_clk0
+				)
+				m.submodules += Instance(
+					'gclkbuff',
+					o_A = sys_clk0,
+					o_Z = clk_i
+				)
 			else:
 				clk_i = self.request(self.default_clk).i
 

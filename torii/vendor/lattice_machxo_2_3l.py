@@ -1,9 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc     import abstractproperty
+from abc      import abstractproperty
+from typing   import Tuple, Literal, Optional
 
-from ..hdl   import *
-from ..build import *
+from ..hdl    import (
+	Instance, Const, Signal, Module, ClockDomain, ClockSignal, Record
+)
+from ..build  import TemplatedPlatform, Clock, Subsignal, Attrs
+from ..lib.io import Pin
 
 __all__ = (
 	'LatticeMachXO2Platform',
@@ -171,7 +175,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 	]
 
 	@property
-	def default_clk_constraint(self):
+	def default_clk_constraint(self) -> Clock:
 		# Internal high-speed oscillator on MachXO2/MachXO3L devices.
 		# It can have a range of frequencies.
 		if self.default_clk == 'OSCH':
@@ -180,7 +184,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name):
+	def create_missing_domain(self, name : str) -> Module:
 		# Lattice MachXO2/MachXO3L devices have two global set/reset signals: PUR, which is driven at
 		# startup by the configuration logic and unconditionally resets every storage element,
 		# and GSR, which is driven by user logic and each storage element may be configured as
@@ -239,17 +243,22 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		'LVCMOS12D', 'MIPI',
 	]
 
-	def should_skip_port_component(self, port, attrs, component):
+	def should_skip_port_component(
+		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+	) -> bool:
 		# On ECP5, a differential IO is placed by only instantiating an IO buffer primitive at
 		# the PIOA or PIOC location, which is always the non-inverting pin.
 		if attrs.get('IO_TYPE', 'LVCMOS25') in self._differential_io_types and component == 'n':
 			return True
 		return False
 
-	def _get_xdr_buffer(self, m, pin, *, i_invert = False, o_invert = False):
-		def get_ireg(clk, d, q):
+	def _get_xdr_buffer(
+		self, m : Module, pin : Pin, *, i_invert : bool = False, o_invert : bool = False
+	) -> Tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
+		def get_ireg(clk : Signal, d : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
-				m.submodules += Instance('IFS1P3DX',
+				m.submodules += Instance(
+					'IFS1P3DX',
 					i_SCLK = clk,
 					i_SP = Const(1),
 					i_CD = Const(0),
@@ -257,9 +266,10 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_oreg(clk, d, q):
+		def get_oreg(clk : Signal, d : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
-				m.submodules += Instance('OFS1P3DX',
+				m.submodules += Instance(
+					'OFS1P3DX',
 					i_SCLK = clk,
 					i_SP = Const(1),
 					i_CD = Const(0),
@@ -267,25 +277,27 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_iddr(sclk, d, q0, q1):
+		def get_iddr(sclk : Signal, d : Signal, q0 : Signal, q1 : Signal) -> None:
 			for bit in range(len(d)):
-				m.submodules += Instance('IDDRXE',
+				m.submodules += Instance(
+					'IDDRXE',
 					i_SCLK = sclk,
 					i_RST = Const(0),
 					i_D = d[bit],
 					o_Q0 = q0[bit], o_Q1 = q1[bit]
 				)
 
-		def get_oddr(sclk, d0, d1, q):
+		def get_oddr(sclk : Signal, d0 : Signal, d1 : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
-				m.submodules += Instance('ODDRXE',
+				m.submodules += Instance(
+					'ODDRXE',
 					i_SCLK = sclk,
 					i_RST = Const(0),
 					i_D0 = d0[bit], i_D1 = d1[bit],
 					o_Q = q[bit]
 				)
 
-		def get_ineg(z, invert):
+		def get_ineg(z : Signal, invert : bool) -> Signal:
 			if invert:
 				a = Signal.like(z, name_suffix = '_n')
 				m.d.comb += z.eq(~a)
@@ -293,7 +305,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 			else:
 				return z
 
-		def get_oneg(a, invert):
+		def get_oneg(a : Signal, invert : bool) -> Signal:
 			if invert:
 				z = Signal.like(a, name_suffix = '_n')
 				m.d.comb += z.eq(~a)
@@ -352,50 +364,62 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def get_input(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
 		for bit in range(len(port)):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('IB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IB',
 				i_I = port.io[bit],
 				o_O = i[bit]
 			)
 		return m
 
-	def get_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
 		for bit in range(len(port)):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OB',
 				i_I = o[bit],
 				o_O = port.io[bit]
 			)
 		return m
 
-	def get_tristate(self, pin, port, attrs, invert):
-		self._check_feature('single-ended tristate', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
 		for bit in range(len(port)):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OBZ',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OBZ',
 				i_T = t,
 				i_I = o[bit],
 				o_O = port.io[bit]
 			)
 		return m
 
-	def get_input_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input/output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert, o_invert = invert)
 		for bit in range(len(port)):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('BB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'BB',
 				i_T = t,
 				i_I = o[bit],
 				o_O = i[bit],
@@ -403,50 +427,62 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input(self, pin, port, attrs, invert):
-		self._check_feature('differential input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('IB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IB',
 				i_I = port.p[bit],
 				o_O = i[bit]
 			)
 		return m
 
-	def get_diff_output(self, pin, port, attrs, invert):
-		self._check_feature('differential output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OB',
 				i_I = o[bit],
 				o_O = port.p[bit],
 			)
 		return m
 
-	def get_diff_tristate(self, pin, port, attrs, invert):
-		self._check_feature('differential tristate', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OBZ',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OBZ',
 				i_T = t,
 				i_I = o[bit],
 				o_O = port.p[bit],
 			)
 		return m
 
-	def get_diff_input_output(self, pin, port, attrs, invert):
-		self._check_feature('differential input/output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert, o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('BB',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'BB',
 				i_T = t,
 				i_I = o[bit],
 				o_O = i[bit],

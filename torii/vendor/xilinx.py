@@ -1,10 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractproperty
+from typing    import List, Dict, Union, Literal, Optional, Tuple
 
-from ..hdl     import *
+from ..hdl     import (
+	Instance, Const, Signal, Module, ClockDomain, ClockSignal, C, Record,
+	ResetSignal
+)
 from ..lib.cdc import ResetSynchronizer
-from ..build   import *
+from ..build   import TemplatedPlatform, Attrs
+from ..lib.io  import Pin
 
 __all__ = (
 	'XilinxPlatform',
@@ -105,7 +110,7 @@ class XilinxPlatform(TemplatedPlatform):
 
 	Available overrides:
 		* ``add_constraints``: inserts commands in XDC file.
-	'''
+	''' # noqa: E101
 
 	toolchain = None # selected when creating platform
 
@@ -114,7 +119,7 @@ class XilinxPlatform(TemplatedPlatform):
 	speed   = abstractproperty()
 
 	@property
-	def _part(self):
+	def _part(self) -> str:
 		if self.family in { 'ultrascale', 'ultrascaleplus' }:
 			return f'{self.device}-{self.package}-{self.speed}'
 		else:
@@ -416,7 +421,7 @@ class XilinxPlatform(TemplatedPlatform):
 
 	# Common logic
 
-	def __init__(self, *, toolchain = None):
+	def __init__(self, *, toolchain : Literal['Vivado', 'ISE', 'Symbiflow'] = None) -> None:
 		super().__init__()
 
 		# Determine device family.
@@ -500,7 +505,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self.toolchain = toolchain
 
 	@property
-	def required_tools(self):
+	def required_tools(self) -> List[str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_required_tools
 		if self.toolchain == 'ISE':
@@ -510,7 +515,7 @@ class XilinxPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self):
+	def file_templates(self) -> Dict[str, str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_file_templates
 		if self.toolchain == 'ISE':
@@ -520,7 +525,7 @@ class XilinxPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self):
+	def command_templates(self) -> List[str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_command_templates
 		if self.toolchain == 'ISE':
@@ -529,7 +534,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return self._symbiflow_command_templates
 		assert False
 
-	def create_missing_domain(self, name):
+	def create_missing_domain(self, name : str) -> Module:
 		# Xilinx devices have a global write enable (GWE) signal that asserted during configuraiton
 		# and deasserted once it ends. Because it is an asynchronous signal (GWE is driven by logic
 		# syncronous to configuration clock, which is not used by most designs), even though it is
@@ -587,11 +592,13 @@ class XilinxPlatform(TemplatedPlatform):
 				m.submodules.reset_sync = ResetSynchronizer(rst_i, domain = 'sync')
 			return m
 
-	def add_clock_constraint(self, clock, frequency):
+	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'TRUE'
 
-	def _get_xdr_buffer(self, m, pin, iostd, *, i_invert = False, o_invert = False):
+	def _get_xdr_buffer(
+		self, m : Module , pin : Pin, iostd, *, i_invert : bool = False, o_invert : bool = False
+	) -> Tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
 		XFDDR_FAMILIES = {
 			'virtex2',
 			'virtex2p',
@@ -614,10 +621,11 @@ class XilinxPlatform(TemplatedPlatform):
 			'ultrascaleplus',
 		}
 
-		def get_iob_dff(clk, d, q):
+		def get_iob_dff(clk : Signal, d : Signal, q : Signal) -> None:
 			# SDR I/O is performed by packing a flip-flop into the pad IOB.
 			for bit in range(len(q)):
-				m.submodules += Instance('FDCE',
+				m.submodules += Instance(
+					'FDCE',
 					a_IOB = 'TRUE',
 					i_C = clk,
 					i_CE = Const(1),
@@ -626,9 +634,10 @@ class XilinxPlatform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_dff(clk, d, q):
+		def get_dff(clk : Signal, d : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
-				m.submodules += Instance('FDCE',
+				m.submodules += Instance(
+					'FDCE',
 					i_C = clk,
 					i_CE = Const(1),
 					i_CLR = Const(0),
@@ -636,111 +645,145 @@ class XilinxPlatform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_ifddr(clk, io, q0, q1):
+		def get_ifddr(clk : Signal, io : Signal, q0 : Signal, q1 : Signal) -> None:
 			assert self.family in XFDDR_FAMILIES
 			for bit in range(len(q0)):
-				m.submodules += Instance('IFDDRCPE',
-					i_C0 = clk, i_C1 = ~clk,
+				m.submodules += Instance(
+					'IFDDRCPE',
+					i_C0 = clk,
+					i_C1 = ~clk,
 					i_CE = Const(1),
-					i_CLR = Const(0), i_PRE = Const(0),
+					i_CLR = Const(0),
+					i_PRE = Const(0),
 					i_D = io[bit],
-					o_Q0 = q0[bit], o_Q1 = q1[bit]
+					o_Q0 = q0[bit],
+					o_Q1 = q1[bit]
 				)
 
-		def get_iddr2(clk, d, q0, q1, alignment):
+		def get_iddr2(clk : Signal, d : Signal, q0 : Signal, q1 : Signal, alignment) -> None:
 			assert self.family in XDDR2_FAMILIES
 			for bit in range(len(q0)):
-				m.submodules += Instance('IDDR2',
+				m.submodules += Instance(
+					'IDDR2',
 					p_DDR_ALIGNMENT = alignment,
 					p_SRTYPE = 'ASYNC',
-					p_INIT_Q0 = C(0, 1), p_INIT_Q1 = C(0, 1),
-					i_C0 = clk, i_C1 = ~clk,
+					p_INIT_Q0 = C(0, 1),
+					p_INIT_Q1 = C(0, 1),
+					i_C0 = clk,
+					i_C1 = ~clk,
 					i_CE = Const(1),
-					i_S = Const(0), i_R = Const(0),
+					i_S = Const(0),
+					i_R = Const(0),
 					i_D = d[bit],
-					o_Q0 = q0[bit], o_Q1 = q1[bit]
+					o_Q0 = q0[bit],
+					o_Q1 = q1[bit]
 				)
 
-		def get_iddr(clk, d, q1, q2):
+		def get_iddr(clk : Signal, d : Signal, q1 : Signal, q2 : Signal) -> None:
 			assert self.family in XDDR_FAMILIES or self.family in XDDRE1_FAMILIES
 			for bit in range(len(q1)):
 				if self.family in XDDR_FAMILIES:
-					m.submodules += Instance('IDDR',
+					m.submodules += Instance(
+						'IDDR',
 						p_DDR_CLK_EDGE = 'SAME_EDGE_PIPELINED',
 						p_SRTYPE = 'ASYNC',
-						p_INIT_Q1 = C(0, 1), p_INIT_Q2 = C(0, 1),
+						p_INIT_Q1 = C(0, 1),
+						p_INIT_Q2 = C(0, 1),
 						i_C = clk,
 						i_CE = Const(1),
-						i_S = Const(0), i_R = Const(0),
-						i_D = d[bit],
-						o_Q1 = q1[bit], o_Q2 = q2[bit]
-					)
-				else:
-					m.submodules += Instance('IDDRE1',
-						p_DDR_CLK_EDGE = 'SAME_EDGE_PIPELINED',
-						p_IS_C_INVERTED = C(0, 1), p_IS_CB_INVERTED = C(1, 1),
-						i_C = clk, i_CB = clk,
+						i_S = Const(0),
 						i_R = Const(0),
 						i_D = d[bit],
-						o_Q1 = q1[bit], o_Q2 = q2[bit]
+						o_Q1 = q1[bit],
+						o_Q2 = q2[bit]
+					)
+				else:
+					m.submodules += Instance(
+						'IDDRE1',
+						p_DDR_CLK_EDGE = 'SAME_EDGE_PIPELINED',
+						p_IS_C_INVERTED = C(0, 1),
+						p_IS_CB_INVERTED = C(1, 1),
+						i_C = clk,
+						i_CB = clk,
+						i_R = Const(0),
+						i_D = d[bit],
+						o_Q1 = q1[bit],
+						o_Q2 = q2[bit]
 					)
 
-		def get_fddr(clk, d0, d1, q):
+		def get_fddr(clk : Signal, d0 : Signal, d1 : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
 				if self.family in XFDDR_FAMILIES:
-					m.submodules += Instance('FDDRCPE',
-						i_C0 = clk, i_C1 = ~clk,
+					m.submodules += Instance(
+						'FDDRCPE',
+						i_C0 = clk,
+						i_C1 = ~clk,
 						i_CE = Const(1),
-						i_PRE = Const(0), i_CLR = Const(0),
-						i_D0 = d0[bit], i_D1 = d1[bit],
+						i_PRE = Const(0),
+						i_CLR = Const(0),
+						i_D0 = d0[bit],
+						i_D1 = d1[bit],
 						o_Q = q[bit]
 					)
 				else:
-					m.submodules += Instance('ODDR2',
+					m.submodules += Instance(
+						'ODDR2',
 						p_DDR_ALIGNMENT = 'NONE',
 						p_SRTYPE = 'ASYNC',
 						p_INIT = C(0, 1),
-						i_C0 = clk, i_C1 = ~clk,
+						i_C0 = clk,
+						i_C1 = ~clk,
 						i_CE = Const(1),
-						i_S = Const(0), i_R = Const(0),
-						i_D0 = d0[bit], i_D1 = d1[bit],
+						i_S = Const(0),
+						i_R = Const(0),
+						i_D0 = d0[bit],
+						i_D1 = d1[bit],
 						o_Q = q[bit]
 					)
 
-		def get_oddr(clk, d1, d2, q):
+		def get_oddr(clk : Signal, d1 : Signal, d2 : Signal, q : Signal) -> None:
 			for bit in range(len(q)):
 				if self.family in XDDR2_FAMILIES:
-					m.submodules += Instance('ODDR2',
+					m.submodules += Instance(
+						'ODDR2',
 						p_DDR_ALIGNMENT = 'C0',
 						p_SRTYPE = 'ASYNC',
 						p_INIT = C(0, 1),
-						i_C0 = clk, i_C1 = ~clk,
+						i_C0 = clk,
+						i_C1 = ~clk,
 						i_CE = Const(1),
-						i_S = Const(0), i_R = Const(0),
-						i_D0 = d1[bit], i_D1 = d2[bit],
+						i_S = Const(0),
+						i_R = Const(0),
+						i_D0 = d1[bit],
+						i_D1 = d2[bit],
 						o_Q = q[bit]
 					)
 				elif self.family in XDDR_FAMILIES:
-					m.submodules += Instance('ODDR',
+					m.submodules += Instance(
+						'ODDR',
 						p_DDR_CLK_EDGE = 'SAME_EDGE',
 						p_SRTYPE = 'ASYNC',
 						p_INIT = C(0, 1),
 						i_C = clk,
 						i_CE = Const(1),
-						i_S = Const(0), i_R = Const(0),
-						i_D1 = d1[bit], i_D2 = d2[bit],
+						i_S = Const(0),
+						i_R = Const(0),
+						i_D1 = d1[bit],
+						i_D2 = d2[bit],
 						o_Q = q[bit]
 					)
 				elif self.family in XDDRE1_FAMILIES:
-					m.submodules += Instance('ODDRE1',
+					m.submodules += Instance(
+						'ODDRE1',
 						p_SRVAL = C(0, 1),
 						i_C = clk,
 						i_SR = Const(0),
-						i_D1 = d1[bit], i_D2 = d2[bit],
+						i_D1 = d1[bit],
+						i_D2 = d2[bit],
 						o_Q = q[bit]
 					)
 
-		def get_ineg(y, invert):
+		def get_ineg(y : Signal, invert : bool) -> Signal:
 			if invert:
 				a = Signal.like(y, name_suffix = '_n')
 				m.d.comb += y.eq(~a)
@@ -748,7 +791,7 @@ class XilinxPlatform(TemplatedPlatform):
 			else:
 				return y
 
-		def get_oneg(a, invert):
+		def get_oneg(a : Signal, invert : bool) -> Signal:
 			if invert:
 				y = Signal.like(a, name_suffix = '_n')
 				m.d.comb += y.eq(~a)
@@ -870,32 +913,41 @@ class XilinxPlatform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def _get_valid_xdrs(self):
+	def _get_valid_xdrs(self) -> Union[
+		Tuple[Literal[0], Literal[1]],
+		Tuple[Literal[0], Literal[1], Literal[2]]
+	]:
 		if self.family in { 'virtex', 'virtexe' }:
 			return (0, 1)
 		else:
 			return (0, 1, 2)
 
-	def get_input(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD'), i_invert = invert)
 		for bit in range(pin.width):
-			m.submodules["{}_{}".format(pin.name, bit)] = Instance('IBUF',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IBUF',
 				i_I = port.io[bit],
 				o_O = i[bit]
 			)
 		return m
 
-	def get_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended output', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD'), o_invert = invert)
 		if self.toolchain != 'Symbiflow':
 			for bit in range(pin.width):
-				m.submodules[f'{pin.name}_{bit}'] = Instance('OBUF',
+				m.submodules[f'{pin.name}_{bit}'] = Instance(
+					'OBUF',
 					i_I = o[bit],
 					o_O = port.io[bit]
 				)
@@ -903,32 +955,38 @@ class XilinxPlatform(TemplatedPlatform):
 			m.d.comb += port.eq(self._invert_if(invert, o))
 		return m
 
-	def get_tristate(self, pin, port, attrs, invert):
+	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_tristate(pin, port, attrs, invert)
 
-		self._check_feature('single-ended tristate', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'single-ended tristate', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD'), o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules['{pin.name}_{bit}'] = Instance('OBUFT',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OBUFT',
 				i_T = t,
 				i_I = o[bit],
 				o_O = port.io[bit]
 			)
 		return m
 
-	def get_input_output(self, pin, port, attrs, invert):
+	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_input_output(pin, port, attrs, invert)
 
-		self._check_feature('single-ended input/output', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'single-ended input/output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD'), i_invert = invert, o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('IOBUF',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IOBUF',
 				i_T = t,
 				i_I = o[bit],
 				o_O = i[bit],
@@ -936,66 +994,82 @@ class XilinxPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input(self, pin, port, attrs, invert):
+	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_diff_input(pin, port, attrs, invert)
 
-		self._check_feature('differential input', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'differential input', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD', 'LVDS_25'), i_invert = invert)
 		for bit in range(pin.width):
-			m.submodules['{pin.name}_{bit}'] = Instance('IBUFDS',
-				i_I = port.p[bit], i_IB = port.n[bit],
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IBUFDS',
+				i_I = port.p[bit],
+				i_IB = port.n[bit],
 				o_O = i[bit]
 			)
 		return m
 
-	def get_diff_output(self, pin, port, attrs, invert):
+	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_diff_output(pin, port, attrs, invert)
 
-		self._check_feature('differential output', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'differential output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD', 'LVDS_25'), o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OBUFDS',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OBUFDS',
 				i_I = o[bit],
-				o_O = port.p[bit], o_OB = port.n[bit]
+				o_O = port.p[bit],
+				o_OB = port.n[bit]
 			)
 		return m
 
-	def get_diff_tristate(self, pin, port, attrs, invert):
+	def get_diff_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_diff_tristate(pin, port, attrs, invert)
 
-		self._check_feature('differential tristate', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'differential tristate', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD', 'LVDS_25'), o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('OBUFTDS',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'OBUFTDS',
 				i_T = t,
 				i_I = o[bit],
-				o_O = port.p[bit], o_OB = port.n[bit]
+				o_O = port.p[bit],
+				o_OB = port.n[bit]
 			)
 		return m
 
-	def get_diff_input_output(self, pin, port, attrs, invert):
+	def get_diff_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
 		if self.toolchain == 'Symbiflow':
 			return super().get_diff_input_output(pin, port, attrs, invert)
 
-		self._check_feature('differential input/output', pin, attrs,
-							valid_xdrs = self._get_valid_xdrs(), valid_attrs = True)
+		self._check_feature(
+			'differential input/output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+		)
+
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, attrs.get('IOSTANDARD', 'LVDS_25'), i_invert = invert, o_invert = invert)
 		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance('IOBUFDS',
+			m.submodules[f'{pin.name}_{bit}'] = Instance(
+				'IOBUFDS',
 				i_T = t,
 				i_I = o[bit],
 				o_O = i[bit],
-				io_IO = port.p[bit], io_IOB = port.n[bit]
+				io_IO = port.p[bit],
+				io_IOB = port.n[bit]
 			)
 		return m
 
@@ -1011,38 +1085,50 @@ class XilinxPlatform(TemplatedPlatform):
 	# the synchronizer input.  Otherwise, a false path constraint is used to omit the input path
 	# from the timing analysis.
 
-	def get_ff_sync(self, ff_sync):
+	def get_ff_sync(self, ff_sync) -> Module:
 		m = Module()
-		flops = [Signal(ff_sync.i.shape(), name = f'stage{index}',
-						reset = ff_sync._reset, reset_less = ff_sync._reset_less,
-						attrs = { 'ASYNC_REG': 'TRUE' })
-				 for index in range(ff_sync._stages)]
+		flops = [
+			Signal(
+				ff_sync.i.shape(), name = f'stage{index}',
+				reset = ff_sync._reset, reset_less = ff_sync._reset_less,
+				attrs = { 'ASYNC_REG': 'TRUE' }
+			)
+			for index in range(ff_sync._stages)
+		]
 		if self.toolchain == 'Vivado':
 			if ff_sync._max_input_delay is None:
 				flops[0].attrs['torii.vivado.false_path'] = 'TRUE'
 			else:
 				flops[0].attrs['torii.vivado.max_delay'] = str(ff_sync._max_input_delay * 1e9)
 		elif ff_sync._max_input_delay is not None:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support constraining input delay for FFSynchronizer')
+			raise NotImplementedError(
+				f'Platform \'{type(self).__name__}\' does not support constraining input delay for FFSynchronizer'
+			)
 		for i, o in zip((ff_sync.i, *flops), flops):
 			m.d[ff_sync._o_domain] += o.eq(i)
 		m.d.comb += ff_sync.o.eq(flops[-1])
 		return m
 
 
-	def get_async_ff_sync(self, async_ff_sync):
+	def get_async_ff_sync(self, async_ff_sync) -> Module:
 		m = Module()
 		m.domains += ClockDomain('async_ff', async_reset = True, local = True)
-		flops = [Signal(1, name = f'stage{index}', reset = 1,
-						attrs = { 'ASYNC_REG': 'TRUE' })
-				 for index in range(async_ff_sync._stages)]
+		flops = [
+			Signal(1,
+				name = f'stage{index}', reset = 1,
+				attrs = { 'ASYNC_REG': 'TRUE' }
+			)
+			for index in range(async_ff_sync._stages)
+		]
 		if self.toolchain == 'Vivado':
 			if async_ff_sync._max_input_delay is None:
 				flops[0].attrs['torii.vivado.false_path'] = 'TRUE'
 			else:
 				flops[0].attrs['torii.vivado.max_delay'] = str(async_ff_sync._max_input_delay * 1e9)
 		elif async_ff_sync._max_input_delay is not None:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support constraining input delay for AsyncFFSynchronizer')
+			raise NotImplementedError(
+				f'Platform \'{type(self).__name__}\' does not support constraining input delay for AsyncFFSynchronizer'
+			)
 
 		for i, o in zip((0, *flops), flops):
 			m.d.async_ff += o.eq(i)

@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc     import abstractproperty
+from abc      import abstractproperty
+from typing   import List, Dict, Union, Literal
 
-from ..hdl   import *
-from ..build import *
-
+from ..hdl    import (
+	Instance, Module, Signal, ClockDomain, ClockSignal, Const, Repl,
+	Record
+)
+from ..build  import TemplatedPlatform, Clock, Attrs
+from ..lib.io import Pin
 __all__ = (
 	'IntelPlatform',
 )
@@ -60,7 +64,7 @@ class IntelPlatform(TemplatedPlatform):
 	device  = abstractproperty()
 	package = abstractproperty()
 	speed   = abstractproperty()
-	suffix  = ""
+	suffix  = ''
 
 	# Quartus templates
 
@@ -244,14 +248,16 @@ class IntelPlatform(TemplatedPlatform):
 
 	# Common logic
 
-	def __init__(self, *, toolchain = 'Quartus'):
+	def __init__(
+		self, *, toolchain : Literal['Quartus', 'Mistral'] = 'Quartus'
+	) -> None:
 		super().__init__()
 
 		assert toolchain in ('Quartus', 'Mistral')
 		self.toolchain = toolchain
 
 	@property
-	def required_tools(self):
+	def required_tools(self) -> List[str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_required_tools
 		if self.toolchain == 'Mistral':
@@ -259,7 +265,7 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self):
+	def file_templates(self) -> Dict[str, str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_file_templates
 		if self.toolchain == 'Mistral':
@@ -267,19 +273,19 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self):
+	def command_templates(self) -> List[str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_command_templates
 		if self.toolchain == 'Mistral':
 			return self.mistral_command_templates
 		assert False
 
-	def add_clock_constraint(self, clock, frequency):
+	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'true'
 
 	@property
-	def default_clk_constraint(self):
+	def default_clk_constraint(self) -> Clock:
 		# Internal high-speed oscillator on Cyclone V devices.
 		# It is specified to not be faster than 100MHz, but the actual
 		# frequency seems to vary a lot between devices. Measurements
@@ -290,15 +296,17 @@ class IntelPlatform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name):
+	def create_missing_domain(self, name : str) -> Module:
 		if name == 'sync' and self.default_clk == 'cyclonev_oscillator':
 			# Use the internal high-speed oscillator for Cyclone V devices
 			assert self.device.startswith('5C')
 			m = Module()
 			m.domains += ClockDomain('sync')
-			m.submodules += Instance('cyclonev_oscillator',
-									 i_oscena = Const(1),
-									 o_clkout = ClockSignal('sync'))
+			m.submodules += Instance(
+				'cyclonev_oscillator',
+				i_oscena = Const(1),
+				o_clkout = ClockSignal('sync')
+			)
 			return m
 		else:
 			return super().create_missing_domain(name)
@@ -309,8 +317,8 @@ class IntelPlatform(TemplatedPlatform):
 	# See also errata mentioned in: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd11192012_735.html.
 
 	@staticmethod
-	def _get_ireg(m, pin, invert):
-		def get_ineg(i):
+	def _get_ireg(m : Module, pin : Pin, invert : bool) -> Signal:
+		def get_ineg(i : Signal):
 			if invert:
 				i_neg = Signal.like(i, name_suffix = '_neg')
 				m.d.comb += i.eq(~i_neg)
@@ -322,7 +330,8 @@ class IntelPlatform(TemplatedPlatform):
 			return get_ineg(pin.i)
 		elif pin.xdr == 1:
 			i_sdr = Signal(pin.width, name = f'{pin.name}_i_sdr')
-			m.submodules += Instance('$dff',
+			m.submodules += Instance(
+				'$dff',
 				p_CLK_POLARITY = 1,
 				p_WIDTH = pin.width,
 				i_CLK = pin.i_clk,
@@ -332,7 +341,8 @@ class IntelPlatform(TemplatedPlatform):
 			return i_sdr
 		elif pin.xdr == 2:
 			i_ddr = Signal(pin.width, name = f'{pin.name}_i_ddr')
-			m.submodules[f'{pin.name}_i_ddr'] = Instance('altddio_in',
+			m.submodules[f'{pin.name}_i_ddr'] = Instance(
+				'altddio_in',
 				p_width = pin.width,
 				i_datain = i_ddr,
 				i_inclock = pin.i_clk,
@@ -343,10 +353,10 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@staticmethod
-	def _get_oreg(m, pin, invert):
-		def get_oneg(o):
+	def _get_oreg(m : Module, pin : Pin, invert : bool) -> Signal:
+		def get_oneg(o : Signal):
 			if invert:
-				o_neg = Signal.like(o, name_suffix = f'_neg')
+				o_neg = Signal.like(o, name_suffix = '_neg')
 				m.d.comb += o_neg.eq(~o)
 				return o_neg
 			else:
@@ -356,7 +366,8 @@ class IntelPlatform(TemplatedPlatform):
 			return get_oneg(pin.o)
 		elif pin.xdr == 1:
 			o_sdr = Signal(pin.width, name = f'{pin.name}_o_sdr')
-			m.submodules += Instance('$dff',
+			m.submodules += Instance(
+				'$dff',
 				p_CLK_POLARITY = 1,
 				p_WIDTH = pin.width,
 				i_CLK = pin.o_clk,
@@ -366,7 +377,8 @@ class IntelPlatform(TemplatedPlatform):
 			return o_sdr
 		elif pin.xdr == 2:
 			o_ddr = Signal(pin.width, name = f'{pin.name}_o_ddr')
-			m.submodules['{pin.name}_o_ddr'] = Instance('altddio_out',
+			m.submodules['{pin.name}_o_ddr'] = Instance(
+				'altddio_out',
 				p_width = pin.width,
 				o_dataout = o_ddr,
 				i_outclock = pin.o_clk,
@@ -377,14 +389,15 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@staticmethod
-	def _get_oereg(m, pin):
+	def _get_oereg(m : Module, pin : Pin) -> Signal:
 		# altiobuf_ requires an output enable signal for each pin, but pin.oe is 1 bit wide.
 		if pin.xdr == 0:
 			return Repl(pin.oe, pin.width)
 		elif pin.xdr in (1, 2):
 			oe_reg = Signal(pin.width, name = '{pin.name}_oe_reg')
 			oe_reg.attrs['useioff'] = '1'
-			m.submodules += Instance('$dff',
+			m.submodules += Instance(
+				'$dff',
 				p_CLK_POLARITY = 1,
 				p_WIDTH = pin.width,
 				i_CLK = pin.o_clk,
@@ -394,14 +407,17 @@ class IntelPlatform(TemplatedPlatform):
 			return oe_reg
 		assert False
 
-	def get_input(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_in',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_in',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'FALSE',
@@ -410,14 +426,17 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_out',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_out',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'FALSE',
@@ -427,14 +446,17 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_tristate(self, pin, port, attrs, invert):
-		self._check_feature('single-ended tristate', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_out',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_out',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = "FALSE",
@@ -445,14 +467,17 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_input_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input/output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_bidir',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_bidir',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'FALSE',
@@ -463,15 +488,18 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_input(self, pin, port, attrs, invert):
-		self._check_feature('differential input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.p.attrs['useioff'] = 1
 			port.n.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_in',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_in',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'TRUE',
@@ -481,9 +509,11 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_output(self, pin, port, attrs, invert):
-		self._check_feature('differential output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.p.attrs['useioff'] = 1
 			port.n.attrs['useioff'] = 1
@@ -500,15 +530,18 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_tristate(self, pin, port, attrs, invert):
-		self._check_feature('differential tristate', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.p.attrs['useioff'] = 1
 			port.n.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_out',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_out',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'TRUE',
@@ -520,15 +553,18 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_input_output(self, pin, port, attrs, invert):
-		self._check_feature('differential input/output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		if pin.xdr == 1:
 			port.p.attrs['useioff'] = 1
 			port.n.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_bidir',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_bidir',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'TRUE',
@@ -543,8 +579,9 @@ class IntelPlatform(TemplatedPlatform):
 	# The altera_std_synchronizer{,_bundle} megafunctions embed SDC constraints that mark false
 	# paths, so use them instead of our default implementation.
 
-	def get_ff_sync(self, ff_sync):
-		return Instance('altera_std_synchronizer_bundle',
+	def get_ff_sync(self, ff_sync) -> Instance:
+		return Instance(
+			'altera_std_synchronizer_bundle',
 			p_width = len(ff_sync.i),
 			p_depth = ff_sync._stages,
 			i_clk = ClockSignal(ff_sync._o_domain),
@@ -553,11 +590,12 @@ class IntelPlatform(TemplatedPlatform):
 			o_dout = ff_sync.o,
 		)
 
-	def get_async_ff_sync(self, async_ff_sync):
+	def get_async_ff_sync(self, async_ff_sync) -> Module:
 		m = Module()
 		sync_output = Signal()
 		if async_ff_sync._edge == 'pos':
-			m.submodules += Instance('altera_std_synchronizer',
+			m.submodules += Instance(
+				'altera_std_synchronizer',
 				p_depth = async_ff_sync._stages,
 				i_clk = ClockSignal(async_ff_sync._o_domain),
 				i_reset_n = ~async_ff_sync.i,
@@ -565,7 +603,8 @@ class IntelPlatform(TemplatedPlatform):
 				o_dout = sync_output,
 			)
 		else:
-			m.submodules += Instance('altera_std_synchronizer',
+			m.submodules += Instance(
+				'altera_std_synchronizer',
 				p_depth = async_ff_sync._stages,
 				i_clk = ClockSignal(async_ff_sync._o_domain),
 				i_reset_n = async_ff_sync.i,

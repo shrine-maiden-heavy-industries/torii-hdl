@@ -1,10 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractproperty
+from typing    import List, Dict, Literal
 
-from ..hdl     import *
+from ..hdl    import (
+	Instance, Const, Signal, Module, ClockDomain, ClockSignal, ResetSignal, C,
+	Record
+)
+from ..build   import TemplatedPlatform, Clock, Subsignal, Attrs
 from ..lib.cdc import ResetSynchronizer
-from ..build   import *
+from ..lib.io  import Pin
 
 
 __all__ = (
@@ -68,7 +73,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		* ``sbt/outputs/router/{{name}}_timing.rpt``: timing report.
 		* ``{{name}}.edf``: EDIF netlist.
 		* ``{{name}}.bin``: binary bitstream.
-	'''
+	''' # noqa: E101
 
 	toolchain = None # selected when creating platform
 
@@ -300,14 +305,16 @@ class LatticeICE40Platform(TemplatedPlatform):
 
 	# Common logic
 
-	def __init__(self, *, toolchain = 'IceStorm'):
+	def __init__(
+		self, *, toolchain : Literal['IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'] = 'IceStorm'
+	) -> None:
 		super().__init__()
 
 		assert toolchain in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2')
 		self.toolchain = toolchain
 
 	@property
-	def family(self):
+	def family(self) -> str:
 		if self.device.startswith('iCE40'):
 			return 'iCE40'
 		if self.device.startswith('iCE5'):
@@ -315,7 +322,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def _toolchain_env_var(self):
+	def _toolchain_env_var(self) -> str:
 		if self.toolchain == 'IceStorm':
 			return f'TORII_ENV_{self.toolchain}'
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
@@ -323,7 +330,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def required_tools(self):
+	def required_tools(self) -> List[str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_required_tools
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
@@ -331,7 +338,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self):
+	def file_templates(self) -> Dict[str, str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_file_templates
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
@@ -339,7 +346,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self):
+	def command_templates(self) -> List[str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_command_templates
 		if self.toolchain == 'LSE-iCECube2':
@@ -349,7 +356,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def default_clk_constraint(self):
+	def default_clk_constraint(self) -> Clock:
 		# Internal high-speed oscillator: 48 MHz / (2 ^ div)
 		if self.default_clk == 'SB_HFOSC':
 			return Clock(48e6 / 2 ** self.hfosc_div)
@@ -359,7 +366,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name):
+	def create_missing_domain(self, name : str) -> Module:
 		# For unknown reasons (no errata was ever published, and no documentation mentions this
 		# issue), iCE40 BRAMs read as zeroes for ~3 us after configuration and release of internal
 		# global reset. Note that this is a *time-based* delay, generated purely by the internal
@@ -385,21 +392,27 @@ class LatticeICE40Platform(TemplatedPlatform):
 				if not hasattr(self, 'hfosc_div'):
 					raise ValueError('SB_HFOSC divider exponent (hfosc_div) must be an integer between 0 and 3')
 				if not isinstance(self.hfosc_div, int) or self.hfosc_div < 0 or self.hfosc_div > 3:
-					raise ValueError(f'SB_HFOSC divider exponent (hfosc_div) must be an integer between 0 and 3, not {self.hfosc_div!r}')
+					raise ValueError(
+						f'SB_HFOSC divider exponent (hfosc_div) must be an integer between 0 and 3, not {self.hfosc_div!r}'
+					)
 				clk_i = Signal()
-				m.submodules += Instance('SB_HFOSC',
-										 i_CLKHFEN = 1,
-										 i_CLKHFPU = 1,
-										 p_CLKHF_DIV = f'0b{self.hfosc_div:02b}',
-										 o_CLKHF = clk_i)
+				m.submodules += Instance(
+					'SB_HFOSC',
+					i_CLKHFEN = 1,
+					i_CLKHFPU = 1,
+					p_CLKHF_DIV = f'0b{self.hfosc_div:02b}',
+					o_CLKHF = clk_i
+				)
 				delay = int(100e-6 * self.default_clk_frequency)
 			# Internal low-speed clock: 10 KHz.
 			elif self.default_clk == 'SB_LFOSC':
 				clk_i = Signal()
-				m.submodules += Instance('SB_LFOSC',
-										 i_CLKLFEN = 1,
-										 i_CLKLFPU = 1,
-										 o_CLKLF = clk_i)
+				m.submodules += Instance(
+					'SB_LFOSC',
+					i_CLKLFEN = 1,
+					i_CLKLFPU = 1,
+					o_CLKLF = clk_i
+				)
 				delay = int(100e-6 * self.default_clk_frequency)
 			# User-defined clock signal.
 			else:
@@ -431,7 +444,9 @@ class LatticeICE40Platform(TemplatedPlatform):
 
 			return m
 
-	def should_skip_port_component(self, port, attrs, component):
+	def should_skip_port_component(
+		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+	) -> bool:
 		# On iCE40, a differential input is placed by only instantiating an SB_IO primitive for
 		# the pin with z = 0, which is the non-inverting pin. The pinout unfortunately differs
 		# between LP/HX and UP series:
@@ -441,27 +456,33 @@ class LatticeICE40Platform(TemplatedPlatform):
 			return True
 		return False
 
-	def _get_io_buffer(self, m, pin, port, attrs, *, i_invert = False, o_invert = False,
-					   invert_lut = False):
-		def get_dff(clk, d, q):
-			m.submodules += Instance('$dff',
+	def _get_io_buffer(
+		self, m : Module, pin : Pin, port : Subsignal, attrs : Attrs, *,
+		i_invert : bool = False, o_invert : bool = False, invert_lut : bool = False
+	) -> None:
+		def get_dff(clk : Signal, d : Signal, q : Signal) -> None:
+			m.submodules += Instance(
+				'$dff',
 				p_CLK_POLARITY = 1,
 				p_WIDTH = len(d),
 				i_CLK = clk,
 				i_D = d,
-				o_Q = q)
+				o_Q = q
+			)
 
-		def get_ineg(y, invert):
+		def get_ineg(y : Signal, invert : bool) -> Signal:
 			if invert_lut:
 				a = Signal.like(y, name_suffix = f'_x{1 if invert else 0}')
 				for bit in range(len(y)):
-					m.submodules += Instance('SB_LUT4',
+					m.submodules += Instance(
+						'SB_LUT4',
 						p_LUT_INIT = Const(0b01 if invert else 0b10, 16),
 						i_I0 = a[bit],
 						i_I1 = Const(0),
 						i_I2 = Const(0),
 						i_I3 = Const(0),
-						o_O = y[bit])
+						o_O = y[bit]
+					)
 				return a
 			elif invert:
 				a = Signal.like(y, name_suffix = '_n')
@@ -470,17 +491,19 @@ class LatticeICE40Platform(TemplatedPlatform):
 			else:
 				return y
 
-		def get_oneg(a, invert):
+		def get_oneg(a : Signal, invert : bool) -> Signal:
 			if invert_lut:
 				y = Signal.like(a, name_suffix = f'_x{1 if invert else 0}')
 				for bit in range(len(a)):
-					m.submodules += Instance('SB_LUT4',
+					m.submodules += Instance(
+						'SB_LUT4',
 						p_LUT_INIT = Const(0b01 if invert else 0b10, 16),
 						i_I0 = a[bit],
 						i_I1 = Const(0),
 						i_I2 = Const(0),
 						i_I3 = Const(0),
-						o_O = y[bit])
+						o_O = y[bit]
+					)
 				return y
 			elif invert:
 				y = Signal.like(a, name_suffix = '_n')
@@ -529,11 +552,11 @@ class LatticeICE40Platform(TemplatedPlatform):
 				# type, because an output-only pin would not have an input clock, and if its input
 				# is configured as registered, this would prevent a co-located input-capable pin
 				# from using an input clock.
-				i_type =     0b01 # PIN_INPUT
+				i_type = 0b01 # PIN_INPUT
 			elif pin.xdr == 0:
-				i_type =     0b01 # PIN_INPUT
+				i_type = 0b01 # PIN_INPUT
 			elif pin.xdr > 0:
-				i_type =     0b00 # PIN_INPUT_REGISTERED aka PIN_INPUT_DDR
+				i_type = 0b00 # PIN_INPUT_REGISTERED aka PIN_INPUT_DDR
 			if 'o' not in pin.dir:
 				o_type = 0b0000   # PIN_NO_OUTPUT
 			elif pin.xdr == 0 and pin.dir == 'o':
@@ -582,51 +605,63 @@ class LatticeICE40Platform(TemplatedPlatform):
 			else:
 				m.submodules[f'{pin.name}_{bit}'] = Instance('SB_IO', *io_args)
 
-	def get_input(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert)
 		return m
 
-	def get_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_tristate(self, pin, port, attrs, invert):
-		self._check_feature('single-ended tristate', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_input_output(self, pin, port, attrs, invert):
-		self._check_feature('single-ended input/output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert, o_invert = invert)
 		return m
 
-	def get_diff_input(self, pin, port, attrs, invert):
-		self._check_feature('differential input', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		# See comment in should_skip_port_component above.
 		self._get_io_buffer(m, pin, port.p, attrs, i_invert = invert)
 		return m
 
-	def get_diff_output(self, pin, port, attrs, invert):
-		self._check_feature('differential output', pin, attrs,
-							valid_xdrs = (0, 1, 2), valid_attrs = True)
+	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+		self._check_feature(
+			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+		)
+
 		m = Module()
 		# Note that the non-inverting output pin is not driven the same way as a regular
 		# output pin. The inverter introduces a delay, so for a non-inverting output pin,
 		# an identical delay is introduced by instantiating a LUT. This makes the waveform
 		# perfectly symmetric in the xdr = 0 case.
-		self._get_io_buffer(m, pin, port.p, attrs, o_invert=    invert, invert_lut = True)
+		self._get_io_buffer(m, pin, port.p, attrs, o_invert = invert, invert_lut = True)
 		self._get_io_buffer(m, pin, port.n, attrs, o_invert = not invert, invert_lut = True)
 		return m
 
