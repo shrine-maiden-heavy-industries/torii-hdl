@@ -38,10 +38,14 @@ def torii_version() -> str:
 
 @nox.session(reuse_venv = True)
 def test(session: nox.Session) -> None:
+	out_dir = (BUILD_DIR / 'tests')
+	out_dir.mkdir(parents = True, exist_ok = True)
+
 	session.install('.')
+	session.chdir(str(out_dir))
 	session.run(
 		'python', '-m', 'unittest', 'discover',
-		'-s', '.'
+		'-s', str(ROOT_DIR)
 	)
 
 @nox.session
