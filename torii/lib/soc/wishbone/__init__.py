@@ -3,5 +3,9 @@
 from .bus import *
 
 __all__ = (
-
+	'CycleType',
+	'BurstTypeExt',
+	'Interface',
+	'Decoder',
+	'Arbiter',
 )
