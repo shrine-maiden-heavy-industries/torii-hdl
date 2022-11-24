@@ -3,10 +3,11 @@
 from enum        import Enum
 from collections import OrderedDict
 from functools   import reduce, wraps
+from typing      import Union, Tuple, Iterable, Any, Generator, Optional
 
-from ..       import tracer
-from .._utils import union
-from .ast     import *
+from ..          import tracer
+from .._utils    import union
+from .ast        import *
 
 
 __all__ = (
@@ -28,12 +29,16 @@ DIR_FANIN  = Direction.FANIN
 
 class Layout:
 	@staticmethod
-	def cast(obj, *, src_loc_at = 0):
+	def cast(obj, *, src_loc_at : int = 0) -> 'Layout':
 		if isinstance(obj, Layout):
 			return obj
 		return Layout(obj, src_loc_at = 1 + src_loc_at)
 
-	def __init__(self, fields, *, src_loc_at = 0):
+	# TODO: The `Any` type is not correct but the types need to be refactored again eventually to fix it
+	def __init__(
+		self, fields : Iterable[Union[Tuple[str, Any], Tuple[str, Any, Direction]]], *,
+		src_loc_at : int = 0
+	) -> None:
 		self.fields = OrderedDict()
 		for field in fields:
 			if not isinstance(field, tuple) or len(field) not in (2, 3):
@@ -69,20 +74,20 @@ class Layout:
 
 		return self.fields[item]
 
-	def __iter__(self):
+	def __iter__(self) -> Generator[Tuple[str, Any, Direction], None, None]:
 		for name, (shape, dir) in self.fields.items():
 			yield (name, shape, dir)
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		return self.fields == other.fields
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		field_reprs = []
 		for name, shape, dir in self:
 			if dir == DIR_NONE:
 				field_reprs.append(f'({name!r}, {shape!r})')
 			else:
-				field_reprs.append(f'({name!r}, {shape!r}, Direction.{dir.namee})')
+				field_reprs.append(f'({name!r}, {shape!r}, Direction.{dir.name})')
 		return f'Layout([{", ".join(field_reprs)}])'
 
 
@@ -105,15 +110,19 @@ class Record(ValueCastable):
 		for field_name in other.fields:
 			field = other[field_name]
 			if isinstance(field, Record):
-				fields[field_name] = Record.like(field, name = concat(new_name, field_name),
-												 src_loc_at = 1 + src_loc_at)
+				fields[field_name] = Record.like(
+					field, name = concat(new_name, field_name),
+					src_loc_at = 1 + src_loc_at
+				)
 			else:
-				fields[field_name] = Signal.like(field, name = concat(new_name, field_name),
-												 src_loc_at = 1 + src_loc_at)
+				fields[field_name] = Signal.like(
+					field, name = concat(new_name, field_name),
+					src_loc_at = 1 + src_loc_at
+				)
 
 		return Record(other.layout, name = new_name, fields = fields, src_loc_at = 1)
 
-	def __init__(self, layout, *, name = None, fields = None, src_loc_at = 0):
+	def __init__(self, layout, *, name : Optional[str] = None, fields = None, src_loc_at : int = 0) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
@@ -173,10 +182,10 @@ class Record(ValueCastable):
 				raise AttributeError(f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?') from None
 
 	@ValueCastable.lowermethod
-	def as_value(self):
+	def as_value(self) -> Cat:
 		return Cat(self.fields.values())
 
-	def __len__(self):
+	def __len__(self) -> int:
 		return len(self.as_value())
 
 	def _lhs_signals(self):
@@ -185,7 +194,7 @@ class Record(ValueCastable):
 	def _rhs_signals(self):
 		return union((f._rhs_signals() for f in self.fields.values()), start = SignalSet())
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		fields = []
 		for field_name, field in self.fields.items():
 			if isinstance(field, Signal):
@@ -248,9 +257,11 @@ class Record(ValueCastable):
 
 def _valueproxy(name):
 	value_func = getattr(Value, name)
+
 	@wraps(value_func)
 	def _wrapper(self, *args, **kwargs):
 		return value_func(Value.cast(self), *args, **kwargs)
+
 	return _wrapper
 
 for name in [
@@ -266,7 +277,7 @@ for name in [
 		'as_unsigned', 'as_signed', 'bool', 'any', 'all', 'xor', 'implies',
 		'bit_select', 'word_select', 'matches',
 		'shift_left', 'shift_right', 'rotate_left', 'rotate_right', 'eq'
-		]:
+]:
 	setattr(Record, name, _valueproxy(name))
 
 del _valueproxy
