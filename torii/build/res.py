@@ -1,11 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
+from typing      import (
+	List, Optional, Literal, Dict, Union,
+	Generator, Tuple
+)
 
-from ..hdl.ast import *
-from ..hdl.rec import *
-from ..lib.io  import *
-from .dsl      import *
+from ..hdl.ast   import *
+from ..hdl.rec   import *
+from ..lib.io    import *
+from .dsl        import *
 
 __all__ = (
 	'ResourceError',
@@ -18,7 +22,7 @@ class ResourceError(Exception):
 
 
 class ResourceManager:
-	def __init__(self, resources, connectors):
+	def __init__(self, resources : List[Resource], connectors : List[Connector]) -> None:
 		self.resources  = OrderedDict()
 		self._requested = OrderedDict()
 		self._phys_reqd = OrderedDict()
@@ -33,7 +37,7 @@ class ResourceManager:
 		self.add_resources(resources)
 		self.add_connectors(connectors)
 
-	def add_resources(self, resources):
+	def add_resources(self, resources : List[Resource]) -> None:
 		for res in resources:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
@@ -42,7 +46,7 @@ class ResourceManager:
 
 			self.resources[res.name, res.number] = res
 
-	def add_connectors(self, connectors):
+	def add_connectors(self, connectors : List[Connector]) -> None:
 		for conn in connectors:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
@@ -55,18 +59,32 @@ class ResourceManager:
 				assert conn_pin not in self._conn_pins
 				self._conn_pins[conn_pin] = plat_pin
 
-	def lookup(self, name, number=0):
+	def lookup(self, name : str , number : int = 0) -> Resource:
 		if (name, number) not in self.resources:
 			raise ResourceError(f'Resource {name}#{number} does not exist')
 
 		return self.resources[name, number]
 
-	def request(self, name, number = 0, *, dir = None, xdr = None):
+	def request(
+		self, name : str, number : int = 0, *,
+		dir : Optional[Literal['i', 'o', 'oe', 'io', '-']] = None,
+		xdr : Optional[Dict[str, int]] = None
+	) -> Union[Record, Pin]:
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
 			raise ResourceError(f'Resource {name}#{number} has already been requested')
 
-		def merge_options(subsignal, dir, xdr):
+		def merge_options(
+			subsignal : Subsignal,
+			dir : Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
+			xdr : Optional[Union[int, Dict[str, int]]]
+		) -> Tuple[
+			Union[
+				Literal['i', 'o', 'oe', 'io', '-'],
+				Dict[str, Literal['i', 'o', 'oe', 'io', '-']]
+			],
+			Union[int, Dict[str, int]]
+		]:
 			if isinstance(subsignal.ios[0], Subsignal):
 				if dir is None:
 					dir = dict()
@@ -89,19 +107,24 @@ class ResourceManager:
 					xdr = 0
 				if dir not in ('i', 'o', 'oe', 'io', '-'):
 					raise TypeError(f'Direction must be one of "i", "o", "oe", "io", or "-", not {dir!r}')
-
-				if dir != subsignal.ios[0].dir and \
-						not (subsignal.ios[0].dir == 'io' or dir == '-'):
-					raise ValueError(f'Direction of {subsignal.ios[0]!r} cannot be changed from "{subsignal.ios[0].dir}" to "{dir}"; '
-									 'direction can be changed from "io" to "i", "o", or '
-									 '"oe", or from anything to "-"')
+				if dir != subsignal.ios[0].dir and not (subsignal.ios[0].dir == 'io' or dir == '-'):
+					raise ValueError(
+						f'Direction of {subsignal.ios[0]!r} cannot be changed from "{subsignal.ios[0].dir}" to "{dir}"; '
+						'direction can be changed from "io" to "i", "o", or '
+						'"oe", or from anything to "-"'
+					)
 
 				if not isinstance(xdr, int) or xdr < 0:
 					raise ValueError(f'Data rate of {subsignal.ios[0]!r} must be a non-negative integer, not {xdr!r}')
 
-			return dir, xdr
+			return (dir, xdr)
 
-		def resolve(resource, dir, xdr, name, attrs):
+		def resolve(
+			resource : Resource,
+			dir : Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
+			xdr : Union[int, Dict[str, int]],
+			name : str, attrs : Attrs
+		) -> Union[Record, Pin]:
 			for attr_key, attr_value in attrs.items():
 				if hasattr(attr_value, '__call__'):
 					attr_value = attr_value(self)
@@ -114,9 +137,11 @@ class ResourceManager:
 			if isinstance(resource.ios[0], Subsignal):
 				fields = OrderedDict()
 				for sub in resource.ios:
-					fields[sub.name] = resolve(sub, dir[sub.name], xdr[sub.name],
-											   name = f'{name}__{sub.name}',
-											   attrs = {**attrs, **sub.attrs})
+					fields[sub.name] = resolve(
+						sub, dir[sub.name], xdr[sub.name],
+						name = f'{name}__{sub.name}',
+						attrs = {**attrs, **sub.attrs}
+					)
 				return Record([
 					(f_name, f.layout) for (f_name, f) in fields.items()
 				], fields = fields, name = name)
@@ -143,9 +168,11 @@ class ResourceManager:
 
 				for phys_name in phys_names:
 					if phys_name in self._phys_reqd:
-						raise ResourceError(f'Resource component {name} uses physical pin {phys_name}, but it '
-											f'is already used by resource component {self._phys_reqd[phys_name]} that was '
-											'requested earlier')
+						raise ResourceError(
+							f'Resource component {name} uses physical pin {phys_name}, but it '
+							f'is already used by resource component {self._phys_reqd[phys_name]} that was '
+							'requested earlier'
+						)
 
 					self._phys_reqd[phys_name] = name
 
@@ -159,31 +186,39 @@ class ResourceManager:
 			else:
 				assert False # :nocov:
 
-		value = resolve(resource,
+		value = resolve(
+			resource,
 			*merge_options(resource, dir, xdr),
 			name = f'{resource.name}_{resource.number}',
-			attrs = resource.attrs)
+			attrs = resource.attrs
+		)
 		self._requested[resource.name, resource.number] = value
 		return value
 
-	def iter_single_ended_pins(self):
+	def iter_single_ended_pins(self) -> Generator[Tuple[
+		Pin, Subsignal, Attrs, bool
+	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
 			if isinstance(res.ios[0], Pins):
-				yield pin, port, attrs, res.ios[0].invert
+				yield (pin, port, attrs, res.ios[0].invert)
 
-	def iter_differential_pins(self):
+	def iter_differential_pins(self) -> Generator[Tuple[
+		Pin, Subsignal, Attrs, bool
+	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
 			if isinstance(res.ios[0], DiffPairs):
-				yield pin, port, attrs, res.ios[0].invert
+				yield (pin, port, attrs, res.ios[0].invert)
 
-	def should_skip_port_component(self, port, attrs, component):
+	def should_skip_port_component(
+		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+	) -> bool:
 		return False
 
-	def iter_ports(self):
+	def iter_ports(self) -> Generator[Signal, None, None]:
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
 				if not self.should_skip_port_component(port, attrs, 'io'):
@@ -196,28 +231,32 @@ class ResourceManager:
 			else:
 				assert False
 
-	def iter_port_constraints(self):
+	def iter_port_constraints(self) -> Generator[
+		Tuple[str, str, Attrs], None, None
+	]:
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
 				if not self.should_skip_port_component(port, attrs, 'io'):
-					yield port.io.name, res.ios[0].map_names(self._conn_pins, res), attrs
+					yield (port.io.name, res.ios[0].map_names(self._conn_pins, res), attrs)
 			elif isinstance(res.ios[0], DiffPairs):
 				if not self.should_skip_port_component(port, attrs, 'p'):
-					yield port.p.name, res.ios[0].p.map_names(self._conn_pins, res), attrs
+					yield (port.p.name, res.ios[0].p.map_names(self._conn_pins, res), attrs)
 				if not self.should_skip_port_component(port, attrs, 'n'):
-					yield port.n.name, res.ios[0].n.map_names(self._conn_pins, res), attrs
+					yield (port.n.name, res.ios[0].n.map_names(self._conn_pins, res), attrs)
 			else:
 				assert False
 
-	def iter_port_constraints_bits(self):
+	def iter_port_constraints_bits(self) -> Generator[
+		Tuple[str, str, Attrs], None, None
+	]:
 		for port_name, pin_names, attrs in self.iter_port_constraints():
 			if len(pin_names) == 1:
-				yield port_name, pin_names[0], attrs
+				yield (port_name, pin_names[0], attrs)
 			else:
 				for bit, pin_name in enumerate(pin_names):
-					yield f'{port_name}[{bit}]', pin_name, attrs
+					yield (f'{port_name}[{bit}]', pin_name, attrs)
 
-	def add_clock_constraint(self, clock, frequency):
+	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
 		if not isinstance(clock, Signal):
 			raise TypeError(f'Object {clock!r} is not a Signal')
 		if not isinstance(frequency, (int, float)):
@@ -229,7 +268,9 @@ class ResourceManager:
 		else:
 			self._clocks[clock] = float(frequency)
 
-	def iter_clock_constraints(self):
+	def iter_clock_constraints(self) -> Generator[
+		Tuple[str, Signal, float], None, None
+	]:
 		# Back-propagate constraints through the input buffer. For clock constraints on pins
 		# (the majority of cases), toolchains work better if the constraint is defined on the pin
 		# and not on the buffered internal net; and if the toolchain is advanced enough that
@@ -247,8 +288,8 @@ class ResourceManager:
 				elif isinstance(res.ios[0], DiffPairs):
 					pin_i_to_port[pin.i] = port.p
 				else:
-					assert False
+					raise ValueError(f'Expected res.ios[0] to be a \'Pins\' or \'DiffPairs\', not {res.ios[0]!r}')
 
 		for net_signal, frequency in self._clocks.items():
 			port_signal = pin_i_to_port.get(net_signal)
-			yield net_signal, port_signal, frequency
+			yield (net_signal, port_signal, frequency)
