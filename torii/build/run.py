@@ -3,6 +3,9 @@
 from collections import OrderedDict
 from contextlib  import contextmanager
 from abc         import ABCMeta, abstractmethod
+from typing      import (
+	Union, Dict, Any, Literal, Tuple, Generator, List
+)
 import os
 import sys
 import subprocess
@@ -20,7 +23,7 @@ __all__ = (
 )
 
 class BuildPlan:
-	def __init__(self, script):
+	def __init__(self, script : str) -> None:
 		'''A build plan.
 
 		Parameters
@@ -31,7 +34,7 @@ class BuildPlan:
 		self.script = script
 		self.files  = OrderedDict()
 
-	def add_file(self, filename, content):
+	def add_file(self, filename : str, content : Union[str, bytes]) -> None:
 		'''
 		Add ``content``, which can be a :class:`str`` or :class:`bytes`, to the build plan
 		as ``filename``. The file name can be a relative path with directories separated by
@@ -40,7 +43,7 @@ class BuildPlan:
 		assert isinstance(filename, str) and filename not in self.files
 		self.files[filename] = content
 
-	def digest(self, size=64):
+	def digest(self, size : int = 64) -> bytes:
 		'''
 		Compute a `digest`, a short byte sequence deterministically and uniquely identifying
 		this build plan.
@@ -55,7 +58,7 @@ class BuildPlan:
 		hasher.update(self.script.encode('utf-8'))
 		return hasher.digest()
 
-	def archive(self, file):
+	def archive(self, file : str) -> None:
 		'''
 		Archive files from the build plan into ``file``, which can be either a filename, or
 		a file-like object. The produced archive is deterministic: exact same files will
@@ -66,16 +69,18 @@ class BuildPlan:
 			for filename in sorted(self.files):
 				archive.writestr(zipfile.ZipInfo(filename), self.files[filename])
 
-	def execute_local(self, root="build", *, run_script=True):
-		"""
+	def execute_local(
+		self, root : str = 'build', *, run_script : bool = True
+	) -> 'LocalBuildProducts':
+		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
 		the build root directory ``root``, and, if ``run_script`` is ``True``, the script
 		appropriate for the platform (``{script}.bat`` on Windows, ``{script}.sh`` elsewhere) is
 		executed in the build root.
 
 		Returns :class:`LocalBuildProducts`.
-		"""
-		os.makedirs(root, exist_ok=True)
+		'''
+		os.makedirs(root, exist_ok = True)
 		cwd = os.getcwd()
 		try:
 			os.chdir(root)
@@ -98,16 +103,18 @@ class BuildPlan:
 					# Without "call", "cmd /c {}.bat" will return 0.
 					# See https://stackoverflow.com/a/30736987 for a detailed explanation of why.
 					# Running the script manually from a command prompt is unaffected.
-					subprocess.check_call(['cmd', '/c', f'call {self.script}.bat'])
+					subprocess.check_call([ 'cmd', '/c', f'call {self.script}.bat' ])
 				else:
-					subprocess.check_call(['sh', f'{self.script}.sh'])
+					subprocess.check_call([ 'sh', f'{self.script}.sh' ])
 
 			return LocalBuildProducts(os.getcwd())
 
 		finally:
 			os.chdir(cwd)
 
-	def execute_remote_ssh(self, *, connect_to = {}, root, run_script=True):
+	def execute_remote_ssh(
+		self, *, connect_to : Dict[str, Any] = {}, root : str, run_script : bool = True
+	) -> 'RemoteSSHBuildProducts':
 		'''
 		Execute build plan using the remote SSH strategy. Files from the build
 		plan are transferred via SFTP to the directory ``root`` on a  remote
@@ -184,7 +191,7 @@ class BuildPlan:
 
 		return RemoteSSHBuildProducts(connect_to, root)
 
-	def execute(self):
+	def execute(self) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the default strategy. Use one of the ``execute_*`` methods
 		explicitly to have more control over the strategy.
@@ -192,9 +199,9 @@ class BuildPlan:
 		return self.execute_local()
 
 
-class BuildProducts(metaclass=ABCMeta):
+class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
-	def get(self, filename, mode = 'b'):
+	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> Union[str, bytes]:
 		'''
 		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
 		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
@@ -202,7 +209,9 @@ class BuildProducts(metaclass=ABCMeta):
 		assert mode in ('b', 't')
 
 	@contextmanager
-	def extract(self, *filenames):
+	def extract(self, *filenames : Tuple[str]) -> Generator[
+		Union[None, str, List[str]], None, None
+	]:
 		'''
 		Extract ``filenames`` from build products, place them in an OS-specific temporary file
 		location, with the extension preserved, and delete them afterwards. This method is used
@@ -237,24 +246,24 @@ class BuildProducts(metaclass=ABCMeta):
 
 
 class LocalBuildProducts(BuildProducts):
-	def __init__(self, root):
+	def __init__(self, root : str) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
 		# any way other than through `products.get()`) in general, so downstream code must never
 		# rely on this, even when we happen to use a local build most of the time.
 		self.__root = root
 
-	def get(self, filename, mode = 'b'):
+	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> Union[str, bytes]:
 		super().get(filename, mode)
 		with open(os.path.join(self.__root, filename), 'r' + mode) as f:
 			return f.read()
 
 
 class RemoteSSHBuildProducts(BuildProducts):
-	def __init__(self, connect_to, root):
+	def __init__(self, connect_to : Dict[str, Any], root : str) -> None:
 		self.__connect_to = connect_to
 		self.__root = root
 
-	def get(self, filename, mode = 'b'):
+	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> bytes:
 		super().get(filename, mode)
 
 		from paramiko import SSHClient
