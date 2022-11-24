@@ -2,8 +2,8 @@
 
 from collections import OrderedDict
 from typing      import (
-	Literal, Optional, Tuple, Union, Iterator,
-	List, Dict, Callable
+	Literal, Optional, Tuple, Union, Generator,
+	Iterator, List, Dict, Callable
 )
 
 __all__ = (
@@ -263,6 +263,6 @@ class Connector:
 	def __len__(self) -> int:
 		return len(self.mapping)
 
-	def __iter__(self) -> Iterator[Tuple[str, str]]:
+	def __iter__(self) -> Generator[Tuple[str, str], None, None]:
 		for conn_pin, plat_pin in self.mapping.items():
 			yield f'{self.name}_{self.number}:{conn_pin}', plat_pin
