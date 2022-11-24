@@ -59,6 +59,8 @@ def docs(session: nox.Session) -> None:
 @nox.session
 def mypy(session: nox.Session) -> None:
 	out_dir = (BUILD_DIR / 'mypy')
+	out_dir.mkdir(parents = True, exist_ok = True)
+
 	session.install('mypy')
 	session.install('lxml')
 	session.install('.')
