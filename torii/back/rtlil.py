@@ -1,19 +1,20 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import io
+import warnings
 from collections import OrderedDict
 from contextlib  import contextmanager
-import warnings
+from typing      import (
+	Union, Optional, Dict, Literal, Tuple
+)
 
-from .._utils import bits_for, flatten
-from ..hdl    import ast, ir, mem, xfrm
-
+from .._utils    import bits_for, flatten
+from ..hdl       import ast, ir, mem, xfrm
 
 __all__ = (
 	'convert',
 	'convert_fragment',
 )
-
 
 _escape_map = str.maketrans({
 	'\"': '\\\"',
@@ -24,7 +25,7 @@ _escape_map = str.maketrans({
 })
 
 
-def _signed(value):
+def _signed(value : Union[str, int, ast.Const]) -> bool:
 	if isinstance(value, str):
 		return False
 	elif isinstance(value, int):
@@ -32,10 +33,10 @@ def _signed(value):
 	elif isinstance(value, ast.Const):
 		return value.signed
 	else:
-		assert False, f'Invalid constant {value!r}'
+		raise TypeError(f'Expected one of \'str\', \'int\', \'Const\', not {value!r}')
 
 
-def _const(value):
+def _const(value : Union[str, int, ast.Const]) -> str:
 	if isinstance(value, str):
 		return f'\"{value.translate(_escape_map)}\"'
 	elif isinstance(value, int):
@@ -50,23 +51,23 @@ def _const(value):
 		value_twos_compl = value.value & ((1 << value.width) - 1)
 		return f'{value.width}\'{value_twos_compl:0{value.width}b}'
 	else:
-		assert False, f'Invalid constant {value!r}'
+		raise TypeError(f'Expected one of \'str\', \'int\', \'Const\', not {value!r}')
 
 
 class _Namer:
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__()
 		self._anon  = 0
 		self._index = 0
 		self._names = set()
 
-	def anonymous(self):
+	def anonymous(self) -> str:
 		name = f'U$${self._anon}'
 		assert name not in self._names
 		self._anon += 1
 		return name
 
-	def _make_name(self, name, local):
+	def _make_name(self, name : Optional[str], local : bool) -> str:
 		if name is None:
 			self._index += 1
 			name = f'${self._index}'
@@ -80,160 +81,170 @@ class _Namer:
 
 
 class _BufferedBuilder:
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__()
 		self._buffer = io.StringIO()
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self._buffer.getvalue()
 
-	def _append(self, fmt, *args, **kwargs):
+	def _append(self, fmt : str, *args, **kwargs) -> None:
 		self._buffer.write(fmt.format(*args, **kwargs))
 
 
 class _ProxiedBuilder:
-	def _append(self, *args, **kwargs):
+	def _append(self, *args, **kwargs) -> None:
 		self.rtlil._append(*args, **kwargs)
 
 
 class _AttrBuilder:
-	def __init__(self, emit_src, *args, **kwargs):
+	def __init__(self, emit_src : bool, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
 		self.emit_src = emit_src
 
-	def _attribute(self, name, value, *, indent=0):
-		self._append('{}attribute \\{} {}\n',
-					 '  ' * indent, name, _const(value))
+	def _attribute(self, name : str, value : Union[str, int, ast.Const], *, indent : int = 0) -> None:
+		self._append('{}attribute \\{} {}\n', '  ' * indent, name, _const(value))
 
-	def _attributes(self, attrs, *, src = None, **kwargs):
+	def _attributes(self, attrs : Dict[str, Union[str, int, ast.Const]], *, src : str = None, **kwargs) -> None:
 		for name, value in attrs.items():
 			self._attribute(name, value, **kwargs)
 		if src and self.emit_src:
 			self._attribute('src', src, **kwargs)
 
-
 class _Builder(_BufferedBuilder, _Namer):
-	def __init__(self, emit_src):
+	def __init__(self, emit_src : bool) -> None:
 		super().__init__()
 		self.emit_src = emit_src
 
-	def module(self, name=None, attrs = {}):
+	def module(self, name : str = None, attrs : Dict[str, Union[str, int, ast.Const]] = {}) -> '_ModuleBuilder':
 		name = self._make_name(name, local = False)
 		return _ModuleBuilder(self, name, attrs)
 
-
 class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
-	def __init__(self, rtlil, name, attrs):
+	def __init__(self, rtlil, name : str, attrs : Dict[str, Union[str, int, ast.Const]]) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
-		self.attrs = {'generator': 'Torii'}
+		self.attrs = { 'generator': 'Torii' }
 		self.attrs.update(attrs)
 
-	def __enter__(self):
+	def __enter__(self) -> '_ModuleBuilder':
 		self._attributes(self.attrs)
 		self._append('module {}\n', self.name)
 		return self
 
-	def __exit__(self, *args):
+	def __exit__(self, *args) -> None:
 		self._append('end\n')
 		self.rtlil._buffer.write(str(self))
 
-	def wire(self, width, port_id = None, port_kind = None, name = None, attrs = {}, src = ''):
+	def wire(
+		self, width : int, port_id : Optional[str] = None, port_kind : Literal['input', 'output', 'inout'] = None,
+		name : str = None, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> str:
 		# Very large wires are unlikely to work. Verilog 1364-2005 requires the limit on vectors
 		# to be at least 2**16 bits, and Yosys 0.9 cannot read RTLIL with wires larger than 2**32
 		# bits. In practice, wires larger than 2**16 bits, although accepted, cause performance
 		# problems without an immediately visible cause, so conservatively limit wire size.
 		if width > 2 ** 16:
-			raise OverflowError(f'Wire created at {src or "unknown location"} is {width} bits wide, which is unlikely to '
-								'synthesize correctly')
+			raise OverflowError(
+				f'Wire created at {src or "unknown location"} is {width} bits wide, which is unlikely to '
+				'synthesize correctly'
+			)
 
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
 		if port_id is None:
 			self._append('  wire width {} {}\n', width, name)
 		else:
-			assert port_kind in ('input', 'output', 'inout')
+			if port_kind not in ('input', 'output', 'inout'):
+				raise ValueError(f'Expected one of \'input\', \'output\', \'inout\' for port_kind, not {port_kind!r}')
 			self._append('  wire width {} {} {} {}\n', width, port_kind, port_id, name)
 		return name
 
-	def connect(self, lhs, rhs):
+	def connect(self, lhs, rhs) -> None:
 		self._append('  connect {} {}\n', lhs, rhs)
 
-	def memory(self, width, size, name = None, attrs = {}, src = ''):
+	def memory(
+		self, width : int, size : int, name : str = None, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
 		self._append('  memory width {} size {} {}\n', width, size, name)
 		return name
 
-	def cell(self, kind, name = None, params = {}, ports = {}, attrs = {}, src = ''):
+	def cell(
+		self, kind : str, name : str = None, params : Dict[str, Union[str, int, float, ast.Const]] = {},
+		ports : Dict[str, str] = {}, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
-		name = self._make_name(name, local=False)
+		name = self._make_name(name, local = False)
 		self._append('  cell {} {}\n', kind, name)
 		for param, value in params.items():
 			if isinstance(value, float):
-				self._append('    parameter real \\{} \"{!r}\"\n',
-							 param, value)
+				self._append('    parameter real \\{} \"{!r}\"\n', param, value)
 			elif _signed(value):
-				self._append('    parameter signed \\{} {}\n',
-							 param, _const(value))
+				self._append('    parameter signed \\{} {}\n', param, _const(value))
 			else:
-				self._append('    parameter \\{} {}\n',
-							 param, _const(value))
+				self._append('    parameter \\{} {}\n', param, _const(value))
 		for port, wire in ports.items():
 			self._append('    connect {} {}\n', port, wire)
 		self._append('  end\n')
 		return name
 
-	def process(self, name = None, attrs = {}, src = ''):
+	def process(
+		self, name : Optional[str] = None, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> '_ProcessBuilder':
 		name = self._make_name(name, local = True)
 		return _ProcessBuilder(self, name, attrs, src)
 
-
 class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
-	def __init__(self, rtlil, name, attrs, src):
+	def __init__(self, rtlil, name : str , attrs : Dict[str, Union[str, int, ast.Const]], src : str) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
 		self.attrs = {}
 		self.src   = src
 
-	def __enter__(self):
-		self._attributes(self.attrs, src=self.src, indent=1)
+	def __enter__(self) -> '_ProcessBuilder':
+		self._attributes(self.attrs, src = self.src, indent = 1)
 		self._append('  process {}\n', self.name)
 		return self
 
-	def __exit__(self, *args):
+	def __exit__(self, *args) -> None:
 		self._append('  end\n')
 		self.rtlil._buffer.write(str(self))
 
-	def case(self):
-		return _CaseBuilder(self, indent=2)
+	def case(self) -> '_CaseBuilder':
+		return _CaseBuilder(self, indent = 2)
 
-	def sync(self, kind, cond = None):
+	def sync(self, kind : Literal['i', 'o', 'io'], cond : Optional[str] = None) -> '_SyncBuilder':
 		return _SyncBuilder(self, kind, cond)
 
 
 class _CaseBuilder(_ProxiedBuilder):
-	def __init__(self, rtlil, indent):
+	def __init__(self, rtlil, indent : int):
 		self.rtlil  = rtlil
 		self.indent = indent
 
-	def __enter__(self):
+	def __enter__(self) -> '_CaseBuilder':
 		return self
 
-	def __exit__(self, *args):
+	def __exit__(self, *args) -> None:
 		pass
 
 	def assign(self, lhs, rhs):
 		self._append('{}assign {} {}\n', '  ' * self.indent, lhs, rhs)
 
-	def switch(self, cond, attrs = {}, src = ''):
+	def switch(
+		self, cond, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> '_SwitchBuilder':
 		return _SwitchBuilder(self.rtlil, cond, attrs, src, self.indent)
 
 
 class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
-	def __init__(self, rtlil, cond, attrs, src, indent):
+	def __init__(
+		self, rtlil, cond, attrs : Dict[str, Union[str, int, ast.Const]] , src : str, indent : int
+	) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil  = rtlil
 		self.cond   = cond
@@ -241,45 +252,48 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 		self.src    = src
 		self.indent = indent
 
-	def __enter__(self):
-		self._attributes(self.attrs, src=self.src, indent=self.indent)
+	def __enter__(self) -> '_SwitchBuilder':
+		self._attributes(self.attrs, src = self.src, indent = self.indent)
 		self._append('{}switch {}\n', '  ' * self.indent, self.cond)
 		return self
 
-	def __exit__(self, *args):
+	def __exit__(self, *args) -> None:
 		self._append('{}end\n', '  ' * self.indent)
 
-	def case(self, *values, attrs = {}, src = ''):
+	def case(
+		self, *values, attrs : Dict[str, Union[str, int, ast.Const]] = {}, src : str = ''
+	) -> '_CaseBuilder':
 		self._attributes(attrs, src = src, indent = self.indent + 1)
 		if values == ():
 			self._append('{}case\n', '  ' * (self.indent + 1))
 		else:
-			self._append('{}case {}\n', '  ' * (self.indent + 1),
-						 ', '.join(f'{len(value)}\'{value}'for value in values))
+			self._append(
+				'{}case {}\n', '  ' * (self.indent + 1), ', '.join(f'{len(value)}\'{value}'for value in values)
+			)
 		return _CaseBuilder(self.rtlil, self.indent + 2)
 
 
 class _SyncBuilder(_ProxiedBuilder):
-	def __init__(self, rtlil, kind, cond):
+	def __init__(self, rtlil, kind : Literal['i', 'o', 'io'], cond : Optional[str]) -> None:
 		self.rtlil = rtlil
 		self.kind  = kind
 		self.cond  = cond
 
-	def __enter__(self):
+	def __enter__(self) -> '_SyncBuilder':
 		if self.cond is None:
 			self._append('    sync {}\n', self.kind)
 		else:
 			self._append('    sync {} {}\n', self.kind, self.cond)
 		return self
 
-	def __exit__(self, *args):
+	def __exit__(self, *args) -> None:
 		pass
 
-	def update(self, lhs, rhs):
+	def update(self, lhs, rhs) -> None:
 		self._append('      update {} {}\n', lhs, rhs)
 
 
-def _src(src_loc):
+def _src(src_loc : Optional[Tuple[str, int]]) -> Optional[str]:
 	if src_loc is None:
 		return None
 	file, line = src_loc
@@ -287,14 +301,14 @@ def _src(src_loc):
 
 
 class _LegalizeValue(Exception):
-	def __init__(self, value, branches, src_loc):
+	def __init__(self, value, branches, src_loc : Optional[Tuple[str, int]]) -> None:
 		self.value    = value
 		self.branches = list(branches)
 		self.src_loc  = src_loc
 
 
 class _ValueCompilerState:
-	def __init__(self, rtlil):
+	def __init__(self, rtlil) -> None:
 		self.rtlil  = rtlil
 		self.wires  = ast.SignalDict()
 		self.driven = ast.SignalDict()
@@ -303,11 +317,12 @@ class _ValueCompilerState:
 
 		self.expansions = ast.ValueDict()
 
-	def add_driven(self, signal, sync):
+	def add_driven(self, signal, sync) -> None:
 		self.driven[signal] = sync
 
-	def add_port(self, signal, kind):
-		assert kind in ('i', 'o', 'io')
+	def add_port(self, signal, kind : Literal['i', 'o', 'io']) -> None:
+		if kind not in ('i', 'o', 'io'):
+			raise ValueError(f'Expected one of \'i\', \'o\', \'io\' not {kind!r}')
 		if kind == 'i':
 			kind = 'input'
 		elif kind == 'o':
@@ -355,7 +370,7 @@ class _ValueCompilerState:
 			wire_next = None
 		self.wires[signal] = (wire_curr, wire_next)
 
-		return wire_curr, wire_next
+		return (wire_curr, wire_next)
 
 	def resolve_curr(self, signal, prefix = None):
 		wire_curr, wire_next = self.resolve(signal, prefix)
@@ -1039,19 +1054,27 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 	return module.name, port_map
 
 
-def convert_fragment(fragment, name = 'top', *, emit_src = True):
-	assert isinstance(fragment, ir.Fragment)
+def convert_fragment(
+	fragment : ir.Fragment, name : str = 'top', *, emit_src : str = True
+) -> Tuple[str, ast.SignalDict]:
+	if not isinstance(fragment, ir.Fragment):
+		raise ValueError(f'Expected an ir.Fragment not a {fragment!r}')
 	builder = _Builder(emit_src = emit_src)
 	name_map = ast.SignalDict()
 	_convert_fragment(builder, fragment, name_map, hierarchy = (name,))
-	return str(builder), name_map
+	return (str(builder), name_map)
 
 
-def convert(elaboratable, name = 'top', platform = None, ports = None, *, emit_src = True, **kwargs):
+def convert(
+	elaboratable, name : str = 'top', platform = None, ports = None, *, emit_src = True, **kwargs
+) -> str:
 	# TODO(amaranth-0.4): remove
 	if ports is None:
-		warnings.warn('Implicit port determination is deprecated, specify ports explicitly',
-					  DeprecationWarning, stacklevel = 2)
+		warnings.warn(
+			'Implicit port determination is deprecated, specify ports explicitly',
+			DeprecationWarning,
+			stacklevel = 2
+		)
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
-	il_text, name_map = convert_fragment(fragment, name, emit_src = emit_src)
+	il_text, _ = convert_fragment(fragment, name, emit_src = emit_src)
 	return il_text
