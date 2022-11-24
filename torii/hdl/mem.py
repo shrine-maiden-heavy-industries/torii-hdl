@@ -2,6 +2,7 @@
 
 import operator
 from collections import OrderedDict
+from typing      import Optional
 
 from ..          import tracer
 from .ast        import *
@@ -42,7 +43,10 @@ class Memory:
 	init : list of int
 	attrs : dict
 	'''
-	def __init__(self, *, width, depth, init = None, name = None, attrs = None, simulate = True):
+	def __init__(
+		self, *, width : int, depth : int, init = None, name : Optional[str] = None,
+		attrs : Optional[OrderedDict] = None, simulate : bool = True
+	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')
 		if not isinstance(depth, int) or depth < 0:
