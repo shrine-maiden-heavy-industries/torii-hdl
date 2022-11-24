@@ -3,7 +3,9 @@
 from abc         import ABCMeta
 from collections import defaultdict, OrderedDict
 from functools   import reduce
+from typing      import Union, Optional, Any
 import warnings
+
 
 from .._utils  import *
 from .._unused import *
@@ -23,7 +25,7 @@ class UnusedElaboratable(UnusedMustUse):
 	pass
 
 
-class Elaboratable(MustUse, metaclass=ABCMeta):
+class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
 
 
@@ -33,7 +35,9 @@ class DriverConflict(UserWarning):
 
 class Fragment:
 	@staticmethod
-	def get(obj, platform):
+	def get(
+		obj : Union['Fragment', Elaboratable, object] , platform : Optional[Any]
+	) -> 'Fragment':
 		code = None
 		while True:
 			if isinstance(obj, Fragment):
