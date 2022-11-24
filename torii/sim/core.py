@@ -2,8 +2,10 @@
 
 import inspect
 import warnings
+from typing   import Optional, Union, Literal, Iterable, IO, Generator, Coroutine
 
 from .._utils import deprecated
+from ..hdl    import Signal
 from ..hdl.cd import *
 from ..hdl.ir import *
 from ._base   import BaseEngine
@@ -23,15 +25,15 @@ class Command:
 
 
 class Settle(Command):
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return '(settle)'
 
 
 class Delay(Command):
-	def __init__(self, interval = None):
+	def __init__(self, interval : Optional[Union[int, float]] = None) -> None:
 		self.interval = None if interval is None else float(interval)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		if self.interval is None:
 			return '(delay ε)'
 		else:
@@ -39,28 +41,28 @@ class Delay(Command):
 
 
 class Tick(Command):
-	def __init__(self, domain = 'sync'):
+	def __init__(self, domain : Union[str, ClockDomain] = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
 		assert domain != 'comb'
 		self.domain = domain
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(tick {self.domain})'
 
 
 class Passive(Command):
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return '(passive)'
 
 
 class Active(Command):
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return '(active)'
 
 
 class Simulator:
-	def __init__(self, fragment, *, engine = 'pysim'):
+	def __init__(self, fragment : Fragment, *, engine : Literal['pysim'] = 'pysim') -> None:
 		if isinstance(engine, type) and issubclass(engine, BaseEngine):
 			pass
 		elif engine == 'pysim':
@@ -73,29 +75,38 @@ class Simulator:
 		self._engine   = engine(self._fragment)
 		self._clocked  = set()
 
-	def _check_process(self, process):
+	def _check_process(self, process : Union[Generator, Coroutine]) -> Union[Generator, Coroutine]:
 		if not (inspect.isgeneratorfunction(process) or inspect.iscoroutinefunction(process)):
 			raise TypeError(f'Cannot add a process {process!r} because it is not a generator function')
 		return process
 
-	def add_process(self, process):
+	def add_process(self, process : Union[Generator, Coroutine]) -> None:
 		process = self._check_process(process)
+
 		def wrapper():
 			# Only start a bench process after comb settling, so that the reset values are correct.
 			yield Settle()
 			yield from process()
+
 		self._engine.add_coroutine_process(wrapper, default_cmd = None)
 
-	def add_sync_process(self, process, *, domain = 'sync'):
+	def add_sync_process(
+		self, process : Union[Generator, Coroutine], *, domain : Union[str, ClockDomain] = 'sync'
+	) -> None:
 		process = self._check_process(process)
+
 		def wrapper():
 			# Only start a sync process after the first clock edge (or reset edge, if the domain
 			# uses an asynchronous reset). This matches the behavior of synchronous FFs.
 			yield Tick(domain)
 			yield from process()
+
 		self._engine.add_coroutine_process(wrapper, default_cmd = Tick(domain))
 
-	def add_clock(self, period, *, phase = None, domain = 'sync', if_exists = False):
+	def add_clock(
+		self, period : float, *, phase : Optional[float] = None,
+		domain : Union[str, ClockDomain] = 'sync', if_exists : bool = False
+	) -> None:
 		'''Add a clock process.
 
 		Adds a process that drives the clock signal of ``domain`` at a 50% duty cycle.
@@ -119,10 +130,12 @@ class Simulator:
 		if isinstance(domain, ClockDomain):
 			if (domain.name in self._fragment.domains and
 					domain is not self._fragment.domains[domain.name]):
-				warnings.warn('Adding a clock process that drives a clock domain object '
-							  f'named {domain.name!r}, which is distinct from an identically named domain '
-							  'in the simulated design',
-							  UserWarning, stacklevel = 2)
+				warnings.warn(
+					'Adding a clock process that drives a clock domain object '
+					f'named {domain.name!r}, which is distinct from an identically named domain '
+					'in the simulated design',
+					UserWarning, stacklevel = 2
+				)
 		elif domain in self._fragment.domains:
 			domain = self._fragment.domains[domain]
 		elif if_exists:
@@ -145,7 +158,7 @@ class Simulator:
 		self._engine.add_clock_process(domain.clk, phase = phase, period = period)
 		self._clocked.add(domain)
 
-	def reset(self):
+	def reset(self) -> None:
 		'''Reset the simulation.
 
 		Assign the reset value to every signal in the simulation, and restart every user process.
@@ -154,10 +167,10 @@ class Simulator:
 
 	# TODO(amaranth-0.4): replace with _real_step
 	@deprecated('instead of `sim.step()`, use `sim.advance()`')
-	def step(self):
+	def step(self) -> bool:
 		return self.advance()
 
-	def advance(self):
+	def advance(self) -> bool:
 		'''Advance the simulation.
 
 		Run every process and commit changes until a fixed point is reached, then advance time
@@ -168,7 +181,7 @@ class Simulator:
 		'''
 		return self._engine.advance()
 
-	def run(self):
+	def run(self) -> None:
 		'''Run the simulation while any processes are active.
 
 		Processes added with :meth:`add_process` and :meth:`add_sync_process` are initially active,
@@ -178,7 +191,7 @@ class Simulator:
 		while self.advance():
 			pass
 
-	def run_until(self, deadline, *, run_passive=False):
+	def run_until(self, deadline : int, *, run_passive : bool = False) -> None:
 		'''Run the simulation until it advances to ``deadline``.
 
 		If ``run_passive`` is ``False``, the simulation also stops when there are no active
@@ -193,7 +206,10 @@ class Simulator:
 		while (self.advance() or run_passive) and self._engine.now < deadline:
 			pass
 
-	def write_vcd(self, vcd_file, gtkw_file = None, *, traces = ()):
+	def write_vcd(
+		self, vcd_file : Optional[Union[IO, str]], gtkw_file : Optional[Union[IO, str]] = None, *,
+		traces : Iterable[Signal] = ()
+	) -> None:
 		'''Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
 
 		This method returns a context manager. It can be used as: ::
