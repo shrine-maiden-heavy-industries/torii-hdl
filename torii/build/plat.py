@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections import OrderedDict
-from abc         import ABCMeta, abstractmethod, abstractproperty
-from typing      import (
+from collections  import OrderedDict
+from abc          import ABCMeta, abstractmethod, abstractproperty
+from typing       import (
 	Union, Iterable, IO, Optional, Dict, Tuple,
 	Type, Generator, TypeVar, Literal
 )
@@ -11,16 +11,17 @@ import textwrap
 import re
 import jinja2
 
-from ..           import __version__
-from .._toolchain import *
-from ..hdl        import *
-from ..hdl.xfrm   import SampleLowerer, DomainLowerer
-from ..lib.io     import Pin
-from ..lib.cdc    import ResetSynchronizer
-from ..back       import rtlil, verilog
-from .dsl         import Clock, Attrs
-from .res         import *
-from .run         import *
+from ..            import __version__
+from .._toolchain  import *
+from ..hdl         import *
+from ..hdl.xfrm    import SampleLowerer, DomainLowerer
+from ..lib.io      import Pin
+from ..lib.cdc     import ResetSynchronizer
+from ..back        import rtlil, verilog
+from ..util.string import ascii_escape, tcl_escape, tcl_quote
+from .dsl          import Clock, Attrs
+from .res          import *
+from .run          import *
 
 __all__ = (
 	'Platform',
@@ -444,20 +445,6 @@ class TemplatedPlatform(Platform):
 
 		def hierarchy(signal, separator):
 			return separator.join(self._name_map[signal][1:])
-
-		def ascii_escape(string : str) -> str:
-			def escape_one(match : re.Match[str]) -> str:
-				if match.group(1) is None:
-					return match.group(2)
-				else:
-					return f'_{ord(match.group(1)[0]):02x}_'
-			return ''.join(escape_one(m) for m in re.finditer(r'([^A-Za-z0-9_])|(.)', string))
-
-		def tcl_escape(string : str) -> str:
-			return '{' + re.sub(r'([{}\\])', r'\\\1', string) + '}'
-
-		def tcl_quote(string : str) -> str:
-			return '"' + re.sub(r'([$[\\])', r'\\\1', string) + '"'
 
 		def verbose(arg : str) -> Union[jinja2.Undefined, str]:
 			if get_override_flag('verbose'):
