@@ -106,12 +106,14 @@ class ResourceManager:
 				if xdr is None:
 					xdr = 0
 				if dir not in ('i', 'o', 'oe', 'io', '-'):
-					raise TypeError(f'Direction must be one of "i", "o", "oe", "io", or "-", not {dir!r}')
+					raise TypeError(
+						f'Direction must be one of \'i\', \'o\', \'oe\', \'io\', or \'-\', not {dir!r}'
+					)
 				if dir != subsignal.ios[0].dir and not (subsignal.ios[0].dir == 'io' or dir == '-'):
 					raise ValueError(
-						f'Direction of {subsignal.ios[0]!r} cannot be changed from "{subsignal.ios[0].dir}" to "{dir}"; '
-						'direction can be changed from "io" to "i", "o", or '
-						'"oe", or from anything to "-"'
+						f'Direction of {subsignal.ios[0]!r} cannot be changed from \'{subsignal.ios[0].dir}\' '
+						f'to \'{dir}\'; direction can be changed from \'io\' to \'i\', \'o\', or '
+						'\'oe\', or from anything to \'-\''
 					)
 
 				if not isinstance(xdr, int) or xdr < 0:

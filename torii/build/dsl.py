@@ -37,7 +37,7 @@ class Pins:
 			names = [ f'{conn_name}_{conn_number}:{name}' for name in names ]
 
 		if dir not in ('i', 'o', 'io', 'oe'):
-			raise TypeError(f'Direction must be one of "i", "o", "oe", or "io", not {dir!r}')
+			raise TypeError(f'Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not {dir!r}')
 
 		if assert_width is not None and len(names) != assert_width:
 			raise AssertionError(f'{len(names)} names are specified ({" ".join(names)}), but {assert_width} names are expected')
