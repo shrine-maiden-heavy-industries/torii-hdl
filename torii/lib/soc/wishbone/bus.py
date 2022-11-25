@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from enum        import Enum
-from typing      import Literal, Iterable, Optional, Tuple
+from enum           import Enum
+from typing         import Literal, Iterable, Optional, Tuple
 
-from ....        import Record, Elaboratable, Module, Signal, Cat, Repl
-from ....hdl.rec import Direction
-from ....utils   import log2_int
+from ....           import Record, Elaboratable, Module, Signal, Cat, Repl
+from ....hdl.rec    import Direction
+from ....util.units import log2_int
 
-from ..memory    import MemoryMap
+from ..memory       import MemoryMap
 
 
 __all__ = (

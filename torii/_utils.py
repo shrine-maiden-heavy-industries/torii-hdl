@@ -11,7 +11,7 @@ from collections.abc import Iterable
 from typing          import Union, Type, Dict
 
 
-from .utils import *
+from .util.units     import *
 
 __all__ = (
 	'flatten',

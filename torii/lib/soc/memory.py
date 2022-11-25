@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from bisect   import bisect_left, bisect_right
-from typing   import Iterable, Optional, Union, Tuple, Generator, List
+from bisect        import bisect_left, bisect_right
+from typing        import Iterable, Optional, Union, Tuple, Generator, List
 
-from ...utils import bits_for
+from ...util.units import bits_for
 
 __all__ = (
 	'ResourceInfo',

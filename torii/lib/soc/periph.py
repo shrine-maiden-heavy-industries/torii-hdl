@@ -4,7 +4,7 @@ from collections     import OrderedDict
 from collections.abc import Mapping
 from typing          import Optional, Dict, Generator
 
-from ...utils        import bits_for
+from ...util.units   import bits_for
 
 from .memory         import MemoryMap
 from .               import event

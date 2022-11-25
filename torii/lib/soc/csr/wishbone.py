@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing     import Optional
+from typing         import Optional
 
-from ....       import Elaboratable, Module, Signal, Cat
-from ....utils  import log2_int
+from ....           import Elaboratable, Module, Signal, Cat
+from ....util.units import log2_int
 
-from .          import Interface as CSRInterface
-from ..wishbone import Interface as WishboneInterface
-from ..memory   import MemoryMap
+from .              import Interface as CSRInterface
+from ..wishbone     import Interface as WishboneInterface
+from ..memory       import MemoryMap
 
 __all__ = (
 	'WishboneCSRBridge',

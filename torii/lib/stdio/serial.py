@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Literal, Optional, Union, List, Tuple
+from typing        import Literal, Optional, Union, List, Tuple
 
-from ...      import Elaboratable, Module, Signal, Const, Record, Cat
-from ..cdc    import FFSynchronizer
-from ..io     import Pin
-from ...utils import bits_for
+from ...           import Elaboratable, Module, Signal, Const, Record, Cat
+from ..cdc         import FFSynchronizer
+from ..io          import Pin
+from ...util.units import bits_for
 
 __all__ = (
 	'AsyncSerialRX',
