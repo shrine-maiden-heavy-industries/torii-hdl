@@ -101,7 +101,7 @@ if __name__ == '__main__':
 	import argparse
 
 	parser = argparse.ArgumentParser()
-	p_action = parser.add_subparsers(dest =' action')
+	p_action = parser.add_subparsers(dest = 'action')
 	p_action.add_parser('simulate')
 	p_action.add_parser('generate')
 
