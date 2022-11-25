@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
 import os
 import re
 import shutil
@@ -6,13 +8,15 @@ import textwrap
 import traceback
 import unittest
 
-from torii.hdl.ast import *
-from torii.hdl.ir import *
-from torii.back import rtlil
+from torii.hdl.ast    import *
+from torii.hdl.ir     import *
+from torii.back       import rtlil
 from torii._toolchain import require_tool
 
 
-__all__ = ["FHDLTestCase"]
+__all__ = (
+	'FHDLTestCase',
+)
 
 
 class FHDLTestCase(unittest.TestCase):
