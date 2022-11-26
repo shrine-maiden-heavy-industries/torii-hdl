@@ -99,21 +99,12 @@ class ShapeTestCase(FHDLTestCase):
 		):
 			Shape.cast(-1)
 
-	def test_cast_tuple(self):
-		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'ignore', category = DeprecationWarning)
-			s1 = Shape.cast((1, True))
-			self.assertEqual(s1.width, 1)
-			self.assertEqual(s1.signed, True)
-
 	def test_cast_tuple_wrong(self):
-		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'ignore', category = DeprecationWarning)
-			with self.assertRaisesRegex(
-				TypeError,
-				r'^Width must be a non-negative integer, not -1$'
-			):
-				Shape.cast((-1, True))
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^Object \(-1, True\) cannot be converted to a Torii shape$'
+		):
+			Shape.cast((-1, True))
 
 	def test_cast_range(self):
 		s1 = Shape.cast(range(0, 8))

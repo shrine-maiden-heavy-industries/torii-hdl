@@ -89,7 +89,7 @@ class Shape:
 
 	@staticmethod
 	def cast(
-		obj : Union['Shape', int, Tuple[int, bool], range, type, ShapeCastable], *,
+		obj : Union['Shape', int, range, type, ShapeCastable], *,
 		src_loc_at : int = 0
 	) -> 'Shape':
 		while True:
@@ -97,14 +97,6 @@ class Shape:
 				return obj
 			elif isinstance(obj, int):
 				return Shape(obj)
-			# TODO(nmigen-0.4): remove
-			elif isinstance(obj, tuple):
-				width, signed = obj
-				warnings.warn(
-					f'instead of `{obj}`, use `{"signed" if signed else "unsigned"}({width})`',
-					DeprecationWarning, stacklevel = 2 + src_loc_at
-				)
-				return Shape(width, signed)
 			elif isinstance(obj, range):
 				if len(obj) == 0:
 					return Shape(0, obj.start < 0)
