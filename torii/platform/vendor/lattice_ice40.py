@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractproperty
+from abc       import abstractmethod
 from typing    import List, Dict, Literal
 
 from ...hdl    import (
@@ -77,8 +77,15 @@ class LatticeICE40Platform(TemplatedPlatform):
 
 	toolchain = None # selected when creating platform
 
-	device  = abstractproperty()
-	package = abstractproperty()
+	@property
+	@abstractmethod
+	def device(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def package(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
 
 	# IceStorm templates
 

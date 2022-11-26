@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractproperty
+from abc       import abstractmethod
 from typing    import Tuple, Literal, Optional
 
 from ...hdl    import (
@@ -48,9 +48,21 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 
 	toolchain = 'Diamond'
 
-	device  = abstractproperty()
-	package = abstractproperty()
-	speed   = abstractproperty()
+	@property
+	@abstractmethod
+	def device(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def package(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def speed(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
 	grade   = 'C' # [C]ommercial, [I]ndustrial
 
 	required_tools = [

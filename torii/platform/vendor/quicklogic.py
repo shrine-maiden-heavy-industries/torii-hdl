@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc        import abstractproperty
+from abc        import abstractmethod
 from typing     import Union
 
 from ...hdl     import (
@@ -32,8 +32,15 @@ class QuicklogicPlatform(TemplatedPlatform):
 		* ``add_constraints``: inserts commands in XDC file.
 	'''
 
-	device  = abstractproperty()
-	package = abstractproperty()
+	@property
+	@abstractmethod
+	def device(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def package(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
 
 	# Since the QuickLogic version of SymbiFlow toolchain is not upstreamed yet
 	# we should distinguish the QuickLogic version from mainline one.

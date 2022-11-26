@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc        import abstractproperty
+from abc        import abstractmethod
 from typing     import List, Dict, Union, Literal, Optional, Tuple
 
 from ...hdl     import (
@@ -114,9 +114,20 @@ class XilinxPlatform(TemplatedPlatform):
 
 	toolchain = None # selected when creating platform
 
-	device  = abstractproperty()
-	package = abstractproperty()
-	speed   = abstractproperty()
+	@property
+	@abstractmethod
+	def device(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def package(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def speed(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
 
 	@property
 	def _part(self) -> str:
