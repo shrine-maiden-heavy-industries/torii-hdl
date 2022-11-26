@@ -1,12 +1,17 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from argparse import ArgumentParser, FileType, Namespace
-from typing   import Optional, Union, Tuple
+from argparse     import ArgumentParser, FileType, Namespace
+from typing       import Optional, Union, Tuple
+import logging    as log
 
-from .hdl.ir  import Fragment, Elaboratable, Signal
-from .build   import Platform
-from .back    import rtlil, cxxrtl, verilog
-from .sim     import Simulator
+
+from rich         import traceback
+from rich.logging import RichHandler
+
+from .hdl.ir      import Fragment, Elaboratable, Signal
+from .build       import Platform
+from .back        import rtlil, cxxrtl, verilog
+from .sim         import Simulator
 
 __all__ = (
 	'main',
@@ -15,6 +20,14 @@ __all__ = (
 def main_parser(parser : Optional[ArgumentParser] = None) -> ArgumentParser:
 	if parser is None:
 		parser = ArgumentParser()
+
+	parser.add_argument(
+		'-v', '--verbose',
+		dest    = 'verbose',
+		default = False,
+		action  = 'store_true',
+		help    = 'Enable verbose logging',
+	)
 
 	p_action = parser.add_subparsers(dest = 'action')
 
@@ -84,6 +97,22 @@ def main_runner(
 	parser : ArgumentParser, args : Namespace, design : Union[Fragment, Elaboratable],
 	platform : Platform = None, name : str = 'top', ports : Tuple[Signal] = ()
 ) -> None:
+
+	level = log.INFO
+	if args is not None and args.verbose:
+		level = log.DEBUG
+
+	log.basicConfig(
+		force    = True,
+		format   = '%(message)s',
+		datefmt  = '[%X]',
+		level    = level,
+		handlers = [
+			RichHandler(rich_tracebacks = True, show_path = True)
+		]
+	)
+
+
 	if args.action == 'generate':
 		fragment = Fragment.get(design, platform)
 		generate_type = args.generate_type
@@ -116,5 +145,6 @@ def main_runner(
 
 
 def main(*args, **kwargs) -> None:
+	traceback.install()
 	parser = main_parser()
 	main_runner(parser, parser.parse_args(), *args, **kwargs)
