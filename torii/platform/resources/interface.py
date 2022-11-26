@@ -12,6 +12,7 @@ __all__ = (
 	'DirectUSBResource',
 	'ULPIResource',
 	'PS2Resource',
+	'CANResource',
 )
 
 def UARTResource(
@@ -216,3 +217,17 @@ def PS2Resource(
 		ios.append(attrs)
 
 	return Resource.family(*args, default_name = 'ps2', ios = ios)
+
+def CANResource(
+	*args, rx : str, tx : str,
+	conn : Optional[Union[Tuple[str, int], int]] = None, attrs : Optional[Attrs] = None
+) -> Resource:
+	ios = [
+		Subsignal('rx', Pins(rx, dir = 'i', conn = conn)),
+		Subsignal('rx', Pins(rx, dir = 'o', conn = conn)),
+	]
+
+	if attrs is not None:
+		ios.append(attrs)
+
+	return Resource.family(*args, default_name = 'can', ios = ios)
