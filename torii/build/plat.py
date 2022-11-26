@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections  import OrderedDict
-from abc          import ABCMeta, abstractmethod, abstractproperty
+from abc          import ABCMeta, abstractmethod
 from typing       import (
 	Union, Iterable, IO, Optional, Dict, Tuple,
-	Type, Generator, TypeVar, Literal
+	Type, Generator, TypeVar, Literal, List
 )
 import os
 import textwrap
@@ -30,11 +30,24 @@ __all__ = (
 
 
 class Platform(ResourceManager, metaclass = ABCMeta):
-	resources      = abstractproperty()
-	connectors     = abstractproperty()
+	@property
+	@abstractmethod
+	def resources(self):
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def connectors(self):
+		raise NotImplementedError('Platform must implement this property')
+
 	default_clk    = None
 	default_rst    = None
-	required_tools = abstractproperty()
+
+	@property
+	@abstractmethod
+	def required_tools(self):
+		raise NotImplementedError('Platform must implement this property')
+
 
 	def __init__(self) -> None:
 		super().__init__(self.resources, self.connectors)
@@ -287,9 +300,20 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 
 class TemplatedPlatform(Platform):
-	toolchain         = abstractproperty()
-	file_templates    = abstractproperty()
-	command_templates = abstractproperty()
+	@property
+	@abstractmethod
+	def toolchain(self) ->  Optional[str]:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def file_templates(self) -> Dict[str, str]:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def command_templates(self) -> List[str]:
+		raise NotImplementedError('Platform must implement this property')
 
 	build_script_templates = {
 		'build_{{name}}.sh': '''
