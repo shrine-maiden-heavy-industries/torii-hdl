@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc      import abstractproperty
-from typing   import List, Dict, Union, Literal
+from abc       import abstractproperty
+from typing    import List, Dict, Union, Literal
 
-from ..hdl    import (
+from ...hdl    import (
 	Instance, Module, Signal, ClockDomain, ClockSignal, Const, Repl,
 	Record
 )
-from ..build  import TemplatedPlatform, Clock, Attrs
-from ..lib.io import Pin
+from ...build  import TemplatedPlatform, Clock, Attrs
+from ...lib.io import Pin
 __all__ = (
 	'IntelPlatform',
 )

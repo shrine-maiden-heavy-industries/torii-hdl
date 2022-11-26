@@ -3,13 +3,13 @@
 from abc       import abstractproperty
 from typing    import List, Dict, Literal
 
-from ..hdl    import (
+from ...hdl    import (
 	Instance, Const, Signal, Module, ClockDomain, ClockSignal, ResetSignal, C,
 	Record
 )
-from ..build   import TemplatedPlatform, Clock, Subsignal, Attrs
-from ..lib.cdc import ResetSynchronizer
-from ..lib.io  import Pin
+from ...build   import TemplatedPlatform, Clock, Subsignal, Attrs
+from ...lib.cdc import ResetSynchronizer
+from ...lib.io  import Pin
 
 
 __all__ = (

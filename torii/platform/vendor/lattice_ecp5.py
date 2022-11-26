@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc      import abstractproperty
-from typing   import List, Dict, Tuple, Literal, Optional
+from abc       import abstractproperty
+from typing    import List, Dict, Tuple, Literal, Optional
 
-from ..hdl    import (
+from ...hdl    import (
 	Instance, Const, Signal, Module, ClockDomain, ClockSignal, Repl,
 	Record
 )
-from ..build  import TemplatedPlatform, Clock, Subsignal, Attrs
-from ..lib.io import Pin
+from ...build  import TemplatedPlatform, Clock, Subsignal, Attrs
+from ...lib.io import Pin
 
 __all__ = (
 	'LatticeECP5Platform',

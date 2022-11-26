@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractproperty
-from typing    import List, Dict, Union, Literal, Optional, Tuple
+from abc        import abstractproperty
+from typing     import List, Dict, Union, Literal, Optional, Tuple
 
-from ..hdl     import (
+from ...hdl     import (
 	Instance, Const, Signal, Module, ClockDomain, ClockSignal, C, Record,
 	ResetSignal
 )
-from ..lib.cdc import ResetSynchronizer
-from ..build   import TemplatedPlatform, Attrs
-from ..lib.io  import Pin
+from ...lib.cdc import ResetSynchronizer
+from ...build   import TemplatedPlatform, Attrs
+from ...lib.io  import Pin
 
 __all__ = (
 	'XilinxPlatform',

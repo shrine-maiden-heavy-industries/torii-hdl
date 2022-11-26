@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractproperty
-from typing    import Union
+from abc        import abstractproperty
+from typing     import Union
 
-from ..hdl     import (
+from ...hdl     import (
 	Instance, Const, Signal, Module, ClockDomain, ClockSignal
 )
-from ..build   import TemplatedPlatform, Clock
-from ..lib.cdc import ResetSynchronizer
+from ...build   import TemplatedPlatform, Clock
+from ...lib.cdc import ResetSynchronizer
 
 __all__ = (
 	'QuicklogicPlatform',
