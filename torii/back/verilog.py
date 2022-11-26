@@ -54,12 +54,7 @@ def convert(
 	elaboratable : Union[ir.Fragment, ir.Elaboratable], name : str = 'top', platform = None, ports = None,
 	*, emit_src : bool = True, strip_internal_attrs : bool = False, **kwargs
 ) -> str:
-	# TODO(amaranth-0.4): remove
-	if ports is None:
-		warnings.warn(
-			'Implicit port determination is deprecated, specify ports explicitly',
-			DeprecationWarning, stacklevel = 2
-		)
+
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
 	verilog_text, _ = convert_fragment(fragment, name, emit_src = emit_src, strip_internal_attrs = strip_internal_attrs)
 	return verilog_text
