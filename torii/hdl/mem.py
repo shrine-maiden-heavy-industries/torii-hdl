@@ -4,7 +4,7 @@ import operator
 from collections import OrderedDict
 from typing      import Optional
 
-from ..          import tracer
+from ..util      import tracer
 from .ast        import *
 from .ir         import Elaboratable, Instance
 

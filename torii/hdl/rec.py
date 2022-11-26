@@ -5,7 +5,7 @@ from collections import OrderedDict
 from functools   import reduce, wraps
 from typing      import Union, Tuple, Iterable, Any, Generator, Optional
 
-from ..          import tracer
+from ..util      import tracer
 from .._utils    import union
 from .ast        import *
 

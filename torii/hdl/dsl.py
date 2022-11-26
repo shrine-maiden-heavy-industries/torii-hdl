@@ -7,7 +7,7 @@ from enum        import Enum
 import warnings
 
 from .._utils    import flatten, bits_for
-from ..          import tracer
+from ..util      import tracer
 from .ast        import *
 from .ir         import *
 from .cd         import *

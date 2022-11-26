@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import sys
+from sys    import version_info, _getframe
 from opcode import opname
 from typing import Union, Tuple, Optional
 
@@ -16,7 +16,7 @@ class NameNotFound(Exception):
 _raise_exception = object()
 
 def get_var_name(depth : int = 2, default : Optional[Union[str, object]] = _raise_exception) -> Union[str, object]:
-	frame = sys._getframe(depth)
+	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
 	while call_index > 0 and opname[code.co_code[call_index]] == 'CACHE':
@@ -41,7 +41,7 @@ def get_var_name(depth : int = 2, default : Optional[Union[str, object]] = _rais
 			return code.co_varnames[name_index]
 		elif opc == 'STORE_DEREF':
 			name_index = int(code.co_code[index + 1])
-			if sys.version_info >= (3, 11):
+			if version_info >= (3, 11):
 				name_index -= code.co_nlocals
 			return code.co_cellvars[name_index]
 		elif opc in (
@@ -60,5 +60,5 @@ def get_src_loc(src_loc_at : int = 0) -> Tuple[str, int]:
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
-	frame = sys._getframe(2 + src_loc_at)
+	frame = _getframe(2 + src_loc_at)
 	return (frame.f_code.co_filename, frame.f_lineno)

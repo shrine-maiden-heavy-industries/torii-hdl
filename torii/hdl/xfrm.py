@@ -5,7 +5,7 @@ from collections     import OrderedDict
 from collections.abc import Iterable
 
 from .._utils        import flatten
-from ..              import tracer
+from ..util          import tracer
 from .ast            import *
 from .ast            import _StatementList
 from .cd             import *

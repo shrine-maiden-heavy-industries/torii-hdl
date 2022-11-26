@@ -2,7 +2,7 @@
 
 from typing import Optional, Literal
 
-from ..     import tracer
+from ..util import tracer
 from .ast   import Signal
 
 __all__ = (

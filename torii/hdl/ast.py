@@ -9,7 +9,7 @@ from enum            import Enum
 from itertools       import chain
 from typing          import Iterator, Tuple, Union, Optional
 
-from ..              import tracer
+from ..util          import tracer
 from .._utils        import *
 from .._unused       import *
 
