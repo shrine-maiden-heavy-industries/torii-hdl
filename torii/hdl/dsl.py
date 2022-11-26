@@ -1,18 +1,17 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections import OrderedDict
-from contextlib  import contextmanager, _GeneratorContextManager
-from functools   import wraps
-from enum        import Enum
 import warnings
+from collections  import OrderedDict
+from contextlib   import _GeneratorContextManager, contextmanager
+from enum         import Enum
+from functools    import wraps
 
-from .._utils    import flatten, bits_for
-from ..util      import tracer
-from .ast        import *
-from .ir         import *
-from .cd         import *
-from .xfrm       import *
-
+from ..util       import  flatten, tracer
+from ..util.units import bits_for
+from .ast         import *
+from .cd          import *
+from .ir          import *
+from .xfrm        import *
 
 __all__ = (
 	'SyntaxError',

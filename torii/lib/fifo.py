@@ -2,13 +2,13 @@
 
 '''First-in first-out queues.'''
 
-from typing    import Union
+from typing       import Union
 
-from ..        import Elaboratable, Module, Signal, Mux, Memory, ResetSignal
-from ..asserts import *
-from .._utils  import log2_int
-from .coding   import GrayEncoder, GrayDecoder
-from .cdc      import FFSynchronizer, AsyncFFSynchronizer
+from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
+from ..asserts    import *
+from ..util.units import log2_int
+from .cdc         import AsyncFFSynchronizer, FFSynchronizer
+from .coding      import GrayDecoder, GrayEncoder
 
 __all__ = (
 	'FIFOInterface',

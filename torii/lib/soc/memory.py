@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from bisect        import bisect_left, bisect_right
-from typing        import Iterable, Optional, Union, Tuple, Generator, List
+from typing        import Generator, Iterable, List, Optional, Tuple, Union
 
 from ...util.units import bits_for
 

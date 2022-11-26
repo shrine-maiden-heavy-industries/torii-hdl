@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractmethod
-from typing    import List, Dict, Tuple, Literal, Optional
+from typing    import Dict, List, Literal, Optional, Tuple
 
+from ...build  import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl    import (
-	Instance, Const, Signal, Module, ClockDomain, ClockSignal, Repl,
-	Record
+	ClockDomain, ClockSignal, Const, Instance, Module, Record,
+	Repl, Signal
 )
-from ...build  import TemplatedPlatform, Clock, Subsignal, Attrs
 from ...lib.io import Pin
 
 __all__ = (

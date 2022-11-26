@@ -1,17 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .ast  import (
-	Shape, unsigned, signed, Value, Const,
-	C, Mux, Cat, Repl, Array,
-	Signal, ClockSignal, ResetSignal
+	Array, C, Cat, ClockSignal, Const, Mux, Repl, ResetSignal,
+	Shape, Signal, Value, signed, unsigned
 )
-
-from .dsl  import Module
 from .cd   import ClockDomain
+from .dsl  import Module
 from .ir   import Elaboratable, Fragment, Instance
 from .mem  import Memory
 from .rec  import Record
-from .xfrm import DomainRenamer, ResetInserter, EnableInserter
+from .xfrm import DomainRenamer, EnableInserter, ResetInserter
 
 __all__ = (
 	'Shape', 'unsigned', 'signed', 'Value', 'Const',

@@ -1,14 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import inspect
-import warnings
-from typing   import Optional, Union, Literal, Iterable, IO, Generator, Coroutine
+from inspect           import iscoroutinefunction, isgeneratorfunction
+from typing            import (
+	IO, Coroutine, Generator, Iterable, Literal, Optional, Union
+)
+from warnings          import warn
 
-from .._utils import deprecated
-from ..hdl    import Signal
-from ..hdl.cd import *
-from ..hdl.ir import *
-from ._base   import BaseEngine
+from ..hdl             import Signal
+from ..hdl.cd          import *
+from ..hdl.ir          import *
+from ..util.decorators import deprecated
+from ._base            import BaseEngine
 
 __all__ = (
 	'Settle',
@@ -76,7 +78,7 @@ class Simulator:
 		self._clocked  = set()
 
 	def _check_process(self, process : Union[Generator, Coroutine]) -> Union[Generator, Coroutine]:
-		if not (inspect.isgeneratorfunction(process) or inspect.iscoroutinefunction(process)):
+		if not (isgeneratorfunction(process) or iscoroutinefunction(process)):
 			raise TypeError(f'Cannot add a process {process!r} because it is not a generator function')
 		return process
 
@@ -130,7 +132,7 @@ class Simulator:
 		if isinstance(domain, ClockDomain):
 			if (domain.name in self._fragment.domains and
 					domain is not self._fragment.domains[domain.name]):
-				warnings.warn(
+				warn(
 					'Adding a clock process that drives a clock domain object '
 					f'named {domain.name!r}, which is distinct from an identically named domain '
 					'in the simulated design',

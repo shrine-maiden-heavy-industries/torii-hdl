@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from argparse     import ArgumentParser, FileType, Namespace
-from typing       import Optional, Union, Tuple
 import logging    as log
-
+from argparse     import ArgumentParser, FileType, Namespace
+from typing       import Optional, Tuple, Union
 
 from rich         import traceback
 from rich.logging import RichHandler
 
-from .hdl.ir      import Fragment, Elaboratable, Signal
+from .back        import cxxrtl, rtlil, verilog
 from .build       import Platform
-from .back        import rtlil, cxxrtl, verilog
+from .hdl.ir      import Elaboratable, Fragment, Signal
 from .sim         import Simulator
 
 __all__ = (

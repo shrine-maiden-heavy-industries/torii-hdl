@@ -1,19 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing    import (
-	Optional
-)
-
 import logging as log
 from functools import wraps
-from pathlib   import Path
-from unittest  import TestCase
 from math      import ceil
 from os        import getenv
+from pathlib   import Path
+from typing    import Optional
+from unittest  import TestCase
 
 from ..hdl.ast import Signal
-from ..sim     import Simulator, Settle
 from ..hdl.ir  import Fragment
+from ..sim     import Settle, Simulator
 from .mock     import MockPlatform
 
 __all__ = (

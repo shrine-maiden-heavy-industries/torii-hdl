@@ -2,12 +2,11 @@
 
 from collections     import OrderedDict
 from collections.abc import Mapping
-from typing          import Optional, Dict, Generator
+from typing          import Dict, Generator, Optional
 
 from ...util.units   import bits_for
-
-from .memory         import MemoryMap
 from .               import event
+from .memory         import MemoryMap
 
 __all__ = (
 	'ConstantValue',

@@ -3,10 +3,8 @@
 from abc        import abstractmethod
 from typing     import Union
 
-from ...hdl     import (
-	Instance, Const, Signal, Module, ClockDomain, ClockSignal
-)
-from ...build   import TemplatedPlatform, Clock
+from ...build   import Clock, TemplatedPlatform
+from ...hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Signal
 from ...lib.cdc import ResetSynchronizer
 
 __all__ = (

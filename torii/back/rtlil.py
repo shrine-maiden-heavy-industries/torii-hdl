@@ -2,14 +2,15 @@
 
 import io
 import warnings
-from collections import OrderedDict
-from contextlib  import contextmanager
-from typing      import (
+from collections  import OrderedDict
+from contextlib   import contextmanager
+from typing       import (
 	Union, Optional, Dict, Literal, Tuple
 )
 
-from .._utils    import bits_for, flatten
-from ..hdl       import ast, ir, mem, xfrm
+from ..util       import flatten
+from ..util.units import bits_for
+from ..hdl        import ast, ir, mem, xfrm
 
 __all__ = (
 	'convert',

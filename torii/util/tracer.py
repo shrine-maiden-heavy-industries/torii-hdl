@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys    import version_info, _getframe
+from sys    import _getframe, version_info
+from typing import Optional, Tuple, Union
 from opcode import opname
-from typing import Union, Tuple, Optional
 
 __all__ = (
 	'NameNotFound',

@@ -3,9 +3,9 @@
 
 from collections import OrderedDict
 from enum        import Enum
-from typing      import Optional, Tuple, Generator
+from typing      import Generator, Optional, Tuple
 
-from ...         import Record, Elaboratable, Module, Signal
+from ...         import Elaboratable, Module, Record, Signal
 
 __all__ = (
 	'Source',

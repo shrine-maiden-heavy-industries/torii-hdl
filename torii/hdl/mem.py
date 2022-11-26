@@ -8,7 +8,6 @@ from ..util      import tracer
 from .ast        import *
 from .ir         import Elaboratable, Instance
 
-
 __all__ = (
 	'Memory',
 	'ReadPort',

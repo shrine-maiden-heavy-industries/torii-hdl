@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc         import ABCMeta
-from collections import defaultdict, OrderedDict
-from functools   import reduce
-from typing      import Union, Optional, Any
 import warnings
+from abc               import ABCMeta
+from collections       import OrderedDict, defaultdict
+from functools         import reduce
+from typing            import Any, Optional, Union
 
-
-from .._utils  import *
-from .._unused import *
-from .ast      import *
-from .cd       import *
+from .._unused         import *
+from ..util            import flatten
+from ..util.decorators import memoize
+from .ast              import *
+from .cd               import *
 
 __all__ = (
 	'UnusedElaboratable',
@@ -529,7 +529,7 @@ class Fragment:
 				self.add_ports(sig, dir = 'i')
 
 	def prepare(self, ports=None, missing_domain=lambda name: ClockDomain(name)):
-		from .xfrm import SampleLowerer, DomainLowerer
+		from .xfrm import DomainLowerer, SampleLowerer
 
 		fragment = SampleLowerer()(self)
 		new_domains = fragment._propagate_domains(missing_domain)

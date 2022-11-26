@@ -1,14 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum           import Enum
-from typing         import Literal, Iterable, Optional, Tuple
+from typing         import Iterable, Literal, Optional, Tuple
 
-from ....           import Record, Elaboratable, Module, Signal, Cat, Repl
+from ....           import Cat, Elaboratable, Module, Record, Repl, Signal
 from ....hdl.rec    import Direction
 from ....util.units import log2_int
-
 from ..memory       import MemoryMap
-
 
 __all__ = (
 	'CycleType',

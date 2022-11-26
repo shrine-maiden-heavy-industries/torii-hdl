@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from contextlib import contextmanager
-import itertools
-import re
+from itertools  import chain
+from re         import search
+
 from vcd        import VCDWriter
 from vcd.gtkw   import GTKWSave
 
 from ..hdl      import *
 from ..hdl.ast  import SignalDict
 from ._base     import *
-from ._pyrtl    import _FragmentCompiler
-from ._pycoro   import PyCoroProcess
 from ._pyclock  import PyClockProcess
+from ._pycoro   import PyCoroProcess
+from ._pyrtl    import _FragmentCompiler
 
 __all__ = (
 	'PySimEngine',
@@ -83,7 +84,7 @@ class _VCDWriter:
 		if self.vcd_writer is None:
 			return
 
-		for signal, names in itertools.chain(signal_names.items(), trace_names.items()):
+		for signal, names in chain(signal_names.items(), trace_names.items()):
 			if signal.decoder:
 				var_type = 'string'
 				var_size = 1
@@ -94,7 +95,7 @@ class _VCDWriter:
 				var_init = signal.reset
 
 			for (*var_scope, var_name) in names:
-				if re.search(r'[ \t\r\n]', var_name):
+				if search(r'[ \t\r\n]', var_name):
 					raise NameError(f'Signal \'{".".join(var_scope)}.{var_name}\' contains a whitespace character')
 
 				suffix = None

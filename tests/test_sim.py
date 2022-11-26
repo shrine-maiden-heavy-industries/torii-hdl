@@ -4,7 +4,7 @@
 import os
 from contextlib    import contextmanager
 
-from torii._utils  import flatten
+from torii.util    import flatten
 from torii.hdl.ast import *
 from torii.hdl.cd  import *
 from torii.hdl.mem import *

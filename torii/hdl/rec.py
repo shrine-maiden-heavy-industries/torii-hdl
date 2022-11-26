@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from enum        import Enum
 from collections import OrderedDict
+from enum        import Enum
 from functools   import reduce, wraps
-from typing      import Union, Tuple, Iterable, Any, Generator, Optional
+from typing      import Any, Generator, Iterable, Optional, Tuple, Union
 
+from ..util      import union
 from ..util      import tracer
-from .._utils    import union
 from .ast        import *
-
 
 __all__ = (
 	'Direction',

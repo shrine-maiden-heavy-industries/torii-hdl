@@ -3,8 +3,8 @@
 from enum     import Enum
 from typing   import Optional, Tuple
 
+from ....     import Elaboratable, Module, Mux, Record, Signal
 from ..memory import MemoryMap
-from ....     import Record, Elaboratable, Module, Signal, Mux
 
 __all__ = (
 	'Element',

@@ -1,21 +1,20 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import os
-import tempfile
 from contextlib import contextmanager
-import sys
+from os         import getenv
+from sys        import version_info
+from tempfile   import NamedTemporaryFile
 
 from ..hdl      import *
 from ..hdl.ast  import SignalSet
-from ..hdl.xfrm import ValueVisitor, StatementVisitor, LHSGroupFilter
+from ..hdl.xfrm import LHSGroupFilter, StatementVisitor, ValueVisitor
 from ._base     import BaseProcess
-
 
 __all__ = (
 	'PyRTLProcess',
 )
 
-_USE_PATTERN_MATCHING = (sys.version_info >= (3, 10))
+_USE_PATTERN_MATCHING = (version_info >= (3, 10))
 
 class PyRTLProcess(BaseProcess):
 	__slots__ = ('is_comb', 'runnable', 'passive', 'run')
@@ -473,8 +472,8 @@ class _FragmentCompiler:
 			# (almost certainly due to a bug in the code generator), use this environment variable
 			# to make backtraces useful.
 			code = emitter.flush()
-			if os.getenv('TORII_pysim_dump'):
-				file = tempfile.NamedTemporaryFile('w', prefix = 'torii_pysim_', delete = False)
+			if getenv('TORII_PYSIM_DUMP'):
+				file = NamedTemporaryFile('w', prefix = 'torii_pysim_', delete = False)
 				file.write(code)
 				filename = file.name
 			else:

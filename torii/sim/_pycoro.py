@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import inspect
+from inspect   import getfile, getlineno, iscoroutine, isgenerator
 
 from ..hdl     import *
-from ..hdl.ast import Statement, SignalSet
-from .core     import Tick, Settle, Delay, Passive, Active
+from ..hdl.ast import SignalSet, Statement
 from ._base    import BaseProcess
-from ._pyrtl   import _ValueCompiler, _RHSValueCompiler, _StatementCompiler
+from ._pyrtl   import _RHSValueCompiler, _StatementCompiler, _ValueCompiler
+from .core     import Active, Delay, Passive, Settle, Tick
 
 __all__ = (
     'PyCoroProcess',
@@ -38,13 +38,13 @@ class PyCoroProcess(BaseProcess):
         coroutine = self.coroutine
         if coroutine is None:
             return None
-        while coroutine.gi_yieldfrom is not None and inspect.isgenerator(coroutine.gi_yieldfrom):
+        while coroutine.gi_yieldfrom is not None and isgenerator(coroutine.gi_yieldfrom):
             coroutine = coroutine.gi_yieldfrom
-        if inspect.isgenerator(coroutine):
+        if isgenerator(coroutine):
             frame = coroutine.gi_frame
-        if inspect.iscoroutine(coroutine):
+        if iscoroutine(coroutine):
             frame = coroutine.cr_frame
-        return f'{inspect.getfile(frame)}:{inspect.getlineno(frame)}'
+        return f'{getfile(frame)}:{getlineno(frame)}'
 
     def add_trigger(self, signal, trigger = None):
         self.state.add_trigger(self, signal, trigger = trigger)

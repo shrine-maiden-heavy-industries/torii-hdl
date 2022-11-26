@@ -1,18 +1,20 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc             import ABCMeta, abstractmethod
-import warnings
 import functools
-from collections     import OrderedDict
-from collections.abc import Iterable, MutableMapping, MutableSet, MutableSequence
-from enum            import Enum
-from itertools       import chain
-from typing          import Iterator, Tuple, Union, Optional
+import warnings
+from abc               import ABCMeta, abstractmethod
+from collections       import OrderedDict
+from collections.abc   import (
+	Iterable, MutableMapping, MutableSequence, MutableSet
+)
+from enum              import Enum
+from itertools         import chain
+from typing            import Iterator, Optional, Tuple, Union
 
-from ..util          import tracer
-from .._utils        import *
-from .._unused       import *
-
+from .._unused         import *
+from ..util            import tracer, flatten, union
+from ..util.decorators import final, deprecated
+from ..util.units      import bits_for
 
 __all__ = (
 	'Shape', 'signed', 'unsigned', 'ShapeCastable',

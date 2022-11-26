@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractmethod
-from typing    import List, Dict, Literal
+from abc        import abstractmethod
+from typing     import Dict, List, Literal
 
-from ...hdl    import (
-	Instance, Const, Signal, Module, ClockDomain, ClockSignal, ResetSignal, C,
-	Record
+from ...build   import Attrs, Clock, Subsignal, TemplatedPlatform
+from ...hdl     import (
+	C, ClockDomain, ClockSignal, Const, Instance, Module,
+    Record, ResetSignal, Signal
 )
-from ...build   import TemplatedPlatform, Clock, Subsignal, Attrs
 from ...lib.cdc import ResetSynchronizer
 from ...lib.io  import Pin
-
 
 __all__ = (
 	'LatticeICE40Platform',

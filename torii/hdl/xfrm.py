@@ -4,14 +4,13 @@ from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Iterable
 
-from .._utils        import flatten
+from ..util          import flatten
 from ..util          import tracer
 from .ast            import *
 from .ast            import _StatementList
 from .cd             import *
 from .ir             import *
 from .rec            import *
-
 
 __all__ = (
 	'ValueVisitor', 'ValueTransformer',
