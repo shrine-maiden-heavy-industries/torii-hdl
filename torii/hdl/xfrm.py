@@ -94,8 +94,7 @@ class ValueVisitor(metaclass = ABCMeta):
 			new_value = self.on_AnyConst(value)
 		elif type(value) is AnySeq:
 			new_value = self.on_AnySeq(value)
-		elif isinstance(value, Signal):
-			# Uses `isinstance()` and not `type() is` because amaranth.compat requires it.
+		elif type(value) is Signal:
 			new_value = self.on_Signal(value)
 		elif type(value) is ClockSignal:
 			new_value = self.on_ClockSignal(value)
