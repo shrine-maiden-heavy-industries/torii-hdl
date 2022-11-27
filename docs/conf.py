@@ -18,6 +18,7 @@ extensions = [
 	'sphinx.ext.napoleon',
 	'sphinx.ext.todo',
 	'sphinxcontrib.platformpicker',
+	'sphinxcontrib.wavedrom',
 	'myst_parser',
 	'sphinx_rtd_theme',
 ]
@@ -30,7 +31,7 @@ source_suffix = {
 	'.md': 'markdown',
 }
 
-root_doc = "cover"
+root_doc = 'cover'
 
 pygments_style         = 'monokai'
 autodoc_member_order   = 'bysource'
@@ -63,5 +64,16 @@ html_static_path = [
 ]
 
 html_css_files = [
-	'custom.css'
+	'css/styles.css'
 ]
+
+html_js_files = [
+	'js/mermaid.min.js',
+	'js/wavedrom.min.js',
+	'js/wavedrom.skin.js',
+]
+
+html_style = 'css/styles.css'
+
+offline_skin_js_path = '_static/js/wavedrom.skin.js'
+offline_wavedrom_js_path = '_static/js/wavedrom.min.js'

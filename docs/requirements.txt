@@ -1,4 +1,6 @@
 sphinx
 sphinx-rtd-theme
 sphinxcontrib-platformpicker
+wavedrom
+sphinxcontrib-wavedrom
 myst-parser
