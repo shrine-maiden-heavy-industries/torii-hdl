@@ -61,3 +61,31 @@ def VGAResource(
 		ios.append(attrs)
 
 	return Resource.family(*args, default_name = 'vga', ios = ios)
+
+
+def VGADACResource(
+	*args,
+	clk : str, r : str, g : str, b : str, vs : str, hs : str, extras : list[Subsignal] = [],
+	invert_sync : bool = False, conn : Optional[Union[Tuple[str, int], str]] = None,
+	attrs : Optional[Attrs] = None
+) -> Resource:
+
+	ios = []
+
+	ios.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
+	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
+	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
+	ios.append(Subsignal('b', Pins(b, dir = 'o', conn = conn)))
+	ios.append(Subsignal(
+		'hs', Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+	))
+	ios.append(Subsignal(
+		'vs', Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+	))
+	for extra in extras:
+		ios.append(extra)
+
+	if attrs is not None:
+		ios.append(attrs)
+
+	return Resource.family(*args, default_name = 'vgadac', ios = ios)
