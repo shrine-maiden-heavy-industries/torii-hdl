@@ -24,7 +24,7 @@ class XilinxPlatform(TemplatedPlatform):
 		* ``vivado``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_Vivado``, if present.
+	``TORII_ENV_VIVADO``, if present.
 
 	Available overrides:
 		* ``script_after_read``: inserts commands after ``read_xdc`` in Tcl script.
@@ -66,7 +66,7 @@ class XilinxPlatform(TemplatedPlatform):
 		* ``bitgen``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_ISE``, if present.
+	``TORII_ENV_ISE``, if present.
 
 	Available overrides:
 		* ``script_after_run``: inserts commands after ``run`` in XST script.
@@ -106,10 +106,11 @@ class XilinxPlatform(TemplatedPlatform):
 		* ``symbiflow_write_bitstream``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_Symbiflow``, if present.
+	``TORII_ENV_SYMBIFLOW``, if present.
 
 	Available overrides:
 		* ``add_constraints``: inserts commands in XDC file.
+
 	''' # noqa: E101
 
 	toolchain = None # selected when creating platform

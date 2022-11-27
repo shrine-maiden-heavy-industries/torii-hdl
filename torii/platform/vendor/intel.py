@@ -24,7 +24,7 @@ class IntelPlatform(TemplatedPlatform):
 		* ``quartus_sta``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_Quartus``, if present.
+	``TORII_ENV_QUARTUS``, if present.
 
 	Available overrides:
 		* ``add_settings``: inserts commands at the end of the QSF file.
@@ -48,7 +48,7 @@ class IntelPlatform(TemplatedPlatform):
 		* ``nextpnr-mistral``
 
 	The environment is populated by running the script specified in the environment variable
-	``TORII_ENV_Mistral``, if present.
+	``TORII_ENV_MISTRAL``, if present.
 
 		* ``verbose``: enables logging of informational messages to standard error.
 		* ``read_verilog_opts``: adds options for ``read_verilog`` Yosys command.
@@ -57,6 +57,7 @@ class IntelPlatform(TemplatedPlatform):
 		* ``script_after_synth``: inserts commands after ``synth_intel_alm`` in Yosys script.
 		* ``yosys_opts``: adds extra options for ``yosys``.
 		* ``nextpnr_opts``: adds extra options for ``nextpnr-mistral``.
+
 	'''
 
 	toolchain = None # selected when creating platform

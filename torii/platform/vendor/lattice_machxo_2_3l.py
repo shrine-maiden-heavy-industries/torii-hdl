@@ -24,7 +24,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		* ``ddtcmd``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_Diamond``, if present. On Linux, diamond_env as provided by Diamond
+	``TORIIS_ENV_DIAMOND``, if present. On Linux, diamond_env as provided by Diamond
 	itself is a good candidate. On Windows, the following script (named ``diamond_env.bat``,
 	for instance) is known to work::
 
@@ -44,6 +44,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		* ``{{name}}.svf``: JTAG programming vector for FLASH programming.
 		* ``{{name}}_flash.svf``: JTAG programming vector for FLASH programming.
 		* ``{{name}}_sram.svf``: JTAG programming vector for SRAM programming.
+
 	'''
 
 	toolchain = 'Diamond'

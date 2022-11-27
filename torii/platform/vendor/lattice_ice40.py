@@ -26,7 +26,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		* ``icepack``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_IceStorm``, if present.
+	``TORII_ENV_ICESTORM``, if present.
 
 	Available overrides:
 		* ``verbose``: enables logging of informational messages to standard error.
@@ -55,7 +55,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		* ``tclsh``
 
 	The environment is populated by setting the necessary environment variables based on
-	``AMARANTH_ENV_iCECube2``, which must point to the root of the iCECube2 installation, and
+	``TORII_ENV_ICECUBE2``, which must point to the root of the iCECube2 installation, and
 	is required.
 
 	Available overrides:
@@ -72,6 +72,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		* ``sbt/outputs/router/{{name}}_timing.rpt``: timing report.
 		* ``{{name}}.edf``: EDIF netlist.
 		* ``{{name}}.bin``: binary bitstream.
+
 	''' # noqa: E101
 
 	toolchain = None # selected when creating platform
