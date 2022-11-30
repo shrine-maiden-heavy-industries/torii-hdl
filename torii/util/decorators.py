@@ -2,9 +2,8 @@
 
 
 from collections import OrderedDict
-from contextlib  import contextmanager
 from functools   import wraps
-from warnings    import catch_warnings, filterwarnings, warn
+from warnings    import warn
 
 __all__ = (
 	'memoize',
@@ -37,23 +36,6 @@ def deprecated(message : str, stacklevel : int = 2):
 			return f(*args, **kwargs)
 		return wrapper
 	return decorator
-
-
-def _ignore_deprecated(f = None):
-	if f is None:
-		@contextmanager
-		def context_like():
-			with catch_warnings():
-				filterwarnings(action = 'ignore', category = DeprecationWarning)
-				yield
-		return context_like()
-	else:
-		@wraps(f)
-		def decorator_like(*args, **kwargs):
-			with catch_warnings():
-				filterwarnings(action = 'ignore', category  =DeprecationWarning)
-				f(*args, **kwargs)
-		return decorator_like
 
 def extend(cls):
 	def decorator(f):
