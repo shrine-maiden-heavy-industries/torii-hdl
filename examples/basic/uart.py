@@ -130,7 +130,8 @@ if __name__ == '__main__':
 			yield
 			assert not (yield uart.tx_ack)
 
-			for _ in range(uart.divisor * 12): yield
+			for _ in range(uart.divisor * 12):
+				yield
 
 			assert (yield uart.tx_ack)
 			assert (yield uart.rx_rdy)
