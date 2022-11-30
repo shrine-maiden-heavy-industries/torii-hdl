@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, Memory
 from torii.cli import main
 
 
@@ -10,9 +10,9 @@ class RegisterFile(Elaboratable):
 		self.dat_r = Signal(8)
 		self.dat_w = Signal(8)
 		self.we    = Signal()
-		self.mem   = Memory(width=8, depth=16, init=[0xaa, 0x55])
+		self.mem   = Memory(width = 8, depth = 16, init = [0xaa, 0x55])
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.submodules.rdport = rdport = self.mem.read_port()
 		m.submodules.wrport = wrport = self.mem.write_port()

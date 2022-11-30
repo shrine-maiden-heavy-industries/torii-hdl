@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal
 from torii.cli import main
 
 
@@ -12,7 +12,7 @@ class ParMux(Elaboratable):
 		self.c = Signal(width)
 		self.o = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		with m.Switch(self.s):
 			with m.Case('--1'):

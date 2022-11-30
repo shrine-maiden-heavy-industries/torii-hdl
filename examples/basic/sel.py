@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, Record
 from torii.cli import main
 
 
@@ -9,7 +9,7 @@ class FlatGPIO(Elaboratable):
 		self.pins = pins
 		self.bus  = bus
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		bus  = self.bus
 
 		m = Module()

@@ -11,7 +11,7 @@ class UART(Elaboratable):
 		Set to ``round(clk-rate / baud-rate)``.
 		E.g. ``12e6 / 115200`` = ``104``.
 	'''
-	def __init__(self, divisor, data_bits=8):
+	def __init__(self, divisor, data_bits = 8):
 		assert divisor >= 4
 
 		self.data_bits = data_bits
@@ -30,11 +30,11 @@ class UART(Elaboratable):
 		self.rx_rdy  = Signal()
 		self.rx_ack  = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		tx_phase = Signal(range(self.divisor))
-		tx_shreg = Signal(1 + self.data_bits + 1, reset=-1)
+		tx_shreg = Signal(1 + self.data_bits + 1, reset = -1)
 		tx_count = Signal(range(len(tx_shreg) + 1))
 
 		m.d.comb += self.tx_o.eq(tx_shreg[0])
@@ -57,7 +57,7 @@ class UART(Elaboratable):
 				]
 
 		rx_phase = Signal(range(self.divisor))
-		rx_shreg = Signal(1 + self.data_bits + 1, reset=-1)
+		rx_shreg = Signal(1 + self.data_bits + 1, reset = -1)
 		rx_count = Signal(range(len(rx_shreg) + 1))
 
 		m.d.comb += self.rx_data.eq(rx_shreg[1:-1])

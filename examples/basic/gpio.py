@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, Record, Array
 from torii.cli import main
 
 
@@ -9,7 +9,7 @@ class GPIO(Elaboratable):
 		self.pins = pins
 		self.bus  = bus
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.comb += self.bus.r_data.eq(self.pins[self.bus.addr])
 		with m.If(self.bus.we):

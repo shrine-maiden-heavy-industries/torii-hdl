@@ -1,35 +1,34 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal
 from torii.cli import main
 
-
 class Adder(Elaboratable):
-	def __init__(self, width):
+	def __init__(self, width : int):
 		self.a   = Signal(width)
 		self.b   = Signal(width)
 		self.o   = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.comb += self.o.eq(self.a + self.b)
 		return m
 
 
 class Subtractor(Elaboratable):
-	def __init__(self, width):
+	def __init__(self, width : int):
 		self.a   = Signal(width)
 		self.b   = Signal(width)
 		self.o   = Signal(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.comb += self.o.eq(self.a - self.b)
 		return m
 
 
 class ALU(Elaboratable):
-	def __init__(self, width):
+	def __init__(self, width : int):
 		self.op  = Signal()
 		self.a   = Signal(width)
 		self.b   = Signal(width)
@@ -38,7 +37,7 @@ class ALU(Elaboratable):
 		self.add = Adder(width)
 		self.sub = Subtractor(width)
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.submodules.add = self.add
 		m.submodules.sub = self.sub

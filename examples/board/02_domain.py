@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 # If more control over clocking and resets is required, a "sync" clock domain could be created
 # explicitly, which overrides the default behavior. Any other clock domains could also be
 # independently created in addition to the main "sync" domain.
 
-from torii                                     import *
-from torii_boards.lattice.ice40_hx1k_blink_evn import *
-
-
+from torii                                     import (
+	Elaboratable, Module, Signal, ClockDomain, ClockSignal
+)
+from torii_boards.lattice.ice40_hx1k_blink_evn import ICE40HX1KBlinkEVNPlatform
 
 class BlinkyWithDomain(Elaboratable):
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		clk3p3 = platform.request('clk3p3')
 		led    = platform.request('led', 0)
 		timer  = Signal(20)

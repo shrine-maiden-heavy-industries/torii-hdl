@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, Cat
 from torii.cli import main
 
 
 class UARTReceiver(Elaboratable):
-	def __init__(self, divisor):
+	def __init__(self, divisor : int):
 		self.divisor = divisor
 
 		self.i    = Signal()
@@ -14,7 +14,7 @@ class UARTReceiver(Elaboratable):
 		self.ack  = Signal()
 		self.err  = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 
 		ctr = Signal(range(self.divisor))

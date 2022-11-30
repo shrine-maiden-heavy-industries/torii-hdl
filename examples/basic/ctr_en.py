@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import *
-from torii.sim  import *
+from torii      import Elaboratable, Module, Signal, EnableInserter
+from torii.sim  import Simulator
 from torii.back import verilog
 
 
 class Counter(Elaboratable):
-	def __init__(self, width):
-		self.v = Signal(width, reset=2**width-1)
+	def __init__(self, width : int):
+		self.v = Signal(width, reset = 2**width-1)
 		self.o = Signal()
 		self.en = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.sync += self.v.eq(self.v + 1)
 		m.d.comb += self.o.eq(self.v[-1])
@@ -37,6 +37,8 @@ def ce_proc():
 	yield
 	yield
 	yield ctr.en.eq(1)
+
 sim.add_sync_process(ce_proc)
+
 with sim.write_vcd('ctrl.vcd', 'ctrl.gtkw', traces = [ctr.en, ctr.v, ctr.o]):
 	sim.run_until(100e-6, run_passive = True)

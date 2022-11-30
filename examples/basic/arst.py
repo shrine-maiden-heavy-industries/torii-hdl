@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, ClockDomain
 from torii.cli import main
 
 
 class ClockDivisor(Elaboratable):
-	def __init__(self, factor):
+	def __init__(self, factor : int):
 		self.v = Signal(factor)
 		self.o = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.d.sync += self.v.eq(self.v + 1)
 		m.d.comb += self.o.eq(self.v[-1])

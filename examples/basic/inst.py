@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import *
+from torii     import Elaboratable, Module, Signal, Instance
 from torii.cli import main
 
 
@@ -11,15 +11,15 @@ class System(Elaboratable):
 		self.dat_w = Signal(8)
 		self.we    = Signal()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform) -> Module:
 		m = Module()
 		m.submodules.cpu = Instance(
 			'CPU',
-			p_RESET_ADDR=0xfff0,
-			i_d_adr  =self.adr,
-			i_d_dat_r=self.dat_r,
-			o_d_dat_w=self.dat_w,
-			i_d_we   =self.we,
+			p_RESET_ADDR = 0xfff0,
+			i_d_adr      = self.adr,
+			i_d_dat_r    = self.dat_r,
+			o_d_dat_w    = self.dat_w,
+			i_d_we       = self.we,
 		)
 		return m
 

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii         import *
+from torii         import Signal, Module
 from torii.lib.cdc import FFSynchronizer
 from torii.cli     import main
 
