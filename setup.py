@@ -36,7 +36,7 @@ def doc_version():
 
 
 setup(
-	name             = 'torii-hdl',
+	name             = 'torii',
 	use_scm_version  = scm_version(),
 	author           = ', '.join([
 		'Aki Van Ness',
