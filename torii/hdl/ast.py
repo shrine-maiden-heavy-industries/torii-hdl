@@ -18,7 +18,7 @@ from ..util.units      import bits_for
 
 __all__ = (
 	'Shape', 'signed', 'unsigned', 'ShapeCastable',
-	'Value', 'Const', 'C', 'AnyConst', 'AnySeq', 'Operator', 'Mux', 'Part', 'Slice', 'Cat', 'Repl',
+	'Value', 'Const', 'AnyConst', 'AnySeq', 'Operator', 'Mux', 'Part', 'Slice', 'Cat', 'Repl',
 	'Array', 'ArrayProxy',
 	'Signal', 'ClockSignal', 'ResetSignal',
 	'UserValue', 'ValueCastable',
@@ -668,9 +668,6 @@ class Const(Value):
 		return f'(const {self.width}\'{"s" if self.signed else ""}d{self.value})'
 
 
-C = Const  # shorthand
-
-
 class AnyValue(Value, DUID):
 	def __init__(
 		self, shape : Union[Shape, int, Tuple[int, bool], range, type, ShapeCastable] , *,
@@ -897,7 +894,7 @@ class Cat(Value):
 			if isinstance(arg, int) and arg not in [0, 1]:
 				warnings.warn(
 					f'Argument #{index + 1} of Cat() is a bare integer {arg} used in bit vector '
-					f'context; consider specifying explicit width using C({arg}, {bits_for(arg)}) instead',
+					f'context; consider specifying explicit width using Const({arg}, {bits_for(arg)}) instead',
 					SyntaxWarning, stacklevel = 2 + src_loc_at
 				)
 			self.parts.append(Value.cast(arg))
@@ -951,7 +948,7 @@ class Repl(Value):
 		if isinstance(value, int) and value not in [0, 1]:
 			warnings.warn(
 				f'Value argument of Repl() is a bare integer {value} used in bit vector '
-				f'context; consider specifying explicit width using C({value}, {bits_for(value)}) instead',
+				f'context; consider specifying explicit width using Const({value}, {bits_for(value)}) instead',
 				SyntaxWarning, stacklevel = 2 + src_loc_at
 			)
 		self.value = Value.cast(value)

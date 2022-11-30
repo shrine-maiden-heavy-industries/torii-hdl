@@ -888,7 +888,7 @@ class CatTestCase(FHDLTestCase):
 		with self.assertWarnsRegex(
 			SyntaxWarning,
 			r'^Argument #1 of Cat\(\) is a bare integer 2 used in bit vector context; '
-			r'consider specifying explicit width using C\(2, 2\) instead$'
+			r'consider specifying explicit width using Const\(2, 2\) instead$'
 		):
 			Cat(2)
 
@@ -925,7 +925,7 @@ class ReplTestCase(FHDLTestCase):
 		with self.assertWarnsRegex(
 			SyntaxWarning,
 			r'^Value argument of Repl\(\) is a bare integer 2 used in bit vector context; '
-			r'consider specifying explicit width using C\(2, 2\) instead$'
+			r'consider specifying explicit width using Const\(2, 2\) instead$'
 		):
 			Repl(2, 3)
 

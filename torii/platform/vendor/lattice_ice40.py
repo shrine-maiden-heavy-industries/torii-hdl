@@ -5,7 +5,7 @@ from typing     import Dict, List, Literal
 
 from ...build   import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl     import (
-	C, ClockDomain, ClockSignal, Const, Instance, Module,
+	ClockDomain, ClockSignal, Const, Instance, Module,
 	Record, ResetSignal, Signal
 )
 from ...lib.cdc import ResetSynchronizer
@@ -578,7 +578,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 				o_type = 0b0100   # PIN_OUTPUT_DDR
 			elif pin.xdr == 2:
 				o_type = 0b1100   # PIN_OUTPUT_DDR_ENABLE_REGISTERED
-			io_args.append(('p', 'PIN_TYPE', C((o_type << 2) | i_type, 6)))
+			io_args.append(('p', 'PIN_TYPE', Const((o_type << 2) | i_type, 6)))
 
 			if hasattr(pin, 'i_clk'):
 				io_args.append(('i', 'INPUT_CLK',  pin.i_clk))

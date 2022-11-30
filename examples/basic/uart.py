@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii import *
+from torii import Elaboratable, Signal, Module, Cat, Const
 
 
 class UART(Elaboratable):
@@ -42,7 +42,7 @@ class UART(Elaboratable):
 			m.d.comb += self.tx_ack.eq(1)
 			with m.If(self.tx_rdy):
 				m.d.sync += [
-					tx_shreg.eq(Cat(C(0, 1), self.tx_data, C(1, 1))),
+					tx_shreg.eq(Cat(Const(0, 1), self.tx_data, Const(1, 1))),
 					tx_count.eq(len(tx_shreg)),
 					tx_phase.eq(self.divisor - 1),
 				]
@@ -51,7 +51,7 @@ class UART(Elaboratable):
 				m.d.sync += tx_phase.eq(tx_phase - 1)
 			with m.Else():
 				m.d.sync += [
-					tx_shreg.eq(Cat(tx_shreg[1:], C(1, 1))),
+					tx_shreg.eq(Cat(tx_shreg[1:], Const(1, 1))),
 					tx_count.eq(tx_count - 1),
 					tx_phase.eq(self.divisor - 1),
 				]

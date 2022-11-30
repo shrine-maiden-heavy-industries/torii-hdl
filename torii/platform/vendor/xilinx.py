@@ -5,7 +5,7 @@ from typing     import Dict, List, Literal, Optional, Tuple, Union
 
 from ...build   import Attrs, TemplatedPlatform
 from ...hdl     import (
-	C, ClockDomain, ClockSignal, Const, Instance, Module,
+	ClockDomain, ClockSignal, Const, Instance, Module,
 	Record, ResetSignal, Signal
 )
 from ...lib.cdc import ResetSynchronizer
@@ -736,14 +736,22 @@ class XilinxPlatform(TemplatedPlatform):
 				# Actually use BUFGCTRL configured as BUFGCE, since using BUFGCE causes
 				# sim/synth mismatches with Vivado 2019.2, and the suggested workaround
 				# (SIM_DEVICE parameter) breaks Vivado 2017.4.
-				m.submodules += Instance('BUFGCTRL',
+				m.submodules += Instance(
+					'BUFGCTRL',
 					p_SIM_DEVICE = '7SERIES',
-					i_I0 = clk_i,   i_S0 = C(1, 1), i_CE0 = ready,   i_IGNORE0 = C(0, 1),
-					i_I1 = C(1, 1), i_S1 = C(0, 1), i_CE1 = C(0, 1), i_IGNORE1 = C(1, 1),
-					o_O = ClockSignal('sync')
+					i_I0         = clk_i,
+					i_S0         = Const(1, 1),
+					i_CE0        = ready,
+					i_IGNORE0    = Const(0, 1),
+					i_I1         = Const(1, 1),
+					i_S1         = Const(0, 1),
+					i_CE1        = Const(0, 1),
+					i_IGNORE1    = Const(1, 1),
+					o_O          = ClockSignal('sync')
 				)
 			else:
-				m.submodules += Instance('BUFGCE',
+				m.submodules += Instance(
+					'BUFGCE',
 					p_SIM_DEVICE = 'ULTRASCALE',
 					i_CE = ready,
 					i_I = clk_i,
@@ -828,8 +836,8 @@ class XilinxPlatform(TemplatedPlatform):
 					'IDDR2',
 					p_DDR_ALIGNMENT = alignment,
 					p_SRTYPE = 'ASYNC',
-					p_INIT_Q0 = C(0, 1),
-					p_INIT_Q1 = C(0, 1),
+					p_INIT_Q0 = Const(0, 1),
+					p_INIT_Q1 = Const(0, 1),
 					i_C0 = clk,
 					i_C1 = ~clk,
 					i_CE = Const(1),
@@ -848,8 +856,8 @@ class XilinxPlatform(TemplatedPlatform):
 						'IDDR',
 						p_DDR_CLK_EDGE = 'SAME_EDGE_PIPELINED',
 						p_SRTYPE = 'ASYNC',
-						p_INIT_Q1 = C(0, 1),
-						p_INIT_Q2 = C(0, 1),
+						p_INIT_Q1 = Const(0, 1),
+						p_INIT_Q2 = Const(0, 1),
 						i_C = clk,
 						i_CE = Const(1),
 						i_S = Const(0),
@@ -862,8 +870,8 @@ class XilinxPlatform(TemplatedPlatform):
 					m.submodules += Instance(
 						'IDDRE1',
 						p_DDR_CLK_EDGE = 'SAME_EDGE_PIPELINED',
-						p_IS_C_INVERTED = C(0, 1),
-						p_IS_CB_INVERTED = C(1, 1),
+						p_IS_C_INVERTED = Const(0, 1),
+						p_IS_CB_INVERTED = Const(1, 1),
 						i_C = clk,
 						i_CB = clk,
 						i_R = Const(0),
@@ -891,7 +899,7 @@ class XilinxPlatform(TemplatedPlatform):
 						'ODDR2',
 						p_DDR_ALIGNMENT = 'NONE',
 						p_SRTYPE = 'ASYNC',
-						p_INIT = C(0, 1),
+						p_INIT = Const(0, 1),
 						i_C0 = clk,
 						i_C1 = ~clk,
 						i_CE = Const(1),
@@ -909,7 +917,7 @@ class XilinxPlatform(TemplatedPlatform):
 						'ODDR2',
 						p_DDR_ALIGNMENT = 'C0',
 						p_SRTYPE = 'ASYNC',
-						p_INIT = C(0, 1),
+						p_INIT = Const(0, 1),
 						i_C0 = clk,
 						i_C1 = ~clk,
 						i_CE = Const(1),
@@ -924,7 +932,7 @@ class XilinxPlatform(TemplatedPlatform):
 						'ODDR',
 						p_DDR_CLK_EDGE = 'SAME_EDGE',
 						p_SRTYPE = 'ASYNC',
-						p_INIT = C(0, 1),
+						p_INIT = Const(0, 1),
 						i_C = clk,
 						i_CE = Const(1),
 						i_S = Const(0),
@@ -936,7 +944,7 @@ class XilinxPlatform(TemplatedPlatform):
 				elif self.family in XDDRE1_FAMILIES:
 					m.submodules += Instance(
 						'ODDRE1',
-						p_SRVAL = C(0, 1),
+						p_SRVAL = Const(0, 1),
 						i_C = clk,
 						i_SR = Const(0),
 						i_D1 = d1[bit],

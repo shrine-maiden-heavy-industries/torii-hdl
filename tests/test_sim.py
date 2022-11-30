@@ -42,246 +42,246 @@ class SimulatorUnitTestCase(FHDLTestCase):
 
 	def test_invert(self):
 		stmt = lambda y, a: y.eq(~a)
-		self.assertStatement(stmt, [C(0b0000, 4)], C(0b1111, 4))
-		self.assertStatement(stmt, [C(0b1010, 4)], C(0b0101, 4))
-		self.assertStatement(stmt, [C(0,      4)], C(-1,     4))
+		self.assertStatement(stmt, [Const(0b0000, 4)], Const(0b1111, 4))
+		self.assertStatement(stmt, [Const(0b1010, 4)], Const(0b0101, 4))
+		self.assertStatement(stmt, [Const(0,      4)], Const(-1,     4))
 
 	def test_neg(self):
 		stmt = lambda y, a: y.eq(-a)
-		self.assertStatement(stmt, [C(0b0000, 4)], C(0b0000, 4))
-		self.assertStatement(stmt, [C(0b0001, 4)], C(0b1111, 4))
-		self.assertStatement(stmt, [C(0b1010, 4)], C(0b0110, 4))
-		self.assertStatement(stmt, [C(1,      4)], C(-1,     4))
-		self.assertStatement(stmt, [C(5,      4)], C(-5,     4))
+		self.assertStatement(stmt, [Const(0b0000, 4)], Const(0b0000, 4))
+		self.assertStatement(stmt, [Const(0b0001, 4)], Const(0b1111, 4))
+		self.assertStatement(stmt, [Const(0b1010, 4)], Const(0b0110, 4))
+		self.assertStatement(stmt, [Const(1,      4)], Const(-1,     4))
+		self.assertStatement(stmt, [Const(5,      4)], Const(-5,     4))
 
 	def test_bool(self):
 		stmt = lambda y, a: y.eq(a.bool())
-		self.assertStatement(stmt, [C(0, 4)], C(0))
-		self.assertStatement(stmt, [C(1, 4)], C(1))
-		self.assertStatement(stmt, [C(2, 4)], C(1))
+		self.assertStatement(stmt, [Const(0, 4)], Const(0))
+		self.assertStatement(stmt, [Const(1, 4)], Const(1))
+		self.assertStatement(stmt, [Const(2, 4)], Const(1))
 
 	def test_as_unsigned(self):
 		stmt = lambda y, a, b: y.eq(a.as_unsigned() == b)
-		self.assertStatement(stmt, [C(0b01, signed(2)), C(0b0001, unsigned(4))], C(1))
-		self.assertStatement(stmt, [C(0b11, signed(2)), C(0b0011, unsigned(4))], C(1))
+		self.assertStatement(stmt, [Const(0b01, signed(2)), Const(0b0001, unsigned(4))], Const(1))
+		self.assertStatement(stmt, [Const(0b11, signed(2)), Const(0b0011, unsigned(4))], Const(1))
 
 	def test_as_unsigned_lhs(self):
 		stmt = lambda y, a: y.as_unsigned().eq(a)
-		self.assertStatement(stmt, [C(0b01, unsigned(2))], C(0b0001, signed(4)))
+		self.assertStatement(stmt, [Const(0b01, unsigned(2))], Const(0b0001, signed(4)))
 
 	def test_as_signed(self):
 		stmt = lambda y, a, b: y.eq(a.as_signed() == b)
-		self.assertStatement(stmt, [C(0b01, unsigned(2)), C(0b0001, signed(4))], C(1))
-		self.assertStatement(stmt, [C(0b11, unsigned(2)), C(0b1111, signed(4))], C(1))
+		self.assertStatement(stmt, [Const(0b01, unsigned(2)), Const(0b0001, signed(4))], Const(1))
+		self.assertStatement(stmt, [Const(0b11, unsigned(2)), Const(0b1111, signed(4))], Const(1))
 
 	def test_as_signed_issue_502(self):
 		stmt = lambda y, a: y.eq(a.as_signed())
-		self.assertStatement(stmt, [C(0b01, unsigned(2))], C(0b0001, signed(4)))
-		self.assertStatement(stmt, [C(0b11, unsigned(2))], C(0b1111, signed(4)))
+		self.assertStatement(stmt, [Const(0b01, unsigned(2))], Const(0b0001, signed(4)))
+		self.assertStatement(stmt, [Const(0b11, unsigned(2))], Const(0b1111, signed(4)))
 
 	def test_as_signed_lhs(self):
 		stmt = lambda y, a: y.as_signed().eq(a)
-		self.assertStatement(stmt, [C(0b01, unsigned(2))], C(0b0001, signed(4)))
+		self.assertStatement(stmt, [Const(0b01, unsigned(2))], Const(0b0001, signed(4)))
 
 	def test_any(self):
 		stmt = lambda y, a: y.eq(a.any())
-		self.assertStatement(stmt, [C(0b00, 2)], C(0))
-		self.assertStatement(stmt, [C(0b01, 2)], C(1))
-		self.assertStatement(stmt, [C(0b10, 2)], C(1))
-		self.assertStatement(stmt, [C(0b11, 2)], C(1))
+		self.assertStatement(stmt, [Const(0b00, 2)], Const(0))
+		self.assertStatement(stmt, [Const(0b01, 2)], Const(1))
+		self.assertStatement(stmt, [Const(0b10, 2)], Const(1))
+		self.assertStatement(stmt, [Const(0b11, 2)], Const(1))
 
 	def test_all(self):
 		stmt = lambda y, a: y.eq(a.all())
-		self.assertStatement(stmt, [C(0b00, 2)], C(0))
-		self.assertStatement(stmt, [C(0b01, 2)], C(0))
-		self.assertStatement(stmt, [C(0b10, 2)], C(0))
-		self.assertStatement(stmt, [C(0b11, 2)], C(1))
+		self.assertStatement(stmt, [Const(0b00, 2)], Const(0))
+		self.assertStatement(stmt, [Const(0b01, 2)], Const(0))
+		self.assertStatement(stmt, [Const(0b10, 2)], Const(0))
+		self.assertStatement(stmt, [Const(0b11, 2)], Const(1))
 
 	def test_xor_unary(self):
 		stmt = lambda y, a: y.eq(a.xor())
-		self.assertStatement(stmt, [C(0b00, 2)], C(0))
-		self.assertStatement(stmt, [C(0b01, 2)], C(1))
-		self.assertStatement(stmt, [C(0b10, 2)], C(1))
-		self.assertStatement(stmt, [C(0b11, 2)], C(0))
+		self.assertStatement(stmt, [Const(0b00, 2)], Const(0))
+		self.assertStatement(stmt, [Const(0b01, 2)], Const(1))
+		self.assertStatement(stmt, [Const(0b10, 2)], Const(1))
+		self.assertStatement(stmt, [Const(0b11, 2)], Const(0))
 
 	def test_add(self):
 		stmt = lambda y, a, b: y.eq(a + b)
-		self.assertStatement(stmt, [C(0,  4), C(1,  4)], C(1,   4))
-		self.assertStatement(stmt, [C(-5, 4), C(-5, 4)], C(-10, 5))
+		self.assertStatement(stmt, [Const(0,  4), Const(1,  4)], Const(1,   4))
+		self.assertStatement(stmt, [Const(-5, 4), Const(-5, 4)], Const(-10, 5))
 
 	def test_sub(self):
 		stmt = lambda y, a, b: y.eq(a - b)
-		self.assertStatement(stmt, [C(2,  4), C(1,  4)], C(1,   4))
-		self.assertStatement(stmt, [C(0,  4), C(1,  4)], C(-1,  4))
-		self.assertStatement(stmt, [C(0,  4), C(10, 4)], C(-10, 5))
+		self.assertStatement(stmt, [Const(2,  4), Const(1,  4)], Const(1,   4))
+		self.assertStatement(stmt, [Const(0,  4), Const(1,  4)], Const(-1,  4))
+		self.assertStatement(stmt, [Const(0,  4), Const(10, 4)], Const(-10, 5))
 
 	def test_mul(self):
 		stmt = lambda y, a, b: y.eq(a * b)
-		self.assertStatement(stmt, [C(2,  4), C(1,  4)], C(2,   8))
-		self.assertStatement(stmt, [C(2,  4), C(2,  4)], C(4,   8))
-		self.assertStatement(stmt, [C(7,  4), C(7,  4)], C(49,  8))
+		self.assertStatement(stmt, [Const(2,  4), Const(1,  4)], Const(2,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(2,  4)], Const(4,   8))
+		self.assertStatement(stmt, [Const(7,  4), Const(7,  4)], Const(49,  8))
 
 	def test_floordiv(self):
 		stmt = lambda y, a, b: y.eq(a // b)
-		self.assertStatement(stmt, [C(2,  4), C(1,  4)], C(2,   8))
-		self.assertStatement(stmt, [C(2,  4), C(2,  4)], C(1,   8))
-		self.assertStatement(stmt, [C(7,  4), C(2,  4)], C(3,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(1,  4)], Const(2,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(2,  4)], Const(1,   8))
+		self.assertStatement(stmt, [Const(7,  4), Const(2,  4)], Const(3,   8))
 
 	def test_floordiv_neg(self):
 		stmt = lambda y, a, b: y.eq(a // b)
-		self.assertStatement(stmt, [C(-5, 4), C( 2, 4)], C(-3, 8))
-		self.assertStatement(stmt, [C(-5, 4), C(-2, 4)], C( 2, 8))
-		self.assertStatement(stmt, [C( 5, 4), C( 2, 4)], C( 2, 8))
-		self.assertStatement(stmt, [C( 5, 4), C(-2, 4)], C(-3, 8))
+		self.assertStatement(stmt, [Const(-5, 4), Const( 2, 4)], Const(-3, 8))
+		self.assertStatement(stmt, [Const(-5, 4), Const(-2, 4)], Const( 2, 8))
+		self.assertStatement(stmt, [Const( 5, 4), Const( 2, 4)], Const( 2, 8))
+		self.assertStatement(stmt, [Const( 5, 4), Const(-2, 4)], Const(-3, 8))
 
 	def test_mod(self):
 		stmt = lambda y, a, b: y.eq(a % b)
-		self.assertStatement(stmt, [C(2,  4), C(0,  4)], C(0,   8))
-		self.assertStatement(stmt, [C(2,  4), C(1,  4)], C(0,   8))
-		self.assertStatement(stmt, [C(2,  4), C(2,  4)], C(0,   8))
-		self.assertStatement(stmt, [C(7,  4), C(2,  4)], C(1,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(0,  4)], Const(0,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(1,  4)], Const(0,   8))
+		self.assertStatement(stmt, [Const(2,  4), Const(2,  4)], Const(0,   8))
+		self.assertStatement(stmt, [Const(7,  4), Const(2,  4)], Const(1,   8))
 
 	def test_mod_neg(self):
 		stmt = lambda y, a, b: y.eq(a % b)
-		self.assertStatement(stmt, [C(-5, 4), C( 3, 4)], C( 1, 8))
-		self.assertStatement(stmt, [C(-5, 4), C(-3, 4)], C(-2, 8))
-		self.assertStatement(stmt, [C( 5, 4), C( 3, 4)], C( 2, 8))
-		self.assertStatement(stmt, [C( 5, 4), C(-3, 4)], C(-1, 8))
+		self.assertStatement(stmt, [Const(-5, 4), Const( 3, 4)], Const( 1, 8))
+		self.assertStatement(stmt, [Const(-5, 4), Const(-3, 4)], Const(-2, 8))
+		self.assertStatement(stmt, [Const( 5, 4), Const( 3, 4)], Const( 2, 8))
+		self.assertStatement(stmt, [Const( 5, 4), Const(-3, 4)], Const(-1, 8))
 
 	def test_and(self):
 		stmt = lambda y, a, b: y.eq(a & b)
-		self.assertStatement(stmt, [C(0b1100, 4), C(0b1010, 4)], C(0b1000, 4))
+		self.assertStatement(stmt, [Const(0b1100, 4), Const(0b1010, 4)], Const(0b1000, 4))
 
 	def test_or(self):
 		stmt = lambda y, a, b: y.eq(a | b)
-		self.assertStatement(stmt, [C(0b1100, 4), C(0b1010, 4)], C(0b1110, 4))
+		self.assertStatement(stmt, [Const(0b1100, 4), Const(0b1010, 4)], Const(0b1110, 4))
 
 	def test_xor_binary(self):
 		stmt = lambda y, a, b: y.eq(a ^ b)
-		self.assertStatement(stmt, [C(0b1100, 4), C(0b1010, 4)], C(0b0110, 4))
+		self.assertStatement(stmt, [Const(0b1100, 4), Const(0b1010, 4)], Const(0b0110, 4))
 
 	def test_shl(self):
 		stmt = lambda y, a, b: y.eq(a << b)
-		self.assertStatement(stmt, [C(0b1001, 4), C(0)],  C(0b1001,    5))
-		self.assertStatement(stmt, [C(0b1001, 4), C(3)],  C(0b1001000, 7))
+		self.assertStatement(stmt, [Const(0b1001, 4), Const(0)],  Const(0b1001,    5))
+		self.assertStatement(stmt, [Const(0b1001, 4), Const(3)],  Const(0b1001000, 7))
 
 	def test_shr(self):
 		stmt = lambda y, a, b: y.eq(a >> b)
-		self.assertStatement(stmt, [C(0b1001, 4), C(0)],  C(0b1001,    4))
-		self.assertStatement(stmt, [C(0b1001, 4), C(2)],  C(0b10,      4))
+		self.assertStatement(stmt, [Const(0b1001, 4), Const(0)],  Const(0b1001,    4))
+		self.assertStatement(stmt, [Const(0b1001, 4), Const(2)],  Const(0b10,      4))
 
 	def test_eq(self):
 		stmt = lambda y, a, b: y.eq(a == b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(1))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(0))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(0))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(0))
 
 	def test_ne(self):
 		stmt = lambda y, a, b: y.eq(a != b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(0))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(1))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(1))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(1))
 
 	def test_lt(self):
 		stmt = lambda y, a, b: y.eq(a < b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(0))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(1))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(1))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(0))
 
 	def test_ge(self):
 		stmt = lambda y, a, b: y.eq(a >= b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(1))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(0))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(0))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(1))
 
 	def test_gt(self):
 		stmt = lambda y, a, b: y.eq(a > b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(0))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(0))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(0))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(1))
 
 	def test_le(self):
 		stmt = lambda y, a, b: y.eq(a <= b)
-		self.assertStatement(stmt, [C(0, 4), C(0, 4)], C(1))
-		self.assertStatement(stmt, [C(0, 4), C(1, 4)], C(1))
-		self.assertStatement(stmt, [C(1, 4), C(0, 4)], C(0))
+		self.assertStatement(stmt, [Const(0, 4), Const(0, 4)], Const(1))
+		self.assertStatement(stmt, [Const(0, 4), Const(1, 4)], Const(1))
+		self.assertStatement(stmt, [Const(1, 4), Const(0, 4)], Const(0))
 
 	def test_mux(self):
 		stmt = lambda y, a, b, c: y.eq(Mux(c, a, b))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(0)], C(3, 4))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(1)], C(2, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(0)], Const(3, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(1)], Const(2, 4))
 
 	def test_mux_invert(self):
 		stmt = lambda y, a, b, c: y.eq(Mux(~c, a, b))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(0)], C(2, 4))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(1)], C(3, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(0)], Const(2, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(1)], Const(3, 4))
 
 	def test_mux_wide(self):
 		stmt = lambda y, a, b, c: y.eq(Mux(c, a, b))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(0, 2)], C(3, 4))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(1, 2)], C(2, 4))
-		self.assertStatement(stmt, [C(2, 4), C(3, 4), C(2, 2)], C(2, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(0, 2)], Const(3, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(1, 2)], Const(2, 4))
+		self.assertStatement(stmt, [Const(2, 4), Const(3, 4), Const(2, 2)], Const(2, 4))
 
 	def test_abs(self):
 		stmt = lambda y, a: y.eq(abs(a))
-		self.assertStatement(stmt, [C(3,  unsigned(8))], C(3,  unsigned(8)))
-		self.assertStatement(stmt, [C(-3, unsigned(8))], C(-3, unsigned(8)))
-		self.assertStatement(stmt, [C(3,  signed(8))],   C(3,  signed(8)))
-		self.assertStatement(stmt, [C(-3, signed(8))],   C(3,  signed(8)))
+		self.assertStatement(stmt, [Const(3,  unsigned(8))], Const(3,  unsigned(8)))
+		self.assertStatement(stmt, [Const(-3, unsigned(8))], Const(-3, unsigned(8)))
+		self.assertStatement(stmt, [Const(3,  signed(8))],   Const(3,  signed(8)))
+		self.assertStatement(stmt, [Const(-3, signed(8))],   Const(3,  signed(8)))
 
 	def test_slice(self):
 		stmt1 = lambda y, a: y.eq(a[2])
-		self.assertStatement(stmt1, [C(0b10110100, 8)], C(0b1,  1))
+		self.assertStatement(stmt1, [Const(0b10110100, 8)], Const(0b1,  1))
 		stmt2 = lambda y, a: y.eq(a[2:4])
-		self.assertStatement(stmt2, [C(0b10110100, 8)], C(0b01, 2))
+		self.assertStatement(stmt2, [Const(0b10110100, 8)], Const(0b01, 2))
 
 	def test_slice_lhs(self):
 		stmt1 = lambda y, a: y[2].eq(a)
-		self.assertStatement(stmt1, [C(0b0,  1)], C(0b11111011, 8), reset = 0b11111111)
+		self.assertStatement(stmt1, [Const(0b0,  1)], Const(0b11111011, 8), reset = 0b11111111)
 		stmt2 = lambda y, a: y[2:4].eq(a)
-		self.assertStatement(stmt2, [C(0b01, 2)], C(0b11110111, 8), reset = 0b11111011)
+		self.assertStatement(stmt2, [Const(0b01, 2)], Const(0b11110111, 8), reset = 0b11111011)
 
 	def test_bit_select(self):
 		stmt = lambda y, a, b: y.eq(a.bit_select(b, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(0)], C(0b100, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(2)], C(0b101, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(3)], C(0b110, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(0)], Const(0b100, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(2)], Const(0b101, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(3)], Const(0b110, 3))
 
 	def test_bit_select_lhs(self):
 		stmt = lambda y, a, b: y.bit_select(a, 3).eq(b)
-		self.assertStatement(stmt, [C(0), C(0b100, 3)], C(0b11111100, 8), reset = 0b11111111)
-		self.assertStatement(stmt, [C(2), C(0b101, 3)], C(0b11110111, 8), reset = 0b11111111)
-		self.assertStatement(stmt, [C(3), C(0b110, 3)], C(0b11110111, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(0), Const(0b100, 3)], Const(0b11111100, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(2), Const(0b101, 3)], Const(0b11110111, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(3), Const(0b110, 3)], Const(0b11110111, 8), reset = 0b11111111)
 
 	def test_word_select(self):
 		stmt = lambda y, a, b: y.eq(a.word_select(b, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(0)], C(0b100, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(1)], C(0b110, 3))
-		self.assertStatement(stmt, [C(0b10110100, 8), C(2)], C(0b010, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(0)], Const(0b100, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(1)], Const(0b110, 3))
+		self.assertStatement(stmt, [Const(0b10110100, 8), Const(2)], Const(0b010, 3))
 
 	def test_word_select_lhs(self):
 		stmt = lambda y, a, b: y.word_select(a, 3).eq(b)
-		self.assertStatement(stmt, [C(0), C(0b100, 3)], C(0b11111100, 8), reset = 0b11111111)
-		self.assertStatement(stmt, [C(1), C(0b101, 3)], C(0b11101111, 8), reset = 0b11111111)
-		self.assertStatement(stmt, [C(2), C(0b110, 3)], C(0b10111111, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(0), Const(0b100, 3)], Const(0b11111100, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(1), Const(0b101, 3)], Const(0b11101111, 8), reset = 0b11111111)
+		self.assertStatement(stmt, [Const(2), Const(0b110, 3)], Const(0b10111111, 8), reset = 0b11111111)
 
 	def test_cat(self):
 		stmt = lambda y, *xs: y.eq(Cat(*xs))
-		self.assertStatement(stmt, [C(0b10, 2), C(0b01, 2)], C(0b0110, 4))
+		self.assertStatement(stmt, [Const(0b10, 2), Const(0b01, 2)], Const(0b0110, 4))
 
 	def test_cat_lhs(self):
 		l = Signal(3)
 		m = Signal(3)
 		n = Signal(3)
 		stmt = lambda y, a: [Cat(l, m, n).eq(a), y.eq(Cat(n, m, l))]
-		self.assertStatement(stmt, [C(0b100101110, 9)], C(0b110101100, 9))
+		self.assertStatement(stmt, [Const(0b100101110, 9)], Const(0b110101100, 9))
 
 	def test_nested_cat_lhs(self):
 		l = Signal(3)
 		m = Signal(3)
 		n = Signal(3)
 		stmt = lambda y, a: [Cat(Cat(l, Cat(m)), n).eq(a), y.eq(Cat(n, m, l))]
-		self.assertStatement(stmt, [C(0b100101110, 9)], C(0b110101100, 9))
+		self.assertStatement(stmt, [Const(0b100101110, 9)], Const(0b110101100, 9))
 
 	def test_record(self):
 		rec = Record([
@@ -289,24 +289,24 @@ class SimulatorUnitTestCase(FHDLTestCase):
 			('m', 2),
 		])
 		stmt = lambda y, a: [rec.eq(a), y.eq(rec)]
-		self.assertStatement(stmt, [C(0b101, 3)], C(0b101, 3))
+		self.assertStatement(stmt, [Const(0b101, 3)], Const(0b101, 3))
 
 	def test_repl(self):
 		stmt = lambda y, a: y.eq(Repl(a, 3))
-		self.assertStatement(stmt, [C(0b10, 2)], C(0b101010, 6))
+		self.assertStatement(stmt, [Const(0b10, 2)], Const(0b101010, 6))
 
 	def test_array(self):
 		array = Array([1, 4, 10])
 		stmt = lambda y, a: y.eq(array[a])
-		self.assertStatement(stmt, [C(0)], C(1))
-		self.assertStatement(stmt, [C(1)], C(4))
-		self.assertStatement(stmt, [C(2)], C(10))
+		self.assertStatement(stmt, [Const(0)], Const(1))
+		self.assertStatement(stmt, [Const(1)], Const(4))
+		self.assertStatement(stmt, [Const(2)], Const(10))
 
 	def test_array_oob(self):
 		array = Array([1, 4, 10])
 		stmt = lambda y, a: y.eq(array[a])
-		self.assertStatement(stmt, [C(3)], C(10))
-		self.assertStatement(stmt, [C(4)], C(10))
+		self.assertStatement(stmt, [Const(3)], Const(10))
+		self.assertStatement(stmt, [Const(4)], Const(10))
 
 	def test_array_lhs(self):
 		l = Signal(3, reset = 1)
@@ -314,9 +314,9 @@ class SimulatorUnitTestCase(FHDLTestCase):
 		n = Signal(3, reset = 7)
 		array = Array([l, m, n])
 		stmt = lambda y, a, b: [array[a].eq(b), y.eq(Cat(*array))]
-		self.assertStatement(stmt, [C(0), C(0b000)], C(0b111100000))
-		self.assertStatement(stmt, [C(1), C(0b010)], C(0b111010001))
-		self.assertStatement(stmt, [C(2), C(0b100)], C(0b100100001))
+		self.assertStatement(stmt, [Const(0), Const(0b000)], Const(0b111100000))
+		self.assertStatement(stmt, [Const(1), Const(0b010)], Const(0b111010001))
+		self.assertStatement(stmt, [Const(2), Const(0b100)], Const(0b100100001))
 
 	def test_array_lhs_oob(self):
 		l = Signal(3)
@@ -324,15 +324,15 @@ class SimulatorUnitTestCase(FHDLTestCase):
 		n = Signal(3)
 		array = Array([l, m, n])
 		stmt = lambda y, a, b: [array[a].eq(b), y.eq(Cat(*array))]
-		self.assertStatement(stmt, [C(3), C(0b001)], C(0b001000000))
-		self.assertStatement(stmt, [C(4), C(0b010)], C(0b010000000))
+		self.assertStatement(stmt, [Const(3), Const(0b001)], Const(0b001000000))
+		self.assertStatement(stmt, [Const(4), Const(0b010)], Const(0b010000000))
 
 	def test_array_index(self):
 		array = Array(Array(x * y for y in range(10)) for x in range(10))
 		stmt = lambda y, a, b: y.eq(array[a][b])
 		for x in range(10):
 			for y in range(10):
-				self.assertStatement(stmt, [C(x), C(y)], C(x * y))
+				self.assertStatement(stmt, [Const(x), Const(y)], Const(x * y))
 
 	def test_array_attr(self):
 		from collections import namedtuple
@@ -341,71 +341,71 @@ class SimulatorUnitTestCase(FHDLTestCase):
 		array = Array(pair(x, -x) for x in range(10))
 		stmt = lambda y, a: y.eq(array[a].p + array[a].n)
 		for i in range(10):
-			self.assertStatement(stmt, [C(i)], C(0))
+			self.assertStatement(stmt, [Const(i)], Const(0))
 
 	def test_shift_left(self):
 		stmt1 = lambda y, a: y.eq(a.shift_left(1))
-		self.assertStatement(stmt1, [C(0b10100010, 8)], C(   0b101000100, 9))
+		self.assertStatement(stmt1, [Const(0b10100010, 8)], Const(   0b101000100, 9))
 		stmt2 = lambda y, a: y.eq(a.shift_left(4))
-		self.assertStatement(stmt2, [C(0b10100010, 8)], C(0b101000100000, 12))
+		self.assertStatement(stmt2, [Const(0b10100010, 8)], Const(0b101000100000, 12))
 
 	def test_shift_right(self):
 		stmt1 = lambda y, a: y.eq(a.shift_right(1))
-		self.assertStatement(stmt1, [C(0b10100010, 8)], C(0b1010001, 7))
+		self.assertStatement(stmt1, [Const(0b10100010, 8)], Const(0b1010001, 7))
 		stmt2 = lambda y, a: y.eq(a.shift_right(4))
-		self.assertStatement(stmt2, [C(0b10100010, 8)], C(   0b1010, 4))
+		self.assertStatement(stmt2, [Const(0b10100010, 8)], Const(   0b1010, 4))
 
 	def test_rotate_left(self):
 		stmt = lambda y, a: y.eq(a.rotate_left(1))
-		self.assertStatement(stmt, [C(0b1)], C(0b1))
-		self.assertStatement(stmt, [C(0b1001000)], C(0b0010001))
+		self.assertStatement(stmt, [Const(0b1)], Const(0b1))
+		self.assertStatement(stmt, [Const(0b1001000)], Const(0b0010001))
 		stmt = lambda y, a: y.eq(a.rotate_left(5))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0010000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0110000))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0010000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0110000))
 		stmt = lambda y, a: y.eq(a.rotate_left(7))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b1000000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b1000001))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b1000000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b1000001))
 		stmt = lambda y, a: y.eq(a.rotate_left(9))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0000010))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0000110))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0000010))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0000110))
 		stmt = lambda y, a: y.eq(a.rotate_left(-1))
-		self.assertStatement(stmt, [C(0b1)], C(0b1))
-		self.assertStatement(stmt, [C(0b1001000)], C(0b0100100))
+		self.assertStatement(stmt, [Const(0b1)], Const(0b1))
+		self.assertStatement(stmt, [Const(0b1001000)], Const(0b0100100))
 		stmt = lambda y, a: y.eq(a.rotate_left(-5))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0000010))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0000110))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0000010))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0000110))
 		stmt = lambda y, a: y.eq(a.rotate_left(-7))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b1000000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b1000001))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b1000000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b1000001))
 		stmt = lambda y, a: y.eq(a.rotate_left(-9))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0010000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0110000))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0010000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0110000))
 
 	def test_rotate_right(self):
 		stmt = lambda y, a: y.eq(a.rotate_right(1))
-		self.assertStatement(stmt, [C(0b1)], C(0b1))
-		self.assertStatement(stmt, [C(0b1001000)], C(0b0100100))
+		self.assertStatement(stmt, [Const(0b1)], Const(0b1))
+		self.assertStatement(stmt, [Const(0b1001000)], Const(0b0100100))
 		stmt = lambda y, a: y.eq(a.rotate_right(5))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0000010))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0000110))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0000010))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0000110))
 		stmt = lambda y, a: y.eq(a.rotate_right(7))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b1000000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b1000001))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b1000000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b1000001))
 		stmt = lambda y, a: y.eq(a.rotate_right(9))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0010000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0110000))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0010000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0110000))
 		stmt = lambda y, a: y.eq(a.rotate_right(-1))
-		self.assertStatement(stmt, [C(0b1)], C(0b1))
-		self.assertStatement(stmt, [C(0b1001000)], C(0b0010001))
+		self.assertStatement(stmt, [Const(0b1)], Const(0b1))
+		self.assertStatement(stmt, [Const(0b1001000)], Const(0b0010001))
 		stmt = lambda y, a: y.eq(a.rotate_right(-5))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0010000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0110000))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0010000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0110000))
 		stmt = lambda y, a: y.eq(a.rotate_right(-7))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b1000000))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b1000001))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b1000000))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b1000001))
 		stmt = lambda y, a: y.eq(a.rotate_right(-9))
-		self.assertStatement(stmt, [C(0b1000000)], C(0b0000010))
-		self.assertStatement(stmt, [C(0b1000001)], C(0b0000110))
+		self.assertStatement(stmt, [Const(0b1000000)], Const(0b0000010))
+		self.assertStatement(stmt, [Const(0b1000001)], Const(0b0000110))
 
 
 class SimulatorIntegrationTestCase(FHDLTestCase):

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .ast  import (
-	Array, C, Cat, ClockSignal, Const, Mux, Repl, ResetSignal,
+	Array, Cat, ClockSignal, Const, Mux, Repl, ResetSignal,
 	Shape, Signal, Value, signed, unsigned
 )
 from .cd   import ClockDomain
@@ -13,7 +13,7 @@ from .xfrm import DomainRenamer, EnableInserter, ResetInserter
 
 __all__ = (
 	'Shape', 'unsigned', 'signed', 'Value', 'Const',
-	'C', 'Mux', 'Cat', 'Repl', 'Array',
+	'Mux', 'Cat', 'Repl', 'Array',
 	'Signal', 'ClockSignal', 'ResetSignal',
 	'Module',
 	'ClockDomain',

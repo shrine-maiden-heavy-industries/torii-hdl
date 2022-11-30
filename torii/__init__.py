@@ -13,7 +13,7 @@ from .hdl import *
 
 __all__ = (
 	'Shape', 'unsigned', 'signed',
-	'Value', 'Const', 'C', 'Mux', 'Cat', 'Repl', 'Array', 'Signal', 'ClockSignal', 'ResetSignal',
+	'Value', 'Const', 'Mux', 'Cat', 'Repl', 'Array', 'Signal', 'ClockSignal', 'ResetSignal',
 	'Module',
 	'ClockDomain',
 	'Elaboratable', 'Fragment', 'Instance',
