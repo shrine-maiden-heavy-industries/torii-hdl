@@ -178,7 +178,7 @@ class ToriiTestCase(TestCase):
 		yield from SimulationTestCase.pulse(sig, neg = False, post_step = post_step)
 
 	@staticmethod
-	def pulse_pos(sig : Signal, *, post_step : bool = True):
+	def pulse_neg(sig : Signal, *, post_step : bool = True):
 		'''Inserts a negative pulse on the given signal
 
 		Parameters
