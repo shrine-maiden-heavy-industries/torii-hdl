@@ -11,7 +11,7 @@ from enum              import Enum
 from itertools         import chain
 from typing            import Iterator, Optional, Tuple, Union
 
-from .._unused         import *
+from ._unused          import MustUse, UnusedMustUse
 from ..util            import tracer, flatten, union
 from ..util.decorators import final, deprecated
 from ..util.units      import bits_for

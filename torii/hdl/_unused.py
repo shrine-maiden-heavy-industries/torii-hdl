@@ -5,7 +5,7 @@ from types    import TracebackType
 from typing   import Optional, Type
 from warnings import warn_explicit
 
-from .util    import get_linter_option
+from ..util   import get_linter_option
 
 __all__ = (
 	'UnusedMustUse',

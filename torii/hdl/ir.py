@@ -6,7 +6,7 @@ from collections       import OrderedDict, defaultdict
 from functools         import reduce
 from typing            import Any, Optional, Union
 
-from .._unused         import *
+from ._unused          import UnusedMustUse, MustUse
 from ..util            import flatten
 from ..util.decorators import memoize
 from .ast              import *
