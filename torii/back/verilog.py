@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import warnings
 from typing             import Tuple, Union
 
 from .._toolchain.yosys import find_yosys, YosysError

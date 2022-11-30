@@ -163,13 +163,19 @@ class ReadPort(Elaboratable):
 		self.domain      = domain
 		self.transparent = transparent
 
-		self.addr = Signal(range(memory.depth),
-						   name = f'{memory.name}_r_addr', src_loc_at = 1 + src_loc_at)
-		self.data = Signal(memory.width,
-						   name = f'{memory.name}_r_data', src_loc_at = 1 + src_loc_at)
+		self.addr = Signal(
+			range(memory.depth),
+			name = f'{memory.name}_r_addr', src_loc_at = 1 + src_loc_at
+		)
+		self.data = Signal(
+			memory.width,
+			name = f'{memory.name}_r_data', src_loc_at = 1 + src_loc_at
+		)
 		if self.domain != 'comb' and not transparent:
-			self.en = Signal(name = f'{memory.name}_r_en', reset = 1,
-							 src_loc_at = 1 + src_loc_at)
+			self.en = Signal(
+				name = f'{memory.name}_r_en', reset = 1,
+				src_loc_at = 1 + src_loc_at
+			)
 		else:
 			self.en = Const(1)
 
@@ -261,18 +267,24 @@ class WritePort(Elaboratable):
 		if granularity > memory.width:
 			raise ValueError(f'Write port granularity must not be greater than memory width ({granularity} > {memory.width})')
 		if memory.width // granularity * granularity != memory.width:
-			raise ValueError(f'Write port granularity must divide memory width evenly')
+			raise ValueError('Write port granularity must divide memory width evenly')
 
 		self.memory       = memory
 		self.domain       = domain
 		self.granularity  = granularity
 
-		self.addr = Signal(range(memory.depth),
-						   name = f'{memory.name}_w_addr', src_loc_at = 1 + src_loc_at)
-		self.data = Signal(memory.width,
-						   name = f'{memory.name}_w_data', src_loc_at = 1 + src_loc_at)
-		self.en   = Signal(memory.width // granularity,
-						   name = f'{memory.name}_w_en', src_loc_at = 1 + src_loc_at)
+		self.addr = Signal(
+			range(memory.depth),
+			name = f'{memory.name}_w_addr', src_loc_at = 1 + src_loc_at
+		)
+		self.data = Signal(
+			memory.width,
+			name = f'{memory.name}_w_data', src_loc_at = 1 + src_loc_at
+		)
+		self.en   = Signal(
+			memory.width // granularity,
+			name = f'{memory.name}_w_en', src_loc_at = 1 + src_loc_at
+		)
 
 	def elaborate(self, platform):
 		f = Instance('$memwr',

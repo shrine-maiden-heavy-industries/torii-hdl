@@ -163,7 +163,7 @@ class IntelPlatform(TemplatedPlatform):
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		''',
+		''', # noqa: E501
 		'{{name}}.srf': r'''
 			{% for warning in platform.quartus_suppressed_warnings %}
 			{ "" "" "" "{{name}}.v" {  } {  } 0 {{warning}} "" 0 0 "Design Software" 0 -1 0 ""}
@@ -327,7 +327,8 @@ class IntelPlatform(TemplatedPlatform):
 	# The altiobuf_* and altddio_* primitives are explained in the following Intel documents:
 	# * https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_altiobuf.pdf
 	# * https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_altddio.pdf
-	# See also errata mentioned in: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd11192012_735.html.
+	# See also errata mentioned in:
+	# 	https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd11192012_735.html.
 
 	@staticmethod
 	def _get_ireg(m : Module, pin : Pin, invert : bool) -> Signal:

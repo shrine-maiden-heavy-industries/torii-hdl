@@ -165,8 +165,10 @@ class ValueTransformer(ValueVisitor):
 		return Repl(self.on_value(value.value), value.count)
 
 	def on_ArrayProxy(self, value):
-		return ArrayProxy([self.on_value(elem) for elem in value._iter_as_values()],
-						  self.on_value(value.index))
+		return ArrayProxy(
+			[self.on_value(elem) for elem in value._iter_as_values()],
+			self.on_value(value.index)
+		)
 
 	def on_Sample(self, value):
 		return Sample(self.on_value(value.value), value.clocks, value.domain)
@@ -455,8 +457,10 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 
 	def on_ResetSignal(self, value):
 		if value.domain in self.domain_map:
-			return ResetSignal(self.domain_map[value.domain],
-							   allow_reset_less = value.allow_reset_less)
+			return ResetSignal(
+				self.domain_map[value.domain],
+				allow_reset_less = value.allow_reset_less
+			)
 		return value
 
 	def map_domains(self, fragment, new_fragment):
@@ -514,8 +518,10 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 			domain = fragment.domains[domain_name]
 			if domain.rst is None:
 				continue
-			stmts = [signal.eq(Const(signal.reset, signal.width))
-					 for signal in signals if not signal.reset_less]
+			stmts = [
+				signal.eq(Const(signal.reset, signal.width))
+				for signal in signals if not signal.reset_less
+			]
 			fragment.add_statements(Switch(domain.rst, {1: stmts}))
 
 	def on_fragment(self, fragment):

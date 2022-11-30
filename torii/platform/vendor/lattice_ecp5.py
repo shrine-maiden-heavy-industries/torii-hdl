@@ -269,7 +269,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		''',
+		''' # noqa: E501
 	}
 	_diamond_command_templates = [
 		# These don't have any usable command-line option overrides.

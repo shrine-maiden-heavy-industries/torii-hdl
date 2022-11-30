@@ -137,7 +137,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		''',
+		''' # noqa: E501
 	}
 	command_templates = [
 		# These don't have any usable command-line option overrides.

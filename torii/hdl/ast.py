@@ -1009,8 +1009,10 @@ class Signal(Value, DUID):
 	decoder : function
 	'''
 
-	def __init__(self, shape = None, *, name = None, reset = 0, reset_less = False,
-				 attrs = None, decoder = None, src_loc_at = 0):
+	def __init__(
+		self, shape = None, *, name = None, reset = 0, reset_less = False,
+		attrs = None, decoder = None, src_loc_at = 0
+	):
 		super().__init__(src_loc_at = src_loc_at)
 
 		if name is not None and not isinstance(name, str):
@@ -1028,8 +1030,11 @@ class Signal(Value, DUID):
 
 		reset_width = bits_for(reset, self.signed)
 		if reset != 0 and reset_width > self.width:
-			warnings.warn(f'Reset value {reset!r} requires {reset_width} bits to represent, but the signal only has {self.width} bits',
-						  SyntaxWarning, stacklevel=2 + src_loc_at)
+			warnings.warn(
+				f'Reset value {reset!r} requires {reset_width} bits to represent, '
+				f'but the signal only has {self.width} bits',
+				SyntaxWarning, stacklevel = 2 + src_loc_at
+			)
 
 		self.reset = reset
 		self.reset_less = bool(reset_less)
@@ -1068,8 +1073,10 @@ class Signal(Value, DUID):
 			new_name = tracer.get_var_name(depth = 2 + src_loc_at, default = '$like')
 		kw = dict(shape = Value.cast(other).shape(), name = new_name)
 		if isinstance(other, Signal):
-			kw.update(reset = other.reset, reset_less = other.reset_less,
-					  attrs = other.attrs, decoder = other.decoder)
+			kw.update(
+				reset = other.reset, reset_less = other.reset_less,
+				attrs = other.attrs, decoder = other.decoder
+			)
 		kw.update(kwargs)
 		return Signal(**kw, src_loc_at = 1 + src_loc_at)
 
@@ -1160,8 +1167,9 @@ class ResetSignal(Value):
 class Array(MutableSequence):
 	'''Addressable multiplexer.
 
-	An array is similar to a ``list`` that can also be indexed by ``Value``s; indexing by an integer or a slice works the same as for Python lists, but indexing by a ``Value`` results
-	in a proxy.
+	An array is similar to a ``list`` that can also be indexed by ``Value``s;
+	indexing by an integer or a slice works the same as for Python lists,
+	but indexing by a ``Value`` results in a proxy.
 
 	The array proxy can be used as an ordinary ``Value``, i.e. participate in calculations and
 	assignments, provided that all elements of the array are values. The array proxy also supports
@@ -1386,7 +1394,7 @@ class ValueCastable:
 		def wrapper_memoized(self, *args, **kwargs):
 			# Use `in self.__dict__` instead of `hasattr` to avoid interfering with custom
 			# `__getattr__` implementations.
-			if not '_ValueCastable__lowered_to' in self.__dict__:
+			if '_ValueCastable__lowered_to' not in self.__dict__:
 				self.__lowered_to = func(self, *args, **kwargs)
 			return self.__lowered_to
 		wrapper_memoized.__memoized = True
@@ -1796,13 +1804,17 @@ class ValueKey:
 
 
 class ValueDict(_MappedKeyDict):
-	_map_key   = ValueKey
-	_unmap_key = lambda self, key: key.value
+	_map_key = ValueKey
+
+	def _unmap_key(self, key):
+		return key.value
 
 
 class ValueSet(_MappedKeySet):
-	_map_key   = ValueKey
-	_unmap_key = lambda self, key: key.value
+	_map_key = ValueKey
+
+	def _unmap_key(self, key):
+		return key.value
 
 
 class SignalKey:
@@ -1835,10 +1847,14 @@ class SignalKey:
 
 
 class SignalDict(_MappedKeyDict):
-	_map_key   = SignalKey
-	_unmap_key = lambda self, key: key.signal
+	_map_key = SignalKey
+
+	def _unmap_key(self, key):
+		return key.signal
 
 
 class SignalSet(_MappedKeySet):
-	_map_key   = SignalKey
-	_unmap_key = lambda self, key: key.signal
+	_map_key = SignalKey
+
+	def _unmap_key(self, key):
+		return key.signal

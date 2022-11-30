@@ -145,11 +145,15 @@ class Record(ValueCastable):
 				self.fields[field_name] = field
 			else:
 				if isinstance(field_shape, Layout):
-					self.fields[field_name] = Record(field_shape, name=concat(name, field_name),
-													 src_loc_at = 1 + src_loc_at)
+					self.fields[field_name] = Record(
+						field_shape, name = concat(name, field_name),
+						src_loc_at = 1 + src_loc_at
+					)
 				else:
-					self.fields[field_name] = Signal(field_shape, name=concat(name, field_name),
-													 src_loc_at = 1 + src_loc_at)
+					self.fields[field_name] = Signal(
+						field_shape, name = concat(name, field_name),
+						src_loc_at = 1 + src_loc_at
+					)
 
 	def __getattr__(self, name):
 		return self[name]
@@ -239,7 +243,10 @@ class Record(ValueCastable):
 			subord_items = []
 			for subord in subordinates:
 				if field not in subord.fields:
-					raise AttributeError(f'Cannot connect field \'{field}\' of {rec_name(self)} to subordinate {rec_name(subord)} because the subordinate record does not have this field')
+					raise AttributeError(
+						f'Cannot connect field \'{field}\' of {rec_name(self)} to subordinate '
+						f'{rec_name(subord)} because the subordinate record does not have this field'
+					)
 				subord_items.append(subord.fields[field])
 
 			if isinstance(shape, Layout):

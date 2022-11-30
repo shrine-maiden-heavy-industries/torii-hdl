@@ -5,7 +5,6 @@ from os         import getenv
 from sys        import version_info
 from tempfile   import NamedTemporaryFile
 
-from ..hdl      import *
 from ..hdl.ast  import SignalSet
 from ..hdl.xfrm import LHSGroupFilter, StatementVisitor, ValueVisitor
 from ._base     import BaseProcess
@@ -200,8 +199,7 @@ class _RHSValueCompiler(_ValueCompiler):
 	def on_Part(self, value):
 		offset_mask = (1 << len(value.offset)) - 1
 		offset = f'({value.stride} * ({offset_mask:#x} & {self(value.offset)}))'
-		return f'({(1 << value.width) - 1} & ' \
-			   f'{self(value.value)} >> {offset})'
+		return f'({(1 << value.width) - 1} & {self(value.value)} >> {offset})'
 
 	def on_Cat(self, value):
 		gen_parts = []
@@ -240,7 +238,7 @@ class _RHSValueCompiler(_ValueCompiler):
 							self.emitter.append(f'{gen_value} = {self(elem)}')
 					self.emitter.append('case _:')
 					with self.emitter.indent():
-							self.emitter.append(f'{gen_value} = {self(value.elems[-1])}')
+						self.emitter.append(f'{gen_value} = {self(value.elems[-1])}')
 			else:
 				for index, elem in enumerate(value.elems):
 					if index == 0:
@@ -249,7 +247,7 @@ class _RHSValueCompiler(_ValueCompiler):
 						self.emitter.append(f'elif {index} == {gen_index}:')
 					with self.emitter.indent():
 						self.emitter.append(f'{gen_value} = {self(elem)}')
-				self.emitter.append(f'else:')
+				self.emitter.append('else:')
 				with self.emitter.indent():
 					self.emitter.append(f'{gen_value} = {self(value.elems[-1])}')
 
@@ -301,9 +299,11 @@ class _LHSValueCompiler(_ValueCompiler):
 	def on_Slice(self, value):
 		def gen(arg):
 			width_mask = (1 << (value.stop - value.start)) - 1
-			self(value.value)(f'({self.lrhs(value.value)} & ' \
-				f'{~(width_mask << value.start):#x} | ' \
-				f'(({width_mask:#x} & {arg}) << {value.start}))')
+			self(value.value)(
+				f'({self.lrhs(value.value)} & '
+				f'{~(width_mask << value.start):#x} | '
+				f'(({width_mask:#x} & {arg}) << {value.start}))'
+			)
 		return gen
 
 	def on_Part(self, value):
@@ -311,9 +311,11 @@ class _LHSValueCompiler(_ValueCompiler):
 			width_mask = (1 << value.width) - 1
 			offset_mask = (1 << len(value.offset)) - 1
 			offset = f'({value.stride} * ({offset_mask:#x} & {self.rrhs(value.offset)}))'
-			self(value.value)(f'({self.lrhs(value.value)} & ' \
-				f'~({width_mask:#x} << {offset}) | ' \
-				f'(({width_mask:#x} & {arg}) << {offset}))')
+			self(value.value)(
+				f'({self.lrhs(value.value)} & '
+				f'~({width_mask:#x} << {offset}) | '
+				f'(({width_mask:#x} & {arg}) << {offset}))'
+			)
 		return gen
 
 	def on_Cat(self, value):
@@ -352,11 +354,11 @@ class _LHSValueCompiler(_ValueCompiler):
 							self.emitter.append(f'elif {index} == {gen_index}:')
 						with self.emitter.indent():
 							self(elem)(arg)
-					self.emitter.append(f'else:')
+					self.emitter.append('else:')
 					with self.emitter.indent():
 						self(value.elems[-1])(arg)
 			else:
-				self.emitter.append(f'pass')
+				self.emitter.append('pass')
 		return gen
 
 
@@ -390,7 +392,7 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 				for pattern in patterns:
 					if "-" in pattern:
 						mask  = int(''.join('0' if b == '-' else '1' for b in pattern), 2)
-						value = int(''.join('0' if b == '-' else  b  for b in pattern), 2)
+						value = int(''.join('0' if b == '-' else b for b in pattern), 2)
 						gen_checks.append(f'{value} == ({mask} & {gen_test})')
 					else:
 						value = int(pattern, 2)
@@ -436,7 +438,7 @@ class _FragmentCompiler:
 			domain_process = PyRTLProcess(is_comb = domain_name is None)
 
 			emitter = _PythonEmitter()
-			emitter.append(f'def run():')
+			emitter.append('def run():')
 			emitter._level += 1
 
 			if domain_name is None:

@@ -248,7 +248,7 @@ class XilinxPlatform(TemplatedPlatform):
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		'''
+		''' # noqa: E501
 	}
 	_vivado_command_templates = [
 		r'''
@@ -1057,7 +1057,9 @@ class XilinxPlatform(TemplatedPlatform):
 					# Third-generation input DDR register: does all of the above on its own.
 					get_iddr(pin.i_clk, i, pin_i0, pin_i1)
 			if "o" in pin.dir:
-				if self.family in XFDDR_FAMILIES or self.family == 'spartan3e' or (self.family.startswith("spartan3a") and iostd not in TRUE_DIFF_S3EA):
+				if self.family in XFDDR_FAMILIES or self.family == 'spartan3e' or (
+					self.family.startswith("spartan3a") and iostd not in TRUE_DIFF_S3EA
+				):
 					# For this generation, we need to realign o1 input ourselves.
 					o1_ff = Signal.like(pin_o1, name_suffix = '_ff')
 					get_dff(pin.o_clk, pin_o1, o1_ff)

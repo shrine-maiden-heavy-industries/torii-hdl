@@ -187,6 +187,7 @@ class Fragment:
 
 		driver_subfrags = SignalDict()
 		memory_subfrags = OrderedDict()
+
 		def add_subfrag(registry, entity, entry):
 			# Because of missing domain insertion, at the point when this code runs, we have
 			# a mixture of bound and unbound {Clock,Reset}Signals. Map the bound ones to
@@ -227,8 +228,9 @@ class Fragment:
 				continue
 
 			# First, recurse into subfragments and let them detect driver conflicts as well.
-			subfrag_drivers, subfrag_memories = \
-				subfrag._resolve_hierarchy_conflicts(subfrag_hierarchy, mode)
+			subfrag_drivers, subfrag_memories = subfrag._resolve_hierarchy_conflicts(
+				subfrag_hierarchy, mode
+			)
 
 			# Second, classify subfragments by signals they drive and memories they use.
 			for signal in subfrag_drivers:
@@ -316,16 +318,20 @@ class Fragment:
 			names = [n for f, n, i in subfrags]
 			if not all(names):
 				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
-				raise DomainError(f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\'; '
-								  'it is necessary to either rename subfragment domains '
-								  'explicitly, or give names to subfragments')
+				raise DomainError(
+					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\'; '
+					'it is necessary to either rename subfragment domains '
+					'explicitly, or give names to subfragments'
+				)
 
 			if len(names) != len(set(names)):
 				names = sorted(f'#{i}' for f, n, i in subfrags)
-				raise DomainError(f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\', '
-								  'some of which have identical names; it is necessary to either '
-								  'rename subfragment domains explicitly, or give distinct names '
-								  'to subfragments')
+				raise DomainError(
+					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\', '
+					'some of which have identical names; it is necessary to either '
+					'rename subfragment domains explicitly, or give distinct names '
+					'to subfragments'
+				)
 
 			for subfrag, name, i in subfrags:
 				domain_name_map = { domain_name: f'{name}_{domain_name}' }
@@ -436,7 +442,7 @@ class Fragment:
 						add_io(value._lhs_signals())
 			else:
 				parent[subfrag] = self
-				level [subfrag] = level[self] + 1
+				level[subfrag]  = level[self] + 1
 
 				subfrag._prepare_use_def_graph(parent, level, uses, defs, ios, top)
 

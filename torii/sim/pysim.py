@@ -286,12 +286,14 @@ class PySimEngine(BaseEngine):
 		self._vcd_writers = []
 
 	def add_coroutine_process(self, process, *, default_cmd):
-		self._processes.add(PyCoroProcess(self._state, self._fragment.domains, process,
-										  default_cmd = default_cmd))
+		self._processes.add(
+			PyCoroProcess(self._state, self._fragment.domains, process, default_cmd = default_cmd)
+		)
 
 	def add_clock_process(self, clock, *, phase, period):
-		self._processes.add(PyClockProcess(self._state, clock,
-										   phase = phase, period = period))
+		self._processes.add(
+			PyClockProcess(self._state, clock, phase = phase, period = period)
+		)
 
 	def reset(self):
 		self._state.reset()

@@ -6,7 +6,7 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 
-from ..util       import  flatten, tracer
+from ..util       import flatten, tracer
 from ..util.units import bits_for
 from .ast         import *
 from .cd          import *
@@ -47,8 +47,11 @@ class _ModuleBuilderDomain(_ModuleBuilderProxy):
 class _ModuleBuilderDomains(_ModuleBuilderProxy):
 	def __getattr__(self, name):
 		if name == 'submodules':
-			warnings.warn(f'Using \'<module>.d.{name}\' would add statements to clock domain {name!r}; did you mean <module>.{name} instead?',
-						  SyntaxWarning, stacklevel=2)
+			warnings.warn(
+				f'Using \'<module>.d.{name}\' would add statements to clock domain {name!r}; '
+				f'did you mean <module>.{name} instead?',
+				SyntaxWarning, stacklevel = 2
+			)
 		if name == 'comb':
 			domain = None
 		else:
@@ -155,8 +158,10 @@ class FSM:
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
 	def __init_subclass__(cls):
-		raise SyntaxError('Instead of inheriting from `Module`, inherit from `Elaboratable` '
-						  'and return a `Module` from the `elaborate(self, platform)` method')
+		raise SyntaxError(
+			'Instead of inheriting from `Module`, inherit from `Elaboratable` '
+			'and return a `Module` from the `elaborate(self, platform)` method'
+		)
 
 	def __init__(self):
 		_ModuleBuilderRoot.__init__(self, self, depth = 0)
@@ -182,7 +187,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					secondary_context = 'Case'
 				if self._ctrl_context == 'FSM':
 					secondary_context = 'State'
-				raise SyntaxError(f'{construct} is not permitted directly inside of {self._ctrl_context}; it is permitted inside of {self._ctrl_context} {secondary_context}')
+				raise SyntaxError(
+					f'{construct} is not permitted directly inside of {self._ctrl_context}; '
+					f'it is permitted inside of {self._ctrl_context} {secondary_context}'
+				)
 
 	def _get_ctrl(self, name):
 		if self._ctrl_stack:
@@ -203,11 +211,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		cond = Value.cast(cond)
 		width, signed = cond.shape()
 		if signed:
-			warnings.warn('Signed values in If/Elif conditions usually result from inverting '
-						  'Python booleans with ~, which leads to unexpected results. '
-						  'Replace `~flag` with `not flag`. (If this is a false positive, '
-						  'silence this warning with `m.If(x)` → `m.If(x.bool())`.)',
-						  SyntaxWarning, stacklevel = 4)
+			warnings.warn(
+				'Signed values in If/Elif conditions usually result from inverting '
+				'Python booleans with ~, which leads to unexpected results. '
+				'Replace `~flag` with `not flag`. (If this is a false positive, '
+				'silence this warning with `m.If(x)` → `m.If(x.bool())`.)',
+				SyntaxWarning, stacklevel = 4
+			)
 		return cond
 
 	@_guardedcontextmanager('If')
@@ -276,7 +286,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	@contextmanager
 	def Switch(self, test):
 		self._check_context('Switch', context = None)
-		switch_data = self._set_ctrl('Switch', {
+		self._set_ctrl('Switch', {
 			'test'         : Value.cast(test),
 			'cases'        : OrderedDict(),
 			'src_loc'      : tracer.get_src_loc(src_loc_at = 1),
@@ -306,13 +316,17 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					len("".join(pattern.split())) != len(switch_data['test'])):
 				raise SyntaxError(f'Case pattern \'{pattern}\' must have the same width as switch value (which is {len(switch_data["test"])})')
 			if isinstance(pattern, int) and bits_for(pattern) > len(switch_data["test"]):
-				warnings.warn(f'Case pattern \'{pattern:b}\' is wider than switch value (which has width {len(switch_data["test"])}); comparison will never be true',
-							  SyntaxWarning, stacklevel = 3)
+				warnings.warn(
+					f'Case pattern \'{pattern:b}\' is wider than switch value (which has width {len(switch_data["test"])}); '
+					'comparison will never be true', SyntaxWarning, stacklevel = 3
+				)
 				continue
 			if isinstance(pattern, Enum) and bits_for(pattern.value) > len(switch_data["test"]):
-				warnings.warn(f'Case pattern \'{pattern.value:b}\' ({ pattern.__class__.__name__}.{pattern.name}) is wider than switch value '
-							  f'(which has width {len(switch_data["test"])}); comparison will never be true',
-							  SyntaxWarning, stacklevel = 3)
+				warnings.warn(
+					f'Case pattern \'{pattern.value:b}\' ({ pattern.__class__.__name__}.{pattern.name}) is wider than switch value '
+					f'(which has width {len(switch_data["test"])}); comparison will never be true',
+					SyntaxWarning, stacklevel = 3
+				)
 				continue
 			new_patterns = (*new_patterns, pattern)
 		try:
@@ -349,8 +363,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc'       : tracer.get_src_loc(src_loc_at = 1),
 			'state_src_locs': {},
 		})
-		self._generated[name] = fsm = \
-			FSM(fsm_data['signal'], fsm_data['encoding'], fsm_data['decoding'])
+		self._generated[name] = fsm = FSM(
+			fsm_data['signal'], fsm_data['encoding'], fsm_data['decoding']
+		)
 		try:
 			self._ctrl_context = 'FSM'
 			self.domain._depth += 1
@@ -484,7 +499,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	def _add_submodule(self, submodule, name = None):
 		if not hasattr(submodule, 'elaborate'):
 			raise TypeError(f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule')
-		if name == None:
+		if name is None:
 			self._anon_submodules.append(submodule)
 		else:
 			if name in self._named_submodules:

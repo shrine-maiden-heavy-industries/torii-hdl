@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import io
-import warnings
 from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import (
@@ -716,9 +715,11 @@ class _LHSValueCompiler(_ValueCompiler):
 			# is large (e.g. 32-bit wide), trying to naively legalize it is likely to exhaust
 			# system resources.
 			max_branches = len(value.value) // value.stride + 1
-			raise _LegalizeValue(value.offset,
-								 range(1 << len(value.offset))[:max_branches],
-								 value.src_loc)
+			raise _LegalizeValue(
+				value.offset,
+				range(1 << len(value.offset))[:max_branches],
+				value.src_loc
+			)
 
 	def on_Repl(self, value):
 		raise TypeError # :nocov:
@@ -821,8 +822,10 @@ class _StatementCompiler(xfrm.StatementVisitor):
 		try:
 			super().on_statement(stmt)
 		except _LegalizeValue as legalize:
-			with self._case.switch(self.rhs_compiler(legalize.value),
-								   src=_src(legalize.src_loc)) as switch:
+			with self._case.switch(
+				self.rhs_compiler(legalize.value),
+				src = _src(legalize.src_loc)
+			) as switch:
 				shape = legalize.value.shape()
 				tests = [f'{v:0{shape.width}b}' for v in legalize.branches]
 				if tests:
@@ -901,8 +904,10 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 					if isinstance(param_value, mem.Memory):
 						memory = param_value
 						if memory not in memories:
-							memories[memory] = module.memory(width=memory.width, size=memory.depth,
-															 name=memory.name, attrs=memory.attrs)
+							memories[memory] = module.memory(
+								width = memory.width, size = memory.depth,
+								name = memory.name, attrs = memory.attrs
+							)
 							addr_bits = bits_for(memory.depth)
 							data_parts = []
 							data_mask = (1 << memory.width) - 1
@@ -928,9 +933,10 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 					sub_params[param_name] = param_value
 
-			sub_type, sub_port_map = \
-				_convert_fragment(builder, subfragment, name_map,
-								  hierarchy = hierarchy + (sub_name,))
+			sub_type, sub_port_map = _convert_fragment(
+				builder, subfragment, name_map,
+				hierarchy = hierarchy + (sub_name,)
+			)
 
 			sub_ports = OrderedDict()
 			for port, value in sub_port_map.items():
