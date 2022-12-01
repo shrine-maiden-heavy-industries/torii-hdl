@@ -34,7 +34,7 @@ class SourceTestCase(unittest.TestCase):
 			ValueError,
 			r'Invalid trigger mode \'foo\'; must be one of level, rise, fall'
 		):
-			src = Source(trigger = 'foo')
+			Source(trigger = 'foo')
 
 	def test_get_map_wrong(self):
 		src = Source()
@@ -157,7 +157,7 @@ class MonitorTestCase(unittest.TestCase):
 			TypeError,
 			r'Event map must be an instance of EventMap, not \'foo\''
 		):
-			dut = Monitor(event_map = 'foo')
+			Monitor(event_map = 'foo')
 
 	def test_events(self):
 		sub_0 = Source(trigger = 'level')

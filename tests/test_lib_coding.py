@@ -8,10 +8,10 @@ from torii.lib.coding import *
 
 from .utils           import *
 
-
 class EncoderTestCase(FHDLTestCase):
 	def test_basic(self):
 		enc = Encoder(4)
+
 		def process():
 			self.assertEqual((yield enc.n), 1)
 			self.assertEqual((yield enc.o), 0)
@@ -39,6 +39,7 @@ class EncoderTestCase(FHDLTestCase):
 class PriorityEncoderTestCase(FHDLTestCase):
 	def test_basic(self):
 		enc = PriorityEncoder(4)
+
 		def process():
 			self.assertEqual((yield enc.n), 1)
 			self.assertEqual((yield enc.o), 0)
@@ -66,6 +67,7 @@ class PriorityEncoderTestCase(FHDLTestCase):
 class DecoderTestCase(FHDLTestCase):
 	def test_basic(self):
 		dec = Decoder(4)
+
 		def process():
 			self.assertEqual((yield dec.o), 0b0001)
 

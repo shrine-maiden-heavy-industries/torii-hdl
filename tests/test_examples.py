@@ -6,9 +6,9 @@ from pathlib import Path
 
 from .utils  import *
 
-
 def example_test(name):
 	path = (Path(__file__).parent / '..' / 'examples' / name).resolve()
+
 	def test_function(self):
 		subprocess.check_call([
 				sys.executable, str(path), 'generate', '-t', 'v'

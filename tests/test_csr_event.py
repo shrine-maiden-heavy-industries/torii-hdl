@@ -124,7 +124,8 @@ class EventMonitorSimulationTestCase(unittest.TestCase):
 			yield dut.bus.w_data.eq(0b1)
 			yield
 			yield dut.bus.w_stb.eq(0)
-			yield; yield Delay()
+			yield
+			yield Delay()
 
 			self.assertEqual((yield dut.src.i), 1)
 			yield sub.i.eq(0)

@@ -23,6 +23,7 @@ class FHDLTestCase(unittest.TestCase):
 	def assertRepr(self, obj, repr_str):
 		if isinstance(obj, list):
 			obj = Statement.cast(obj)
+
 		def prepare_repr(repr_str):
 			repr_str = re.sub(r'\s+', ' ',  repr_str)
 			repr_str = re.sub(r'\( (?=\()', '(', repr_str)
@@ -77,9 +78,8 @@ class FHDLTestCase(unittest.TestCase):
 			script = script,
 			rtlil = rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]
 		)
-		with subprocess.Popen([
-			require_tool('sby'), '-f', '-d', spec_name
-			],
+		with subprocess.Popen(
+			[require_tool('sby'), '-f', '-d', spec_name],
 			cwd = spec_dir,
 			env = {**os.environ, 'PYTHONWARNINGS': 'ignore'},
 			universal_newlines = True,

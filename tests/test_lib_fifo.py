@@ -90,7 +90,7 @@ class FIFOModel(Elaboratable, FIFOInterface):
 
 		storage = Memory(width = self.width, depth = self.depth)
 		w_port  = m.submodules.w_port = storage.write_port(domain = self.w_domain)
-		r_port  = m.submodules.r_port = storage.read_port (domain = 'comb')
+		r_port  = m.submodules.r_port = storage.read_port(domain = 'comb')
 
 		produce = Signal(range(self.depth))
 		consume = Signal(range(self.depth))
@@ -114,9 +114,9 @@ class FIFOModel(Elaboratable, FIFOInterface):
 		with m.If(ResetSignal(self.r_domain) | ResetSignal(self.w_domain)):
 			m.d.sync += self.level.eq(0)
 		with m.Else():
-			m.d.sync += self.level.eq(self.level
-				+ (self.w_rdy & self.w_en)
-				- (self.r_rdy & self.r_en))
+			m.d.sync += self.level.eq(
+				self.level + (self.w_rdy & self.w_en) - (self.r_rdy & self.r_en)
+			)
 
 		m.d.comb += [
 			self.r_level.eq(self.level),

@@ -6,7 +6,6 @@ from torii.hdl.mem import *
 
 from .utils        import *
 
-
 class MemoryTestCase(FHDLTestCase):
 	def test_name(self):
 		m1 = Memory(width = 8, depth = 4)
@@ -26,12 +25,12 @@ class MemoryTestCase(FHDLTestCase):
 			TypeError,
 			r'^Memory width must be a non-negative integer, not -1$'
 		):
-			m = Memory(width = -1, depth = 4)
+			Memory(width = -1, depth = 4)
 		with self.assertRaisesRegex(
 			TypeError,
 			r'^Memory depth must be a non-negative integer, not -1$'
 		):
-			m = Memory(width = 8, depth = -1)
+			Memory(width = 8, depth = -1)
 
 	def test_init(self):
 		m = Memory(width = 8, depth = 4, init = range(4))
@@ -42,15 +41,16 @@ class MemoryTestCase(FHDLTestCase):
 			ValueError,
 			r'^Memory initialization value count exceed memory depth \(8 > 4\)$'
 		):
-			m = Memory(width = 8, depth = 4, init = range(8))
+			Memory(width = 8, depth = 4, init = range(8))
 
 	def test_init_wrong_type(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Memory initialization value at address 1: '
 				r'\'str\' object cannot be interpreted as an integer$'
-		)):
-			m = Memory(width = 8, depth = 4, init = [1, '0'])
+			)
+		):
+			Memory(width = 8, depth = 4, init = [1, '0'])
 
 	def test_attrs(self):
 		m1 = Memory(width = 8, depth = 4)

@@ -84,4 +84,4 @@ class ClockDomainTestCase(FHDLTestCase):
 			ValueError,
 			r'^Domain \'comb\' may not be clocked$'
 		):
-			comb = ClockDomain()
+			ClockDomain(name = 'comb')

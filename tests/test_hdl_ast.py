@@ -16,7 +16,7 @@ class UnsignedEnum(Enum):
 
 class SignedEnum(Enum):
 	FOO = -1
-	BAR =  0
+	BAR = 0
 	BAZ = +1
 
 
@@ -172,7 +172,7 @@ class ShapeCastableTestCase(FHDLTestCase):
 			r'^Class \'MockShapeCastableNoOverride\' deriving from `ShapeCastable` must '
 			r'override the `as_shape` method$'
 		):
-			sc = MockShapeCastableNoOverride()
+			MockShapeCastableNoOverride()
 
 	def test_cast(self):
 		sc = MockShapeCastable(unsigned(2))
@@ -706,7 +706,8 @@ class OperatorTestCase(FHDLTestCase):
 			SyntaxWarning, (
 				r'^Match pattern \'10110\' is wider than match value \(which has width 4\); '
 				r'comparison will never be true$'
-		)):
+			)
+		):
 			s.matches(0b10110)
 
 	def test_matches_bits_wrong(self):
@@ -715,7 +716,8 @@ class OperatorTestCase(FHDLTestCase):
 			SyntaxError, (
 				r'^Match pattern \'abc\' must consist of 0, 1, and - \(don\'t care\) bits, '
 				r'and may include whitespace$'
-		)):
+			)
+		):
 			s.matches('abc')
 
 	def test_matches_pattern_wrong(self):
@@ -932,22 +934,22 @@ class ReplTestCase(FHDLTestCase):
 
 class ArrayTestCase(FHDLTestCase):
 	def test_acts_like_array(self):
-		a = Array([1,2,3])
-		self.assertSequenceEqual(a, [1,2,3])
+		a = Array([1, 2, 3])
+		self.assertSequenceEqual(a, [1, 2, 3])
 		self.assertEqual(a[1], 2)
 		a[1] = 4
-		self.assertSequenceEqual(a, [1,4,3])
+		self.assertSequenceEqual(a, [1, 4, 3])
 		del a[1]
-		self.assertSequenceEqual(a, [1,3])
+		self.assertSequenceEqual(a, [1, 3])
 		a.insert(1, 2)
-		self.assertSequenceEqual(a, [1,2,3])
+		self.assertSequenceEqual(a, [1, 2, 3])
 
 	def test_becomes_immutable(self):
-		a = Array([1,2,3])
+		a = Array([1, 2, 3])
 		s1 = Signal(range(len(a)))
 		s2 = Signal(range(len(a)))
-		v1 = a[s1]
-		v2 = a[s2]
+		a[s1]
+		a[s2]
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Array can no longer be mutated after it was indexed with a value at '
@@ -965,10 +967,10 @@ class ArrayTestCase(FHDLTestCase):
 			a.insert(1, 2)
 
 	def test_repr(self):
-		a = Array([1,2,3])
+		a = Array([1, 2, 3])
 		self.assertEqual(repr(a), '(array mutable [1, 2, 3])')
 		s = Signal(range(len(a)))
-		v = a[s]
+		a[s]
 		self.assertEqual(repr(a), '(array [1, 2, 3])')
 
 
@@ -1274,7 +1276,7 @@ class ValueCastableTestCase(FHDLTestCase):
 			r'^Class \'MockValueCastableNotDecorated\' deriving from `ValueCastable` must '
 			r'decorate the `as_value` method with the `ValueCastable.lowermethod` decorator$'
 		):
-			vc = MockValueCastableNotDecorated()
+			MockValueCastableNotDecorated()
 
 	def test_no_override(self):
 		with self.assertRaisesRegex(
@@ -1282,7 +1284,7 @@ class ValueCastableTestCase(FHDLTestCase):
 			r'^Class \'MockValueCastableNoOverride\' deriving from `ValueCastable` must '
 			r'override the `as_value` method$'
 		):
-			vc = MockValueCastableNoOverride()
+			MockValueCastableNoOverride()
 
 	def test_memoized(self):
 		vc = MockValueCastableChanges(1)
@@ -1320,15 +1322,17 @@ class SampleTestCase(FHDLTestCase):
 	def test_signal(self):
 		s1 = Sample(Signal(2), 1, 'sync')
 		self.assertEqual(s1.shape(), unsigned(2))
-		s2 = Sample(ClockSignal(), 1, 'sync')
-		s3 = Sample(ResetSignal(), 1, 'sync')
+
+		Sample(ClockSignal(), 1, 'sync')
+		Sample(ResetSignal(), 1, 'sync')
 
 	def test_wrong_value_operator(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Sampled value must be a signal or a constant, not '
 				r'\(\+ \(sig \$signal\) \(const 1\'d1\)\)$'
-		)):
+			)
+		):
 			Sample(Signal() + 1, 1, 'sync')
 
 	def test_wrong_clocks_neg(self):

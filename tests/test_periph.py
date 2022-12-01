@@ -109,7 +109,7 @@ class PeripheralInfoTestCase(unittest.TestCase):
 
 	def test_memory_map_frozen(self):
 		memory_map = MemoryMap(addr_width = 1, data_width = 8)
-		info = PeripheralInfo(memory_map = memory_map)
+		PeripheralInfo(memory_map = memory_map)
 		with self.assertRaisesRegex(
 			ValueError,
 			r'Memory map has been frozen. Cannot add resource \'a\''
@@ -121,7 +121,7 @@ class PeripheralInfoTestCase(unittest.TestCase):
 			TypeError,
 			r'Memory map must be an instance of MemoryMap, not \'foo\''
 		):
-			info = PeripheralInfo(memory_map = 'foo')
+			PeripheralInfo(memory_map = 'foo')
 
 	def test_irq(self):
 		memory_map = MemoryMap(addr_width = 1, data_width = 8)
@@ -153,7 +153,7 @@ class PeripheralInfoTestCase(unittest.TestCase):
 			TypeError,
 			r'IRQ line must be an instance of event.Source, not \'foo\''
 		):
-			info = PeripheralInfo(memory_map = memory_map, irq = 'foo')
+			PeripheralInfo(memory_map = memory_map, irq = 'foo')
 
 	def test_constant_map(self):
 		constant_map = ConstantMap()
@@ -179,4 +179,4 @@ class PeripheralInfoTestCase(unittest.TestCase):
 			TypeError,
 			r'Constant map must be an instance of ConstantMap, not \'foo\''
 		):
-			info = PeripheralInfo(memory_map = memory_map, constant_map = 'foo')
+			PeripheralInfo(memory_map = memory_map, constant_map = 'foo')

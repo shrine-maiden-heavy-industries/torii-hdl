@@ -4,37 +4,36 @@ import unittest
 
 from torii.lib.soc.memory import _RangeMap, ResourceInfo, MemoryMap
 
-
 class RangeMapTestCase(unittest.TestCase):
 	def test_insert(self):
 		range_map = _RangeMap()
-		range_map.insert(range(0,10), 'a')
-		range_map.insert(range(20,21), 'c')
-		range_map.insert(range(15,16), 'b')
-		range_map.insert(range(16,20), 'q')
+		range_map.insert(range(0, 10), 'a')
+		range_map.insert(range(20, 21), 'c')
+		range_map.insert(range(15, 16), 'b')
+		range_map.insert(range(16, 20), 'q')
 		self.assertEqual(range_map._keys, [
-			range(0,10), range(15,16), range(16,20), range(20,21)
+			range(0, 10), range(15, 16), range(16, 20), range(20, 21)
 		])
 
 	def test_overlaps(self):
 		range_map = _RangeMap()
-		range_map.insert(range(10,20), 'a')
-		self.assertEqual(range_map.overlaps(range(5,15)), ['a'])
-		self.assertEqual(range_map.overlaps(range(15,25)), ['a'])
-		self.assertEqual(range_map.overlaps(range(5,25)), ['a'])
-		self.assertEqual(range_map.overlaps(range(0,3)), [])
-		self.assertEqual(range_map.overlaps(range(0,5)), [])
-		self.assertEqual(range_map.overlaps(range(25,30)), [])
+		range_map.insert(range(10, 20), 'a')
+		self.assertEqual(range_map.overlaps(range(5, 15)), ['a'])
+		self.assertEqual(range_map.overlaps(range(15, 25)), ['a'])
+		self.assertEqual(range_map.overlaps(range(5, 25)), ['a'])
+		self.assertEqual(range_map.overlaps(range(0, 3)), [])
+		self.assertEqual(range_map.overlaps(range(0, 5)), [])
+		self.assertEqual(range_map.overlaps(range(25, 30)), [])
 
 	def test_insert_wrong_overlap(self):
 		range_map = _RangeMap()
-		range_map.insert(range(0,10), 'a')
+		range_map.insert(range(0, 10), 'a')
 		with self.assertRaises(AssertionError):
-			range_map.insert(range(5,15), 'b')
+			range_map.insert(range(5, 15), 'b')
 
 	def test_get(self):
 		range_map = _RangeMap()
-		range_map.insert(range(5,15), 'a')
+		range_map.insert(range(5, 15), 'a')
 		self.assertEqual(range_map.get(0), None)
 		self.assertEqual(range_map.get(5), 'a')
 		self.assertEqual(range_map.get(10), 'a')
@@ -199,9 +198,12 @@ class MemoryMapTestCase(unittest.TestCase):
 
 	def test_add_resource_extend(self):
 		memory_map = MemoryMap(addr_width = 16, data_width = 8)
-		self.assertEqual(memory_map.add_resource('a', name = 'foo', size = 1, addr = 0x10000,
-												 extend = True),
-						 (0x10000, 0x10001))
+		self.assertEqual(
+			memory_map.add_resource(
+				'a', name = 'foo', size = 1, addr = 0x10000, extend = True
+			),
+			(0x10000, 0x10001)
+		)
 		self.assertEqual(memory_map.addr_width, 17)
 
 	def test_add_resource_size_zero(self):
@@ -308,8 +310,10 @@ class MemoryMapTestCase(unittest.TestCase):
 	def test_add_window(self):
 		memory_map = MemoryMap(addr_width = 16, data_width = 8)
 		self.assertEqual(memory_map.add_resource('a', name = 'foo', size = 1), (0, 1))
-		self.assertEqual(memory_map.add_window(MemoryMap(addr_width = 10, data_width = 8)),
-						 (0x400, 0x800, 1))
+		self.assertEqual(
+			memory_map.add_window(MemoryMap(addr_width = 10, data_width = 8)),
+			(0x400, 0x800, 1)
+		)
 		self.assertEqual(memory_map.add_resource('b', name = 'bar', size = 1), (0x800, 0x801))
 
 	def test_add_window_sparse(self):

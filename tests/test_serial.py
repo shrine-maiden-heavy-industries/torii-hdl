@@ -62,50 +62,54 @@ class AsyncSerialRXTestCase(unittest.TestCase):
 
 	def test_8n1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 8, parity = 'none')
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 1], data = 0b01110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 1], data = 0b01110101)
 
 	def test_16n1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 16, parity = 'none')
-		self.rx_test([0, 1,0,1,0,1,1,1,0,1,1,1,1,0,0,0,0, 1],
-					 data = 0b0000111101110101)
+		self.rx_test(
+			[0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+			data = 0b0000111101110101
+		)
 
 	def test_8m1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 8, parity = 'mark')
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 1, 1], data = 0b01110101)
-		self.rx_test([0, 1,0,1,0,1,1,0,0, 1, 1], data = 0b00110101)
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 0, 1], errors = {'parity'})
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1], data = 0b01110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1], data = 0b00110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1], errors = {'parity'})
 
 	def test_8s1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 8, parity = 'space')
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 0, 1], data = 0b01110101)
-		self.rx_test([0, 1,0,1,0,1,1,0,0, 0, 1], data = 0b00110101)
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 1, 1], errors = {'parity'})
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1], data = 0b01110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1], data = 0b00110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1], errors = {'parity'})
 
 	def test_8e1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 8, parity = 'even')
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 1, 1], data = 0b01110101)
-		self.rx_test([0, 1,0,1,0,1,1,0,0, 0, 1], data = 0b00110101)
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 0, 1], errors = {'parity'})
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1], data = 0b01110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1], data = 0b00110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1], errors = {'parity'})
 
 	def test_8o1(self):
 		self.dut = AsyncSerialRX(divisor = 5, data_bits = 8, parity = 'odd')
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 0, 1], data = 0b01110101)
-		self.rx_test([0, 1,0,1,0,1,1,0,0, 1, 1], data = 0b00110101)
-		self.rx_test([0, 1,0,1,0,1,1,1,0, 1, 1], errors = {'parity'})
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1], data = 0b01110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1], data = 0b00110101)
+		self.rx_test([0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1], errors = {'parity'})
 
 	def test_err_frame(self):
 		self.dut = AsyncSerialRX(divisor = 5)
-		self.rx_test([0, 0,0,0,0,0,0,0,0, 0], errors = {'frame'})
+		self.rx_test([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], errors = {'frame'})
 
 	def test_err_overflow(self):
 		self.dut = AsyncSerialRX(divisor = 5)
+
 		def process():
 			self.assertFalse((yield self.dut.rdy))
-			yield from self.tx_bits([0, 0,0,0,0,0,0,0,0, 1])
+			yield from self.tx_bits([0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
 			yield from self.tx_period()
 			yield
 			self.assertFalse((yield self.dut.rdy))
 			self.assertTrue((yield self.dut.err.overflow))
+
 		simulation_test(self.dut, process)
 
 	def test_fifo(self):
@@ -119,9 +123,12 @@ class AsyncSerialRXTestCase(unittest.TestCase):
 			self.fifo.w_en.eq(self.dut.rdy),
 			self.fifo.w_data.eq(self.dut.data),
 		]
+
 		def process():
-			yield from self.tx_bits([0, 1,0,1,0,1,0,1,0, 1,
-									 0, 0,1,0,1,0,1,0,1, 1])
+			yield from self.tx_bits([
+				0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+				0, 0, 1, 0, 1, 0, 1, 0, 1, 1
+			])
 			self.assertTrue((yield self.fifo.r_rdy))
 			self.assertEqual((yield self.fifo.r_data), 0x55)
 			yield self.fifo.r_en.eq(1)
@@ -132,6 +139,7 @@ class AsyncSerialRXTestCase(unittest.TestCase):
 			self.assertEqual((yield self.fifo.r_data), 0xAA)
 			yield
 			self.assertFalse((yield self.fifo.r_rdy))
+
 		simulation_test(m, process)
 
 
@@ -150,6 +158,7 @@ class AsyncSerialTXTestCase(unittest.TestCase):
 			for bit in bits:
 				yield from self.tx_period()
 				self.assertEqual((yield self.dut.o), bit)
+
 		simulation_test(self.dut, process)
 
 	def test_invalid_divisor(self):
@@ -168,31 +177,33 @@ class AsyncSerialTXTestCase(unittest.TestCase):
 
 	def test_8n1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 8, parity = 'none')
-		self.tx_test(0b01110101, bits = [0, 1,0,1,0,1,1,1,0, 1])
+		self.tx_test(0b01110101, bits = [0, 1, 0, 1, 0, 1, 1, 1, 0, 1])
 
 	def test_16n1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 16, parity = 'none')
-		self.tx_test(0b0000111101110101, bits = [0, 1,0,1,0,1,1,1,0,1,1,1,1,0,0,0,0, 1])
+		self.tx_test(0b0000111101110101, bits = [
+			0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1
+		])
 
 	def test_8m1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 8, parity = 'mark')
-		self.tx_test(0b01110101, bits = [0, 1,0,1,0,1,1,1,0, 1, 1])
-		self.tx_test(0b00110101, bits = [0, 1,0,1,0,1,1,0,0, 1, 1])
+		self.tx_test(0b01110101, bits = [0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1])
+		self.tx_test(0b00110101, bits = [0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1])
 
 	def test_8s1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 8, parity = 'space')
-		self.tx_test(0b01110101, bits = [0, 1,0,1,0,1,1,1,0, 0, 1])
-		self.tx_test(0b00110101, bits = [0, 1,0,1,0,1,1,0,0, 0, 1])
+		self.tx_test(0b01110101, bits = [0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1])
+		self.tx_test(0b00110101, bits = [0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1])
 
 	def test_8e1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 8, parity = 'even')
-		self.tx_test(0b01110101, bits = [0, 1,0,1,0,1,1,1,0, 1, 1])
-		self.tx_test(0b00110101, bits = [0, 1,0,1,0,1,1,0,0, 0, 1])
+		self.tx_test(0b01110101, bits = [0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1])
+		self.tx_test(0b00110101, bits = [0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1])
 
 	def test_8o1(self):
 		self.dut = AsyncSerialTX(divisor = 1, data_bits = 8, parity = 'odd')
-		self.tx_test(0b01110101, bits = [0, 1,0,1,0,1,1,1,0, 0, 1])
-		self.tx_test(0b00110101, bits = [0, 1,0,1,0,1,1,0,0, 1, 1])
+		self.tx_test(0b01110101, bits = [0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1])
+		self.tx_test(0b00110101, bits = [0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1])
 
 	def test_fifo(self):
 		self.dut  = AsyncSerialTX(divisor = 1)
@@ -205,6 +216,7 @@ class AsyncSerialTXTestCase(unittest.TestCase):
 			self.dut.data.eq(self.fifo.r_data),
 			self.fifo.r_en.eq(self.fifo.r_rdy & self.dut.rdy),
 		]
+
 		def process():
 			self.assertTrue((yield self.fifo.w_rdy))
 			yield self.fifo.w_en.eq(1)
@@ -215,13 +227,14 @@ class AsyncSerialTXTestCase(unittest.TestCase):
 			yield
 			yield self.fifo.w_en.eq(0)
 			yield
-			for bit in [0, 1,0,1,0,1,0,1,0, 1]:
+			for bit in [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]:
 				yield from self.tx_period()
 				self.assertEqual((yield self.dut.o), bit)
 			yield
-			for bit in [0, 0,1,0,1,0,1,0,1, 1]:
+			for bit in [0, 0, 1, 0, 1, 0, 1, 0, 1, 1]:
 				yield from self.tx_period()
 				self.assertEqual((yield self.dut.o), bit)
+
 		simulation_test(m, process)
 
 
@@ -235,6 +248,7 @@ class AsyncSerialTestCase(unittest.TestCase):
 		m = Module()
 		m.submodules.serial = self.dut
 		m.d.comb += pins.rx.i.eq(pins.tx.o)
+
 		def process():
 			self.assertTrue((yield self.dut.tx.rdy))
 			yield self.dut.tx.data.eq(0xAA)
@@ -246,4 +260,5 @@ class AsyncSerialTestCase(unittest.TestCase):
 			while not (yield self.dut.rx.rdy):
 				yield
 			self.assertEqual((yield self.dut.rx.data), 0xAA)
+
 		simulation_test(m, process)

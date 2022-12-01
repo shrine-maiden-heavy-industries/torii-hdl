@@ -268,14 +268,13 @@ class SwitchCleanerTestCase(FHDLTestCase):
 	def test_clean(self):
 		a = Signal()
 		b = Signal()
-		c = Signal()
 		stmts = [
 			Switch(a, {
 				1: a.eq(0),
 				0: [
 					b.eq(1),
 					Switch(b, {1: [
-						Switch(a|b, {})
+						Switch(a | b, {})
 					]})
 				]
 			})
@@ -365,7 +364,6 @@ class LHSGroupFilterTestCase(FHDLTestCase):
 	def test_filter(self):
 		a = Signal()
 		b = Signal()
-		c = Signal()
 		stmts = [
 			Switch(a, {
 				1: a.eq(0),

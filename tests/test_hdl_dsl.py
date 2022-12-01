@@ -10,7 +10,6 @@ from torii.hdl.dsl import *
 
 from .utils        import *
 
-
 class DSLTestCase(FHDLTestCase):
 	def setUp(self):
 		self.s1 = Signal()
@@ -26,7 +25,8 @@ class DSLTestCase(FHDLTestCase):
 			SyntaxError, (
 				r'^Instead of inheriting from `Module`, inherit from `Elaboratable` and '
 				r'return a `Module` from the `elaborate\(self, platform\)` method$'
-		)):
+			)
+		):
 			class ORGate(Module):
 				pass
 
@@ -77,7 +77,8 @@ class DSLTestCase(FHDLTestCase):
 			SyntaxError, (
 				r'^Driver-driver conflict: trying to drive \(sig c1\) from d\.sync, but it '
 				r'is already driven from d\.comb$'
-		)):
+			)
+		):
 			m.d.comb += self.c1.eq(1)
 			m.d.sync += self.c1.eq(1)
 
@@ -127,7 +128,8 @@ class DSLTestCase(FHDLTestCase):
 			SyntaxWarning, (
 				r'^Using \'<module>\.d\.submodules\' would add statements to clock domain '
 				r'\'submodules\'; did you mean <module>\.submodules instead\?$'
-		)):
+			)
+		):
 			m.d.submodules += []
 
 	def test_clock_signal(self):
@@ -341,7 +343,8 @@ class DSLTestCase(FHDLTestCase):
 				r'booleans with ~, which leads to unexpected results\. Replace `~flag` with '
 				r'`not flag`\. \(If this is a false positive, silence this warning with '
 				r'`m\.If\(x\)` → `m\.If\(x\.bool\(\)\)`\.\)$'
-		)):
+			)
+		):
 			with m.If(~True):
 				pass
 
@@ -355,7 +358,8 @@ class DSLTestCase(FHDLTestCase):
 				r'booleans with ~, which leads to unexpected results\. Replace `~flag` with '
 				r'`not flag`\. \(If this is a false positive, silence this warning with '
 				r'`m\.If\(x\)` → `m\.If\(x\.bool\(\)\)`\.\)$'
-		)):
+			)
+		):
 			with m.Elif(~True):
 				pass
 
@@ -482,14 +486,16 @@ class DSLTestCase(FHDLTestCase):
 				SyntaxWarning, (
 					r'^Case pattern \'10110\' is wider than switch value \(which has width 4\); '
 					r'comparison will never be true$'
-			)):
+				)
+			):
 				with m.Case(0b10110):
 					pass
 			with self.assertWarnsRegex(
 				SyntaxWarning, (
 					r'^Case pattern \'10101010\' \(Color\.RED\) is wider than switch value '
 					r'\(which has width 4\); comparison will never be true$'
-			)):
+				)
+			):
 				with m.Case(Color.RED):
 					pass
 		self.assertRepr(m._statements, '''
@@ -505,7 +511,8 @@ class DSLTestCase(FHDLTestCase):
 				SyntaxError, (
 					r'^Case pattern \'abc\' must consist of 0, 1, and - \(don\'t care\) bits, '
 					r'and may include whitespace$'
-			)):
+				)
+			):
 				with m.Case('abc'):
 					pass
 
@@ -535,7 +542,8 @@ class DSLTestCase(FHDLTestCase):
 				SyntaxError, (
 					r'^If is not permitted directly inside of Switch; '
 					r'it is permitted inside of Switch Case$'
-			)):
+				)
+			):
 				with m.If(self.s2):
 					pass
 
@@ -716,7 +724,8 @@ class DSLTestCase(FHDLTestCase):
 				SyntaxError, (
 					r'^If is not permitted directly inside of FSM; '
 					r'it is permitted inside of FSM State$'
-			)):
+				)
+			):
 				with m.If(self.s2):
 					pass
 
@@ -821,9 +830,9 @@ class DSLTestCase(FHDLTestCase):
 	def test_submodule_get_unset(self):
 		m1 = Module()
 		with self.assertRaisesRegex(AttributeError, r'^No submodule named \'foo\' exists$'):
-			m2 = m1.submodules.foo
+			m1.submodules.foo
 		with self.assertRaisesRegex(AttributeError, r'^No submodule named \'foo\' exists$'):
-			m2 = m1.submodules['foo']
+			m1.submodules['foo']
 
 	def test_domain_named_implicit(self):
 		m = Module()

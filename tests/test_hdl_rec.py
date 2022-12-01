@@ -83,7 +83,8 @@ class LayoutTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Field \(1,\) has invalid layout: should be either \(name, shape\) or '
 				r'\(name, shape, direction\)$'
-		)):
+			)
+		):
 			Layout.cast([(1,)])
 
 	def test_wrong_name(self):
@@ -105,7 +106,8 @@ class LayoutTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Field \(\'a\', 1, 0\) has invalid direction: should be a Direction '
 				r'instance like DIR_FANIN$'
-		)):
+			)
+		):
 			Layout.cast([('a', 1, 0)])
 
 	def test_wrong_shape(self):
@@ -113,7 +115,8 @@ class LayoutTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Field \(\'a\', \'x\'\) has invalid shape: should be castable to Shape or '
 				r'a list of fields of a nested record$'
-		)):
+			)
+		):
 			Layout.cast([('a', 'x')])
 
 
@@ -470,7 +473,8 @@ class ConnectTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Cannot connect field \'x\' of unnamed record because it does not have '
 				r'a direction$'
-		)):
+			)
+		):
 			recs[0].connect(recs[1])
 
 	def test_wrong_missing_field(self):
@@ -481,5 +485,6 @@ class ConnectTestCase(FHDLTestCase):
 			AttributeError, (
 				r'^Cannot connect field \'addr\' of record \'core\' to subordinate record \'periph\' '
 				r'because the subordinate record does not have this field$'
-		)):
+			)
+		):
 			core.connect(periph)

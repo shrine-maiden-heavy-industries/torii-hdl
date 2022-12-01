@@ -53,22 +53,23 @@ class PinsTestCase(FHDLTestCase):
 			TypeError,
 			r'^Names must be a whitespace-separated string, not \[\'A0\', \'A1\', \'A2\'\]$'
 		):
-			p = Pins(['A0', 'A1', 'A2'])
+			Pins(['A0', 'A1', 'A2'])
 
 	def test_wrong_dir(self):
 		with self.assertRaisesRegex(
 			TypeError,
 			r'^Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not \'wrong\'$'
 		):
-			p = Pins('A0 A1', dir = 'wrong')
+			Pins('A0 A1', dir = 'wrong')
 
 	def test_wrong_conn(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Connector must be None or a pair of string \(connector name\) and '
 				r'integer\/string \(connector number\), not \(\'foo\', None\)$'
-		)):
-			p = Pins('A0 A1', conn = ('foo', None))
+			)
+		):
+			Pins('A0 A1', conn = ('foo', None))
 
 	def test_wrong_map_names(self):
 		p = Pins('0 1 2', conn = ('pmod', 0))
@@ -79,7 +80,8 @@ class PinsTestCase(FHDLTestCase):
 			NameError, (
 				r'^Resource \(pins io pmod_0:0 pmod_0:1 pmod_0:2\) refers to nonexistent '
 				r'connector pin pmod_0:1$'
-		)):
+			)
+		):
 			p.map_names(mapping, p)
 
 	def test_wrong_assert_width(self):
@@ -129,8 +131,9 @@ class DiffPairsTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Positive and negative pins must have the same width, but \(pins io A0\) '
 				r'and \(pins io B0 B1\) do not$'
-		)):
-			dp = DiffPairs('A0', 'B0 B1')
+			)
+		):
+			DiffPairs('A0', 'B0 B1')
 
 	def test_wrong_assert_width(self):
 		with self.assertRaisesRegex(
@@ -152,7 +155,9 @@ class AttrsTestCase(FHDLTestCase):
 		self.assertEqual(repr(a), '(attrs !FOO)')
 
 	def test_callable(self):
-		fn = lambda self: 'FOO'
+		def fn(self):
+			return 'FOO'
+
 		a = Attrs(FOO = fn)
 		self.assertEqual(a['FOO'], fn)
 		self.assertEqual(repr(a), '(attrs FOO={!r})'.format(fn))
@@ -162,7 +167,7 @@ class AttrsTestCase(FHDLTestCase):
 			TypeError,
 			r'^Value of attribute FOO must be None, int, str, or callable, not 1\.0$'
 		):
-			a = Attrs(FOO = 1.0)
+			Attrs(FOO = 1.0)
 
 
 class ClockTestCase(FHDLTestCase):
@@ -219,54 +224,59 @@ class SubsignalTestCase(FHDLTestCase):
 
 	def test_wrong_empty_io(self):
 		with self.assertRaisesRegex(ValueError, r'^Missing I\/O constraints$'):
-			s = Subsignal('a')
+			Subsignal('a')
 
 	def test_wrong_io(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, '
 				r'not \'wrong\'$'
-		)):
-			s = Subsignal('a', 'wrong')
+			)
+		):
+			Subsignal('a', 'wrong')
 
 	def test_wrong_pins(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
 				r'constraints, but \(pins io A1\) appears after \(pins io A0\)$'
-		)):
-			s = Subsignal('a', Pins('A0'), Pins('A1'))
+			)
+		):
+			Subsignal('a', Pins('A0'), Pins('A1'))
 
 	def test_wrong_diffpairs(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
 				r'constraints, but \(pins io A1\) appears after \(diffpairs io \(p A0\) \(n B0\)\)$'
-		)):
-			s = Subsignal('a', DiffPairs('A0', 'B0'), Pins('A1'))
+			)
+		):
+			Subsignal('a', DiffPairs('A0', 'B0'), Pins('A1'))
 
 	def test_wrong_subsignals(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
 				r'constraints, but \(pins io B0\) appears after \(subsignal b \(pins io A0\)\)$'
-		)):
-			s = Subsignal('a', Subsignal('b', Pins('A0')), Pins('B0'))
+			)
+		):
+			Subsignal('a', Subsignal('b', Pins('A0')), Pins('B0'))
 
 	def test_wrong_clock(self):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Clock constraint can only be applied to Pins or DiffPairs, not '
 				r'\(subsignal b \(pins io A0\)\)$'
-		)):
-			s = Subsignal('a', Subsignal('b', Pins('A0')), Clock(1e6))
+			)
+		):
+			Subsignal('a', Subsignal('b', Pins('A0')), Clock(1e6))
 
 	def test_wrong_clock_many(self):
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Clock constraint can be applied only once$'
 		):
-			s = Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
+			Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
 
 
 class ResourceTestCase(FHDLTestCase):
@@ -370,7 +380,8 @@ class ConnectorTestCase(FHDLTestCase):
 			TypeError, (
 				r'^Connector must be None or a pair of string \(connector name\) and '
 				r'integer\/string \(connector number\), not \(\'foo\', None\)$'
-		)):
+			)
+		):
 			Connector('ext', 'A', '0 1 2', conn = ('foo', None))
 
 	def test_wrong_io(self):

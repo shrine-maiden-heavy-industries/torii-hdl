@@ -435,8 +435,10 @@ class DecoderSimulationTestCase(unittest.TestCase):
 
 class ArbiterTestCase(unittest.TestCase):
 	def setUp(self):
-		self.dut = Arbiter(addr_width = 31, data_width = 32, granularity = 16,
-						   features = {'err'})
+		self.dut = Arbiter(
+			addr_width = 31, data_width = 32, granularity = 16,
+			features = {'err'}
+		)
 
 	def test_add_wrong(self):
 		with self.assertRaisesRegex(
