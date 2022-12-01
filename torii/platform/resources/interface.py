@@ -224,7 +224,7 @@ def CANResource(
 ) -> Resource:
 	ios = [
 		Subsignal('rx', Pins(rx, dir = 'i', conn = conn)),
-		Subsignal('rx', Pins(rx, dir = 'o', conn = conn)),
+		Subsignal('tx', Pins(tx, dir = 'o', conn = conn)),
 	]
 
 	if attrs is not None:
