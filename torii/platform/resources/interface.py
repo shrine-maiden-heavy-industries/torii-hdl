@@ -13,6 +13,7 @@ __all__ = (
 	'ULPIResource',
 	'PS2Resource',
 	'CANResource',
+	'JTAGResource',
 )
 
 def UARTResource(
@@ -231,3 +232,17 @@ def CANResource(
 		ios.append(attrs)
 
 	return Resource.family(*args, default_name = 'can', ios = ios)
+
+def JTAGResource(
+	*args, tck : str, tms : str, tdi : str, tdo : str,
+	conn : Optional[Union[Tuple[str, int], int]] = None, attrs : Optional[Attrs] = None
+) -> Resource:
+	ios = [
+		Subsignal('tck', Pins(tck, dir = 'i', conn = conn, assert_width = 1)),
+		Subsignal('tms', Pins(tms, dir = 'i', conn = conn, assert_width = 1)),
+		Subsignal('tdi', Pins(tdi, dir = 'i', conn = conn, assert_width = 1)),
+		Subsignal('tdo', Pins(tdo, dir = 'oe', conn = conn, assert_width = 1)),
+	]
+	if attrs is not None:
+		ios.append(attrs)
+	return Resource.family(*args, default_name = 'jtag', ios = ios)
