@@ -280,6 +280,8 @@ The [latest release](install.md#latest-release) of Torii is recommended for any 
 
 ## Installing board definitions
 
+This section assumes you have already [installed Torii](#installation) to your system.
+
 Installing the [Torii Development Board](https://github.com/shrine-maiden-heavy-industries/torii-boards) definitions is much the same as installing Torii.
 
 ### Latest release
