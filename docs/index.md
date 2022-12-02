@@ -11,6 +11,8 @@ library/index
 platforms/index
 sim/index
 changelog
+
+Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
 ```
 
 # Torii-HDL
@@ -23,6 +25,9 @@ Torii is a toolkit for developing hardware based on digital logic, it consists o
 
 
 For more information on Torii, see the [Introduction](./intro.md) and check out the [Getting Started](./getting_started.md) guide for how to get up and running with Torii.
+
+
+There is also a [collection of board definition files](https://shrine-maiden-heavy-industries.github.io/torii-boards/) for popular FPGA development boards from various vendors, to help you get up to speed with your designs faster.
 
 
 [Verilog]: https://ieeexplore.ieee.org/document/1620780

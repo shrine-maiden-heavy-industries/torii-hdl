@@ -81,7 +81,7 @@ html_context = {
 	'display_github'    : True,
 	'github_user'       : 'shrine-maiden-heavy-industries',
 	'github_repo'       : 'torii-hdl',
-	'github_version'    : 'main/docs',
+	'github_version'    : 'main/docs/',
 	'versions'          : [
 		('latest', '/latest')
 	]
