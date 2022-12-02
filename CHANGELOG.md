@@ -41,6 +41,7 @@ Unreleased template stuff
 - Added `QSPIFlashResource` to `torii.platform.resources.memory`.
 - Added `JTAGResource` to `torii.platform.resources.interface`.
 - Added `EthernetResource` to `torii.platform.resources.interface`.
+
 ### Changed
 
 - Refactored the [documentation](https://shrine-maiden-heavy-industries.github.io/torii-hdl/).
