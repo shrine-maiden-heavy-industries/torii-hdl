@@ -1,8 +1,6 @@
 # Lattice iCE40
 
-The {py:mod}`torii.platform.vendor.lattice_ice40` module provides a base platform to support Lattice iCE40 devices.
-
-The [IceStorm] and [iCECube2] toolchains are supported.
+The {py:mod}`torii.platform.vendor.lattice_ice40` module provides a base platform to support Lattice iCE40 devices with the [IceStorm] and [iCECube2] toolchains.
 
 ```{eval-rst}
 

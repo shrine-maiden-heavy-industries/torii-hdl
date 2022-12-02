@@ -1,9 +1,7 @@
 # Xilinx
 
 
-The {py:mod}`torii.platform.vendor.xilinx` module provides a base platform to support Xilinx toolchains.
-
-The [ISE], [Vivado], and [Symbiflow] toolchains are supported.
+The {py:mod}`torii.platform.vendor.xilinx` module provides a base platform to support Xilinx devices with the [ISE], [Vivado], and [Symbiflow] toolchains.
 
 ```{eval-rst}
 

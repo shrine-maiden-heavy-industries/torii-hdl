@@ -1,9 +1,6 @@
 # Quicklogic
 
-The {py:mod}`torii.platform.vendor.quicklogic` module provides a base platform to support Quicklogic toolchains.
-
-The [Symbiflow] toolchain is supported.
-
+The {py:mod}`torii.platform.vendor.quicklogic` module provides a base platform to support Quicklogic devices with [Symbiflow] toolchain.
 ```{eval-rst}
 
 .. autoclass:: torii.platform.vendor.quicklogic.QuicklogicPlatform

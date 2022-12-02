@@ -1,8 +1,6 @@
 # Intel
 
-The {py:mod}`torii.platform.vendor.intel` module provides a base platform to support Intel toolchains.
-
-The [Quartus] and [Mistral] toolchains are supported.
+The {py:mod}`torii.platform.vendor.intel` module provides a base platform to support Intel toolchains with the [Quartus] and [Mistral] toolchains.
 
 ```{eval-rst}
 
