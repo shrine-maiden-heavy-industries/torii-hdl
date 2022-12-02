@@ -57,11 +57,13 @@ class Shape:
 	'''Bit width and signedness of a value.
 
 	A ``Shape`` can be constructed using:
+
 	  * explicit bit width and signedness;
 	  * aliases :func:`signed` and :func:`unsigned`;
 	  * casting from a variety of objects.
 
 	A ``Shape`` can be cast from:
+
 	  * an integer, where the integer specifies the bit width;
 	  * a range, where the result is wide enough to represent any element of the range, and is
 		signed if any element of the range is signed;
@@ -1316,10 +1318,12 @@ class UserValue(Value):
 
 	The following is an incomplete list of actions that, when applied to an ``UserValue`` directly
 	or indirectly, will cause it to be lowered, provided as an illustrative reference:
+
 		* Querying the shape using ``.shape()`` or ``len()``;
 		* Creating a similarly shaped signal using ``Signal.like``;
 		* Indexing or iterating through individual bits;
 		* Adding an assignment to the value to a ``Module`` using ``m.d.<domain> +=``.
+
 	'''
 	@deprecated('instead of `UserValue`, use `ValueCastable`', stacklevel = 3)
 	def __init__(self, *, src_loc_at = 0):

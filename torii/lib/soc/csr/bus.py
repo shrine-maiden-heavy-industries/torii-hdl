@@ -190,6 +190,7 @@ class Multiplexer(Elaboratable):
 	a CSR bus with an *n*-bit data path from a CPU with a *k*-bit datapath (*k>n*) in cases
 	where CSR access latency is less important than resource usage. In this case, two strategies
 	are possible for connecting the CSR bus to the CPU:
+
 		* The CPU could access the CSR bus directly (with no intervening logic other than simple
 		  translation of control signals). In this case, the register alignment should be set
 		  to 1 (i.e. `alignment` should be set to 0), and each *w*-bit register would occupy

@@ -41,6 +41,7 @@ class Memory:
 	depth : int
 	init : list of int
 	attrs : dict
+
 	'''
 	def __init__(
 		self, *, width : int, depth : int, init = None, name : Optional[str] = None,
@@ -98,6 +99,7 @@ class Memory:
 		Returns
 		-------
 		An instance of :class:`ReadPort` associated with this memory.
+
 		'''
 		return ReadPort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
@@ -114,6 +116,7 @@ class Memory:
 		Returns
 		-------
 		An instance of :class:`WritePort` associated with this memory.
+
 		'''
 		return WritePort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
@@ -151,9 +154,10 @@ class ReadPort(Elaboratable):
 		transparent ports cannot assign ``en`` (which is hardwired to 1 instead), as doing so is
 		currently not supported by Yosys.
 
-	Exceptions
-	----------
-	Raises :exn:`ValueError` if the read port is simultaneously asynchronous and non-transparent.
+	Raises
+	------
+	:class:`ValueError` if the read port is simultaneously asynchronous and non-transparent.
+
 	'''
 	def __init__(self, memory, *, domain = 'sync', transparent = True, src_loc_at = 0):
 		if domain == 'comb' and not transparent:
@@ -254,10 +258,11 @@ class WritePort(Elaboratable):
 		Write enable. Each bit selects a non-overlapping chunk of ``granularity`` bits on the
 		``data`` signal, which is written to memory at ``addr``. Unselected chunks are ignored.
 
-	Exceptions
-	----------
-	Raises :exn:`ValueError` if the write port granularity is greater than memory width, or does not
+	Raises
+	------
+	:class:`ValueError` if the write port granularity is greater than memory width, or does not
 	divide memory width evenly.
+
 	'''
 	def __init__(self, memory, *, domain = 'sync', granularity = None, src_loc_at = 0):
 		if granularity is None:
@@ -319,6 +324,7 @@ class DummyPort:
 	This port can be used in place of either a read or a write port for testing and verification.
 	It does not include any read/write port specific attributes, i.e. none besides ``'domain'``;
 	any such attributes may be set manually.
+
 	'''
 	def __init__(self, *, data_width, addr_width, domain = 'sync', name = None, granularity = None):
 		self.domain = domain

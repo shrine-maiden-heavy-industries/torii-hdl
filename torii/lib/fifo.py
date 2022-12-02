@@ -55,6 +55,7 @@ class FIFOInterface:
 	r_level : Signal(range(depth + 1)), out
 		Number of unread entries.
 	{r_attributes}
+
 	'''
 
 	__doc__ = _doc_template.format(
