@@ -83,6 +83,11 @@ setup(
 			'tests.*'
 		)
 	),
+	package_data      = {
+		'torii': [
+			'py.typed'
+		],
+	},
 
 	classifiers       = [
 		'Development Status :: 4 - Beta',
