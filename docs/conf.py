@@ -1,14 +1,33 @@
 # SPDX-License-Identifier: BSD-2-Clause
 import os, sys
+from pathlib import Path
 sys.path.insert(0, os.path.abspath('.'))
 
 from torii import __version__ as torii_version
+
+ROOT_DIR = (Path(__file__).parent).parent
+
+def doc_version():
+	try:
+		from setuptools_scm.git import parse as parse_git
+	except ImportError:
+		return ''
+
+	git = parse_git(str(ROOT_DIR.resolve()))
+	if not git:
+		return ''
+	elif git.exact:
+		return git.format_with('v{tag}')
+	else:
+		return 'latest'
+
 
 project   = 'Torii-HDL'
 version   = torii_version
 release   = version.split('+')[0]
 copyright = '2022, Shrine Maiden Heavy Industries'
 language  = 'en'
+docver    = doc_version()
 
 extensions = [
 	'sphinx.ext.autodoc',
@@ -48,6 +67,26 @@ napoleon_custom_sections  = [
 ]
 
 myst_heading_anchors = 3
+
+templates_path = [
+	'_templates',
+]
+
+
+html_context = {
+	'display_lower_left': False,
+	'current_language'  : language,
+	'current_version'   : docver,
+	'version'           : docver,
+	'display_github'    : True,
+	'github_user'       : 'shrine-maiden-heavy-industries',
+	'github_repo'       : 'torii-hdl',
+	'github_version'    : 'main/docs',
+	'versions'          : [
+		('latest', '/latest')
+	]
+}
+
 
 html_baseurl     = 'https://shrine-maiden-heavy-industries.github.io/torii-hdl/'
 html_theme       = 'sphinx_rtd_theme'
