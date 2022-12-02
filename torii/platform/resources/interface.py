@@ -179,7 +179,7 @@ def ULPIResource(
 	*args,
 	data : str, clk : str, dir : str, nxt : str, stp : str, rst : Optional[str] = None,
 	clk_dir : Literal['i', 'o'] = 'i', rst_invert : bool = False, attrs : Optional[Attrs] = None,
-	conn : Optional[Union[Tuple[str, int], int]]
+	conn : Optional[Union[Tuple[str, int], int]] = None
 ) -> Resource:
 
 	if clk_dir not in ('i', 'o'):
