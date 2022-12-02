@@ -7,11 +7,12 @@ The evaluation board definitions have also been migrated and are located in the 
 
 ## Introduction
 
-**TODO**
+Please see the [Torii Introduction](https://shrine-maiden-heavy-industries.github.io/torii-hdl/intro.html) on the [online documentation](https://shrine-maiden-heavy-industries.github.io/torii-hdl/)
+
 
 ## Installation
 
-**TODO**
+Please see the [installation instructions](https://shrine-maiden-heavy-industries.github.io/torii-hdl/install.html) on the [online documentation](https://shrine-maiden-heavy-industries.github.io/torii-hdl/)
 
 ## Supported devices
 
