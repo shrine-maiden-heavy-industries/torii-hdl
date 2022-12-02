@@ -9,6 +9,7 @@ from .extensions import *
 __all__ = (
 	'Display7SegResource',
 	'VGAResource',
+	'VGADACResource',
 	'UARTResource',
 	'IrDAResource',
 	'SPIResource',

@@ -8,6 +8,7 @@ from ...build import *
 __all__ = (
 	'Display7SegResource',
 	'VGAResource',
+	'VGADACResource',
 )
 
 
