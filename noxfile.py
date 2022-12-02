@@ -64,8 +64,10 @@ def mypy(session: nox.Session) -> None:
 	session.install('mypy')
 	session.install('lxml')
 	session.install('.')
-	session.run('mypy', '--non-interactive', '--install-types')
-	session.run('mypy', '-p', 'torii', '--html-report', str(out_dir.resolve()))
+	session.run(
+		'mypy', '--non-interactive', '--install-types',
+		'-p', 'torii', '--html-report', str(out_dir.resolve())
+	)
 
 @nox.session
 def flake8(session: nox.Session) -> None:
