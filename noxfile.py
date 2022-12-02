@@ -87,7 +87,8 @@ def build_dists(session: nox.Session) -> None:
 def upload_dist(session: nox.Session) -> None:
 	session.install('twine')
 	build_dists(session)
-	session.log('Uploading to PyPi')
-	session.run('python', '-m', 'twine',
-		'upload', f'{DIST_DIR}/*'
+	session.log(f'Uploading torii-{torii_version()} to PyPi')
+	session.run(
+		'python', '-m', 'twine',
+		'upload', f'{DIST_DIR}/torii-{torii_version()}*'
 	)
