@@ -455,9 +455,9 @@ class TemplatedPlatform(Platform):
 		def invoke_tool(context, name : str) -> str:
 			env_var = tool_env_var(name)
 			if context.parent['syntax'] == 'sh':
-				return '"${env_var}"'
+				return f'"${env_var}"'
 			elif context.parent['syntax'] == 'bat':
-				return '%{env_var}%'
+				return f'%{env_var}%'
 			else:
 				assert False
 
