@@ -220,10 +220,10 @@ The [latest release](install.md#latest-release) of Torii is recommended for any 
 		.. code-block:: console
 
 			$ git clone https://github.com/shrine-maiden-heavy-industries/torii-hdl
-			$ cd torii
+			$ cd torii-hdl
 			$ pip3 install --user --editable '.'
 
-		Any changes made to the ``torii`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
+		Any changes made to the ``torii-hdl`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
 
 		.. code-block:: console
 
@@ -398,14 +398,14 @@ Installing the [Torii Development Board](https://github.com/shrine-maiden-heavy-
 		.. code-block:: doscon
 
 			> git clone https://github.com/shrine-maiden-heavy-industries/torii-boards
-			> cd torii
+			> cd torii-boards
 			> pip install --editable .
 
 		Any changes made to the ``torii-boards`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
 
 		.. code-block:: doscon
 
-			> cd torii
+			> cd torii-boards
 			> git pull --ff-only origin main
 			> pip install --editable .
 
