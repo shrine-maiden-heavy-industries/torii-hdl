@@ -50,7 +50,7 @@ setup(
 	license          = ' BSD-2-Clause',
 	python_requires  = '~=3.9',
 	zip_safe         = True,
-	url              = 'https://github.com/shrine-maiden-heavy-industries/torii-hdl',
+	url              = 'https://torii.shmdn.link/',
 
 	long_description = README_FILE.read_text(),
 	long_description_content_type = 'text/markdown',
