@@ -116,7 +116,7 @@ setup(
 	],
 
 	project_urls     = {
-		'Documentation': 'https://shrine-maiden-heavy-industries.github.io/torii-hdl/',
+		'Documentation': 'https://torii.shmdn.link/',
 		'Source Code'  : 'https://github.com/shrine-maiden-heavy-industries/torii-hdl',
 		'Bug Tracker'  : 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues',
 	},

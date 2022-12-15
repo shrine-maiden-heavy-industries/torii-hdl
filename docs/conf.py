@@ -88,7 +88,7 @@ html_context = {
 }
 
 
-html_baseurl     = 'https://shrine-maiden-heavy-industries.github.io/torii-hdl/'
+html_baseurl     = 'https://torii.shmdn.link/'
 html_theme       = 'sphinx_rtd_theme'
 html_copy_source = False
 
