@@ -13,6 +13,8 @@ sim/index
 changelog
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
+
+Source Code <https://github.com/shrine-maiden-heavy-industries/torii-hdl/>
 ```
 
 # Torii-HDL
