@@ -302,7 +302,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 class TemplatedPlatform(Platform):
 	@property
 	@abstractmethod
-	def toolchain(self) ->  Optional[str]:
+	def toolchain(self) -> Optional[str]:
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
