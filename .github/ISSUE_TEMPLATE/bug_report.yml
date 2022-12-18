@@ -1,0 +1,42 @@
+name: Bug Report
+description: "Report an issue with Torii"
+labels: ["pending-verification"]
+body:
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "The version of Torii this bug was encountered on."
+      placeholder: "The output of `python -c 'import torii;print(torii.__version__)'`"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: >
+        When providing steps to reproduce the issue, please ensure that the issue
+        is reproducible in the current git main of Torii. Also ensure to
+        provide all necessary source files needed.
+
+
+        Please see [https://stackoverflow.com/help/mcve](https://stackoverflow.com/help/mcve)
+        for information on how to create a Minimal, Complete, and Verifiable Example
+        (MCVE).
+
+  - type: textarea
+    id: bug-desc
+    attributes:
+      label: What happened?
+      description: A clear and detailed report as possible, as well as how to reproduce it if applicable
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/usb-construct/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
