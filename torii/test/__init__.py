@@ -81,7 +81,8 @@ class ToriiTestCase(TestCase):
 			self.sim.run()
 		else:
 			out_name = f'{self.vcd_name}{f"-{suffix}" if suffix is not None else ""}.vcd'
-			out_file = self.out_dir / out_name
+			# HACK: Converting the path object to a string because write_vcd is dumb
+			out_file = str((self.out_dir / out_name).resolve())
 
 			with self.sim.write_vcd(out_file):
 				self.sim.reset()
