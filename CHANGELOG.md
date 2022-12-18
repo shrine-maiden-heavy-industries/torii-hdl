@@ -25,6 +25,15 @@ Unreleased template stuff
 ### Fixed
 ### Security
 
+## [0.4.2]
+
+### Fixed
+
+- Fixed the project URLs for the documentation and package.
+- Fixed some minor issues in the install documentation.
+- Fixed the line endings on generated *nix build scripts.
+- Fixed an issue where the built-in test harness was broken with writing VCDs.
+
 ## [0.4.1]
 
 ### Fixed
@@ -92,7 +101,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...main
+[0.4.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0
 [0.3.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.3...amaranth-fork
