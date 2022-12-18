@@ -22,7 +22,7 @@ class ResourceError(Exception):
 
 
 class ResourceManager:
-	def __init__(self, resources : List[Resource], connectors : List[Connector]) -> None:
+	def __init__(self, resources: List[Resource], connectors: List[Connector]) -> None:
 		self.resources  = OrderedDict()
 		self._requested = OrderedDict()
 		self._phys_reqd = OrderedDict()
@@ -37,7 +37,7 @@ class ResourceManager:
 		self.add_resources(resources)
 		self.add_connectors(connectors)
 
-	def add_resources(self, resources : List[Resource]) -> None:
+	def add_resources(self, resources: List[Resource]) -> None:
 		for res in resources:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
@@ -46,7 +46,7 @@ class ResourceManager:
 
 			self.resources[res.name, res.number] = res
 
-	def add_connectors(self, connectors : List[Connector]) -> None:
+	def add_connectors(self, connectors: List[Connector]) -> None:
 		for conn in connectors:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
@@ -59,25 +59,25 @@ class ResourceManager:
 				assert conn_pin not in self._conn_pins
 				self._conn_pins[conn_pin] = plat_pin
 
-	def lookup(self, name : str , number : int = 0) -> Resource:
+	def lookup(self, name: str , number: int = 0) -> Resource:
 		if (name, number) not in self.resources:
 			raise ResourceError(f'Resource {name}#{number} does not exist')
 
 		return self.resources[name, number]
 
 	def request(
-		self, name : str, number : int = 0, *,
-		dir : Optional[Literal['i', 'o', 'oe', 'io', '-']] = None,
-		xdr : Optional[Dict[str, int]] = None
+		self, name: str, number: int = 0, *,
+		dir: Optional[Literal['i', 'o', 'oe', 'io', '-']] = None,
+		xdr: Optional[Dict[str, int]] = None
 	) -> Union[Record, Pin]:
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
 			raise ResourceError(f'Resource {name}#{number} has already been requested')
 
 		def merge_options(
-			subsignal : Subsignal,
-			dir : Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
-			xdr : Optional[Union[int, Dict[str, int]]]
+			subsignal: Subsignal,
+			dir: Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
+			xdr: Optional[Union[int, Dict[str, int]]]
 		) -> Tuple[
 			Union[
 				Literal['i', 'o', 'oe', 'io', '-'],
@@ -122,10 +122,10 @@ class ResourceManager:
 			return (dir, xdr)
 
 		def resolve(
-			resource : Resource,
-			dir : Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
-			xdr : Union[int, Dict[str, int]],
-			name : str, attrs : Attrs
+			resource: Resource,
+			dir: Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
+			xdr: Union[int, Dict[str, int]],
+			name: str, attrs: Attrs
 		) -> Union[Record, Pin]:
 			for attr_key, attr_value in attrs.items():
 				if hasattr(attr_value, '__call__'):
@@ -216,7 +216,7 @@ class ResourceManager:
 				yield (pin, port, attrs, res.ios[0].invert)
 
 	def should_skip_port_component(
-		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+		self, port: Subsignal, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
 	) -> bool:
 		return False
 
@@ -258,7 +258,7 @@ class ResourceManager:
 				for bit, pin_name in enumerate(pin_names):
 					yield (f'{port_name}[{bit}]', pin_name, attrs)
 
-	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
 		if not isinstance(clock, Signal):
 			raise TypeError(f'Object {clock!r} is not a Signal')
 		if not isinstance(frequency, (int, float)):

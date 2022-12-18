@@ -32,7 +32,7 @@ class Settle(Command):
 
 
 class Delay(Command):
-	def __init__(self, interval : Optional[Union[int, float]] = None) -> None:
+	def __init__(self, interval: Optional[Union[int, float]] = None) -> None:
 		self.interval = None if interval is None else float(interval)
 
 	def __repr__(self) -> str:
@@ -43,7 +43,7 @@ class Delay(Command):
 
 
 class Tick(Command):
-	def __init__(self, domain : Union[str, ClockDomain] = 'sync') -> None:
+	def __init__(self, domain: Union[str, ClockDomain] = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
 		assert domain != 'comb'
@@ -64,7 +64,7 @@ class Active(Command):
 
 
 class Simulator:
-	def __init__(self, fragment : Fragment, *, engine : Literal['pysim'] = 'pysim') -> None:
+	def __init__(self, fragment: Fragment, *, engine: Literal['pysim'] = 'pysim') -> None:
 		if isinstance(engine, type) and issubclass(engine, BaseEngine):
 			pass
 		elif engine == 'pysim':
@@ -77,12 +77,12 @@ class Simulator:
 		self._engine   = engine(self._fragment)
 		self._clocked  = set()
 
-	def _check_process(self, process : Union[Generator, Coroutine]) -> Union[Generator, Coroutine]:
+	def _check_process(self, process: Union[Generator, Coroutine]) -> Union[Generator, Coroutine]:
 		if not (isgeneratorfunction(process) or iscoroutinefunction(process)):
 			raise TypeError(f'Cannot add a process {process!r} because it is not a generator function')
 		return process
 
-	def add_process(self, process : Union[Generator, Coroutine]) -> None:
+	def add_process(self, process: Union[Generator, Coroutine]) -> None:
 		process = self._check_process(process)
 
 		def wrapper():
@@ -93,7 +93,7 @@ class Simulator:
 		self._engine.add_coroutine_process(wrapper, default_cmd = None)
 
 	def add_sync_process(
-		self, process : Union[Generator, Coroutine], *, domain : Union[str, ClockDomain] = 'sync'
+		self, process: Union[Generator, Coroutine], *, domain: Union[str, ClockDomain] = 'sync'
 	) -> None:
 		process = self._check_process(process)
 
@@ -106,8 +106,8 @@ class Simulator:
 		self._engine.add_coroutine_process(wrapper, default_cmd = Tick(domain))
 
 	def add_clock(
-		self, period : float, *, phase : Optional[float] = None,
-		domain : Union[str, ClockDomain] = 'sync', if_exists : bool = False
+		self, period: float, *, phase: Optional[float] = None,
+		domain: Union[str, ClockDomain] = 'sync', if_exists: bool = False
 	) -> None:
 		'''Add a clock process.
 
@@ -193,7 +193,7 @@ class Simulator:
 		while self.advance():
 			pass
 
-	def run_until(self, deadline : int, *, run_passive : bool = False) -> None:
+	def run_until(self, deadline: int, *, run_passive: bool = False) -> None:
 		'''Run the simulation until it advances to ``deadline``.
 
 		If ``run_passive`` is ``False``, the simulation also stops when there are no active
@@ -209,8 +209,8 @@ class Simulator:
 			pass
 
 	def write_vcd(
-		self, vcd_file : Optional[Union[IO, str]], gtkw_file : Optional[Union[IO, str]] = None, *,
-		traces : Iterable[Signal] = ()
+		self, vcd_file: Optional[Union[IO, str]], gtkw_file: Optional[Union[IO, str]] = None, *,
+		traces: Iterable[Signal] = ()
 	) -> None:
 		'''Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
 

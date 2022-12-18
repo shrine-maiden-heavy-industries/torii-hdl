@@ -68,7 +68,7 @@ class YosysBinary:
 
 	@classmethod
 	def run(
-		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+		cls, args: List[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		'''Run Yosys process.
 
@@ -98,7 +98,7 @@ class YosysBinary:
 
 	@classmethod
 	def _process_result(
-		cls, returncode : int, stdout : str, stderr : str, ignore_warnings : bool, src_loc_at : int
+		cls, returncode: int, stdout: str, stderr: str, ignore_warnings: bool, src_loc_at: int
 	) -> str:
 		if returncode:
 			raise YosysError(stderr.strip())
@@ -132,7 +132,7 @@ class _BuiltinYosys(YosysBinary):
 
 	@classmethod
 	def run(
-		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+		cls, args: List[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		popen = subprocess.Popen(
 			[ sys.executable, '-m', cls.YOSYS_PACKAGE, *args ],
@@ -173,7 +173,7 @@ class _SystemYosys(YosysBinary):
 
 	@classmethod
 	def run(
-		cls, args : List[str], stdin : str = '', *, ignore_warnings : bool = False, src_loc_at : int = 0
+		cls, args: List[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		popen = subprocess.Popen(
 			[ require_tool(cls.YOSYS_BINARY), *args ],
@@ -190,7 +190,7 @@ class _SystemYosys(YosysBinary):
 		return cls._process_result(popen.returncode, stdout, stderr, ignore_warnings, src_loc_at)
 
 
-def find_yosys(requirement : Callable[[Optional[Tuple[int, int, int]]], bool]) -> YosysBinary:
+def find_yosys(requirement: Callable[[Optional[Tuple[int, int, int]]], bool]) -> YosysBinary:
 	'''Find an available Yosys executable of required version.
 
 	Parameters

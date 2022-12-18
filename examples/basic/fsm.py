@@ -5,7 +5,7 @@ from torii.cli import main
 
 
 class UARTReceiver(Elaboratable):
-	def __init__(self, divisor : int):
+	def __init__(self, divisor: int):
 		self.divisor = divisor
 
 		self.i    = Signal()

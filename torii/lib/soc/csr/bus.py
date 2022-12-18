@@ -59,7 +59,7 @@ class Element(Record):
 		this strobe is asserted.
 	'''
 	def __init__(
-		self, width : int, access : Access, *, name : Optional[str] = None, src_loc_at : int = 0
+		self, width: int, access: Access, *, name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise ValueError(f'Width must be a non-negative integer, not {width!r}')
@@ -132,7 +132,7 @@ class Interface(Record):
 		nothing.
 	'''
 
-	def __init__(self, *, addr_width : int, data_width : int, name : Optional[str] = None) -> None:
+	def __init__(self, *, addr_width: int, data_width: int, name: Optional[str] = None) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
 		if not isinstance(data_width, int) or data_width <= 0:
@@ -156,7 +156,7 @@ class Interface(Record):
 		return self._map
 
 	@memory_map.setter
-	def memory_map(self, memory_map : MemoryMap) -> None:
+	def memory_map(self, memory_map: MemoryMap) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')
 		if memory_map.addr_width != self.addr_width:
@@ -225,7 +225,7 @@ class Multiplexer(Elaboratable):
 		CSR bus providing access to registers.
 	''' # noqa: E101
 	def __init__(
-		self, *, addr_width : int, data_width : int, alignment : int = 0, name : Optional[str] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
 		self._map = MemoryMap(
 			addr_width = addr_width, data_width = data_width,
@@ -245,7 +245,7 @@ class Multiplexer(Elaboratable):
 			self._bus.memory_map = self._map
 		return self._bus
 
-	def align_to(self, alignment : int) -> int:
+	def align_to(self, alignment: int) -> int:
 		'''Align the implicit address of the next register.
 
 		See :meth:`MemoryMap.align_to` for details.
@@ -253,8 +253,8 @@ class Multiplexer(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, element : Element, *, addr : Optional[int] = None, alignment : Optional[int] = None,
-		extend : bool = False
+		self, element: Element, *, addr: Optional[int] = None, alignment: Optional[int] = None,
+		extend: bool = False
 	) -> Tuple[int, int]:
 		'''Add a register.
 
@@ -353,7 +353,7 @@ class Decoder(Elaboratable):
 		CSR bus providing access to subordinate buses.
 	'''
 	def __init__(
-		self, *, addr_width : int, data_width : int, alignment : int = 0, name : Optional[str] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
 		self._map  = MemoryMap(
 			addr_width = addr_width, data_width = data_width,
@@ -374,7 +374,7 @@ class Decoder(Elaboratable):
 			self._bus.memory_map = self._map
 		return self._bus
 
-	def align_to(self, alignment : int) -> int:
+	def align_to(self, alignment: int) -> int:
 		'''Align the implicit address of the next window.
 
 		See :meth:`MemoryMap.align_to` for details.
@@ -382,7 +382,7 @@ class Decoder(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, sub_bus : Interface, *, addr : Optional[int] = None, extend : bool = False
+		self, sub_bus: Interface, *, addr: Optional[int] = None, extend: bool = False
 	) -> Tuple[int, int, int]:
 		'''Add a window to a subordinate bus.
 

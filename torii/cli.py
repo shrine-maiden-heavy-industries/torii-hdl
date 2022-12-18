@@ -16,7 +16,7 @@ __all__ = (
 	'main',
 )
 
-def main_parser(parser : Optional[ArgumentParser] = None) -> ArgumentParser:
+def main_parser(parser: Optional[ArgumentParser] = None) -> ArgumentParser:
 	if parser is None:
 		parser = ArgumentParser()
 
@@ -93,8 +93,8 @@ def main_parser(parser : Optional[ArgumentParser] = None) -> ArgumentParser:
 
 
 def main_runner(
-	parser : ArgumentParser, args : Namespace, design : Union[Fragment, Elaboratable],
-	platform : Platform = None, name : str = 'top', ports : Tuple[Signal] = ()
+	parser: ArgumentParser, args: Namespace, design: Union[Fragment, Elaboratable],
+	platform: Platform = None, name: str = 'top', ports: Tuple[Signal] = ()
 ) -> None:
 
 	level = log.INFO

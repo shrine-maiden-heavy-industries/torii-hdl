@@ -27,7 +27,7 @@ class MockRecord(Record):
 
 	'''
 
-	def _insert_field(self, item : str) -> None:
+	def _insert_field(self, item: str) -> None:
 		'''Construct mocked Record
 
 		When the call to ``__getitem__`` runs into a field that
@@ -53,7 +53,7 @@ class MockRecord(Record):
 		super().__init__((), *args, **kwargs)
 		self.fields = {}
 
-	def __getitem__(self, item : str) -> Record:
+	def __getitem__(self, item: str) -> Record:
 		'''Return record field
 
 		If the field doesn't exist, we create it with a call
@@ -84,7 +84,7 @@ class MockPlatform:
 
 	'''
 
-	def request(self, name : str, number : int = 0) -> MockRecord:
+	def request(self, name: str, number: int = 0) -> MockRecord:
 		'''Request a resource from the platform
 
 		This call returns a :py:class:`MockRecord` regardless

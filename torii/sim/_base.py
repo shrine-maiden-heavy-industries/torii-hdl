@@ -74,7 +74,7 @@ class BaseEngine:
 		raise NotImplementedError
 
 	def write_vcd(
-		self, *, vcd_file : Optional[Union[IO, str]], gtkw_file : Optional[Union[IO, str]] = None,
-		traces : Iterable[Signal]
+		self, *, vcd_file: Optional[Union[IO, str]], gtkw_file: Optional[Union[IO, str]] = None,
+		traces: Iterable[Signal]
 	) -> None:
 		raise NotImplementedError

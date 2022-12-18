@@ -29,7 +29,7 @@ class Encoder(Elaboratable):
 	n : Signal, out
 		Invalid: either none or multiple input bits are asserted.
 	'''
-	def __init__(self, width : int) -> None:
+	def __init__(self, width: int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
@@ -68,7 +68,7 @@ class PriorityEncoder(Elaboratable):
 	n : Signal, out
 		Invalid: no input bits are asserted.
 	'''
-	def __init__(self, width : int) -> None:
+	def __init__(self, width: int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
@@ -104,7 +104,7 @@ class Decoder(Elaboratable):
 	n : Signal, in
 		Invalid, no output bits are to be asserted.
 	'''
-	def __init__(self, width : int) -> None:
+	def __init__(self, width: int) -> None:
 		self.width = width
 
 		self.i = Signal(range(width))
@@ -144,7 +144,7 @@ class GrayEncoder(Elaboratable):
 	o : Signal(width), out
 		Encoded Gray code.
 	'''
-	def __init__(self, width : int) -> None:
+	def __init__(self, width: int) -> None:
 		self.width = width
 
 		self.i = Signal(width)
@@ -171,7 +171,7 @@ class GrayDecoder(Elaboratable):
 	o : Signal(width), out
 		Decoded natural binary.
 	'''
-	def __init__(self, width : int) -> None:
+	def __init__(self, width: int) -> None:
 		self.width = width
 
 		self.i = Signal(width)

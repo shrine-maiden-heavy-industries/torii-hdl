@@ -14,19 +14,19 @@ __all__ = (
 )
 
 
-def _check_divisor(divisor : int, bound : int):
+def _check_divisor(divisor: int, bound: int):
 	if divisor < bound:
 		raise ValueError(f'Invalid divisor {divisor!r}; must be greater than or equal to {bound}')
 
 
-def _check_parity(parity : Literal['none', 'mark', 'space', 'even', 'odd']):
+def _check_parity(parity: Literal['none', 'mark', 'space', 'even', 'odd']):
 	choices = ( 'none', 'mark', 'space', 'even', 'odd' )
 	if parity not in choices:
 		raise ValueError(f'Invalid parity {parity!r}; must be one of {", ".join(choices)}')
 
 
 def _compute_parity_bit(
-	data : Record , parity : Literal['none', 'mark', 'space', 'even', 'odd']
+	data: Record , parity: Literal['none', 'mark', 'space', 'even', 'odd']
 ) -> Union[Const, Record, bool]:
 	if parity == 'none':
 		return Const(0, 0)
@@ -42,7 +42,7 @@ def _compute_parity_bit(
 
 
 def _wire_layout(
-	data_bits : int, parity : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none'
+	data_bits: int, parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none'
 ) -> List[Tuple[str, int]]:
 	return [
 		('start',  1),
@@ -88,9 +88,9 @@ class AsyncSerialRX(Elaboratable):
 		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
 	'''
 	def __init__(
-		self, *, divisor : int, divisor_bits : Optional[int] = None, data_bits : int = 8,
-		parity : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
-		pins : Optional[Pin] = None
+		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
+		parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
+		pins: Optional[Pin] = None
 	) -> None:
 		_check_parity(parity)
 		self._parity = parity
@@ -192,9 +192,9 @@ class AsyncSerialTX(Elaboratable):
 		Serial output. If ``pins`` has been specified, it drives ``pins.tx.o``.
 	'''
 	def __init__(
-		self, *, divisor : int, divisor_bits : Optional[int] = None, data_bits : int = 8,
+		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
 		parity  : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
-		pins : Optional[Pin] = None
+		pins: Optional[Pin] = None
 	) -> None:
 		_check_parity(parity)
 		self._parity = parity
@@ -275,7 +275,7 @@ class AsyncSerial(Elaboratable):
 		See :class:`AsyncSerialTX`.
 	'''
 	def __init__(
-		self, *, divisor : int, divisor_bits : Optional[int] = None, **kwargs
+		self, *, divisor: int, divisor_bits: Optional[int] = None, **kwargs
 	) -> None:
 		self.divisor = Signal(divisor_bits or bits_for(divisor), reset = divisor)
 

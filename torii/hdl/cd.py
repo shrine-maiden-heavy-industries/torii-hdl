@@ -47,15 +47,15 @@ class ClockDomain:
 	'''
 
 	@staticmethod
-	def _name_for(domain_name : str, signal_name : str) -> str:
+	def _name_for(domain_name: str, signal_name: str) -> str:
 		if domain_name == 'sync':
 			return signal_name
 		else:
 			return f'{domain_name}_{signal_name}'
 
 	def __init__(self,
-		name : Optional[str] = None, *, clk_edge : Literal['pos', 'neg'] = 'pos',
-		reset_less : bool = False, async_reset : bool = False, local : bool = False
+		name: Optional[str] = None, *, clk_edge: Literal['pos', 'neg'] = 'pos',
+		reset_less: bool = False, async_reset: bool = False, local: bool = False
 	) -> None:
 		if name is None:
 			try:
@@ -85,7 +85,7 @@ class ClockDomain:
 
 		self.local = local
 
-	def rename(self, new_name : str) -> None:
+	def rename(self, new_name: str) -> None:
 		self.name = new_name
 		self.clk.name = self._name_for(new_name, 'clk')
 		if self.rst is not None:

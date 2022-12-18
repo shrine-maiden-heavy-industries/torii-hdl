@@ -23,7 +23,7 @@ __all__ = (
 )
 
 class BuildPlan:
-	def __init__(self, script : str) -> None:
+	def __init__(self, script: str) -> None:
 		'''A build plan.
 
 		Parameters
@@ -34,7 +34,7 @@ class BuildPlan:
 		self.script = script
 		self.files  = OrderedDict()
 
-	def add_file(self, filename : str, content : Union[str, bytes]) -> None:
+	def add_file(self, filename: str, content: Union[str, bytes]) -> None:
 		'''
 		Add ``content``, which can be a :class:`str`` or :class:`bytes`, to the build plan
 		as ``filename``. The file name can be a relative path with directories separated by
@@ -43,7 +43,7 @@ class BuildPlan:
 		assert isinstance(filename, str) and filename not in self.files
 		self.files[filename] = content
 
-	def digest(self, size : int = 64) -> bytes:
+	def digest(self, size: int = 64) -> bytes:
 		'''
 		Compute a `digest`, a short byte sequence deterministically and uniquely identifying
 		this build plan.
@@ -58,7 +58,7 @@ class BuildPlan:
 		hasher.update(self.script.encode('utf-8'))
 		return hasher.digest()
 
-	def archive(self, file : str) -> None:
+	def archive(self, file: str) -> None:
 		'''
 		Archive files from the build plan into ``file``, which can be either a filename, or
 		a file-like object. The produced archive is deterministic: exact same files will
@@ -70,7 +70,7 @@ class BuildPlan:
 				archive.writestr(zipfile.ZipInfo(filename), self.files[filename])
 
 	def execute_local(
-		self, root : str = 'build', *, run_script : bool = True
+		self, root: str = 'build', *, run_script: bool = True
 	) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
@@ -116,7 +116,7 @@ class BuildPlan:
 			os.chdir(cwd)
 
 	def execute_remote_ssh(
-		self, *, connect_to : Dict[str, Any] = {}, root : str, run_script : bool = True
+		self, *, connect_to: Dict[str, Any] = {}, root: str, run_script: bool = True
 	) -> 'RemoteSSHBuildProducts':
 		'''
 		Execute build plan using the remote SSH strategy. Files from the build
@@ -204,7 +204,7 @@ class BuildPlan:
 
 class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
-	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> Union[str, bytes]:
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> Union[str, bytes]:
 		'''
 		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
 		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
@@ -212,7 +212,7 @@ class BuildProducts(metaclass = ABCMeta):
 		assert mode in ('b', 't')
 
 	@contextmanager
-	def extract(self, *filenames : Tuple[str]) -> Generator[
+	def extract(self, *filenames: Tuple[str]) -> Generator[
 		Union[None, str, List[str]], None, None
 	]:
 		'''
@@ -249,24 +249,24 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 class LocalBuildProducts(BuildProducts):
-	def __init__(self, root : str) -> None:
+	def __init__(self, root: str) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
 		# any way other than through `products.get()`) in general, so downstream code must never
 		# rely on this, even when we happen to use a local build most of the time.
 		self.__root = root
 
-	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> Union[str, bytes]:
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> Union[str, bytes]:
 		super().get(filename, mode)
 		with open(os.path.join(self.__root, filename), 'r' + mode) as f:
 			return f.read()
 
 
 class RemoteSSHBuildProducts(BuildProducts):
-	def __init__(self, connect_to : Dict[str, Any], root : str) -> None:
+	def __init__(self, connect_to: Dict[str, Any], root: str) -> None:
 		self.__connect_to = connect_to
 		self.__root = root
 
-	def get(self, filename : str, mode : Literal['b', 't'] = 'b') -> bytes:
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> bytes:
 		super().get(filename, mode)
 
 		from paramiko import SSHClient

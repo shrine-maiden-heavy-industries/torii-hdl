@@ -78,7 +78,7 @@ class Shape:
 	signed : bool
 		If ``False``, the value is unsigned. If ``True``, the value is signed two's complement.
 	'''  # noqa: E101
-	def __init__(self, width : int = 1, signed : bool = False) -> None:
+	def __init__(self, width: int = 1, signed: bool = False) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Width must be a non-negative integer, not {width!r}')
 
@@ -91,8 +91,8 @@ class Shape:
 
 	@staticmethod
 	def cast(
-		obj : Union['Shape', int, range, type, ShapeCastable], *,
-		src_loc_at : int = 0
+		obj: Union['Shape', int, range, type, ShapeCastable], *,
+		src_loc_at: int = 0
 	) -> 'Shape':
 		while True:
 			if isinstance(obj, Shape):
@@ -130,7 +130,7 @@ class Shape:
 		else:
 			return f'unsigned({self.width})'
 
-	def __eq__(self, other : Union[Tuple[int, bool], 'Shape']) -> bool:
+	def __eq__(self, other: Union[Tuple[int, bool], 'Shape']) -> bool:
 		# TODO(nmigen-0.4): remove
 		if isinstance(other, tuple) and len(other) == 2:
 			width, signed = other
@@ -146,12 +146,12 @@ class Shape:
 		return self.width == other.width and self.signed == other.signed
 
 
-def unsigned(width : int) -> Shape:
+def unsigned(width: int) -> Shape:
 	'''Shorthand for ``Shape(width, signed=False)``.'''
 	return Shape(width, signed = False)
 
 
-def signed(width : int) -> Shape:
+def signed(width: int) -> Shape:
 	'''Shorthand for ``Shape(width, signed=True)``.'''
 	return Shape(width, signed = True)
 
@@ -160,7 +160,7 @@ ValueCastType = Union['Value', int, Enum, 'ValueCastable']
 
 class Value(metaclass = ABCMeta):
 	@staticmethod
-	def cast(obj : ValueCastType ) -> 'Value':
+	def cast(obj: ValueCastType ) -> 'Value':
 		'''Converts ``obj`` to an Torii value.
 
 		Booleans and integers are wrapped into a :class:`Const`. Enumerations whose members are
@@ -182,7 +182,7 @@ class Value(metaclass = ABCMeta):
 				raise RecursionError(f'Value-castable object {obj!r} casts to itself')
 			obj = new_obj
 
-	def __init__(self, *, src_loc_at : int = 0) -> None:
+	def __init__(self, *, src_loc_at: int = 0) -> None:
 		super().__init__()
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
@@ -195,35 +195,35 @@ class Value(metaclass = ABCMeta):
 	def __neg__(self) -> 'Operator':
 		return Operator('-', [self])
 
-	def __add__(self, other : ValueCastType) -> 'Operator':
+	def __add__(self, other: ValueCastType) -> 'Operator':
 		return Operator('+', [self, other])
 
-	def __radd__(self, other : ValueCastType) -> 'Operator':
+	def __radd__(self, other: ValueCastType) -> 'Operator':
 		return Operator('+', [other, self])
 
-	def __sub__(self, other : ValueCastType) -> 'Operator':
+	def __sub__(self, other: ValueCastType) -> 'Operator':
 		return Operator('-', [self, other])
 
-	def __rsub__(self, other : ValueCastType) -> 'Operator':
+	def __rsub__(self, other: ValueCastType) -> 'Operator':
 		return Operator('-', [other, self])
 
 
-	def __mul__(self, other : ValueCastType) -> 'Operator':
+	def __mul__(self, other: ValueCastType) -> 'Operator':
 		return Operator('*', [self, other])
 
-	def __rmul__(self, other : ValueCastType) -> 'Operator':
+	def __rmul__(self, other: ValueCastType) -> 'Operator':
 		return Operator('*', [other, self])
 
-	def __mod__(self, other : ValueCastType) -> 'Operator':
+	def __mod__(self, other: ValueCastType) -> 'Operator':
 		return Operator('%', [self, other])
 
-	def __rmod__(self, other : ValueCastType) -> 'Operator':
+	def __rmod__(self, other: ValueCastType) -> 'Operator':
 		return Operator('%', [other, self])
 
-	def __floordiv__(self, other : ValueCastType) -> 'Operator':
+	def __floordiv__(self, other: ValueCastType) -> 'Operator':
 		return Operator('//', [self, other])
 
-	def __rfloordiv__(self, other : ValueCastType) -> 'Operator':
+	def __rfloordiv__(self, other: ValueCastType) -> 'Operator':
 		return Operator('//', [other, self])
 
 
@@ -235,58 +235,58 @@ class Value(metaclass = ABCMeta):
 			# an unsigned value.
 			raise TypeError('Shift amount must be unsigned')
 
-	def __lshift__(self, other : ValueCastType) -> 'Operator':
+	def __lshift__(self, other: ValueCastType) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('<<', [self, other])
 
-	def __rlshift__(self, other : ValueCastType) -> 'Operator':
+	def __rlshift__(self, other: ValueCastType) -> 'Operator':
 		self.__check_shamt()
 		return Operator('<<', [other, self])
 
-	def __rshift__(self, other : ValueCastType) -> 'Operator':
+	def __rshift__(self, other: ValueCastType) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('>>', [self, other])
 
-	def __rrshift__(self, other : ValueCastType) -> 'Operator':
+	def __rrshift__(self, other: ValueCastType) -> 'Operator':
 		self.__check_shamt()
 		return Operator('>>', [other, self])
 
-	def __and__(self, other : ValueCastType) -> 'Operator':
+	def __and__(self, other: ValueCastType) -> 'Operator':
 		return Operator('&', [self, other])
 
-	def __rand__(self, other : ValueCastType) -> 'Operator':
+	def __rand__(self, other: ValueCastType) -> 'Operator':
 		return Operator('&', [other, self])
 
-	def __xor__(self, other : ValueCastType) -> 'Operator':
+	def __xor__(self, other: ValueCastType) -> 'Operator':
 		return Operator('^', [self, other])
 
-	def __rxor__(self, other : ValueCastType) -> 'Operator':
+	def __rxor__(self, other: ValueCastType) -> 'Operator':
 		return Operator('^', [other, self])
 
-	def __or__(self, other : ValueCastType) -> 'Operator':
+	def __or__(self, other: ValueCastType) -> 'Operator':
 		return Operator('|', [self, other])
 
-	def __ror__(self, other : ValueCastType) -> 'Operator':
+	def __ror__(self, other: ValueCastType) -> 'Operator':
 		return Operator('|', [other, self])
 
-	def __eq__(self, other : ValueCastType) -> 'Operator':
+	def __eq__(self, other: ValueCastType) -> 'Operator':
 		return Operator('==', [self, other])
 
-	def __ne__(self, other : ValueCastType) -> 'Operator':
+	def __ne__(self, other: ValueCastType) -> 'Operator':
 		return Operator('!=', [self, other])
 
-	def __lt__(self, other : ValueCastType) -> 'Operator':
+	def __lt__(self, other: ValueCastType) -> 'Operator':
 		return Operator('<', [self, other])
 
-	def __le__(self, other : ValueCastType) -> 'Operator':
+	def __le__(self, other: ValueCastType) -> 'Operator':
 		return Operator('<=', [self, other])
 
-	def __gt__(self, other : ValueCastType) -> 'Operator':
+	def __gt__(self, other: ValueCastType) -> 'Operator':
 		return Operator('>', [self, other])
 
-	def __ge__(self, other : ValueCastType) -> 'Operator':
+	def __ge__(self, other: ValueCastType) -> 'Operator':
 		return Operator('>=', [self, other])
 
 	def __abs__(self) -> 'Value':
@@ -299,7 +299,7 @@ class Value(metaclass = ABCMeta):
 	def __len__(self) -> int:
 		return self.shape().width
 
-	def __getitem__(self, key : Union[int, slice]) -> 'Slice':
+	def __getitem__(self, key: Union[int, slice]) -> 'Slice':
 		n = len(self)
 		if isinstance(key, int):
 			if key not in range(-n, n):
@@ -375,7 +375,7 @@ class Value(metaclass = ABCMeta):
 		'''
 		return Operator('r^', [self])
 
-	def implies(premise, conclusion : ValueCastType)  -> 'Operator':
+	def implies(premise, conclusion: ValueCastType)  -> 'Operator':
 		'''Implication.
 
 		Returns
@@ -385,7 +385,7 @@ class Value(metaclass = ABCMeta):
 		'''
 		return ~premise | conclusion
 
-	def bit_select(self, offset : Union['Value', int] , width : int) -> 'Part':
+	def bit_select(self, offset: Union['Value', int] , width: int) -> 'Part':
 		'''Part-select with bit granularity.
 
 		Selects a constant width but variable offset part of a ``Value``, such that successive
@@ -408,7 +408,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
-	def word_select(self, offset : Union['Value', int] , width : int) -> 'Part':
+	def word_select(self, offset: Union['Value', int] , width: int) -> 'Part':
 		'''Part-select with word granularity.
 
 		Selects a constant width but variable offset part of a ``Value``, such that successive
@@ -431,7 +431,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
-	def matches(self, *patterns : Tuple[Union[int, str, Enum]]) -> 'Value':
+	def matches(self, *patterns: Tuple[Union[int, str, Enum]]) -> 'Value':
 		'''Pattern matching.
 
 		Matches against a set of patterns, which may be integers or bit strings, recognizing
@@ -488,7 +488,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return Cat(*matches).any()
 
-	def shift_left(self, amount : int) -> 'Value':
+	def shift_left(self, amount: int) -> 'Value':
 		'''Shift left by constant amount.
 
 		Parameters
@@ -510,7 +510,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return Cat(Const(0, amount), self) # unsigned
 
-	def shift_right(self, amount : int) -> 'Value':
+	def shift_right(self, amount: int) -> 'Value':
 		'''Shift right by constant amount.
 
 		Parameters
@@ -532,7 +532,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return self[amount:] # unsigned
 
-	def rotate_left(self, amount : int) -> 'Value':
+	def rotate_left(self, amount: int) -> 'Value':
 		'''Rotate left by constant amount.
 
 		Parameters
@@ -550,7 +550,7 @@ class Value(metaclass = ABCMeta):
 		amount %= len(self)
 		return Cat(self[-amount:], self[:-amount]) # meow :3
 
-	def rotate_right(self, amount : int) -> 'Value':
+	def rotate_right(self, amount: int) -> 'Value':
 		'''Rotate right by constant amount.
 
 		Parameters
@@ -568,7 +568,7 @@ class Value(metaclass = ABCMeta):
 		amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
-	def eq(self, value : 'Value') -> 'Assign':
+	def eq(self, value: 'Value') -> 'Assign':
 		'''Assignment.
 
 		Parameters
@@ -634,7 +634,7 @@ class Const(Value):
 	src_loc = None
 
 	@staticmethod
-	def normalize(value : int, shape : Tuple[int, bool]):
+	def normalize(value: int, shape: Tuple[int, bool]):
 		width, signed = shape
 		mask = (1 << width) - 1
 		value &= mask
@@ -643,8 +643,8 @@ class Const(Value):
 		return value
 
 	def __init__(
-		self, value : int, shape : Optional[Union[int, Tuple[int, bool]]] = None, *,
-		src_loc_at : int = 0
+		self, value: int, shape: Optional[Union[int, Tuple[int, bool]]] = None, *,
+		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
 		self.value = int(value)
@@ -672,8 +672,8 @@ class Const(Value):
 
 class AnyValue(Value, DUID):
 	def __init__(
-		self, shape : Union[Shape, int, Tuple[int, bool], range, type, ShapeCastable] , *,
-		src_loc_at : int = 0
+		self, shape: Union[Shape, int, Tuple[int, bool], range, type, ShapeCastable] , *,
+		src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.width, self.signed = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
@@ -775,7 +775,7 @@ class Operator(Value):
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
 
-def Mux(sel : Value, val1 : Value, val0 : Value) -> Operator:
+def Mux(sel: Value, val1: Value, val0: Value) -> Operator:
 	'''Choose between two values.
 
 	Parameters
@@ -797,7 +797,7 @@ def Mux(sel : Value, val1 : Value, val0 : Value) -> Operator:
 @final
 class Slice(Value):
 	def __init__(
-		self, value : ValueCastType, start : int, stop : int, *, src_loc_at : int = 0
+		self, value: ValueCastType, start: int, stop: int, *, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(start, int):
 			raise TypeError(f'Slice start must be an integer, not {start!r}')
@@ -837,8 +837,8 @@ class Slice(Value):
 @final
 class Part(Value):
 	def __init__(
-		self, value : Value, offset : ValueCastType, width : int, stride : int = 1, *,
-		src_loc_at : int = 0
+		self, value: Value, offset: ValueCastType, width: int, stride: int = 1, *,
+		src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Part width must be a non-negative integer, not {width!r}')
@@ -889,7 +889,7 @@ class Cat(Value):
 	Value, inout
 		Resulting ``Value`` obtained by concatentation.
 	'''
-	def __init__(self, *args : Iterable[Value], src_loc_at : int = 0) -> None:
+	def __init__(self, *args: Iterable[Value], src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts = []
 		for index, arg in enumerate(flatten(args)):
@@ -942,7 +942,7 @@ class Repl(Value):
 	Repl, out
 		Replicated value.
 	'''
-	def __init__(self, value : Value, count : int, *, src_loc_at : int = 0) -> None:
+	def __init__(self, value: Value, count: int, *, src_loc_at: int = 0) -> None:
 		if not isinstance(count, int) or count < 0:
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
 
@@ -1141,7 +1141,7 @@ class ResetSignal(Value):
 	allow_reset_less : bool
 		If the clock domain is reset-less, act as a constant ``0`` instead of reporting an error.
 	'''
-	def __init__(self, domain : str = 'sync', allow_reset_less : bool = False, *, src_loc_at : int = 0):
+	def __init__(self, domain: str = 'sync', allow_reset_less: bool = False, *, src_loc_at: int = 0):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
@@ -1512,7 +1512,7 @@ class Property(Statement, MustUse):
 	_MustUse__warning = UnusedProperty
 
 	def __init__(
-		self, test : ValueCastType, *, _check : Optional[Signal] = None, _en : Optional[Signal] = None, src_loc_at : int = 0
+		self, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.test   = Value.cast(test)
@@ -1702,7 +1702,7 @@ class _MappedKeySet(MutableSet, _MappedKeyCollection):
 
 
 class ValueKey:
-	def __init__(self, value : ValueCastType) -> None:
+	def __init__(self, value: ValueCastType) -> None:
 		self.value = Value.cast(value)
 		if isinstance(self.value, Const):
 			self._hash = hash(self.value.value)
@@ -1739,7 +1739,7 @@ class ValueKey:
 	def __hash__(self) -> int:
 		return self._hash
 
-	def __eq__(self, other : 'ValueKey'):
+	def __eq__(self, other: 'ValueKey'):
 		if not isinstance(other, ValueKey):
 			return False
 		if not isinstance(self.value, type(other.value)):
@@ -1783,7 +1783,7 @@ class ValueKey:
 		else: # :nocov:
 			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
 
-	def __lt__(self, other : 'ValueKey') -> bool:
+	def __lt__(self, other: 'ValueKey') -> bool:
 		if not isinstance(other, ValueKey):
 			return False
 		if not isinstance(self.value, type(other.value)):
@@ -1819,7 +1819,7 @@ class ValueSet(_MappedKeySet):
 
 
 class SignalKey:
-	def __init__(self, signal : Union[Signal, ClockSignal, ResetSignal]) -> None:
+	def __init__(self, signal: Union[Signal, ClockSignal, ResetSignal]) -> None:
 		self.signal = signal
 		if isinstance(signal, Signal):
 			self._intern = (0, signal.duid)
@@ -1833,12 +1833,12 @@ class SignalKey:
 	def __hash__(self) -> int:
 		return hash(self._intern)
 
-	def __eq__(self, other : 'SignalKey') -> bool:
+	def __eq__(self, other: 'SignalKey') -> bool:
 		if type(other) is not SignalKey:
 			return False
 		return self._intern == other._intern
 
-	def __lt__(self, other : 'SignalKey') -> bool:
+	def __lt__(self, other: 'SignalKey') -> bool:
 		if type(other) is not SignalKey:
 			raise TypeError(f'Object {other!r} cannot be compared to a SignalKey')
 		return self._intern < other._intern

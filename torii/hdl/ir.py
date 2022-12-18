@@ -36,7 +36,7 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj : Union['Fragment', Elaboratable, object] , platform : Optional[Any]
+		obj: Union['Fragment', Elaboratable, object] , platform: Optional[Any]
 	) -> 'Fragment':
 		code = None
 		while True:

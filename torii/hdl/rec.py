@@ -28,15 +28,15 @@ DIR_FANIN  = Direction.FANIN
 
 class Layout:
 	@staticmethod
-	def cast(obj, *, src_loc_at : int = 0) -> 'Layout':
+	def cast(obj, *, src_loc_at: int = 0) -> 'Layout':
 		if isinstance(obj, Layout):
 			return obj
 		return Layout(obj, src_loc_at = 1 + src_loc_at)
 
 	# TODO: The `Any` type is not correct but the types need to be refactored again eventually to fix it
 	def __init__(
-		self, fields : Iterable[Union[Tuple[str, Any], Tuple[str, Any, Direction]]], *,
-		src_loc_at : int = 0
+		self, fields: Iterable[Union[Tuple[str, Any], Tuple[str, Any, Direction]]], *,
+		src_loc_at: int = 0
 	) -> None:
 		self.fields = OrderedDict()
 		for field in fields:
@@ -121,7 +121,7 @@ class Record(ValueCastable):
 
 		return Record(other.layout, name = new_name, fields = fields, src_loc_at = 1)
 
-	def __init__(self, layout, *, name : Optional[str] = None, fields = None, src_loc_at : int = 0) -> None:
+	def __init__(self, layout, *, name: Optional[str] = None, fields = None, src_loc_at: int = 0) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 

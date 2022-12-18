@@ -16,31 +16,31 @@ NS = 1e-9
 US = 1e-6
 MS = 1e-3
 
-def ns_to_sec(val : float) -> float:
+def ns_to_sec(val: float) -> float:
 	''' Convert the given number of nanoseconds into fractional seconds '''
 	return val * NS
 
-def us_to_sec(val : float) -> float:
+def us_to_sec(val: float) -> float:
 	''' Convert the given number of microseconds into fractional seconds '''
 	return val * US
 
-def ms_to_sec(val : float) -> float:
+def ms_to_sec(val: float) -> float:
 	''' Convert the given number of milliseconds into fractional seconds '''
 	return val * MS
 
-def sec_to_ns(val : float) -> float:
+def sec_to_ns(val: float) -> float:
 	''' Convert the give number of sections into nanoseconds '''
 	return val / NS
 
-def sec_to_us(val : float) -> float:
+def sec_to_us(val: float) -> float:
 	''' Convert the give number of sections into microseconds '''
 	return val / US
 
-def sec_to_ms(val : float) -> float:
+def sec_to_ms(val: float) -> float:
 	''' Convert the give number of sections into milliseconds '''
 	return val / MS
 
-def iec_size(size : int, dec : int = 2) -> str:
+def iec_size(size: int, dec: int = 2) -> str:
 	''' Converts the given number of bytes to an IEC suffixed string '''
 	from math import floor, log, pow
 
@@ -59,7 +59,7 @@ def iec_size(size : int, dec : int = 2) -> str:
 
 	return f'{fixed}{suffixes[scale]}'
 
-def log2_int(n : int, need_pow2 : bool = True) -> int:
+def log2_int(n: int, need_pow2: bool = True) -> int:
 	''' '''
 
 	if n == 0:
@@ -70,7 +70,7 @@ def log2_int(n : int, need_pow2 : bool = True) -> int:
 	return r
 
 
-def bits_for(n : int, require_sign_bit : bool = False) -> int:
+def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	''' Returns the number of bits needed to represent int ``n`` '''
 
 	if n > 0:

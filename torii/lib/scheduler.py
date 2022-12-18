@@ -35,7 +35,7 @@ class RoundRobin(Elaboratable):
 		Asserted if grant corresponds to an active request. Deasserted
 		otherwise, i.e. if no requests are active.
 	'''
-	def __init__(self, *, count : int) -> None:
+	def __init__(self, *, count: int) -> None:
 		if not isinstance(count, int) or count < 0:
 			raise ValueError(f'Count must be a non-negative integer, not {count!r}')
 		self.count    = count

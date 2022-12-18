@@ -4,7 +4,7 @@ from torii     import Elaboratable, Module, Signal
 from torii.cli import main
 
 class Adder(Elaboratable):
-	def __init__(self, width : int):
+	def __init__(self, width: int):
 		self.a   = Signal(width)
 		self.b   = Signal(width)
 		self.o   = Signal(width)
@@ -16,7 +16,7 @@ class Adder(Elaboratable):
 
 
 class Subtractor(Elaboratable):
-	def __init__(self, width : int):
+	def __init__(self, width: int):
 		self.a   = Signal(width)
 		self.b   = Signal(width)
 		self.o   = Signal(width)
@@ -28,7 +28,7 @@ class Subtractor(Elaboratable):
 
 
 class ALU(Elaboratable):
-	def __init__(self, width : int):
+	def __init__(self, width: int):
 		self.op  = Signal()
 		self.a   = Signal(width)
 		self.b   = Signal(width)

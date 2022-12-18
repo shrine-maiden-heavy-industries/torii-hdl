@@ -55,7 +55,7 @@ class ToriiTestCase(TestCase):
 		''' Return the name used to generate VCD files '''
 		return f'test-{self.__class__.__name__}'
 
-	def clk_period(self, domain : Optional[str] = None) -> float:
+	def clk_period(self, domain: Optional[str] = None) -> float:
 		''' Returns the period of the clock on the given domain '''
 		if domain is None:
 			return 1 / self.domains[0][1]
@@ -64,7 +64,7 @@ class ToriiTestCase(TestCase):
 
 		return 1 / freq
 
-	def run_sim(self, *, suffix : Optional[str] = None) -> None:
+	def run_sim(self, *, suffix: Optional[str] = None) -> None:
 		'''Run the simulation
 
 		If the environment variable ``TORII_TEST_INHIBIT_VCD``
@@ -112,7 +112,7 @@ class ToriiTestCase(TestCase):
 
 		yield Signal()
 
-	def wait_for(self, time : float, domain : Optional[str] = None):
+	def wait_for(self, time: float, domain: Optional[str] = None):
 		''' Waits for the number time units.
 
 		Parameters
@@ -159,7 +159,7 @@ class ToriiTestCase(TestCase):
 
 
 	@staticmethod
-	def pulse_pos(sig : Signal, *, post_step : bool = True):
+	def pulse_pos(sig: Signal, *, post_step: bool = True):
 		'''Inserts a positive pulse on the given signal
 
 		Parameters
@@ -177,7 +177,7 @@ class ToriiTestCase(TestCase):
 		yield from ToriiTestCase.pulse(sig, neg = False, post_step = post_step)
 
 	@staticmethod
-	def pulse_neg(sig : Signal, *, post_step : bool = True):
+	def pulse_neg(sig: Signal, *, post_step: bool = True):
 		'''Inserts a negative pulse on the given signal
 
 		Parameters
@@ -195,7 +195,7 @@ class ToriiTestCase(TestCase):
 		yield from ToriiTestCase.pulse(sig, neg = True, post_step = post_step)
 
 	@staticmethod
-	def step(cycles : int):
+	def step(cycles: int):
 		'''Step simulator.
 
 		This advances the simulation by the given number of cycles.
@@ -211,7 +211,7 @@ class ToriiTestCase(TestCase):
 			yield
 
 	@staticmethod
-	def settle(count : int = 1):
+	def settle(count: int = 1):
 		'''Settle simulator.
 
 		This advances the simulation by the given number of settles.
@@ -227,7 +227,7 @@ class ToriiTestCase(TestCase):
 			yield
 
 	@staticmethod
-	def wait_until_high(strobe : Signal, *, timeout : int = None):
+	def wait_until_high(strobe: Signal, *, timeout: int = None):
 		'''Run simulation until signal goes high.
 
 		Runs the simulation while checking for the positive edge of the `strobe`
@@ -257,7 +257,7 @@ class ToriiTestCase(TestCase):
 				raise RuntimeError(f'Timeout waiting for \'{strobe.name}\' to go high')
 
 	@staticmethod
-	def wait_until_low(strobe : Signal, *, timeout : int = None):
+	def wait_until_low(strobe: Signal, *, timeout: int = None):
 		'''Run simulation until signal goes low.
 
 		Runs the simulation while checking for the negative edge of the `strobe`
@@ -286,7 +286,7 @@ class ToriiTestCase(TestCase):
 			if timeout and elapsed_cycles > timeout:
 				raise RuntimeError(f'Timeout waiting for \'{strobe.name}\' to go low')
 
-def sim_test(*, domain : str = None, defer : bool = False):
+def sim_test(*, domain: str = None, defer: bool = False):
 	'''Simulation test case decorator
 
 	Parameters

@@ -30,7 +30,7 @@ def union(i, start = None):
 			r |= e
 	return r
 
-def get_linter_options(filename : str) -> Dict[str, Union[int, str]]:
+def get_linter_options(filename: str) -> Dict[str, Union[int, str]]:
 	# Check the first five lines of the file
 	magic_comments = (
 		compile(r'^#\s*amaranth:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$'),
@@ -52,7 +52,7 @@ def get_linter_options(filename : str) -> Dict[str, Union[int, str]]:
 
 
 def get_linter_option(
-	filename : str , name : str, type : Union[Type[bool], Type[int]], default : Union[bool, int]
+	filename: str , name: str, type: Union[Type[bool], Type[int]], default: Union[bool, int]
 ) -> Union[bool, int]:
 	options = get_linter_options(filename)
 	if name not in options:

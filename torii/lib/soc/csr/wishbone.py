@@ -39,7 +39,7 @@ class WishboneCSRBridge(Elaboratable):
 		Wishbone bus provided by the bridge.
 	'''
 	def __init__(
-		self, csr_bus : CSRInterface, *, data_width : Optional[int] = None, name : Optional[str] = None
+		self, csr_bus: CSRInterface, *, data_width: Optional[int] = None, name: Optional[str] = None
 	) -> None:
 		if not isinstance(csr_bus, CSRInterface):
 			raise ValueError(f'CSR bus must be an instance of CSRInterface, not {csr_bus!r}')

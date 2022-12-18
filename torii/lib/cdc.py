@@ -12,7 +12,7 @@ __all__ = (
 )
 
 
-def _check_stages(stages : int):
+def _check_stages(stages: int):
 	if not isinstance(stages, int) or stages < 1:
 		raise TypeError(f'Synchronization stage count must be a positive integer, not {stages!r}')
 	if stages < 2:
@@ -70,8 +70,8 @@ class FFSynchronizer(Elaboratable):
 	:class:`FFSynchronizer`, e.g. to instantiate library cells directly.
 	''' # noqa: E101
 	def __init__(
-		self, i : Signal, o : Signal, *, o_domain : str = 'sync', reset : int = 0,
-		reset_less : bool = True, stages : int = 2, max_input_delay : Optional[float] = None
+		self, i: Signal, o: Signal, *, o_domain: str = 'sync', reset: int = 0,
+		reset_less: bool = True, stages: int = 2, max_input_delay: Optional[float] = None
 	) -> None:
 		_check_stages(stages)
 
@@ -134,8 +134,8 @@ class AsyncFFSynchronizer(Elaboratable):
 	:class:`AsyncFFSynchronizer`, e.g. to instantiate library cells directly.
 	'''
 	def __init__(
-		self, i : Signal, o : Signal, *, o_domain : str = 'sync', stages : int = 2,
-		async_edge : Literal['pos', 'neg'] = 'pos', max_input_delay : Optional[float] = None
+		self, i: Signal, o: Signal, *, o_domain: str = 'sync', stages: int = 2,
+		async_edge: Literal['pos', 'neg'] = 'pos', max_input_delay: Optional[float] = None
 	) -> None:
 		_check_stages(stages)
 
@@ -219,8 +219,8 @@ class ResetSynchronizer(Elaboratable):
 	:class:`ResetSynchronizer`, e.g. to instantiate library cells directly.
 	'''
 	def __init__(
-		self, arst : Signal, *, domain : str = 'sync', stages : int = 2,
-		max_input_delay : Optional[float] = None
+		self, arst: Signal, *, domain: str = 'sync', stages: int = 2,
+		max_input_delay: Optional[float] = None
 	) -> None:
 		_check_stages(stages)
 
@@ -259,7 +259,7 @@ class PulseSynchronizer(Elaboratable):
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased deassertion latency.
 	'''
-	def __init__(self, i_domain : str, o_domain : str, *, stages : int = 2) -> None:
+	def __init__(self, i_domain: str, o_domain: str, *, stages: int = 2) -> None:
 		_check_stages(stages)
 
 		self.i = Signal()

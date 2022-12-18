@@ -33,7 +33,7 @@ class EventMonitor(Elaboratable):
 		Trigger mode. See :class:`..event.Source`.
 	'''
 	def __init__(
-		self, *, data_width : int, alignment : int = 0, trigger : event.Source.Trigger = 'level'
+		self, *, data_width: int, alignment: int = 0, trigger: event.Source.Trigger = 'level'
 	) -> None:
 		choices = ('level', 'rise', 'fall')
 		if not isinstance(trigger, event.Source.Trigger) and trigger not in choices:
@@ -84,7 +84,7 @@ class EventMonitor(Elaboratable):
 		self.freeze()
 		return self._mux.bus
 
-	def add(self, src : event.Source) -> None:
+	def add(self, src: event.Source) -> None:
 		'''Add a subordinate event source.
 
 		See :meth:`..event.EventMap.add` for details.

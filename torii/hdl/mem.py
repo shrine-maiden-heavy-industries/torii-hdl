@@ -44,8 +44,8 @@ class Memory:
 
 	'''
 	def __init__(
-		self, *, width : int, depth : int, init = None, name : Optional[str] = None,
-		attrs : Optional[OrderedDict] = None, simulate : bool = True
+		self, *, width: int, depth: int, init = None, name: Optional[str] = None,
+		attrs: Optional[OrderedDict] = None, simulate: bool = True
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')

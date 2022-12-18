@@ -71,7 +71,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		return constraint.frequency
 
-	def add_file(self, filename : str, content : Union[str, bytes, IO]) -> None:
+	def add_file(self, filename: str, content: Union[str, bytes, IO]) -> None:
 		if not isinstance(filename, str):
 			raise TypeError(f'File name must be a string, not {filename!r}')
 		if hasattr(content, 'read'):
@@ -85,7 +85,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		else:
 			self.extra_files[filename] = content
 
-	def iter_files(self, *suffixes : str) -> Iterable[str]:
+	def iter_files(self, *suffixes: str) -> Iterable[str]:
 		for filename in self.extra_files:
 			if filename.endswith(suffixes):
 				yield filename
@@ -99,8 +99,8 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return f'TORII_ENV_{tool_env_var(self.toolchain)}'
 
 	def build(
-		self, elaboratable : Union[Fragment, Elaboratable], name : str = 'top', build_dir : str = 'build',
-		do_build : bool = True, program_opts : Optional[Dict[str, str]] = None, do_program : bool = False, **kwargs
+		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', build_dir: str = 'build',
+		do_build: bool = True, program_opts: Optional[Dict[str, str]] = None, do_program: bool = False, **kwargs
 	) -> Union[BuildPlan, BuildProducts, None]:
 		# The following code performs a best-effort check for presence of required tools upfront,
 		# before performing any build actions, to provide a better diagnostic. It does not handle
@@ -137,7 +137,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			return True
 		return all(has_tool(name) for name in self.required_tools)
 
-	def create_missing_domain(self, name : str) -> Module:
+	def create_missing_domain(self, name: str) -> Module:
 		# Simple instantiation of a clock domain driven directly by the board clock and reset.
 		# This implementation uses a single ResetSynchronizer to ensure that:
 		#   * an external reset is definitely synchronized to the system clock;
@@ -159,7 +159,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			return m
 
 	def prepare(
-		self, elaboratable : Union[Fragment, Elaboratable], name : str = 'top', **kwargs
+		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', **kwargs
 	) -> BuildPlan:
 		assert not self._prepared
 		self._prepared = True
@@ -199,21 +199,21 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return self.toolchain_prepare(fragment, name, **kwargs)
 
 	@abstractmethod
-	def toolchain_prepare(self, fragment : Fragment, name : str, **kwargs) -> BuildPlan:
+	def toolchain_prepare(self, fragment: Fragment, name: str, **kwargs) -> BuildPlan:
 		'''
 		Convert the ``fragment`` and constraints recorded in this :class:`Platform` into
 		a :class:`BuildPlan`.
 		'''
 		raise NotImplementedError # :nocov:
 
-	def toolchain_program(self, products : BuildProducts, name : str, **kwargs) -> None:
+	def toolchain_program(self, products: BuildProducts, name: str, **kwargs) -> None:
 		'''
 		Extract bitstream for fragment ``name`` from ``products`` and download it to a target.
 		'''
 		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
 
 	def _check_feature(
-		self, feature : str, pin : Pin, attrs : Attrs, valid_xdrs : Tuple[int], valid_attrs : Optional[str]
+		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: Tuple[int], valid_attrs: Optional[str]
 	) -> None:
 		if len(valid_xdrs) == 0:
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature}')
@@ -225,14 +225,14 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support attributes for {feature}')
 
 	@staticmethod
-	def _invert_if(invert : bool, value):
+	def _invert_if(invert: bool, value):
 		if invert:
 			return ~value
 		else:
 			return value
 
 	def get_input(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> Module:
 		self._check_feature('single-ended input', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -241,7 +241,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_output(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> Module:
 		self._check_feature('single-ended output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -250,7 +250,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_tristate(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> Module:
 		self._check_feature('single-ended tristate', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -264,7 +264,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_input_output(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> Module:
 		self._check_feature('single-ended input/output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -279,22 +279,22 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_diff_input(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> None:
 		self._check_feature('differential input', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_output(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> None:
 		self._check_feature('differential output', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_tristate(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> None:
 		self._check_feature('differential tristate', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_input_output(
-		self, pin : Pin, port : Record, attrs : Attrs, invert : bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> None:
 		self._check_feature('differential input/output', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
@@ -343,7 +343,7 @@ class TemplatedPlatform(Platform):
 				continue
 			yield (net_signal, port_signal, frequency)
 
-	def toolchain_prepare(self, fragment : Fragment, name : str, **kwargs) -> BuildPlan:
+	def toolchain_prepare(self, fragment: Fragment, name: str, **kwargs) -> BuildPlan:
 		# Restrict the name of the design to a strict alphanumeric character set. Platforms will
 		# interpolate the name of the design in many different contexts: filesystem paths, Python
 		# scripts, Tcl scripts, ad-hoc constraint files, and so on. It is not practical to add
@@ -368,7 +368,7 @@ class TemplatedPlatform(Platform):
 		_ETYPE = TypeVar('_ETYPE')
 
 		def _extract_override(
-			var : str, *, expected_type : Type[_ETYPE]
+			var: str, *, expected_type: Type[_ETYPE]
 		) -> Union[jinja2.Undefined, _ETYPE]:
 			deprecated_var_env = f'AMARANTH_{var}'
 			var_env = 'TORII_{var}'
@@ -390,11 +390,11 @@ class TemplatedPlatform(Platform):
 			else:
 				return jinja2.Undefined(name = var)
 
-		def get_override(var : str) -> str:
+		def get_override(var: str) -> str:
 			value = _extract_override(var, expected_type = str)
 			return value
 
-		def get_override_flag(var : str) -> bool:
+		def get_override_flag(var: str) -> bool:
 			value = _extract_override(var, expected_type = bool)
 			if isinstance(value, str):
 				value = value.lower()
@@ -409,12 +409,12 @@ class TemplatedPlatform(Platform):
 		def emit_rtlil() -> str:
 			return rtlil_text
 
-		def emit_verilog(opts : Tuple[str] = ()) -> str:
+		def emit_verilog(opts: Tuple[str] = ()) -> str:
 			return verilog._convert_rtlil_text(
 				rtlil_text, strip_internal_attrs = True, write_verilog_opts = opts
 			)
 
-		def emit_debug_verilog(opts : str = ()) -> str:
+		def emit_debug_verilog(opts: str = ()) -> str:
 			if not get_override_flag('debug_verilog'):
 				return '/* Debug Verilog generation was disabled. */'
 			else:
@@ -422,7 +422,7 @@ class TemplatedPlatform(Platform):
 					rtlil_text, strip_internal_attrs = False, write_verilog_opts = opts
 				)
 
-		def emit_commands(syntax : Literal['sh', 'bat']) -> str:
+		def emit_commands(syntax: Literal['sh', 'bat']) -> str:
 			commands = []
 
 			for name in self.required_tools:
@@ -452,7 +452,7 @@ class TemplatedPlatform(Platform):
 			return '\n'.join(commands)
 
 		@jinja2.pass_context
-		def invoke_tool(context, name : str) -> str:
+		def invoke_tool(context, name: str) -> str:
 			env_var = tool_env_var(name)
 			if context.parent['syntax'] == 'sh':
 				return f'"${env_var}"'
@@ -461,7 +461,7 @@ class TemplatedPlatform(Platform):
 			else:
 				assert False
 
-		def options(opts : Union[str, Iterable[str]]) -> str:
+		def options(opts: Union[str, Iterable[str]]) -> str:
 			if isinstance(opts, str):
 				return opts
 			else:
@@ -470,20 +470,20 @@ class TemplatedPlatform(Platform):
 		def hierarchy(signal, separator):
 			return separator.join(self._name_map[signal][1:])
 
-		def verbose(arg : str) -> Union[jinja2.Undefined, str]:
+		def verbose(arg: str) -> Union[jinja2.Undefined, str]:
 			if get_override_flag('verbose'):
 				return arg
 			else:
 				return jinja2.Undefined(name = 'quiet')
 
-		def quiet(arg : str) -> Union[jinja2.Undefined, str]:
+		def quiet(arg: str) -> Union[jinja2.Undefined, str]:
 			if get_override_flag('verbose'):
 				return jinja2.Undefined(name = 'quiet')
 			else:
 				return arg
 
 		def render(
-			source : str, origin : str, syntax : Optional[Literal['sh', 'bat']] = None
+			source: str, origin: str, syntax: Optional[Literal['sh', 'bat']] = None
 		) -> str:
 			try:
 				source   = textwrap.dedent(source).strip()

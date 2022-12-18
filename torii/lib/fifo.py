@@ -76,7 +76,7 @@ class FIFOInterface:
 		r_attributes = ''
 	)
 
-	def __init__(self, *, width : int, depth : int, fwft : bool) -> None:
+	def __init__(self, *, width: int, depth: int, fwft: bool) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'FIFO width must be a non-negative integer, not {width!r}')
 
@@ -98,7 +98,7 @@ class FIFOInterface:
 		self.r_level = Signal(range(depth + 1))
 
 
-def _incr(signal, modulo : int) -> Union[Mux, int]:
+def _incr(signal, modulo: int) -> Union[Mux, int]:
 	if modulo == 2 ** len(signal):
 		return signal + 1
 	else:
@@ -129,7 +129,7 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		w_attributes = ''
 	)
 
-	def __init__(self, *, width : int, depth : int, fwft : bool = True) -> None:
+	def __init__(self, *, width: int, depth: int, fwft: bool = True) -> None:
 		super().__init__(width = width, depth = depth, fwft = fwft)
 
 		self.level = Signal(range(depth + 1))
@@ -234,7 +234,7 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 		w_attributes = ''
 	)
 
-	def __init__(self, *, width : int, depth : int):
+	def __init__(self, *, width: int, depth: int):
 		super().__init__(width = width, depth = depth, fwft = True)
 
 		self.level = Signal(range(depth + 1))
@@ -314,8 +314,8 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 	)
 
 	def __init__(
-		self, *, width : int, depth : int, r_domain : str = 'read', w_domain : str = 'write',
-		exact_depth : bool = False
+		self, *, width: int, depth: int, r_domain: str = 'read', w_domain: str = 'write',
+		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
 			try:
@@ -494,8 +494,8 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 	)
 
 	def __init__(
-		self, *, width : int, depth : int, r_domain : str = 'read', w_domain : str = 'write',
-		exact_depth : bool = False
+		self, *, width: int, depth: int, r_domain: str = 'read', w_domain: str = 'write',
+		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
 			try:

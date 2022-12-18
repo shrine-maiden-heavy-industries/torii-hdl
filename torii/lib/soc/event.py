@@ -38,7 +38,7 @@ class Source(Record):
 		Event trigger. Asserted when an event occurs, according to the trigger mode.
 	'''
 	def __init__(
-		self, *, trigger : Trigger = 'level', name : Optional[str] = None, src_loc_at : int = 0
+		self, *, trigger: Trigger = 'level', name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
 		choices = ("level", 'rise', 'fall')
 		if not isinstance(trigger, Source.Trigger) and trigger not in choices:
@@ -68,7 +68,7 @@ class Source(Record):
 		return self._map
 
 	@event_map.setter
-	def event_map(self, event_map : 'EventMap') -> None:
+	def event_map(self, event_map: 'EventMap') -> None:
 		if not isinstance(event_map, EventMap):
 			raise TypeError(f'Event map must be an instance of EventMap, not {event_map!r}')
 		event_map.freeze()
@@ -106,7 +106,7 @@ class EventMap:
 		'''
 		self._frozen = True
 
-	def add(self, src : Source) -> None:
+	def add(self, src: Source) -> None:
 		'''Add an event source.
 
 		Arguments
@@ -125,7 +125,7 @@ class EventMap:
 		if src not in self._sources:
 			self._sources[src] = self.size
 
-	def index(self, src : Source) -> int:
+	def index(self, src: Source) -> int:
 		'''Get the index corresponding to an event source.
 
 		Arguments
@@ -179,7 +179,7 @@ class Monitor(Elaboratable):
 	clear : Signal(event_map.size), bit mask, in
 		Clear selected pending events.
 	'''
-	def __init__(self, event_map : EventMap, *, trigger : Source.Trigger = 'level') -> None:
+	def __init__(self, event_map: EventMap, *, trigger: Source.Trigger = 'level') -> None:
 		self.src = Source(trigger = trigger)
 		self.src.event_map = event_map
 

@@ -313,7 +313,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 	# Common logic
 
 	def __init__(
-		self, *, toolchain : Literal['IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'] = 'IceStorm'
+		self, *, toolchain: Literal['IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'] = 'IceStorm'
 	) -> None:
 		super().__init__()
 
@@ -373,7 +373,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name : str) -> Module:
+	def create_missing_domain(self, name: str) -> Module:
 		# For unknown reasons (no errata was ever published, and no documentation mentions this
 		# issue), iCE40 BRAMs read as zeroes for ~3 us after configuration and release of internal
 		# global reset. Note that this is a *time-based* delay, generated purely by the internal
@@ -452,7 +452,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 			return m
 
 	def should_skip_port_component(
-		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+		self, port: Subsignal, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
 	) -> bool:
 		# On iCE40, a differential input is placed by only instantiating an SB_IO primitive for
 		# the pin with z = 0, which is the non-inverting pin. The pinout unfortunately differs
@@ -464,10 +464,10 @@ class LatticeICE40Platform(TemplatedPlatform):
 		return False
 
 	def _get_io_buffer(
-		self, m : Module, pin : Pin, port : Subsignal, attrs : Attrs, *,
-		i_invert : bool = False, o_invert : bool = False, invert_lut : bool = False
+		self, m: Module, pin: Pin, port: Subsignal, attrs: Attrs, *,
+		i_invert: bool = False, o_invert: bool = False, invert_lut: bool = False
 	) -> None:
-		def get_dff(clk : Signal, d : Signal, q : Signal) -> None:
+		def get_dff(clk: Signal, d: Signal, q: Signal) -> None:
 			m.submodules += Instance(
 				'$dff',
 				p_CLK_POLARITY = 1,
@@ -477,7 +477,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 				o_Q = q
 			)
 
-		def get_ineg(y : Signal, invert : bool) -> Signal:
+		def get_ineg(y: Signal, invert: bool) -> Signal:
 			if invert_lut:
 				a = Signal.like(y, name_suffix = f'_x{1 if invert else 0}')
 				for bit in range(len(y)):
@@ -498,7 +498,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 			else:
 				return y
 
-		def get_oneg(a : Signal, invert : bool) -> Signal:
+		def get_oneg(a: Signal, invert: bool) -> Signal:
 			if invert_lut:
 				y = Signal.like(a, name_suffix = f'_x{1 if invert else 0}')
 				for bit in range(len(a)):
@@ -612,7 +612,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 			else:
 				m.submodules[f'{pin.name}_{bit}'] = Instance('SB_IO', *io_args)
 
-	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -621,7 +621,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert)
 		return m
 
-	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -630,7 +630,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -639,7 +639,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -648,7 +648,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert, o_invert = invert)
 		return m
 
-	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -658,7 +658,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.p, attrs, i_invert = invert)
 		return m
 
-	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)

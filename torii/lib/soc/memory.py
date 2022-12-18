@@ -21,7 +21,7 @@ class _RangeMap:
 		self._starts = []
 		self._stops  = []
 
-	def insert(self, key : range, value : object):
+	def insert(self, key: range, value: object):
 		assert isinstance(key, range)
 		assert not self.overlaps(key)
 
@@ -34,14 +34,14 @@ class _RangeMap:
 		self._keys.insert(start_idx, key)
 		self._values[key] = value
 
-	def get(self, point : int) -> object:
+	def get(self, point: int) -> object:
 		point_idx = bisect_right(self._stops, point)
 		if point_idx < len(self._keys):
 			point_range = self._keys[point_idx]
 			if point >= point_range.start and point < point_range.stop:
 				return self._values[point_range]
 
-	def overlaps(self, key : range) -> List[object]:
+	def overlaps(self, key: range) -> List[object]:
 		start_idx = bisect_right(self._stops, key.start)
 		stop_idx  = bisect_left(self._starts, key.stop)
 		return [self._values[key] for key in self._keys[start_idx:stop_idx]]
@@ -74,7 +74,7 @@ class ResourceInfo:
 		is located behind a window that uses sparse addressing.
 	'''
 	def __init__(
-		self, resource : object, name : Union[str, Iterable[str]], start : int, end : int, width : int
+		self, resource: object, name: Union[str, Iterable[str]], start: int, end: int, width: int
 	) -> None:
 		if isinstance(name, str):
 			name = (name,)
@@ -145,7 +145,7 @@ class MemoryMap:
 		Name of the address range. Optional.
 	'''
 	def __init__(
-		self, *, addr_width : int, data_width : int, alignment : int = 0, name : Optional[str] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
@@ -174,7 +174,7 @@ class MemoryMap:
 		return self._addr_width
 
 	@addr_width.setter
-	def addr_width(self, addr_width : int) -> None:
+	def addr_width(self, addr_width: int) -> None:
 		if self._frozen:
 			raise ValueError('Memory map has been frozen. Address width cannot be extended further')
 		if not isinstance(addr_width, int) or addr_width <= 0:
@@ -207,12 +207,12 @@ class MemoryMap:
 		self._frozen = True
 
 	@staticmethod
-	def _align_up(value : int, alignment : int) -> int:
+	def _align_up(value: int, alignment: int) -> int:
 		if value % (1 << alignment) != 0:
 			value += (1 << alignment) - (value % (1 << alignment))
 		return value
 
-	def align_to(self, alignment : int) -> int:
+	def align_to(self, alignment: int) -> int:
 		'''Align the implicit next address.
 
 		Arguments
@@ -231,7 +231,7 @@ class MemoryMap:
 		return self._next_addr
 
 	def _compute_addr_range(
-		self, addr : int, size : int, step : int = 1, *, alignment : int, extend : bool
+		self, addr: int, size: int, step: int = 1, *, alignment: int, extend: bool
 	) -> range:
 		if addr is not None:
 			if not isinstance(addr, int) or addr < 0:
@@ -270,8 +270,8 @@ class MemoryMap:
 		return addr_range
 
 	def add_resource(
-		self, resource : object, *, name : str, size : int, addr : Optional[int] = None,
-		alignment : Optional[int] = None, extend : bool = False
+		self, resource: object, *, name: str, size: int, addr: Optional[int] = None,
+		alignment: Optional[int] = None, extend: bool = False
 	) -> Tuple[int, int]:
 		'''Add a resource.
 
@@ -352,8 +352,8 @@ class MemoryMap:
 			yield (resource, resource_name, (resource_range.start, resource_range.stop))
 
 	def add_window(
-		self, window : 'MemoryMap', *, addr : Optional[int] = None, sparse : Optional[int] = None,
-		extend : bool = False
+		self, window: 'MemoryMap', *, addr: Optional[int] = None, sparse: Optional[int] = None,
+		extend: bool = False
 	) -> Tuple[int, int, int]:
 		'''Add a window.
 
@@ -514,7 +514,7 @@ class MemoryMap:
 
 	@staticmethod
 	def _translate(
-		resource_info : ResourceInfo, window, window_range : range
+		resource_info: ResourceInfo, window, window_range: range
 	) -> ResourceInfo:
 		assert (resource_info.end - resource_info.start) % window_range.step == 0
 		# Accessing a resource through a dense and then a sparse window results in very strange
@@ -549,7 +549,7 @@ class MemoryMap:
 			else:
 				assert False # :nocov:
 
-	def find_resource(self, resource : object) -> ResourceInfo:
+	def find_resource(self, resource: object) -> ResourceInfo:
 		'''Find address range corresponding to a resource.
 
 		Recursively find the address range of a resource, performing address translation for
@@ -581,7 +581,7 @@ class MemoryMap:
 
 		raise KeyError(resource)
 
-	def decode_address(self, address : int) -> Optional[object]:
+	def decode_address(self, address: int) -> Optional[object]:
 		'''Decode an address to a resource.
 
 		Arguments

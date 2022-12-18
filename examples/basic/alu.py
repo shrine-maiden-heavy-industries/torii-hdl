@@ -5,7 +5,7 @@ from torii.cli import main
 
 
 class ALU(Elaboratable):
-	def __init__(self, width : int):
+	def __init__(self, width: int):
 		self.sel = Signal(2)
 		self.a   = Signal(width)
 		self.b   = Signal(width)

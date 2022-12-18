@@ -34,8 +34,8 @@ class BurstTypeExt(Enum):
 
 
 def _check_interface(
-	addr_width : int, data_width : int, granularity : int,
-	features : Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']]
+	addr_width: int, data_width: int, granularity: int,
+	features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']]
 ) -> None:
 	if not isinstance(addr_width, int) or addr_width < 0:
 		raise ValueError(f'Address width must be a non-negative integer, not {addr_width!r}')
@@ -113,9 +113,9 @@ class Interface(Record):
 		Optional. Corresponds to Wishbone signal ``BTE_O`` (initiator) or ``BTE_I`` (target).
 	'''
 	def __init__(
-		self, *, addr_width : int, data_width : int, granularity : int = None,
-		features : Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
-		name : Optional[str] = None
+		self, *, addr_width: int, data_width: int, granularity: int = None,
+		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
+		name: Optional[str] = None
 	) -> None:
 		if granularity is None:
 			granularity  = data_width
@@ -159,7 +159,7 @@ class Interface(Record):
 		return self._map
 
 	@memory_map.setter
-	def memory_map(self, memory_map : MemoryMap) -> None:
+	def memory_map(self, memory_map: MemoryMap) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')
 		if memory_map.data_width != self.granularity:
@@ -205,9 +205,9 @@ class Decoder(Elaboratable):
 		CSR bus providing access to subordinate buses.
 	'''
 	def __init__(
-		self, *, addr_width : int, data_width : int, granularity : Optional[int] = None,
-		features : Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
-		alignment : int = 0, name : Optional[str] = None
+		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
+		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
+		alignment: int = 0, name: Optional[str] = None
 	) -> None:
 		if granularity is None:
 			granularity  = data_width
@@ -241,7 +241,7 @@ class Decoder(Elaboratable):
 			self._bus.memory_map = self._map
 		return self._bus
 
-	def align_to(self, alignment : int) -> int:
+	def align_to(self, alignment: int) -> int:
 		'''Align the implicit address of the next window.
 
 		See :meth:`MemoryMap.align_to` for details.
@@ -249,8 +249,8 @@ class Decoder(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, sub_bus : Interface, *, addr : Optional[int] = None, sparse : bool = False,
-		extend : bool = False
+		self, sub_bus: Interface, *, addr: Optional[int] = None, sparse: bool = False,
+		extend: bool = False
 	) -> Tuple[int, int, int]:
 		'''Add a window to a subordinate bus.
 
@@ -362,8 +362,8 @@ class Arbiter(Elaboratable):
 		Shared Wishbone bus.
 	'''
 	def __init__(
-		self, *, addr_width : int, data_width : int, granularity : Optional[int] = None,
-		features : Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset()
+		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
+		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset()
 	) -> None:
 		self.bus    = Interface(
 			addr_width = addr_width,
@@ -373,7 +373,7 @@ class Arbiter(Elaboratable):
 		)
 		self._intrs = []
 
-	def add(self, intr_bus : Interface) -> None:
+	def add(self, intr_bus: Interface) -> None:
 		'''Add an initiator bus to the arbiter.
 
 		The initiator bus must have the same address width and data width as the arbiter. The

@@ -29,7 +29,7 @@ class ConstantBool(ConstantValue):
 	value : bool
 		Constant value.
 	'''
-	def __init__(self, value : bool) -> None:
+	def __init__(self, value: bool) -> None:
 		if not isinstance(value, bool):
 			raise TypeError(f'Value must be a bool, not {value!r}')
 		self._value = value
@@ -55,7 +55,7 @@ class ConstantInt(ConstantValue):
 		Signedness. Optional. ``value < 0`` by default.
 	'''
 	def __init__(
-		self, value : int, *, width : Optional[int] = None, signed : Optional[bool] = None
+		self, value: int, *, width: Optional[int] = None, signed: Optional[bool] = None
 	) -> None:
 		if not isinstance(value, int):
 			raise TypeError(f'Value must be an integer, not {value!r}')
@@ -106,7 +106,7 @@ class ConstantMap(Mapping):
 	>>> ConstantMap(RX_FIFO_DEPTH=16)
 	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width=5, signed=False))])
 	'''
-	def __init__(self, **constants : Dict[str, ConstantValue]) -> None:
+	def __init__(self, **constants: Dict[str, ConstantValue]) -> None:
 		self._storage = OrderedDict()
 		for key, value in constants.items():
 			if isinstance(value, bool):
@@ -146,8 +146,8 @@ class PeripheralInfo:
 		Constant map of the peripheral. Optional.
 	'''
 	def __init__(
-		self, *, memory_map : MemoryMap, irq : Optional[event.Source] = None,
-		constant_map : Optional[ConstantMap] = None
+		self, *, memory_map: MemoryMap, irq: Optional[event.Source] = None,
+		constant_map: Optional[ConstantMap] = None
 	) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')

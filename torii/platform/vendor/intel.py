@@ -262,7 +262,7 @@ class IntelPlatform(TemplatedPlatform):
 	# Common logic
 
 	def __init__(
-		self, *, toolchain : Literal['Quartus', 'Mistral'] = 'Quartus'
+		self, *, toolchain: Literal['Quartus', 'Mistral'] = 'Quartus'
 	) -> None:
 		super().__init__()
 
@@ -293,7 +293,7 @@ class IntelPlatform(TemplatedPlatform):
 			return self.mistral_command_templates
 		assert False
 
-	def add_clock_constraint(self, clock : Signal, frequency : Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'true'
 
@@ -309,7 +309,7 @@ class IntelPlatform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name : str) -> Module:
+	def create_missing_domain(self, name: str) -> Module:
 		if name == 'sync' and self.default_clk == 'cyclonev_oscillator':
 			# Use the internal high-speed oscillator for Cyclone V devices
 			assert self.device.startswith('5C')
@@ -331,8 +331,8 @@ class IntelPlatform(TemplatedPlatform):
 	# 	https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd11192012_735.html.
 
 	@staticmethod
-	def _get_ireg(m : Module, pin : Pin, invert : bool) -> Signal:
-		def get_ineg(i : Signal):
+	def _get_ireg(m: Module, pin: Pin, invert: bool) -> Signal:
+		def get_ineg(i: Signal):
 			if invert:
 				i_neg = Signal.like(i, name_suffix = '_neg')
 				m.d.comb += i.eq(~i_neg)
@@ -367,8 +367,8 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@staticmethod
-	def _get_oreg(m : Module, pin : Pin, invert : bool) -> Signal:
-		def get_oneg(o : Signal):
+	def _get_oreg(m: Module, pin: Pin, invert: bool) -> Signal:
+		def get_oneg(o: Signal):
 			if invert:
 				o_neg = Signal.like(o, name_suffix = '_neg')
 				m.d.comb += o_neg.eq(~o)
@@ -403,7 +403,7 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@staticmethod
-	def _get_oereg(m : Module, pin : Pin) -> Signal:
+	def _get_oereg(m: Module, pin: Pin) -> Signal:
 		# altiobuf_ requires an output enable signal for each pin, but pin.oe is 1 bit wide.
 		if pin.xdr == 0:
 			return Repl(pin.oe, pin.width)
@@ -421,7 +421,7 @@ class IntelPlatform(TemplatedPlatform):
 			return oe_reg
 		assert False
 
-	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -440,7 +440,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -460,7 +460,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -481,7 +481,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -502,7 +502,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -523,7 +523,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -544,7 +544,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -567,7 +567,7 @@ class IntelPlatform(TemplatedPlatform):
 		)
 		return m
 
-	def get_diff_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)

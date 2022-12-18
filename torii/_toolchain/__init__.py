@@ -13,16 +13,16 @@ __all__ = (
 class ToolNotFound(Exception):
 	pass
 
-def tool_env_var(name : str) -> str:
+def tool_env_var(name: str) -> str:
 	return name.upper().replace('-', '_').replace('+', 'X')
 
-def _get_tool(name : str) -> str:
+def _get_tool(name: str) -> str:
 	return environ.get(tool_env_var(name), name)
 
-def has_tool(name : str) -> bool:
+def has_tool(name: str) -> bool:
 	return which(_get_tool(name)) is not None
 
-def require_tool(name : str) -> str:
+def require_tool(name: str) -> str:
 	env_var = tool_env_var(name)
 	path = _get_tool(name)
 	if which(path) is None:

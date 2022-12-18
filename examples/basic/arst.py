@@ -5,7 +5,7 @@ from torii.cli import main
 
 
 class ClockDivisor(Elaboratable):
-	def __init__(self, factor : int):
+	def __init__(self, factor: int):
 		self.v = Signal(factor)
 		self.o = Signal()
 

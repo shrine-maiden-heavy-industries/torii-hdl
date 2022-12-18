@@ -16,9 +16,9 @@ __all__ = (
 
 def _SplitResources(
 	*args,
-	pins : Union[str, List[str], Dict[str, str]], invert : bool = False,
-	conn : Optional[Union[Tuple[str, int], int]] = None,
-	attrs : Optional[Attrs] = None, default_name : str, dir : Literal['i', 'o', 'io']
+	pins: Union[str, List[str], Dict[str, str]], invert: bool = False,
+	conn: Optional[Union[Tuple[str, int], int]] = None,
+	attrs: Optional[Attrs] = None, default_name: str, dir: Literal['i', 'o', 'io']
 ) -> List[Resource]:
 
 	if not isinstance(pins, (str, list, dict)):
@@ -47,8 +47,8 @@ def LEDResources(*args, **kwargs) -> List[Resource]:
 
 def RGBLEDResource(
 	*args,
-	r : str, g : str, b : str, invert : bool = False,
-	conn : Optional[Union[Tuple[str, int], int]] = None, attrs : Optional[Attrs] = None
+	r: str, g: str, b: str, invert: bool = False,
+	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 
 	ios = []

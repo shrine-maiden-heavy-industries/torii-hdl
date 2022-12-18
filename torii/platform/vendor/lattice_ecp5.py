@@ -292,7 +292,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 	# Common logic
 
 	def __init__(
-		self, *, toolchain : Literal['Trellis', 'Diamond'] = 'Trellis'
+		self, *, toolchain: Literal['Trellis', 'Diamond'] = 'Trellis'
 	) -> None:
 		super().__init__()
 
@@ -329,7 +329,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			return Clock(310e6 / self.oscg_div)
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name : str) -> Module:
+	def create_missing_domain(self, name: str) -> Module:
 		# Lattice ECP5 devices have two global set/reset signals: PUR, which is driven at startup
 		# by the configuration logic and unconditionally resets every storage element, and GSR,
 		# which is driven by user logic and each storage element may be configured as affected or
@@ -385,7 +385,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 	]
 
 	def should_skip_port_component(
-		self, port : Subsignal, attrs : Attrs, component : Literal['io', 'i', 'o', 'p', 'n', 'oe']
+		self, port: Subsignal, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
 	) -> bool:
 		# On ECP5, a differential IO is placed by only instantiating an IO buffer primitive at
 		# the PIOA or PIOC location, which is always the non-inverting pin.
@@ -394,9 +394,9 @@ class LatticeECP5Platform(TemplatedPlatform):
 		return False
 
 	def _get_xdr_buffer(
-		self, m : Module, pin : Pin, *, i_invert : bool = False, o_invert : bool = False
+		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
 	) -> Tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
-		def get_ireg(clk : Signal, d : Signal, q : Signal) -> None:
+		def get_ireg(clk: Signal, d: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
 					'IFS1P3DX',
@@ -407,7 +407,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_oreg(clk : Signal, d : Signal, q : Signal) -> None:
+		def get_oreg(clk: Signal, d: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
 					'OFS1P3DX',
@@ -418,7 +418,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_oereg(clk : Signal, oe : Signal, q : Signal) -> None:
+		def get_oereg(clk: Signal, oe: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
 					'OFS1P3DX',
@@ -429,7 +429,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_iddr(sclk : Signal, d : Signal, q0 : Signal, q1 : Signal) -> None:
+		def get_iddr(sclk: Signal, d: Signal, q0: Signal, q1: Signal) -> None:
 			for bit in range(len(d)):
 				m.submodules += Instance(
 					'IDDRX1F',
@@ -441,8 +441,8 @@ class LatticeECP5Platform(TemplatedPlatform):
 				)
 
 		def get_iddrx2(
-			sclk : Signal, eclk : Signal, d : Signal,
-			q0 : Signal, q1 : Signal, q2 : Signal, q3 : Signal
+			sclk: Signal, eclk: Signal, d: Signal,
+			q0: Signal, q1: Signal, q2: Signal, q3: Signal
 		) -> None:
 			for bit in range(len(d)):
 				m.submodules += Instance(
@@ -458,8 +458,8 @@ class LatticeECP5Platform(TemplatedPlatform):
 				)
 
 		def get_iddr71b(
-			sclk : Signal, eclk : Signal, d : Signal,
-			q0 : Signal, q1 : Signal, q2 : Signal, q3 : Signal, q4 : Signal, q5 : Signal, q6 : Signal
+			sclk: Signal, eclk: Signal, d: Signal,
+			q0: Signal, q1: Signal, q2: Signal, q3: Signal, q4: Signal, q5: Signal, q6: Signal
 		) -> None:
 			for bit in range(len(d)):
 				m.submodules += Instance(
@@ -477,7 +477,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 					o_Q6 = q6[bit],
 				)
 
-		def get_oddr(sclk : Signal, d0 : Signal, d1 : Signal, q : Signal) -> None:
+		def get_oddr(sclk: Signal, d0: Signal, d1: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
 					'ODDRX1F',
@@ -489,8 +489,8 @@ class LatticeECP5Platform(TemplatedPlatform):
 				)
 
 		def get_oddrx2(
-			sclk : Signal, eclk : Signal,
-			d0 : Signal, d1 : Signal, d2 : Signal, d3 : Signal, q : Signal
+			sclk: Signal, eclk: Signal,
+			d0: Signal, d1: Signal, d2: Signal, d3: Signal, q: Signal
 		) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
@@ -506,9 +506,9 @@ class LatticeECP5Platform(TemplatedPlatform):
 				)
 
 		def get_oddr71b(
-			sclk : Signal, eclk : Signal,
-			d0 : Signal, d1 : Signal, d2 : Signal, d3 : Signal, d4 : Signal,
-			d5 : Signal, d6 : Signal, q : Signal
+			sclk:  Signal, eclk:  Signal,
+			d0: Signal, d1: Signal, d2: Signal, d3: Signal, d4: Signal,
+			d5: Signal, d6: Signal, q: Signal
 		) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(
@@ -526,7 +526,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 					o_Q = q[bit]
 				)
 
-		def get_ineg(z : Signal, invert : bool) -> Signal:
+		def get_ineg(z: Signal, invert: bool) -> Signal:
 			if invert:
 				a = Signal.like(z, name_suffix = '_n')
 				m.d.comb += z.eq(~a)
@@ -534,7 +534,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			else:
 				return z
 
-		def get_oneg(a : Signal, invert : bool) -> Signal:
+		def get_oneg(a: Signal, invert: bool) -> Signal:
 			if invert:
 				z = Signal.like(a, name_suffix = '_n')
 				m.d.comb += z.eq(~a)
@@ -629,7 +629,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def get_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -644,7 +644,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -659,7 +659,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -675,7 +675,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -692,7 +692,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -707,7 +707,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -722,7 +722,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_tristate(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)
@@ -738,7 +738,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input_output(self, pin : Pin, port : Record, attrs : Attrs, invert : bool) -> Module:
+	def get_diff_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(
 			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True
 		)

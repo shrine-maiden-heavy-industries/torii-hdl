@@ -28,7 +28,7 @@ def final(cls):
 	cls.__init_subclass__ = init_subclass
 	return cls
 
-def deprecated(message : str, stacklevel : int = 2):
+def deprecated(message: str, stacklevel: int = 2):
 	def decorator(f):
 		@wraps(f)
 		def wrapper(*args, **kwargs):
