@@ -2,7 +2,7 @@ from torii import *
 
 
 class UpCounter(Elaboratable):
-    """
+    '''
     A 16-bit up counter with a fixed limit.
 
     Parameters
@@ -17,8 +17,8 @@ class UpCounter(Elaboratable):
         its value otherwise.
     ovf : Signal, out
         ``ovf`` is asserted when the counter reaches its limit.
-    """
-    def __init__(self, limit):
+    '''
+    def __init__(self, limit: int):
         self.limit = limit
 
         # Ports
@@ -28,7 +28,7 @@ class UpCounter(Elaboratable):
         # State
         self.count = Signal(16)
 
-    def elaborate(self, platform):
+    def elaborate(self, platform) -> Module:
         m = Module()
 
         m.d.comb += self.ovf.eq(self.count == self.limit)
