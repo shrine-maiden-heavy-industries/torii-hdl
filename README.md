@@ -5,6 +5,9 @@ Torii is a fork of [Amaranth HDL](https://github.com/amaranth-lang) that has bee
 The evaluation board definitions have also been migrated and are located in the [torii-boards](https://github.com/shrine-maiden-heavy-industries/torii-boards) repository.
 
 
+There is also a list of [projects using Torii](https://torii.shmdn.link/projects.html) that are using Torii, and we'd love to add yours too!
+
+
 ## Introduction
 
 Please see the [Torii Introduction](https://shrine-maiden-heavy-industries.github.io/torii-hdl/intro.html) on the [online documentation](https://shrine-maiden-heavy-industries.github.io/torii-hdl/)
@@ -81,6 +84,7 @@ Torii can be used to target any FPGA or ASIC process that accepts behavioral Ver
   </tr>
 </tbody>
 </table>
+
 
 
 ## License
