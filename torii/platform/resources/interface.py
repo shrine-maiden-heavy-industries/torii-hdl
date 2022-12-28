@@ -179,16 +179,23 @@ def ULPIResource(
 	*args,
 	data: str, clk: str, dir: str, nxt: str, stp: str, rst: Optional[str] = None,
 	clk_dir: Literal['i', 'o'] = 'i', rst_invert: bool = False, attrs: Optional[Attrs] = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None
+	clk_attrs: Optional[Attrs] = None, conn: Optional[Union[Tuple[str, int], int]] = None
 ) -> Resource:
 
 	if clk_dir not in ('i', 'o'):
 		raise ValueError(f'clk_dir should be \'i\' or \'o\' not {clk_dir!r}')
 
+	clk_subsig = Subsignal('clk', Pins(clk, dir = clk_dir, conn = conn, assert_width = 1))
+	# If the clock is an input, we must constrain it to be 60MHz.
+	if clk_dir == 'i':
+		clk_subsig.clock = Clock(60e6)
+	if clk_attrs is not None:
+		clk_subsig.attrs.update(clk_attrs)
+
 	io = []
 
 	io.append(Subsignal('data', Pins(data, dir = 'io', conn = conn, assert_width = 8)))
-	io.append(Subsignal('clk', Pins(clk, dir = clk_dir, conn = conn, assert_width = 1)))
+	io.append(clk_subsig)
 	io.append(Subsignal('dir', Pins(dir, dir = 'i', conn = conn, assert_width = 1)))
 	io.append(Subsignal('nxt', Pins(nxt, dir = 'i', conn = conn, assert_width = 1)))
 	io.append(Subsignal('stp', Pins(stp, dir = 'o', conn = conn, assert_width = 1)))
