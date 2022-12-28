@@ -108,7 +108,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...main
+[0.4.3]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0
