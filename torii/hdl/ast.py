@@ -170,12 +170,12 @@ class Value(metaclass = ABCMeta):
 		while True:
 			if isinstance(obj, Value):
 				return obj
-			elif isinstance(obj, int):
-				return Const(obj)
-			elif isinstance(obj, Enum):
-				return Const(obj.value, Shape.cast(type(obj)))
 			elif isinstance(obj, ValueCastable):
 				new_obj = obj.as_value()
+			elif isinstance(obj, Enum):
+				return Const(obj.value, Shape.cast(type(obj)))
+			elif isinstance(obj, int):
+				return Const(obj)
 			else:
 				raise TypeError(f'Object {obj!r} cannot be converted to a Torii value')
 			if new_obj is obj:
