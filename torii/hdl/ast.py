@@ -893,7 +893,7 @@ class Cat(Value):
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts = []
 		for index, arg in enumerate(flatten(args)):
-			if isinstance(arg, int) and arg not in [0, 1]:
+			if isinstance(arg, int) and not isinstance(arg, Enum) and arg not in [0, 1]:
 				warnings.warn(
 					f'Argument #{index + 1} of Cat() is a bare integer {arg} used in bit vector '
 					f'context; consider specifying explicit width using Const({arg}, {bits_for(arg)}) instead',
