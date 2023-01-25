@@ -371,7 +371,7 @@ class TemplatedPlatform(Platform):
 			var: str, *, expected_type: Type[_ETYPE]
 		) -> Union[jinja2.Undefined, _ETYPE]:
 			deprecated_var_env = f'AMARANTH_{var}'
-			var_env = 'TORII_{var}'
+			var_env = f'TORII_{var}'
 			if deprecated_var_env in os.environ or var_env in os.environ:
 				# On Windows, there is no way to define an "empty but set" variable; it is tempting
 				# to use a quoted empty string, but it doesn't do what one would expect. Recognize
