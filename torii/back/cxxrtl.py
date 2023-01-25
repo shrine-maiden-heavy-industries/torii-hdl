@@ -17,7 +17,7 @@ def _convert_rtlil_text(
 ) -> str:
 	if black_boxes is not None:
 		if not isinstance(black_boxes, dict):
-			raise TypeError('CXXRTL black boxes must be a dictionary, not {black_boxes!r}')
+			raise TypeError(f'CXXRTL black boxes must be a dictionary, not {black_boxes!r}')
 		for box_name, box_source in black_boxes.items():
 			if not isinstance(box_name, str):
 				raise TypeError(f'CXXRTL black box name must be a string, not {box_name!r}')

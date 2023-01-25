@@ -1798,7 +1798,7 @@ class ValueKey:
 					self.value.start < other.value.start and
 					self.value.end < other.value.end)
 		else: # :nocov:
-			raise TypeError('Object {!r} cannot be used as a key in value collections')
+			raise TypeError(f'Object {other!r} cannot be used as a key in value collections')
 
 	def __repr__(self) -> str:
 		return f'<{__name__}.ValueKey {self.value!r}>'
