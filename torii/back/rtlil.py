@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import io
+import re
 from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import (
@@ -158,6 +159,9 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		else:
 			if port_kind not in ('input', 'output', 'inout'):
 				raise ValueError(f'Expected one of \'input\', \'output\', \'inout\' for port_kind, not {port_kind!r}')
+			# By convention, Yosys ports named $\d+ are positional, so there is no way to use
+			# a port with such a name. See amaranth-lang/amaranth#733.
+			assert port_id is not None
 			self._append('  wire width {} {} {} {}\n', width, port_kind, port_id, name)
 		return name
 
@@ -187,6 +191,9 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 			else:
 				self._append('    parameter \\{} {}\n', param, _const(value))
 		for port, wire in ports.items():
+			# By convention, Yosys ports named $\d+ are positional. Amaranth does not support
+			# connecting cell ports by position. See amaranth-lang/amaranth#733.
+			assert not re.match(r"^\$\d+$", port)
 			self._append('    connect {} {}\n', port, wire)
 		self._append('  end\n')
 		return name
