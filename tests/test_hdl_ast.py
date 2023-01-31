@@ -68,10 +68,10 @@ class ShapeTestCase(FHDLTestCase):
 		self.assertEqual(repr(Shape()), 'unsigned(1)')
 		self.assertEqual(repr(Shape(2, True)), 'signed(2)')
 
-	def test_tuple(self):
-		width, signed = Shape()
-		self.assertEqual(width, 1)
-		self.assertEqual(signed, False)
+	def test_convert_tuple_wrong(self):
+		with self.assertRaisesRegex(TypeError,
+				r"^cannot unpack non-iterable Shape object$"):
+			width, signed = Shape()
 
 	def test_unsigned(self):
 		s1 = unsigned(2)
