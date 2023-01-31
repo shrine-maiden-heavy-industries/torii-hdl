@@ -60,7 +60,7 @@ class ShapeTestCase(FHDLTestCase):
 	def test_compare_tuple_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^Shapes may be compared with other Shapes and \(int, bool\) tuples, not \(2, 3\)$'
+			r'^Shapes may be compared with shape-castable objects, not \(2, 3\)$'
 		):
 			Shape(1, True) == (2, 3)
 

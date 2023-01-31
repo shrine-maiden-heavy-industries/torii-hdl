@@ -127,13 +127,6 @@ class Shape:
 			return f'unsigned({self.width})'
 
 	def __eq__(self, other: Union[Tuple[int, bool], 'Shape']) -> bool:
-		# TODO(nmigen-0.4): remove
-		if isinstance(other, tuple) and len(other) == 2:
-			width, signed = other
-			if isinstance(width, int) and isinstance(signed, bool):
-				return self.width == width and self.signed == signed
-			else:
-				raise TypeError(f'Shapes may be compared with other Shapes and (int, bool) tuples, not {other!r}')
 		if not isinstance(other, Shape):
 			try:
 				other = self.__class__.cast(other)
