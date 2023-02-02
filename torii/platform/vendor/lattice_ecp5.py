@@ -134,7 +134,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 				read_verilog {{get_override("read_verilog_opts")|options}} {{file}}
 			{% endfor %}
 			{% for file in platform.iter_files(".sv") -%}
-				read_veriport, attrs, componentlog -sv {{get_override("read_verilog_opts")|options}} {{file}}
+				read_verilog -sv {{get_override("read_verilog_opts")|options}} {{file}}
 			{% endfor %}
 			{% for file in platform.iter_files(".il") -%}
 				read_ilang {{file}}
