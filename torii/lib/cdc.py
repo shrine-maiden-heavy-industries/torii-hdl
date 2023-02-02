@@ -20,7 +20,7 @@ def _check_stages(stages: int):
 
 
 class FFSynchronizer(Elaboratable):
-	'''Resynchronise a signal to a different clock domain.
+	'''Resynchronize a signal to a different clock domain.
 
 	Consists of a chain of flip-flops. Eliminates metastabilities at the output, but provides
 	no other guarantee as to the safe domain-crossing of a signal.
@@ -28,9 +28,9 @@ class FFSynchronizer(Elaboratable):
 	Parameters
 	----------
 	i : Signal(n), in
-		Signal to be resynchronised.
+		Signal to be resynchronized.
 	o : Signal(n), out
-		Signal connected to synchroniser output.
+		Signal connected to synchronizer output.
 	o_domain : str
 		Name of output clock domain.
 	reset : int
@@ -60,7 +60,7 @@ class FFSynchronizer(Elaboratable):
 		- Your design features warm (non-power-on) resets of ``o_domain``, so the one-time
 		  initialization at power on is insufficient;
 		- Your design features a sequenced reset, and the :class:`FFSynchronizer` must maintain
-		  its reset value until ``o_domain`` reset specifically is deasserted.
+		  its reset value until ``o_domain`` reset specifically is de-asserted.
 
 		:class:`FFSynchronizer` is reset by the ``o_domain`` reset only.
 
@@ -104,10 +104,10 @@ class FFSynchronizer(Elaboratable):
 
 
 class AsyncFFSynchronizer(Elaboratable):
-	'''Synchronize deassertion of an asynchronous signal.
+	'''Synchronize de-assertion of an asynchronous signal.
 
-	The signal driven by the :class:`AsyncFFSynchronizer` is asserted asynchronously and deasserted
-	synchronously, eliminating metastability during deassertion.
+	The signal driven by the :class:`AsyncFFSynchronizer` is asserted asynchronously and de-asserted
+	synchronously, eliminating metastability during de-assertion.
 
 	This synchronizer is primarily useful for resets and reset-like signals.
 
@@ -121,7 +121,7 @@ class AsyncFFSynchronizer(Elaboratable):
 		Name of clock domain to synchronize to.
 	stages : int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
-		with higher numbers reducing MTBF further, at the cost of increased deassertion latency.
+		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
 	async_edge : str
 		The edge of the input signal which causes the output to be set. Must be one of "pos" or "neg".
 	max_input_delay : None or float
@@ -189,13 +189,13 @@ class AsyncFFSynchronizer(Elaboratable):
 
 
 class ResetSynchronizer(Elaboratable):
-	'''Synchronize deassertion of a clock domain reset.
+	'''Synchronize de-assertion of a clock domain reset.
 
 	The reset of the clock domain driven by the :class:`ResetSynchronizer` is asserted
-	asynchronously and deasserted synchronously, eliminating metastability during deassertion.
+	asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.
 
 	The driven clock domain could use a reset that is asserted either synchronously or
-	asynchronously; a reset is always deasserted synchronously. A domain with an asynchronously
+	asynchronously; a reset is always de-asserted synchronously. A domain with an asynchronously
 	asserted reset is useful if the clock of the domain may be gated, yet the domain still
 	needs to be reset promptly; otherwise, synchronously asserted reset (the default) should
 	be used.
@@ -208,7 +208,7 @@ class ResetSynchronizer(Elaboratable):
 		Name of clock domain to reset.
 	stages : int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
-		with higher numbers reducing MTBF further, at the cost of increased deassertion latency.
+		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
 	max_input_delay : None or float
 		Maximum delay from the input signal's clock to the first synchronization stage, in seconds.
 		If specified and the platform does not support it, elaboration will fail.
@@ -257,7 +257,7 @@ class PulseSynchronizer(Elaboratable):
 		Name of output clock domain.
 	stages : int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
-		with higher numbers reducing MTBF further, at the cost of increased deassertion latency.
+		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
 	'''
 	def __init__(self, i_domain: str, o_domain: str, *, stages: int = 2) -> None:
 		_check_stages(stages)

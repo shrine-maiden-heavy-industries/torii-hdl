@@ -24,7 +24,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		* ``ddtcmd``
 
 	The environment is populated by running the script specified in the environment variable
-	``TORIIS_ENV_DIAMOND``, if present. On Linux, diamond_env as provided by Diamond
+	``TORII_ENV_DIAMOND``, if present. On Linux, diamond_env as provided by Diamond
 	itself is a good candidate. On Windows, the following script (named ``diamond_env.bat``,
 	for instance) is known to work::
 
@@ -194,7 +194,7 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 		# startup by the configuration logic and unconditionally resets every storage element,
 		# and GSR, which is driven by user logic and each storage element may be configured as
 		# affected or unaffected by GSR. PUR is purely asynchronous, so even though it is
-		# a low-skew global network, its deassertion may violate a setup/hold constraint with
+		# a low-skew global network, its de-assertion may violate a setup/hold constraint with
 		# relation to a user clock. To avoid this, a GSR/SGSR instance should be driven
 		# synchronized to user clock.
 		if name == 'sync' and self.default_clk is not None:

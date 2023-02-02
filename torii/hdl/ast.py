@@ -887,7 +887,7 @@ class Cat(Value):
 	Returns
 	-------
 	Value, inout
-		Resulting ``Value`` obtained by concatentation.
+		Resulting ``Value`` obtained by concatenation.
 	'''
 	def __init__(self, *args: Iterable[Value], src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
@@ -1307,7 +1307,7 @@ class UserValue(Value):
 	'''Value with custom lowering.
 
 	A ``UserValue`` is a value whose precise representation does not have to be immediately known,
-	which is useful in certain metaprogramming scenarios. Instead of providing fixed semantics
+	which is useful in certain meta-programming scenarios. Instead of providing fixed semantics
 	upfront, it is kept abstract for as long as possible, only being lowered to a concrete Torii
 	value when required.
 

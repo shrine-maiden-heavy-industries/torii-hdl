@@ -45,7 +45,7 @@ Unreleased template stuff
 
 ### Fixed
 
-- Fixed issue with `invoke_tool` not emitting the enviroment variable properly
+- Fixed issue with `invoke_tool` not emitting the environment variable properly
 
 ## [0.4.0]
 

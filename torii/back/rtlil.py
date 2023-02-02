@@ -1025,7 +1025,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 		#
 		# Because this assignment is done at a late stage, a single Signal object can get assigned
 		# many times, once in each module it is used. This is a deliberate decision; the possible
-		# alternatives are to add ports for undriven signals (which requires choosing one module
+		# alternatives are to add ports for un-driven signals (which requires choosing one module
 		# to drive it to reset value arbitrarily) or to replace them with their reset value (which
 		# removes valuable source location information).
 		driven = ast.SignalSet()

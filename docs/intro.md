@@ -67,7 +67,7 @@ The Torii build system produces self-contained, portable build trees that requir
 ## Development board definitions
 
 
-Getting started with a new FPGA development board often requires going through a laborous and error-prone process of deriving toolchain configuration and constraint files from the supplied documentation. The Torii project includes a community-maintained repository of definitions for many open-source and commercial FPGA development boards.
+Getting started with a new FPGA development board often requires going through a laborious and error-prone process of deriving toolchain configuration and constraint files from the supplied documentation. The Torii project includes a community-maintained repository of definitions for many open-source and commercial FPGA development boards.
 
 These board definitions contain everything that is necessary to start using the board: FPGA family and model, clocks and resets, descriptions of on-board peripherals (including pin direction and attributes such as I/O standard), connector pinouts, and for boards with a built-in debug probe, the steps required to program the board. It takes a single Python invocation to generate, build, and download a test design that shows whether the board, toolchain, and programmer are working correctly.
 

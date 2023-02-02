@@ -409,7 +409,7 @@ class Arbiter(Elaboratable):
 
 		bus_busy = self.bus.cyc
 		if hasattr(self.bus, 'lock'):
-			# If LOCK is not asserted, we also wait for STB to be deasserted before granting bus
+			# If LOCK is not asserted, we also wait for STB to be de-asserted before granting bus
 			# ownership to the next initiator. If we didn't, the next bus owner could receive
 			# an ACK (or ERR, RTY) from the previous transaction when targeting the same
 			# peripheral.

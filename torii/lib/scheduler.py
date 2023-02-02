@@ -32,7 +32,7 @@ class RoundRobin(Elaboratable):
 		Number of the granted request. Does not change if there are no
 		active requests.
 	valid : Signal(), out
-		Asserted if grant corresponds to an active request. Deasserted
+		Asserted if grant corresponds to an active request. De-asserted
 		otherwise, i.e. if no requests are active.
 	'''
 	def __init__(self, *, count: int) -> None:

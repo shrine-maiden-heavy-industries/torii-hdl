@@ -19,7 +19,7 @@ def build_cxx(
 
 	cwd = getcwd()
 	try:
-		# Unforuntately, `ccompiler.compile` assumes the paths are relative, and interprets
+		# Unfortunately, `ccompiler.compile` assumes the paths are relative, and interprets
 		# the directory name of the source path specially. That makes it necessary to build in
 		# the output directory directly.
 		chdir(build_dir.name)

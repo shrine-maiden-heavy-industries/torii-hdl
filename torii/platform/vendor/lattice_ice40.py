@@ -599,7 +599,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 				if pin.xdr < 2:
 					io_args.append(('i', 'D_OUT_0', pin_o[bit]))
 				elif pin.xdr == 2:
-					# Re-register negedge output after it leaves fabric. This increases setup time
+					# Re-register neg-edge output after it leaves fabric. This increases setup time
 					# to an entire cycle, and doesn't add latency.
 					io_args.append(('i', 'D_OUT_0', pin_o0[bit]))
 					io_args.append(('i', 'D_OUT_1', o1_ff[bit]))
