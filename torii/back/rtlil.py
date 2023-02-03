@@ -138,6 +138,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		self._append('end\n')
 		self.rtlil._buffer.write(str(self))
 
+	# FIXME: Type annotation for `port_id` seems to be incorrect
 	def wire(
 		self, width: int, port_id: Optional[str] = None, port_kind: Literal['input', 'output', 'inout'] = None,
 		name: str = None, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
@@ -161,7 +162,13 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 				raise ValueError(f'Expected one of \'input\', \'output\', \'inout\' for port_kind, not {port_kind!r}')
 			# By convention, Yosys ports named $\d+ are positional, so there is no way to use
 			# a port with such a name. See amaranth-lang/amaranth#733.
-			assert port_id is not None
+			if port_id is None:
+				# NOTE: This seems like it's not purely needed? as to get to this branch we ensure
+				# that `port_id` is not None anyway.
+				raise ValueError(
+					'Yosys ports named \'$\\d+\' are positional, and Torii does not support '
+					'connecting cell ports py position.'
+				)
 			self._append('  wire width {} {} {} {}\n', width, port_kind, port_id, name)
 		return name
 
@@ -191,9 +198,13 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 			else:
 				self._append('    parameter \\{} {}\n', param, _const(value))
 		for port, wire in ports.items():
-			# By convention, Yosys ports named $\d+ are positional. Amaranth does not support
+			# By convention, Yosys ports named $\d+ are positional. Torii does not support
 			# connecting cell ports by position. See amaranth-lang/amaranth#733.
-			assert not re.match(r"^\$\d+$", port)
+			if re.match(r'^\$\d+$', port):
+				raise ValueError(
+					f'Invalid port name \'{port}\'.\n Yosys ports named \'$\\d+\' are positional,'
+					'and Torii does not support connecting cell ports py position.'
+				)
 			self._append('    connect {} {}\n', port, wire)
 		self._append('  end\n')
 		return name
