@@ -250,7 +250,7 @@ class StatementTransformer(StatementVisitor):
 		return Assume(self.on_value(stmt.test), _check = stmt._check, _en = stmt._en)
 
 	def on_Cover(self, stmt):
-		return Cover(self.on_value(stmt.test), _check=stmt._check, _en=stmt._en)
+		return Cover(self.on_value(stmt.test), _check = stmt._check, _en = stmt._en)
 
 	def on_Switch(self, stmt):
 		cases = OrderedDict((k, self.on_statement(s)) for k, s in stmt.cases.items())
@@ -483,7 +483,7 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 
 
 class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
-	def __init__(self, domains=None):
+	def __init__(self, domains = None):
 		self.domains = domains
 
 	def _resolve(self, domain, context):
@@ -722,7 +722,7 @@ class _ControlInserter(FragmentTransformer):
 	def _insert_control(self, fragment, domain, signals):
 		raise NotImplementedError # :nocov:
 
-	def __call__(self, value, *, src_loc_at=0):
+	def __call__(self, value, *, src_loc_at = 0):
 		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 		return super().__call__(value, src_loc_at = 1 + src_loc_at)
 

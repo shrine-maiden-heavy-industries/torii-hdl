@@ -9,7 +9,7 @@ from collections.abc   import (
 )
 from enum              import Enum
 from itertools         import chain
-from typing            import Iterator, Optional, Tuple, Union
+from typing            import Optional, Tuple, Union
 
 from ._unused          import MustUse, UnusedMustUse
 from ..util            import tracer, flatten, union
@@ -136,12 +136,12 @@ class Shape:
 
 
 def unsigned(width: int) -> Shape:
-	'''Shorthand for ``Shape(width, signed=False)``.'''
+	'''Shorthand for ``Shape(width, signed = False)``.'''
 	return Shape(width, signed = False)
 
 
 def signed(width: int) -> Shape:
-	'''Shorthand for ``Shape(width, signed=True)``.'''
+	'''Shorthand for ``Shape(width, signed = True)``.'''
 	return Shape(width, signed = True)
 
 
@@ -1241,7 +1241,7 @@ class Array(MutableSequence):
 
 @final
 class ArrayProxy(Value):
-	def __init__(self, elems, index, *, src_loc_at=0):
+	def __init__(self, elems, index, *, src_loc_at = 0):
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.elems = elems
 		self.index = Value.cast(index)

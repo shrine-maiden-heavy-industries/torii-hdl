@@ -107,7 +107,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		# several corner cases:
 		#  1. `require_tool` does not source toolchain environment scripts, so if such a script
 		#     is used, the check is skipped, and `execute_local()` may fail;
-		#  2. if the design is not built (do_build=False), most of the tools are not required and
+		#  2. if the design is not built (do_build = False), most of the tools are not required and
 		#     in fact might not be available if the design will be built manually with a different
 		#     environment script specified, or on a different machine; however, Yosys is required
 		#     by virtually every platform anyway, to provide debug Verilog output, and `prepare()`

@@ -103,8 +103,8 @@ class ConstantMap(Mapping):
 
 	Examples
 	--------
-	>>> ConstantMap(RX_FIFO_DEPTH=16)
-	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width=5, signed=False))])
+	>>> ConstantMap(RX_FIFO_DEPTH = 16)
+	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])
 	'''
 	def __init__(self, **constants: Dict[str, ConstantValue]) -> None:
 		self._storage = OrderedDict()

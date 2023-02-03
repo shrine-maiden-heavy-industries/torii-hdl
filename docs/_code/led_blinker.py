@@ -5,7 +5,7 @@ class LEDBlinker(Elaboratable):
     def elaborate(self, platform):
         m = Module()
 
-        led = platform.request("led")
+        led = platform.request('led')
 
         half_freq = int(platform.default_clk_frequency // 2)
         timer = Signal(range(half_freq + 1))
@@ -21,4 +21,4 @@ class LEDBlinker(Elaboratable):
 from torii_boards.icestick import *
 
 
-ICEStickPlatform().build(LEDBlinker(), do_program=True)
+ICEStickPlatform().build(LEDBlinker(), do_program = True)

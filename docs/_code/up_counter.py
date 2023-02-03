@@ -68,12 +68,12 @@ def bench():
 sim = Simulator(dut)
 sim.add_clock(1e-6) # 1 MHz
 sim.add_sync_process(bench)
-with sim.write_vcd("up_counter.vcd"):
+with sim.write_vcd('up_counter.vcd'):
     sim.run()
 # --- CONVERT ---
 from torii.back import verilog
 
 
 top = UpCounter(25)
-with open("up_counter.v", "w") as f:
-    f.write(verilog.convert(top, ports=[top.en, top.ovf]))
+with open('up_counter.v', 'w') as f:
+    f.write(verilog.convert(top, ports = [top.en, top.ovf]))

@@ -46,7 +46,7 @@ def _convert_rtlil_text(
 
 def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> Tuple[str, ast.SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
-	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs=strip_internal_attrs), name_map)
+	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs = strip_internal_attrs), name_map)
 
 
 def convert(

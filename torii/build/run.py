@@ -48,7 +48,7 @@ class BuildPlan:
 		Compute a `digest`, a short byte sequence deterministically and uniquely identifying
 		this build plan.
 		'''
-		hasher = hashlib.blake2b(digest_size=size)
+		hasher = hashlib.blake2b(digest_size = size)
 		for filename in sorted(self.files):
 			hasher.update(filename.encode('utf-8'))
 			content = self.files[filename]
@@ -92,7 +92,7 @@ class BuildPlan:
 				assert '..' not in filename.parts
 				dirname = os.path.dirname(filename)
 				if dirname:
-					os.makedirs(dirname, exist_ok=True)
+					os.makedirs(dirname, exist_ok = True)
 
 				# Ensure that any shell script files have proper line endings
 				newline = '\n' if filename.suffix == '.sh' else None
@@ -231,7 +231,7 @@ class BuildProducts(metaclass = ABCMeta):
 				# others if it's still open within the Python process, so we close it and delete
 				# it manually.
 				file = tempfile.NamedTemporaryFile(
-					prefix='torii_', suffix = '_' + os.path.basename(filename),
+					prefix = 'torii_', suffix = '_' + os.path.basename(filename),
 					delete = False)
 				files.append(file)
 				file.write(self.get(filename))

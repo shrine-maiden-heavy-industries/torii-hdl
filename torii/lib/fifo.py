@@ -153,7 +153,7 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		do_read  = self.r_rdy & self.r_en
 		do_write = self.w_rdy & self.w_en
 
-		storage = Memory(width=self.width, depth=self.depth)
+		storage = Memory(width = self.width, depth = self.depth)
 		w_port  = m.submodules.w_port = storage.write_port()
 		r_port  = m.submodules.r_port = storage.read_port(
 			domain = 'comb' if self.fwft else 'sync', transparent = self.fwft)
@@ -215,7 +215,7 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 		description = '''
 		Buffered synchronous first in, first out queue.
 
-		This queue's interface is identical to :class:`SyncFIFO` configured as ``fwft=True``, but it
+		This queue's interface is identical to :class:`SyncFIFO` configured as ``fwft = True``, but it
 		does not use asynchronous memory reads, which are incompatible with FPGA block RAMs.
 
 		In exchange, the latency between an entry being written to an empty queue and that entry
@@ -304,7 +304,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 			Always set.
 		'''.strip(),
 		attributes = '',
-		r_data_valid='Valid if ``r_rdy`` is asserted.',
+		r_data_valid = 'Valid if ``r_rdy`` is asserted.',
 		r_attributes = '''
 		r_rst : Signal(1), out
 			Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
@@ -355,7 +355,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		m.d[self._w_domain] += produce_w_bin.eq(produce_w_nxt)
 
 		# Note: Both read-domain counters must be reset_less (see comments below)
-		consume_r_bin = Signal(self._ctr_bits, reset_less=True)
+		consume_r_bin = Signal(self._ctr_bits, reset_less = True)
 		consume_r_nxt = Signal(self._ctr_bits)
 		m.d.comb += consume_r_nxt.eq(consume_r_bin + do_read)
 		m.d[self._r_domain] += consume_r_bin.eq(consume_r_nxt)
@@ -402,7 +402,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		m.d[self._w_domain] += self.w_level.eq((produce_w_bin - consume_w_bin))
 		m.d.comb += self.r_level.eq((produce_r_bin - consume_r_bin))
 
-		storage = Memory(width=self.width, depth=self.depth)
+		storage = Memory(width = self.width, depth = self.depth)
 		w_port  = m.submodules.w_port = storage.write_port(domain = self._w_domain)
 		r_port  = m.submodules.r_port = storage.read_port(
 			domain = self._r_domain, transparent = False
@@ -534,7 +534,9 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 		m.d[self._r_domain] += self.r_level.eq(fifo.r_level + r_consume_buffered)
 
 		w_consume_buffered = Signal()
-		m.submodules.consume_buffered_cdc = FFSynchronizer(r_consume_buffered, w_consume_buffered, o_domain=self._w_domain, stages=4)
+		m.submodules.consume_buffered_cdc = FFSynchronizer(
+			r_consume_buffered, w_consume_buffered, o_domain = self._w_domain, stages = 4
+		)
 		m.d.comb += self.w_level.eq(fifo.w_level + w_consume_buffered)
 
 		with m.If(self.r_en | ~self.r_rdy):

@@ -541,7 +541,7 @@ class _RHSValueCompiler(_ValueCompiler):
 
 		arg_shape = arg.shape()
 		res_shape = value.shape()
-		res = self.s.rtlil.wire(width=res_shape.width, src=_src(value.src_loc))
+		res = self.s.rtlil.wire(width = res_shape.width, src = _src(value.src_loc))
 		self.s.rtlil.cell(self.operator_map[(1, value.operator)], ports = {
 			'\\A': self(arg),
 			'\\Y': res,
@@ -655,7 +655,7 @@ class _RHSValueCompiler(_ValueCompiler):
 		lhs_shape = lhs.shape()
 		rhs_shape = rhs.shape()
 		res_shape = value.shape()
-		res = self.s.rtlil.wire(width=res_shape.width, src = _src(value.src_loc))
+		res = self.s.rtlil.wire(width = res_shape.width, src = _src(value.src_loc))
 		# Note: Verilog's x[o+:w] construct produces a $shiftx cell, not a $shift cell.
 		# However, Torii's semantics defines the out-of-range bits to be zero, so it is correct
 		# to use a $shift cell here instead, even though it produces less idiomatic Verilog.
@@ -753,7 +753,7 @@ class _StatementCompiler(xfrm.StatementVisitor):
 		self._wrap_assign = False
 
 	@contextmanager
-	def case(self, switch, values, attrs={}, src = ''):
+	def case(self, switch, values, attrs = {}, src = ''):
 		try:
 			old_case = self._case
 			with switch.case(*values, attrs = attrs, src = src) as self._case:
@@ -890,7 +890,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 		# Register all signals driven in the current fragment. This must be done first, as it
 		# affects further codegen; e.g. whether \sig$next signals will be generated and used.
 		for domain, signal in fragment.iter_drivers():
-			compiler_state.add_driven(signal, sync=domain is not None)
+			compiler_state.add_driven(signal, sync = domain is not None)
 
 		# Transform all signals used as ports in the current fragment eagerly and outside of
 		# any hierarchy, to make sure they get sensible (non-prefixed) names.
@@ -958,7 +958,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 			for port, value in sub_port_map.items():
 				if not isinstance(subfragment, ir.Instance):
 					for signal in value._rhs_signals():
-						compiler_state.resolve_curr(signal, prefix=sub_name)
+						compiler_state.resolve_curr(signal, prefix = sub_name)
 				if len(value) > 0:
 					sub_ports[port] = rhs_compiler(value)
 

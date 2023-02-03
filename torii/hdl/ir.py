@@ -89,7 +89,7 @@ class Fragment:
 				if port_dir == dir:
 					yield port
 
-	def add_driver(self, signal, domain=None):
+	def add_driver(self, signal, domain = None):
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
 		self.drivers[domain].add(signal)
@@ -273,7 +273,7 @@ class Fragment:
 				warnings.warn_explicit(message, DriverConflict, *memory.src_loc)
 
 		# Flatten hierarchy.
-		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key=lambda x: x[1]):
+		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):
 			self._merge_subfragment(subfrag)
 
 		# If we flattened anything, we might be in a situation where we have a driver conflict
@@ -374,7 +374,7 @@ class Fragment:
 				# and there was no chance to add any logic driving it.
 				new_domains.append(value)
 			else:
-				new_fragment = Fragment.get(value, platform=platform)
+				new_fragment = Fragment.get(value, platform = platform)
 				if domain_name not in new_fragment.domains:
 					defined = new_fragment.domains.keys()
 					raise DomainError(
@@ -388,7 +388,7 @@ class Fragment:
 		self._propagate_domains_up()
 		self._propagate_domains_down()
 		self._resolve_hierarchy_conflicts()
-		new_domains = self._create_missing_domains(missing_domain, platform=platform)
+		new_domains = self._create_missing_domains(missing_domain, platform = platform)
 		self._propagate_domains_down()
 		return new_domains
 
@@ -534,7 +534,7 @@ class Fragment:
 			else:
 				self.add_ports(sig, dir = 'i')
 
-	def prepare(self, ports=None, missing_domain=lambda name: ClockDomain(name)):
+	def prepare(self, ports = None, missing_domain = lambda name: ClockDomain(name)):
 		from .xfrm import DomainLowerer, SampleLowerer
 
 		fragment = SampleLowerer()(self)

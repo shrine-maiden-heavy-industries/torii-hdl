@@ -252,7 +252,7 @@ class Record(ValueCastable):
 			if isinstance(shape, Layout):
 				sub_include = include[field] if include and field in include else None
 				sub_exclude = exclude[field] if exclude and field in exclude else None
-				stmts += item.connect(*subord_items, include=sub_include, exclude=sub_exclude)
+				stmts += item.connect(*subord_items, include = sub_include, exclude = sub_exclude)
 			else:
 				if direction == DIR_FANOUT:
 					stmts += [ sub_item.eq(item) for sub_item in subord_items ]

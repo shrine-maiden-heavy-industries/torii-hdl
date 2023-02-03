@@ -447,7 +447,7 @@ class _FragmentCompiler:
 					emitter.append(f'next_{signal_index} = {signal.reset}')
 
 				inputs = SignalSet()
-				_StatementCompiler(self.state, emitter, inputs=inputs)(domain_stmts)
+				_StatementCompiler(self.state, emitter, inputs = inputs)(domain_stmts)
 
 				for input in inputs:
 					self.state.add_trigger(domain_process, input)

@@ -430,7 +430,7 @@ class Arbiter(Elaboratable):
 			for i, intr_bus in enumerate(self._intrs):
 				m.d.comb += intr_bus.dat_r.eq(self.bus.dat_r)
 				if hasattr(intr_bus, 'stall'):
-					intr_bus_stall = Signal(reset=1)
+					intr_bus_stall = Signal(reset = 1)
 					m.d.comb += intr_bus.stall.eq(intr_bus_stall)
 
 				with m.Case(i):

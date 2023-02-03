@@ -302,7 +302,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def Case(self, *patterns):
-		self._check_context('Case', context='Switch')
+		self._check_context('Case', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
 		new_patterns = ()

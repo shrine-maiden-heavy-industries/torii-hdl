@@ -195,14 +195,14 @@ class Resource(Subsignal):
 	) -> 'Resource':
 		# This constructor accepts two different forms:
 		#  1. Number-only form:
-		#       Resource.family(0, default_name = "name", ios = [ Pins("A0 A1") ])
+		#       Resource.family(0, default_name = 'name', ios = [ Pins('A0 A1') ])
 		#  2. Name-and-number (name override) form:
-		#       Resource.family("override", 0, default_name = "name", ios = ...)
+		#       Resource.family('override', 0, default_name = "name", ios = ...)
 		# This makes it easier to build abstractions for resources, e.g. an SPIResource abstraction
-		# could simply delegate to `Resource.family(*args, default_name="spi", ios=ios)`.
+		# could simply delegate to `Resource.family(*args, default_name = 'spi', ios = ios)`.
 		# The name_suffix argument is meant to support creating resources with
 		# similar names, such as spi_flash, spi_flash_2x, etc.
-		if name_suffix:  # Only add "_" if we actually have a suffix.
+		if name_suffix:  # Only add '_' if we actually have a suffix.
 			name_suffix = '_' + name_suffix
 
 		if number is None: # name_or_number is number

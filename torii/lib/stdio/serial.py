@@ -121,7 +121,7 @@ class AsyncSerialRX(Elaboratable):
 		bitno = Signal(range(len(shreg)))
 
 		if self._pins is not None:
-			m.submodules += FFSynchronizer(self._pins.rx.i, self.i, reset=1)
+			m.submodules += FFSynchronizer(self._pins.rx.i, self.i, reset = 1)
 
 		with m.FSM() as fsm:
 			with m.State('IDLE'):
