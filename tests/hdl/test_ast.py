@@ -5,7 +5,7 @@ from enum          import Enum
 
 from torii.hdl.ast import *
 
-from .utils        import *
+from ..utils       import *
 
 
 class UnsignedEnum(Enum):

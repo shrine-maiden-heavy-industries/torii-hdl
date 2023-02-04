@@ -7,7 +7,7 @@ from torii.lib.io    import *
 from torii.build.dsl import *
 from torii.build.res import *
 
-from .utils          import *
+from ..utils         import *
 
 class ResourceManagerTestCase(FHDLTestCase):
 	def setUp(self):

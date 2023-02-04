@@ -8,7 +8,7 @@ from torii.hdl.cd  import *
 from torii.hdl.ir  import *
 from torii.hdl.mem import *
 
-from .utils        import *
+from ..utils       import *
 
 
 class ElaboratesToNone(Elaboratable):

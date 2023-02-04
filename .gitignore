@@ -14,7 +14,7 @@ __pycache__/
 /htmlcov
 
 # tests
-/tests/spec_*/
+/tests/**/spec_*/
 *.vcd
 *.gtkw
 

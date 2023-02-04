@@ -5,7 +5,7 @@ from torii.hdl.rec import *
 from torii.sim     import *
 from torii.lib.io  import *
 
-from .utils        import *
+from ..utils       import *
 
 
 class PinLayoutTestCase(FHDLTestCase):

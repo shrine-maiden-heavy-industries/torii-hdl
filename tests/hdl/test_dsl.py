@@ -8,7 +8,7 @@ from torii.hdl.ast import *
 from torii.hdl.cd  import *
 from torii.hdl.dsl import *
 
-from .utils        import *
+from ..utils       import *
 
 class DSLTestCase(FHDLTestCase):
 	def setUp(self):

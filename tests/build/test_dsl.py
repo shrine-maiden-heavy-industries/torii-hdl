@@ -4,7 +4,7 @@ from collections     import OrderedDict
 
 from torii.build.dsl import *
 
-from .utils          import *
+from ..utils         import *
 
 
 class PinsTestCase(FHDLTestCase):

@@ -6,7 +6,7 @@ from torii.asserts    import *
 from torii.sim        import *
 from torii.lib.coding import *
 
-from .utils           import *
+from ..utils          import *
 
 class EncoderTestCase(FHDLTestCase):
 	def test_basic(self):

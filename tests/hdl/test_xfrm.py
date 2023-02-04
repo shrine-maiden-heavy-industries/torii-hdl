@@ -1,15 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import warnings
-
 from torii.hdl.ast  import *
 from torii.hdl.cd   import *
 from torii.hdl.ir   import *
 from torii.hdl.xfrm import *
 from torii.hdl.mem  import *
 
-from .utils         import *
+from ..utils        import *
 
 
 class DomainRenamerTestCase(FHDLTestCase):

@@ -3,7 +3,7 @@
 from torii            import *
 from torii.build.plat import *
 
-from .utils           import *
+from ..utils          import *
 
 
 class MockPlatform(Platform):

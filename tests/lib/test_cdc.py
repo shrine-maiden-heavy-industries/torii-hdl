@@ -5,7 +5,7 @@ from torii.hdl     import *
 from torii.sim     import *
 from torii.lib.cdc import *
 
-from .utils        import *
+from ..utils       import *
 
 class FFSynchronizerTestCase(FHDLTestCase):
 	def test_stages_wrong(self):

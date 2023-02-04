@@ -4,7 +4,7 @@
 from torii.hdl.ast import *
 from torii.hdl.mem import *
 
-from .utils        import *
+from ..utils       import *
 
 class MemoryTestCase(FHDLTestCase):
 	def test_name(self):

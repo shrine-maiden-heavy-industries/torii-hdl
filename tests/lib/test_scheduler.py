@@ -8,7 +8,7 @@ from torii.asserts       import *
 from torii.sim           import *
 from torii.lib.scheduler import *
 
-from .utils              import *
+from ..utils             import *
 
 class RoundRobinTestCase(unittest.TestCase):
 	def test_count(self):

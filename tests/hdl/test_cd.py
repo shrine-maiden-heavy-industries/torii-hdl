@@ -2,7 +2,7 @@
 
 from torii.hdl.cd import *
 
-from .utils       import *
+from ..utils      import *
 
 
 class ClockDomainTestCase(FHDLTestCase):

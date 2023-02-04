@@ -13,7 +13,7 @@ from torii.hdl.dsl import *
 from torii.hdl.ir  import *
 from torii.sim     import *
 
-from .utils        import *
+from ..utils       import *
 
 class SimulatorUnitTestCase(FHDLTestCase):
 	def assertStatement(self, stmt, inputs, output, reset = 0):

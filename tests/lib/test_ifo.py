@@ -6,7 +6,7 @@ from torii.asserts  import *
 from torii.sim      import *
 from torii.lib.fifo import *
 
-from .utils         import *
+from ..utils        import *
 
 
 class FIFOTestCase(FHDLTestCase):
