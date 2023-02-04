@@ -50,8 +50,8 @@ def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> Tup
 
 
 def convert(
-	elaboratable: Union[ir.Fragment, ir.Elaboratable], name: str = 'top', platform = None, ports = None,
-	*, emit_src: bool = True, strip_internal_attrs: bool = False, **kwargs
+	elaboratable: Union[ir.Fragment, ir.Elaboratable], name: str = 'top', platform = None, *, ports,
+	emit_src: bool = True, strip_internal_attrs: bool = False, **kwargs
 ) -> str:
 
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)

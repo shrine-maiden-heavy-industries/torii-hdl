@@ -1086,7 +1086,7 @@ def convert_fragment(
 
 
 def convert(
-	elaboratable, name: str = 'top', platform = None, ports = None, *, emit_src = True, **kwargs
+	elaboratable, name: str = 'top', platform = None, *, ports,  emit_src = True, **kwargs
 ) -> str:
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
 	il_text, _ = convert_fragment(fragment, name, emit_src = emit_src)
