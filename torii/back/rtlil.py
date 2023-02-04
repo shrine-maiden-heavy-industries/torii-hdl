@@ -441,10 +441,7 @@ class _ValueCompiler(xfrm.ValueVisitor):
 		if value.start == 0 and value.stop == len(value.value):
 			return self(value.value)
 
-		if isinstance(value.value, ast.UserValue):
-			sigspec = self._prepare_value_for_Slice(value.value._lazy_lower())
-		else:
-			sigspec = self._prepare_value_for_Slice(value.value)
+		sigspec = self._prepare_value_for_Slice(value.value)
 
 		if value.start == value.stop:
 			return '{}'
