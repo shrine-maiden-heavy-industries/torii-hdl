@@ -9,7 +9,6 @@ from warnings          import warn
 from ..hdl             import Signal
 from ..hdl.cd          import *
 from ..hdl.ir          import *
-from ..util.decorators import deprecated
 from ._base            import BaseEngine
 
 __all__ = (
@@ -166,11 +165,6 @@ class Simulator:
 		Assign the reset value to every signal in the simulation, and restart every user process.
 		'''
 		self._engine.reset()
-
-	# TODO(amaranth-0.4): replace with _real_step
-	@deprecated('instead of `sim.step()`, use `sim.advance()`')
-	def step(self) -> bool:
-		return self.advance()
 
 	def advance(self) -> bool:
 		'''Advance the simulation.
