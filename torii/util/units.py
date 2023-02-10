@@ -55,7 +55,13 @@ def iec_size(size: int, dec: int = 2) -> str:
 
 	scale = int(floor(log(size, 1024)))
 	power = pow(1024, scale)
-	fixed = round((size / power), dec)
+	fixed = size / power
+	rem = size % power
+
+	if rem == 0 and dec == 0:
+		fixed = int(fixed)
+	else:
+		fixed = round(fixed, dec)
 
 	return f'{fixed}{suffixes[scale]}'
 
