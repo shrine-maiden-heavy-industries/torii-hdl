@@ -48,4 +48,4 @@ jobs:
       - name: Run Tests
         shell: bash
         run: |
-          nox -s test
+          nox -s test -- --coverage --codecov

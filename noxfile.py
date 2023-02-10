@@ -40,13 +40,28 @@ def torii_version() -> str:
 def test(session: nox.Session) -> None:
 	out_dir = (BUILD_DIR / 'tests')
 	out_dir.mkdir(parents = True, exist_ok = True)
+	coverage = '--coverage' in session.posargs
+	codecov  = '--codecov' in session.posargs
+
+	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('.')
+	if coverage:
+		session.log('Coverage support enabled')
+		session.install('coverage')
+		coverage_args = ('-m', 'coverage', 'run')
+	else:
+		coverage_args = ()
+	if codecov and coverage:
+		session.log('Codecov support enabled')
+		session.install('codecov')
+
 	session.chdir(str(out_dir))
 	session.run(
-		'python', '-m', 'unittest', 'discover',
-		'-s', str(ROOT_DIR)
+		'python', *coverage_args, *unitest_args
 	)
+	if codecov and coverage:
+		session.run('codecov')
 
 @nox.session
 def docs(session: nox.Session) -> None:
