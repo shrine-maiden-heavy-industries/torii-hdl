@@ -291,20 +291,16 @@ class FIFOFormalCase(FHDLTestCase):
 		self.check_sync_fifo(SyncFIFOBuffered(width = 8, depth = 3))
 
 	def check_async_fifo(self, fifo):
-		pass
-		# FIXME: The Formal model fails after sby/6398938
-		# Need to figure out why
-
 		# TODO: properly doing model equivalence checking on this likely requires multiclock,
 		# which is not really documented nor is it clear how to use it.
 		# self.assertFormal(FIFOModelEquivalenceSpec(fifo, r_domain = 'read', w_domain = 'write'),
 		#                   mode = 'bmc', depth = fifo.depth * 3 + 1)
-		# self.assertFormal(
-		# 	FIFOContractSpec(
-		# 		fifo, r_domain = 'read', w_domain = 'write', bound = fifo.depth * 4 + 1
-		# 	),
-		# 	mode = 'hybrid', depth = fifo.depth * 4 + 1
-		# )
+		self.assertFormal(
+			FIFOContractSpec(
+				fifo, r_domain = 'read', w_domain = 'write', bound = fifo.depth * 4 + 1
+			),
+			mode = 'hybrid', depth = fifo.depth * 4 + 1
+		)
 
 	def test_async(self):
 		self.check_async_fifo(AsyncFIFO(width = 8, depth = 4))

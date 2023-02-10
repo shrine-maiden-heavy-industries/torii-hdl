@@ -61,6 +61,7 @@ class FHDLTestCase(unittest.TestCase):
 		mode {mode}
 		depth {depth}
 		wait on
+		multiclock on
 
 		[engines]
 		smtbmc
@@ -78,6 +79,7 @@ class FHDLTestCase(unittest.TestCase):
 			script = script,
 			rtlil = rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]
 		)
+
 		with subprocess.Popen(
 			[require_tool('sby'), '-f', '-d', spec_name],
 			cwd = spec_dir,
