@@ -90,7 +90,11 @@ class BuildPlan:
 				filename = pathlib.Path(filename)
 				# Forbid parent directory components completely to avoid the possibility
 				# of writing outside the build root.
-				assert '..' not in filename.parts
+				if '..' in filename.parts:
+					raise RuntimeError(
+						f'Unable to write to \'{filename}\'\n'
+						'Writing to outside of the build root is forbidden.'
+					)
 				dirname = os.path.dirname(filename)
 				if dirname:
 					os.makedirs(dirname, exist_ok = True)
