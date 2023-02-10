@@ -28,4 +28,4 @@ def tcl_escape(string: str) -> str:
 def tcl_quote(string: str) -> str:
 	''' Apply appropriate quoting for use in TCL scripts '''
 
-	return '"' + sub(r'([$[\\])', r'\\\1', string) + '"'
+	return '"' + sub(r'([$[\\"])', r'\\\1', string) + '"'
