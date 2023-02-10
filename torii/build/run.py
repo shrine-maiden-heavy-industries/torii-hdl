@@ -95,11 +95,10 @@ class BuildPlan:
 				if dirname:
 					os.makedirs(dirname, exist_ok = True)
 
-				# Ensure that any shell script files have proper line endings
-				newline = '\n' if filename.suffix == '.sh' else None
+				if isinstance(content, str):
+					content = content.encode('utf-8')
 
-				mode = 'wt' if isinstance(content, str) else 'wb'
-				with open(filename, mode, newline = newline) as f:
+				with open(filename, 'wb') as f:
 					f.write(content)
 
 			if run_script:
