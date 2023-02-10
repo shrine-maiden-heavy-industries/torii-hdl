@@ -14,6 +14,7 @@ import zipfile
 import hashlib
 import pathlib
 
+from ..util.decorators import deprecated
 
 __all__ = (
 	'BuildPlan',
@@ -115,6 +116,7 @@ class BuildPlan:
 		finally:
 			os.chdir(cwd)
 
+	@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
 	def execute_remote_ssh(
 		self, *, connect_to: Dict[str, Any] = {}, root: str, run_script: bool = True
 	) -> 'RemoteSSHBuildProducts':
@@ -261,6 +263,7 @@ class LocalBuildProducts(BuildProducts):
 			return f.read()
 
 
+@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
 class RemoteSSHBuildProducts(BuildProducts):
 	def __init__(self, connect_to: Dict[str, Any], root: str) -> None:
 		self.__connect_to = connect_to
