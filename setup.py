@@ -80,7 +80,9 @@ setup(
 		where   = '.',
 		exclude = (
 			'tests',
-			'tests.*'
+			'tests.*',
+			'contrib',
+			'contrib.*'
 		)
 	),
 	package_data      = {

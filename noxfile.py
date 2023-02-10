@@ -49,7 +49,10 @@ def test(session: nox.Session) -> None:
 	if coverage:
 		session.log('Coverage support enabled')
 		session.install('coverage')
-		coverage_args = ('-m', 'coverage', 'run')
+		coverage_args = (
+			'-m', 'coverage', 'run',
+			f'--rcfile={(ROOT_DIR / "contrib") / "coveragerc"}'
+		)
 	else:
 		coverage_args = ()
 	if codecov and coverage:
