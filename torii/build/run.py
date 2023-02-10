@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections import OrderedDict
-from contextlib  import contextmanager
-from abc         import ABCMeta, abstractmethod
-from typing      import (
+from collections       import OrderedDict
+from contextlib        import contextmanager
+from abc               import ABCMeta, abstractmethod
+from typing            import (
 	Union, Dict, Any, Literal, Tuple, Generator, List
 )
 import os
@@ -12,7 +12,7 @@ import subprocess
 import tempfile
 import zipfile
 import hashlib
-import pathlib
+from pathlib           import Path, PurePosixPath
 
 from ..util.decorators import deprecated
 
@@ -71,7 +71,7 @@ class BuildPlan:
 				archive.writestr(zipfile.ZipInfo(filename), self.files[filename])
 
 	def execute_local(
-		self, root: str = 'build', *, run_script: bool = True
+		self, root: Union[str, Path] = 'build', *, run_script: bool = True
 	) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
@@ -81,13 +81,18 @@ class BuildPlan:
 
 		Returns :class:`LocalBuildProducts`.
 		'''
-		os.makedirs(root, exist_ok = True)
-		cwd = os.getcwd()
+
+		if isinstance(root, str):
+			root = Path(root).resolve()
+
+		root.mkdir(parents = True, exist_ok = True)
+
+		cwd = Path.cwd()
 		try:
 			os.chdir(root)
 
 			for filename, content in self.files.items():
-				filename = pathlib.Path(filename)
+				filename = Path(filename)
 				# Forbid parent directory components completely to avoid the possibility
 				# of writing outside the build root.
 				if '..' in filename.parts:
@@ -95,14 +100,13 @@ class BuildPlan:
 						f'Unable to write to \'{filename}\'\n'
 						'Writing to outside of the build root is forbidden.'
 					)
-				dirname = os.path.dirname(filename)
-				if dirname:
-					os.makedirs(dirname, exist_ok = True)
+
+				filename.parent.mkdir(parents = True, exist_ok = True)
 
 				if isinstance(content, str):
 					content = content.encode('utf-8')
 
-				with open(filename, 'wb') as f:
+				with filename.resolve().open('wb') as f:
 					f.write(content)
 
 			if run_script:
@@ -114,7 +118,7 @@ class BuildPlan:
 				else:
 					subprocess.check_call([ 'sh', f'{self.script}.sh' ])
 
-			return LocalBuildProducts(os.getcwd())
+			return LocalBuildProducts(Path.cwd())
 
 		finally:
 			os.chdir(cwd)
@@ -160,7 +164,7 @@ class BuildPlan:
 					# TypeError, so skip over the root ("."); this also handles files
 					# already in the root directory.
 					for parent in reversed(path.parents):
-						if parent == pathlib.PurePosixPath('.'):
+						if parent == PurePosixPath('.'):
 							continue
 						else:
 							mkdir_exist_ok(parent)
@@ -169,7 +173,7 @@ class BuildPlan:
 
 				sftp.chdir(root)
 				for filename, content in self.files.items():
-					filename = pathlib.PurePosixPath(filename)
+					filename = PurePosixPath(filename)
 					assert '..' not in filename.parts
 
 					mkdirs(filename)
@@ -214,7 +218,9 @@ class BuildProducts(metaclass = ABCMeta):
 		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
 		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
 		'''
-		assert mode in ('b', 't')
+		if mode not in ('b', 't'):
+			raise ValueError(f'Unsupported file access mode \'{mode}\', must be either \'b\' or \'t\'.')
+
 
 	@contextmanager
 	def extract(self, *filenames: Tuple[str]) -> Generator[
@@ -254,15 +260,18 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 class LocalBuildProducts(BuildProducts):
-	def __init__(self, root: str) -> None:
+	def __init__(self, root: Union[str, Path]) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
 		# any way other than through `products.get()`) in general, so downstream code must never
 		# rely on this, even when we happen to use a local build most of the time.
-		self.__root = root
+		if isinstance(root, str):
+			self.__root = Path(root)
+		else:
+			self.__root = root
 
 	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> Union[str, bytes]:
 		super().get(filename, mode)
-		with open(os.path.join(self.__root, filename), 'r' + mode) as f:
+		with (self.__root / filename).resolve().open(f'r{mode}') as f:
 			return f.read()
 
 
