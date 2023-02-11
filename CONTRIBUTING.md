@@ -4,6 +4,10 @@ We love contributions from the community. Please send pull requests and raise
 issues! All code submissions require review. We use GitHub pull requests for
 this purpose.
 
+> **Note** Contributions that were generated in whole or in-part from any
+> language model or AI, such as ChatGPT, BARD, or any other such tool
+> are explicitly forbidden and will result in your permanent ban from contributing
+> to this project.
 
 # COPYRIGHTS and LICENSE
 
