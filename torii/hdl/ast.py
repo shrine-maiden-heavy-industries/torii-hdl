@@ -1450,12 +1450,17 @@ class Property(Statement, MustUse):
 	_MustUse__warning = UnusedProperty
 
 	def __init__(
-		self, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None, src_loc_at: int = 0
+		self, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None,
+		name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.test   = Value.cast(test)
 		self._check = _check
 		self._en    = _en
+		self.name   = name
+		if not isinstance(self.name, str) and self.name is not None:
+			raise TypeError(f'Property name must be a string of None, not {self.name!r}')
+
 		if self._check is None:
 			self._check = Signal(reset_less = True, name = f'${self._kind}$check')
 			self._check.src_loc = self.src_loc
@@ -1470,6 +1475,8 @@ class Property(Statement, MustUse):
 		return self.test._rhs_signals()
 
 	def __repr__(self) -> str:
+		if self.name is not None:
+			return f'({self.name}: {self._kind} {self.test!r})'
 		return f'({self._kind} {self.test!r})'
 
 
