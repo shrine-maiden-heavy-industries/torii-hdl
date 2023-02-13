@@ -13,7 +13,7 @@ from typing            import Optional, Tuple, Union
 
 from ._unused          import MustUse, UnusedMustUse
 from ..util            import tracer, flatten, union
-from ..util.decorators import final, deprecated
+from ..util.decorators import final
 from ..util.units      import bits_for
 
 __all__ = (
