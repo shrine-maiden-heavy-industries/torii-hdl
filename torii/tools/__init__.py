@@ -3,6 +3,15 @@
 from os     import environ
 from shutil import which
 
+__doc__ = '''\
+
+.. warning:
+
+	The following module is internal implementation details for Torii and should
+	not be considered stable or for external use.
+
+'''
+
 __all__ = (
 	'ToolNotFound',
 	'tool_env_var',
