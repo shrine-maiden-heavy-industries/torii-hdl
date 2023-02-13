@@ -2,7 +2,7 @@
 
 from typing             import Dict, Tuple, Optional
 
-from .._toolchain.yosys import find_yosys, YosysError
+from ..tools.yosys      import find_yosys, YosysError
 from ..hdl.ast          import SignalDict
 from .                  import rtlil
 

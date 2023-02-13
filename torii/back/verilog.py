@@ -2,7 +2,7 @@
 
 from typing             import Tuple, Union
 
-from .._toolchain.yosys import find_yosys, YosysError
+from ..tools.yosys      import find_yosys, YosysError
 from ..hdl              import ir, ast
 from .                  import rtlil
 

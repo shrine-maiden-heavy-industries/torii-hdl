@@ -5,7 +5,7 @@ import ctypes
 import tempfile
 import unittest
 
-from torii._toolchain.cxx import *
+from torii.tools.cxx import *
 
 
 class ToolchainCxxTestCase(unittest.TestCase):

@@ -12,7 +12,7 @@ import re
 import jinja2
 
 from ..            import __version__
-from .._toolchain  import *
+from ..tools       import *
 from ..hdl         import *
 from ..hdl.xfrm    import SampleLowerer, DomainLowerer
 from ..lib.io      import Pin
