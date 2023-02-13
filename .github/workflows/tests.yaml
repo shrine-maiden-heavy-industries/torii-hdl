@@ -33,7 +33,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup OSS CAD Suite
-        uses: YosysHQ/setup-oss-cad-suite@v1
+        uses: YosysHQ/setup-oss-cad-suite@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup
         shell: bash
