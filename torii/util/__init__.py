@@ -31,20 +31,12 @@ def union(i, start = None):
 	return r
 
 def get_linter_options(filename: str) -> Dict[str, Union[int, str]]:
-	# Check the first five lines of the file
-	magic_comments = (
-		compile(r'^#\s*amaranth:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$'),
-		compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$'),
-	)
+	magic_comment = compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$')
 
+	# Check the first five lines of the file, because it might not be first
 	lines = getlines(filename)[0:5]
 	if len(lines) > 0:
-		matches = list(filter(lambda m: m is not None, map(magic_comments[0].match, lines)))
-		if len(matches) > 0:
-			warn_explicit('Use `# torii:` annotation instead of `# amaranth:`',
-				DeprecationWarning, filename, 1)
-		else:
-			matches = list(filter(lambda m: m is not None, map(magic_comments[1].match, lines)))
+		matches = list(filter(lambda m: m is not None, map(magic_comment.match, lines)))
 
 		if len(matches) > 0:
 			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))
