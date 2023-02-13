@@ -27,7 +27,7 @@ Unreleased template stuff
 
 ## [0.4.3]
 
-## Fixed
+### Fixed
 
 - Fixed a small issue with the newline changes that caused synthesis to fail
 - Fixed up the ULPI instance to properly handle the `clk` signal and constrain it
