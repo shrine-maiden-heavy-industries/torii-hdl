@@ -18,7 +18,7 @@ from ..hdl.xfrm    import SampleLowerer, DomainLowerer
 from ..lib.io      import Pin
 from ..lib.cdc     import ResetSynchronizer
 from ..back        import rtlil, verilog
-from ..util.string import ascii_escape, tcl_escape, tcl_quote
+from ..util.string import ascii_escape, tcl_escape, tcl_quote, tool_env_var
 from .dsl          import Clock, Attrs
 from .res          import *
 from .run          import *

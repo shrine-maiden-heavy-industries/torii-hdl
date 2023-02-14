@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from os     import environ
-from shutil import which
+from os            import environ
+from shutil        import which
+
+from ..util.string import tool_env_var
 
 __doc__ = '''\
 
@@ -14,16 +16,12 @@ __doc__ = '''\
 
 __all__ = (
 	'ToolNotFound',
-	'tool_env_var',
 	'has_tool',
 	'require_tool',
 )
 
 class ToolNotFound(Exception):
 	pass
-
-def tool_env_var(name: str) -> str:
-	return name.upper().replace('-', '_').replace('+', 'X')
 
 def _get_tool(name: str) -> str:
 	return environ.get(tool_env_var(name), name)

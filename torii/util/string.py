@@ -6,6 +6,7 @@ __all__ = (
 	'ascii_escape',
 	'tcl_quote',
 	'tcl_escape',
+	'tool_env_var',
 )
 
 def ascii_escape(string: str) -> str:
@@ -29,3 +30,8 @@ def tcl_quote(string: str) -> str:
 	''' Apply appropriate quoting for use in TCL scripts '''
 
 	return '"' + sub(r'([$[\\"])', r'\\\1', string) + '"'
+
+def tool_env_var(name: str) -> str:
+	''' Convert the given tool name into a normalized version for environment variables '''
+
+	return name.upper().replace('-', '_').replace('+', 'X')
