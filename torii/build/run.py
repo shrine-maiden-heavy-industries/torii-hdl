@@ -275,8 +275,9 @@ class LocalBuildProducts(BuildProducts):
 			return f.read()
 
 
-@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
 class RemoteSSHBuildProducts(BuildProducts):
+
+	@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
 	def __init__(self, connect_to: Dict[str, Any], root: str) -> None:
 		self.__connect_to = connect_to
 		self.__root = root
