@@ -4,7 +4,6 @@ from collections.abc import Iterable
 from linecache       import getlines
 from re              import compile
 from typing          import Dict, Type, Union
-from warnings        import warn_explicit
 
 __all__ = (
 	'flatten',
