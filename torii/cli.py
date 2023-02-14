@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import logging    as log
-from argparse     import ArgumentParser, FileType, Namespace
+from argparse     import (
+	ArgumentParser, FileType, Namespace, ArgumentDefaultsHelpFormatter
+)
 from typing       import Optional, Tuple, Union
 
 from rich         import traceback
@@ -18,7 +20,10 @@ __all__ = (
 
 def main_parser(parser: Optional[ArgumentParser] = None) -> ArgumentParser:
 	if parser is None:
-		parser = ArgumentParser()
+		parser = ArgumentParser(
+			formatter_class = ArgumentDefaultsHelpFormatter,
+			description     = 'Torii-HDL CLI Runner'
+		)
 
 	parser.add_argument(
 		'-v', '--verbose',
