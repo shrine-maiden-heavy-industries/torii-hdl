@@ -18,8 +18,8 @@ DIST_DIR  = (BUILD_DIR / 'dist')
 # Default sessions to run
 nox.options.sessions = (
 	'test',
-	'flake8',
-	'mypy'
+	'lint',
+	'typecheck'
 )
 
 def torii_version() -> str:
@@ -75,7 +75,7 @@ def docs(session: nox.Session) -> None:
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(out_dir))
 
 @nox.session
-def mypy(session: nox.Session) -> None:
+def typecheck(session: nox.Session) -> None:
 	out_dir = (BUILD_DIR / 'mypy')
 	out_dir.mkdir(parents = True, exist_ok = True)
 
@@ -88,7 +88,7 @@ def mypy(session: nox.Session) -> None:
 	)
 
 @nox.session
-def flake8(session: nox.Session) -> None:
+def lint(session: nox.Session) -> None:
 	session.install('flake8')
 	session.run('flake8', './torii')
 	session.run('flake8', './examples')
