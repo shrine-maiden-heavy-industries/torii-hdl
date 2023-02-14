@@ -206,7 +206,7 @@ class Decoder(Elaboratable):
 	Attributes
 	----------
 	bus : :class:`Interface`
-		CSR bus providing access to subordinate buses.
+		Wishbone bus providing access to subordinate buses.
 
 	'''
 
