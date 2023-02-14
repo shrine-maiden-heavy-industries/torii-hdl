@@ -319,10 +319,10 @@ class LatticeICE40Platform(TemplatedPlatform):
 
 	@property
 	def _toolchain_env_var(self) -> str:
-		if self.toolchain == 'IceStorm':
-			return f'TORII_ENV_{self.toolchain}'
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return 'TORII_ENV_iCECube2'
+		elif self.toolchain == 'IceStorm':
+			return super()._toolchain_env_var
 		assert False
 
 	@property
