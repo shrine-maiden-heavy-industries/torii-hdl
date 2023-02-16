@@ -104,16 +104,16 @@ def lint(session: nox.Session) -> None:
 	)
 
 @nox.session
-def build_dists(session: nox.Session) -> None:
+def dist(session: nox.Session) -> None:
 	session.install('build')
 	session.run('python', '-m', 'build',
 		'-o', str(DIST_DIR)
 	)
 
 @nox.session
-def upload_dist(session: nox.Session) -> None:
+def upload(session: nox.Session) -> None:
 	session.install('twine')
-	build_dists(session)
+	dist(session)
 	session.log(f'Uploading torii-{torii_version()} to PyPi')
 	session.run(
 		'python', '-m', 'twine',
