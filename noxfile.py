@@ -52,7 +52,7 @@ def test(session: nox.Session) -> None:
 		session.install('coverage')
 		coverage_args = (
 			'-m', 'coverage', 'run',
-			f'--rcfile={(ROOT_DIR / "contrib") / "coveragerc"}'
+			f'--rcfile={CNTRB_DIR / "coveragerc"}'
 		)
 	else:
 		coverage_args = ()
