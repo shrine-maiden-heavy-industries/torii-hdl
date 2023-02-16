@@ -106,7 +106,8 @@ def lint(session: nox.Session) -> None:
 @nox.session
 def dist(session: nox.Session) -> None:
 	session.install('build')
-	session.run('python', '-m', 'build',
+	session.run(
+		'python', '-m', 'build',
 		'-o', str(DIST_DIR)
 	)
 
