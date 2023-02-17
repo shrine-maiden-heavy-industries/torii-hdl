@@ -188,21 +188,21 @@ The [latest release](install.md#latest-release) of Torii is recommended for any 
 
 		.. code-block:: console
 
-			$ pip3 install --user 'git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git#egg=torii'
+			$ pip3 install --user 'torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git'
 
 	.. platform-choice:: macos
 		:title: macOS
 
 		.. code-block:: console
 
-			$ pip install --user 'git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git#egg=torii'
+			$ pip install --user 'torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git'
 
 	.. platform-choice:: windows
 		:title: Windows
 
 		.. code-block:: doscon
 
-			> pip install git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git#egg=torii
+			> pip install "torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git"
 
 ```
 
