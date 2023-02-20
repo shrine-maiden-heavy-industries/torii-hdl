@@ -91,6 +91,29 @@ class Shape:
 		self.width = width
 		self.signed = signed
 
+	# This implements an algorithm for inferring shape from standard Python enumerations
+	# for `Shape.cast()`.
+	@staticmethod
+	def _cast_plain_enum(obj):
+		signed = False
+		width  = 0
+		for member in obj:
+			try:
+				member_shape = Const.cast(member.value).shape()
+			except TypeError:
+				raise TypeError(
+					'Only enumerations whose members have constant-castable '
+					'values can be used in Torii code'
+				)
+			if not signed and member_shape.signed:
+				signed = True
+				width  = max(width + 1, member_shape.width)
+			elif signed and not member_shape.signed:
+				width  = max(width, member_shape.width + 1)
+			else:
+				width  = max(width, member_shape.width)
+		return Shape(width, signed)
+
 	@staticmethod
 	def cast(
 		obj: Union['Shape', int, range, type, ShapeCastable], *,
@@ -99,6 +122,8 @@ class Shape:
 		while True:
 			if isinstance(obj, Shape):
 				return obj
+			elif isinstance(obj, ShapeCastable):
+				new_obj = obj.as_shape()
 			elif isinstance(obj, int):
 				return Shape(obj)
 			elif isinstance(obj, range):
@@ -111,15 +136,7 @@ class Shape:
 				)
 				return Shape(width, signed)
 			elif isinstance(obj, type) and issubclass(obj, Enum):
-				min_value = min(member.value for member in obj)
-				max_value = max(member.value for member in obj)
-				if not isinstance(min_value, int) or not isinstance(max_value, int):
-					raise TypeError('Only enumerations with integer values can be used as value shapes')
-				signed = min_value < 0 or max_value < 0
-				width  = max(bits_for(min_value, signed), bits_for(max_value, signed))
-				return Shape(width, signed)
-			elif isinstance(obj, ShapeCastable):
-				new_obj = obj.as_shape()
+				return Shape._cast_plain_enum(obj)
 			else:
 				raise TypeError(f'Object {obj!r} cannot be converted to a Torii shape')
 			if new_obj is obj:
@@ -947,10 +964,20 @@ class Cat(Value):
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts = []
 		for index, arg in enumerate(flatten(args)):
+			if isinstance(arg, Enum) and (not isinstance(type(arg), ShapeCastable) or
+				not hasattr(arg, '_torii_shape_')
+			):
+				warnings.warn(
+					f'Argument #{index + 1} of \'Cat()\' is an enumerated value {arg!r} without '
+					'a defined shape used in a bit vector context; use \'Const\' to specify '
+					'the shape.',
+					SyntaxWarning, stacklevel = 2 + src_loc_at
+				)
 			if isinstance(arg, int) and not isinstance(arg, Enum) and arg not in [0, 1]:
 				warnings.warn(
-					f'Argument #{index + 1} of Cat() is a bare integer {arg} used in bit vector '
-					f'context; consider specifying explicit width using Const({arg}, {bits_for(arg)}) instead',
+					f'Argument #{index + 1} of \'Cat()\' is a bare integer {arg} used in bit vector '
+					f'context; consider specifying the width explicitly using \'Const({arg}, {bits_for(arg)})\' '
+					'instead',
 					SyntaxWarning, stacklevel = 2 + src_loc_at
 				)
 			self.parts.append(Value.cast(arg))

@@ -148,7 +148,7 @@ class ShapeTestCase(ToriiTestSuiteCase):
 	def test_cast_enum_bad(self):
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^Only enumerations with integer values can be used as value shapes$'
+			r'^Only enumerations whose members have constant-castable values can be used in Torii code$'
 		):
 			Shape.cast(StringEnum)
 
@@ -228,7 +228,7 @@ class ValueTestCase(ToriiTestSuiteCase):
 	def test_cast_enum_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^Only enumerations with integer values can be used as value shapes$'
+			r'^Only enumerations whose members have constant-castable values can be used in Torii code$'
 		):
 			Value.cast(StringEnum.FOO)
 
@@ -902,29 +902,40 @@ class CatTestCase(ToriiTestSuiteCase):
 			warnings.filterwarnings(action = 'error', category = SyntaxWarning)
 			Cat(0, 1, 1, 0)
 
-	def test_enum(self):
+	def test_enum_wrong(self):
 		class Color(Enum):
 			RED  = 1
 			BLUE = 2
-		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'error', category = SyntaxWarning)
+
+		with self.assertWarnsRegex(
+			SyntaxWarning,
+			r'^Argument #1 of \'Cat\(\)\' is an enumerated value <Color\.RED: 1> without '
+			r'a defined shape used in a bit vector context; use \'Const\' to specify '
+			r'the shape\.$',
+		):
 			c = Cat(Color.RED, Color.BLUE)
 		self.assertEqual(repr(c), '(cat (const 2\'d1) (const 2\'d2))')
 
-	def test_intenum(self):
+	def test_intenum_wrong(self):
 		class Color(int, Enum):
 			RED  = 1
 			BLUE = 2
-		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'error', category = SyntaxWarning)
+
+		with self.assertWarnsRegex(
+			SyntaxWarning,
+			r'^Argument #1 of \'Cat\(\)\' is an enumerated value <Color\.RED: 1> '
+			r'without a defined shape used in a bit vector context; use \'Const\' to specify '
+			r'the shape\.$'
+
+		):
 			c = Cat(Color.RED, Color.BLUE)
 		self.assertEqual(repr(c), '(cat (const 2\'d1) (const 2\'d2))')
 
 	def test_int_wrong(self):
 		with self.assertWarnsRegex(
 			SyntaxWarning,
-			r'^Argument #1 of Cat\(\) is a bare integer 2 used in bit vector context; '
-			r'consider specifying explicit width using Const\(2, 2\) instead$'
+			r'^Argument #1 of \'Cat\(\)\' is a bare integer 2 used in bit vector context; '
+			r'consider specifying the width explicitly using \'Const\(2, 2\)\' instead$'
 		):
 			Cat(2)
 
