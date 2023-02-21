@@ -608,12 +608,8 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		matches = []
+		# This code should accept exactly the same patterns as `with m.Case(...):`.
 		for pattern in patterns:
-			if not isinstance(pattern, (int, str, Enum)):
-				raise SyntaxError(
-					f'Match pattern must be an integer, a string, or an enumeration, not {pattern!r}'
-				)
-
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise SyntaxError(
 					f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may include whitespace'
@@ -624,24 +620,30 @@ class Value(metaclass = ABCMeta):
 					f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)})'
 				)
 
-			if isinstance(pattern, int) and bits_for(pattern) > len(self):
-				warnings.warn(
-					f'Match pattern \'{pattern:b}\' is wider than match value (which has width {len(self)}); '
-					'comparison will never be true',
-					SyntaxWarning, stacklevel = 3
-				)
-				continue
 			if isinstance(pattern, str):
 				pattern = ''.join(pattern.split()) # remove whitespace
 				mask    = int(pattern.replace('0', '1').replace('-', '0'), 2)
 				pattern = int(pattern.replace('-', '0'), 2)
 				matches.append((self & mask) == pattern)
-			elif isinstance(pattern, int):
-				matches.append(self == pattern)
-			elif isinstance(pattern, Enum):
-				matches.append(self == pattern.value)
 			else:
-				raise TypeError(f'Expected pattern to be either a \'str\', \'int\', or \'Enum\', not \'{pattern!r}\'')
+				orig_pattern = pattern
+				try:
+					pattern = Const.cast(pattern)
+				except TypeError as error:
+					raise SyntaxError(
+						'Match pattern must be a string or a const-castable expression, '
+						f'not {pattern!r}'
+					) from error
+
+				pattern_len = bits_for(pattern.value)
+				if pattern_len > len(self):
+					warnings.warn(
+						f'Match pattern \'{orig_pattern}\' ({pattern_len}\'{pattern.value:b}) is wider than '
+						f'match value (which has width {len(self)}); comparison will never be true',
+						SyntaxWarning, stacklevel = 2
+					)
+					continue
+				matches.append(self == pattern)
 
 		if not matches:
 			warnings.warn(
@@ -817,9 +819,6 @@ class Value(metaclass = ABCMeta):
 	def _rhs_signals(self):
 		pass # :nocov:
 
-	def _as_const(self):
-		raise TypeError(f'Value {self!r} cannot be evaluated as constant')
-
 
 @final
 class Const(Value):
@@ -851,6 +850,32 @@ class Const(Value):
 			value |= ~mask
 		return value
 
+	@staticmethod
+	def cast(obj):
+		'''
+		Converts ``obj`` to an Torii constant.
+
+		First, ``obj`` is converted to a value using :meth:`Value.cast`. If it is a constant, it
+		is returned. If it is a constant-castable expression, it is evaluated and returned.
+		Otherwise, :exn:`TypeError` is raised.
+		'''
+
+		obj = Value.cast(obj)
+		if type(obj) is Const:
+			return obj
+		elif type(obj) is Cat:
+			value = 0
+			width = 0
+			for part in obj.parts:
+				const  = Const.cast(part)
+				part_value = Const(const.value, unsigned(const.width)).value
+				value |= part_value << width
+				width += len(const)
+			return Const(value, width)
+		else:
+			raise TypeError(f'Value {obj!r} cannot be converted to an Torii constant')
+
+
 	def __init__(
 		self, value: int, shape: Optional[Union[int, tuple[int, bool]]] = None, *,
 		src_loc_at: int = 0
@@ -880,9 +905,6 @@ class Const(Value):
 
 	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet()
-
-	def _as_const(self) -> int:
-		return self.value
 
 	def __repr__(self) -> str:
 		return f'(const {self.width}\'{"s" if self.signed else ""}d{self.value})'
@@ -1154,13 +1176,6 @@ class Cat(Value):
 
 	def _rhs_signals(self):
 		return union((part._rhs_signals() for part in self.parts), start = SignalSet())
-
-	def _as_const(self) -> int:
-		value = 0
-		for part in reversed(self.parts):
-			value <<= len(part)
-			value |= part._as_const()
-		return value
 
 	def __repr__(self) -> str:
 		return f'(cat {" ".join(map(repr, self.parts))})'

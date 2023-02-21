@@ -33,6 +33,43 @@ All of the examples below assume that a glob import is used.
 
 ```
 
+## Shapes
+
+A `Shape` is an object with two attributes, `.width` and `.signed`. It can be constructed directly:
+
+```{eval-rst}
+.. doctest::
+
+   >>> Shape(width=5, signed=False)
+   unsigned(5)
+   >>> Shape(width=12, signed=True)
+   signed(12)
+```
+
+However, in most cases, the shape is always constructed with the same signedness, and the aliases `signed` and `unsigned` are more convenient:
+
+```{eval-rst}
+.. doctest::
+
+   >>> unsigned(5) == Shape(width=5, signed=False)
+   True
+   >>> signed(12) == Shape(width=12, signed=True)
+   True
+```
+
+## Shapes of values
+
+All values have a `.shape()` method that computes their shape. The width of a value `v`, `v.shape().width`, can also be retrieved with `len(v)`.
+
+```{eval-rst}
+.. doctest::
+
+   >>> Const(5).shape()
+   unsigned(3)
+   >>> len(Const(5))
+   3
+```
+
 ## Values
 
 The basic building block of the Torii language is a *value*, which is a term for a binary number that is computed or stored anywhere in the design. Each value has a *width*---the amount of bits used to represent the value---and a *signedness*---the interpretation of the value by arithmetic operations---collectively called its *shape*. Signed values always use [two's complement] representation.
@@ -78,47 +115,6 @@ The shape of the constant can be specified explicitly, in which case the number'
    0
 
 ```
-
-
-## Shapes
-
-A `Shape` is an object with two attributes, `.width` and `.signed`. It can be constructed directly:
-
-```{eval-rst}
-.. doctest::
-
-   >>> Shape(width = 5, signed = False)
-   unsigned(5)
-   >>> Shape(width = 12, signed = True)
-
-   signed(12)
-```
-
-However, in most cases, the shape is always constructed with the same signedness, and the aliases `signed` and `unsigned` are more convenient:
-
-```{eval-rst}
-.. doctest::
-
-   >>> unsigned(5) == Shape(width = 5, signed = False)
-   True
-   >>> signed(12) == Shape(width = 12, signed = True)
-   True
-
-```
-
-### Shapes of values
-
-All values have a `.shape()` method that computes their shape. The width of a value `v`, `v.shape().width`, can also be retrieved with `len(v)`.
-
-```{eval-rst}
-.. doctest::
-
-   >>> Const(5).shape()
-   unsigned(3)
-   >>> len(Const(5))
-   3
-```
-
 
 ## Shape casting
 
@@ -213,7 +209,7 @@ The enumeration does not have to subclass {class}`enum.IntEnum`; it only needs t
 
 ## Value casting
 
-Like shapes, values may be *cast* from other objects, which are called *value-castable*. Casting allows objects that are not provided by Torii, such as integers or enumeration members, to be used in Torii expressions directly.
+Like shapes, values may be *cast* from other objects, which are called *value-castable*. Casting to values allows objects that are not provided by Torii, such as integers or enumeration members, to be used in Torii expressions directly.
 
 <!-- TODO: link to ValueCastable -->
 
@@ -223,7 +219,7 @@ Casting to a value can be done explicitly with `Value.cast`, but is usually impl
 ### Values from integers
 
 
-Casting a value from an integer `i` is a shorthand for `Const(i)`:
+Casting a value from an integer `i` is equivalent to `Const(i)`:
 
 ```{eval-rst}
 .. doctest::
@@ -239,7 +235,7 @@ If a value subclasses :class:`enum.IntEnum` or its class otherwise inherits from
 
 ### Values from enumeration members
 
-Casting a value from an enumeration member `m` is a shorthand for `Const(m.value, type(m))`:
+Casting a value from an enumeration member `m` is equivalent to `Const(m.value, type(m))`:
 
 ```{eval-rst}
 .. doctest::
@@ -251,6 +247,33 @@ Casting a value from an enumeration member `m` is a shorthand for `Const(m.value
 
 ```{note}
 If a value subclasses :class:`enum.IntEnum` or its class otherwise inherits from both :class:`int` and :class:`Enum`, it is treated as an enumeration.
+```
+
+# Constant casting
+
+A subset of [values](#values) are *constant-castable*. If a value is constant-castable and all of its operands are also constant-castable, it can be converted to a `Const`, the numeric value of which can then be read by Python code. This provides a way to perform computation on Torii values while constructing the design.
+
+```{todo}
+link to m.Case and v.matches() below
+```
+
+Constant-castable objects are accepted anywhere a constant integer is accepted. Casting to a constant can also be done explicitly with `Const.cast`:
+
+```{eval-rst}
+.. doctest::
+
+   >>> Const.cast(Cat(Direction.TOP, Direction.LEFT))
+   (const 4'd4)
+
+```
+
+```{note}
+   At the moment, only the following expressions are constant-castable:
+
+   * :class:`Const`
+   * :class:`Cat`
+
+   This list will be expanded in the future.
 ```
 
 ## Signals

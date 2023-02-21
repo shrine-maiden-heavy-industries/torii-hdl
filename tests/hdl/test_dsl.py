@@ -479,6 +479,24 @@ class DSLTestCase(ToriiTestSuiteCase):
 		)
 		''')
 
+	def test_Switch_const_castable(self):
+		class Color(Enum):
+			RED  = 0
+			BLUE = 1
+
+		m = Module()
+		se = Signal(2)
+		with m.Switch(se):
+			with m.Case(Cat(Color.RED, Color.BLUE)):
+				m.d.comb += self.c1.eq(1)
+		self.assertRepr(m._statements, '''
+		(
+			(switch (sig se)
+				(case 10 (eq (sig c1) (const 1'd1)))
+			)
+		)
+		''')
+
 	def test_Case_width_wrong(self):
 		class Color(Enum):
 			RED = 0b10101010
@@ -492,7 +510,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 					pass
 			with self.assertWarnsRegex(
 				SyntaxWarning, (
-					r'^Case pattern \'10110\' is wider than switch value \(which has width 4\); '
+					r'^Case pattern \'22\' \(5\'10110\) is wider than switch value \(which has width 4\); '
 					r'comparison will never be true$'
 				)
 			):
@@ -500,7 +518,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 					pass
 			with self.assertWarnsRegex(
 				SyntaxWarning, (
-					r'^Case pattern \'10101010\' \(Color\.RED\) is wider than switch value '
+					r'^Case pattern \'<Color.RED: 170>\' \(8\'10101010\) is wider than switch value '
 					r'\(which has width 4\); comparison will never be true$'
 				)
 			):
@@ -529,7 +547,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
 				SyntaxError,
-				r'^Case pattern must be an integer, a string, or an enumeration, not 1\.0$'
+				r'^Case pattern must be a string or a const-castable expression, not 1\.0$'
 			):
 				with m.Case(1.0):
 					pass

@@ -813,7 +813,13 @@ class OperatorTestCase(ToriiTestSuiteCase):
 	def test_matches_enum(self):
 		s = Signal(SignedEnum)
 		self.assertRepr(s.matches(SignedEnum.FOO), '''
-		(== (sig s) (const 1'sd-1))
+		(== (sig s) (const 2'sd-1))
+		''')
+
+	def test_matches_const_castable(self):
+		s = Signal(4)
+		self.assertRepr(s.matches(Cat(Const(0b10, 2), Const(0b11, 2))), '''
+		(== (sig s) (const 4'd14))
 		''')
 
 	def test_matches_width_wrong(self):
@@ -825,11 +831,18 @@ class OperatorTestCase(ToriiTestSuiteCase):
 			s.matches('--')
 		with self.assertWarnsRegex(
 			SyntaxWarning, (
-				r'^Match pattern \'10110\' is wider than match value \(which has width 4\); '
+				r'^Match pattern \'22\' \(5\'10110\) is wider than match value \(which has width 4\); '
 				r'comparison will never be true$'
 			)
 		):
 			s.matches(0b10110)
+
+		with self.assertWarns(
+			SyntaxWarning,
+			msg = 'Match pattern \'(cat (const 1\'d0) (const 4\'d11))\' (5\'10110) is wider '
+				'than match value (which has width 4); comparison will never be true'
+		):
+			s.matches(Cat(0, Const(0b1011, 4)))
 
 	def test_matches_bits_wrong(self):
 		s = Signal(4)
@@ -845,7 +858,7 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		s = Signal(4)
 		with self.assertRaisesRegex(
 			SyntaxError,
-			r'^Match pattern must be an integer, a string, or an enumeration, not 1\.0$'
+			r'^Match pattern must be a string or a const-castable expression, not 1\.0$'
 		):
 			s.matches(1.0)
 
@@ -1069,6 +1082,16 @@ class CatTestCase(ToriiTestSuiteCase):
 			r'consider specifying the width explicitly using \'Const\(2, 2\)\' instead$'
 		):
 			Cat(2)
+
+	def test_const(self):
+		a = Const.cast(Cat(Const(1, 1), Const(0, 1), Const(3, 2), Const(2, 2)))
+		self.assertEqual(a.value, 0x2d)
+		self.assertEqual(a.width, 6)
+		self.assertEqual(a.signed, False)
+		a = Const.cast(Cat(Const(-4, 8), Const(-3, 8)))
+		self.assertEqual(a.value, 0xfdfc)
+		self.assertEqual(a.width, 16)
+		self.assertEqual(a.signed, False)
 
 
 class ReplTestCase(ToriiTestSuiteCase):

@@ -13,7 +13,7 @@ from typing       import (
 from ..util       import flatten, tracer
 from ..util.units import bits_for
 from .ast         import (
-	Assert, Assign, Assume, Cat, Cover, Operator, Signal, SignalDict,
+	Assert, Assign, Assume, Cat, Cover, Const, Operator, Signal, SignalDict,
 	Statement, Switch, Value, _StatementList, ValueCastType
 )
 from .cd          import ClockDomain
@@ -365,9 +365,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if switch_data is None:
 			raise SyntaxError('Case outside of Switch block')
 		new_patterns: _PatternTuple = ()
+		# This code should accept exactly the same patterns as `v.matches(...)`.
 		for pattern in patterns:
-			if not isinstance(pattern, (int, str, Enum)):
-				raise SyntaxError(f'Case pattern must be an integer, a string, or an enumeration, not {pattern!r}')
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise SyntaxError(
 					f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
@@ -379,20 +378,27 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					f'Case pattern \'{pattern}\' must have the same width as switch value '
 					f'(which is {len(switch_data["test"])})'
 				)
-			if isinstance(pattern, int) and bits_for(pattern) > len(switch_data["test"]):
-				warnings.warn(
-					f'Case pattern \'{pattern:b}\' is wider than switch value (which has width {len(switch_data["test"])}); '
-					'comparison will never be true', SyntaxWarning, stacklevel = 3
-				)
-				continue
-			if isinstance(pattern, Enum) and bits_for(pattern.value) > len(switch_data["test"]):
-				warnings.warn(
-					f'Case pattern \'{pattern.value:b}\' ({ pattern.__class__.__name__}.{pattern.name}) is wider than switch value '
-					f'(which has width {len(switch_data["test"])}); comparison will never be true',
-					SyntaxWarning, stacklevel = 3
-				)
-				continue
-			new_patterns = (*new_patterns, pattern)
+			if isinstance(pattern, str):
+				new_patterns = (*new_patterns, pattern)
+			else:
+				orig_pattern = pattern
+				try:
+					pattern = Const.cast(pattern)
+				except TypeError as error:
+					raise SyntaxError(
+						'Case pattern must be a string or a const-castable expression, '
+						f'not {pattern!r}'
+					) from error
+
+				pattern_len = bits_for(pattern.value)
+				if pattern_len > len(switch_data['test']):
+					warnings.warn(
+						f'Case pattern \'{orig_pattern!r}\' ({pattern_len}\'{pattern.value:b}) is wider than '
+						f'switch value (which has width {len(switch_data["test"])}); comparison will never be true',
+						SyntaxWarning, stacklevel = 2
+					)
+					continue
+				new_patterns = (*new_patterns, pattern.value)
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
