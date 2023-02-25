@@ -23,7 +23,55 @@ Unreleased template stuff
 ### Deprecated
 ### Removed
 ### Fixed
-### Security
+
+## [0.4.4]
+
+### Added
+
+ - Handle `Repl`'s in `ValueKey`
+ - Allow for `IntEnum`'s in `Value.cast`
+ - Added proper testing for the `torii.util.units` module.
+ - Added proper testing for the `torii.util.string` module.
+ - Added support for `name = ` in property checks, such as `Assert`, etc.
+ - Added exports for `convert` and `convert_fragment` for rtlil, cxxrtl, and verilog into the root `torii.back` module.
+
+### Changed
+
+ - Updated the copyright years in the license file.
+ - Hardened the RTLIL backend against generating Yosys reserved port names.
+ - Removed warning on `IntEnum`'s in `Cat` (meow)
+ - Ensured that files are always are written with Unix `LF` line endings.
+ - Renamed the `_toolchain` module to `tools`.
+ - Moved the `tool_env_var` from `torii.tools` into `torii.util.string`.
+ - Renamed nox session names for `flake8` and `mypy` into `lint` and `typecheck`
+ - Renamed nox session names for `build_dists` and `upload_dist` into `build` and `upload`
+ - Added a default help formatter for the built-in CLI stub.
+
+### Deprecated
+
+ - Deprecated the remote SSH builds.
+ - Deprecated passing non `Elaboratable` or `Fragment` objects to `Fragment.get`.
+
+### Removed
+
+ - Removed `Shape` and `tuple` casts and comparisons.
+ - Removed `UserValue` and associated machinery.
+ - Removed default ports from `rtlil_convert` and `verilog_convert`.
+ - Removed `step` from `core.Simulator` in favor of `advance`.
+ - Removed support for the `AMARANTH_ENV_*` environment variables.
+ - Removed the `_BuiltinYosys` proxy object and associated bits.
+
+### Fixed
+
+ - Fixed an issue with the `TORII_` environment variables not being recognized.
+ - Fixed missing f-strings in the `cxxrtl`, `ast`, and `intel` modules.
+ - Fixed an issue in the `LatticeECP5` platform that would have caused broken SystemVerilog inclusions.
+ - Fixed a bunch of miscellaneous spelling things.
+ - Fixed an issue where `src` attributes would be added to generated RTLIL even if the `emit_src` attribute was `False`.
+ - Fixed an issue where the tracer would encounter an unknown opcode and would return None.
+ - Fixed the `iec_size` utility method to behave a bit better with strange sizes.
+ - Fixed the `tcl_quote` string method that would leave un-escaped `"`'s causing the TCL script to fail due to invalid syntax.
+ - Fixed an issue in the `LatticeICE40` platform where the `IceStorm` toolchain environment variable was not being normalized properly.
 
 ## [0.4.3]
 
@@ -108,7 +156,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...main
+[0.4.4]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1
