@@ -178,6 +178,9 @@ class Value(metaclass = ABCMeta):
 	def __bool__(self) -> None:
 		raise TypeError('Attempted to convert Torii value to Python boolean')
 
+	def __pos__(self) -> 'Value':
+		return self
+
 	def __invert__(self) -> 'Operator':
 		return Operator('~', [self])
 
