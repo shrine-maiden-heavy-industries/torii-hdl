@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections  import OrderedDict
-from abc          import ABCMeta, abstractmethod
-from typing       import (
+from collections     import OrderedDict
+from collections.abc import Iterable
+from abc             import ABCMeta, abstractmethod
+from typing          import (
 	Union, Iterable, IO, Optional, Dict, Tuple,
 	Type, Generator, TypeVar, Literal, List
 )
@@ -11,17 +12,17 @@ import textwrap
 import re
 import jinja2
 
-from ..            import __version__
-from ..tools       import *
-from ..hdl         import *
-from ..hdl.xfrm    import SampleLowerer, DomainLowerer
-from ..lib.io      import Pin
-from ..lib.cdc     import ResetSynchronizer
-from ..back        import rtlil, verilog
-from ..util.string import ascii_escape, tcl_escape, tcl_quote, tool_env_var
-from .dsl          import Clock, Attrs
-from .res          import *
-from .run          import *
+from ..              import __version__
+from ..tools         import *
+from ..hdl           import *
+from ..hdl.xfrm      import SampleLowerer, DomainLowerer
+from ..lib.io        import Pin
+from ..lib.cdc       import ResetSynchronizer
+from ..back          import rtlil, verilog
+from ..util.string   import ascii_escape, tcl_escape, tcl_quote, tool_env_var
+from .dsl            import Clock, Attrs
+from .res            import *
+from .run            import *
 
 __all__ = (
 	'Platform',
@@ -371,10 +372,12 @@ class TemplatedPlatform(Platform):
 
 				return re.sub(r'^\"\"$', '', var_env_value)
 			elif var in kwargs:
-				if not isinstance(kwargs[var], expected_type) and expected_type is not None:
-					raise TypeError(f'Override \'{var}\' must be a {expected_type.__name__}, not {kwargs[var]!r}')
-				else:
-					return kwargs[var]
+				kwarg = kwargs[var]
+				if issubclass(expected_type, str) and isinstance(var, Iterable):
+					kwarg = ' '.join(kwarg)
+				if not isinstance(kwarg, expected_type) and expected_type is not None:
+					raise TypeError(f'Override \'{var}\' must be a {expected_type.__name__}, not {kwarg!r}')
+				return kwarg
 			else:
 				return jinja2.Undefined(name = var)
 
