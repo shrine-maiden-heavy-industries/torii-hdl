@@ -18,10 +18,14 @@ def _convert_rtlil_text(
 ) -> str:
 	# this version requirement needs to be synchronized with the one in setup.py!
 	yosys = find_yosys(lambda ver: ver >= (0, 10))
+	yosys_version = yosys.version()
 
 	script = []
 	script.append(f'read_ilang <<rtlil\n{rtlil_text}\nrtlil')
-	script.append('proc -nomux')
+	if yosys_version >= (0, 17):
+		script.append('proc -nomux -norom')
+	else:
+		script.append('proc -nomux')
 	script.append('memory_collect')
 
 	if strip_internal_attrs:
