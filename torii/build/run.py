@@ -4,7 +4,7 @@ from collections       import OrderedDict
 from contextlib        import contextmanager
 from abc               import ABCMeta, abstractmethod
 from typing            import (
-	Union, Dict, Any, Literal, Tuple, Generator, List
+	Union, Literal, Tuple, Generator, List
 )
 import os
 import sys
@@ -12,15 +12,13 @@ import subprocess
 import tempfile
 import zipfile
 import hashlib
-from pathlib           import Path, PurePosixPath
+from pathlib           import Path
 
-from ..util.decorators import deprecated
 
 __all__ = (
 	'BuildPlan',
 	'BuildProducts',
 	'LocalBuildProducts',
-	'RemoteSSHBuildProducts',
 )
 
 class BuildPlan:
@@ -123,86 +121,6 @@ class BuildPlan:
 		finally:
 			os.chdir(cwd)
 
-	@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
-	def execute_remote_ssh(
-		self, *, connect_to: Dict[str, Any] = {}, root: str, run_script: bool = True
-	) -> 'RemoteSSHBuildProducts':
-		'''
-		Execute build plan using the remote SSH strategy. Files from the build
-		plan are transferred via SFTP to the directory ``root`` on a  remote
-		server. If ``run_script`` is ``True``, the ``paramiko`` SSH client will
-		then run ``{script}.sh``. ``root`` can either be an absolute or
-		relative (to the login directory) path.
-
-		``connect_to`` is a dictionary that holds all input arguments to
-		``paramiko``'s ``SSHClient.connect``
-		(`documentation <http://docs.paramiko.org/en/stable/api/client.html#paramiko.client.SSHClient.connect>`_).
-		At a minimum, the ``hostname`` input argument must be supplied in this
-		dictionary as the remote server.
-
-		Returns :class:`RemoteSSHBuildProducts`.
-		'''
-		from paramiko import SSHClient
-
-		with SSHClient() as client:
-			client.load_system_host_keys()
-			client.connect(**connect_to)
-
-			with client.open_sftp() as sftp:
-				def mkdir_exist_ok(path):
-					try:
-						sftp.mkdir(str(path))
-					except IOError as e:
-						# mkdir fails if directory exists. This is fine in torii.build.
-						# Reraise errors containing e.errno info.
-						if e.errno:
-							raise e
-
-				def mkdirs(path):
-					# Iteratively create parent directories of a file by iterating over all
-					# parents except for the root ("."). Slicing the parents results in
-					# TypeError, so skip over the root ("."); this also handles files
-					# already in the root directory.
-					for parent in reversed(path.parents):
-						if parent == PurePosixPath('.'):
-							continue
-						else:
-							mkdir_exist_ok(parent)
-
-				mkdir_exist_ok(root)
-
-				sftp.chdir(root)
-				for filename, content in self.files.items():
-					filename = PurePosixPath(filename)
-					assert '..' not in filename.parts
-
-					mkdirs(filename)
-
-					mode = 't' if isinstance(content, str) else 'b'
-					with sftp.file(str(filename), 'w' + mode) as f:
-						f.set_pipelined()
-						# "b/t" modifier ignored in SFTP.
-						if mode == 't':
-							f.write(content.encode('utf-8'))
-						else:
-							f.write(content)
-
-			if run_script:
-				transport = client.get_transport()
-				channel = transport.open_session()
-				channel.set_combine_stderr(True)
-
-				cmd = f'if [ -f ~/.profile ]; then . ~/.profile; fi && cd {root} && sh {self.script}.sh'
-				channel.exec_command(cmd)
-
-				# Show the output from the server while products are built.
-				buf = channel.recv(1024)
-				while buf:
-					print(buf.decode('utf-8'), end = '')
-					buf = channel.recv(1024)
-
-		return RemoteSSHBuildProducts(connect_to, root)
-
 	def execute(self) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the default strategy. Use one of the ``execute_*`` methods
@@ -273,31 +191,3 @@ class LocalBuildProducts(BuildProducts):
 		super().get(filename, mode)
 		with (self.__root / filename).resolve().open(f'r{mode}') as f:
 			return f.read()
-
-
-class RemoteSSHBuildProducts(BuildProducts):
-
-	@deprecated('Remote SSH-based builds have been deprecated and will be removed in the next release')
-	def __init__(self, connect_to: Dict[str, Any], root: str) -> None:
-		self.__connect_to = connect_to
-		self.__root = root
-
-	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> bytes:
-		super().get(filename, mode)
-
-		from paramiko import SSHClient
-
-		with SSHClient() as client:
-			client.load_system_host_keys()
-			client.connect(**self.__connect_to)
-
-			with client.open_sftp() as sftp:
-				sftp.chdir(self.__root)
-
-				with sftp.file(filename, 'r' + mode) as f:
-					f.prefetch()
-					# "b/t" modifier ignored in SFTP.
-					if mode == 't':
-						return f.read().decode('utf-8')
-					else:
-						return f.read()
