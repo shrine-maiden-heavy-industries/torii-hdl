@@ -4,7 +4,7 @@ from collections     import OrderedDict
 from collections.abc import Iterable
 from abc             import ABCMeta, abstractmethod
 from typing          import (
-	Union, Iterable, IO, Optional, Dict, Tuple,
+	Union, IO, Optional, Dict, Tuple,
 	Type, Generator, TypeVar, Literal, List
 )
 import os
