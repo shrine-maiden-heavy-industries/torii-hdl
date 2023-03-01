@@ -18,6 +18,7 @@ DIST_DIR  = (BUILD_DIR / 'dist')
 IN_CI           = getenv('GITHUB_WORKSPACE') is not None
 ENABLE_COVERAGE = IN_CI or getenv('TORII_TEST_COVERAGE') is not None
 ENABLE_FORMAL   = getenv('TORII_TEST_FORMAL') is not None
+ENABLE_ASIC     = getenv('TORII_TEST_ASIC') is not None
 
 # Default sessions to run
 nox.options.sessions = (
@@ -69,8 +70,15 @@ def test(session: Session) -> None:
 			session.run(
 				'python', *coverage_args, str(example)
 			)
+	elif ENABLE_ASIC:
+		ASIC_EXAMPLES = ROOT_DIR / 'examples' / 'asic'
+
+		session.log('Running ASIC tests')
+		session.run(
+			'python', *coverage_args, f'{ASIC_EXAMPLES / "alu.py"}'
+		)
 	else:
-		session.log('Running standard test suite')
+		session.log('Running standard tests')
 		session.run(
 			'python', *coverage_args, *unitest_args, *session.posargs
 		)
