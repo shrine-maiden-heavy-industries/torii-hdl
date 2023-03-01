@@ -36,6 +36,10 @@ class UnusedElaboratable(UnusedMustUse):
 class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
 
+	def formal(self, module):
+		''' Entry point for elaboration under formal verification '''
+		return module
+
 	@abstractmethod
 	def elaborate(self, platform):
 		''' '''
