@@ -133,6 +133,66 @@ jobs:
           files: ./build/tests/coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  test-torii-asic:
+    runs-on: ubuntu-latest
+    name: 'Torii ASIC Test'
+    continue-on-error: true
+    env:
+      OPENLANE_IMAGE_NAME: efabless/openlane:latest
+      OPENLANE_ROOT: /home/runner/work/torii-hdl/torii-hdl/openlane
+      PDK_ROOT: /home/runner/work/torii-hdl/torii-hdl/pdk
+      PDK_TAG: 3df14f84ab167baf757134739bb1d2c5c044849c
+      TORII_OPENLANE_ROOT: ${OPENLANE_ROOT}
+      TORII_PDK_ROOT: ${PDK_ROOT}
+    steps:
+      - name: 'Setup Python (${{ env.TOOL_PYTHON_VERSION }})'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.TOOL_PYTHON_VERSION }}
+
+      - name: 'Initialize Environment'
+        shell: bash
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: |
+          echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
+          echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
+          echo "TORII_TEST_ASIC=1" >> $GITHUB_ENV
+
+      - name: 'Install Dependencies'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install klayout magic
+          python -m pip install --user --upgrade pip setuptools wheel setuptools_scm nox volare
+
+      - name: 'Checkout OpenLANE'
+        uses: actions/checkout@v4
+        with:
+          repository: 'The-OpenROAD-Project/OpenLane'
+          ref: '2023.06.22'
+          path: 'openlane'
+          fetch-depth: 1
+
+      - name: 'Checkout Torii'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 'Setup PDK / OpenLane'
+        shell: bash
+        run: |
+          volare enable --pdk sky130 ${PDK_TAG}
+          pushd ${OPENLANE_ROOT}
+          make
+          make test
+          popd
+
+      - name: 'Run Tests'
+        shell: bash
+        run: |
+          nox -s test
+
   linkcheck-docs:
     runs-on: ubuntu-latest
     name: 'Torii Docs - Link-check'
