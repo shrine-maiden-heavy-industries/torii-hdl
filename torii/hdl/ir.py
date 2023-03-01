@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
-from abc               import ABCMeta
+from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
 from functools         import reduce
 from typing            import Any, Optional, Union
@@ -30,6 +30,11 @@ class UnusedElaboratable(UnusedMustUse):
 
 class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
+
+	@abstractmethod
+	def elaborate(self, platform):
+		''' '''
+		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
 
 
 class DriverConflict(UserWarning):
