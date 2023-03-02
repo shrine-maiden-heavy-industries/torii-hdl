@@ -373,7 +373,7 @@ class TemplatedPlatform(Platform):
 				return re.sub(r'^\"\"$', '', var_env_value)
 			elif var in kwargs:
 				kwarg = kwargs[var]
-				if issubclass(expected_type, str) and isinstance(var, Iterable):
+				if issubclass(expected_type, str) and not isinstance(kwarg, str) and isinstance(kwarg, Iterable):
 					kwarg = ' '.join(kwarg)
 				if not isinstance(kwarg, expected_type) and expected_type is not None:
 					raise TypeError(f'Override \'{var}\' must be a {expected_type.__name__}, not {kwarg!r}')
