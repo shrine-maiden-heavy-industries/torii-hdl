@@ -1112,21 +1112,33 @@ class Signal(Value, DUID):
 		self.width  = shape.width
 		self.signed = shape.signed
 
-
-		if isinstance(reset, Enum):
-			reset = reset.value
-		if not isinstance(reset, int):
-			raise TypeError('Reset value has to be an int or an integral Enum')
-
-		reset_width = bits_for(reset, self.signed)
-		if reset != 0 and reset_width > self.width:
-			warnings.warn(
-				f'Reset value {reset!r} requires {reset_width} bits to represent, '
-				f'but the signal only has {self.width} bits',
-				SyntaxWarning, stacklevel = 2 + src_loc_at
+		orig_reset = reset
+		try:
+			reset = Const.cast(reset)
+		except TypeError:
+			raise TypeError(
+				f'Reset value must be a constant-castable expression, not {orig_reset!r}'
 			)
 
-		self.reset = reset
+		# Avoid false positives for all-zeroes and all-ones
+		if orig_reset not in (0, -1):
+			if reset.shape().signed and not self.signed:
+				warnings.warn(
+					message = f'Reset value {orig_reset!r} is signed, but the signal shape is {shape!r}',
+					category = SyntaxWarning,
+					stacklevel = 2
+				)
+			elif (
+				reset.shape().width > self.width or
+				reset.shape().width == self.width and
+				self.signed and not reset.shape().signed
+			):
+				warnings.warn(
+					message = f'Reset value {orig_reset!r} will be truncated to the signal shape {shape!r}',
+					category = SyntaxWarning,
+					stacklevel = 2
+				)
+		self.reset = reset.value
 		self.reset_less = bool(reset_less)
 
 		self.attrs = OrderedDict(() if attrs is None else attrs)
