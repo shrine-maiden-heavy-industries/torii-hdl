@@ -7,6 +7,7 @@ from setuptools_scm import (
 )
 
 import nox
+from nox.sessions   import Session
 
 ROOT_DIR  = Path(__file__).parent
 
@@ -38,7 +39,7 @@ def torii_version() -> str:
 	)
 
 @nox.session(reuse_venv = True)
-def test(session: nox.Session) -> None:
+def test(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'tests')
 	out_dir.mkdir(parents = True, exist_ok = True)
 	coverage = '--coverage' in session.posargs
@@ -68,7 +69,7 @@ def test(session: nox.Session) -> None:
 		session.run('codecov')
 
 @nox.session
-def docs(session: nox.Session) -> None:
+def docs(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'docs')
 	shutil.rmtree(out_dir, ignore_errors = True)
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
@@ -76,7 +77,7 @@ def docs(session: nox.Session) -> None:
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(out_dir))
 
 @nox.session
-def typecheck(session: nox.Session) -> None:
+def typecheck(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'mypy')
 	out_dir.mkdir(parents = True, exist_ok = True)
 
@@ -91,7 +92,7 @@ def typecheck(session: nox.Session) -> None:
 	)
 
 @nox.session
-def lint(session: nox.Session) -> None:
+def lint(session: Session) -> None:
 	session.install('flake8')
 	session.run(
 		'flake8', '--config', str((CNTRB_DIR / '.flake8').resolve()), './torii'
@@ -104,7 +105,7 @@ def lint(session: nox.Session) -> None:
 	)
 
 @nox.session
-def dist(session: nox.Session) -> None:
+def dist(session: Session) -> None:
 	session.install('build')
 	session.run(
 		'python', '-m', 'build',
@@ -112,7 +113,7 @@ def dist(session: nox.Session) -> None:
 	)
 
 @nox.session
-def upload(session: nox.Session) -> None:
+def upload(session: Session) -> None:
 	session.install('twine')
 	dist(session)
 	session.log(f'Uploading torii-{torii_version()} to PyPi')
