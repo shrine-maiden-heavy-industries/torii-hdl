@@ -13,7 +13,8 @@ __all__ = (
 )
 
 class WishboneCSRBridge(Elaboratable):
-	'''Wishbone to CSR bridge.
+	'''
+	Wishbone to CSR bridge.
 
 	A bus bridge for accessing CSR registers from Wishbone. This bridge supports any Wishbone
 	data width greater or equal to CSR data width and performs appropriate address translation.
@@ -37,7 +38,9 @@ class WishboneCSRBridge(Elaboratable):
 	----------
 	wb_bus : :class:`..wishbone.Interface`
 		Wishbone bus provided by the bridge.
+
 	'''
+
 	def __init__(
 		self, csr_bus: CSRInterface, *, data_width: Optional[int] = None, name: Optional[str] = None
 	) -> None:

@@ -108,7 +108,8 @@ class Simulator:
 		self, period: float, *, phase: Optional[float] = None,
 		domain: Union[str, ClockDomain] = 'sync', if_exists: bool = False
 	) -> None:
-		'''Add a clock process.
+		'''
+		Add a clock process.
 
 		Adds a process that drives the clock signal of ``domain`` at a 50% duty cycle.
 
@@ -127,7 +128,9 @@ class Simulator:
 			If ``False`` (the default), raise an error if the driven domain is specified as
 			a string and the root fragment does not have such a domain. If ``True``, do nothing
 			in this case.
+
 		'''
+
 		if isinstance(domain, ClockDomain):
 			if (domain.name in self._fragment.domains and
 					domain is not self._fragment.domains[domain.name]):
@@ -160,42 +163,54 @@ class Simulator:
 		self._clocked.add(domain)
 
 	def reset(self) -> None:
-		'''Reset the simulation.
+		'''
+		Reset the simulation.
 
 		Assign the reset value to every signal in the simulation, and restart every user process.
+
 		'''
+
 		self._engine.reset()
 
 	def advance(self) -> bool:
-		'''Advance the simulation.
+		'''
+		Advance the simulation.
 
 		Run every process and commit changes until a fixed point is reached, then advance time
 		to the closest deadline (if any). If there is an unstable combinatorial loop,
 		this function will never return.
 
 		Returns ``True`` if there are any active processes, ``False`` otherwise.
+
 		'''
+
 		return self._engine.advance()
 
 	def run(self) -> None:
-		'''Run the simulation while any processes are active.
+		'''
+		Run the simulation while any processes are active.
 
 		Processes added with :meth:`add_process` and :meth:`add_sync_process` are initially active,
 		and may change their status using the ``yield Passive()`` and ``yield Active()`` commands.
 		Processes compiled from HDL and added with :meth:`add_clock` are always passive.
+
 		'''
+
 		while self.advance():
 			pass
 
 	def run_until(self, deadline: int, *, run_passive: bool = False) -> None:
-		'''Run the simulation until it advances to ``deadline``.
+		'''
+		Run the simulation until it advances to ``deadline``.
 
 		If ``run_passive`` is ``False``, the simulation also stops when there are no active
 		processes, similar to :meth:`run`. Otherwise, the simulation will stop only after it
 		advances to or past ``deadline``.
 
 		If the simulation stops advancing, this function will never return.
+
 		'''
+
 		# Convert deadline in seconds into internal 1 ps units
 		deadline = deadline * 1e12
 		assert self._engine.now <= deadline
@@ -206,7 +221,8 @@ class Simulator:
 		self, vcd_file: Optional[Union[IO, str]], gtkw_file: Optional[Union[IO, str]] = None, *,
 		traces: Iterable[Signal] = ()
 	) -> None:
-		'''Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
+		'''
+		Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
 
 		This method returns a context manager. It can be used as: ::
 
@@ -223,7 +239,9 @@ class Simulator:
 			GTKWave save file or filename.
 		traces : iterable of Signal
 			Signals to display traces for.
+
 		'''
+
 		if self._engine.now != 0:
 			for file in (vcd_file, gtkw_file):
 				if hasattr(file, 'close'):

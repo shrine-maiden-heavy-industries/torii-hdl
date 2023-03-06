@@ -53,7 +53,8 @@ def _wire_layout(
 
 
 class AsyncSerialRX(Elaboratable):
-	'''Asynchronous serial receiver.
+	'''
+	Asynchronous serial receiver.
 
 	Parameters
 	----------
@@ -86,7 +87,9 @@ class AsyncSerialRX(Elaboratable):
 		Read acknowledge. Must be held asserted while data can be read out of the receiver.
 	i : Signal, in
 		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
+
 	'''
+
 	def __init__(
 		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
 		parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
@@ -163,7 +166,8 @@ class AsyncSerialRX(Elaboratable):
 
 
 class AsyncSerialTX(Elaboratable):
-	'''Asynchronous serial transmitter.
+	'''
+	Asynchronous serial transmitter.
 
 	Parameters
 	----------
@@ -190,7 +194,9 @@ class AsyncSerialTX(Elaboratable):
 		Write strobe. Data gets transmitted when both ``rdy`` and ``ack`` are asserted.
 	o : Signal, out
 		Serial output. If ``pins`` has been specified, it drives ``pins.tx.o``.
+
 	'''
+
 	def __init__(
 		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
 		parity  : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
@@ -250,7 +256,8 @@ class AsyncSerialTX(Elaboratable):
 
 
 class AsyncSerial(Elaboratable):
-	'''Asynchronous serial transceiver.
+	'''
+	Asynchronous serial transceiver.
 
 	Parameters
 	----------
@@ -273,7 +280,9 @@ class AsyncSerial(Elaboratable):
 		See :class:`AsyncSerialRX`.
 	tx : :class:`AsyncSerialTX`
 		See :class:`AsyncSerialTX`.
+
 	'''
+
 	def __init__(
 		self, *, divisor: int, divisor_bits: Optional[int] = None, **kwargs
 	) -> None:

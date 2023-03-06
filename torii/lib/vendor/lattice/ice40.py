@@ -7,7 +7,8 @@ __all__ = (
 )
 
 class ice40Warmboot(Elaboratable):
-	''' Lattice ice40 Warmboot block
+	'''
+	Lattice ice40 Warmboot block
 
 	Attributes
 	----------

@@ -11,10 +11,13 @@ __all__ = (
 )
 
 class _RangeMap:
-	'''Range map.
+	'''
+	Range map.
 
 	A range map is a mapping from non-overlapping ranges to arbitrary values.
+
 	'''
+
 	def __init__(self) -> None:
 		self._keys   = []
 		self._values = dict()
@@ -52,7 +55,8 @@ class _RangeMap:
 
 
 class ResourceInfo:
-	'''Resource metadata.
+	'''
+	Resource metadata.
 
 	A wrapper class for resource objects, with their assigned name and address range.
 
@@ -72,7 +76,9 @@ class ResourceInfo:
 		Amount of data bits accessed at each address. It may be equal to the data width of the
 		memory map from which this :class:`ResourceInfo` was obtained, or less if the resource
 		is located behind a window that uses sparse addressing.
+
 	'''
+
 	def __init__(
 		self, resource: object, name: Union[str, Iterable[str]], start: int, end: int, width: int
 	) -> None:
@@ -115,7 +121,8 @@ class ResourceInfo:
 
 
 class MemoryMap:
-	'''Memory map.
+	'''
+	Memory map.
 
 	A memory map is a hierarchical description of an address space, describing the structure of
 	address decoders of peripherals as well as bus bridges. It is built by adding resources
@@ -143,7 +150,9 @@ class MemoryMap:
 		``2 ** alignment``.
 	name : str
 		Name of the address range. Optional.
+
 	'''
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
@@ -199,11 +208,14 @@ class MemoryMap:
 		return self._name
 
 	def freeze(self) -> None:
-		'''Freeze the memory map.
+		'''
+		Freeze the memory map.
 
 		Once the memory map is frozen, its visible state becomes immutable. Resources and windows
 		cannot be added anymore, and its address width cannot be extended further.
+
 		'''
+
 		self._frozen = True
 
 	@staticmethod
@@ -213,7 +225,8 @@ class MemoryMap:
 		return value
 
 	def align_to(self, alignment: int) -> int:
-		'''Align the implicit next address.
+		'''
+		Align the implicit next address.
 
 		Arguments
 		---------
@@ -224,7 +237,9 @@ class MemoryMap:
 		Return value
 		------------
 		Implicit next address.
+
 		'''
+
 		if not isinstance(alignment, int) or alignment < 0:
 			raise ValueError(f'Alignment must be a non-negative integer, not {alignment!r}')
 		self._next_addr = self._align_up(self._next_addr, max(alignment, self.alignment))
@@ -273,7 +288,8 @@ class MemoryMap:
 		self, resource: object, *, name: str, size: int, addr: Optional[int] = None,
 		alignment: Optional[int] = None, extend: bool = False
 	) -> tuple[int, int]:
-		'''Add a resource.
+		'''
+		Add a resource.
 
 		A resource is any device on the bus that is a destination for bus transactions, e.g.
 		a register or a memory block.
@@ -311,7 +327,9 @@ class MemoryMap:
 		windows that have already been added, or would be out of bounds;
 		- the resource has already been added to this memory map;
 		- the name of the resource is already present in the namespace of this memory map;
+
 		'''
+
 		if self._frozen:
 			raise ValueError(f'Memory map has been frozen. Cannot add resource {resource!r}')
 
@@ -339,7 +357,8 @@ class MemoryMap:
 		return (addr_range.start, addr_range.stop)
 
 	def resources(self):
-		'''Iterate local resources and their address ranges.
+		'''
+		Iterate local resources and their address ranges.
 
 		Non-recursively iterate resources in ascending order of their address.
 
@@ -347,7 +366,9 @@ class MemoryMap:
 		------------
 		A tuple ``resource, name, (start, end)`` describing the address range assigned to the
 		resource.
+
 		'''
+
 		for resource, resource_name, resource_range in self._resources.values():
 			yield (resource, resource_name, (resource_range.start, resource_range.stop))
 
@@ -355,7 +376,8 @@ class MemoryMap:
 		self, window: 'MemoryMap', *, addr: Optional[int] = None, sparse: Optional[int] = None,
 		extend: bool = False
 	) -> tuple[int, int, int]:
-		'''Add a window.
+		'''
+		Add a window.
 
 		A window is a device on a bus that provides access to a different bus, i.e. a bus bridge.
 		It performs address translation, such that the devices on a subordinate bus have different
@@ -408,7 +430,9 @@ class MemoryMap:
 		- the name of the added memory map is already present in the namespace of this memory map;
 		- the added memory map has no name, and the name of one of its subordinate resources or
 		windows is already present in the namespace of this memory map;
+
 		'''
+
 		if not isinstance(window, MemoryMap):
 			raise TypeError(f'Window must be a MemoryMap, not {window!r}')
 
@@ -475,7 +499,8 @@ class MemoryMap:
 		return addr_range.start, addr_range.stop, addr_range.step
 
 	def windows(self):
-		'''Iterate local windows and their address ranges.
+		'''
+		Iterate local windows and their address ranges.
 
 		Non-recursively iterate windows in ascending order of their address.
 
@@ -485,12 +510,15 @@ class MemoryMap:
 		the window. When bridging buses of unequal data width, ``ratio`` is the amount of
 		contiguous addresses on the narrower bus that are accessed for each transaction on
 		the wider bus. Otherwise, it is always 1.
+
 		'''
+
 		for window, window_range in self._windows.values():
 			yield (window, (window_range.start, window_range.stop, window_range.step))
 
 	def window_patterns(self) -> Generator[tuple[object, tuple[str, int]], None, None]:
-		'''Iterate local windows and patterns that match their address ranges.
+		'''
+		Iterate local windows and patterns that match their address ranges.
 
 		Non-recursively iterate windows in ascending order of their address.
 
@@ -502,7 +530,9 @@ class MemoryMap:
 		buses of unequal data width, ``ratio`` is the amount of contiguous addresses on
 		the narrower bus that are accessed for each transaction on the wider bus. Otherwise,
 		it is always 1.
+
 		'''
+
 		for window, window_range in self._windows.values():
 			const_bits = self.addr_width - window.addr_width
 			if const_bits > 0:
@@ -528,7 +558,8 @@ class MemoryMap:
 		return ResourceInfo(resource_info.resource, name, start, start + size, width)
 
 	def all_resources(self) -> Generator[ResourceInfo, None, None]:
-		'''Iterate all resources and their address ranges.
+		'''
+		Iterate all resources and their address ranges.
 
 		Recursively iterate all resources in ascending order of their address, performing address
 		translation for resources that are located behind a window.
@@ -536,7 +567,9 @@ class MemoryMap:
 		Yield values
 		------------
 		An instance of :class:`ResourceInfo` describing the resource and its address range.
+
 		'''
+
 		for addr_range, assignment in self._ranges.items():
 			if id(assignment) in self._resources:
 				_, resource_name, _ = self._resources[id(assignment)]
@@ -550,7 +583,8 @@ class MemoryMap:
 				assert False # :nocov:
 
 	def find_resource(self, resource: object) -> ResourceInfo:
-		'''Find address range corresponding to a resource.
+		'''
+		Find address range corresponding to a resource.
 
 		Recursively find the address range of a resource, performing address translation for
 		resources that are located behind a window.
@@ -567,7 +601,9 @@ class MemoryMap:
 		Exceptions
 		----------
 		Raises :exn:`KeyError` if the resource is not found.
+
 		'''
+
 		if id(resource) in self._resources:
 			_, resource_name, resource_range = self._resources[id(resource)]
 			return ResourceInfo(resource, resource_name, resource_range.start, resource_range.stop,
@@ -582,7 +618,8 @@ class MemoryMap:
 		raise KeyError(resource)
 
 	def decode_address(self, address: int) -> Optional[object]:
-		'''Decode an address to a resource.
+		'''
+		Decode an address to a resource.
 
 		Arguments
 		---------
@@ -592,7 +629,9 @@ class MemoryMap:
 		Return value
 		------------
 		A resource mapped to the provided address, or ``None`` if there is no such resource.
+
 		'''
+
 		assignment = self._ranges.get(address)
 		if assignment is None:
 			return

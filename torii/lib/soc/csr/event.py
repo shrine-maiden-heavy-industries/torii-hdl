@@ -12,7 +12,8 @@ __all__ = (
 
 
 class EventMonitor(Elaboratable):
-	'''Event monitor.
+	'''
+	Event monitor.
 
 	A monitor for subordinate event sources, with a CSR bus interface.
 
@@ -31,7 +32,9 @@ class EventMonitor(Elaboratable):
 		CSR address alignment. See :class:`..memory.MemoryMap`.
 	trigger : :class:`..event.Source.Trigger`
 		Trigger mode. See :class:`..event.Source`.
+
 	'''
+
 	def __init__(
 		self, *, data_width: int, alignment: int = 0, trigger: event.Source.Trigger = 'level'
 	) -> None:
@@ -48,10 +51,13 @@ class EventMonitor(Elaboratable):
 		self._frozen  = False
 
 	def freeze(self) -> None:
-		'''Freeze the event monitor.
+		'''
+		Freeze the event monitor.
 
 		Once the event monitor is frozen, subordinate sources cannot be added anymore.
+
 		'''
+
 		if self._frozen:
 			return
 		self._monitor = event.Monitor(self._map, trigger = self._trigger)
@@ -63,32 +69,41 @@ class EventMonitor(Elaboratable):
 
 	@property
 	def src(self) -> event.Source:
-		'''Event source.
+		'''
+		Event source.
 
 		Return value
 		------------
 		An :class:`..event.Source`. Its input line is asserted by the monitor when a subordinate
 		event is enabled and pending.
+
 		'''
+
 		self.freeze()
 		return self._monitor.src
 
 	@property
 	def bus(self) -> Interface:
-		'''CSR bus interface.
+		'''
+		CSR bus interface.
 
 		Return value
 		------------
 		A :class:`..csr.Interface` providing access to registers.
+
 		'''
+
 		self.freeze()
 		return self._mux.bus
 
 	def add(self, src: event.Source) -> None:
-		'''Add a subordinate event source.
+		'''
+		Add a subordinate event source.
 
 		See :meth:`..event.EventMap.add` for details.
+
 		'''
+
 		self._map.add(src)
 
 	def elaborate(self, platform) -> Module:

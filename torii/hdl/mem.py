@@ -17,7 +17,8 @@ __all__ = (
 
 
 class Memory:
-	'''A word addressable storage.
+	'''
+	A word addressable storage.
 
 	Parameters
 	----------
@@ -43,6 +44,7 @@ class Memory:
 	attrs : dict
 
 	'''
+
 	def __init__(
 		self, *, width: int, depth: int, init = None, name: Optional[str] = None,
 		attrs: Optional[OrderedDict] = None, simulate: bool = True
@@ -87,7 +89,8 @@ class Memory:
 			raise TypeError(f'Memory initialization value at address {addr:x}: {e}') from None
 
 	def read_port(self, *, src_loc_at = 0, **kwargs):
-		'''Get a read port.
+		'''
+		Get a read port.
 
 		See :class:`ReadPort` for details.
 
@@ -101,10 +104,12 @@ class Memory:
 		An instance of :class:`ReadPort` associated with this memory.
 
 		'''
+
 		return ReadPort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
 	def write_port(self, *, src_loc_at = 0, **kwargs):
-		'''Get a write port.
+		'''
+		Get a write port.
 
 		See :class:`WritePort` for details.
 
@@ -118,15 +123,17 @@ class Memory:
 		An instance of :class:`WritePort` associated with this memory.
 
 		'''
+
 		return WritePort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
 	def __getitem__(self, index):
-		'''Simulation only.'''
+		''' Simulation only. '''
 		return self._array[index]
 
 
 class ReadPort(Elaboratable):
-	'''A memory read port.
+	'''
+	A memory read port.
 
 	Parameters
 	----------
@@ -159,6 +166,7 @@ class ReadPort(Elaboratable):
 	:class:`ValueError` if the read port is simultaneously asynchronous and non-transparent.
 
 	'''
+
 	def __init__(self, memory, *, domain = 'sync', transparent = True, src_loc_at = 0):
 		if domain == 'comb' and not transparent:
 			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
@@ -233,7 +241,8 @@ class ReadPort(Elaboratable):
 
 
 class WritePort(Elaboratable):
-	'''A memory write port.
+	'''
+	A memory write port.
 
 	Parameters
 	----------
@@ -264,6 +273,7 @@ class WritePort(Elaboratable):
 	divide memory width evenly.
 
 	'''
+
 	def __init__(self, memory, *, domain = 'sync', granularity = None, src_loc_at = 0):
 		if granularity is None:
 			granularity = memory.width
@@ -319,13 +329,15 @@ class WritePort(Elaboratable):
 
 
 class DummyPort:
-	'''Dummy memory port.
+	'''
+	Dummy memory port.
 
 	This port can be used in place of either a read or a write port for testing and verification.
 	It does not include any read/write port specific attributes, i.e. none besides ``'domain'``;
 	any such attributes may be set manually.
 
 	'''
+
 	def __init__(self, *, data_width, addr_width, domain = 'sync', name = None, granularity = None):
 		self.domain = domain
 

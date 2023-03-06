@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-'''First-in first-out queues.'''
+''' First-in first-out queues. '''
 
 from typing       import Union
 

@@ -30,7 +30,7 @@ __all__ = (
 
 
 class DUID:
-	'''Deterministic Unique IDentifier.'''
+	''' Deterministic Unique IDentifier. '''
 	__next_uid = 0
 
 	def __init__(self) -> None:
@@ -39,13 +39,16 @@ class DUID:
 
 
 class ShapeCastable:
-	'''Interface of user-defined objects that can be cast to :class:`Shape` s.
+	'''
+	Interface of user-defined objects that can be cast to :class:`Shape`s.
 
 	An object deriving from :class:`ShapeCastable` is automatically converted to a :class:`Shape`
 	when it is used in a context where a :class:`Shape` is expected. Such objects can contain
 	a richer description of the shape than what is supported by the core Torii language, yet
 	still be transparently used with it.
+
 	'''
+
 	def __new__(cls, *args, **kwargs) -> 'ShapeCastable':
 		self = super().__new__(cls)
 		if not hasattr(self, 'as_shape'):
@@ -54,7 +57,8 @@ class ShapeCastable:
 
 
 class Shape:
-	'''Bit width and signedness of a value.
+	'''
+	Bit width and signedness of a value.
 
 	A ``Shape`` can be constructed using:
 
@@ -77,7 +81,9 @@ class Shape:
 		The number of bits in the representation, including the sign bit (if any).
 	signed : bool
 		If ``False``, the value is unsigned. If ``True``, the value is signed two's complement.
+
 	'''  # noqa: E101
+
 	def __init__(self, width: int = 1, signed: bool = False) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Width must be a non-negative integer, not {width!r}')
@@ -136,12 +142,12 @@ class Shape:
 
 
 def unsigned(width: int) -> Shape:
-	'''Shorthand for ``Shape(width, signed = False)``.'''
+	''' Shorthand for ``Shape(width, signed = False)``. '''
 	return Shape(width, signed = False)
 
 
 def signed(width: int) -> Shape:
-	'''Shorthand for ``Shape(width, signed = True)``.'''
+	''' Shorthand for ``Shape(width, signed = True)``. '''
 	return Shape(width, signed = True)
 
 
@@ -150,12 +156,15 @@ ValueCastType = Union['Value', int, Enum, 'ValueCastable']
 class Value(metaclass = ABCMeta):
 	@staticmethod
 	def cast(obj: ValueCastType ) -> 'Value':
-		'''Converts ``obj`` to an Torii value.
+		'''
+		Converts ``obj`` to an Torii value.
 
 		Booleans and integers are wrapped into a :class:`Const`. Enumerations whose members are
 		all integers are converted to a :class:`Const` with a shape that fits every member.
 		:class:`ValueCastable` objects are recursively cast to an Torii value.
+
 		'''
+
 		while True:
 			if isinstance(obj, Value):
 				return obj
@@ -306,77 +315,99 @@ class Value(metaclass = ABCMeta):
 			raise TypeError(f'Cannot index value with {key!r}')
 
 	def as_unsigned(self)  -> 'Operator':
-		'''Conversion to unsigned.
+		'''
+		Conversion to unsigned.
 
 		Returns
 		-------
 		Value, out
 			This ``Value`` reinterpreted as a unsigned integer.
+
 		'''
+
 		return Operator('u', [self])
 
 	def as_signed(self)  -> 'Operator':
-		'''Conversion to signed.
+		'''
+		Conversion to signed.
 
 		Returns
 		-------
 		Value, out
 			This ``Value`` reinterpreted as a signed integer.
+
 		'''
+
 		return Operator('s', [self])
 
 	def bool(self)  -> 'Operator':
-		'''Conversion to boolean.
+		'''
+		Conversion to boolean.
 
 		Returns
 		-------
 		Value, out
 			``1`` if any bits are set, ``0`` otherwise.
+
 		'''
+
 		return Operator('b', [self])
 
 	def any(self)  -> 'Operator':
-		'''Check if any bits are ``1``.
+		'''
+		Check if any bits are ``1``.
 
 		Returns
 		-------
 		Value, out
 			``1`` if any bits are set, ``0`` otherwise.
+
 		'''
+
 		return Operator('r|', [self])
 
 	def all(self)  -> 'Operator':
-		'''Check if all bits are ``1``.
+		'''
+		Check if all bits are ``1``.
 
 		Returns
 		-------
 		Value, out
 			``1`` if all bits are set, ``0`` otherwise.
+
 		'''
+
 		return Operator('r&', [self])
 
 	def xor(self)  -> 'Operator':
-		'''Compute pairwise exclusive-or of every bit.
+		'''
+		Compute pairwise exclusive-or of every bit.
 
 		Returns
 		-------
 		Value, out
 			``1`` if an odd number of bits are set, ``0`` if an even number of bits are set.
+
 		'''
+
 		return Operator('r^', [self])
 
 	def implies(premise, conclusion: ValueCastType)  -> 'Operator':
-		'''Implication.
+		'''
+		Implication.
 
 		Returns
 		-------
 		Value, out
 			``0`` if ``premise`` is true and ``conclusion`` is not, ``1`` otherwise.
+
 		'''
+
 		return ~premise | conclusion
 
 	def bit_select(self, offset: Union['Value', int] , width: int) -> 'Part':
-		'''Part-select with bit granularity.
+		'''
+		Part-select with bit granularity.
 
 		Selects a constant width but variable offset part of a ``Value``, such that successive
 		parts overlap by all but 1 bit.
@@ -392,14 +423,17 @@ class Value(metaclass = ABCMeta):
 		-------
 		Part, out
 			Selected part of the ``Value``
+
 		'''
+
 		offset = Value.cast(offset)
 		if type(offset) is Const and isinstance(width, int):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
 	def word_select(self, offset: Union['Value', int] , width: int) -> 'Part':
-		'''Part-select with word granularity.
+		'''
+		Part-select with word granularity.
 
 		Selects a constant width but variable offset part of a ``Value``, such that successive
 		parts do not overlap.
@@ -415,14 +449,17 @@ class Value(metaclass = ABCMeta):
 		-------
 		Part, out
 			Selected part of the ``Value``
+
 		'''
+
 		offset = Value.cast(offset)
 		if type(offset) is Const and isinstance(width, int):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
 	def matches(self, *patterns: tuple[Union[int, str, Enum]]) -> 'Value':
-		'''Pattern matching.
+		'''
+		Pattern matching.
 
 		Matches against a set of patterns, which may be integers or bit strings, recognizing
 		the same grammar as ``Case()``.
@@ -436,7 +473,9 @@ class Value(metaclass = ABCMeta):
 		-------
 		Value, out
 			``1`` if any pattern matches the value, ``0`` otherwise.
+
 		'''
+
 		matches = []
 		for pattern in patterns:
 			if not isinstance(pattern, (int, str, Enum)):
@@ -479,7 +518,8 @@ class Value(metaclass = ABCMeta):
 			return Cat(*matches).any()
 
 	def shift_left(self, amount: int) -> 'Value':
-		'''Shift left by constant amount.
+		'''
+		Shift left by constant amount.
 
 		Parameters
 		----------
@@ -490,7 +530,9 @@ class Value(metaclass = ABCMeta):
 		-------
 		Value, out
 			If the amount is positive, the input shifted left. Otherwise, the input shifted right.
+
 		'''
+
 		if not isinstance(amount, int):
 			raise TypeError(f'Shift amount must be an integer, not {amount!r}')
 		if amount < 0:
@@ -501,7 +543,8 @@ class Value(metaclass = ABCMeta):
 			return Cat(Const(0, amount), self) # unsigned
 
 	def shift_right(self, amount: int) -> 'Value':
-		'''Shift right by constant amount.
+		'''
+		Shift right by constant amount.
 
 		Parameters
 		----------
@@ -512,7 +555,9 @@ class Value(metaclass = ABCMeta):
 		-------
 		Value, out
 			If the amount is positive, the input shifted right. Otherwise, the input shifted left.
+
 		'''
+
 		if not isinstance(amount, int):
 			raise TypeError(f'Shift amount must be an integer, not {amount!r}')
 		if amount < 0:
@@ -523,7 +568,8 @@ class Value(metaclass = ABCMeta):
 			return self[amount:] # unsigned
 
 	def rotate_left(self, amount: int) -> 'Value':
-		'''Rotate left by constant amount.
+		'''
+		Rotate left by constant amount.
 
 		Parameters
 		----------
@@ -534,14 +580,17 @@ class Value(metaclass = ABCMeta):
 		-------
 		Value, out
 			If the amount is positive, the input rotated left. Otherwise, the input rotated right.
+
 		'''
+
 		if not isinstance(amount, int):
 			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
 		amount %= len(self)
 		return Cat(self[-amount:], self[:-amount]) # meow :3
 
 	def rotate_right(self, amount: int) -> 'Value':
-		'''Rotate right by constant amount.
+		'''
+		Rotate right by constant amount.
 
 		Parameters
 		----------
@@ -552,14 +601,17 @@ class Value(metaclass = ABCMeta):
 		-------
 		Value, out
 			If the amount is positive, the input rotated right. Otherwise, the input rotated right.
+
 		'''
+
 		if not isinstance(amount, int):
 			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
 		amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
 	def eq(self, value: 'Value') -> 'Assign':
-		'''Assignment.
+		'''
+		Assignment.
 
 		Parameters
 		----------
@@ -570,12 +622,15 @@ class Value(metaclass = ABCMeta):
 		-------
 		Assign
 			Assignment statement that can be used in combinatorial or synchronous context.
+
 		'''
+
 		return Assign(self, value, src_loc_at = 1)
 
 	@abstractmethod
 	def shape(self) -> Shape:
-		'''Bit width and signedness of a value.
+		'''
+		Bit width and signedness of a value.
 
 		Returns
 		-------
@@ -588,7 +643,9 @@ class Value(metaclass = ABCMeta):
 		Shape(width = 8, signed = False)
 		>>> Const(0xaa).shape()
 		Shape(width = 8, signed = False)
+
 		'''
+
 		raise NotImplementedError('.shape has not been implemented')
 
 	def _lhs_signals(self):
@@ -606,7 +663,8 @@ class Value(metaclass = ABCMeta):
 
 @final
 class Const(Value):
-	'''A constant, literal integer value.
+	'''
+	A constant, literal integer value.
 
 	Parameters
 	----------
@@ -620,7 +678,9 @@ class Const(Value):
 	----------
 	width : int
 	signed : bool
+
 	'''
+
 	src_loc = None
 
 	@staticmethod
@@ -764,7 +824,8 @@ class Operator(Value):
 
 
 def Mux(sel: Value, val1: Value, val0: Value) -> Operator:
-	'''Choose between two values.
+	'''
+	Choose between two values.
 
 	Parameters
 	----------
@@ -778,7 +839,9 @@ def Mux(sel: Value, val1: Value, val0: Value) -> Operator:
 	-------
 	Value, out
 		Output ``Value``. If ``sel`` is asserted, the Mux returns ``val1``, else ``val0``.
+
 	'''
+
 	return Operator('m', [sel, val1, val0])
 
 
@@ -854,7 +917,8 @@ class Part(Value):
 
 @final
 class Cat(Value):
-	'''Concatenate values.
+	'''
+	Concatenate values.
 
 	Form a compound ``Value`` from several smaller ones by concatenation.
 	The first argument occupies the lower bits of the result.
@@ -876,7 +940,9 @@ class Cat(Value):
 	-------
 	Value, inout
 		Resulting ``Value`` obtained by concatenation.
+
 	'''
+
 	def __init__(self, *args: Iterable[Value], src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts = []
@@ -911,7 +977,8 @@ class Cat(Value):
 
 @final
 class Repl(Value):
-	'''Replicate a value
+	'''
+	Replicate a value
 
 	An input value is replicated (repeated) several times
 	to be used on the RHS of assignments::
@@ -929,7 +996,9 @@ class Repl(Value):
 	-------
 	Repl, out
 		Replicated value.
+
 	'''
+
 	def __init__(self, value: Value, count: int, *, src_loc_at: int = 0) -> None:
 		if not isinstance(count, int) or count < 0:
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
@@ -956,7 +1025,8 @@ class Repl(Value):
 
 # @final
 class Signal(Value, DUID):
-	'''A varying integer value.
+	'''
+	A varying integer value.
 
 	Parameters
 	----------
@@ -994,6 +1064,7 @@ class Signal(Value, DUID):
 	reset_less : bool
 	attrs : dict
 	decoder : function
+
 	'''
 
 	def __init__(
@@ -1050,13 +1121,16 @@ class Signal(Value, DUID):
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
 	def like(other, *, name = None, name_suffix = None, src_loc_at = 0, **kwargs):
-		'''Create Signal based on another.
+		'''
+		Create Signal based on another.
 
 		Parameters
 		----------
 		other : Value
 			Object to base this Signal on.
+
 		'''
+
 		if name is not None:
 			new_name = str(name)
 		elif name_suffix is not None:
@@ -1087,7 +1161,8 @@ class Signal(Value, DUID):
 
 @final
 class ClockSignal(Value):
-	'''Clock signal for a clock domain.
+	'''
+	Clock signal for a clock domain.
 
 	Any ``ClockSignal`` is equivalent to ``cd.clk`` for a clock domain with the corresponding name.
 	All of these signals ultimately refer to the same signal, but they can be manipulated
@@ -1097,7 +1172,9 @@ class ClockSignal(Value):
 	----------
 	domain : str
 		Clock domain to obtain a clock signal for. Defaults to ``'sync'``.
+
 	'''
+
 	def __init__(self, domain = 'sync', *, src_loc_at = 0):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
@@ -1121,7 +1198,8 @@ class ClockSignal(Value):
 
 @final
 class ResetSignal(Value):
-	'''Reset signal for a clock domain.
+	'''
+	Reset signal for a clock domain.
 
 	Any ``ResetSignal`` is equivalent to ``cd.rst`` for a clock domain with the corresponding name.
 	All of these signals ultimately refer to the same signal, but they can be manipulated
@@ -1133,7 +1211,9 @@ class ResetSignal(Value):
 		Clock domain to obtain a reset signal for. Defaults to ``'sync'``.
 	allow_reset_less : bool
 		If the clock domain is reset-less, act as a constant ``0`` instead of reporting an error.
+
 	'''
+
 	def __init__(self, domain: str = 'sync', allow_reset_less: bool = False, *, src_loc_at: int = 0):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
@@ -1157,7 +1237,8 @@ class ResetSignal(Value):
 
 
 class Array(MutableSequence):
-	'''Addressable multiplexer.
+	'''
+	Addressable multiplexer.
 
 	An array is similar to a ``list`` that can also be indexed by ``Value``s;
 	indexing by an integer or a slice works the same as for Python lists,
@@ -1205,7 +1286,9 @@ class Array(MutableSequence):
 			buses[sel].r_en.eq(master.r_en),
 			master.r_data.eq(buses[sel].r_data),
 		]
+
 	'''
+
 	def __init__(self, iterable = ()):
 		self._inner    = list(iterable)
 		self._proxy_at = None
@@ -1295,7 +1378,8 @@ class ArrayProxy(Value):
 		return f'(proxy (array [{", ".join(map(repr, self.elems))}]) {self.index!r})'
 
 class ValueCastable:
-	'''Interface of user-defined objects that can be cast to :class:`Value` s.
+	'''
+	Interface of user-defined objects that can be cast to :class:`Value` s.
 
 	An object deriving from :class:`ValueCastable`` is automatically converted to a :class:`Value`
 	when it is used in a context where a :class:`Value`` is expected. Such objects can implement
@@ -1310,7 +1394,9 @@ class ValueCastable:
 	calls to :meth:`as_value` return the same :class:`Value` representation. If the class deriving
 	from :class:`ValueCastable` is mutable, it is up to the user to ensure that it is not mutated
 	in a way that changes its representation after the first call to :meth:`as_value`.
+
 	'''
+
 	def __new__(cls, *args, **kwargs):
 		self = super().__new__(cls)
 		if not hasattr(self, 'as_value'):
@@ -1323,7 +1409,8 @@ class ValueCastable:
 
 	@staticmethod
 	def lowermethod(func):
-		'''Decorator to memoize lowering methods.
+		'''
+		Decorator to memoize lowering methods.
 
 		Ensures the decorated method is called only once, with subsequent method calls returning
 		the object returned by the first first method call.
@@ -1331,7 +1418,9 @@ class ValueCastable:
 		This decorator is required to decorate the ``as_value`` method of ``ValueCastable``
 		subclasses. This is to ensure that Torii's view of representation of all values stays
 		internally consistent.
+
 		'''
+
 		@functools.wraps(func)
 		def wrapper_memoized(self, *args, **kwargs):
 			# Use `in self.__dict__` instead of `hasattr` to avoid interfering with custom
@@ -1345,12 +1434,15 @@ class ValueCastable:
 
 @final
 class Sample(Value):
-	'''Value from the past.
+	'''
+	Value from the past.
 
 	A ``Sample`` of an expression is equal to the value of the expression ``clocks`` clock edges
 	of the ``domain`` clock back. If that moment is before the beginning of time, it is equal
 	to the value of the expression calculated as if each signal had its reset value.
+
 	'''
+
 	def __init__(self, expr, clocks, domain, *, src_loc_at = 0):
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.value  = Value.cast(expr)
@@ -1391,10 +1483,13 @@ def Fell(expr, clocks = 0, domain = None):
 
 @final
 class Initial(Value):
-	'''Start indicator, for model checking.
+	'''
+	Start indicator, for model checking.
 
 	An ``Initial`` signal is ``1`` at the first cycle of model checking, and ``0`` at any other.
+
 	'''
+
 	def __init__(self, *, src_loc_at = 0):
 		super().__init__(src_loc_at = src_loc_at)
 

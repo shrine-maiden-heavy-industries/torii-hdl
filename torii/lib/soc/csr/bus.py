@@ -15,11 +15,14 @@ __all__ = (
 
 class Element(Record):
 	class Access(Enum):
-		'''Register access mode.
+		'''
+		Register access mode.
 
 		Coarse access mode for the entire register. Individual fields can have more restrictive
 		access mode, e.g. R/O fields can be a part of an R/W register.
+
 		'''
+
 		R  = 'r'
 		W  = 'w'
 		RW = 'rw'
@@ -30,7 +33,8 @@ class Element(Record):
 		def writable(self) -> bool:
 			return self == self.W or self == self.RW
 
-	'''Peripheral-side CSR interface.
+	'''
+	Peripheral-side CSR interface.
 
 	A low-level interface to a single atomically readable and writable register in a peripheral.
 	This interface supports any register width and semantics, provided that both reads and writes
@@ -57,7 +61,9 @@ class Element(Record):
 	w_stb : Signal()
 		Write strobe. Registers should update their value or perform the write side effect when
 		this strobe is asserted.
+
 	'''
+
 	def __init__(
 		self, width: int, access: Access, *, name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
@@ -83,7 +89,8 @@ class Element(Record):
 
 
 class Interface(Record):
-	'''CPU-side CSR interface.
+	'''
+	CPU-side CSR interface.
 
 	A low-level interface to a set of atomically readable and writable peripheral CSR registers.
 
@@ -130,6 +137,7 @@ class Interface(Record):
 		to the register and causes write side effects to be performed (if any). If ``addr`` points
 		to any chunk of a register, latches ``w_data`` to the captured value. Otherwise, does
 		nothing.
+
 	'''
 
 	def __init__(self, *, addr_width: int, data_width: int, name: Optional[str] = None) -> None:
@@ -174,7 +182,8 @@ class Interface(Record):
 
 
 class Multiplexer(Elaboratable):
-	'''CSR register multiplexer.
+	'''
+	CSR register multiplexer.
 
 	An address-based multiplexer for CSR registers implementing atomic updates.
 
@@ -223,7 +232,9 @@ class Multiplexer(Elaboratable):
 	----------
 	bus : :class:`Interface`
 		CSR bus providing access to registers.
+
 	''' # noqa: E101
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
@@ -246,20 +257,26 @@ class Multiplexer(Elaboratable):
 		return self._bus
 
 	def align_to(self, alignment: int) -> int:
-		'''Align the implicit address of the next register.
+		'''
+		Align the implicit address of the next register.
 
 		See :meth:`MemoryMap.align_to` for details.
+
 		'''
+
 		return self._map.align_to(alignment)
 
 	def add(
 		self, element: Element, *, addr: Optional[int] = None, alignment: Optional[int] = None,
 		extend: bool = False
 	) -> tuple[int, int]:
-		'''Add a register.
+		'''
+		Add a register.
 
 		See :meth:`MemoryMap.add_resource` for details.
+
 		'''
+
 		if not isinstance(element, Element):
 			raise TypeError(f'Element must be an instance of csr.Element, not {element!r}')
 
@@ -320,7 +337,8 @@ class Multiplexer(Elaboratable):
 
 
 class Decoder(Elaboratable):
-	'''CSR bus decoder.
+	'''
+	CSR bus decoder.
 
 	An address decoder for subordinate CSR buses.
 
@@ -351,7 +369,9 @@ class Decoder(Elaboratable):
 	----------
 	bus : :class:`Interface`
 		CSR bus providing access to subordinate buses.
+
 	'''
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
 	) -> None:
@@ -375,19 +395,25 @@ class Decoder(Elaboratable):
 		return self._bus
 
 	def align_to(self, alignment: int) -> int:
-		'''Align the implicit address of the next window.
+		'''
+		Align the implicit address of the next window.
 
 		See :meth:`MemoryMap.align_to` for details.
+
 		'''
+
 		return self._map.align_to(alignment)
 
 	def add(
 		self, sub_bus: Interface, *, addr: Optional[int] = None, extend: bool = False
 	) -> tuple[int, int, int]:
-		'''Add a window to a subordinate bus.
+		'''
+		Add a window to a subordinate bus.
 
 		See :meth:`MemoryMap.add_resource` for details.
+
 		'''
+
 		if not isinstance(sub_bus, Interface):
 			raise TypeError(f'Subordinate bus must be an instance of csr.Interface, not {sub_bus!r}')
 		if sub_bus.data_width != self._map.data_width:

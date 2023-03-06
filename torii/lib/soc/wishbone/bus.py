@@ -18,7 +18,7 @@ __all__ = (
 
 
 class CycleType(Enum):
-	'''Wishbone Registered Feedback cycle type.'''
+	''' Wishbone Registered Feedback cycle type. '''
 	CLASSIC      = 0b000
 	CONST_BURST  = 0b001
 	INCR_BURST   = 0b010
@@ -26,7 +26,7 @@ class CycleType(Enum):
 
 
 class BurstTypeExt(Enum):
-	'''Wishbone Registered Feedback burst type extension.'''
+	''' Wishbone Registered Feedback burst type extension. '''
 	LINEAR  = 0b00
 	WRAP_4  = 0b01
 	WRAP_8  = 0b10
@@ -50,7 +50,8 @@ def _check_interface(
 		raise ValueError(f'Optional signal(s) {", ".join(map(repr, unknown))} are not supported')
 
 class Interface(Record):
-	'''Wishbone interface.
+	'''
+	Wishbone interface.
 
 	See the `Wishbone specification <https://opencores.org/howto/wishbone>`_ for description
 	of the Wishbone signals. The ``RST_I`` and ``CLK_I`` signals are provided as a part of
@@ -111,7 +112,9 @@ class Interface(Record):
 		Optional. Corresponds to Wishbone signal ``CTI_O`` (initiator) or ``CTI_I`` (target).
 	bte : Signal()
 		Optional. Corresponds to Wishbone signal ``BTE_O`` (initiator) or ``BTE_I`` (target).
+
 	'''
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, granularity: int = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
@@ -180,7 +183,8 @@ class Interface(Record):
 
 
 class Decoder(Elaboratable):
-	'''Wishbone bus decoder.
+	'''
+	Wishbone bus decoder.
 
 	An address decoder for subordinate Wishbone buses.
 
@@ -203,7 +207,9 @@ class Decoder(Elaboratable):
 	----------
 	bus : :class:`Interface`
 		CSR bus providing access to subordinate buses.
+
 	'''
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
@@ -242,17 +248,21 @@ class Decoder(Elaboratable):
 		return self._bus
 
 	def align_to(self, alignment: int) -> int:
-		'''Align the implicit address of the next window.
+		'''
+		Align the implicit address of the next window.
 
 		See :meth:`MemoryMap.align_to` for details.
+
 		'''
+
 		return self._map.align_to(alignment)
 
 	def add(
 		self, sub_bus: Interface, *, addr: Optional[int] = None, sparse: bool = False,
 		extend: bool = False
 	) -> tuple[int, int, int]:
-		'''Add a window to a subordinate bus.
+		'''
+		Add a window to a subordinate bus.
 
 		The decoder can perform either sparse or dense address translation. If dense address
 		translation is used (the default), the subordinate bus must have the same data width as
@@ -262,7 +272,9 @@ class Decoder(Elaboratable):
 		must be equal to or less than the granularity of the decoder.
 
 		See :meth:`MemoryMap.add_resource` for details.
+
 		'''
+
 		if not isinstance(sub_bus, Interface):
 			raise TypeError(f'Subordinate bus must be an instance of wishbone.Interface, not {sub_bus!r}')
 		if sub_bus.granularity > self.granularity:
@@ -341,7 +353,8 @@ class Decoder(Elaboratable):
 
 
 class Arbiter(Elaboratable):
-	'''Wishbone bus arbiter.
+	'''
+	Wishbone bus arbiter.
 
 	A round-robin arbiter for initiators accessing a shared Wishbone bus.
 
@@ -360,7 +373,9 @@ class Arbiter(Elaboratable):
 	----------
 	bus : :class:`Interface`
 		Shared Wishbone bus.
+
 	'''
+
 	def __init__(
 		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset()
@@ -374,12 +389,15 @@ class Arbiter(Elaboratable):
 		self._intrs = []
 
 	def add(self, intr_bus: Interface) -> None:
-		'''Add an initiator bus to the arbiter.
+		'''
+		Add an initiator bus to the arbiter.
 
 		The initiator bus must have the same address width and data width as the arbiter. The
 		granularity of the initiator bus must be greater than or equal to the granularity of
 		the arbiter.
+
 		'''
+
 		if not isinstance(intr_bus, Interface):
 			raise TypeError(f'Initiator bus must be an instance of wishbone.Interface, not {intr_bus!r}')
 		if intr_bus.addr_width != self.bus.addr_width:

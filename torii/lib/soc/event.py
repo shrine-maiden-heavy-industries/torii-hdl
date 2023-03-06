@@ -16,12 +16,13 @@ __all__ = (
 
 class Source(Record):
 	class Trigger(Enum):
-		'''Event trigger mode.'''
+		''' Event trigger mode. '''
 		LEVEL = 'level'
 		RISE  = 'rise'
 		FALL  = 'fall'
 
-	'''Event source interface.
+	'''
+	Event source interface.
 
 	Parameters
 	----------
@@ -36,7 +37,9 @@ class Source(Record):
 		Input line. Sampled in order to detect an event.
 	trg : Signal()
 		Event trigger. Asserted when an event occurs, according to the trigger mode.
+
 	'''
+
 	def __init__(
 		self, *, trigger: Trigger = 'level', name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
@@ -53,7 +56,8 @@ class Source(Record):
 
 	@property
 	def event_map(self) -> 'EventMap':
-		'''Event map.
+		'''
+		Event map.
 
 		Return value
 		------------
@@ -62,7 +66,9 @@ class Source(Record):
 		Exceptions
 		----------
 		Raises :exn:`NotImplementedError` if the source does not have an event map.
+
 		'''
+
 		if self._map is None:
 			raise NotImplementedError(f'Event source {self!r} does not have an event map')
 		return self._map
@@ -79,11 +85,13 @@ class Source(Record):
 
 
 class EventMap:
-	'''Event map.
+	'''
+	Event map.
 
 	An event map is a description of a set of events. It is built by adding event sources
 	and can be queried later to determine their index. Event indexing is done implicitly by
 	increment, starting at 0.
+
 	'''
 	def __init__(self) -> None:
 		self._sources = OrderedDict()
@@ -91,23 +99,29 @@ class EventMap:
 
 	@property
 	def size(self) -> int:
-		'''Size of the event map.
+		'''
+		Size of the event map.
 
 		Return value
 		------------
 		The number of event sources in the map.
+
 		'''
 		return len(self._sources)
 
 	def freeze(self) -> None:
-		'''Freeze the event map.
+		'''
+		Freeze the event map.
 
 		Once the event map is frozen, sources cannot be added anymore.
+
 		'''
+
 		self._frozen = True
 
 	def add(self, src: Source) -> None:
-		'''Add an event source.
+		'''
+		Add an event source.
 
 		Arguments
 		---------
@@ -117,7 +131,9 @@ class EventMap:
 		Exceptions
 		----------
 		Raises :exn:`ValueError` if the event map is frozen.
+
 		'''
+
 		if self._frozen:
 			raise ValueError('Event map has been frozen. Cannot add source.')
 		if not isinstance(src, Source):
@@ -126,7 +142,8 @@ class EventMap:
 			self._sources[src] = self.size
 
 	def index(self, src: Source) -> int:
-		'''Get the index corresponding to an event source.
+		'''
+		Get the index corresponding to an event source.
 
 		Arguments
 		---------
@@ -140,24 +157,30 @@ class EventMap:
 		Exceptions
 		----------
 		Raises :exn:`KeyError` if the source is not found.
+
 		'''
+
 		if not isinstance(src, Source):
 			raise TypeError(f'Event source must be an instance of event.Source, not {src!r}')
 		return self._sources[src]
 
 	def sources(self) -> Generator[tuple[Source, int], None, None]:
-		'''Iterate event sources.
+		'''
+		Iterate event sources.
 
 		Yield values
 		------------
 		A tuple ``src, index`` corresponding to an event source and its index.
+
 		'''
+
 		for src, index in self._sources.items():
 			yield (src, index)
 
 
 class Monitor(Elaboratable):
-	'''Event monitor.
+	'''
+	Event monitor.
 
 	A monitor for subordinate event sources.
 
@@ -178,7 +201,9 @@ class Monitor(Elaboratable):
 		Pending events.
 	clear : Signal(event_map.size), bit mask, in
 		Clear selected pending events.
+
 	'''
+
 	def __init__(self, event_map: EventMap, *, trigger: Source.Trigger = 'level') -> None:
 		self.src = Source(trigger = trigger)
 		self.src.event_map = event_map

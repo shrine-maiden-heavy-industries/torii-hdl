@@ -9,7 +9,8 @@ __all__ = (
 
 
 class MockRecord(Record):
-	'''Mock Torii Record
+	'''
+	Mock Torii Record
 
 	This class is a modified version of :py:class:`Record`
 	that dynamically allocates a record for every field
@@ -28,7 +29,8 @@ class MockRecord(Record):
 	'''
 
 	def _insert_field(self, item: str) -> None:
-		'''Construct mocked Record
+		'''
+		Construct mocked Record
 
 		When the call to ``__getitem__`` runs into a field that
 		we have not mocked before, and the field is a str, then
@@ -54,7 +56,8 @@ class MockRecord(Record):
 		self.fields = {}
 
 	def __getitem__(self, item: str) -> Record:
-		'''Return record field
+		'''
+		Return record field
 
 		If the field doesn't exist, we create it with a call
 		to ``_insert_field`` then return the generated field.
@@ -76,7 +79,8 @@ class MockRecord(Record):
 			return super().__getitem__(item)
 
 class MockPlatform:
-	'''Mock Torii Platform
+	'''
+	Mock Torii Platform
 
 	This is a mock platform that returns a :py:class:`MockRecord`
 	whenever any call to ``request`` is made, regardless of the
@@ -85,7 +89,8 @@ class MockPlatform:
 	'''
 
 	def request(self, name: str, number: int = 0) -> MockRecord:
-		'''Request a resource from the platform
+		'''
+		Request a resource from the platform
 
 		This call returns a :py:class:`MockRecord` regardless
 		of any of the parameters passed in.

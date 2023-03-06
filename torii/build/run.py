@@ -21,12 +21,14 @@ __all__ = (
 
 class BuildPlan:
 	def __init__(self, script: str) -> None:
-		'''A build plan.
+		'''
+		A build plan.
 
 		Parameters
 		----------
 		script : str
 			The base name (without extension) of the script that will be executed.
+
 		'''
 		self.script = script
 		self.files  = OrderedDict()

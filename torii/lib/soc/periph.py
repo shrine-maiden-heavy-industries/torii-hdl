@@ -22,13 +22,16 @@ class ConstantValue:
 
 
 class ConstantBool(ConstantValue):
-	'''Boolean constant.
+	'''
+	Boolean constant.
 
 	Parameters
 	----------
 	value : bool
 		Constant value.
+
 	'''
+
 	def __init__(self, value: bool) -> None:
 		if not isinstance(value, bool):
 			raise TypeError(f'Value must be a bool, not {value!r}')
@@ -43,7 +46,8 @@ class ConstantBool(ConstantValue):
 
 
 class ConstantInt(ConstantValue):
-	'''Integer constant.
+	'''
+	Integer constant.
 
 	Parameters
 	----------
@@ -53,7 +57,9 @@ class ConstantInt(ConstantValue):
 		Width in bits. Optional. ``bits_for(value)`` by default.
 	signed : bool
 		Signedness. Optional. ``value < 0`` by default.
+
 	'''
+
 	def __init__(
 		self, value: int, *, width: Optional[int] = None, signed: Optional[bool] = None
 	) -> None:
@@ -92,7 +98,8 @@ class ConstantInt(ConstantValue):
 
 
 class ConstantMap(Mapping):
-	'''Named constant map.
+	'''
+	Named constant map.
 
 	A read-only container for named constants. Keys are iterated in insertion order.
 
@@ -105,7 +112,9 @@ class ConstantMap(Mapping):
 	--------
 	>>> ConstantMap(RX_FIFO_DEPTH = 16)
 	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])
+
 	'''
+
 	def __init__(self, **constants: dict[str, ConstantValue]) -> None:
 		self._storage = OrderedDict()
 		for key, value in constants.items():
@@ -131,7 +140,8 @@ class ConstantMap(Mapping):
 
 
 class PeripheralInfo:
-	'''Peripheral metadata.
+	'''
+	Peripheral metadata.
 
 	A unified description of the local resources of a peripheral. It may be queried in order to
 	recover its memory windows, CSR registers, event sources and configuration constants.
@@ -144,7 +154,9 @@ class PeripheralInfo:
 		IRQ line of the peripheral. Optional.
 	constant_map : :class:`ConstantMap`
 		Constant map of the peripheral. Optional.
+
 	'''
+
 	def __init__(
 		self, *, memory_map: MemoryMap, irq: Optional[event.Source] = None,
 		constant_map: Optional[ConstantMap] = None
@@ -166,17 +178,21 @@ class PeripheralInfo:
 
 	@property
 	def memory_map(self) -> MemoryMap:
-		'''Memory map.
+		'''
+		Memory map.
 
 		Return value
 		------------
 		A :class:`MemoryMap` describing the local address space of the peripheral.
+
 		'''
+
 		return self._memory_map
 
 	@property
 	def irq(self) -> event.Source:
-		'''IRQ line.
+		'''
+		IRQ line.
 
 		Return value
 		------------
@@ -186,17 +202,22 @@ class PeripheralInfo:
 		Exceptions
 		----------
 		Raises :exn:`NotImplementedError` if the peripheral info does not have an IRQ line.
+
 		'''
+
 		if self._irq is None:
 			raise NotImplementedError('Peripheral info does not have an IRQ line')
 		return self._irq
 
 	@property
 	def constant_map(self) -> ConstantMap:
-		'''Constant map.
+		'''
+		Constant map.
 
 		Return value
 		------------
 		A :class:`ConstantMap` containing configuration constants of the peripheral.
+
 		'''
+
 		return self._constant_map

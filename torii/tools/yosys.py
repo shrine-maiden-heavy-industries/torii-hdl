@@ -27,20 +27,23 @@ class YosysBinary:
 
 	@classmethod
 	def available(cls) -> bool:
-		'''Check for Yosys availability.
+		'''
+		Check for Yosys availability.
 
 		Returns
 		-------
 		available : bool
 			``True`` if Yosys is installed, ``False`` otherwise. Installed binary may still not
 			be runnable, or might be too old to be useful.
+
 		'''
 
 		return has_tool(cls.YOSYS_BINARY)
 
 	@classmethod
 	def version(cls) -> Optional[tuple[int, int, int]]:
-		'''Get Yosys version.
+		'''
+		Get Yosys version.
 
 		Returns
 		-------
@@ -52,6 +55,7 @@ class YosysBinary:
 			Minor version.
 		distance : int
 			Distance to last tag per ``git describe``. May not be exact for system Yosys.
+
 		'''
 
 		version = cls.run(['-V'])
@@ -63,13 +67,16 @@ class YosysBinary:
 
 	@classmethod
 	def data_dir(cls) -> Path:
-		'''Get Yosys data directory.
+		'''
+		Get Yosys data directory.
 
 		Returns
 		-------
 		data_dir : pathlib.Path
 			Yosys data directory (also known as 'datdir').
+
 		'''
+
 		popen = subprocess.Popen(
 			[require_tool(cls.YOSYS_BINARY) + '-config', '--datdir'],
 			stdout = subprocess.PIPE, stderr = subprocess.PIPE,
@@ -84,7 +91,8 @@ class YosysBinary:
 	def run(
 		cls, args: list[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
-		'''Run Yosys process.
+		'''
+		Run Yosys process.
 
 		Parameters
 		----------
@@ -107,6 +115,7 @@ class YosysBinary:
 		YosysError
 			Raised if Yosys returns a non-zero code. The exception message is the standard error
 			output.
+
 		'''
 
 		popen = subprocess.Popen(
@@ -157,7 +166,8 @@ def min_yosys_version(version: tuple[int, int, int]) -> bool:
 def find_yosys(
 	requirement: Callable[[Optional[tuple[int, int, int]]], bool] = min_yosys_version
 ) -> YosysBinary:
-	'''Find an available Yosys executable of required version.
+	'''
+	Find an available Yosys executable of required version.
 
 	Parameters
 	----------
@@ -173,6 +183,7 @@ def find_yosys(
 	----------
 	YosysError
 		Raised if required Yosys version is not found.
+
 	'''
 
 

@@ -10,7 +10,8 @@ __all__ = (
 
 
 class Encoder(Elaboratable):
-	'''Encode one-hot to binary.
+	'''
+	Encode one-hot to binary.
 
 	If one bit in ``i`` is asserted, ``n`` is low and ``o`` indicates the asserted bit.
 	Otherwise, ``n`` is high and ``o`` is ``0``.
@@ -28,7 +29,9 @@ class Encoder(Elaboratable):
 		Encoded natural binary.
 	n : Signal, out
 		Invalid: either none or multiple input bits are asserted.
+
 	'''
+
 	def __init__(self, width: int) -> None:
 		self.width = width
 
@@ -48,7 +51,8 @@ class Encoder(Elaboratable):
 
 
 class PriorityEncoder(Elaboratable):
-	'''Priority encode requests to binary.
+	'''
+	Priority encode requests to binary.
 
 	If any bit in ``i`` is asserted, ``n`` is low and ``o`` indicates the least significant
 	asserted bit.
@@ -67,7 +71,9 @@ class PriorityEncoder(Elaboratable):
 		Encoded natural binary.
 	n : Signal, out
 		Invalid: no input bits are asserted.
+
 	'''
+
 	def __init__(self, width: int) -> None:
 		self.width = width
 
@@ -85,7 +91,8 @@ class PriorityEncoder(Elaboratable):
 
 
 class Decoder(Elaboratable):
-	'''Decode binary to one-hot.
+	'''
+	Decode binary to one-hot.
 
 	If ``n`` is low, only the ``i``-th bit in ``o`` is asserted.
 	If ``n`` is high, ``o`` is ``0``.
@@ -103,7 +110,9 @@ class Decoder(Elaboratable):
 		Decoded one-hot.
 	n : Signal, in
 		Invalid, no output bits are to be asserted.
+
 	'''
+
 	def __init__(self, width: int) -> None:
 		self.width = width
 
@@ -123,14 +132,17 @@ class Decoder(Elaboratable):
 
 
 class PriorityDecoder(Decoder):
-	'''Decode binary to priority request.
+	'''
+	Decode binary to priority request.
 
 	Identical to :class:`Decoder`.
+
 	'''
 
 
 class GrayEncoder(Elaboratable):
-	'''Encode binary to Gray code.
+	'''
+	Encode binary to Gray code.
 
 	Parameters
 	----------
@@ -143,7 +155,9 @@ class GrayEncoder(Elaboratable):
 		Natural binary input.
 	o : Signal(width), out
 		Encoded Gray code.
+
 	'''
+
 	def __init__(self, width: int) -> None:
 		self.width = width
 
@@ -157,7 +171,8 @@ class GrayEncoder(Elaboratable):
 
 
 class GrayDecoder(Elaboratable):
-	'''Decode Gray code to binary.
+	'''
+	Decode Gray code to binary.
 
 	Parameters
 	----------
@@ -170,7 +185,9 @@ class GrayDecoder(Elaboratable):
 		Gray code input.
 	o : Signal(width), out
 		Decoded natural binary.
+
 	'''
+
 	def __init__(self, width: int) -> None:
 		self.width = width
 

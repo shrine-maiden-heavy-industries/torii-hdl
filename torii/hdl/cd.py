@@ -16,7 +16,8 @@ class DomainError(Exception):
 
 
 class ClockDomain:
-	'''Synchronous domain.
+	'''
+	Synchronous domain.
 
 	Parameters
 	----------
@@ -44,6 +45,7 @@ class ClockDomain:
 		in combinatorial context).
 	rst : Signal or None, inout
 		Reset signal for this domain. Can be driven or used to drive.
+
 	'''
 
 	@staticmethod

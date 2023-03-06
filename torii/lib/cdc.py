@@ -20,7 +20,8 @@ def _check_stages(stages: int):
 
 
 class FFSynchronizer(Elaboratable):
-	'''Resynchronize a signal to a different clock domain.
+	'''
+	Resynchronize a signal to a different clock domain.
 
 	Consists of a chain of flip-flops. Eliminates metastabilities at the output, but provides
 	no other guarantee as to the safe domain-crossing of a signal.
@@ -68,7 +69,9 @@ class FFSynchronizer(Elaboratable):
 	------------------
 	Define the ``get_ff_sync`` platform method to override the implementation of
 	:class:`FFSynchronizer`, e.g. to instantiate library cells directly.
+
 	''' # noqa: E101
+
 	def __init__(
 		self, i: Signal, o: Signal, *, o_domain: str = 'sync', reset: int = 0,
 		reset_less: bool = True, stages: int = 2, max_input_delay: Optional[float] = None
@@ -104,7 +107,8 @@ class FFSynchronizer(Elaboratable):
 
 
 class AsyncFFSynchronizer(Elaboratable):
-	'''Synchronize de-assertion of an asynchronous signal.
+	'''
+	Synchronize de-assertion of an asynchronous signal.
 
 	The signal driven by the :class:`AsyncFFSynchronizer` is asserted asynchronously and de-asserted
 	synchronously, eliminating metastability during de-assertion.
@@ -132,7 +136,9 @@ class AsyncFFSynchronizer(Elaboratable):
 	------------------
 	Define the ``get_async_ff_sync`` platform method to override the implementation of
 	:class:`AsyncFFSynchronizer`, e.g. to instantiate library cells directly.
+
 	'''
+
 	def __init__(
 		self, i: Signal, o: Signal, *, o_domain: str = 'sync', stages: int = 2,
 		async_edge: Literal['pos', 'neg'] = 'pos', max_input_delay: Optional[float] = None
@@ -189,7 +195,8 @@ class AsyncFFSynchronizer(Elaboratable):
 
 
 class ResetSynchronizer(Elaboratable):
-	'''Synchronize de-assertion of a clock domain reset.
+	'''
+	Synchronize de-assertion of a clock domain reset.
 
 	The reset of the clock domain driven by the :class:`ResetSynchronizer` is asserted
 	asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.
@@ -217,7 +224,9 @@ class ResetSynchronizer(Elaboratable):
 	------------------
 	Define the ``get_reset_sync`` platform method to override the implementation of
 	:class:`ResetSynchronizer`, e.g. to instantiate library cells directly.
+
 	'''
+
 	def __init__(
 		self, arst: Signal, *, domain: str = 'sync', stages: int = 2,
 		max_input_delay: Optional[float] = None
@@ -242,7 +251,8 @@ class ResetSynchronizer(Elaboratable):
 
 
 class PulseSynchronizer(Elaboratable):
-	'''A one-clock pulse on the input produces a one-clock pulse on the output.
+	'''
+	A one-clock pulse on the input produces a one-clock pulse on the output.
 
 	If the output clock is faster than the input clock, then the input may be safely asserted at
 	100% duty cycle. Otherwise, if the clock ratio is ``n``:1, the input may be asserted at most
@@ -258,7 +268,9 @@ class PulseSynchronizer(Elaboratable):
 	stages : int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
+
 	'''
+
 	def __init__(self, i_domain: str, o_domain: str, *, stages: int = 2) -> None:
 		_check_stages(stages)
 

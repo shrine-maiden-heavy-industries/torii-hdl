@@ -8,7 +8,8 @@ __all__ = (
 
 
 class RoundRobin(Elaboratable):
-	'''Round-robin scheduler.
+	'''
+	Round-robin scheduler.
 
 	For a given set of requests, the round-robin scheduler will
 	grant one request. Once it grants a request, if any other
@@ -34,7 +35,9 @@ class RoundRobin(Elaboratable):
 	valid : Signal(), out
 		Asserted if grant corresponds to an active request. De-asserted
 		otherwise, i.e. if no requests are active.
+
 	'''
+
 	def __init__(self, *, count: int) -> None:
 		if not isinstance(count, int) or count < 0:
 			raise ValueError(f'Count must be a non-negative integer, not {count!r}')
