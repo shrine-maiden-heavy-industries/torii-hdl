@@ -511,7 +511,7 @@ class XilinxPlatform(TemplatedPlatform):
 				read_verilog -sv {{get_override("read_verilog_opts")|options}} {{file}}
 			{% endfor %}
 			{% for file in platform.iter_files(".il") -%}
-				read_ilang {{file}}
+				read_rtlil {{file}}
 			{% endfor %}
 			read_verilog {{name}}.v
 			{{get_override("script_after_read")|default("# (script_after_read placeholder)")}}

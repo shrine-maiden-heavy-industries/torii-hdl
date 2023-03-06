@@ -29,8 +29,8 @@ def _convert_rtlil_text(
 	script = []
 	if black_boxes is not None:
 		for box_name, box_source in black_boxes.items():
-			script.append(f'read_ilang <<rtlil\n{box_source}\nrtlil')
-	script.append(f'read_ilang <<rtlil\n{rtlil_text}\nrtlil')
+			script.append(f'read_rtlil <<rtlil\n{box_source}\nrtlil')
+	script.append(f'read_rtlil <<rtlil\n{rtlil_text}\nrtlil')
 	script.append('write_cxxrtl')
 
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
