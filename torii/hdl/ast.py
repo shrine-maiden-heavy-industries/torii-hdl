@@ -675,8 +675,6 @@ class Value(metaclass = ABCMeta):
 	def _as_const(self):
 		raise TypeError(f'Value {self!r} cannot be evaluated as constant')
 
-	__hash__ = None
-
 
 @final
 class Const(Value):
