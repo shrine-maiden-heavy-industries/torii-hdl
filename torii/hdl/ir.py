@@ -53,7 +53,8 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj: Union['Fragment', Elaboratable, object] , platform: Optional[Any]
+		obj: Union['Fragment', Elaboratable, object] , platform: Optional[Any],
+		*, formal: bool = False
 	) -> 'Fragment':
 		code = None
 		while True:
@@ -63,7 +64,10 @@ class Fragment:
 				code = obj.elaborate.__code__
 				UnusedElaboratable._MustUse__silence = False
 				obj._MustUse__used = True
-				new_obj = obj.elaborate(platform)
+				if formal:
+					new_obj = obj.formal(obj.elaborate(platform))
+				else:
+					new_obj = obj.elaborate(platform)
 			else:
 				raise AttributeError(f'Object {obj!r} cannot be elaborated')
 			if new_obj is obj:
