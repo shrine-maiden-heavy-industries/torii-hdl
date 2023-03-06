@@ -2,7 +2,7 @@
 
 from collections     import OrderedDict
 from collections.abc import Mapping
-from typing          import Dict, Generator, Optional
+from typing          import Generator, Optional
 
 from ...util.units   import bits_for
 from .               import event
@@ -106,7 +106,7 @@ class ConstantMap(Mapping):
 	>>> ConstantMap(RX_FIFO_DEPTH = 16)
 	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])
 	'''
-	def __init__(self, **constants: Dict[str, ConstantValue]) -> None:
+	def __init__(self, **constants: dict[str, ConstantValue]) -> None:
 		self._storage = OrderedDict()
 		for key, value in constants.items():
 			if isinstance(value, bool):

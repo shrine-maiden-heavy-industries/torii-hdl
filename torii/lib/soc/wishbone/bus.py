@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum           import Enum
-from typing         import Iterable, Literal, Optional, Tuple
+from typing         import Iterable, Literal, Optional
 
 from ....           import Cat, Elaboratable, Module, Record, Repl, Signal
 from ....hdl.rec    import Direction
@@ -251,7 +251,7 @@ class Decoder(Elaboratable):
 	def add(
 		self, sub_bus: Interface, *, addr: Optional[int] = None, sparse: bool = False,
 		extend: bool = False
-	) -> Tuple[int, int, int]:
+	) -> tuple[int, int, int]:
 		'''Add a window to a subordinate bus.
 
 		The decoder can perform either sparse or dense address translation. If dense address

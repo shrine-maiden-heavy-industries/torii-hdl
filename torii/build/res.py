@@ -1,10 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
-from typing      import (
-	List, Optional, Literal, Dict, Union,
-	Generator, Tuple
-)
+from typing      import Optional, Literal, Union, Generator
 
 from ..hdl.ast   import *
 from ..hdl.rec   import *
@@ -22,7 +19,7 @@ class ResourceError(Exception):
 
 
 class ResourceManager:
-	def __init__(self, resources: List[Resource], connectors: List[Connector]) -> None:
+	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:
 		self.resources  = OrderedDict()
 		self._requested = OrderedDict()
 		self._phys_reqd = OrderedDict()
@@ -37,7 +34,7 @@ class ResourceManager:
 		self.add_resources(resources)
 		self.add_connectors(connectors)
 
-	def add_resources(self, resources: List[Resource]) -> None:
+	def add_resources(self, resources: list[Resource]) -> None:
 		for res in resources:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
@@ -46,7 +43,7 @@ class ResourceManager:
 
 			self.resources[res.name, res.number] = res
 
-	def add_connectors(self, connectors: List[Connector]) -> None:
+	def add_connectors(self, connectors: list[Connector]) -> None:
 		for conn in connectors:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
@@ -68,7 +65,7 @@ class ResourceManager:
 	def request(
 		self, name: str, number: int = 0, *,
 		dir: Optional[Literal['i', 'o', 'oe', 'io', '-']] = None,
-		xdr: Optional[Dict[str, int]] = None
+		xdr: Optional[dict[str, int]] = None
 	) -> Union[Record, Pin]:
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
@@ -76,14 +73,14 @@ class ResourceManager:
 
 		def merge_options(
 			subsignal: Subsignal,
-			dir: Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
-			xdr: Optional[Union[int, Dict[str, int]]]
-		) -> Tuple[
+			dir: Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
+			xdr: Optional[Union[int, dict[str, int]]]
+		) -> tuple[
 			Union[
 				Literal['i', 'o', 'oe', 'io', '-'],
-				Dict[str, Literal['i', 'o', 'oe', 'io', '-']]
+				dict[str, Literal['i', 'o', 'oe', 'io', '-']]
 			],
-			Union[int, Dict[str, int]]
+			Union[int, dict[str, int]]
 		]:
 			if isinstance(subsignal.ios[0], Subsignal):
 				if dir is None:
@@ -123,8 +120,8 @@ class ResourceManager:
 
 		def resolve(
 			resource: Resource,
-			dir: Union[Literal['i', 'o', 'oe', 'io', '-'], Dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
-			xdr: Union[int, Dict[str, int]],
+			dir: Union[Literal['i', 'o', 'oe', 'io', '-'], dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
+			xdr: Union[int, dict[str, int]],
 			name: str, attrs: Attrs
 		) -> Union[Record, Pin]:
 			for attr_key, attr_value in attrs.items():
@@ -197,7 +194,7 @@ class ResourceManager:
 		self._requested[resource.name, resource.number] = value
 		return value
 
-	def iter_single_ended_pins(self) -> Generator[Tuple[
+	def iter_single_ended_pins(self) -> Generator[tuple[
 		Pin, Subsignal, Attrs, bool
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
@@ -206,7 +203,7 @@ class ResourceManager:
 			if isinstance(res.ios[0], Pins):
 				yield (pin, port, attrs, res.ios[0].invert)
 
-	def iter_differential_pins(self) -> Generator[Tuple[
+	def iter_differential_pins(self) -> Generator[tuple[
 		Pin, Subsignal, Attrs, bool
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
@@ -234,7 +231,7 @@ class ResourceManager:
 				assert False
 
 	def iter_port_constraints(self) -> Generator[
-		Tuple[str, str, Attrs], None, None
+		tuple[str, str, Attrs], None, None
 	]:
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
@@ -249,7 +246,7 @@ class ResourceManager:
 				assert False
 
 	def iter_port_constraints_bits(self) -> Generator[
-		Tuple[str, str, Attrs], None, None
+		tuple[str, str, Attrs], None, None
 	]:
 		for port_name, pin_names, attrs in self.iter_port_constraints():
 			if len(pin_names) == 1:
@@ -271,7 +268,7 @@ class ResourceManager:
 			self._clocks[clock] = float(frequency)
 
 	def iter_clock_constraints(self) -> Generator[
-		Tuple[str, Signal, float], None, None
+		tuple[str, Signal, float], None, None
 	]:
 		# Back-propagate constraints through the input buffer. For clock constraints on pins
 		# (the majority of cases), toolchains work better if the constraint is defined on the pin

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractmethod
-from typing    import Dict, List, Literal, Optional, Tuple
+from typing    import Literal, Optional
 
 from ...build  import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl    import (
@@ -296,7 +296,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 		self.toolchain = toolchain
 
 	@property
-	def required_tools(self) -> List[str]:
+	def required_tools(self) -> list[str]:
 		if self.toolchain == 'Trellis':
 			return self._trellis_required_tools
 		if self.toolchain == 'Diamond':
@@ -304,7 +304,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self) -> Dict[str, str]:
+	def file_templates(self) -> dict[str, str]:
 		if self.toolchain == 'Trellis':
 			return self._trellis_file_templates
 		if self.toolchain == 'Diamond':
@@ -312,7 +312,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self) -> List[str]:
+	def command_templates(self) -> list[str]:
 		if self.toolchain == 'Trellis':
 			return self._trellis_command_templates
 		if self.toolchain == 'Diamond':
@@ -391,7 +391,7 @@ class LatticeECP5Platform(TemplatedPlatform):
 
 	def _get_xdr_buffer(
 		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
-	) -> Tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
+	) -> tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
 		def get_ireg(clk: Signal, d: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(

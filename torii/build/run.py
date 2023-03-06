@@ -3,9 +3,7 @@
 from collections       import OrderedDict
 from contextlib        import contextmanager
 from abc               import ABCMeta, abstractmethod
-from typing            import (
-	Union, Literal, Tuple, Generator, List
-)
+from typing            import Union, Literal, Generator
 import os
 import sys
 import subprocess
@@ -141,8 +139,8 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 	@contextmanager
-	def extract(self, *filenames: Tuple[str]) -> Generator[
-		Union[None, str, List[str]], None, None
+	def extract(self, *filenames: tuple[str]) -> Generator[
+		Union[None, str, list[str]], None, None
 	]:
 		'''
 		Extract ``filenames`` from build products, place them in an OS-specific temporary file

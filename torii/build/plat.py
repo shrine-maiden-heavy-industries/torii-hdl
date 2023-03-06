@@ -4,8 +4,7 @@ from collections     import OrderedDict
 from collections.abc import Iterable
 from abc             import ABCMeta, abstractmethod
 from typing          import (
-	Union, IO, Optional, Dict, Tuple,
-	Type, Generator, TypeVar, Literal, List
+	Union, IO, Optional, Type, Generator, TypeVar, Literal
 )
 import os
 import textwrap
@@ -97,7 +96,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	def build(
 		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', build_dir: str = 'build',
-		do_build: bool = True, program_opts: Optional[Dict[str, str]] = None, do_program: bool = False, **kwargs
+		do_build: bool = True, program_opts: Optional[dict[str, str]] = None, do_program: bool = False, **kwargs
 	) -> Union[BuildPlan, BuildProducts, None]:
 		# The following code performs a best-effort check for presence of required tools upfront,
 		# before performing any build actions, to provide a better diagnostic. It does not handle
@@ -206,7 +205,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
 
 	def _check_feature(
-		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: Tuple[int], valid_attrs: Optional[str]
+		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int], valid_attrs: Optional[str]
 	) -> None:
 		if len(valid_xdrs) == 0:
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature}')
@@ -300,12 +299,12 @@ class TemplatedPlatform(Platform):
 
 	@property
 	@abstractmethod
-	def file_templates(self) -> Dict[str, str]:
+	def file_templates(self) -> dict[str, str]:
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
 	@abstractmethod
-	def command_templates(self) -> List[str]:
+	def command_templates(self) -> list[str]:
 		raise NotImplementedError('Platform must implement this property')
 
 	build_script_templates = {
@@ -324,7 +323,7 @@ class TemplatedPlatform(Platform):
 	}
 
 	def iter_clock_constraints(self) -> Generator[
-		Tuple[str, Signal, float], None, None
+		tuple[str, Signal, float], None, None
 	]:
 		for net_signal, port_signal, frequency in super().iter_clock_constraints():
 			# Skip any clock constraints placed on signals that are never used in the design.
@@ -400,7 +399,7 @@ class TemplatedPlatform(Platform):
 		def emit_rtlil() -> str:
 			return rtlil_text
 
-		def emit_verilog(opts: Tuple[str] = ()) -> str:
+		def emit_verilog(opts: tuple[str] = ()) -> str:
 			return verilog._convert_rtlil_text(
 				rtlil_text, strip_internal_attrs = True, write_verilog_opts = opts
 			)

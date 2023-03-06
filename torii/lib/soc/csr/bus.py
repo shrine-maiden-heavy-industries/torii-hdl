@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum     import Enum
-from typing   import Optional, Tuple
+from typing   import Optional
 
 from ....     import Elaboratable, Module, Mux, Record, Signal
 from ..memory import MemoryMap
@@ -255,7 +255,7 @@ class Multiplexer(Elaboratable):
 	def add(
 		self, element: Element, *, addr: Optional[int] = None, alignment: Optional[int] = None,
 		extend: bool = False
-	) -> Tuple[int, int]:
+	) -> tuple[int, int]:
 		'''Add a register.
 
 		See :meth:`MemoryMap.add_resource` for details.
@@ -383,7 +383,7 @@ class Decoder(Elaboratable):
 
 	def add(
 		self, sub_bus: Interface, *, addr: Optional[int] = None, extend: bool = False
-	) -> Tuple[int, int, int]:
+	) -> tuple[int, int, int]:
 		'''Add a window to a subordinate bus.
 
 		See :meth:`MemoryMap.add_resource` for details.

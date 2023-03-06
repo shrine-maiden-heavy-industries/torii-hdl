@@ -26,7 +26,7 @@ class ToriiTestCase(TestCase):
 
 	Attributes
 	----------
-	domains : Tuple[Tuple[str, float]]
+	domains : tuple[tuple[str, float], ...]
 		The collection of clock domains and frequencies
 	out_dir : str
 		The test output directory.

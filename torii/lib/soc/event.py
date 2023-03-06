@@ -3,7 +3,7 @@
 
 from collections import OrderedDict
 from enum        import Enum
-from typing      import Generator, Optional, Tuple
+from typing      import Generator, Optional
 
 from ...         import Elaboratable, Module, Record, Signal
 
@@ -145,7 +145,7 @@ class EventMap:
 			raise TypeError(f'Event source must be an instance of event.Source, not {src!r}')
 		return self._sources[src]
 
-	def sources(self) -> Generator[Tuple[Source, int], None, None]:
+	def sources(self) -> Generator[tuple[Source, int], None, None]:
 		'''Iterate event sources.
 
 		Yield values

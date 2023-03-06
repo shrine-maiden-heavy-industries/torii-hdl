@@ -3,7 +3,7 @@
 from collections import OrderedDict
 from enum        import Enum
 from functools   import reduce, wraps
-from typing      import Any, Generator, Iterable, Optional, Tuple, Union
+from typing      import Any, Generator, Iterable, Optional, Union
 
 from ..util      import union
 from ..util      import tracer
@@ -35,7 +35,7 @@ class Layout:
 
 	# TODO: The `Any` type is not correct but the types need to be refactored again eventually to fix it
 	def __init__(
-		self, fields: Iterable[Union[Tuple[str, Any], Tuple[str, Any, Direction]]], *,
+		self, fields: Iterable[Union[tuple[str, Any], tuple[str, Any, Direction]]], *,
 		src_loc_at: int = 0
 	) -> None:
 		self.fields = OrderedDict()
@@ -73,7 +73,7 @@ class Layout:
 
 		return self.fields[item]
 
-	def __iter__(self) -> Generator[Tuple[str, Any, Direction], None, None]:
+	def __iter__(self) -> Generator[tuple[str, Any, Direction], None, None]:
 		for name, (shape, dir) in self.fields.items():
 			yield (name, shape, dir)
 

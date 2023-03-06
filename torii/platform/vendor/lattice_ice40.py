@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc        import abstractmethod
-from typing     import Dict, List, Literal
+from typing     import Literal
 
 from ...build   import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl     import (
@@ -326,7 +326,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def required_tools(self) -> List[str]:
+	def required_tools(self) -> list[str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_required_tools
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
@@ -334,7 +334,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self) -> Dict[str, str]:
+	def file_templates(self) -> dict[str, str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_file_templates
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
@@ -342,7 +342,7 @@ class LatticeICE40Platform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self) -> List[str]:
+	def command_templates(self) -> list[str]:
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_command_templates
 		if self.toolchain == 'LSE-iCECube2':

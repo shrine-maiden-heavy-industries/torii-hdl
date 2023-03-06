@@ -4,7 +4,7 @@ import logging    as log
 from argparse     import (
 	ArgumentParser, FileType, Namespace, ArgumentDefaultsHelpFormatter
 )
-from typing       import Optional, Tuple, Union
+from typing       import Optional, Union
 
 from rich         import traceback
 from rich.logging import RichHandler
@@ -99,7 +99,7 @@ def main_parser(parser: Optional[ArgumentParser] = None) -> ArgumentParser:
 
 def main_runner(
 	parser: ArgumentParser, args: Namespace, design: Union[Fragment, Elaboratable],
-	platform: Platform = None, name: str = 'top', ports: Tuple[Signal] = ()
+	platform: Platform = None, name: str = 'top', ports: tuple[Signal] = ()
 ) -> None:
 
 	level = log.INFO

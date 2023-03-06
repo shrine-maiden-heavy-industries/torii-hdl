@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractmethod
-from typing    import Dict, List, Literal, Union
+from typing    import Literal, Union
 
 from ...build  import Attrs, Clock, TemplatedPlatform
 from ...hdl    import (
@@ -265,7 +265,7 @@ class IntelPlatform(TemplatedPlatform):
 		self.toolchain = toolchain
 
 	@property
-	def required_tools(self) -> List[str]:
+	def required_tools(self) -> list[str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_required_tools
 		if self.toolchain == 'Mistral':
@@ -273,7 +273,7 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self) -> Dict[str, str]:
+	def file_templates(self) -> dict[str, str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_file_templates
 		if self.toolchain == 'Mistral':
@@ -281,7 +281,7 @@ class IntelPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self) -> List[str]:
+	def command_templates(self) -> list[str]:
 		if self.toolchain == 'Quartus':
 			return self.quartus_command_templates
 		if self.toolchain == 'Mistral':

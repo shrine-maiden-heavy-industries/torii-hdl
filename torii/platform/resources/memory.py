@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum     import auto, unique, Enum
-from typing   import Optional, Tuple, Union, List
+from typing   import Optional, Union
 
 from ...build import *
 
@@ -35,9 +35,9 @@ class QSPIDataMode(Enum):
 def SPIFlashResources(
 	*args,
 	cs_n: str, clk: str, copi: str, cipo: str, wp_n: Optional[str] = None,
-	hold_n: Optional[str] = None, conn: Optional[Union[Tuple[str, int], int]] = None,
+	hold_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
 	attrs: Optional[Attrs] = None
-) -> List[Resource]:
+) -> list[Resource]:
 
 	resources = []
 
@@ -132,8 +132,8 @@ def SDCardResources(
 	*args,
 	clk: str, cmd: str, dat0: str, dat1: Optional[str] = None, dat2: Optional[str] = None,
 	dat3: Optional[str] = None, cd: Optional[str] = None, wp_n: Optional[str] = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
-) -> List[Resource]:
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+) -> list[Resource]:
 
 	resources = []
 	io_common = []
@@ -188,7 +188,7 @@ def SDCardResources(
 def SRAMResource(
 	*args,
 	cs_n: str, oe_n: Optional[str] = None, we_n: str, a: str, d: str,
-	dm_n: Optional[str] = None, conn: Optional[Union[Tuple[str, int], int]] = None,
+	dm_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 
@@ -217,7 +217,7 @@ def SDRAMResource(
 	*args,
 	clk: str, cke: Optional[str] = None, cs_n: Optional[str] = None,
 	we_n: str, ras_n: str, cas_n: str, ba: str, a: str, dq: str,
-	dqm: Optional[str] = None, conn: Optional[Union[Tuple[str, int], int]] = None,
+	dqm: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 
@@ -250,8 +250,8 @@ def NORFlashResources(
 	*args,
 	rst: Optional[str] = None, byte_n: Optional[str] = None,
 	cs_n: str, oe_n: str, we_n: str, wp_n: str, by: str, a: str, dq: str,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
-) -> List[Resource]:
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+) -> list[Resource]:
 
 	resources = []
 
@@ -302,7 +302,7 @@ def DDR3Resource(
 	rst_n: Optional[str] = None,
 	clk_p: str, clk_n: str, clk_en: str, cs_n: str, we_n: str, ras_n: str, cas_n: str,
 	a: str, ba: str, dqs_p: str, dqs_n: str, dq: str, dm: str, odt: str,
-	conn: Optional[Union[Tuple[str, int], int]] = None,
+	conn: Optional[Union[tuple[str, int], int]] = None,
 	diff_attrs = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 

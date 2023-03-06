@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Optional, Tuple, Union, Literal
+from typing   import Optional, Union, Literal
 
 from ...build import *
 
@@ -20,7 +20,7 @@ def UARTResource(
 	*args,
 	rx: str, tx: str, rts: Optional[str] = None, cts: Optional[str] = None,
 	dtr: Optional[str] = None, dsr: Optional[str] = None, dcd: Optional[str] = None,
-	ri: Optional[str] = None, conn: Optional[Union[Tuple[str, int], str]] = None,
+	ri: Optional[str] = None, conn: Optional[Union[tuple[str, int], str]] = None,
 	attrs: Optional[Attrs] = None, role: Optional[str]  = None
 ) -> Resource:
 
@@ -65,7 +65,7 @@ def UARTResource(
 
 def IrDAResource(
 	number: int, *, rx: str, tx: str, en: Optional[str] = None, sd: Optional[str] = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 	# Exactly one of en (active-high enable) or sd (shutdown, active-low enable) should
 	# be specified, and it is mapped to a logic level en subsignal.
@@ -91,7 +91,7 @@ def IrDAResource(
 def SPIResource(
 	*args,
 	cs_n: str, clk: str, copi: str, cipo: str, int: str = None, reset: str = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None,
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None,
 	role: Literal['controller', 'peripheral'] = 'controller'
 ) -> Resource:
 
@@ -137,7 +137,7 @@ def SPIResource(
 
 def I2CResource(
 	*args,
-	scl: str, sda: str, conn: Optional[Union[Tuple[str, int], int]] = None,
+	scl: str, sda: str, conn: Optional[Union[tuple[str, int], int]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 
@@ -155,7 +155,7 @@ def I2CResource(
 def DirectUSBResource(
 	*args,
 	d_p: str, d_n: str, pullup: Optional[str] = None, vbus_valid: Optional[str] = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 
 	io = []
@@ -179,7 +179,7 @@ def ULPIResource(
 	*args,
 	data: str, clk: str, dir: str, nxt: str, stp: str, rst: Optional[str] = None,
 	clk_dir: Literal['i', 'o'] = 'i', rst_invert: bool = False, attrs: Optional[Attrs] = None,
-	clk_attrs: Optional[Attrs] = None, conn: Optional[Union[Tuple[str, int], int]] = None
+	clk_attrs: Optional[Attrs] = None, conn: Optional[Union[tuple[str, int], int]] = None
 ) -> Resource:
 
 	if clk_dir not in ('i', 'o'):
@@ -214,7 +214,7 @@ def ULPIResource(
 def PS2Resource(
 	*args,
 	clk: str, dat: str,
-	conn :  Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn :  Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 	ios = []
 
@@ -228,7 +228,7 @@ def PS2Resource(
 
 def CANResource(
 	*args, rx: str, tx: str,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 	ios = [
 		Subsignal('rx', Pins(rx, dir = 'i', conn = conn)),
@@ -242,7 +242,7 @@ def CANResource(
 
 def JTAGResource(
 	*args, tck: str, tms: str, tdi: str, tdo: str,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
 ) -> Resource:
 	ios = [
 		Subsignal('tck', Pins(tck, dir = 'i', conn = conn, assert_width = 1)),
@@ -261,7 +261,7 @@ def EthernetResource(
 	tx_en: Optional[str] = None, tx_err: Optional[str] = None, tx_ctl: Optional[str] = None,
 	col: Optional[str] = None, crs: Optional[str] = None,
 	mdc: Optional[str] = None, mdio: Optional[str] = None,
-	conn: Optional[Union[Tuple[str, int], int]] = None, attrs: Optional[Attrs] = None,
+	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None,
 	mdio_attrs: Optional[Attrs] = None
 ) -> Resource:
 

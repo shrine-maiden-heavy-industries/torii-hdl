@@ -4,9 +4,7 @@ import io
 import re
 from collections  import OrderedDict
 from contextlib   import contextmanager
-from typing       import (
-	Union, Optional, Dict, Literal, Tuple
-)
+from typing       import Union, Optional, Literal
 
 from ..util       import flatten
 from ..util.units import bits_for
@@ -106,7 +104,7 @@ class _AttrBuilder:
 	def _attribute(self, name: str, value: Union[str, int, ast.Const], *, indent: int = 0) -> None:
 		self._append('{}attribute \\{} {}\n', '  ' * indent, name, _const(value))
 
-	def _attributes(self, attrs: Dict[str, Union[str, int, ast.Const]], *, src: str = None, **kwargs) -> None:
+	def _attributes(self, attrs: dict[str, Union[str, int, ast.Const]], *, src: str = None, **kwargs) -> None:
 		for name, value in attrs.items():
 			self._attribute(name, value, **kwargs)
 		if src and self.emit_src:
@@ -117,12 +115,12 @@ class _Builder(_BufferedBuilder, _Namer):
 		super().__init__()
 		self.emit_src = emit_src
 
-	def module(self, name: str = None, attrs: Dict[str, Union[str, int, ast.Const]] = {}) -> '_ModuleBuilder':
+	def module(self, name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}) -> '_ModuleBuilder':
 		name = self._make_name(name, local = False)
 		return _ModuleBuilder(self, name, attrs)
 
 class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
-	def __init__(self, rtlil, name: str, attrs: Dict[str, Union[str, int, ast.Const]]) -> None:
+	def __init__(self, rtlil, name: str, attrs: dict[str, Union[str, int, ast.Const]]) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
@@ -141,7 +139,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 	# FIXME: Type annotation for `port_id` seems to be incorrect
 	def wire(
 		self, width: int, port_id: Optional[str] = None, port_kind: Literal['input', 'output', 'inout'] = None,
-		name: str = None, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> str:
 		# Very large wires are unlikely to work. Verilog 1364-2005 requires the limit on vectors
 		# to be at least 2**16 bits, and Yosys 0.9 cannot read RTLIL with wires larger than 2**32
@@ -176,7 +174,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		self._append('  connect {} {}\n', lhs, rhs)
 
 	def memory(
-		self, width: int, size: int, name: str = None, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, width: int, size: int, name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
@@ -184,8 +182,8 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		return name
 
 	def cell(
-		self, kind: str, name: str = None, params: Dict[str, Union[str, int, float, ast.Const]] = {},
-		ports: Dict[str, str] = {}, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, kind: str, name: str = None, params: dict[str, Union[str, int, float, ast.Const]] = {},
+		ports: dict[str, str] = {}, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
@@ -210,13 +208,13 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		return name
 
 	def process(
-		self, name: Optional[str] = None, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, name: Optional[str] = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> '_ProcessBuilder':
 		name = self._make_name(name, local = True)
 		return _ProcessBuilder(self, name, attrs, src)
 
 class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
-	def __init__(self, rtlil, name: str , attrs: Dict[str, Union[str, int, ast.Const]], src: str) -> None:
+	def __init__(self, rtlil, name: str , attrs: dict[str, Union[str, int, ast.Const]], src: str) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
@@ -254,14 +252,14 @@ class _CaseBuilder(_ProxiedBuilder):
 		self._append('{}assign {} {}\n', '  ' * self.indent, lhs, rhs)
 
 	def switch(
-		self, cond, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, cond, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> '_SwitchBuilder':
 		return _SwitchBuilder(self.rtlil, cond, attrs, src, self.indent)
 
 
 class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 	def __init__(
-		self, rtlil, cond, attrs: Dict[str, Union[str, int, ast.Const]] , src: str, indent: int
+		self, rtlil, cond, attrs: dict[str, Union[str, int, ast.Const]] , src: str, indent: int
 	) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil  = rtlil
@@ -279,7 +277,7 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 		self._append('{}end\n', '  ' * self.indent)
 
 	def case(
-		self, *values, attrs: Dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, *values, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
 	) -> '_CaseBuilder':
 		self._attributes(attrs, src = src, indent = self.indent + 1)
 		if values == ():
@@ -311,7 +309,7 @@ class _SyncBuilder(_ProxiedBuilder):
 		self._append('      update {} {}\n', lhs, rhs)
 
 
-def _src(src_loc: Optional[Tuple[str, int]]) -> Optional[str]:
+def _src(src_loc: Optional[tuple[str, int]]) -> Optional[str]:
 	if src_loc is None:
 		return None
 	file, line = src_loc
@@ -319,7 +317,7 @@ def _src(src_loc: Optional[Tuple[str, int]]) -> Optional[str]:
 
 
 class _LegalizeValue(Exception):
-	def __init__(self, value, branches, src_loc: Optional[Tuple[str, int]]) -> None:
+	def __init__(self, value, branches, src_loc: Optional[tuple[str, int]]) -> None:
 		self.value    = value
 		self.branches = list(branches)
 		self.src_loc  = src_loc
@@ -1076,7 +1074,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 def convert_fragment(
 	fragment: ir.Fragment, name: str = 'top', *, emit_src: str = True
-) -> Tuple[str, ast.SignalDict]:
+) -> tuple[str, ast.SignalDict]:
 	if not isinstance(fragment, ir.Fragment):
 		raise ValueError(f'Expected an ir.Fragment not a {fragment!r}')
 	builder = _Builder(emit_src = emit_src)

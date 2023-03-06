@@ -2,7 +2,6 @@
 
 from distutils import ccompiler
 from sysconfig import get_config_var
-from typing    import List, Dict, Tuple
 from tempfile  import TemporaryDirectory
 from os        import getcwd, chdir
 
@@ -12,8 +11,8 @@ __all__ = (
 
 # TODO: Refactor this so you don't need to pass the sources along with the filename in if not needed
 def build_cxx(
-	cxx_sources: Dict[str, str], output_name: str, include_dirs: List, macros: List
-)  -> Tuple[TemporaryDirectory, str]:
+	cxx_sources: dict[str, str], output_name: str, include_dirs: list[str], macros: list[str]
+)  -> tuple[TemporaryDirectory, str]:
 
 	build_dir = TemporaryDirectory(prefix = 'torii_cxx_')
 

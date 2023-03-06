@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc        import abstractmethod
-from typing     import Dict, List, Literal, Optional, Tuple, Union
+from typing     import Literal, Optional, Union
 
 from ...build   import Attrs, TemplatedPlatform
 from ...hdl     import (
@@ -657,7 +657,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self.toolchain = toolchain
 
 	@property
-	def required_tools(self) -> List[str]:
+	def required_tools(self) -> list[str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_required_tools
 		if self.toolchain == 'ISE':
@@ -669,7 +669,7 @@ class XilinxPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def file_templates(self) -> Dict[str, str]:
+	def file_templates(self) -> dict[str, str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_file_templates
 		if self.toolchain == 'ISE':
@@ -681,7 +681,7 @@ class XilinxPlatform(TemplatedPlatform):
 		assert False
 
 	@property
-	def command_templates(self) -> List[str]:
+	def command_templates(self) -> list[str]:
 		if self.toolchain == 'Vivado':
 			return self._vivado_command_templates
 		if self.toolchain == 'ISE':
@@ -764,7 +764,7 @@ class XilinxPlatform(TemplatedPlatform):
 
 	def _get_xdr_buffer(
 		self, m: Module , pin: Pin, iostd, *, i_invert: bool = False, o_invert: bool = False
-	) -> Tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
+	) -> tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
 		XFDDR_FAMILIES = {
 			'virtex2',
 			'virtex2p',
@@ -1082,8 +1082,8 @@ class XilinxPlatform(TemplatedPlatform):
 		return (i, o, t)
 
 	def _get_valid_xdrs(self) -> Union[
-		Tuple[Literal[0], Literal[1]],
-		Tuple[Literal[0], Literal[1], Literal[2]]
+		tuple[Literal[0], Literal[1]],
+		tuple[Literal[0], Literal[1], Literal[2]]
 	]:
 		if self.family in { 'virtex', 'virtexe' }:
 			return (0, 1)

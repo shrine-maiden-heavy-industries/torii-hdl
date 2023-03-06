@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from bisect        import bisect_left, bisect_right
-from typing        import Generator, Iterable, List, Optional, Tuple, Union
+from typing        import Generator, Iterable, Optional, Union
 
 from ...util.units import bits_for
 
@@ -41,12 +41,12 @@ class _RangeMap:
 			if point >= point_range.start and point < point_range.stop:
 				return self._values[point_range]
 
-	def overlaps(self, key: range) -> List[object]:
+	def overlaps(self, key: range) -> list[object]:
 		start_idx = bisect_right(self._stops, key.start)
 		stop_idx  = bisect_left(self._starts, key.stop)
 		return [self._values[key] for key in self._keys[start_idx:stop_idx]]
 
-	def items(self) -> Generator[Tuple[range, object], None, None]:
+	def items(self) -> Generator[tuple[range, object], None, None]:
 		for key in self._keys:
 			yield (key, self._values[key])
 
@@ -98,7 +98,7 @@ class ResourceInfo:
 		return self._resource
 
 	@property
-	def name(self) -> Tuple[str]:
+	def name(self) -> tuple[str]:
 		return self._name
 
 	@property
@@ -272,7 +272,7 @@ class MemoryMap:
 	def add_resource(
 		self, resource: object, *, name: str, size: int, addr: Optional[int] = None,
 		alignment: Optional[int] = None, extend: bool = False
-	) -> Tuple[int, int]:
+	) -> tuple[int, int]:
 		'''Add a resource.
 
 		A resource is any device on the bus that is a destination for bus transactions, e.g.
@@ -354,7 +354,7 @@ class MemoryMap:
 	def add_window(
 		self, window: 'MemoryMap', *, addr: Optional[int] = None, sparse: Optional[int] = None,
 		extend: bool = False
-	) -> Tuple[int, int, int]:
+	) -> tuple[int, int, int]:
 		'''Add a window.
 
 		A window is a device on a bus that provides access to a different bus, i.e. a bus bridge.
@@ -489,7 +489,7 @@ class MemoryMap:
 		for window, window_range in self._windows.values():
 			yield (window, (window_range.start, window_range.stop, window_range.step))
 
-	def window_patterns(self) -> Generator[Tuple[object, Tuple[str, int]], None, None]:
+	def window_patterns(self) -> Generator[tuple[object, tuple[str, int]], None, None]:
 		'''Iterate local windows and patterns that match their address ranges.
 
 		Non-recursively iterate windows in ascending order of their address.

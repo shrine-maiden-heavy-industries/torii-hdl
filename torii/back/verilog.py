@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing             import Tuple, Union
+from typing             import Union
 
 from ..tools.yosys      import find_yosys, YosysError
 from ..hdl              import ir, ast
@@ -14,7 +14,7 @@ __all__ = (
 
 
 def _convert_rtlil_text(
-	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: Tuple[str] = ()
+	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str] = ()
 ) -> str:
 	# this version requirement needs to be synchronized with the one in setup.py!
 	yosys = find_yosys(lambda ver: ver >= (0, 10))
@@ -48,7 +48,7 @@ def _convert_rtlil_text(
 	)
 
 
-def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> Tuple[str, ast.SignalDict]:
+def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tuple[str, ast.SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs = strip_internal_attrs), name_map)
 

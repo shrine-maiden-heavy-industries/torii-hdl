@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Optional, Tuple, Union
+from typing   import Optional, Union
 
 from ...build import *
 
@@ -15,7 +15,7 @@ __all__ = (
 def Display7SegResource(
 	*args,
 	a: str, b: str, c: str, d: str, e: str, f: str, g: str, dp: Optional[str] = None,
-	invert: bool = False, conn: Optional[Union[Tuple[str, int], str]] = None,
+	invert: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 
@@ -42,7 +42,7 @@ def Display7SegResource(
 def VGAResource(
 	*args,
 	r: str, g: str, b: str, vs: str, hs: str,
-	invert_sync: bool = False, conn: Optional[Union[Tuple[str, int], str]] = None,
+	invert_sync: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 
@@ -67,7 +67,7 @@ def VGAResource(
 def VGADACResource(
 	*args,
 	clk: str, r: str, g: str, b: str, vs: str, hs: str, extras: list[Subsignal] = [],
-	invert_sync: bool = False, conn: Optional[Union[Tuple[str, int], str]] = None,
+	invert_sync: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
 	attrs: Optional[Attrs] = None
 ) -> Resource:
 

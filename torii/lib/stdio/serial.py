@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing        import List, Literal, Optional, Tuple, Union
+from typing        import Literal, Optional, Union
 
 from ...           import Cat, Const, Elaboratable, Module, Record, Signal
 from ...util.units import bits_for
@@ -43,7 +43,7 @@ def _compute_parity_bit(
 
 def _wire_layout(
 	data_bits: int, parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none'
-) -> List[Tuple[str, int]]:
+) -> list[tuple[str, int]]:
 	return [
 		('start',  1),
 		('data',   data_bits),

@@ -4,7 +4,7 @@ import re
 import subprocess
 import warnings
 from pathlib   import Path
-from typing    import List, Tuple, Callable, Optional
+from typing    import Callable, Optional
 
 from .         import has_tool, require_tool
 
@@ -39,7 +39,7 @@ class YosysBinary:
 		return has_tool(cls.YOSYS_BINARY)
 
 	@classmethod
-	def version(cls) -> Optional[Tuple[int, int, int]]:
+	def version(cls) -> Optional[tuple[int, int, int]]:
 		'''Get Yosys version.
 
 		Returns
@@ -82,7 +82,7 @@ class YosysBinary:
 
 	@classmethod
 	def run(
-		cls, args: List[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
+		cls, args: list[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		'''Run Yosys process.
 
@@ -135,7 +135,7 @@ class YosysBinary:
 				warnings.warn(message, YosysWarning, stacklevel = 3 + src_loc_at)
 		return stdout
 
-def find_yosys(requirement: Callable[[Optional[Tuple[int, int, int]]], bool]) -> YosysBinary:
+def find_yosys(requirement: Callable[[Optional[tuple[int, int, int]]], bool]) -> YosysBinary:
 	'''Find an available Yosys executable of required version.
 
 	Parameters

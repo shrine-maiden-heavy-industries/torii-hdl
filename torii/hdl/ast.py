@@ -9,7 +9,7 @@ from collections.abc   import (
 )
 from enum              import Enum
 from itertools         import chain
-from typing            import Optional, Tuple, Union
+from typing            import Optional, Union
 
 from ._unused          import MustUse, UnusedMustUse
 from ..util            import tracer, flatten, union
@@ -126,7 +126,7 @@ class Shape:
 		else:
 			return f'unsigned({self.width})'
 
-	def __eq__(self, other: Union[Tuple[int, bool], 'Shape']) -> bool:
+	def __eq__(self, other: Union[tuple[int, bool], 'Shape']) -> bool:
 		if not isinstance(other, Shape):
 			try:
 				other = self.__class__.cast(other)
@@ -421,7 +421,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
-	def matches(self, *patterns: Tuple[Union[int, str, Enum]]) -> 'Value':
+	def matches(self, *patterns: tuple[Union[int, str, Enum]]) -> 'Value':
 		'''Pattern matching.
 
 		Matches against a set of patterns, which may be integers or bit strings, recognizing
@@ -624,7 +624,7 @@ class Const(Value):
 	src_loc = None
 
 	@staticmethod
-	def normalize(value: int, shape: Tuple[int, bool]):
+	def normalize(value: int, shape: tuple[int, bool]):
 		mask = (1 << shape.width) - 1
 		value &= mask
 		if shape.signed and value >> (shape.width - 1):
@@ -632,7 +632,7 @@ class Const(Value):
 		return value
 
 	def __init__(
-		self, value: int, shape: Optional[Union[int, Tuple[int, bool]]] = None, *,
+		self, value: int, shape: Optional[Union[int, tuple[int, bool]]] = None, *,
 		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
@@ -662,7 +662,7 @@ class Const(Value):
 
 class AnyValue(Value, DUID):
 	def __init__(
-		self, shape: Union[Shape, int, Tuple[int, bool], range, type, ShapeCastable] , *,
+		self, shape: Union[Shape, int, tuple[int, bool], range, type, ShapeCastable] , *,
 		src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)

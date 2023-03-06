@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from sys    import _getframe, version_info
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 from opcode import opname
 
 __all__ = (
@@ -56,7 +56,7 @@ def get_var_name(depth: int = 2, default: Optional[Union[str, object]] = _raise_
 				return default
 
 
-def get_src_loc(src_loc_at: int = 0) -> Tuple[str, int]:
+def get_src_loc(src_loc_at: int = 0) -> tuple[str, int]:
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
