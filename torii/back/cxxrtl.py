@@ -24,7 +24,7 @@ def _convert_rtlil_text(
 			if not isinstance(box_source, str):
 				raise TypeError(f'CXXRTL black box source code must be a string, not {box_source!r}')
 
-	yosys = find_yosys(lambda ver: ver >= (0, 10))
+	yosys = find_yosys()
 
 	script = []
 	if black_boxes is not None:

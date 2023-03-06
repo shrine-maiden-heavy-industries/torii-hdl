@@ -135,7 +135,28 @@ class YosysBinary:
 				warnings.warn(message, YosysWarning, stacklevel = 3 + src_loc_at)
 		return stdout
 
-def find_yosys(requirement: Callable[[Optional[tuple[int, int, int]]], bool]) -> YosysBinary:
+def min_yosys_version(version: tuple[int, int, int]) -> bool:
+	'''
+	Returns if the yosys version is greater than or equal to the minimum
+	required version
+
+	Parameters
+	----------
+	version: tuple[int, int, int]
+		The version of Yosys found on the system
+
+	Returns
+	-------
+	bool:
+		If the version meets the minimum requirement. (currently 0.15)
+
+	'''
+
+	return version >= (0, 15)
+
+def find_yosys(
+	requirement: Callable[[Optional[tuple[int, int, int]]], bool] = min_yosys_version
+) -> YosysBinary:
 	'''Find an available Yosys executable of required version.
 
 	Parameters

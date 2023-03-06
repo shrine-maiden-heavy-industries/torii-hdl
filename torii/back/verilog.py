@@ -16,8 +16,8 @@ __all__ = (
 def _convert_rtlil_text(
 	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str] = ()
 ) -> str:
-	# this version requirement needs to be synchronized with the one in setup.py!
-	yosys = find_yosys(lambda ver: ver >= (0, 10))
+
+	yosys = find_yosys()
 	yosys_version = yosys.version()
 
 	script = []
