@@ -21,4 +21,7 @@ __pycache__/
 # misc user-created
 /*.il
 /*.v
+/*.sv
+/*.vhd
+/*.vhdl
 /build
