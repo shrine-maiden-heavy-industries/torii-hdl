@@ -161,7 +161,7 @@ Specifying a shape with a range is convenient for counters, indexes, and all oth
 
 ```
 ```{eval-rst}
-.. warning::
+.. note::
 
    Python ranges are *exclusive* or *half-open*, meaning they do not contain their ``.stop`` element. Because of this, values with shapes cast from a ``range(stop)`` where ``stop`` is a power of 2 are not wide enough to represent ``stop`` itself:
 
@@ -173,7 +173,7 @@ Specifying a shape with a range is convenient for counters, indexes, and all oth
       >>> fencepost.value
       0
 
-   Be mindful of this edge case!
+   This is detected in :py:class:`Const` and :py:class:`Signal` when invoked with a suspected off-by-one error, which then emits a diagnostic message.
 
 ```
 

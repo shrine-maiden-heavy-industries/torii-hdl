@@ -717,6 +717,14 @@ class Const(Value):
 		elif isinstance(shape, int):
 			shape = Shape(shape, signed = self.value < 0)
 		else:
+			if isinstance(shape, range) and self.value == shape.stop:
+				warnings.warn(
+					message =
+						f'Value {self.value!r} equals the non-inclusive end of the constant '
+						f'shape {shape!r}; this is likely an off-by-one error',
+					category = SyntaxWarning,
+					stacklevel = 2
+				)
 			shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 		self.width  = shape.width
 		self.signed = shape.signed
@@ -1138,6 +1146,15 @@ class Signal(Value, DUID):
 				)
 		self.reset = reset.value
 		self.reset_less = bool(reset_less)
+
+		if isinstance(orig_shape, range) and self.reset == orig_shape.stop:
+			warnings.warn(
+				message =
+					f'Reset value {self.reset!r} equals the non-inclusive end of the signal '
+					f'shape {orig_shape!r}; this is likely an off-by-one error',
+				category = SyntaxWarning,
+				stacklevel = 2
+			)
 
 		self.attrs = OrderedDict(() if attrs is None else attrs)
 
