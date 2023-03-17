@@ -470,7 +470,7 @@ The following table lists the bitwise and shift operations provided by Torii:
 |--------------------|----------------------------------------------------|
 | `~a`               | bitwise NOT; complement                            |
 | `a & b`            | bitwise AND                                        |
-| `a | b`            | bitwise OR                                         |
+| `a \| b`           | bitwise OR                                         |
 | `a ^ b`            | bitwise XOR                                        |
 | `a.implies(b)`     | bitwise [IMPLY]                                    |
 | `a >> b`           | arithmetic right shift by variable amount [^1][^2] |
@@ -530,7 +530,7 @@ The following table lists the Python logical expressions and their Torii equival
 |-------------------|---------------------------------|
 | `not a`           | `~(a).bool()`                   |
 | `a and b`         | `(a).bool() & (b).bool()`       |
-| `a or b`          | `(a).bool() | (b).bool()`       |
+| `a or b`          | `(a).bool() \| (b).bool()`      |
 
 
 When the operands are known to be boolean values, such as comparisons, reductions, or boolean signals, the `.bool()` conversion may be omitted for clarity:
@@ -540,7 +540,7 @@ When the operands are known to be boolean values, such as comparisons, reduction
 |-------------------|-------------------------------------|
 | `not p`           | `~(p)`                              |
 | `p and q`         | `(p) & (q)`                         |
-| `p or q`          | `(p) | (q)`                         |
+| `p or q`          | `(p) \| (q)`                        |
 
 
 ```{eval-rst}
