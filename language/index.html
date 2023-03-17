@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev15 documentation</title>
+  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev16 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../_static/platformpicker.css" type="text/css" />
@@ -14,7 +14,8 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
@@ -778,8 +779,8 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&amp;</span> <span class="pre">b</span></code></p></td>
 <td><p>bitwise AND</p></td>
 </tr>
-<tr class="row-even"><td><p>`a</p></td>
-<td><p>b`</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">|</span> <span class="pre">b</span></code></p></td>
+<td><p>bitwise OR</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">^</span> <span class="pre">b</span></code></p></td>
 <td><p>bitwise XOR</p></td>
@@ -862,7 +863,7 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">(a).bool()</span> <span class="pre">&amp;</span> <span class="pre">(b).bool()</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">or</span> <span class="pre">b</span></code></p></td>
-<td><p>`(a).bool()</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(a).bool()</span> <span class="pre">|</span> <span class="pre">(b).bool()</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -881,7 +882,7 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">(p)</span> <span class="pre">&amp;</span> <span class="pre">(q)</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">or</span> <span class="pre">q</span></code></p></td>
-<td><p>`(p)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(p)</span> <span class="pre">|</span> <span class="pre">(q)</span></code></p></td>
 </tr>
 </tbody>
 </table>
