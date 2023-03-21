@@ -3,12 +3,11 @@
 import os
 import ctypes
 import tempfile
-import unittest
 
-from torii.tools.cxx import *
+from torii.tools.cxx import build_cxx
+from torii.test      import ToriiTestCase
 
-
-class ToolchainCxxTestCase(unittest.TestCase):
+class ToolchainCxxTestCase(ToriiTestCase):
 	def setUp(self):
 		self.include_dir = None
 		self.build_dir = None

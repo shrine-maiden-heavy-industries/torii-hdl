@@ -1,14 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii                      import *
 from torii.sim                  import *
 from torii.lib.soc              import csr
 from torii.lib.soc.csr.wishbone import *
 
-
+from ....utils                  import ToriiTestSuiteCase
 class MockRegister(Elaboratable):
 	def __init__(self, width, name):
 		self.element = csr.Element(width, 'rw', name = name)
@@ -30,7 +28,7 @@ class MockRegister(Elaboratable):
 		return m
 
 
-class WishboneCSRBridgeTestCase(unittest.TestCase):
+class WishboneCSRBridgeTestCase(ToriiTestSuiteCase):
 	def test_wrong_csr_bus(self):
 		with self.assertRaisesRegex(
 			ValueError,

@@ -5,10 +5,10 @@ from torii.hdl.rec import *
 from torii.sim     import *
 from torii.lib.io  import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
 
-class PinLayoutTestCase(FHDLTestCase):
+class PinLayoutTestCase(ToriiTestSuiteCase):
 	def assertLayoutEqual(self, layout, expected):
 		casted_layout = {}
 		for name, (shape, dir) in layout.items():
@@ -203,7 +203,7 @@ class PinLayoutDDRTestCase(PinLayoutTestCase):
 		})
 
 
-class PinTestCase(FHDLTestCase):
+class PinTestCase(ToriiTestSuiteCase):
 	def test_attributes(self):
 		pin = Pin(2, dir = 'io', xdr = 2)
 		self.assertEqual(pin.width, 2)

@@ -7,9 +7,9 @@ from torii.lib.io    import *
 from torii.build.dsl import *
 from torii.build.res import *
 
-from ..utils         import *
+from ..utils         import ToriiTestSuiteCase
 
-class ResourceManagerTestCase(FHDLTestCase):
+class ResourceManagerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.resources = [
 			Resource('clk100', 0, DiffPairs('H1', 'H2', dir = 'i'), Clock(100e6)),

@@ -15,7 +15,7 @@ from torii.sim     import *
 
 from ..utils       import *
 
-class SimulatorUnitTestCase(FHDLTestCase):
+class SimulatorUnitTestCase(ToriiTestSuiteCase):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
 		inputs = [Value.cast(i) for i in inputs]
 		output = Value.cast(output)
@@ -821,7 +821,7 @@ class SimulatorUnitTestCase(FHDLTestCase):
 		)
 
 
-class SimulatorIntegrationTestCase(FHDLTestCase):
+class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 	@contextmanager
 	def assertSimulation(self, module, deadline = None):
 		sim = Simulator(module)
@@ -1316,7 +1316,7 @@ class SimulatorIntegrationTestCase(FHDLTestCase):
 					pass
 
 
-class SimulatorRegressionTestCase(FHDLTestCase):
+class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 	def test_bug_325(self):
 		dut = Module()
 		dut.d.comb += Signal().eq(Cat())

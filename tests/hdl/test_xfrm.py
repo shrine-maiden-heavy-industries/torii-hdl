@@ -7,10 +7,10 @@ from torii.hdl.ir   import *
 from torii.hdl.xfrm import *
 from torii.hdl.mem  import *
 
-from ..utils        import *
+from ..utils        import ToriiTestSuiteCase
 
 
-class DomainRenamerTestCase(FHDLTestCase):
+class DomainRenamerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()
 		self.s2 = Signal()
@@ -126,7 +126,7 @@ class DomainRenamerTestCase(FHDLTestCase):
 			DomainRenamer({'comb': 'sync'})
 
 
-class DomainLowererTestCase(FHDLTestCase):
+class DomainLowererTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s = Signal()
 
@@ -216,7 +216,7 @@ class DomainLowererTestCase(FHDLTestCase):
 			DomainLowerer()(f)
 
 
-class SampleLowererTestCase(FHDLTestCase):
+class SampleLowererTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.i = Signal()
 		self.o1 = Signal()
@@ -262,7 +262,7 @@ class SampleLowererTestCase(FHDLTestCase):
 		self.assertEqual(len(f.drivers['sync']), 2)
 
 
-class SwitchCleanerTestCase(FHDLTestCase):
+class SwitchCleanerTestCase(ToriiTestSuiteCase):
 	def test_clean(self):
 		a = Signal()
 		b = Signal()
@@ -290,7 +290,7 @@ class SwitchCleanerTestCase(FHDLTestCase):
 		''')
 
 
-class LHSGroupAnalyzerTestCase(FHDLTestCase):
+class LHSGroupAnalyzerTestCase(ToriiTestSuiteCase):
 	def test_no_group_unrelated(self):
 		a = Signal()
 		b = Signal()
@@ -358,7 +358,7 @@ class LHSGroupAnalyzerTestCase(FHDLTestCase):
 		])
 
 
-class LHSGroupFilterTestCase(FHDLTestCase):
+class LHSGroupFilterTestCase(ToriiTestSuiteCase):
 	def test_filter(self):
 		a = Signal()
 		b = Signal()
@@ -390,7 +390,7 @@ class LHSGroupFilterTestCase(FHDLTestCase):
 		self.assertRepr(LHSGroupFilter(SignalSet())(stmts), '()')
 
 
-class ResetInserterTestCase(FHDLTestCase):
+class ResetInserterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()
 		self.s2 = Signal(reset = 1)
@@ -470,7 +470,7 @@ class ResetInserterTestCase(FHDLTestCase):
 		''')
 
 
-class EnableInserterTestCase(FHDLTestCase):
+class EnableInserterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()
 		self.s2 = Signal()
@@ -575,7 +575,7 @@ class _MockElaboratable(Elaboratable):
 		return f
 
 
-class TransformedElaboratableTestCase(FHDLTestCase):
+class TransformedElaboratableTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.c1 = Signal()
 		self.c2 = Signal()

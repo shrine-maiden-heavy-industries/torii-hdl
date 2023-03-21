@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import unittest
-
 from torii.lib.soc.memory import _RangeMap, ResourceInfo, MemoryMap
 
-class RangeMapTestCase(unittest.TestCase):
+from ...utils             import ToriiTestSuiteCase
+
+class RangeMapTestCase(ToriiTestSuiteCase):
 	def test_insert(self):
 		range_map = _RangeMap()
 		range_map.insert(range(0, 10), 'a')
@@ -41,7 +41,7 @@ class RangeMapTestCase(unittest.TestCase):
 		self.assertEqual(range_map.get(15), None)
 
 
-class ResourceInfoTestCase(unittest.TestCase):
+class ResourceInfoTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		info = ResourceInfo('a', name = ('foo', 'bar'), start = 0, end = 1, width = 8)
 		self.assertEqual(info.name, ('foo', 'bar'))
@@ -107,7 +107,7 @@ class ResourceInfoTestCase(unittest.TestCase):
 			ResourceInfo('a', name = 'b', start = 0, end = 1, width = -1)
 
 
-class MemoryMapTestCase(unittest.TestCase):
+class MemoryMapTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		memory_map_0 = MemoryMap(addr_width = 1, data_width = 8)
 		memory_map_1 = MemoryMap(addr_width = 1, data_width = 8, name = None)
@@ -489,7 +489,7 @@ class MemoryMapTestCase(unittest.TestCase):
 			memory_map.align_to(alignment = -1)
 
 
-class MemoryMapDiscoveryTestCase(unittest.TestCase):
+class MemoryMapDiscoveryTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.root = MemoryMap(addr_width = 32, data_width = 32)
 		self.res1 = 'res1'

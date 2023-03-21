@@ -2,10 +2,10 @@
 
 from torii.hdl.cd import *
 
-from ..utils      import *
+from ..utils      import ToriiTestSuiteCase
 
 
-class ClockDomainTestCase(FHDLTestCase):
+class ClockDomainTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		sync = ClockDomain()
 		self.assertEqual(sync.name, 'sync')

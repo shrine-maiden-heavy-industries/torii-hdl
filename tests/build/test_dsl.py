@@ -4,10 +4,10 @@ from collections     import OrderedDict
 
 from torii.build.dsl import *
 
-from ..utils         import *
+from ..utils         import ToriiTestSuiteCase
 
 
-class PinsTestCase(FHDLTestCase):
+class PinsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		p = Pins('A0 A1 A2')
 		self.assertEqual(repr(p), '(pins io A0 A1 A2)')
@@ -92,7 +92,7 @@ class PinsTestCase(FHDLTestCase):
 			Pins('0 1 2', assert_width = 4)
 
 
-class DiffPairsTestCase(FHDLTestCase):
+class DiffPairsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		dp = DiffPairs(p = 'A0 A1', n = 'B0 B1')
 		self.assertEqual(repr(dp), '(diffpairs io (p A0 A1) (n B0 B1))')
@@ -143,7 +143,7 @@ class DiffPairsTestCase(FHDLTestCase):
 			DiffPairs('0 1 2', '3 4 5', assert_width = 4)
 
 
-class AttrsTestCase(FHDLTestCase):
+class AttrsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		a = Attrs(IO_STANDARD = 'LVCMOS33', PULLUP = 1)
 		self.assertEqual(a['IO_STANDARD'], 'LVCMOS33')
@@ -170,7 +170,7 @@ class AttrsTestCase(FHDLTestCase):
 			Attrs(FOO = 1.0)
 
 
-class ClockTestCase(FHDLTestCase):
+class ClockTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		c = Clock(1_000_000)
 		self.assertEqual(c.frequency, 1e6)
@@ -178,7 +178,7 @@ class ClockTestCase(FHDLTestCase):
 		self.assertEqual(repr(c), '(clock 1000000.0)')
 
 
-class SubsignalTestCase(FHDLTestCase):
+class SubsignalTestCase(ToriiTestSuiteCase):
 	def test_basic_pins(self):
 		s = Subsignal('a', Pins('A0'), Attrs(IOSTANDARD = 'LVCMOS33'))
 		self.assertEqual(
@@ -279,7 +279,7 @@ class SubsignalTestCase(FHDLTestCase):
 			Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
 
 
-class ResourceTestCase(FHDLTestCase):
+class ResourceTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		r = Resource('serial', 0,
 			Subsignal('tx', Pins('A0', dir = 'o')),
@@ -318,7 +318,7 @@ class ResourceTestCase(FHDLTestCase):
 		self.assertEqual(r4.ios, ios)
 
 
-class ConnectorTestCase(FHDLTestCase):
+class ConnectorTestCase(ToriiTestSuiteCase):
 	def test_string(self):
 		c = Connector('pmod', 0, 'A0 A1 A2 A3 - - A4 A5 A6 A7 - -')
 		self.assertEqual(c.name, 'pmod')

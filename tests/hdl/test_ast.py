@@ -5,7 +5,7 @@ from enum          import Enum
 
 from torii.hdl.ast import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
 
 class UnsignedEnum(Enum):
@@ -31,7 +31,7 @@ class TypedEnum(int, Enum):
 	BAZ = 3
 
 
-class ShapeTestCase(FHDLTestCase):
+class ShapeTestCase(ToriiTestSuiteCase):
 	def test_make(self):
 		s1 = Shape()
 		self.assertEqual(s1.width, 1)
@@ -173,7 +173,7 @@ class MockShapeCastableNoOverride(ShapeCastable):
 		pass
 
 
-class ShapeCastableTestCase(FHDLTestCase):
+class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -200,7 +200,7 @@ class ShapeCastableTestCase(FHDLTestCase):
 		self.assertEqual(Shape.cast(sc), unsigned(1))
 
 
-class ValueTestCase(FHDLTestCase):
+class ValueTestCase(ToriiTestSuiteCase):
 	def test_cast(self):
 		self.assertIsInstance(Value.cast(0), Const)
 		self.assertIsInstance(Value.cast(True), Const)
@@ -439,7 +439,7 @@ class ValueTestCase(FHDLTestCase):
 			Const(31).rotate_right('str')
 
 
-class ConstTestCase(FHDLTestCase):
+class ConstTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		self.assertEqual(Const(0).shape(),   unsigned(1))
 		self.assertIsInstance(Const(0).shape(), Shape)
@@ -474,7 +474,7 @@ class ConstTestCase(FHDLTestCase):
 			hash(Const(0))
 
 
-class OperatorTestCase(FHDLTestCase):
+class OperatorTestCase(ToriiTestSuiteCase):
 	def test_bool(self):
 		v = Const(0, 4).bool()
 		self.assertEqual(repr(v), '(b (const 4\'d0))')
@@ -749,7 +749,7 @@ class OperatorTestCase(FHDLTestCase):
 			hash(Const(0) + Const(0))
 
 
-class SliceTestCase(FHDLTestCase):
+class SliceTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		s1 = Const(10)[2]
 		self.assertEqual(s1.shape(), unsigned(1))
@@ -805,7 +805,7 @@ class SliceTestCase(FHDLTestCase):
 		self.assertEqual(repr(s1), '(slice (const 4\'d10) 2:3)')
 
 
-class BitSelectTestCase(FHDLTestCase):
+class BitSelectTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.c = Const(0, 8)
 		self.s = Signal(range(self.c.width))
@@ -838,7 +838,7 @@ class BitSelectTestCase(FHDLTestCase):
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 1)')
 
 
-class WordSelectTestCase(FHDLTestCase):
+class WordSelectTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.c = Const(0, 8)
 		self.s = Signal(range(self.c.width))
@@ -870,7 +870,7 @@ class WordSelectTestCase(FHDLTestCase):
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 2)')
 
 
-class CatTestCase(FHDLTestCase):
+class CatTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		c0 = Cat()
 		self.assertEqual(c0.shape(), unsigned(0))
@@ -929,7 +929,7 @@ class CatTestCase(FHDLTestCase):
 			Cat(2)
 
 
-class ReplTestCase(FHDLTestCase):
+class ReplTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		s1 = Repl(Const(10), 3)
 		self.assertEqual(s1.shape(), unsigned(12))
@@ -966,7 +966,7 @@ class ReplTestCase(FHDLTestCase):
 			Repl(2, 3)
 
 
-class ArrayTestCase(FHDLTestCase):
+class ArrayTestCase(ToriiTestSuiteCase):
 	def test_acts_like_array(self):
 		a = Array([1, 2, 3])
 		self.assertSequenceEqual(a, [1, 2, 3])
@@ -1008,7 +1008,7 @@ class ArrayTestCase(FHDLTestCase):
 		self.assertEqual(repr(a), '(array [1, 2, 3])')
 
 
-class ArrayProxyTestCase(FHDLTestCase):
+class ArrayProxyTestCase(ToriiTestSuiteCase):
 	def test_index_shape(self):
 		m = Array(Array(x * y for y in range(1, 4)) for x in range(1, 4))
 		a = Signal(range(3))
@@ -1054,7 +1054,7 @@ class ArrayProxyTestCase(FHDLTestCase):
 		self.assertEqual(repr(v), '(proxy (array [1, 2, 3]) (sig s))')
 
 
-class SignalTestCase(FHDLTestCase):
+class SignalTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		s1 = Signal()
 		self.assertEqual(s1.shape(), unsigned(1))
@@ -1167,7 +1167,7 @@ class SignalTestCase(FHDLTestCase):
 		self.assertEqual(s2.decoder(SignedEnum.FOO), 'FOO/-1')
 
 
-class ClockSignalTestCase(FHDLTestCase):
+class ClockSignalTestCase(ToriiTestSuiteCase):
 	def test_domain(self):
 		s1 = ClockSignal()
 		self.assertEqual(s1.domain, 'sync')
@@ -1197,7 +1197,7 @@ class ClockSignalTestCase(FHDLTestCase):
 			ClockSignal('comb')
 
 
-class ResetSignalTestCase(FHDLTestCase):
+class ResetSignalTestCase(ToriiTestSuiteCase):
 	def test_domain(self):
 		s1 = ResetSignal()
 		self.assertEqual(s1.domain, 'sync')
@@ -1269,7 +1269,7 @@ class MockValueCastableCustomGetattr(ValueCastable):
 		assert False
 
 
-class ValueCastableTestCase(FHDLTestCase):
+class ValueCastableTestCase(ToriiTestSuiteCase):
 	def test_not_decorated(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -1314,7 +1314,7 @@ class ValueCastableTestCase(FHDLTestCase):
 		self.assertIsInstance(Value.cast(vc), Signal)
 
 
-class SampleTestCase(FHDLTestCase):
+class SampleTestCase(ToriiTestSuiteCase):
 	def test_const(self):
 		s = Sample(1, 1, 'sync')
 		self.assertEqual(s.shape(), unsigned(1))
@@ -1350,13 +1350,13 @@ class SampleTestCase(FHDLTestCase):
 			Sample(Signal(), 1, 0)
 
 
-class InitialTestCase(FHDLTestCase):
+class InitialTestCase(ToriiTestSuiteCase):
 	def test_initial(self):
 		i = Initial()
 		self.assertEqual(i.shape(), unsigned(1))
 
 
-class SwitchTestCase(FHDLTestCase):
+class SwitchTestCase(ToriiTestSuiteCase):
 	def test_default_case(self):
 		s = Switch(Const(0), {None: []})
 		self.assertEqual(s.cases, {(): []})

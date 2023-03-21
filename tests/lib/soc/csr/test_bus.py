@@ -1,16 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii                 import *
 from torii.hdl.rec         import Layout
 from torii.sim             import *
 from torii.lib.soc.csr.bus import *
 from torii.lib.soc.memory  import MemoryMap
 
-
-class ElementTestCase(unittest.TestCase):
+from ....utils             import ToriiTestSuiteCase
+class ElementTestCase(ToriiTestSuiteCase):
 	def test_layout_1_ro(self):
 		elem = Element(1, 'r')
 		self.assertEqual(elem.width, 1)
@@ -66,7 +64,7 @@ class ElementTestCase(unittest.TestCase):
 			Element(width = 1, access = 'wo')
 
 
-class InterfaceTestCase(unittest.TestCase):
+class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_layout(self):
 		iface = Interface(addr_width = 12, data_width = 8)
 		self.assertEqual(iface.addr_width, 12)
@@ -139,7 +137,7 @@ class InterfaceTestCase(unittest.TestCase):
 			iface.memory_map = MemoryMap(addr_width = 16, data_width = 16)
 
 
-class MultiplexerTestCase(unittest.TestCase):
+class MultiplexerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Multiplexer(addr_width = 16, data_width = 8)
 
@@ -274,7 +272,7 @@ class MultiplexerTestCase(unittest.TestCase):
 			sim.run()
 
 
-class MultiplexerAlignedTestCase(unittest.TestCase):
+class MultiplexerAlignedTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Multiplexer(addr_width = 16, data_width = 8, alignment = 2)
 
@@ -334,7 +332,7 @@ class MultiplexerAlignedTestCase(unittest.TestCase):
 			sim.run()
 
 
-class DecoderTestCase(unittest.TestCase):
+class DecoderTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Decoder(addr_width = 16, data_width = 8)
 

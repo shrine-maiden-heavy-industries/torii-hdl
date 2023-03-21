@@ -6,20 +6,20 @@ import shutil
 import subprocess
 import textwrap
 import traceback
-import unittest
 
 from torii.hdl.ast    import *
 from torii.hdl.ir     import *
 from torii.back       import rtlil
 from torii.tools      import require_tool
+from torii.test       import ToriiTestCase
 
 
 __all__ = (
-	'FHDLTestCase',
+	'ToriiTestSuiteCase',
 )
 
 
-class FHDLTestCase(unittest.TestCase):
+class ToriiTestSuiteCase(ToriiTestCase):
 	def assertRepr(self, obj, repr_str):
 		if isinstance(obj, list):
 			obj = Statement.cast(obj)

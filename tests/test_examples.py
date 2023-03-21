@@ -4,7 +4,7 @@ import sys
 import subprocess
 from pathlib import Path
 
-from .utils  import *
+from .utils  import ToriiTestSuiteCase
 
 def example_test(name):
 	path = (Path(__file__).parent / '..' / 'examples' / name).resolve()
@@ -18,7 +18,7 @@ def example_test(name):
 	return test_function
 
 
-class ExamplesTestCase(FHDLTestCase):
+class ExamplesTestCase(ToriiTestSuiteCase):
 	test_alu        = example_test('basic/alu.py')
 	test_alu_hier   = example_test('basic/alu_hier.py')
 	test_arst       = example_test('basic/arst.py')

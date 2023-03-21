@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii               import *
 from torii.sim           import *
 from torii.lib.soc.event import *
 
+from ...utils            import ToriiTestSuiteCase
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
@@ -16,7 +15,7 @@ def simulation_test(dut, process):
 		sim.run()
 
 
-class SourceTestCase(unittest.TestCase):
+class SourceTestCase(ToriiTestSuiteCase):
 	def test_level(self):
 		src = Source(trigger = 'level')
 		self.assertEqual(src.trigger, Source.Trigger.LEVEL)
@@ -62,7 +61,7 @@ class SourceTestCase(unittest.TestCase):
 			src.event_map = 'foo'
 
 
-class EventMapTestCase(unittest.TestCase):
+class EventMapTestCase(ToriiTestSuiteCase):
 	def test_add(self):
 		src_0 = Source()
 		src_1 = Source()
@@ -138,7 +137,7 @@ class EventMapTestCase(unittest.TestCase):
 		])
 
 
-class MonitorTestCase(unittest.TestCase):
+class MonitorTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		sub_0 = Source()
 		sub_1 = Source()

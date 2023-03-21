@@ -4,9 +4,9 @@
 from torii.hdl.ast import *
 from torii.hdl.mem import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
-class MemoryTestCase(FHDLTestCase):
+class MemoryTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		m1 = Memory(width = 8, depth = 4)
 		self.assertEqual(m1.name, 'm1')
@@ -137,7 +137,7 @@ class MemoryTestCase(FHDLTestCase):
 			mem.write_port(granularity = 3)
 
 
-class DummyPortTestCase(FHDLTestCase):
+class DummyPortTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		p1 = DummyPort(data_width = 8, addr_width = 2)
 		self.assertEqual(p1.addr.name, 'p1_addr')

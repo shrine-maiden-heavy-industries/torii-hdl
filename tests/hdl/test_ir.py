@@ -8,7 +8,7 @@ from torii.hdl.cd  import *
 from torii.hdl.ir  import *
 from torii.hdl.mem import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
 
 class ElaboratesToNone(Elaboratable):
@@ -21,7 +21,7 @@ class ElaboratesToSelf(Elaboratable):
 		return self
 
 
-class FragmentGetTestCase(FHDLTestCase):
+class FragmentGetTestCase(ToriiTestSuiteCase):
 	def test_get_wrong_none(self):
 		with self.assertRaisesRegex(
 			AttributeError,
@@ -47,7 +47,7 @@ class FragmentGetTestCase(FHDLTestCase):
 			Fragment.get(ElaboratesToSelf(), platform = None)
 
 
-class FragmentGeneratedTestCase(FHDLTestCase):
+class FragmentGeneratedTestCase(ToriiTestSuiteCase):
 	def test_find_subfragment(self):
 		f1 = Fragment()
 		f2 = Fragment()
@@ -84,14 +84,14 @@ class FragmentGeneratedTestCase(FHDLTestCase):
 		)
 
 
-class FragmentDriversTestCase(FHDLTestCase):
+class FragmentDriversTestCase(ToriiTestSuiteCase):
 	def test_empty(self):
 		f = Fragment()
 		self.assertEqual(list(f.iter_comb()), [])
 		self.assertEqual(list(f.iter_sync()), [])
 
 
-class FragmentPortsTestCase(FHDLTestCase):
+class FragmentPortsTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()
 		self.s2 = Signal()
@@ -347,7 +347,7 @@ class FragmentPortsTestCase(FHDLTestCase):
 		):
 			f.prepare(ports = Const(1))
 
-class FragmentDomainsTestCase(FHDLTestCase):
+class FragmentDomainsTestCase(ToriiTestSuiteCase):
 	def test_iter_signals(self):
 		cd1 = ClockDomain()
 		cd2 = ClockDomain(reset_less = True)
@@ -592,7 +592,7 @@ class FragmentDomainsTestCase(FHDLTestCase):
 			f1._propagate_domains(missing_domain = lambda name: f2)
 
 
-class FragmentHierarchyConflictTestCase(FHDLTestCase):
+class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 	def setUp_self_sub(self):
 		self.s1 = Signal()
 		self.c1 = Signal()
@@ -782,7 +782,7 @@ class FragmentHierarchyConflictTestCase(FHDLTestCase):
 		f3.prepare()
 
 
-class InstanceTestCase(FHDLTestCase):
+class InstanceTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
 		s1 = Signal()
 		s2 = Signal()

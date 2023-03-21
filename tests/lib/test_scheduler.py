@@ -1,16 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii.hdl           import *
 from torii.asserts       import *
 from torii.sim           import *
 from torii.lib.scheduler import *
 
-from ..utils             import *
+from ..utils             import ToriiTestSuiteCase
 
-class RoundRobinTestCase(unittest.TestCase):
+class RoundRobinTestCase(ToriiTestSuiteCase):
 	def test_count(self):
 		dut = RoundRobin(count = 32)
 		self.assertEqual(dut.count, 32)
@@ -28,7 +26,7 @@ class RoundRobinTestCase(unittest.TestCase):
 			RoundRobin(count = -1)
 
 
-class RoundRobinSimulationTestCase(unittest.TestCase):
+class RoundRobinSimulationTestCase(ToriiTestSuiteCase):
 	def test_count_one(self):
 		dut = RoundRobin(count = 1)
 		sim = Simulator(dut)

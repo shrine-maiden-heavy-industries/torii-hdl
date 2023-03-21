@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import unittest
 
 from torii.lib.soc.periph import *
 from torii.lib.soc.memory import MemoryMap
 from torii.lib.soc        import event
 
+from ...utils             import ToriiTestSuiteCase
 
-class ConstantBoolTestCase(unittest.TestCase):
+class ConstantBoolTestCase(ToriiTestSuiteCase):
 	def test_init(self):
 		a = ConstantBool(True)
 		b = ConstantBool(False)
@@ -22,7 +22,7 @@ class ConstantBoolTestCase(unittest.TestCase):
 		self.assertEqual(repr(ConstantBool(True)), 'ConstantBool(True)')
 
 
-class ConstantIntTestCase(unittest.TestCase):
+class ConstantIntTestCase(ToriiTestSuiteCase):
 	def test_init(self):
 		c = ConstantInt(5, width = 8, signed = True)
 		self.assertEqual(c.value,  5)
@@ -61,7 +61,7 @@ class ConstantIntTestCase(unittest.TestCase):
 		)
 
 
-class ConstantMapTestCase(unittest.TestCase):
+class ConstantMapTestCase(ToriiTestSuiteCase):
 	def test_init(self):
 		constant_map = ConstantMap(A = 5, B = True, C = ConstantBool(False))
 		self.assertEqual(
@@ -101,7 +101,7 @@ class ConstantMapTestCase(unittest.TestCase):
 		self.assertEqual(len(constant_map), 2)
 
 
-class PeripheralInfoTestCase(unittest.TestCase):
+class PeripheralInfoTestCase(ToriiTestSuiteCase):
 	def test_memory_map(self):
 		memory_map = MemoryMap(addr_width = 1, data_width = 8)
 		info = PeripheralInfo(memory_map = memory_map)

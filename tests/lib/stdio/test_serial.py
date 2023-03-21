@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii                  import *
 from torii.lib.fifo         import SyncFIFO
 from torii.lib.io           import pin_layout
@@ -10,6 +8,7 @@ from torii.sim              import *
 
 from torii.lib.stdio.serial import *
 
+from ...utils               import ToriiTestSuiteCase
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
@@ -19,7 +18,7 @@ def simulation_test(dut, process):
 		sim.run()
 
 
-class AsyncSerialRXTestCase(unittest.TestCase):
+class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 	def tx_period(self):
 		for _ in range((yield self.dut.divisor)):
 			yield
@@ -143,7 +142,7 @@ class AsyncSerialRXTestCase(unittest.TestCase):
 		simulation_test(m, process)
 
 
-class AsyncSerialTXTestCase(unittest.TestCase):
+class AsyncSerialTXTestCase(ToriiTestSuiteCase):
 	def tx_period(self):
 		for _ in range((yield self.dut.divisor)):
 			yield
@@ -238,7 +237,7 @@ class AsyncSerialTXTestCase(unittest.TestCase):
 		simulation_test(m, process)
 
 
-class AsyncSerialTestCase(unittest.TestCase):
+class AsyncSerialTestCase(ToriiTestSuiteCase):
 	def test_loopback(self):
 		pins = Record([
 			('rx', pin_layout(1, dir = 'i')),

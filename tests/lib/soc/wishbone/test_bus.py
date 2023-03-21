@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii                      import *
 from torii.hdl.rec              import *
 from torii.sim                  import *
 from torii.lib.soc.wishbone.bus import *
 from torii.lib.soc.memory       import MemoryMap
 
+from ....utils                  import ToriiTestSuiteCase
 
-class InterfaceTestCase(unittest.TestCase):
+class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		iface = Interface(addr_width = 32, data_width = 8)
 		self.assertEqual(iface.addr_width, 32)
@@ -146,7 +145,7 @@ class InterfaceTestCase(unittest.TestCase):
 			iface.memory_map = MemoryMap(addr_width = 30, data_width = 8)
 
 
-class DecoderTestCase(unittest.TestCase):
+class DecoderTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Decoder(addr_width = 31, data_width = 32, granularity = 16)
 
@@ -225,7 +224,7 @@ class DecoderTestCase(unittest.TestCase):
 			self.dut.add(sub, addr = 1)
 
 
-class DecoderSimulationTestCase(unittest.TestCase):
+class DecoderSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		dut = Decoder(
 			addr_width = 30, data_width = 32, granularity = 8,
@@ -433,7 +432,7 @@ class DecoderSimulationTestCase(unittest.TestCase):
 			sim.run()
 
 
-class ArbiterTestCase(unittest.TestCase):
+class ArbiterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Arbiter(
 			addr_width = 31, data_width = 32, granularity = 16,
@@ -480,7 +479,7 @@ class ArbiterTestCase(unittest.TestCase):
 			self.dut.add(Interface(addr_width = 31, data_width = 32, granularity = 16))
 
 
-class ArbiterSimulationTestCase(unittest.TestCase):
+class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		dut = Arbiter(
 			addr_width = 30, data_width = 32, granularity = 8,

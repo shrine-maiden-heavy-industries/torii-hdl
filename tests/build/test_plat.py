@@ -3,7 +3,7 @@
 from torii            import *
 from torii.build.plat import *
 
-from ..utils          import *
+from ..utils          import ToriiTestSuiteCase
 
 
 class MockPlatform(Platform):
@@ -16,7 +16,7 @@ class MockPlatform(Platform):
 		raise NotImplementedError
 
 
-class PlatformTestCase(FHDLTestCase):
+class PlatformTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.platform = MockPlatform()
 

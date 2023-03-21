@@ -5,7 +5,7 @@ from enum          import Enum
 from torii.hdl.ast import *
 from torii.hdl.rec import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
 
 class UnsignedEnum(Enum):
@@ -14,7 +14,7 @@ class UnsignedEnum(Enum):
 	BAZ = 3
 
 
-class LayoutTestCase(FHDLTestCase):
+class LayoutTestCase(ToriiTestSuiteCase):
 	def assertFieldEqual(self, field, expected):
 		(shape, dir) = field
 		shape = Shape.cast(shape)
@@ -120,7 +120,7 @@ class LayoutTestCase(FHDLTestCase):
 			Layout.cast([('a', 'x')])
 
 
-class RecordTestCase(FHDLTestCase):
+class RecordTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		r = Record([
 			('stb',  1),
@@ -362,7 +362,7 @@ class RecordTestCase(FHDLTestCase):
 		self.assertEqual(repr(r1.eq(s1)), '(eq (cat (sig r1__a)) (sig s1))')
 
 
-class ConnectTestCase(FHDLTestCase):
+class ConnectTestCase(ToriiTestSuiteCase):
 	def setUp_flat(self):
 		self.core_layout = [
 			('addr',   32, DIR_FANOUT),

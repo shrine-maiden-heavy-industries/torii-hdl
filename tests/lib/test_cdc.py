@@ -5,9 +5,9 @@ from torii.hdl     import *
 from torii.sim     import *
 from torii.lib.cdc import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
-class FFSynchronizerTestCase(FHDLTestCase):
+class FFSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -61,7 +61,7 @@ class FFSynchronizerTestCase(FHDLTestCase):
 		sim.run()
 
 
-class AsyncFFSynchronizerTestCase(FHDLTestCase):
+class AsyncFFSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -190,7 +190,7 @@ class AsyncFFSynchronizerTestCase(FHDLTestCase):
 			sim.run()
 
 
-class ResetSynchronizerTestCase(FHDLTestCase):
+class ResetSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -253,7 +253,7 @@ class ResetSynchronizerTestCase(FHDLTestCase):
 
 
 # TODO: test with distinct clocks
-class PulseSynchronizerTestCase(FHDLTestCase):
+class PulseSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,

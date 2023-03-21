@@ -6,10 +6,10 @@ from torii.asserts  import *
 from torii.sim      import *
 from torii.lib.fifo import *
 
-from ..utils        import *
+from ..utils        import ToriiTestSuiteCase
 
 
-class FIFOTestCase(FHDLTestCase):
+class FIFOTestCase(ToriiTestSuiteCase):
 	def test_depth_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -256,7 +256,7 @@ class FIFOContractSpec(Elaboratable):
 		return m
 
 
-class FIFOFormalCase(FHDLTestCase):
+class FIFOFormalCase(ToriiTestSuiteCase):
 	def check_sync_fifo(self, fifo):
 		self.assertFormal(
 			FIFOModelEquivalenceSpec(fifo, r_domain = 'sync', w_domain = 'sync'),
@@ -310,7 +310,7 @@ class FIFOFormalCase(FHDLTestCase):
 
 
 # we need this testcase because we cant do model equivalence checking on the async fifos (at the moment)
-class AsyncFIFOSimCase(FHDLTestCase):
+class AsyncFIFOSimCase(ToriiTestSuiteCase):
 	def test_async_fifo_r_level_latency(self):
 		fifo = AsyncFIFO(width = 32, depth = 10, r_domain = 'sync', w_domain = 'sync')
 

@@ -8,9 +8,9 @@ from torii.hdl.ast import *
 from torii.hdl.cd  import *
 from torii.hdl.dsl import *
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
 
-class DSLTestCase(FHDLTestCase):
+class DSLTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()
 		self.s2 = Signal()

@@ -6,9 +6,9 @@ from torii.asserts    import *
 from torii.sim        import *
 from torii.lib.coding import *
 
-from ..utils          import *
+from ..utils          import ToriiTestSuiteCase
 
-class EncoderTestCase(FHDLTestCase):
+class EncoderTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		enc = Encoder(4)
 
@@ -36,7 +36,7 @@ class EncoderTestCase(FHDLTestCase):
 		sim.run()
 
 
-class PriorityEncoderTestCase(FHDLTestCase):
+class PriorityEncoderTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		enc = PriorityEncoder(4)
 
@@ -64,7 +64,7 @@ class PriorityEncoderTestCase(FHDLTestCase):
 		sim.run()
 
 
-class DecoderTestCase(FHDLTestCase):
+class DecoderTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		dec = Decoder(4)
 
@@ -122,7 +122,7 @@ class HammingDistanceSpec(Elaboratable):
 		return m
 
 
-class GrayCoderTestCase(FHDLTestCase):
+class GrayCoderTestCase(ToriiTestSuiteCase):
 	def test_reversible(self):
 		spec = ReversibleSpec(encoder_cls = GrayEncoder, decoder_cls = GrayDecoder, args = (16,))
 		self.assertFormal(spec, mode = 'prove')

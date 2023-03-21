@@ -1,8 +1,9 @@
-from unittest   import TestCase
+# SPDX-License-Identifier: BSD-2-Clause
 
 from torii.util import units as util_units
+from torii.test import ToriiTestCase
 
-class UnitUtilTestCase(TestCase):
+class UnitUtilTestCase(ToriiTestCase):
 
 	def test_time_conversion(self):
 		self.assertEqual(

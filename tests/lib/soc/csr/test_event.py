@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import unittest
-
 from torii             import *
 from torii.sim         import *
 from torii.lib.soc.csr import *
 from torii.lib.soc     import event
 
+from ....utils         import ToriiTestSuiteCase
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
@@ -17,7 +16,7 @@ def simulation_test(dut, process):
 		sim.run()
 
 
-class EventMonitorTestCase(unittest.TestCase):
+class EventMonitorTestCase(ToriiTestSuiteCase):
 	def test_params(self):
 		monitor = EventMonitor(data_width = 16, alignment = 4, trigger = 'rise')
 		self.assertEqual(monitor.bus.data_width, 16)
@@ -96,7 +95,7 @@ class EventMonitorTestCase(unittest.TestCase):
 		self.assertIs(bus, monitor.bus)
 
 
-class EventMonitorSimulationTestCase(unittest.TestCase):
+class EventMonitorSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		dut = EventMonitor(data_width = 8)
 		sub = event.Source()
