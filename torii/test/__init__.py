@@ -12,7 +12,6 @@ from unittest  import TestCase
 from ..hdl.ast import Signal
 from ..hdl.ir  import Fragment
 from ..sim     import Settle, Simulator
-from .mock     import MockPlatform
 
 __all__ = (
 	'ToriiTestCase',
@@ -45,7 +44,7 @@ class ToriiTestCase(TestCase):
 	out_dir   = None
 	dut       = None
 	dut_args  = {}
-	platform  = MockPlatform()
+	platform  = None
 
 	def __init__(self, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
