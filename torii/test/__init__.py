@@ -93,21 +93,21 @@ class ToriiTestCase(TestCase):
 
 	def setUp(self) -> None:
 		''' Set up the simulator per test-case '''
+		if self.dut is not None:
+			self.dut   = self.init_dut()
+			self._frag = Fragment.get(self.dut, self.platform)
+			self.sim   = Simulator(self._frag)
 
-		self.dut   = self.init_dut()
-		self._frag = Fragment.get(self.dut, self.platform)
-		self.sim   = Simulator(self._frag)
+			if self.out_dir is None:
+				if (Path.cwd() / 'build').exists():
+					self.out_dir = Path.cwd() / 'build' / 'tests'
+				else:
+					self.out_dir = Path.cwd() / 'test-vcds'
 
-		if self.out_dir is None:
-			if (Path.cwd() / 'build').exists():
-				self.out_dir = Path.cwd() / 'build' / 'tests'
-			else:
-				self.out_dir = Path.cwd() / 'test-vcds'
+			self.out_dir.mkdir(exist_ok = True, parents = True)
 
-		self.out_dir.mkdir(exist_ok = True, parents = True)
-
-		for d, _ in self.domains:
-			self.sim.add_clock(self.clk_period(d), domain = d)
+			for d, _ in self.domains:
+				self.sim.add_clock(self.clk_period(d), domain = d)
 
 	def init_dut(self):
 		''' Initialize and return the DUT '''
