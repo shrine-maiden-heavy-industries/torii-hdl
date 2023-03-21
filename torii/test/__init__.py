@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+import logging as log
+
 from functools import wraps
 from math      import ceil
 from os        import getenv
@@ -14,7 +16,6 @@ from .mock     import MockPlatform
 
 __all__ = (
 	'ToriiTestCase',
-	'sim_test',
 )
 
 class ToriiTestCase(TestCase):
@@ -92,6 +93,7 @@ class ToriiTestCase(TestCase):
 				self.sim.run()
 
 	def setUp(self) -> None:
+		''' Set up the simulator per test-case '''
 
 		self.dut   = self.init_dut()
 		self._frag = Fragment.get(self.dut, self.platform)
@@ -110,6 +112,7 @@ class ToriiTestCase(TestCase):
 
 	def init_dut(self):
 		''' Initialize and return the DUT '''
+
 		return self.dut(**self.dut_args)
 
 	def init_signals(self):
@@ -300,36 +303,84 @@ class ToriiTestCase(TestCase):
 			if timeout and elapsed_cycles > timeout:
 				raise RuntimeError(f'Timeout waiting for \'{strobe.name}\' to go low')
 
-def sim_test(*, domain: str = None, defer: bool = False):
-	'''
-	Simulation test case decorator
+	@staticmethod
+	def simulation(func):
+		'''
+		Simulation test case decorator
 
-	Parameters
-	----------
-	func
-		The decorated function.
+		..note::
+			This must always be the top-most decorator due to how
+			python decorator precedence works.
 
-	Keyword Args
-	------------
-	domain : str
-		The clock domain this case belongs to.
+		Parameters
+		----------
+		func
+			The decorated function.
 
-	'''
+		'''
 
-	def _test(func):
-		def _run(self):
+		def _run(self: ToriiTestCase):
+			# Invoke the wrapped setup we did
+			func(self)
+
+			log.debug(f'Running simulation for \'{func.__name__}\'')
+			self.run_sim(suffix = func.__name__)
+		return _run
+
+	@staticmethod
+	def sync_domain(*, domain: str):
+		'''
+		This decorator is used to annotate that the following function should be simulated
+		in the specified synchronous domain.
+
+		It should be used in combination with :py:func:`ToriiTestCase.sim_test` to simulate
+		a synchronous process.
+
+		Parameters
+		----------
+		domain : str
+			The domain this process belongs to
+
+		'''
+
+		def _sync(func):
 			@wraps(func)
-			def sim_case():
-				yield from self.init_signals()
+			def _add(self: ToriiTestCase):
+				if domain not in map(lambda d: d[0], self.domains):
+					raise ValueError(
+						f'The requested domain \'{domain}\' was not specified in the ',
+						'test suite.\n'
+						'The following domains are defined:\n',
+						f'{self.domains}'
+					)
+
+
+				def proc():
+					yield from func(self)
+
+				log.debug(f'Adding synchronous process \'{func.__name__}\' to domain \'{domain}\'')
+				self.sim.add_sync_process(proc, domain = domain)
+
+			return _add
+		return _sync
+
+	@staticmethod
+	def comb_domain(func):
+		'''
+		This decorator is used to annotate that the following function should be simulated
+		in the combinatorial domain.
+
+		It should be used in combination with :py:func:`ToriiTestCase.sim_test` to simulate
+		a combinatorial process.
+		'''
+
+		@wraps(func)
+		def _add_comb(self: ToriiTestCase):
+
+			def proc():
 				yield from func(self)
 
-			if domain is None:
-				test_domain = self.domains[0][0]
-			else:
-				test_domain = domain
+			log.debug(f'Adding combinatorial process \'{func.__name__}\'')
+			self.sim.add_process(proc)
 
-			self.sim.add_sync_process(sim_case, domain = test_domain)
-			if not defer:
-				self.run_sim(suffix = func.__name__)
-		return _run
-	return _test
+		return _add_comb
