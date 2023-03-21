@@ -168,11 +168,6 @@ class MockShapeCastable(ShapeCastable):
 		return self.dest
 
 
-class MockShapeCastableNoOverride(ShapeCastable):
-	def __init__(self):
-		pass
-
-
 class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
 		with self.assertRaisesRegex(
@@ -180,7 +175,9 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 			r'^Class \'MockShapeCastableNoOverride\' deriving from `ShapeCastable` must '
 			r'override the `as_shape` method$'
 		):
-			MockShapeCastableNoOverride()
+			class MockShapeCastableNoOverride(ShapeCastable):
+				def __init__(self):
+					pass
 
 	def test_cast(self):
 		sc = MockShapeCastable(unsigned(2))
@@ -1281,20 +1278,6 @@ class MockValueCastableChanges(ValueCastable):
 	def as_value(self):
 		return Signal(self.width)
 
-
-class MockValueCastableNotDecorated(ValueCastable):
-	def __init__(self):
-		pass
-
-	def as_value(self):
-		return Signal()
-
-
-class MockValueCastableNoOverride(ValueCastable):
-	def __init__(self):
-		pass
-
-
 class MockValueCastableCustomGetattr(ValueCastable):
 	def __init__(self):
 		pass
@@ -1314,7 +1297,13 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 			r'^Class \'MockValueCastableNotDecorated\' deriving from `ValueCastable` must '
 			r'decorate the `as_value` method with the `ValueCastable.lowermethod` decorator$'
 		):
-			MockValueCastableNotDecorated()
+			class MockValueCastableNotDecorated(ValueCastable):
+				def __init__(self):
+					pass
+
+				def as_value(self):
+					return Signal()
+
 
 	def test_no_override(self):
 		with self.assertRaisesRegex(
@@ -1322,7 +1311,10 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 			r'^Class \'MockValueCastableNoOverride\' deriving from `ValueCastable` must '
 			r'override the `as_value` method$'
 		):
-			MockValueCastableNoOverride()
+			class MockValueCastableNoOverride(ValueCastable):
+				def __init__(self):
+					pass
+
 
 	def test_memoized(self):
 		vc = MockValueCastableChanges(1)

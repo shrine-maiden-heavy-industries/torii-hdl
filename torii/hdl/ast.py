@@ -49,11 +49,10 @@ class ShapeCastable:
 
 	'''
 
-	def __new__(cls, *args, **kwargs) -> 'ShapeCastable':
-		self = super().__new__(cls)
-		if not hasattr(self, 'as_shape'):
+	def __init_subclass__(cls, **kwargs):
+		if not hasattr(cls, 'as_shape'):
 			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
-		return self
+
 
 
 class Shape:
@@ -1451,15 +1450,13 @@ class ValueCastable:
 
 	'''
 
-	def __new__(cls, *args, **kwargs):
-		self = super().__new__(cls)
-		if not hasattr(self, 'as_value'):
+	def __init_subclass__(cls, **kwargs):
+		if not hasattr(cls, 'as_value'):
 			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ValueCastable` must override '
 							'the `as_value` method')
-		if not hasattr(self.as_value, '_ValueCastable__memoized'):
+		if not hasattr(cls.as_value, '_ValueCastable__memoized'):
 			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ValueCastable` must decorate '
 							'the `as_value` method with the `ValueCastable.lowermethod` decorator')
-		return self
 
 	@staticmethod
 	def lowermethod(func):
