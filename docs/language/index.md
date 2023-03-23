@@ -607,13 +607,13 @@ The following table lists the bit sequence operations provided by Torii:
 | `iter(a)`             | bit iteration                                    |
 | `a.bit_select(b, w)`  | overlapping part select with variable offset     |
 | `a.word_select(b, w)` | non-overlapping part select with variable offset |
-| `Cat(a, b)`           | concatenation [^8]                               |
+| `Cat(a, b, ...)`      | concatenation [^8]                               |
 | `Repl(a, n)`          | replication                                      |
 
 
 [^6]: Words "length" and "width" have the same meaning when talking about Torii values. Conventionally, "width" is used.
 [^7]: All variations of the Python slice notation are supported, including "extended slicing". E.g. all of `a[0]`, `a[1:9]`, `a[2:]`, `a[:-2]`, `a[::-1]`, `a[0:8:2]` select bits in the same way as other Python sequence types select their elements.
-[^8]: In the concatenated value, `a` occupies the least significant bits, and `b` the most significant bits.
+[^8]: In the concatenated value, `a` occupies the least significant bits, and `b` the most significant bits. An arbitrary number of arguments for `Cat` is supported.
 
 For the operators introduced by Torii, the following table explains them in terms of Python code operating on tuples of bits rather than Torii values:
 
