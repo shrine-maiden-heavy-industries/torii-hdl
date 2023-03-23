@@ -6,36 +6,40 @@ from pathlib import Path
 
 from .utils  import ToriiTestSuiteCase
 
-def example_test(name):
-	path = (Path(__file__).parent / '..' / 'examples' / name).resolve()
-
-	def test_function(self):
-		subprocess.check_call([
-				sys.executable, str(path), 'generate', '-t', 'v'
-			],
-			stdout = subprocess.DEVNULL
-		)
-	return test_function
-
-
+EXAMPLE_DIR = (Path(__file__).parent / '..' / 'examples').resolve()
 class ExamplesTestCase(ToriiTestSuiteCase):
-	test_alu        = example_test('basic/alu.py')
-	test_alu_hier   = example_test('basic/alu_hier.py')
-	test_arst       = example_test('basic/arst.py')
-	test_cdc        = example_test('basic/cdc.py')
-	test_ctr        = example_test('basic/ctr.py')
-	test_ctr_en     = example_test('basic/ctr_en.py')
-	test_fsm        = example_test('basic/fsm.py')
-	test_gpio       = example_test('basic/gpio.py')
-	test_inst       = example_test('basic/inst.py')
-	test_mem        = example_test('basic/mem.py')
-	test_pmux       = example_test('basic/pmux.py')
-	test_por        = example_test('basic/por.py')
 
+	def _example_test(name: str):
+		example_path = (EXAMPLE_DIR / name).resolve()
+
+		def test_example(self):
+			subprocess.check_call(
+				[
+					sys.executable, str(example_path),
+					'generate', '-t', 'v'
+				],
+				stdout = subprocess.DEVNULL
+			)
+		return test_example
+
+	test_alu      = _example_test('basic/alu.py')
+	test_alu_hier = _example_test('basic/alu_hier.py')
+	test_arst     = _example_test('basic/arst.py')
+	test_cdc      = _example_test('basic/cdc.py')
+	test_ctr      = _example_test('basic/ctr.py')
+	test_ctr_en   = _example_test('basic/ctr_en.py')
+	test_fsm      = _example_test('basic/fsm.py')
+	test_gpio     = _example_test('basic/gpio.py')
+	test_inst     = _example_test('basic/inst.py')
+	test_mem      = _example_test('basic/mem.py')
+	test_pmux     = _example_test('basic/pmux.py')
+	test_por      = _example_test('basic/por.py')
+
+	# TODO: Fix up the Torii CLI bits and then fix the uart example to use it
 	def test_uart(self):
-		path = (Path(__file__).parent / '..' / 'examples' / 'basic' / 'uart.py').resolve()
+		example_path = (EXAMPLE_DIR / 'basic' / 'uart.py').resolve()
 		subprocess.check_call([
-				sys.executable, str(path), 'generate'
+				sys.executable, str(example_path), 'generate'
 			],
 			stdout = subprocess.DEVNULL
 		)

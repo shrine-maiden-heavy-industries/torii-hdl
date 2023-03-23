@@ -31,6 +31,7 @@ class ToriiTestSuiteCase(ToriiTestCase):
 			return repr_str.strip()
 		self.assertEqual(prepare_repr(repr(obj)), prepare_repr(repr_str))
 
+	# TODO: Once the Torii formal bits are better defined remove this and add formal to ToriiTestCase
 	def assertFormal(self, spec, mode = 'bmc', depth = 1):
 		stack = traceback.extract_stack()
 		for frame in reversed(stack):

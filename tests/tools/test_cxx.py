@@ -29,9 +29,11 @@ class ToolchainCxxTestCase(ToriiTestCase):
 
 	def test_simple(self):
 		self.build_dir, filename = build_cxx(
-			cxx_sources = {'test.cc': '''
-				extern "C" int answer() { return 42; }
-			'''},
+			cxx_sources = {
+				'test.cc': '''
+					extern "C" int answer() { return 42; }
+				'''
+			},
 			output_name = 'answer',
 			include_dirs = [],
 			macros = [],
@@ -41,9 +43,11 @@ class ToolchainCxxTestCase(ToriiTestCase):
 
 	def test_macro(self):
 		self.build_dir, filename = build_cxx(
-			cxx_sources = {'test.cc': '''
-				extern "C" int answer() { return ANSWER; }
-			'''},
+			cxx_sources = {
+				'test.cc': '''
+					extern "C" int answer() { return ANSWER; }
+				'''
+			},
 			output_name = 'answer',
 			include_dirs = [],
 			macros = ['ANSWER = 42'],
@@ -57,10 +61,12 @@ class ToolchainCxxTestCase(ToriiTestCase):
 			f.write('#define ANSWER 42')
 
 		self.build_dir, filename = build_cxx(
-			cxx_sources = {'test.cc': '''
-				#include <answer.h>
-				extern "C" int answer() { return ANSWER; }
-			'''},
+			cxx_sources = {
+				'test.cc': '''
+					#include <answer.h>
+					extern "C" int answer() { return ANSWER; }
+				'''
+			},
 			output_name = 'answer',
 			include_dirs = [self.include_dir.name],
 			macros = [],

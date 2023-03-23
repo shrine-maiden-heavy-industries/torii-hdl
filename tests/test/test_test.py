@@ -68,8 +68,6 @@ class ToriiTestCaseMultiSyncTest(ToriiTestCase):
 			yield
 			yield from self.step(100)
 
-		sync1(self)
-
 		@ToriiTestCase.sync_domain(domain = 'sync2')
 		def sync2(self):
 			self.assertEqual((yield self.dut.b), 0)
@@ -77,4 +75,8 @@ class ToriiTestCaseMultiSyncTest(ToriiTestCase):
 			yield
 			yield from self.step(100)
 
+		# Invoke sync process setup, this won't actually run the sim it just
+		# ensures that the process defined by the function is added to the
+		# simulator.
+		sync1(self)
 		sync2(self)
