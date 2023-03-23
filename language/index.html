@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev22 documentation</title>
+  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev23 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../_static/platformpicker.css" type="text/css" />
@@ -948,7 +948,7 @@
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.word_select(b,</span> <span class="pre">w)</span></code></p></td>
 <td><p>non-overlapping part select with variable offset</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Cat(a,</span> <span class="pre">b)</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Cat(a,</span> <span class="pre">b,</span> <span class="pre">...)</span></code></p></td>
 <td><p>concatenation <a class="footnote-reference brackets" href="#id21" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Repl(a,</span> <span class="pre">n)</span></code></p></td>
@@ -1230,7 +1230,7 @@ inside `Else`
 </aside>
 <aside class="footnote brackets" id="id21" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">8</a><span class="fn-bracket">]</span></span>
-<p>In the concatenated value, <code class="docutils literal notranslate"><span class="pre">a</span></code> occupies the least significant bits, and <code class="docutils literal notranslate"><span class="pre">b</span></code> the most significant bits.</p>
+<p>In the concatenated value, <code class="docutils literal notranslate"><span class="pre">a</span></code> occupies the least significant bits, and <code class="docutils literal notranslate"><span class="pre">b</span></code> the most significant bits. An arbitrary number of arguments for <code class="docutils literal notranslate"><span class="pre">Cat</span></code> is supported.</p>
 </aside>
 </aside>
 </section>
