@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev29 documentation</title>
+  <title>Language Guide &mdash; Torii-HDL 0.4.5.dev34 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../_static/platformpicker.css" type="text/css" />
@@ -521,8 +521,8 @@
 <span class="go">unsigned(2)</span>
 </pre></div>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Python ranges are <em>exclusive</em> or <em>half-open</em>, meaning they do not contain their <code class="docutils literal notranslate"><span class="pre">.stop</span></code> element. Because of this, values with shapes cast from a <code class="docutils literal notranslate"><span class="pre">range(stop)</span></code> where <code class="docutils literal notranslate"><span class="pre">stop</span></code> is a power of 2 are not wide enough to represent <code class="docutils literal notranslate"><span class="pre">stop</span></code> itself:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fencepost</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fencepost</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
@@ -531,7 +531,7 @@
 <span class="go">0</span>
 </pre></div>
 </div>
-<p>Be mindful of this edge case!</p>
+<p>This is detected in <code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code> when invoked with a suspected off-by-one error, which then emits a diagnostic message.</p>
 </div>
 </section>
 <section id="shapes-from-enumerations">

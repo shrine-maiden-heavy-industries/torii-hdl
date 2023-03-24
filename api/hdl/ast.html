@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.4.5.dev29 documentation</title>
+  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.4.5.dev34 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/platformpicker.css" type="text/css" />
@@ -476,7 +476,7 @@ the enumeration is signed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.ShapeCastable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Permalink to this definition"></a></dt>
 <dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>Shape`s.</p>
 <p>An object deriving from <a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> is automatically converted to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>
 when it is used in a context where a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is expected. Such objects can contain
@@ -855,7 +855,7 @@ independently of the clock domain, even before the clock domain is created.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.ValueCastable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ValueCastable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ValueCastable" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ValueCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ValueCastable" title="Permalink to this definition"></a></dt>
 <dd><p>Interface of user-defined objects that can be cast to <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> s.</p>
 <p>An object deriving from <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueCastable`</span></code> is automatically converted to a <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code>
 when it is used in a context where a <code class="xref py py-class docutils literal notranslate"><span class="pre">Value`</span></code> is expected. Such objects can implement
