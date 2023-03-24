@@ -14,10 +14,13 @@ from .build       import Platform
 from .hdl.ir      import Elaboratable, Fragment, Signal
 from .sim         import Simulator
 
+from .util.decorators import deprecated
+
 __all__ = (
 	'main',
 )
 
+@deprecated('torii.cli.main_parser will be replaced in a future version of Torii')
 def main_parser(parser: Optional[ArgumentParser] = None) -> ArgumentParser:
 	if parser is None:
 		parser = ArgumentParser(
@@ -97,6 +100,7 @@ def main_parser(parser: Optional[ArgumentParser] = None) -> ArgumentParser:
 	return parser
 
 
+@deprecated('torii.cli.main_runner will be replaced in a future version of Torii')
 def main_runner(
 	parser: ArgumentParser, args: Namespace, design: Union[Fragment, Elaboratable],
 	platform: Platform = None, name: str = 'top', ports: tuple[Signal] = ()
@@ -147,7 +151,7 @@ def main_runner(
 		with sim.write_vcd(vcd_file = args.vcd_file, gtkw_file = args.gtkw_file, traces = ports):
 			sim.run_until(args.sync_period * args.sync_clocks, run_passive = True)
 
-
+@deprecated('torii.cli.main will be replaced in a future version of Torii')
 def main(*args, **kwargs) -> None:
 	traceback.install()
 	parser = main_parser()
