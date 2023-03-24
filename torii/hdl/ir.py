@@ -568,6 +568,48 @@ class Fragment:
 
 
 class Instance(Fragment):
+	'''
+	Allows for the direct instantiation of external modules, cells, or primitives.
+
+	It accepts the name of the object to instantiate and a collection of keyword arguments
+	that define the ports, attributes, and parameters to it.
+
+	It is defined by a prefix followed by the canonical name of the element the value is setting.
+	For instance, if you have a cell called ``dff`` with ports named ``CLK``, ``D``, and ``Q`` you
+	are able to instantiate it as follows:
+
+	.. code-block:: python
+
+		dff = Instance(
+			'dff',
+			i_D   = sig_in,
+			i_CLK = clk,
+			o_Q   = sig_out,
+		)
+
+	The meaning of the prefix for the arguments are as follows:
+
+	+---------+----------------------------+
+	| Prefix  | Corresponding Type         |
+	+=========+============================+
+	| ``a_``  | Attribute                  |
+	+---------+----------------------------+
+	| ``p_``  | Parameter                  |
+	+---------+----------------------------+
+	| ``i_``  | Input Port/Signal          |
+	+---------+----------------------------+
+	| ``o_``  | Output Port/Signal         |
+	+---------+----------------------------+
+	| ``io_`` | Bi-directional Port/Signal |
+	+---------+----------------------------+
+
+	Parameters
+	----------
+	type: str
+		The name/type of object to instantiate
+
+	'''
+
 	def __init__(self, type, *args, **kwargs):
 		super().__init__()
 
@@ -583,8 +625,10 @@ class Instance(Fragment):
 			elif kind in ('i', 'o', 'io'):
 				self.named_ports[name] = (Value.cast(value), kind)
 			else:
-				raise NameError(f'Instance argument {(kind, name, value)!r} should be a tuple (kind, name, value) '
-								'where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\'')
+				raise NameError(
+					f'Instance argument {(kind, name, value)!r} should be a tuple (kind, name, value) '
+					'where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\''
+				)
 
 		for kw, arg in kwargs.items():
 			if kw.startswith('a_'):
@@ -593,10 +637,12 @@ class Instance(Fragment):
 				self.parameters[kw[2:]] = arg
 			elif kw.startswith('i_'):
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'i')
-			elif kw.startswith("o_"):
+			elif kw.startswith('o_'):
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'o')
-			elif kw.startswith("io_"):
+			elif kw.startswith('io'):
 				self.named_ports[kw[3:]] = (Value.cast(arg), 'io')
 			else:
-				raise NameError(f'Instance keyword argument {kw} = {arg!r} does not start with one of '
-								'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\'')
+				raise NameError(
+					f'Instance keyword argument {kw} = {arg!r} does not start with one of '
+					'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\''
+				)
