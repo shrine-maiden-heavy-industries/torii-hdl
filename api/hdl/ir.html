@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IR &mdash; Torii-HDL 0.4.5.dev24 documentation</title>
+  <title>IR &mdash; Torii-HDL 0.4.5.dev26 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/platformpicker.css" type="text/css" />
@@ -204,6 +204,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">IR</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="mem.html">Memory</a><ul>
@@ -431,6 +432,55 @@ however it may be deficient or missing in places.</p>
 <dt class="sig sig-object py" id="torii.hdl.ir.DriverConflict">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">DriverConflict</span></span><a class="headerlink" href="#torii.hdl.ir.DriverConflict" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ir.Instance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Instance" title="Permalink to this definition"></a></dt>
+<dd><p>Allows for the direct instantiation of external modules, cells, or primitives.</p>
+<p>It accepts the name of the object to instantiate and a collection of keyword arguments
+that define the ports, attributes, and parameters to it.</p>
+<p>It is defined by a prefix followed by the canonical name of the element the value is setting.
+For instance, if you have a cell called <code class="docutils literal notranslate"><span class="pre">dff</span></code> with ports named <code class="docutils literal notranslate"><span class="pre">CLK</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>, and <code class="docutils literal notranslate"><span class="pre">Q</span></code> you
+are able to instantiate it as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dff</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
+        <span class="s1">&#39;dff&#39;</span><span class="p">,</span>
+        <span class="n">i_D</span>   <span class="o">=</span> <span class="n">sig_in</span><span class="p">,</span>
+        <span class="n">i_CLK</span> <span class="o">=</span> <span class="n">clk</span><span class="p">,</span>
+        <span class="n">o_Q</span>   <span class="o">=</span> <span class="n">sig_out</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The meaning of the prefix for the arguments are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Prefix</p></th>
+<th class="head"><p>Corresponding Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a_</span></code></p></td>
+<td><p>Attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">p_</span></code></p></td>
+<td><p>Parameter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">i_</span></code></p></td>
+<td><p>Input Port/Signal</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">o_</span></code></p></td>
+<td><p>Output Port/Signal</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">io_</span></code></p></td>
+<td><p>Bi-directional Port/Signal</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name/type of object to instantiate</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 

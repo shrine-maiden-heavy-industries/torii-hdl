@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Including External non-Torii Modules &mdash; Torii-HDL 0.4.5.dev24 documentation</title>
+  <title>Including External non-Torii Modules &mdash; Torii-HDL 0.4.5.dev26 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../_static/platformpicker.css" type="text/css" />
@@ -204,6 +204,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/ir.html">IR</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/mem.html">Memory</a><ul>
@@ -417,7 +418,7 @@
   <section id="including-external-non-torii-modules">
 <h1>Including External non-Torii Modules<a class="headerlink" href="#including-external-non-torii-modules" title="Permalink to this heading"></a></h1>
 <p>Occasionally it is desired to include modules that are written in something like <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a>, <a class="reference external" href="https://ieeexplore.ieee.org/document/8299595">SystemVerilog</a>, or <a class="reference external" href="https://ieeexplore.ieee.org/document/8938196">VHDL</a> in a Torii based design. This is most commonly needed for things like external [IP] from other sources such as FPGA primitives or designed generated from another HDL such as <a class="reference external" href="https://clash-lang.org/">Clash</a>, <a class="reference external" href="https://github.com/SpinalHDL/SpinalHDL">SpinalHDL</a>, or <a class="reference external" href="https://www.chisel-lang.org/">Chisel</a>, as they are not directly interoperable with Torii.</p>
-<p>Luckily, this is fairly easy to do with the Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">torii.hdl.ir.Instance</span></code>, it allows you to construct an instance of an arbitrary module, defining all of the inputs, outputs, and properties.</p>
+<p>Luckily, this is fairly easy to do with the Torii <a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Instance" title="torii.hdl.ir.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.hdl.ir.Instance</span></code></a>, it allows you to construct an instance of an arbitrary module, defining all of the inputs, outputs, and properties.</p>
 <section id="torii-instance">
 <h2>Torii <code class="docutils literal notranslate"><span class="pre">Instance</span></code><a class="headerlink" href="#torii-instance" title="Permalink to this heading"></a></h2>
 <p>A Torii instance takes the name of the module or primitive you wish to instantiate, and lets you define the parameters, ports, and attributes, most of which can be directly hooked up with other Torii types such as <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.hdl.ast.Signal</span></code></a>.</p>
