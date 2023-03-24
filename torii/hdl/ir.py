@@ -639,7 +639,7 @@ class Instance(Fragment):
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'i')
 			elif kw.startswith('o_'):
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'o')
-			elif kw.startswith('io'):
+			elif kw.startswith('io_'):
 				self.named_ports[kw[3:]] = (Value.cast(arg), 'io')
 			else:
 				raise NameError(
