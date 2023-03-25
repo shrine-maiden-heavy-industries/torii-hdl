@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 __all__ = (
+	'ps_to_sec',
 	'ns_to_sec',
 	'us_to_sec',
 	'ms_to_sec',
+	'sec_to_ps',
 	'sec_to_ns',
 	'sec_to_us',
 	'sec_to_ms',
@@ -12,9 +14,14 @@ __all__ = (
 	'bits_for',
 )
 
+PS = 1e-12
 NS = 1e-9
 US = 1e-6
 MS = 1e-3
+
+def ps_to_sec(val: float) -> float:
+	''' Convert the given number of picoseconds into fractional seconds '''
+	return val * PS
 
 def ns_to_sec(val: float) -> float:
 	''' Convert the given number of nanoseconds into fractional seconds '''
@@ -27,6 +34,10 @@ def us_to_sec(val: float) -> float:
 def ms_to_sec(val: float) -> float:
 	''' Convert the given number of milliseconds into fractional seconds '''
 	return val * MS
+
+def sec_to_ps(val: float) -> float:
+	''' Convert the give number of sections into picoseconds '''
+	return val / PS
 
 def sec_to_ns(val: float) -> float:
 	''' Convert the give number of sections into nanoseconds '''
