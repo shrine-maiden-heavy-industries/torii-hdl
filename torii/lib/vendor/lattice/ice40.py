@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ....hdl import Elaboratable, Module, Instance, Signal
+from ....hdl import Elaboratable, Instance, Module, Signal
 
 __all__ = (
 	'ice40Warmboot',

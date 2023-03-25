@@ -1,19 +1,19 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Optional, Union, Literal
+from typing   import Literal, Optional, Union
 
-from ...build import Resource, Pins, Attrs, Subsignal, Clock, PinsN
+from ...build import Attrs, Clock, Pins, PinsN, Resource, Subsignal
 
 __all__ = (
-	'UARTResource',
-	'IrDAResource',
-	'SPIResource',
-	'I2CResource',
-	'DirectUSBResource',
-	'ULPIResource',
-	'PS2Resource',
 	'CANResource',
+	'DirectUSBResource',
+	'I2CResource',
+	'IrDAResource',
 	'JTAGResource',
+	'PS2Resource',
+	'SPIResource',
+	'UARTResource',
+	'ULPIResource',
 )
 
 def UARTResource(

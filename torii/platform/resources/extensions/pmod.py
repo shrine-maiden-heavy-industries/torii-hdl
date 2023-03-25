@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # Reference: https://www.digilentinc.com/Pmods/Digilent-Pmod_%20Interface_Specification.pdf
 
-from ....build import Resource, Pins, PinsN, Subsignal
+from ....build import Pins, PinsN, Resource, Subsignal
 
 __all__ = (
-	'PmodGPIOType1Resource',
-	'PmodSPIType2Resource',
-	'PmodSPIType2AResource',
-	'PmodUARTType3Resource',
-	'PmodUARTType4Resource',
-	'PmodUARTType4AResource',
-	'PmodHBridgeType5Resource',
 	'PmodDualHBridgeType6Resource',
+	'PmodGPIOType1Resource',
+	'PmodHBridgeType5Resource',
+	'PmodSPIType2AResource',
+	'PmodSPIType2Resource',
+	'PmodUARTType3Resource',
+	'PmodUARTType4AResource',
+	'PmodUARTType4Resource',
 )
 
 def PmodGPIOType1Resource(name: str, number: int, *args, pmod: int) -> Resource:

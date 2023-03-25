@@ -2,13 +2,12 @@
 
 from typing   import Optional, Union
 
-from ...build import Resource, Attrs, Subsignal, Pins
-
+from ...build import Attrs, Pins, Resource, Subsignal
 
 __all__ = (
 	'Display7SegResource',
-	'VGAResource',
 	'VGADACResource',
+	'VGAResource',
 )
 
 

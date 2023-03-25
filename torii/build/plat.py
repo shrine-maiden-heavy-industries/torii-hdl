@@ -1,29 +1,28 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+import os
+import re
+import textwrap
+from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Iterable
-from abc             import ABCMeta, abstractmethod
-from typing          import (
-	Union, IO, Optional, Type, Generator, TypeVar, Literal
-)
-import os
-import textwrap
-import re
+from typing          import IO, Generator, Literal, Optional, Type, TypeVar, Union
+
 import jinja2
 
 from ..              import __version__
-from ..tools         import require_tool, has_tool
-from ..hdl.ast       import Signal, Const, ClockSignal
+from ..back          import rtlil, verilog
+from ..hdl.ast       import ClockSignal, Const, Signal
 from ..hdl.cd        import ClockDomain
 from ..hdl.dsl       import Module
-from ..hdl.ir        import Fragment, Elaboratable, Instance
+from ..hdl.ir        import Elaboratable, Fragment, Instance
 from ..hdl.rec       import Record
-from ..hdl.xfrm      import SampleLowerer, DomainLowerer
-from ..lib.io        import Pin
+from ..hdl.xfrm      import DomainLowerer, SampleLowerer
 from ..lib.cdc       import ResetSynchronizer
-from ..back          import rtlil, verilog
+from ..lib.io        import Pin
+from ..tools         import has_tool, require_tool
 from ..util.string   import ascii_escape, tcl_escape, tcl_quote, tool_env_var
-from .dsl            import Clock, Attrs
+from .dsl            import Attrs, Clock
 from .res            import ResourceManager
 from .run            import BuildPlan, BuildProducts
 

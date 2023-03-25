@@ -1,22 +1,23 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .dsl  import (
-	Pins, PinsN, DiffPairs, DiffPairsN, Attrs,
-	Clock, Subsignal, Resource, Connector
+	Attrs, Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN,
+	Resource, Subsignal
 )
-from .res  import ResourceError
 from .plat import Platform, TemplatedPlatform
+from .res  import ResourceError
 
 __all__ = (
-	'Pins',
-	'PinsN',
-	'DiffPairs',
-	'DiffPairsN',
 	'Attrs',
 	'Clock',
-	'Subsignal',
-	'Resource',
 	'Connector',
+	'DiffPairs',
+	'DiffPairsN',
+	'Pins',
+	'PinsN',
+	'Platform',
+	'Resource',
 	'ResourceError',
-	'Platform', 'TemplatedPlatform',
+	'Subsignal',
+	'TemplatedPlatform',
 )

@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing             import Union
+from typing        import Union
 
-from ..tools.yosys      import find_yosys, YosysError
-from ..hdl              import ir, ast
-from .                  import rtlil
+from ..hdl         import ast, ir
+from ..tools.yosys import YosysError, find_yosys
+from .             import rtlil
 
 __all__ = (
-	'YosysError',
-	'convert',
 	'convert_fragment',
+	'convert',
+	'YosysError',
 )
 
 

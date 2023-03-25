@@ -5,14 +5,14 @@ from collections import OrderedDict
 from typing      import Optional
 
 from ..util      import tracer
-from .ast        import Array, Const, ClockSignal, Signal, Switch, Repl, Cat
+from .ast        import Array, Cat, ClockSignal, Const, Repl, Signal, Switch
 from .ir         import Elaboratable, Instance
 
 __all__ = (
+	'DummyPort',
 	'Memory',
 	'ReadPort',
 	'WritePort',
-	'DummyPort',
 )
 
 

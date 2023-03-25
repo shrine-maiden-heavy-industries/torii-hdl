@@ -5,8 +5,7 @@ from typing     import Literal
 
 from ...build   import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl     import (
-	ClockDomain, ClockSignal, Const, Instance, Module,
-	Record, ResetSignal, Signal
+	ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
 )
 from ...lib.cdc import ResetSynchronizer
 from ...lib.io  import Pin

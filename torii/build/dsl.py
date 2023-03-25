@@ -1,21 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
-from typing      import (
-	Literal, Optional, Union, Generator,
-	Iterator, Callable
-)
+from typing      import Callable, Generator, Iterator, Literal, Optional, Union
 
 __all__ = (
-	'Pins',
-	'PinsN',
-	'DiffPairs',
-	'DiffPairsN',
 	'Attrs',
 	'Clock',
-	'Subsignal',
-	'Resource',
 	'Connector',
+	'DiffPairs',
+	'DiffPairsN',
+	'Pins',
+	'PinsN',
+	'Resource',
+	'Subsignal',
 )
 
 class Pins:

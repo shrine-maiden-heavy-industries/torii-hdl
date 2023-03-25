@@ -1,23 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from inspect           import iscoroutinefunction, isgeneratorfunction
-from typing            import (
-	IO, Coroutine, Generator, Iterable, Literal, Optional, Union
-)
-from warnings          import warn
+from inspect  import iscoroutinefunction, isgeneratorfunction
+from typing   import IO, Coroutine, Generator, Iterable, Literal, Optional, Union
+from warnings import warn
 
-from ..hdl             import Signal
-from ..hdl.cd          import *
-from ..hdl.ir          import *
-from ._base            import BaseEngine
+from ..hdl    import Signal
+from ..hdl.cd import ClockDomain
+from ..hdl.ir import Fragment
+from ._base   import BaseEngine
 
 __all__ = (
-	'Settle',
-	'Delay',
-	'Tick',
-	'Passive',
 	'Active',
+	'Delay',
+	'Passive',
+	'Settle',
 	'Simulator',
+	'Tick',
 )
 
 

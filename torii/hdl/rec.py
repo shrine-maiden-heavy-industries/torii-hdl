@@ -5,15 +5,14 @@ from enum        import Enum
 from functools   import reduce, wraps
 from typing      import Any, Generator, Iterable, Optional, Union
 
-from ..util      import union
-from ..util      import tracer
+from ..util      import tracer, union
 from .ast        import Cat, Shape, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
-	'Direction',
-	'DIR_NONE',
-	'DIR_FANOUT',
 	'DIR_FANIN',
+	'DIR_FANOUT',
+	'DIR_NONE',
+	'Direction',
 	'Layout',
 	'Record',
 )

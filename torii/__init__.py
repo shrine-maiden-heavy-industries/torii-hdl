@@ -10,19 +10,33 @@ except ImportError: # pragma: no cover
 
 
 from .hdl import (
-	Shape, unsigned, signed,
-	Value, Const, Mux, Cat, Repl, Array, Signal, ClockSignal, ResetSignal,
-	Module, ClockDomain, Elaboratable, Fragment, Instance, Memory, Record,
-	DomainRenamer, ResetInserter, EnableInserter
+	Array, Cat, ClockDomain, ClockSignal, Const, DomainRenamer,
+	Elaboratable, EnableInserter, Fragment, Instance, Memory,
+	Module, Mux, Record, Repl, ResetInserter, ResetSignal, Shape,
+	Signal, Value, signed, unsigned
 )
 
 __all__ = (
-	'Shape', 'unsigned', 'signed',
-	'Value', 'Const', 'Mux', 'Cat', 'Repl', 'Array', 'Signal', 'ClockSignal', 'ResetSignal',
-	'Module',
+	'Array',
+	'Cat',
 	'ClockDomain',
-	'Elaboratable', 'Fragment', 'Instance',
+	'ClockSignal',
+	'Const',
+	'DomainRenamer',
+	'Elaboratable',
+	'EnableInserter',
+	'Fragment',
+	'Instance',
 	'Memory',
+	'Module',
+	'Mux',
 	'Record',
-	'DomainRenamer', 'ResetInserter', 'EnableInserter',
+	'Repl',
+	'ResetInserter',
+	'ResetSignal',
+	'Shape',
+	'Signal',
+	'Value',
+	'signed',
+	'unsigned',
 )

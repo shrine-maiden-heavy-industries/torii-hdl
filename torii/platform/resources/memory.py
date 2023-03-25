@@ -1,21 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from enum     import auto, unique, Enum
+from enum     import Enum, auto, unique
 from typing   import Optional, Union
 
-from ...build import Resource, Attrs, Pins, PinsN, Subsignal, DiffPairs
+from ...build import Attrs, DiffPairs, Pins, PinsN, Resource, Subsignal
 
 __all__ = (
 	'QSPIMode',
 	'QSPIDataMode',
 
-	'SPIFlashResources',
+	'DDR3Resource',
+	'NORFlashResources',
 	'QSPIFlashResource',
 	'SDCardResources',
-	'SRAMResource',
 	'SDRAMResource',
-	'NORFlashResources',
-	'DDR3Resource',
+	'SPIFlashResources',
+	'SRAMResource',
 )
 
 @unique

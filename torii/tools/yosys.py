@@ -3,15 +3,15 @@
 import re
 import subprocess
 import warnings
-from pathlib   import Path
-from typing    import Callable, Optional
+from pathlib import Path
+from typing  import Callable, Optional
 
-from .         import has_tool, require_tool
+from .       import has_tool, require_tool
 
 __all__ = (
-	'YosysError',
-	'YosysBinary',
 	'find_yosys',
+	'YosysBinary',
+	'YosysError',
 )
 
 class YosysError(Exception):

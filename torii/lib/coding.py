@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .. import Elaboratable, Module, Signal, Const
+from .. import Const, Elaboratable, Module, Signal
 
 __all__ = (
-	'Encoder', 'Decoder',
-	'PriorityEncoder', 'PriorityDecoder',
-	'GrayEncoder', 'GrayDecoder',
+	'Decoder',
+	'Encoder',
+	'GrayDecoder',
+	'GrayEncoder',
+	'PriorityDecoder',
+	'PriorityEncoder',
 )
 
 

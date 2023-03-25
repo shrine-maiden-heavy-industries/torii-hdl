@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import logging as log
-
 from functools import wraps
 from math      import ceil
 from os        import getenv

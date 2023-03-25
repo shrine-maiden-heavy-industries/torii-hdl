@@ -1,17 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections       import OrderedDict
-from contextlib        import contextmanager
-from abc               import ABCMeta, abstractmethod
-from typing            import Union, Literal, Generator
+import hashlib
 import os
-import sys
 import subprocess
+import sys
 import tempfile
 import zipfile
-import hashlib
-from pathlib           import Path
-
+from abc         import ABCMeta, abstractmethod
+from collections import OrderedDict
+from contextlib  import contextmanager
+from pathlib     import Path
+from typing      import Generator, Literal, Union
 
 __all__ = (
 	'BuildPlan',

@@ -4,25 +4,34 @@ from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Iterable
 
-from ..util          import flatten
-from ..util          import tracer
+from ..util          import flatten, tracer
 from .ast            import (
-	AnyConst, AnySeq, Const, ClockSignal, Cat, Signal, ResetSignal, Slice, Operator,
-	Part, Repl, ArrayProxy, Sample, Value, Initial, Assign, Assert, Cover, Switch,
-	Statement, Assume, Property, ValueDict, SignalDict, SignalSet, Mux, _StatementList
+	AnyConst, AnySeq, ArrayProxy, Assert, Assign, Assume, Cat,
+	ClockSignal, Const, Cover, Initial, Mux, Operator, Part,
+	Property, Repl, ResetSignal, Sample, Signal, SignalDict,
+	SignalSet, Slice, Statement, Switch, Value, ValueDict,
+	_StatementList
 )
 from .cd             import DomainError
-from .ir             import Instance, Fragment, Elaboratable
+from .ir             import Elaboratable, Fragment, Instance
 
 __all__ = (
-	'ValueVisitor', 'ValueTransformer',
-	'StatementVisitor', 'StatementTransformer',
+	'DomainCollector',
+	'DomainLowerer',
+	'DomainRenamer',
+	'EnableInserter',
 	'FragmentTransformer',
+	'LHSGroupAnalyzer',
+	'LHSGroupFilter',
+	'ResetInserter',
+	'SampleDomainInjector',
+	'SampleLowerer',
+	'StatementTransformer',
+	'StatementVisitor',
+	'SwitchCleaner',
 	'TransformedElaboratable',
-	'DomainCollector', 'DomainRenamer', 'DomainLowerer',
-	'SampleDomainInjector', 'SampleLowerer',
-	'SwitchCleaner', 'LHSGroupAnalyzer', 'LHSGroupFilter',
-	'ResetInserter', 'EnableInserter',
+	'ValueTransformer',
+	'ValueVisitor',
 )
 
 

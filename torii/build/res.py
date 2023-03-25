@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
-from typing      import Optional, Literal, Union, Generator
+from typing      import Generator, Literal, Optional, Union
 
 from ..hdl.ast   import Signal, SignalDict
 from ..hdl.rec   import Record
 from ..lib.io    import Pin
-from .dsl        import Resource, Connector, Subsignal, Attrs, Pins, DiffPairs
+from .dsl        import Attrs, Connector, DiffPairs, Pins, Resource, Subsignal
 
 __all__ = (
 	'ResourceError',

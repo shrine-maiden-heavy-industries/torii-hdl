@@ -8,9 +8,9 @@ from typing      import Generator, Optional
 from ...         import Elaboratable, Module, Record, Signal
 
 __all__ = (
-	'Source',
 	'EventMap',
 	'Monitor',
+	'Source',
 )
 
 

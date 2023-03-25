@@ -1,19 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import logging    as log
-from argparse     import (
-	ArgumentParser, FileType, Namespace, ArgumentDefaultsHelpFormatter
+import logging        as log
+from argparse         import (
+	ArgumentDefaultsHelpFormatter, ArgumentParser, FileType, Namespace
 )
-from typing       import Optional, Union
+from typing           import Optional, Union
 
-from rich         import traceback
-from rich.logging import RichHandler
+from rich             import traceback
+from rich.logging     import RichHandler
 
-from .back        import cxxrtl, rtlil, verilog
-from .build       import Platform
-from .hdl.ir      import Elaboratable, Fragment, Signal
-from .sim         import Simulator
-
+from .back            import cxxrtl, rtlil, verilog
+from .build           import Platform
+from .hdl.ir          import Elaboratable, Fragment, Signal
+from .sim             import Simulator
 from .util.decorators import deprecated
 
 __all__ = (

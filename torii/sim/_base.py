@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Optional, Union, Iterable, IO
+from typing import IO, Iterable, Optional, Union
 
 from ..hdl  import Signal
 
 __all__ = (
+	'BaseEngine',
 	'BaseProcess',
 	'BaseSignalState',
 	'BaseSimulation',
-	'BaseEngine',
 )
 
 class BaseProcess:

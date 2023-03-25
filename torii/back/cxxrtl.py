@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing             import Optional
+from typing        import Optional
 
-from ..tools.yosys      import find_yosys, YosysError
-from ..hdl.ast          import SignalDict
-from .                  import rtlil
+from ..hdl.ast     import SignalDict
+from ..tools.yosys import YosysError, find_yosys
+from .             import rtlil
 
 __all__ = (
-	'YosysError',
-	'convert',
 	'convert_fragment',
+	'convert',
+	'YosysError',
 )
 
 def _convert_rtlil_text(

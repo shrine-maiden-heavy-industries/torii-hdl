@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .hdl.ast import (
-	AnyConst, AnySeq, Assert, Assume, Cover,
-	Past, Stable, Rose, Fell, Initial
+	AnyConst, AnySeq, Assert, Assume, Cover, Fell, Initial,
+	Past, Rose, Stable
 )
 
 __all__ = (
@@ -11,9 +11,9 @@ __all__ = (
 	'Assert',
 	'Assume',
 	'Cover',
-	'Past',
-	'Stable',
-	'Rose',
 	'Fell',
 	'Initial',
+	'Past',
+	'Rose',
+	'Stable',
 )

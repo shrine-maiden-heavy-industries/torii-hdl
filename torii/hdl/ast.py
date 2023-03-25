@@ -11,21 +11,51 @@ from enum              import Enum
 from itertools         import chain
 from typing            import Optional, Union
 
-from ._unused          import MustUse, UnusedMustUse
-from ..util            import tracer, flatten, union
+from ..util            import flatten, tracer, union
 from ..util.decorators import final
 from ..util.units      import bits_for
+from ._unused          import MustUse, UnusedMustUse
 
 __all__ = (
-	'Shape', 'signed', 'unsigned', 'ShapeCastable',
-	'Value', 'Const', 'AnyConst', 'AnySeq', 'Operator', 'Mux', 'Part', 'Slice', 'Cat', 'Repl',
-	'Array', 'ArrayProxy',
-	'Signal', 'ClockSignal', 'ResetSignal',
+	'AnyConst',
+	'AnySeq',
+	'Array',
+	'ArrayProxy',
+	'Assert',
+	'Assign',
+	'Assume',
+	'Cat',
+	'ClockSignal',
+	'Const',
+	'Cover',
+	'Fell',
+	'Initial',
+	'Mux',
+	'Operator',
+	'Part',
+	'Past',
+	'Property',
+	'Repl',
+	'ResetSignal',
+	'Rose',
+	'Sample',
+	'Shape',
+	'ShapeCastable',
+	'Signal',
+	'SignalDict',
+	'SignalKey',
+	'SignalSet',
+	'signed',
+	'Slice',
+	'Stable',
+	'Statement',
+	'Switch',
+	'unsigned',
+	'Value',
 	'ValueCastable',
-	'Sample', 'Past', 'Stable', 'Rose', 'Fell', 'Initial',
-	'Statement', 'Switch',
-	'Property', 'Assign', 'Assert', 'Assume', 'Cover',
-	'ValueKey', 'ValueDict', 'ValueSet', 'SignalKey', 'SignalDict', 'SignalSet',
+	'ValueDict',
+	'ValueKey',
+	'ValueSet',
 )
 
 

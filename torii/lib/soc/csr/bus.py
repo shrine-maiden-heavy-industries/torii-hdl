@@ -7,9 +7,9 @@ from ....     import Elaboratable, Module, Mux, Record, Signal
 from ..memory import MemoryMap
 
 __all__ = (
+	'Decoder',
 	'Element',
 	'Interface',
-	'Decoder',
 	'Multiplexer',
 )
 

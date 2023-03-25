@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Optional, Literal
+from typing import Literal, Optional
 
 from ..util import tracer
 from .ast   import Signal

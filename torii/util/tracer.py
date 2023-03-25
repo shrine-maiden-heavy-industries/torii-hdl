@@ -2,12 +2,13 @@
 
 from sys    import _getframe, version_info
 from typing import Optional, Union
+
 from opcode import opname
 
 __all__ = (
-	'NameNotFound',
-	'get_var_name',
 	'get_src_loc',
+	'get_var_name',
+	'NameNotFound',
 )
 
 class NameNotFound(Exception):

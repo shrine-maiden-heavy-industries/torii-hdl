@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Optional, Union, Literal
+from typing   import Literal, Optional, Union
 
-from ...build import Resource, Attrs, Pins, Subsignal
-
+from ...build import Attrs, Pins, Resource, Subsignal
 
 __all__ = (
+	'ButtonResources',
 	'LEDResources',
 	'RGBLEDResource',
-	'ButtonResources',
 	'SwitchResources',
 )
 

@@ -6,8 +6,8 @@ from typing        import Generator, Iterable, Optional, Union
 from ...util.units import bits_for
 
 __all__ = (
-	'ResourceInfo',
 	'MemoryMap',
+	'ResourceInfo',
 )
 
 class _RangeMap:

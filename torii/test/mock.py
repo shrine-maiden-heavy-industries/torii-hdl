@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ..hdl.rec import Record, DIR_FANIN, DIR_FANOUT
+from ..hdl.rec import DIR_FANIN, DIR_FANOUT, Record
 
 __all__ = (
-	'MockRecord',
 	'MockPlatform',
+	'MockRecord',
 )
 
 

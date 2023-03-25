@@ -15,9 +15,9 @@ __doc__ = '''\
 '''
 
 __all__ = (
-	'ToolNotFound',
 	'has_tool',
 	'require_tool',
+	'ToolNotFound',
 )
 
 class ToolNotFound(Exception):

@@ -1,18 +1,19 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .pmod import (
-	PmodGPIOType1Resource, PmodSPIType2Resource, PmodSPIType2AResource,
-	PmodUARTType3Resource, PmodUARTType4Resource, PmodUARTType4AResource,
-	PmodHBridgeType5Resource, PmodDualHBridgeType6Resource
+	PmodDualHBridgeType6Resource, PmodGPIOType1Resource,
+	PmodHBridgeType5Resource, PmodSPIType2AResource,
+	PmodSPIType2Resource, PmodUARTType3Resource,
+	PmodUARTType4AResource, PmodUARTType4Resource
 )
 
 __all__ = (
-	'PmodGPIOType1Resource',
-	'PmodSPIType2Resource',
-	'PmodSPIType2AResource',
-	'PmodUARTType3Resource',
-	'PmodUARTType4Resource',
-	'PmodUARTType4AResource',
-	'PmodHBridgeType5Resource',
 	'PmodDualHBridgeType6Resource',
+	'PmodGPIOType1Resource',
+	'PmodHBridgeType5Resource',
+	'PmodSPIType2AResource',
+	'PmodSPIType2Resource',
+	'PmodUARTType3Resource',
+	'PmodUARTType4AResource',
+	'PmodUARTType4Resource',
 )

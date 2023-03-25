@@ -6,10 +6,10 @@ from functools   import wraps
 from warnings    import warn
 
 __all__ = (
-	'memoize',
-	'final',
 	'deprecated',
 	'extend'
+	'final',
+	'memoize',
 )
 
 def memoize(f):

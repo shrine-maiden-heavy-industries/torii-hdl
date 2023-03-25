@@ -5,8 +5,7 @@ from typing    import Literal, Optional
 
 from ...build  import Attrs, Clock, Subsignal, TemplatedPlatform
 from ...hdl    import (
-	ClockDomain, ClockSignal, Const, Instance, Module, Record,
-	Repl, Signal
+	ClockDomain, ClockSignal, Const, Instance, Module, Record, Repl, Signal
 )
 from ...lib.io import Pin
 

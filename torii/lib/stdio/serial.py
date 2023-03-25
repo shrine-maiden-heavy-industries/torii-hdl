@@ -8,9 +8,9 @@ from ..cdc         import FFSynchronizer
 from ..io          import Pin
 
 __all__ = (
+	'AsyncSerial',
 	'AsyncSerialRX',
 	'AsyncSerialTX',
-	'AsyncSerial',
 )
 
 

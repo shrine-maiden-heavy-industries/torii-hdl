@@ -9,10 +9,10 @@ from .               import event
 from .memory         import MemoryMap
 
 __all__ = (
-	'ConstantValue',
 	'ConstantBool',
 	'ConstantInt',
 	'ConstantMap',
+	'ConstantValue',
 	'PeripheralInfo',
 )
 

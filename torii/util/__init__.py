@@ -7,9 +7,9 @@ from typing          import Union
 
 __all__ = (
 	'flatten',
-	'union',
-	'get_linter_options',
 	'get_linter_option',
+	'get_linter_options',
+	'union',
 )
 
 def flatten(i):

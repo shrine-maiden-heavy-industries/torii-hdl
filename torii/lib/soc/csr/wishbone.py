@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Optional
+from typing         import Optional
 
 from ....           import Cat, Elaboratable, Module, Signal
 from ....util.units import log2_int

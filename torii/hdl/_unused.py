@@ -8,8 +8,8 @@ from warnings import warn_explicit
 from ..util   import get_linter_option
 
 __all__ = (
-	'UnusedMustUse',
 	'MustUse',
+	'UnusedMustUse',
 )
 
 class UnusedMustUse(Warning):

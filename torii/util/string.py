@@ -4,8 +4,8 @@ from re import Match, finditer, sub
 
 __all__ = (
 	'ascii_escape',
-	'tcl_quote',
 	'tcl_escape',
+	'tcl_quote',
 	'tool_env_var',
 )
 

@@ -5,17 +5,17 @@
 from typing       import Union
 
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
-from ..asserts    import *
+from ..asserts    import Assert, Assume, Initial
 from ..util.units import log2_int
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding      import GrayDecoder, GrayEncoder
 
 __all__ = (
+	'AsyncFIFO',
+	'AsyncFIFOBuffered',
 	'FIFOInterface',
 	'SyncFIFO',
 	'SyncFIFOBuffered',
-	'AsyncFIFO',
-	'AsyncFIFOBuffered',
 )
 
 

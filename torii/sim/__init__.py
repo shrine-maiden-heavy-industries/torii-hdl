@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .core import Settle, Delay, Tick, Passive, Active, Simulator
+from .core import Active, Delay, Passive, Settle, Simulator, Tick
 
 __all__ = (
-	'Settle',
-	'Delay',
-	'Tick',
-	'Passive',
 	'Active',
+	'Delay',
+	'Passive',
+	'Settle',
 	'Simulator',
+	'Tick',
 )

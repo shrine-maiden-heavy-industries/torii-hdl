@@ -9,9 +9,9 @@ __all__ = (
 	'sec_to_ns',
 	'sec_to_us',
 	'sec_to_ms',
+	'bits_for',
 	'iec_size',
 	'log2_int',
-	'bits_for',
 )
 
 PS = 1e-12

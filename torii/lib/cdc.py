@@ -1,14 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing  import Optional, Literal
+from typing import Literal, Optional
 
-from ..      import Elaboratable, Module, Signal, ClockDomain, ClockSignal, ResetSignal
+from ..     import (
+	ClockDomain, ClockSignal, Elaboratable, Module, ResetSignal, Signal
+)
 
 __all__ = (
-	'FFSynchronizer',
 	'AsyncFFSynchronizer',
-	'ResetSynchronizer',
+	'FFSynchronizer',
 	'PulseSynchronizer',
+	'ResetSynchronizer',
 )
 
 

@@ -1,53 +1,60 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .display    import Display7SegResource, VGADACResource, VGAResource
+from .extensions import (
+	PmodDualHBridgeType6Resource, PmodGPIOType1Resource,
+	PmodHBridgeType5Resource, PmodSPIType2AResource,
+	PmodSPIType2Resource, PmodUARTType3Resource,
+	PmodUARTType4AResource, PmodUARTType4Resource
+)
 from .interface  import (
-	UARTResource, ULPIResource, SPIResource, I2CResource, DirectUSBResource,
-	PS2Resource, CANResource, JTAGResource
+	CANResource, DirectUSBResource, I2CResource,
+	JTAGResource, PS2Resource, SPIResource, UARTResource,
+	ULPIResource
 )
 from .memory     import (
-	SPIFlashResources, QSPIFlashResource, SDCardResources, SRAMResource,
-	SDRAMResource, NORFlashResources, DDR3Resource
+	DDR3Resource, NORFlashResources, QSPIFlashResource,
+	SDCardResources, SDRAMResource, SPIFlashResources,
+	SRAMResource
 )
-from .user       import LEDResources, RGBLEDResource, ButtonResources, SwitchResources
-from .extensions import (
-	PmodGPIOType1Resource, PmodSPIType2Resource, PmodSPIType2AResource, PmodUARTType3Resource,
-	PmodUARTType4Resource, PmodUARTType4AResource, PmodHBridgeType5Resource,
-	PmodDualHBridgeType6Resource,
+from .user       import (
+	ButtonResources, LEDResources, RGBLEDResource, SwitchResources
 )
-
 
 __all__ = (
 	'Display7SegResource',
-	'VGAResource',
 	'VGADACResource',
-	'UARTResource',
-	'IrDAResource',
-	'SPIResource',
-	'I2CResource',
-	'DirectUSBResource',
-	'ULPIResource',
-	'PS2Resource',
+	'VGAResource',
+
+	'PmodDualHBridgeType6Resource',
+	'PmodGPIOType1Resource',
+	'PmodHBridgeType5Resource',
+	'PmodSPIType2AResource',
+	'PmodSPIType2Resource',
+	'PmodUARTType3Resource',
+	'PmodUARTType4AResource',
+	'PmodUARTType4Resource',
+
 	'CANResource',
+	'DirectUSBResource',
+	'I2CResource',
+	'IrDAResource',
 	'JTAGResource',
-	'SPIFlashResources',
-	'SDCardResources',
-	'SRAMResource',
-	'SDRAMResource',
+	'PS2Resource',
+	'SPIResource',
+	'UARTResource',
+	'ULPIResource',
+
+	'DDR3Resource',
 	'NORFlashResources',
 	'QSPIFlashResource',
-	'DDR3Resource',
+	'SDCardResources',
+	'SDRAMResource',
+	'SPIFlashResources',
+	'SRAMResource',
+
+	'ButtonResources',
 	'LEDResources',
 	'RGBLEDResource',
-	'ButtonResources',
 	'SwitchResources',
-
-	'PmodGPIOType1Resource',
-	'PmodSPIType2Resource',
-	'PmodSPIType2AResource',
-	'PmodUARTType3Resource',
-	'PmodUARTType4Resource',
-	'PmodUARTType4AResource',
-	'PmodHBridgeType5Resource',
-	'PmodDualHBridgeType6Resource',
 )

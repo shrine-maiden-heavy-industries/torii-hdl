@@ -9,7 +9,7 @@ from vcd.gtkw   import GTKWSave
 
 from ..hdl      import ClockSignal, ResetSignal
 from ..hdl.ast  import SignalDict
-from ._base     import BaseEngine, BaseSimulation, BaseSignalState
+from ._base     import BaseEngine, BaseSignalState, BaseSimulation
 from ._pyclock  import PyClockProcess
 from ._pycoro   import PyCoroProcess
 from ._pyrtl    import _FragmentCompiler

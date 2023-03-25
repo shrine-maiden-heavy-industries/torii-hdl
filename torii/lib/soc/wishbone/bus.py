@@ -9,11 +9,11 @@ from ....util.units import log2_int
 from ..memory       import MemoryMap
 
 __all__ = (
-	'CycleType',
-	'BurstTypeExt',
-	'Interface',
-	'Decoder',
 	'Arbiter',
+	'BurstTypeExt',
+	'CycleType',
+	'Decoder',
+	'Interface',
 )
 
 

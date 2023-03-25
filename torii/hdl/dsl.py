@@ -9,17 +9,17 @@ from functools    import wraps
 from ..util       import flatten, tracer
 from ..util.units import bits_for
 from .ast         import (
-	Operator, Statement, SignalDict, Value, Switch, Cat, Signal,
-	Assign, Assert, Assume, Cover
+	Assert, Assign, Assume, Cat, Cover, Operator, Signal, SignalDict,
+	Statement, Switch, Value
 )
 from .cd          import ClockDomain
 from .ir          import Elaboratable, Fragment
 from .xfrm        import SampleDomainInjector
 
 __all__ = (
+	'Module',
 	'SyntaxError',
 	'SyntaxWarning',
-	'Module',
 )
 
 
