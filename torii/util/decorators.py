@@ -7,7 +7,7 @@ from warnings    import warn
 
 __all__ = (
 	'deprecated',
-	'extend'
+	'extend',
 	'final',
 	'memoize',
 )
