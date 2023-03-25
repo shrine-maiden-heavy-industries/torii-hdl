@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.4.5.dev34 documentation</title>
+  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.4.5.dev37 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/styles.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/platformpicker.css" type="text/css" />
@@ -170,25 +170,25 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Torii HDL Reference</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Abstract Syntax Tree</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.signed"><code class="docutils literal notranslate"><span class="pre">signed()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.unsigned"><code class="docutils literal notranslate"><span class="pre">unsigned()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Const"><code class="docutils literal notranslate"><span class="pre">Const</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.AnyConst"><code class="docutils literal notranslate"><span class="pre">AnyConst</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.AnySeq"><code class="docutils literal notranslate"><span class="pre">AnySeq</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Mux"><code class="docutils literal notranslate"><span class="pre">Mux()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Repl"><code class="docutils literal notranslate"><span class="pre">Repl</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Array"><code class="docutils literal notranslate"><span class="pre">Array</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ClockSignal"><code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ResetSignal"><code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ValueCastable"><code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Const"><code class="docutils literal notranslate"><span class="pre">Const</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Initial"><code class="docutils literal notranslate"><span class="pre">Initial</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ValueSet"><code class="docutils literal notranslate"><span class="pre">ValueSet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Mux"><code class="docutils literal notranslate"><span class="pre">Mux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Repl"><code class="docutils literal notranslate"><span class="pre">Repl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ResetSignal"><code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.signed"><code class="docutils literal notranslate"><span class="pre">signed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.unsigned"><code class="docutils literal notranslate"><span class="pre">unsigned()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ValueCastable"><code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ValueSet"><code class="docutils literal notranslate"><span class="pre">ValueSet</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cd.html">Clock Domain</a><ul>
@@ -202,16 +202,16 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ir.html">IR</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="ir.html#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="ir.html#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="mem.html">Memory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mem.html#torii.hdl.mem.DummyPort"><code class="docutils literal notranslate"><span class="pre">DummyPort</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mem.html#torii.hdl.mem.Memory"><code class="docutils literal notranslate"><span class="pre">Memory</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mem.html#torii.hdl.mem.ReadPort"><code class="docutils literal notranslate"><span class="pre">ReadPort</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mem.html#torii.hdl.mem.WritePort"><code class="docutils literal notranslate"><span class="pre">WritePort</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mem.html#torii.hdl.mem.DummyPort"><code class="docutils literal notranslate"><span class="pre">DummyPort</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="rec.html">Records</a><ul>
@@ -424,110 +424,6 @@
 however it may be deficient or missing in places.</p>
 </div>
 <span class="target" id="module-torii.hdl.ast"></span><dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Shape">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">Shape</span></code> can be constructed using:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>explicit bit width and signedness;</p></li>
-<li><p>aliases <a class="reference internal" href="#torii.hdl.ast.signed" title="torii.hdl.ast.signed"><code class="xref py py-func docutils literal notranslate"><span class="pre">signed()</span></code></a> and <a class="reference internal" href="#torii.hdl.ast.unsigned" title="torii.hdl.ast.unsigned"><code class="xref py py-func docutils literal notranslate"><span class="pre">unsigned()</span></code></a>;</p></li>
-<li><p>casting from a variety of objects.</p></li>
-</ul>
-</div></blockquote>
-<p>A <code class="docutils literal notranslate"><span class="pre">Shape</span></code> can be cast from:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>an integer, where the integer specifies the bit width;</p></li>
-<li><dl class="simple">
-<dt>a range, where the result is wide enough to represent any element of the range, and is</dt><dd><p>signed if any element of the range is signed;</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>an <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code> with all integer members or <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code>, where the result is wide</dt><dd><p>enough to represent any member of the enumeration, and is signed if any member of
-the enumeration is signed.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of bits in the representation, including the sign bit (if any).</p></li>
-<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the value is unsigned. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the value is signed two’s complement.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="torii.hdl.ast.signed">
-<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">signed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.signed" title="Permalink to this definition"></a></dt>
-<dd><p>Shorthand for <code class="docutils literal notranslate"><span class="pre">Shape(width,</span> <span class="pre">signed</span> <span class="pre">=</span> <span class="pre">True)</span></code>.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="torii.hdl.ast.unsigned">
-<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">unsigned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.unsigned" title="Permalink to this definition"></a></dt>
-<dd><p>Shorthand for <code class="docutils literal notranslate"><span class="pre">Shape(width,</span> <span class="pre">signed</span> <span class="pre">=</span> <span class="pre">False)</span></code>.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.ShapeCastable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Permalink to this definition"></a></dt>
-<dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>Shape`s.</p>
-<p>An object deriving from <a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> is automatically converted to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>
-when it is used in a context where a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is expected. Such objects can contain
-a richer description of the shape than what is supported by the core Torii language, yet
-still be transparently used with it.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Const">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Const" title="Permalink to this definition"></a></dt>
-<dd><p>A constant, literal integer value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> or </em><em>None</em>) – Either an integer <code class="docutils literal notranslate"><span class="pre">width</span></code> or a tuple <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">signed)</span></code> specifying the number of bits
-in this constant and whether it is signed (can represent negative values).
-<code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to the minimum possible width and signedness of <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
-<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – </p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.Const.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Const.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.AnyConst">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">AnyConst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.11)"><span class="pre">range</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.11)"><span class="pre">type</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><span class="pre">ShapeCastable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.AnyConst" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -536,122 +432,6 @@ in this constant and whether it is signed (can represent negative values).
 <dt class="sig sig-object py" id="torii.hdl.ast.AnySeq">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">AnySeq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.11)"><span class="pre">range</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.11)"><span class="pre">type</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><span class="pre">ShapeCastable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.AnySeq" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="torii.hdl.ast.Mux">
-<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Mux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.ast.Mux" title="Permalink to this definition"></a></dt>
-<dd><p>Choose between two values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sel</strong> (<em>Value</em><em>, </em><em>in</em>) – Selector.</p></li>
-<li><p><strong>val1</strong> (<em>Value</em><em>, </em><em>in</em>) – </p></li>
-<li><p><strong>val0</strong> (<em>Value</em><em>, </em><em>in</em>) – Input values.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Output <code class="docutils literal notranslate"><span class="pre">Value</span></code>. If <code class="docutils literal notranslate"><span class="pre">sel</span></code> is asserted, the Mux returns <code class="docutils literal notranslate"><span class="pre">val1</span></code>, else <code class="docutils literal notranslate"><span class="pre">val0</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Value, out</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Cat">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.11)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Value</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Cat" title="Permalink to this definition"></a></dt>
-<dd><p>Concatenate values.</p>
-<p>Form a compound <code class="docutils literal notranslate"><span class="pre">Value</span></code> from several smaller ones by concatenation.
-The first argument occupies the lower bits of the result.
-The return value can be used on either side of an assignment, that
-is, the concatenated value can be used as an argument on the RHS or
-as a target on the LHS. If it is used on the LHS, it must solely
-consist of <code class="docutils literal notranslate"><span class="pre">Signal</span></code> s, slices of <code class="docutils literal notranslate"><span class="pre">Signal</span></code> s, and other concatenations
-meeting these properties. The bit length of the return value is the sum of
-the bit lengths of the arguments:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">Cat</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> (<em>Values</em><em> or </em><em>iterables</em><em> of </em><em>Values</em><em>, </em><em>inout</em>) – <code class="docutils literal notranslate"><span class="pre">Value</span></code> s to be concatenated.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Resulting <code class="docutils literal notranslate"><span class="pre">Value</span></code> obtained by concatenation.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Value, inout</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.Cat.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Cat.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Repl">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Repl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Repl" title="Permalink to this definition"></a></dt>
-<dd><p>Replicate a value</p>
-<p>An input value is replicated (repeated) several times
-to be used on the RHS of assignments:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">Repl</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<em>Value</em><em>, </em><em>in</em>) – Input value to be replicated.</p></li>
-<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of replications.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Replicated value.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#torii.hdl.ast.Repl" title="torii.hdl.ast.Repl">Repl</a>, out</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.Repl.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Repl.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.Array">
@@ -705,6 +485,345 @@ for it has been created, the proxy will refer to stale data.</p>
 <dd><p>S.insert(index, value) – insert value before index</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Cat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.11)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Value</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Cat" title="Permalink to this definition"></a></dt>
+<dd><p>Concatenate values.</p>
+<p>Form a compound <code class="docutils literal notranslate"><span class="pre">Value</span></code> from several smaller ones by concatenation.
+The first argument occupies the lower bits of the result.
+The return value can be used on either side of an assignment, that
+is, the concatenated value can be used as an argument on the RHS or
+as a target on the LHS. If it is used on the LHS, it must solely
+consist of <code class="docutils literal notranslate"><span class="pre">Signal</span></code> s, slices of <code class="docutils literal notranslate"><span class="pre">Signal</span></code> s, and other concatenations
+meeting these properties. The bit length of the return value is the sum of
+the bit lengths of the arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">Cat</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*args</strong> (<em>Values</em><em> or </em><em>iterables</em><em> of </em><em>Values</em><em>, </em><em>inout</em>) – <code class="docutils literal notranslate"><span class="pre">Value</span></code> s to be concatenated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resulting <code class="docutils literal notranslate"><span class="pre">Value</span></code> obtained by concatenation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Value, inout</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Cat.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Cat.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.ClockSignal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ClockSignal" title="Permalink to this definition"></a></dt>
+<dd><p>Clock signal for a clock domain.</p>
+<p>Any <code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">cd.clk</span></code> for a clock domain with the corresponding name.
+All of these signals ultimately refer to the same signal, but they can be manipulated
+independently of the clock domain, even before the clock domain is created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Clock domain to obtain a clock signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.ClockSignal.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ClockSignal.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Const">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Const" title="Permalink to this definition"></a></dt>
+<dd><p>A constant, literal integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> or </em><em>None</em>) – Either an integer <code class="docutils literal notranslate"><span class="pre">width</span></code> or a tuple <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">signed)</span></code> specifying the number of bits
+in this constant and whether it is signed (can represent negative values).
+<code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to the minimum possible width and signedness of <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
+<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Const.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Const.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Initial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Initial" title="Permalink to this definition"></a></dt>
+<dd><p>Start indicator, for model checking.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">Initial</span></code> signal is <code class="docutils literal notranslate"><span class="pre">1</span></code> at the first cycle of model checking, and <code class="docutils literal notranslate"><span class="pre">0</span></code> at any other.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Initial.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Initial.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.hdl.ast.Mux">
+<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Mux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.ast.Mux" title="Permalink to this definition"></a></dt>
+<dd><p>Choose between two values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sel</strong> (<em>Value</em><em>, </em><em>in</em>) – Selector.</p></li>
+<li><p><strong>val1</strong> (<em>Value</em><em>, </em><em>in</em>) – </p></li>
+<li><p><strong>val0</strong> (<em>Value</em><em>, </em><em>in</em>) – Input values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output <code class="docutils literal notranslate"><span class="pre">Value</span></code>. If <code class="docutils literal notranslate"><span class="pre">sel</span></code> is asserted, the Mux returns <code class="docutils literal notranslate"><span class="pre">val1</span></code>, else <code class="docutils literal notranslate"><span class="pre">val0</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Value, out</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Repl">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Repl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Repl" title="Permalink to this definition"></a></dt>
+<dd><p>Replicate a value</p>
+<p>An input value is replicated (repeated) several times
+to be used on the RHS of assignments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">Repl</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>Value</em><em>, </em><em>in</em>) – Input value to be replicated.</p></li>
+<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of replications.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Replicated value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#torii.hdl.ast.Repl" title="torii.hdl.ast.Repl">Repl</a>, out</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Repl.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Repl.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.ResetSignal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_reset_less</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ResetSignal" title="Permalink to this definition"></a></dt>
+<dd><p>Reset signal for a clock domain.</p>
+<p>Any <code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">cd.rst</span></code> for a clock domain with the corresponding name.
+All of these signals ultimately refer to the same signal, but they can be manipulated
+independently of the clock domain, even before the clock domain is created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Clock domain to obtain a reset signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p></li>
+<li><p><strong>allow_reset_less</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If the clock domain is reset-less, act as a constant <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of reporting an error.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.ResetSignal.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.ResetSignal.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Sample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Sample" title="Permalink to this definition"></a></dt>
+<dd><p>Value from the past.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Sample</span></code> of an expression is equal to the value of the expression <code class="docutils literal notranslate"><span class="pre">clocks</span></code> clock edges
+of the <code class="docutils literal notranslate"><span class="pre">domain</span></code> clock back. If that moment is before the beginning of time, it is equal
+to the value of the expression calculated as if each signal had its reset value.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Sample.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Sample.shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+<span class="go">Shape(width = 8, signed = False)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.Shape">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Shape" title="Permalink to this definition"></a></dt>
+<dd><p>Bit width and signedness of a value.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Shape</span></code> can be constructed using:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>explicit bit width and signedness;</p></li>
+<li><p>aliases <a class="reference internal" href="#torii.hdl.ast.signed" title="torii.hdl.ast.signed"><code class="xref py py-func docutils literal notranslate"><span class="pre">signed()</span></code></a> and <a class="reference internal" href="#torii.hdl.ast.unsigned" title="torii.hdl.ast.unsigned"><code class="xref py py-func docutils literal notranslate"><span class="pre">unsigned()</span></code></a>;</p></li>
+<li><p>casting from a variety of objects.</p></li>
+</ul>
+</div></blockquote>
+<p>A <code class="docutils literal notranslate"><span class="pre">Shape</span></code> can be cast from:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>an integer, where the integer specifies the bit width;</p></li>
+<li><dl class="simple">
+<dt>a range, where the result is wide enough to represent any element of the range, and is</dt><dd><p>signed if any element of the range is signed;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>an <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code> with all integer members or <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code>, where the result is wide</dt><dd><p>enough to represent any member of the enumeration, and is signed if any member of
+the enumeration is signed.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of bits in the representation, including the sign bit (if any).</p></li>
+<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the value is unsigned. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the value is signed two’s complement.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.ShapeCastable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Permalink to this definition"></a></dt>
+<dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>Shape`s.</p>
+<p>An object deriving from <a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> is automatically converted to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>
+when it is used in a context where a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is expected. Such objects can contain
+a richer description of the shape than what is supported by the core Torii language, yet
+still be transparently used with it.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -781,76 +900,20 @@ the enumeration.</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.ClockSignal">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ClockSignal" title="Permalink to this definition"></a></dt>
-<dd><p>Clock signal for a clock domain.</p>
-<p>Any <code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">cd.clk</span></code> for a clock domain with the corresponding name.
-All of these signals ultimately refer to the same signal, but they can be manipulated
-independently of the clock domain, even before the clock domain is created.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Clock domain to obtain a clock signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.ClockSignal.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ClockSignal.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
+<dt class="sig sig-object py" id="torii.hdl.ast.SignalSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">SignalSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.SignalSet" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.hdl.ast.signed">
+<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">signed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.signed" title="Permalink to this definition"></a></dt>
+<dd><p>Shorthand for <code class="docutils literal notranslate"><span class="pre">Shape(width,</span> <span class="pre">signed</span> <span class="pre">=</span> <span class="pre">True)</span></code>.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.ResetSignal">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_reset_less</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ResetSignal" title="Permalink to this definition"></a></dt>
-<dd><p>Reset signal for a clock domain.</p>
-<p>Any <code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">cd.rst</span></code> for a clock domain with the corresponding name.
-All of these signals ultimately refer to the same signal, but they can be manipulated
-independently of the clock domain, even before the clock domain is created.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Clock domain to obtain a reset signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p></li>
-<li><p><strong>allow_reset_less</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If the clock domain is reset-less, act as a constant <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of reporting an error.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.ResetSignal.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.ResetSignal.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.hdl.ast.unsigned">
+<span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">unsigned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.unsigned" title="Permalink to this definition"></a></dt>
+<dd><p>Shorthand for <code class="docutils literal notranslate"><span class="pre">Shape(width,</span> <span class="pre">signed</span> <span class="pre">=</span> <span class="pre">False)</span></code>.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -883,71 +946,8 @@ internally consistent.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Sample">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Sample" title="Permalink to this definition"></a></dt>
-<dd><p>Value from the past.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">Sample</span></code> of an expression is equal to the value of the expression <code class="docutils literal notranslate"><span class="pre">clocks</span></code> clock edges
-of the <code class="docutils literal notranslate"><span class="pre">domain</span></code> clock back. If that moment is before the beginning of time, it is equal
-to the value of the expression calculated as if each signal had its reset value.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.Sample.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Sample.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.Initial">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Initial" title="Permalink to this definition"></a></dt>
-<dd><p>Start indicator, for model checking.</p>
-<p>An <code class="docutils literal notranslate"><span class="pre">Initial</span></code> signal is <code class="docutils literal notranslate"><span class="pre">1</span></code> at the first cycle of model checking, and <code class="docutils literal notranslate"><span class="pre">0</span></code> at any other.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.hdl.ast.Initial.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Initial.shape" title="Permalink to this definition"></a></dt>
-<dd><p>Bit width and signedness of a value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mh">0xaa</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
-<span class="go">Shape(width = 8, signed = False)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.ValueSet">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ValueSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ValueSet" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ast.SignalSet">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">SignalSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.SignalSet" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
