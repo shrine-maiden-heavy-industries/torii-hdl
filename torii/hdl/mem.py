@@ -5,7 +5,7 @@ from collections import OrderedDict
 from typing      import Optional
 
 from ..util      import tracer
-from .ast        import *
+from .ast        import Array, Const, ClockSignal, Signal, Switch, Repl, Cat
 from .ir         import Elaboratable, Instance
 
 __all__ = (

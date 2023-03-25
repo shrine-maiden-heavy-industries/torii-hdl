@@ -2,7 +2,7 @@
 
 from inspect   import getfile, getlineno, iscoroutine, isgenerator
 
-from ..hdl     import *
+from ..hdl     import Value, Const, ClockDomain
 from ..hdl.ast import SignalSet, Statement
 from ._base    import BaseProcess
 from ._pyrtl   import _RHSValueCompiler, _StatementCompiler, _ValueCompiler

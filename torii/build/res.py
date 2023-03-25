@@ -3,10 +3,10 @@
 from collections import OrderedDict
 from typing      import Optional, Literal, Union, Generator
 
-from ..hdl.ast   import *
-from ..hdl.rec   import *
-from ..lib.io    import *
-from .dsl        import *
+from ..hdl.ast   import Signal, SignalDict
+from ..hdl.rec   import Record
+from ..lib.io    import Pin
+from .dsl        import Resource, Connector, Subsignal, Attrs, Pins, DiffPairs
 
 __all__ = (
 	'ResourceError',

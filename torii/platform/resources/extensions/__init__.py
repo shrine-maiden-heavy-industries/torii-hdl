@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .pmod import *
+from .pmod import (
+	PmodGPIOType1Resource, PmodSPIType2Resource, PmodSPIType2AResource,
+	PmodUARTType3Resource, PmodUARTType4Resource, PmodUARTType4AResource,
+	PmodHBridgeType5Resource, PmodDualHBridgeType6Resource
+)
 
 __all__ = (
 	'PmodGPIOType1Resource',

@@ -8,10 +8,13 @@ from functools    import wraps
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
-from .ast         import *
-from .cd          import *
-from .ir          import *
-from .xfrm        import *
+from .ast         import (
+	Operator, Statement, SignalDict, Value, Switch, Cat, Signal,
+	Assign, Assert, Assume, Cover
+)
+from .cd          import ClockDomain
+from .ir          import Elaboratable, Fragment
+from .xfrm        import SampleDomainInjector
 
 __all__ = (
 	'SyntaxError',

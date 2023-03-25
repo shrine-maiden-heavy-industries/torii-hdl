@@ -9,7 +9,12 @@ except ImportError: # pragma: no cover
 	__version__ = 'unknown'
 
 
-from .hdl import *
+from .hdl import (
+	Shape, unsigned, signed,
+	Value, Const, Mux, Cat, Repl, Array, Signal, ClockSignal, ResetSignal,
+	Module, ClockDomain, Elaboratable, Fragment, Instance, Memory, Record,
+	DomainRenamer, ResetInserter, EnableInserter
+)
 
 __all__ = (
 	'Shape', 'unsigned', 'signed',

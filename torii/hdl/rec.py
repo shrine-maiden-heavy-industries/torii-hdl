@@ -7,7 +7,7 @@ from typing      import Any, Generator, Iterable, Optional, Union
 
 from ..util      import union
 from ..util      import tracer
-from .ast        import *
+from .ast        import Cat, Shape, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
 	'Direction',

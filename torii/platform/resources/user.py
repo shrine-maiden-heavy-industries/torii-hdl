@@ -2,7 +2,7 @@
 
 from typing   import Optional, Union, Literal
 
-from ...build import *
+from ...build import Resource, Attrs, Pins, Subsignal
 
 
 __all__ = (

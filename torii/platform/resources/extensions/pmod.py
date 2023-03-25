@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # Reference: https://www.digilentinc.com/Pmods/Digilent-Pmod_%20Interface_Specification.pdf
 
-from ....build import *
+from ....build import Resource, Pins, PinsN, Subsignal
 
 __all__ = (
 	'PmodGPIOType1Resource',

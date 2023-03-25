@@ -12,16 +12,20 @@ import re
 import jinja2
 
 from ..              import __version__
-from ..tools         import *
-from ..hdl           import *
+from ..tools         import require_tool, has_tool
+from ..hdl.ast       import Signal, Const, ClockSignal
+from ..hdl.cd        import ClockDomain
+from ..hdl.dsl       import Module
+from ..hdl.ir        import Fragment, Elaboratable, Instance
+from ..hdl.rec       import Record
 from ..hdl.xfrm      import SampleLowerer, DomainLowerer
 from ..lib.io        import Pin
 from ..lib.cdc       import ResetSynchronizer
 from ..back          import rtlil, verilog
 from ..util.string   import ascii_escape, tcl_escape, tcl_quote, tool_env_var
 from .dsl            import Clock, Attrs
-from .res            import *
-from .run            import *
+from .res            import ResourceManager
+from .run            import BuildPlan, BuildProducts
 
 __all__ = (
 	'Platform',

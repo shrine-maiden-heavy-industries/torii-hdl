@@ -6,11 +6,13 @@ from collections.abc import Iterable
 
 from ..util          import flatten
 from ..util          import tracer
-from .ast            import *
-from .ast            import _StatementList
-from .cd             import *
-from .ir             import *
-from .rec            import *
+from .ast            import (
+	AnyConst, AnySeq, Const, ClockSignal, Cat, Signal, ResetSignal, Slice, Operator,
+	Part, Repl, ArrayProxy, Sample, Value, Initial, Assign, Assert, Cover, Switch,
+	Statement, Assume, Property, ValueDict, SignalDict, SignalSet, Mux, _StatementList
+)
+from .cd             import DomainError
+from .ir             import Instance, Fragment, Elaboratable
 
 __all__ = (
 	'ValueVisitor', 'ValueTransformer',

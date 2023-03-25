@@ -3,7 +3,7 @@
 from enum     import auto, unique, Enum
 from typing   import Optional, Union
 
-from ...build import *
+from ...build import Resource, Attrs, Pins, PinsN, Subsignal, DiffPairs
 
 __all__ = (
 	'QSPIMode',
