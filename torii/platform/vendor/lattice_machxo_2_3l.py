@@ -221,9 +221,20 @@ class LatticeMachXO2Or3LPlatform(TemplatedPlatform):
 			if using_osch:
 				osch_freq = self.osch_frequency
 				if osch_freq not in self._supported_osch_freqs:
-					raise ValueError(f'Frequency {osch_freq!r} is not valid for OSCH clock. Valid frequencies are {self._supported_osch_freqs!r}')
+					raise ValueError(
+						f'Frequency {osch_freq!r} is not valid for OSCH clock. Valid frequencies are '
+						f'{self._supported_osch_freqs!r}'
+					)
 				osch_freq_param = f'{float(osch_freq):.2f}'
-				m.submodules += [ Instance('OSCH', p_NOM_FREQ = osch_freq_param, i_STDBY = Const(0), o_OSC = clk_i, o_SEDSTDBY = Signal()) ]
+				m.submodules += [
+					Instance(
+						'OSCH',
+						p_NOM_FREQ = osch_freq_param,
+						i_STDBY = Const(0),
+						o_OSC = clk_i,
+						o_SEDSTDBY = Signal()
+					)
+				]
 			# GSR implicitly connects to every appropriate storage element. As such, the sync
 			# domain is reset-less; domains driven by other clocks would need to have dedicated
 			# reset circuitry or otherwise meet setup/hold constraints on their own.

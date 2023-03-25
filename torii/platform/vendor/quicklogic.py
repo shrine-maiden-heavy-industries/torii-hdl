@@ -163,11 +163,15 @@ class QuicklogicPlatform(TemplatedPlatform):
 				if not hasattr(self, 'osc_div'):
 					raise ValueError('OSC divider (osc_div) must be an integer between 2 and 512')
 				if not isinstance(self.osc_div, int) or self.osc_div < 2 or self.osc_div > 512:
-					raise ValueError(f'OSC divider (osc_div) must be an integer between 2 and 512, not {self.osc_div!r}')
+					raise ValueError(
+						f'OSC divider (osc_div) must be an integer between 2 and 512, not {self.osc_div!r}'
+					)
 				if not hasattr(self, 'osc_freq'):
 					raise ValueError('OSC frequency (osc_freq) must be an integer between 2100000 and 80000000')
 				if not isinstance(self.osc_freq, int) or self.osc_freq < 2100000 or self.osc_freq > 80000000:
-					raise ValueError(f'OSC frequency (osc_freq) must be an integer between 2100000 and 80000000, not {self.osc_freq!r}')
+					raise ValueError(
+						f'OSC frequency (osc_freq) must be an integer between 2100000 and 80000000, not {self.osc_freq!r}'
+					)
 				clk_i = Signal()
 				sys_clk0 = Signal()
 				m.submodules += Instance(

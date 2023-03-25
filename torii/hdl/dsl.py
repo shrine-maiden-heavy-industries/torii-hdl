@@ -313,10 +313,16 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			if not isinstance(pattern, (int, str, Enum)):
 				raise SyntaxError(f'Case pattern must be an integer, a string, or an enumeration, not {pattern!r}')
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
-				raise SyntaxError(f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may include whitespace')
+				raise SyntaxError(
+					f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
+					'include whitespace'
+				)
 			if (isinstance(pattern, str) and
 					len("".join(pattern.split())) != len(switch_data['test'])):
-				raise SyntaxError(f'Case pattern \'{pattern}\' must have the same width as switch value (which is {len(switch_data["test"])})')
+				raise SyntaxError(
+					f'Case pattern \'{pattern}\' must have the same width as switch value '
+					f'(which is {len(switch_data["test"])})'
+				)
 			if isinstance(pattern, int) and bits_for(pattern) > len(switch_data["test"]):
 				warnings.warn(
 					f'Case pattern \'{pattern:b}\' is wider than switch value (which has width {len(switch_data["test"])}); '

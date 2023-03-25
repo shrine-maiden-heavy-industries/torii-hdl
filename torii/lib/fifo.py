@@ -322,7 +322,9 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 				depth_bits = log2_int(depth, need_pow2 = exact_depth)
 				depth = 1 << depth_bits
 			except ValueError:
-				raise ValueError(f'AsyncFIFO only supports depths that are powers of 2; requested exact depth {depth} is not') from None
+				raise ValueError(
+					f'AsyncFIFO only supports depths that are powers of 2; requested exact depth {depth} is not'
+				) from None
 		else:
 			depth_bits = 0
 		super().__init__(width = width, depth = depth, fwft = True)
@@ -503,7 +505,8 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 				depth = (1 << depth_bits) + 1
 			except ValueError:
 				raise ValueError(
-					f'AsyncFIFOBuffered only supports depths that are one higher than powers of 2; requested exact depth {depth} is not'
+					'AsyncFIFOBuffered only supports depths that are one higher than powers of 2; '
+					f'requested exact depth {depth} is not'
 				) from None
 		super().__init__(width = width, depth = depth, fwft = True)
 

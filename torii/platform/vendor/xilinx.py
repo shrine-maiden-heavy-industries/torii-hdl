@@ -319,7 +319,7 @@ class XilinxPlatform(TemplatedPlatform):
 				TIMESPEC "TS{{net_signal|hierarchy("__")}}" = PERIOD "PRD{{net_signal|hierarchy("/")}}" {{1000000000/frequency}} ns HIGH 50%;
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		'''
+		''' # noqa: E501
 	}
 	_ise_command_templates = [
 		r'''

@@ -279,7 +279,8 @@ class Decoder(Elaboratable):
 			raise TypeError(f'Subordinate bus must be an instance of wishbone.Interface, not {sub_bus!r}')
 		if sub_bus.granularity > self.granularity:
 			raise ValueError(
-				f'Subordinate bus has granularity {sub_bus.granularity}, which is greater than the decoder granularity {self.granularity}'
+				f'Subordinate bus has granularity {sub_bus.granularity}, which is greater than the decoder '
+				f'granularity {self.granularity}'
 			)
 		if not sparse:
 			if sub_bus.data_width != self.data_width:
@@ -296,7 +297,10 @@ class Decoder(Elaboratable):
 				)
 		for opt_output in { 'err', 'rty', 'stall' }:
 			if hasattr(sub_bus, opt_output) and opt_output not in self.features:
-				raise ValueError(f'Subordinate bus has optional output {opt_output!r}, but the decoder does not have a corresponding input')
+				raise ValueError(
+					f'Subordinate bus has optional output {opt_output!r}, but the decoder does not have '
+					'a corresponding input'
+				)
 
 		self._subs[sub_bus.memory_map] = sub_bus
 		return self._map.add_window(sub_bus.memory_map, addr = addr, sparse = sparse, extend = extend)
@@ -402,19 +406,25 @@ class Arbiter(Elaboratable):
 			raise TypeError(f'Initiator bus must be an instance of wishbone.Interface, not {intr_bus!r}')
 		if intr_bus.addr_width != self.bus.addr_width:
 			raise ValueError(
-				f'Initiator bus has address width {intr_bus.addr_width}, which is not the same as arbiter address width {self.bus.addr_width}'
+				f'Initiator bus has address width {intr_bus.addr_width}, which is not the same as arbiter '
+				f'address width {self.bus.addr_width}'
 			)
 		if intr_bus.granularity < self.bus.granularity:
 			raise ValueError(
-				f'Initiator bus has granularity {intr_bus.granularity}, which is lesser than the arbiter granularity {self.bus.granularity}'
+				f'Initiator bus has granularity {intr_bus.granularity}, which is lesser than the arbiter '
+				f'granularity {self.bus.granularity}'
 			)
 		if intr_bus.data_width != self.bus.data_width:
 			raise ValueError(
-				f'Initiator bus has data width {intr_bus.data_width}, which is not the same as arbiter data width {self.bus.data_width}'
+				f'Initiator bus has data width {intr_bus.data_width}, which is not the same as arbiter '
+				f'data width {self.bus.data_width}'
 			)
 		for opt_output in { 'err', 'rty' }:
 			if hasattr(self.bus, opt_output) and not hasattr(intr_bus, opt_output):
-				raise ValueError(f'Arbiter has optional output {opt_output!r}, but the initiator bus does not have a corresponding input')
+				raise ValueError(
+					f'Arbiter has optional output {opt_output!r}, but the initiator bus does not have '
+					'a corresponding input'
+				)
 
 		self._intrs.append(intr_bus)
 

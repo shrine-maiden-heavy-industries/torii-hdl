@@ -335,7 +335,10 @@ class MemoryMap:
 
 		if id(resource) in self._resources:
 			_, _, addr_range = self._resources[id(resource)]
-			raise ValueError(f'Resource {resource!r} is already added at address range {addr_range.start:#x}..{addr_range.stop:#x}')
+			raise ValueError(
+				f'Resource {resource!r} is already added at address range '
+				f'{addr_range.start:#x}..{addr_range.stop:#x}'
+			)
 
 		if not isinstance(name, str) or not name:
 			raise TypeError(f'Name must be a non-empty string, not {name!r}')

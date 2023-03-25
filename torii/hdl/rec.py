@@ -57,7 +57,9 @@ class Layout:
 					# Check provided shape by calling Shape.cast and checking for exception
 					Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 				except Exception:
-					raise TypeError(f'Field {field!r} has invalid shape: should be castable to Shape or a list of fields of a nested record')
+					raise TypeError(
+						f'Field {field!r} has invalid shape: should be castable to Shape or a list of ''fields of a nested record'
+					)
 			if name in self.fields:
 				raise NameError(f'Field {field!r} has a name that is already present in the layout')
 			self.fields[name] = (shape, direction)
@@ -166,7 +168,9 @@ class Record(ValueCastable):
 					reference = 'Unnamed record'
 				else:
 					reference = f'Record \'{self.name}\''
-				raise AttributeError(f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?') from None
+				raise AttributeError(
+					f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?'
+				) from None
 		elif isinstance(item, tuple):
 			return Record(self.layout[item], fields = {
 				field_name: field_value
@@ -181,7 +185,9 @@ class Record(ValueCastable):
 					reference = 'Unnamed record'
 				else:
 					reference = f'Record \'{self.name}\''
-				raise AttributeError(f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?') from None
+				raise AttributeError(
+					f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?'
+				) from None
 
 	@ValueCastable.lowermethod
 	def as_value(self) -> Cat:

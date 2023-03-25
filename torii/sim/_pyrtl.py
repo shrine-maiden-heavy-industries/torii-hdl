@@ -81,7 +81,10 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 				src = '{}:{}'.format(*value.src_loc)
 			else:
 				src = 'unknown location'
-			raise OverflowError(f'Value defined at {src} is {len(value)} bits wide, which is unlikely to simulate in reasonable time')
+			raise OverflowError(
+				f'Value defined at {src} is {len(value)} bits wide, which is unlikely to simulate '
+				'in reasonable time'
+			)
 
 		return super().on_value(value)
 

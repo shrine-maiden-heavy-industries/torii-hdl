@@ -541,7 +541,8 @@ class Value(metaclass = ABCMeta):
 
 			if isinstance(pattern, int) and bits_for(pattern) > len(self):
 				warnings.warn(
-					f'Match pattern \'{pattern:b}\' is wider than match value (which has width {len(self)}); comparison will never be true',
+					f'Match pattern \'{pattern:b}\' is wider than match value (which has width {len(self)}); '
+					'comparison will never be true',
 					SyntaxWarning, stacklevel = 3
 				)
 				continue
