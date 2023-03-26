@@ -460,48 +460,48 @@ Unreleased template stuff
 <h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5">0.4.5</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <section id="id2">
 <h3>Added<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Added `-norom` and `-proc` options to verilog generation if available in Yosys.
-- Added [a small tutorial](https://torii.shmdn.link/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
-- Added conversion helpers to/from picoseconds.
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">-norom</span></code> and <code class="docutils literal notranslate"><span class="pre">-proc</span></code> options to verilog generation if available in Yosys.</p></li>
+<li><p>Added <a class="reference external" href="https://torii.shmdn.link/tutorials/external_modules.html">a small tutorial</a> on using <code class="docutils literal notranslate"><span class="pre">platform.add_file</span></code> with <code class="docutils literal notranslate"><span class="pre">Instance</span></code> for referencing external modules.</p></li>
+<li><p>Added conversion helpers to/from picoseconds.</p></li>
+</ul>
 </section>
 <section id="id3">
 <h3>Changed<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Updated the minimum Yosys version to `0.15`.
-- Minor typing updates.
-- `Value.matches` now returns `Const(1)` when no value is supplied.
-- `Platform.build` now allows for lists of strings to be passed for argument.
-- Invocations of `read_ilang` in Yosys scripts has been replaced with `read_rtlil` as `read_ilang` has been deprecated for a while now.
-- Replaced `sim_case` in `ToriiTestCase` with `ToriiTestCase.simulation` and added two attributes for defining the simulation domain `ToriiTestCase.comb_domain` and `ToriiTestCase.sync_domain`, the latter of which takes a `domain = ` param to specify which synchronous domain it is using.
-- The default platform in `ToriiTestCase` has been replaced with `None`, rather than `MockPlatform`
-- Gated the initialization of the `ToriiTestCase` `dut` behind a check to prevent non-simulating tests, and tests that don&#39;t use the DUT from exploding.
-- Made the `connectors` property on `Platform`&#39;s optional, it now currently defaults to an empty list.
-- Updated [rich](https://github.com/Textualize/rich) dependency version from `~=12.6.0` to `&gt;=12.6.0`
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Updated the minimum Yosys version to <code class="docutils literal notranslate"><span class="pre">0.15</span></code>.</p></li>
+<li><p>Minor typing updates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Value.matches</span></code> now returns <code class="docutils literal notranslate"><span class="pre">Const(1)</span></code> when no value is supplied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Platform.build</span></code> now allows for lists of strings to be passed for argument.</p></li>
+<li><p>Invocations of <code class="docutils literal notranslate"><span class="pre">read_ilang</span></code> in Yosys scripts has been replaced with <code class="docutils literal notranslate"><span class="pre">read_rtlil</span></code> as <code class="docutils literal notranslate"><span class="pre">read_ilang</span></code> has been deprecated for a while now.</p></li>
+<li><p>Replaced <code class="docutils literal notranslate"><span class="pre">sim_case</span></code> in <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> with <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation</span></code> and added two attributes for defining the simulation domain <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain</span></code> and <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain</span></code>, the latter of which takes a <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">=</span> </code> param to specify which synchronous domain it is using.</p></li>
+<li><p>The default platform in <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">None</span></code>, rather than <code class="docutils literal notranslate"><span class="pre">MockPlatform</span></code></p></li>
+<li><p>Gated the initialization of the <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> <code class="docutils literal notranslate"><span class="pre">dut</span></code> behind a check to prevent non-simulating tests, and tests that don’t use the DUT from exploding.</p></li>
+<li><p>Made the <code class="docutils literal notranslate"><span class="pre">connectors</span></code> property on <code class="docutils literal notranslate"><span class="pre">Platform</span></code>’s optional, it now currently defaults to an empty list.</p></li>
+<li><p>Updated <a class="reference external" href="https://github.com/Textualize/rich">rich</a> dependency version from <code class="docutils literal notranslate"><span class="pre">~=12.6.0</span></code> to <code class="docutils literal notranslate"><span class="pre">&gt;=12.6.0</span></code></p></li>
+</ul>
 </section>
 <section id="id4">
 <h3>Deprecated<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Deprecated the current `torii.cli.*` methods in anticipation of replacing them.
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Deprecated the current <code class="docutils literal notranslate"><span class="pre">torii.cli.*</span></code> methods in anticipation of replacing them.</p></li>
+</ul>
 </section>
 <section id="id5">
 <h3>Removed<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Removed remote SSH build support
-- Removed `Value.__hash__`
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Removed remote SSH build support</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">Value.__hash__</span></code></p></li>
+</ul>
 </section>
 <section id="id6">
 <h3>Fixed<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Corrected how environment variables were extracted making them more consistent.
-- Fixed the `ToriiTestCase` so it&#39;s now properly functional
-- Clarified the usage of `Cat` in the language documentation, noting that it can take more than two arguments for concatenation.
-- Added a warning on potential off-by-one errors when invoking `Signal` with a `range` and having the reset value be the same as the end of the range.
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Corrected how environment variables were extracted making them more consistent.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> so it’s now properly functional</p></li>
+<li><p>Clarified the usage of <code class="docutils literal notranslate"><span class="pre">Cat</span></code> in the language documentation, noting that it can take more than two arguments for concatenation.</p></li>
+<li><p>Added a warning on potential off-by-one errors when invoking <code class="docutils literal notranslate"><span class="pre">Signal</span></code> with a <code class="docutils literal notranslate"><span class="pre">range</span></code> and having the reset value be the same as the end of the range.</p></li>
+</ul>
 </section>
 </section>
 <section id="id7">
