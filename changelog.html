@@ -355,7 +355,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.4.4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.4.5</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Added</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">Changed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">Deprecated</a></li>
@@ -363,26 +363,34 @@
 <li class="toctree-l3"><a class="reference internal" href="#id6">Fixed</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">0.4.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id8">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">0.4.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id10">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">0.4.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id7">0.4.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Removed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id12">Fixed</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id13">0.4.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id14">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id16">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id17">Fixed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">0.4.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Fixed</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id18">0.1.0 - 0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">0.4.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">0.4.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">0.4.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">Projects Using Torii</a></li>
@@ -431,7 +439,7 @@ Unreleased template stuff
 ### Security
 -->
 <section id="unreleased">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Permalink to this heading"></a></h2>
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Permalink to this heading"></a></h2>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Permalink to this heading"></a></h3>
 </section>
@@ -449,9 +457,57 @@ Unreleased template stuff
 </section>
 </section>
 <section id="id1">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4">0.4.4</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5">0.4.5</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <section id="id2">
 <h3>Added<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Added `-norom` and `-proc` options to verilog generation if available in Yosys.
+- Added [a small tutorial](https://torii.shmdn.link/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
+- Added conversion helpers to/from picoseconds.
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>Changed<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Updated the minimum Yosys version to `0.15`.
+- Minor typing updates.
+- `Value.matches` now returns `Const(1)` when no value is supplied.
+- `Platform.build` now allows for lists of strings to be passed for argument.
+- Invocations of `read_ilang` in Yosys scripts has been replaced with `read_rtlil` as `read_ilang` has been deprecated for a while now.
+- Replaced `sim_case` in `ToriiTestCase` with `ToriiTestCase.simulation` and added two attributes for defining the simulation domain `ToriiTestCase.comb_domain` and `ToriiTestCase.sync_domain`, the latter of which takes a `domain = ` param to specify which synchronous domain it is using.
+- The default platform in `ToriiTestCase` has been replaced with `None`, rather than `MockPlatform`
+- Gated the initialization of the `ToriiTestCase` `dut` behind a check to prevent non-simulating tests, and tests that don&#39;t use the DUT from exploding.
+- Made the `connectors` property on `Platform`&#39;s optional, it now currently defaults to an empty list.
+- Updated [rich](https://github.com/Textualize/rich) dependency version from `~=12.6.0` to `&gt;=12.6.0`
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Deprecated<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Deprecated the current `torii.cli.*` methods in anticipation of replacing them.
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>Removed<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Removed remote SSH build support
+- Removed `Value.__hash__`
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>Fixed<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Corrected how environment variables were extracted making them more consistent.
+- Fixed the `ToriiTestCase` so it&#39;s now properly functional
+- Clarified the usage of `Cat` in the language documentation, noting that it can take more than two arguments for concatenation.
+- Added a warning on potential off-by-one errors when invoking `Signal` with a `range` and having the reset value be the same as the end of the range.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4">0.4.4</a><a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<section id="id8">
+<h3>Added<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Handle <code class="docutils literal notranslate"><span class="pre">Repl</span></code>’s in <code class="docutils literal notranslate"><span class="pre">ValueKey</span></code></p></li>
 <li><p>Allow for <code class="docutils literal notranslate"><span class="pre">IntEnum</span></code>’s in <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code></p></li>
@@ -461,8 +517,8 @@ Unreleased template stuff
 <li><p>Added exports for <code class="docutils literal notranslate"><span class="pre">convert</span></code> and <code class="docutils literal notranslate"><span class="pre">convert_fragment</span></code> for rtlil, cxxrtl, and verilog into the root <code class="docutils literal notranslate"><span class="pre">torii.back</span></code> module.</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>Changed<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h3>Changed<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Updated the copyright years in the license file.</p></li>
 <li><p>Hardened the RTLIL backend against generating Yosys reserved port names.</p></li>
@@ -475,15 +531,15 @@ Unreleased template stuff
 <li><p>Added a default help formatter for the built-in CLI stub.</p></li>
 </ul>
 </section>
-<section id="id4">
-<h3>Deprecated<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<section id="id10">
+<h3>Deprecated<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Deprecated the remote SSH builds.</p></li>
 <li><p>Deprecated passing non <code class="docutils literal notranslate"><span class="pre">Elaboratable</span></code> or <code class="docutils literal notranslate"><span class="pre">Fragment</span></code> objects to <code class="docutils literal notranslate"><span class="pre">Fragment.get</span></code>.</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>Removed<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<section id="id11">
+<h3>Removed<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Removed <code class="docutils literal notranslate"><span class="pre">Shape</span></code> and <code class="docutils literal notranslate"><span class="pre">tuple</span></code> casts and comparisons.</p></li>
 <li><p>Removed <code class="docutils literal notranslate"><span class="pre">UserValue</span></code> and associated machinery.</p></li>
@@ -493,8 +549,8 @@ Unreleased template stuff
 <li><p>Removed the <code class="docutils literal notranslate"><span class="pre">_BuiltinYosys</span></code> proxy object and associated bits.</p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>Fixed<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<section id="id12">
+<h3>Fixed<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fixed an issue with the <code class="docutils literal notranslate"><span class="pre">TORII_</span></code> environment variables not being recognized.</p></li>
 <li><p>Fixed missing f-strings in the <code class="docutils literal notranslate"><span class="pre">cxxrtl</span></code>, <code class="docutils literal notranslate"><span class="pre">ast</span></code>, and <code class="docutils literal notranslate"><span class="pre">intel</span></code> modules.</p></li>
@@ -508,20 +564,20 @@ Unreleased template stuff
 </ul>
 </section>
 </section>
-<section id="id7">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3">0.4.3</a><a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
-<section id="id8">
-<h3>Fixed<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<section id="id13">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3">0.4.3</a><a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<section id="id14">
+<h3>Fixed<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fixed a small issue with the newline changes that caused synthesis to fail</p></li>
 <li><p>Fixed up the ULPI instance to properly handle the <code class="docutils literal notranslate"><span class="pre">clk</span></code> signal and constrain it</p></li>
 </ul>
 </section>
 </section>
-<section id="id9">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2">0.4.2</a><a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
-<section id="id10">
-<h3>Fixed<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<section id="id15">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2">0.4.2</a><a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<section id="id16">
+<h3>Fixed<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fixed the project URLs for the documentation and package.</p></li>
 <li><p>Fixed some minor issues in the install documentation.</p></li>
@@ -530,19 +586,19 @@ Unreleased template stuff
 </ul>
 </section>
 </section>
-<section id="id11">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1">0.4.1</a><a class="headerlink" href="#id11" title="Permalink to this heading"></a></h2>
-<section id="id12">
-<h3>Fixed<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<section id="id17">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1">0.4.1</a><a class="headerlink" href="#id17" title="Permalink to this heading"></a></h2>
+<section id="id18">
+<h3>Fixed<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">invoke_tool</span></code> not emitting the environment variable properly</p></li>
 </ul>
 </section>
 </section>
-<section id="id13">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0">0.4.0</a><a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
-<section id="id14">
-<h3>Added<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<section id="id19">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0">0.4.0</a><a class="headerlink" href="#id19" title="Permalink to this heading"></a></h2>
+<section id="id20">
+<h3>Added<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Folded in <code class="docutils literal notranslate"><span class="pre">stdio</span></code> library components.</p></li>
 <li><p>Folded in <code class="docutils literal notranslate"><span class="pre">soc</span></code> library components.</p></li>
@@ -566,8 +622,8 @@ Unreleased template stuff
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">EthernetResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface</span></code>.</p></li>
 </ul>
 </section>
-<section id="id15">
-<h3>Changed<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<section id="id21">
+<h3>Changed<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Refactored the <a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-hdl/">documentation</a>.</p></li>
 <li><p>Migrated string escape functions from the <code class="docutils literal notranslate"><span class="pre">TemplatedPlatform</span></code> into the new strings utility module.</p></li>
@@ -578,8 +634,8 @@ Unreleased template stuff
 <li><p>Moved the <code class="docutils literal notranslate"><span class="pre">_unused</span></code> module into <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code>.</p></li>
 </ul>
 </section>
-<section id="id16">
-<h3>Removed<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<section id="id22">
+<h3>Removed<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Removed the <code class="docutils literal notranslate"><span class="pre">nMigen</span></code> compatibility layer.</p></li>
 <li><p>Removed the <code class="docutils literal notranslate"><span class="pre">migen</span></code> compatibility layer.</p></li>
@@ -592,8 +648,8 @@ Unreleased template stuff
 <li><p>Removed the <code class="docutils literal notranslate"><span class="pre">C</span></code> alias for <code class="docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
 </ul>
 </section>
-<section id="id17">
-<h3>Fixed<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<section id="id23">
+<h3>Fixed<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fixed the package name.</p></li>
 <li><p>Fixed the package authors.</p></li>
@@ -604,8 +660,8 @@ Unreleased template stuff
 </ul>
 </section>
 </section>
-<section id="id18">
-<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.1...amaranth-fork">0.1.0</a> - <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.3...amaranth-fork">0.3.0</a><a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<section id="id24">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.1...amaranth-fork">0.1.0</a> - <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.3...amaranth-fork">0.3.0</a><a class="headerlink" href="#id24" title="Permalink to this heading"></a></h2>
 <p>No changelog is provided for these versions as they are all older tagged releases of <a class="reference external" href="https://github.com/amaranth-lang/amaranth">Amaranth</a> from before the fork.</p>
 </section>
 </section>
