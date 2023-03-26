@@ -24,6 +24,40 @@ Unreleased template stuff
 ### Removed
 ### Fixed
 
+## [0.4.5]
+
+### Added
+
+	- Added `-norom` and `-proc` options to verilog generation if available in Yosys.
+	- Added [a small tutorial](https://torii.shmdn.link/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
+	- Added conversion helpers to/from picoseconds.
+### Changed
+
+	- Updated the minimum Yosys version to `0.15`.
+	- Minor typing updates.
+	- `Value.matches` now returns `Const(1)` when no value is supplied.
+	- `Platform.build` now allows for lists of strings to be passed for argument.
+	- Invocations of `read_ilang` in Yosys scripts has been replaced with `read_rtlil` as `read_ilang` has been deprecated for a while now.
+	- Replaced `sim_case` in `ToriiTestCase` with `ToriiTestCase.simulation` and added two attributes for defining the simulation domain `ToriiTestCase.comb_domain` and `ToriiTestCase.sync_domain`, the latter of which takes a `domain = ` param to specify which synchronous domain it is using.
+	- The default platform in `ToriiTestCase` has been replaced with `None`, rather than `MockPlatform`
+	- Gated the initialization of the `ToriiTestCase` `dut` behind a check to prevent non-simulating tests, and tests that don't use the DUT from exploding.
+	- Made the `connectors` property on `Platform`'s optional, it now currently defaults to an empty list.
+	- Updated [rich](https://github.com/Textualize/rich) dependency version from `~=12.6.0` to `>=12.6.0`
+### Deprecated
+
+	- Deprecated the current `torii.cli.*` methods in anticipation of replacing them.
+### Removed
+
+	- Removed remote SSH build support
+	- Removed `Value.__hash__`
+
+### Fixed
+
+	- Corrected how environment variables were extracted making them more consistent.
+	- Fixed the `ToriiTestCase` so it's now properly functional
+	- Clarified the usage of `Cat` in the language documentation, noting that it can take more than two arguments for concatenation.
+	- Added a warning on potential off-by-one errors when invoking `Signal` with a `range` and having the reset value be the same as the end of the range.
+
 ## [0.4.4]
 
 ### Added
@@ -156,7 +190,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...main
+[0.4.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2
