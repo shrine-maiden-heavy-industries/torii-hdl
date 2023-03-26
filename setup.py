@@ -64,7 +64,7 @@ setup(
 	install_requires = [
 		'pyvcd>=0.2.2,<0.4',
 		'Jinja2~=3.0',
-		'rich~=13.0.0',
+		'rich>=12.6.0',
 	],
 
 	extras_require   = {
