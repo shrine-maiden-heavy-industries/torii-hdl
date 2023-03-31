@@ -8,7 +8,7 @@ from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from ..asserts    import Assert, Assume, Initial
 from ..util.units import log2_int
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
-from .coding      import GrayDecoder, GrayEncoder
+from .coding.gray import GrayDecoder, GrayEncoder
 
 __all__ = (
 	'AsyncFIFO',
