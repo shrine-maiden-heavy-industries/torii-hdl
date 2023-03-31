@@ -8,7 +8,7 @@ from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from ..asserts    import Assert, Assume, Initial
 from ..util.units import log2_int
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
-from .coding.gray import GrayDecoder, GrayEncoder
+from .coding.gray import Decoder, Encoder
 
 __all__ = (
 	'AsyncFIFO',
@@ -364,7 +364,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 
 		produce_w_gry = Signal(self._ctr_bits)
 		produce_r_gry = Signal(self._ctr_bits)
-		produce_enc = m.submodules.produce_enc = GrayEncoder(self._ctr_bits)
+		produce_enc = m.submodules.produce_enc = Encoder(self._ctr_bits)
 		produce_cdc = m.submodules.produce_cdc = FFSynchronizer(  # noqa: F841
 			produce_w_gry, produce_r_gry, o_domain = self._r_domain
 		)
@@ -373,7 +373,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 
 		consume_r_gry = Signal(self._ctr_bits, reset_less = True)
 		consume_w_gry = Signal(self._ctr_bits)
-		consume_enc = m.submodules.consume_enc = GrayEncoder(self._ctr_bits)
+		consume_enc = m.submodules.consume_enc = Encoder(self._ctr_bits)
 		consume_cdc = m.submodules.consume_cdc = FFSynchronizer(  # noqa: F841
 			consume_r_gry, consume_w_gry, o_domain = self._w_domain
 		)
@@ -381,12 +381,12 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		m.d[self._r_domain] += consume_r_gry.eq(consume_enc.o)
 
 		consume_w_bin = Signal(self._ctr_bits)
-		consume_dec = m.submodules.consume_dec = GrayDecoder(self._ctr_bits)
+		consume_dec = m.submodules.consume_dec = Decoder(self._ctr_bits)
 		m.d.comb += consume_dec.i.eq(consume_w_gry),
 		m.d[self._w_domain] += consume_w_bin.eq(consume_dec.o)
 
 		produce_r_bin = Signal(self._ctr_bits)
-		produce_dec = m.submodules.produce_dec = GrayDecoder(self._ctr_bits)
+		produce_dec = m.submodules.produce_dec = Decoder(self._ctr_bits)
 		m.d.comb += produce_dec.i.eq(produce_r_gry),
 		m.d.comb += produce_r_bin.eq(produce_dec.o)
 
@@ -441,7 +441,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 
 		# Decode Gray code counter synchronized from write domain to overwrite binary
 		# counter in read domain.
-		rst_dec = m.submodules.rst_dec = GrayDecoder(self._ctr_bits)
+		rst_dec = m.submodules.rst_dec = Decoder(self._ctr_bits)
 		m.d.comb += rst_dec.i.eq(produce_r_gry)
 		with m.If(r_rst):
 			m.d.comb += r_empty.eq(1)
