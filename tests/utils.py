@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import textwrap
 import traceback
+from pathlib          import Path
 
 from torii.hdl.ast    import *
 from torii.hdl.ir     import *
@@ -33,22 +34,25 @@ class ToriiTestSuiteCase(ToriiTestCase):
 
 	# TODO: Once the Torii formal bits are better defined remove this and add formal to ToriiTestCase
 	def assertFormal(self, spec, mode = 'bmc', depth = 1):
-		stack = traceback.extract_stack()
+		stack      = traceback.extract_stack()
+		file_dir   = Path(__file__).resolve().parent
+		formal_dir = Path.cwd() / 'torii-formal'
+
+		if not formal_dir.exists():
+			formal_dir.mkdir(parents = True, exist_ok = True)
+
 		for frame in reversed(stack):
-			if os.path.dirname(__file__) not in frame.filename:
+			if str(file_dir) not in frame.filename:
 				break
 			caller = frame
 
-		spec_root, _ = os.path.splitext(caller.filename)
-		spec_dir = os.path.dirname(spec_root)
-		spec_name = '{}_{}'.format(
-			os.path.basename(spec_root).replace('test_', 'spec_'),
-			caller.name.replace('test_', '')
-		)
+		fname = Path(caller.filename).resolve().stem.replace('test_', 'spec_')
+		spec_name = f'{fname}_{caller.name.replace("test_", "")}'
+		spec_dir = formal_dir / spec_name
 
 		# The sby -f switch seems not fully functional when sby is reading from stdin.
-		if os.path.exists(os.path.join(spec_dir, spec_name)):
-			shutil.rmtree(os.path.join(spec_dir, spec_name))
+		if spec_dir.exists():
+			shutil.rmtree(spec_dir)
 
 		if mode == 'hybrid':
 			# A mix of BMC and k-induction, as per personal communication with Claire Wolf.
@@ -57,7 +61,7 @@ class ToriiTestSuiteCase(ToriiTestCase):
 		else:
 			script = ''
 
-		config = textwrap.dedent('''\
+		config = textwrap.dedent(f'''\
 		[options]
 		mode {mode}
 		depth {depth}
@@ -73,20 +77,20 @@ class ToriiTestSuiteCase(ToriiTestCase):
 		{script}
 
 		[file top.il]
-		{rtlil}
-		''').format(
-			mode = mode,
-			depth = depth,
-			script = script,
-			rtlil = rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]
-		)
+		{rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]}
+		''')
 
-		with subprocess.Popen(
-			[require_tool('sby'), '-f', '-d', spec_name],
-			cwd = spec_dir,
-			env = {**os.environ, 'PYTHONWARNINGS': 'ignore'},
+		with subprocess.Popen([
+				require_tool('sby'), '-f', '-d', spec_name
+			],
+			cwd                = formal_dir,
+			env                = {
+				**os.environ,
+				'PYTHONWARNINGS': 'ignore'
+			},
 			universal_newlines = True,
-			stdin = subprocess.PIPE, stdout = subprocess.PIPE
+			stdin              = subprocess.PIPE,
+			stdout             = subprocess.PIPE
 		) as proc:
 			stdout, stderr = proc.communicate(config)
 			if proc.returncode != 0:
