@@ -68,9 +68,6 @@ setup(
 	],
 
 	extras_require   = {
-		'remote-build': [
-			'paramiko~=2.7'
-		],
 		'dev': [
 			'nox'
 		],
