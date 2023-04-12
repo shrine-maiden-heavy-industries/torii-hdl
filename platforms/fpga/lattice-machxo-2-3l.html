@@ -330,7 +330,6 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Lattice MachXO2 and MachXO3L</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Platform"><code class="docutils literal notranslate"><span class="pre">LatticeMachXO2Platform</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO3LPlatform"><code class="docutils literal notranslate"><span class="pre">LatticeMachXO3LPlatform</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform"><code class="docutils literal notranslate"><span class="pre">LatticeMachXO2Or3LPlatform</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="quicklogic.html">Quicklogic</a><ul>
@@ -430,13 +429,13 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Platform">
 <span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice_machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">LatticeMachXO2Platform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Platform" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <a class="reference internal" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform" title="torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatticeMachXO2Or3LPlatform</span></code></a></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">MachXO2Or3LPlatform</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO3LPlatform">
 <span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice_machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">LatticeMachXO3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO3LPlatform" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <a class="reference internal" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform" title="torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatticeMachXO2Or3LPlatform</span></code></a></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">MachXO2Or3LPlatform</span></code></p>
 </dd></dl>
 
 <div class="admonition note">
@@ -444,44 +443,6 @@
 <p>Both of the above are aliases for the actual platform below, however only the aliased
 definitions are actually exported from the module for use.</p>
 </div>
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice_machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">LatticeMachXO2Or3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice_machxo_2_3l.LatticeMachXO2Or3LPlatform" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>Required tools:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pnmainc</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ddtcmd</span></code></p></li>
-</ul>
-</dd>
-</dl>
-<p>The environment is populated by running the script specified in the environment variable
-<code class="docutils literal notranslate"><span class="pre">TORII_ENV_DIAMOND</span></code>, if present. On Linux, diamond_env as provided by Diamond
-itself is a good candidate. On Windows, the following script (named <code class="docutils literal notranslate"><span class="pre">diamond_env.bat</span></code>,
-for instance) is known to work:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@echo</span> <span class="n">off</span>
-<span class="nb">set</span> <span class="n">PATH</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">lscc</span>\<span class="n">diamond</span>\<span class="o">%</span><span class="n">DIAMOND_VERSION</span><span class="o">%</span>\<span class="nb">bin</span>\<span class="n">nt64</span><span class="p">;</span><span class="o">%</span><span class="n">PATH</span><span class="o">%</span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Available overrides:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">script_project</span></code>: inserts commands before <code class="docutils literal notranslate"><span class="pre">prj_project</span> <span class="pre">save</span></code> in Tcl script.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">script_after_export</span></code>: inserts commands after <code class="docutils literal notranslate"><span class="pre">prj_run</span> <span class="pre">Export</span></code> in Tcl script.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">add_preferences</span></code>: inserts commands at the end of the LPF file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">add_constraints</span></code>: inserts commands at the end of the XDC file.</p></li>
-</ul>
-</dd>
-<dt>Build products:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}_impl/{{name}}_impl.htm</span></code>: consolidated log.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.jed</span></code>: JEDEC fuse file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.bit</span></code>: binary bitstream.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.svf</span></code>: JTAG programming vector for FLASH programming.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}_flash.svf</span></code>: JTAG programming vector for FLASH programming.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}_sram.svf</span></code>: JTAG programming vector for SRAM programming.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
     <script type="text/javascript">
