@@ -8,7 +8,7 @@ from .extensions import (
 	PmodUARTType4AResource, PmodUARTType4Resource
 )
 from .interface  import (
-	CANResource, DirectUSBResource, I2CResource,
+	CANResource, DirectUSBResource, I2CResource, IrDAResource,
 	JTAGResource, PS2Resource, SPIResource, UARTResource,
 	ULPIResource
 )
