@@ -49,15 +49,6 @@ class Fragment:
 				code = obj.elaborate.__code__
 				obj._MustUse__used = True
 				new_obj = obj.elaborate(platform)
-			elif hasattr(obj, 'elaborate'):
-				warnings.warn(
-					f'Class {type(obj)!r} is an elaboratable that does not explicitly inherit from '
-					'Elaboratable; doing so would improve diagnostics\n'
-					'Support for this will be removed in the next release!',
-					category = DeprecationWarning,
-					stacklevel = 2)
-				code = obj.elaborate.__code__
-				new_obj = obj.elaborate(platform)
 			else:
 				raise AttributeError(f'Object {obj!r} cannot be elaborated')
 			if new_obj is obj:
