@@ -61,7 +61,11 @@ def test(session: Session) -> None:
 	session.run(
 		'python', *coverage_args, *unitest_args
 	)
-
+	if coverage:
+		session.run(
+			'python', '-m', 'coverage', 'xml',
+			f'--rcfile={CNTRB_DIR / "coveragerc"}'
+		)
 
 @nox.session
 def docs(session: Session) -> None:
