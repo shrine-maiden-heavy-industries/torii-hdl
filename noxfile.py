@@ -47,6 +47,8 @@ def test(session: Session) -> None:
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('.')
+	# For sby
+	session.install('click')
 	if coverage:
 		session.log('Coverage support enabled')
 		session.install('coverage')
