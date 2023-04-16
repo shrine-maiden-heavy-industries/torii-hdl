@@ -10,6 +10,7 @@ from ....hdl    import (
 from ....lib.io import Pin
 
 __all__ = (
+	'MachXO2Or3LPlatform',
 	'MachXO2Platform',
 	'MachXO3LPlatform',
 )
