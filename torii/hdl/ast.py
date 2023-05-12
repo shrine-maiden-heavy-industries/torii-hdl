@@ -87,6 +87,8 @@ class ShapeCastable:
 		if not hasattr(cls, 'as_shape'):
 			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
 
+		if not hasattr(cls, 'const'):
+			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
 
 class Shape:
@@ -1275,7 +1277,7 @@ class Signal(Value, DUID):
 	'''
 
 	def __init__(
-		self, shape = None, *, name = None, reset = 0, reset_less = False,
+		self, shape = None, *, name = None, reset = None, reset_less = False,
 		attrs = None, decoder = None, src_loc_at = 0
 	):
 		super().__init__(src_loc_at = src_loc_at)
@@ -1293,15 +1295,29 @@ class Signal(Value, DUID):
 		self.signed = shape.signed
 
 		orig_reset = reset
-		try:
-			reset = Const.cast(reset)
-		except TypeError:
-			raise TypeError(
-				f'Reset value must be a constant-castable expression, not {orig_reset!r}'
-			)
+		if isinstance(orig_shape, ShapeCastable):
+			try:
+				reset = Const.cast(orig_shape.const(reset))
+			except Exception:
+				raise TypeError(
+					f'Reset value must be a constant initializer of {orig_shape!r}'
+				)
+
+			if reset.shape() != Shape.cast(orig_shape):
+				raise ValueError(
+					f'Constant returned by {orig_shape!r}.const() must have the shape that it casts '
+					f'to, {Shape.cast(orig_shape)!r}, and not {reset.shape()!r}'
+				)
+		else:
+			try:
+				reset = Const.cast(reset or 0)
+			except TypeError:
+				raise TypeError(
+					f'Reset value must be a constant-castable expression, not {orig_reset!r}'
+				)
 
 		# Avoid false positives for all-zeroes and all-ones
-		if orig_reset not in (0, -1):
+		if orig_reset not in (None, 0, -1):
 			if reset.shape().signed and not self.signed:
 				warnings.warn(
 					message = f'Reset value {orig_reset!r} is signed, but the signal shape is {shape!r}',

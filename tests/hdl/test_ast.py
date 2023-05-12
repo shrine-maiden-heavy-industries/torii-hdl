@@ -183,6 +183,9 @@ class MockShapeCastable(ShapeCastable):
 	def as_shape(self):
 		return self.dest
 
+	def const(self, obj):
+		return Const(obj, self.dest)
+
 
 class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
@@ -1316,6 +1319,24 @@ class SignalTestCase(ToriiTestSuiteCase):
 			r'not <StringEnum\.FOO: \'a\'>$'
 		):
 			Signal(1, reset = StringEnum.FOO)
+
+	def test_reset_shape_castable_const(self):
+		class CastableFromHex(ShapeCastable):
+			def as_shape(self):
+				return unsigned(8)
+
+			def const(self, init):
+				return int(init, 16)
+
+		s1 = Signal(CastableFromHex(), reset = 'aa')
+		self.assertEqual(s1.reset, 0xaa)
+
+		with self.assertRaisesRegex(
+			ValueError,
+			r'^Constant returned by <.+?CastableFromHex.+?>\.const\(\) must have the shape '
+			r'that it casts to, unsigned\(8\), and not unsigned\(1\)$'
+		):
+			Signal(CastableFromHex(), reset="01")
 
 	def test_reset_signed_mismatch(self):
 		with self.assertWarnsRegex(
