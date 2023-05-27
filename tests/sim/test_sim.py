@@ -1108,9 +1108,10 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 		with self.assertSimulation(Module()) as sim:
 			def process():
 				nonlocal survived
+
 				with self.assertRaisesRegex(
 					TypeError,
-					r'Received unsupported command 1 from process .+?'
+					r'Received unsupported command 1 from process .+'
 				):
 					yield 1
 				yield Settle()
