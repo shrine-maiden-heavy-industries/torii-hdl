@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, Record
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal, Record
+from torii.back import verilog
 
 
 class FlatGPIO(Elaboratable):
@@ -28,4 +28,5 @@ if __name__ == '__main__':
 	])
 	pins = Signal(8)
 	gpio = FlatGPIO(pins, bus)
-	main(gpio, ports = [pins, bus.addr, bus.r_data, bus.w_data, bus.we])
+
+	print(verilog.convert(gpio, ports = [pins, bus.addr, bus.r_data, bus.w_data, bus.we]))

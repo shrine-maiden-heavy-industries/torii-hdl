@@ -13,10 +13,9 @@ class ExamplesTestCase(ToriiTestSuiteCase):
 		example_path = (EXAMPLE_DIR / name).resolve()
 
 		def test_example(self):
-			subprocess.check_call(
-				[
+			subprocess.check_call([
 					sys.executable, str(example_path),
-					'generate', '-t', 'v'
+					'generate'
 				],
 				stdout = subprocess.DEVNULL
 			)
@@ -34,12 +33,4 @@ class ExamplesTestCase(ToriiTestSuiteCase):
 	test_mem      = _example_test('basic/mem.py')
 	test_pmux     = _example_test('basic/pmux.py')
 	test_por      = _example_test('basic/por.py')
-
-	# TODO: Fix up the Torii CLI bits and then fix the uart example to use it
-	def test_uart(self):
-		example_path = (EXAMPLE_DIR / 'basic' / 'uart.py').resolve()
-		subprocess.check_call([
-				sys.executable, str(example_path), 'generate'
-			],
-			stdout = subprocess.DEVNULL
-		)
+	test_uart     = _example_test('basic/uart.py')

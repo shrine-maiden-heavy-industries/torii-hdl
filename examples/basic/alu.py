@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, Cat
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal, Cat
+from torii.back import verilog
 
 
 class ALU(Elaboratable):
@@ -27,4 +27,5 @@ class ALU(Elaboratable):
 
 if __name__ == '__main__':
 	alu = ALU(width = 16)
-	main(alu, ports = [alu.sel, alu.a, alu.b, alu.o, alu.co])
+
+	print(verilog.convert(alu, ports = [alu.sel, alu.a, alu.b, alu.o, alu.co]))

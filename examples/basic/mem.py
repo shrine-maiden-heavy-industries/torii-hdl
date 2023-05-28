@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, Memory
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal, Memory
+from torii.back import verilog
 
 
 class RegisterFile(Elaboratable):
@@ -28,4 +28,5 @@ class RegisterFile(Elaboratable):
 
 if __name__ == '__main__':
 	rf = RegisterFile()
-	main(rf, ports = [rf.adr, rf.dat_r, rf.dat_w, rf.we])
+
+	print(verilog.convert(rf, ports = [rf.adr, rf.dat_r, rf.dat_w, rf.we]))

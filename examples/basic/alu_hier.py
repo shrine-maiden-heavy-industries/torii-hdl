@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal
+from torii.back import verilog
 
 class Adder(Elaboratable):
 	def __init__(self, width: int):
@@ -56,4 +56,5 @@ class ALU(Elaboratable):
 
 if __name__ == '__main__':
 	alu = ALU(width = 16)
-	main(alu, ports = [alu.op, alu.a, alu.b, alu.o])
+
+	print(verilog.convert(alu, ports = [alu.op, alu.a, alu.b, alu.o]))

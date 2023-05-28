@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, Cat
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal, Cat
+from torii.back import verilog
 
 
 class UARTReceiver(Elaboratable):
@@ -63,4 +63,5 @@ class UARTReceiver(Elaboratable):
 
 if __name__ == '__main__':
 	rx = UARTReceiver(20)
-	main(rx, ports = [rx.i, rx.data, rx.rdy, rx.ack, rx.err])
+
+	print(verilog.convert(rx, ports = [rx.i, rx.data, rx.rdy, rx.ack, rx.err]))

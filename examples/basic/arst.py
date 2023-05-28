@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, ClockDomain
-from torii.cli import main
-
+from torii      import Elaboratable, Module, Signal, ClockDomain
+from torii.back import verilog
 
 class ClockDivisor(Elaboratable):
 	def __init__(self, factor: int):
@@ -20,4 +19,5 @@ if __name__ == '__main__':
 	m = Module()
 	m.domains.sync = sync = ClockDomain('sync', async_reset = True)
 	m.submodules.ctr = ctr = ClockDivisor(factor = 16)
-	main(m, ports = [ctr.o, sync.clk])
+
+	print(verilog.convert(m, ports = [ctr.o, sync.clk]))

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Signal, Module
-from torii.cli import main
+from torii      import Elaboratable, Signal, Module
+from torii.back import verilog
 
 
 class Counter(Elaboratable):
@@ -18,4 +18,4 @@ class Counter(Elaboratable):
 
 ctr = Counter(width = 16)
 if __name__ == '__main__':
-	main(ctr, ports = [ctr.o])
+	print(verilog.convert(ctr, ports = [ctr.o]))

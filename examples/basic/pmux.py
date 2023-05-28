@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal
+from torii.back import verilog
 
 
 class ParMux(Elaboratable):
@@ -28,4 +28,5 @@ class ParMux(Elaboratable):
 
 if __name__ == '__main__':
 	pmux = ParMux(width = 16)
-	main(pmux, ports = [pmux.s, pmux.a, pmux.b, pmux.c, pmux.o])
+
+	print(verilog.convert(pmux, ports = [pmux.s, pmux.a, pmux.b, pmux.c, pmux.o]))

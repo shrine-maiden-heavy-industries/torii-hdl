@@ -2,7 +2,7 @@
 
 from torii         import Signal, Module
 from torii.lib.cdc import FFSynchronizer
-from torii.cli     import main
+from torii.back    import verilog
 
 
 i, o = Signal(name = 'i'), Signal(name = 'o')
@@ -10,4 +10,4 @@ m = Module()
 m.submodules += FFSynchronizer(i, o)
 
 if __name__ == '__main__':
-	main(m, ports = [i, o])
+	print(verilog.convert(m, ports = [i, o]))

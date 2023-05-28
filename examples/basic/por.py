@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Module, ClockDomain, Signal, ClockSignal, ResetSignal
-from torii.cli import main
-
+from torii      import Module, ClockDomain, Signal, ClockSignal, ResetSignal
+from torii.back import verilog
 
 m = Module()
 cd_por  = ClockDomain(reset_less = True)
@@ -11,11 +10,11 @@ m.domains += cd_por, cd_sync
 
 delay = Signal(range(256), reset = 255)
 with m.If(delay != 0):
-    m.d.por += delay.eq(delay - 1)
+	m.d.por += delay.eq(delay - 1)
 m.d.comb += [
-    ClockSignal().eq(cd_por.clk),
-    ResetSignal().eq(delay != 0),
+	ClockSignal().eq(cd_por.clk),
+	ResetSignal().eq(delay != 0),
 ]
 
 if __name__ == '__main__':
-    main(m, ports = [cd_por.clk])
+	print(verilog.convert(m, ports = [cd_por.clk]))

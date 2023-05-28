@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii     import Elaboratable, Module, Signal, Instance
-from torii.cli import main
+from torii      import Elaboratable, Module, Signal, Instance
+from torii.back import verilog
 
 
 class System(Elaboratable):
@@ -26,4 +26,5 @@ class System(Elaboratable):
 
 if __name__ == "__main__":
 	sys = System()
-	main(sys, ports = [sys.adr, sys.dat_r, sys.dat_w, sys.we])
+
+	print(verilog.convert(sys, ports = [sys.adr, sys.dat_r, sys.dat_w, sys.we]))
