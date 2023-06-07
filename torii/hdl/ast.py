@@ -913,6 +913,7 @@ class Slice(Value):
 		if not isinstance(stop, int):
 			raise TypeError(f'Slice stop must be an integer, not {stop!r}')
 
+		value = Value.cast(value)
 		n = len(value)
 		if start not in range(-n, n + 1):
 			raise IndexError(f'Cannot start slice {start} bits into {n}-bit value')
@@ -926,7 +927,7 @@ class Slice(Value):
 			raise IndexError(f'Slice start {start} must be less than slice stop {stop}')
 
 		super().__init__(src_loc_at = src_loc_at)
-		self.value = Value.cast(value)
+		self.value = value
 		self.start = int(start)
 		self.stop  = int(stop)
 
