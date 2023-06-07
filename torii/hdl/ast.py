@@ -732,7 +732,7 @@ class Const(Value):
 	def normalize(value: int, shape: tuple[int, bool]):
 		mask = (1 << shape.width) - 1
 		value &= mask
-		if shape.signed and value >> (shape.width - 1):
+		if shape.signed and (value >> (shape.width - 1)) & 1:
 			value |= ~mask
 		return value
 
