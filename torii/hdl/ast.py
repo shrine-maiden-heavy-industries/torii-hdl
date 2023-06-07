@@ -632,7 +632,8 @@ class Value(metaclass = ABCMeta):
 
 		if not isinstance(amount, int):
 			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
-		amount %= len(self)
+		if len(self) != 0:
+			amount %= len(self)
 		return Cat(self[-amount:], self[:-amount]) # meow :3
 
 	def rotate_right(self, amount: int) -> 'Value':
@@ -653,7 +654,8 @@ class Value(metaclass = ABCMeta):
 
 		if not isinstance(amount, int):
 			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
-		amount %= len(self)
+		if len(self) != 0:
+			amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
 	def eq(self, value: 'Value') -> 'Assign':

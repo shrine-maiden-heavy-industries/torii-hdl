@@ -402,6 +402,15 @@ class ValueTestCase(ToriiTestSuiteCase):
 			Const(256).rotate_left(-7),
 			'(cat (slice (const 9\'d256) 7:9) (slice (const 9\'d256) 0:7))'
 		)
+		self.assertRepr(
+			Const(0, 0).rotate_left(3),
+			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
+		)
+		self.assertRepr(
+			Const(0, 0).rotate_left(-3),
+			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
+		)
+
 
 	def test_rotate_left_wrong(self):
 		with self.assertRaisesRegex(
@@ -427,6 +436,15 @@ class ValueTestCase(ToriiTestSuiteCase):
 			Const(256).rotate_right(-7),
 			'(cat (slice (const 9\'d256) 2:9) (slice (const 9\'d256) 0:2))'
 		)
+		self.assertRepr(
+			Const(0, 0).rotate_right(3),
+			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
+		)
+		self.assertRepr(
+			Const(0, 0).rotate_right(-3),
+			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
+		)
+
 
 	def test_rotate_right_wrong(self):
 		with self.assertRaisesRegex(
