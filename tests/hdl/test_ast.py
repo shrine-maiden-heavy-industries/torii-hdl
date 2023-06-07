@@ -827,6 +827,16 @@ class SliceTestCase(ToriiTestSuiteCase):
 			r'^Slice start 4 must be less than slice stop 2$'
 		):
 			Slice(c, 4, 2)
+		with self.assertRaisesRegex(
+			IndexError,
+			r'^Cannot start slice -9 bits into 8-bit value$'
+		):
+			Slice(c, -9, -5)
+		with self.assertRaisesRegex(
+			IndexError,
+			r'^Cannot stop slice 9 bits into 8-bit value$'
+		):
+			Slice(c, 5, 9)
 
 	def test_repr(self):
 		s1 = Const(10)[2]

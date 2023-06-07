@@ -911,11 +911,11 @@ class Slice(Value):
 			raise TypeError(f'Slice stop must be an integer, not {stop!r}')
 
 		n = len(value)
-		if start not in range(-(n + 1), n + 1):
+		if start not in range(-n, n + 1):
 			raise IndexError(f'Cannot start slice {start} bits into {n}-bit value')
 		if start < 0:
 			start += n
-		if stop not in range(-(n + 1), n + 1):
+		if stop not in range(-n, n + 1):
 			raise IndexError(f'Cannot stop slice {stop} bits into {n}-bit value')
 		if stop < 0:
 			stop += n
