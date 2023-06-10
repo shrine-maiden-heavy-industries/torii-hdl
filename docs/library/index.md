@@ -10,7 +10,7 @@ Torii provides a standard library with various useful components for implementin
 ```{toctree}
 :maxdepth: 2
 
-coding
+coding/index
 cdc
 fifo
 
