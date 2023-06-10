@@ -24,6 +24,9 @@ class Command:
 
 
 class Settle(Command):
+	'''
+		micro-steps the simulation until just before the next clock cycle would start
+	'''
 	def __repr__(self) -> str:
 		return '(settle)'
 
@@ -40,6 +43,15 @@ class Delay(Command):
 
 
 class Tick(Command):
+	'''
+		Runs only the transition from high->low->high but does not progress execution
+		further than that.
+
+		.. warning::
+
+			This can cause things to appear out-of-step.
+
+	'''
 	def __init__(self, domain: Union[str, ClockDomain] = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
