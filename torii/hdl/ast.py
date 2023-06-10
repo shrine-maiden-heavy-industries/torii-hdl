@@ -1887,19 +1887,27 @@ class ValueKey:
 		elif isinstance(self.value, (ClockSignal, ResetSignal)):
 			return self.value.domain == other.value.domain
 		elif isinstance(self.value, Operator):
-			return (self.value.operator == other.value.operator and
-					len(self.value.operands) == len(other.value.operands) and
-					all(ValueKey(a) == ValueKey(b)
-						for a, b in zip(self.value.operands, other.value.operands)))
+			return (
+				self.value.operator == other.value.operator and
+				len(self.value.operands) == len(other.value.operands) and
+				all(
+					ValueKey(a) == ValueKey(b)
+					for a, b in zip(self.value.operands, other.value.operands)
+				)
+			)
 		elif isinstance(self.value, Slice):
-			return (ValueKey(self.value.value) == ValueKey(other.value.value) and
-					self.value.start == other.value.start and
-					self.value.stop == other.value.stop)
+			return (
+				ValueKey(self.value.value) == ValueKey(other.value.value) and
+				self.value.start == other.value.start and
+				self.value.stop == other.value.stop
+			)
 		elif isinstance(self.value, Part):
-			return (ValueKey(self.value.value) == ValueKey(other.value.value) and
-					ValueKey(self.value.offset) == ValueKey(other.value.offset) and
-					self.value.width == other.value.width and
-					self.value.stride == other.value.stride)
+			return (
+				ValueKey(self.value.value) == ValueKey(other.value.value) and
+				ValueKey(self.value.offset) == ValueKey(other.value.offset) and
+				self.value.width == other.value.width and
+				self.value.stride == other.value.stride
+			)
 		elif isinstance(self.value, Cat):
 			return (
 				len(self.value.parts) == len(other.value.parts) and
@@ -1910,18 +1918,25 @@ class ValueKey:
 			)
 
 		elif isinstance(self.value, Repl):
-			return (ValueKey(self.value.value) == ValueKey(other.value.value) and
-				self.value.count == other.value.count)
+			return (
+				ValueKey(self.value.value) == ValueKey(other.value.value) and
+				self.value.count == other.value.count
+			)
 		elif isinstance(self.value, ArrayProxy):
-			return (ValueKey(self.value.index) == ValueKey(other.value.index) and
-					len(self.value.elems) == len(other.value.elems) and
-					all(ValueKey(a) == ValueKey(b)
-						for a, b in zip(self.value._iter_as_values(),
-										other.value._iter_as_values())))
+			return (
+				ValueKey(self.value.index) == ValueKey(other.value.index) and
+				len(self.value.elems) == len(other.value.elems) and
+				all(
+					ValueKey(a) == ValueKey(b)
+					for a, b in zip(self.value._iter_as_values(), other.value._iter_as_values())
+				)
+			)
 		elif isinstance(self.value, Sample):
-			return (ValueKey(self.value.value) == ValueKey(other.value.value) and
-					self.value.clocks == other.value.clocks and
-					self.value.domain == self.value.domain)
+			return (
+				ValueKey(self.value.value) == ValueKey(other.value.value) and
+				self.value.clocks == other.value.clocks and
+				self.value.domain == self.value.domain
+			)
 		elif isinstance(self.value, Initial):
 			return True
 		else: # :nocov:
@@ -1938,9 +1953,11 @@ class ValueKey:
 		elif isinstance(self.value, (Signal, AnyValue)):
 			return self.value.duid < other.value.duid
 		elif isinstance(self.value, Slice):
-			return (ValueKey(self.value.value) < ValueKey(other.value.value) and
-					self.value.start < other.value.start and
-					self.value.end < other.value.end)
+			return (
+				ValueKey(self.value.value) < ValueKey(other.value.value) and
+				self.value.start < other.value.start and
+				self.value.end < other.value.end
+			)
 		else: # :nocov:
 			raise TypeError(f'Object {other!r} cannot be used as a key in value collections')
 
