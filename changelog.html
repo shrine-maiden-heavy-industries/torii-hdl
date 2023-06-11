@@ -442,18 +442,47 @@ Unreleased template stuff
 <h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Permalink to this heading"></a></h2>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added some minor comments to the <code class="docutils literal notranslate"><span class="pre">torii.sim.core</span></code> module about the function of some of the objects.</p></li>
+</ul>
 </section>
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Moved the Lattice platform defs into their own submodule <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor.lattice</span></code>.</p></li>
+<li><p>Replaced the <code class="docutils literal notranslate"><span class="pre">distutils.ccompiler</span></code> with the <code class="docutils literal notranslate"><span class="pre">setuptools.command.build_ext</span></code> module for <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code>.</p></li>
+<li><p>Disabled the warning emitted on <code class="docutils literal notranslate"><span class="pre">~True</span></code>/<code class="docutils literal notranslate"><span class="pre">~False</span></code> when using it as a value in Torii in Python versions older than 3.12.</p></li>
+<li><p>Relaxed the <code class="docutils literal notranslate"><span class="pre">PyVCD</span></code> dependency version to now also include <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p></li>
+<li><p>Ensured <code class="docutils literal notranslate"><span class="pre">Value.__abs__</span></code> now returns <code class="docutils literal notranslate"><span class="pre">unsigned</span></code> <code class="docutils literal notranslate"><span class="pre">Shape</span></code></p></li>
+</ul>
 </section>
 <section id="deprecated">
 <h3>Deprecated<a class="headerlink" href="#deprecated" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Old Lattice platform names have been deprecated in favor of the new platform location.</p></li>
+</ul>
 </section>
 <section id="removed">
 <h3>Removed<a class="headerlink" href="#removed" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">torii.cli</span></code> module</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">remote-build</span></code> category from the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> <code class="docutils literal notranslate"><span class="pre">extra_requires</span></code> due to removal of remote builds.</p></li>
+</ul>
 </section>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed an issue where the <code class="docutils literal notranslate"><span class="pre">IrDAResource</span></code> was not imported into the <code class="docutils literal notranslate"><span class="pre">torii.platform.resources</span></code> <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">torii.utils.tracer</span></code> module to properly handle <code class="docutils literal notranslate"><span class="pre">STORE_DEREF</span></code> and <code class="docutils literal notranslate"><span class="pre">EXTENDED_ARG</span></code>s.</p></li>
+<li><p>Fixed signed value normalization inside <code class="docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">Value.rotate_left</span></code>/<code class="docutils literal notranslate"><span class="pre">Value.rotate_right</span></code> on 0-width values.</p></li>
+<li><p>Fixed a semantic issue with range handling inside <code class="docutils literal notranslate"><span class="pre">Shape.cast</span></code>.</p></li>
+<li><p>Fixed an off-by-one issue in the validation of <code class="docutils literal notranslate"><span class="pre">Slice</span></code>es.</p></li>
+<li><p>Fixed the signedness of the resulting <code class="docutils literal notranslate"><span class="pre">Shape</span></code> when doing subtraction.</p></li>
+<li><p>Fixed handling of <code class="docutils literal notranslate"><span class="pre">ValueKey.__eq__</span></code>.</p></li>
+<li><p>Fixed source-location attribution for <code class="docutils literal notranslate"><span class="pre">Slice</span></code>es.</p></li>
+<li><p>Fixed the order of when <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code> should have been called in the <code class="docutils literal notranslate"><span class="pre">Part</span></code> and <code class="docutils literal notranslate"><span class="pre">Slice</span></code> constructors.</p></li>
+</ul>
 </section>
 </section>
 <section id="id1">
