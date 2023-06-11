@@ -18,11 +18,38 @@ Unreleased template stuff
 -->
 
 ## [Unreleased]
+
 ### Added
+
+ - Added some minor comments to the `torii.sim.core` module about the function of some of the objects.
+
+
 ### Changed
+
+ - Moved the Lattice platform defs into their own submodule `torii.platform.vendor.lattice`.
+ - Replaced the `distutils.ccompiler` with the `setuptools.command.build_ext` module for `torii.tools.cxx`.
+ - Disabled the warning emitted on `~True`/`~False` when using it as a value in Torii in Python versions older than 3.12.
+ - Relaxed the `PyVCD` dependency version to now also include `0.5`.
+ - Ensured `Value.__abs__` now returns `unsigned` `Shape`
 ### Deprecated
+
+ - Old Lattice platform names have been deprecated in favor of the new platform location.
 ### Removed
+
+ - Removed the `torii.cli` module
+ - Removed the `remote-build` category from the `setup.py` `extra_requires` due to removal of remote builds.
 ### Fixed
+
+ - Fixed an issue where the `IrDAResource` was not imported into the `torii.platform.resources` `__init__.py`
+ - Fixed the `torii.utils.tracer` module to properly handle `STORE_DEREF` and `EXTENDED_ARG`s.
+ - Fixed signed value normalization inside `Const`.
+ - Fixed issue with `Value.rotate_left`/`Value.rotate_right` on 0-width values.
+ - Fixed a semantic issue with range handling inside `Shape.cast`.
+ - Fixed an off-by-one issue in the validation of `Slice`es.
+ - Fixed the signedness of the resulting `Shape` when doing subtraction.
+ - Fixed handling of `ValueKey.__eq__`.
+ - Fixed source-location attribution for `Slice`es.
+ - Fixed the order of when `Value.cast` should have been called in the `Part` and `Slice` constructors.
 
 ## [0.4.5]
 
