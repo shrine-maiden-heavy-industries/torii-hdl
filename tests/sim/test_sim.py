@@ -3,6 +3,7 @@
 
 import os
 from contextlib    import contextmanager
+from warnings      import catch_warnings
 
 from torii.util    import flatten
 from torii.hdl.ast import *
@@ -1316,6 +1317,14 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 				with sim.write_vcd(f):
 					pass
 
+	def test_no_negated_boolean_warning(self):
+		m = Module()
+		a = Signal()
+		b = Signal()
+		m.d.comb += a.eq(~(b == b))
+		with catch_warnings(record=True) as warns:
+			Simulator(m).run()
+			self.assertEqual(warns, [])
 
 class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 	def test_bug_325(self):
