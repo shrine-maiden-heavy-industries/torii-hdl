@@ -12,7 +12,7 @@ from itertools         import chain
 from typing            import Optional, Union
 
 from ..util            import flatten, tracer, union
-from ..util.decorators import final
+from ..util.decorators import final, deprecated
 from ..util.units      import bits_for
 from ._unused          import MustUse, UnusedMustUse
 
@@ -658,6 +658,29 @@ class Value(metaclass = ABCMeta):
 			amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
+	def replicate(self, count):
+		'''
+		Replication.
+
+		A ``Value`` is replicated (repeated) several times to be used
+		on the RHS of assignments::
+
+			len(v.replicate(n)) == len(v) * n
+
+		Parameters
+		----------
+		count : int
+			Number of replications.
+
+		Returns
+		-------
+		Value, out
+			Replicated value.
+		'''
+		if not isinstance(count, int) or count < 0:
+			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
+		return Cat(self for _ in range(count))
+
 	def eq(self, value: 'Value') -> 'Assign':
 		'''
 		Assignment.
@@ -1044,8 +1067,8 @@ class Cat(Value):
 		return f'(cat {" ".join(map(repr, self.parts))})'
 
 
-@final
-class Repl(Value):
+@deprecated('instead of `Repl(value, count)`, use `value.replicate(count)`')
+def Repl(value: ValueCastType, count: int):
 	'''
 	Replicate a value
 
@@ -1063,33 +1086,18 @@ class Repl(Value):
 
 	Returns
 	-------
-	Repl, out
+	Value, out
 		Replicated value.
 
 	'''
+	if isinstance(value, int) and value not in [0, 1]:
+		warnings.warn(
+			f'Value argument of Repl() is a bare integer {value} used in bit vector '
+			f'context; consider specifying explicit width using Const({value}, {bits_for(value)}) instead',
+			SyntaxWarning, stacklevel = 3
+		)
 
-	def __init__(self, value: Value, count: int, *, src_loc_at: int = 0) -> None:
-		if not isinstance(count, int) or count < 0:
-			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
-
-		super().__init__(src_loc_at = src_loc_at)
-		if isinstance(value, int) and value not in [0, 1]:
-			warnings.warn(
-				f'Value argument of Repl() is a bare integer {value} used in bit vector '
-				f'context; consider specifying explicit width using Const({value}, {bits_for(value)}) instead',
-				SyntaxWarning, stacklevel = 2 + src_loc_at
-			)
-		self.value = Value.cast(value)
-		self.count = count
-
-	def shape(self) -> Shape:
-		return Shape(len(self.value) * self.count)
-
-	def _rhs_signals(self):
-		return self.value._rhs_signals()
-
-	def __repr__(self) -> str:
-		return f'(repl {self.value!r} {self.count})'
+	return Value.cast(value).replicate(count)
 
 
 # @final
@@ -1874,8 +1882,6 @@ class ValueKey:
 			))
 		elif isinstance(self.value, Sample):
 			self._hash = hash((ValueKey(self.value.value), self.value.clocks, self.value.domain))
-		elif isinstance(self.value, Repl):
-			self._hash = hash((ValueKey(self.value.value), self.value.count))
 		elif isinstance(self.value, Initial):
 			self._hash = 0
 		else: # :nocov:
@@ -1928,12 +1934,6 @@ class ValueKey:
 					ValueKey(a) == ValueKey(b)
 					for a, b in zip(self.value.parts, other.value.parts)
 				)
-			)
-
-		elif isinstance(self.value, Repl):
-			return (
-				ValueKey(self.value.value) == ValueKey(other.value.value) and
-				self.value.count == other.value.count
 			)
 		elif isinstance(self.value, ArrayProxy):
 			return (

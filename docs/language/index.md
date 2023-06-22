@@ -608,7 +608,7 @@ The following table lists the bit sequence operations provided by Torii:
 | `a.bit_select(b, w)`  | overlapping part select with variable offset     |
 | `a.word_select(b, w)` | non-overlapping part select with variable offset |
 | `Cat(a, b, ...)`      | concatenation [^8]                               |
-| `Repl(a, n)`          | replication                                      |
+| `a.replicate(n)`      | replication                                      |
 
 
 [^6]: Words "length" and "width" have the same meaning when talking about Torii values. Conventionally, "width" is used.
@@ -621,7 +621,7 @@ For the operators introduced by Torii, the following table explains them in term
 | Torii operation       | Equivalent Python code |
 |-----------------------|------------------------|
 | `Cat(a, b)`           | `a + b`                |
-| `Repl(a, n)`          | `a * n`                |
+| `a.replicate(n)`      | `a * n`                |
 | `a.bit_select(b, w)`  | `a[b:b+w]`             |
 | `a.word_select(b, w)` | `a[b*w:b*w+w]`         |
 

@@ -583,9 +583,9 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			[Const(0b101, 3)], Const(0b101, 3)
 		)
 
-	def test_repl(self):
+	def test_replicate(self):
 		self.assertStatement(
-			lambda y, a: y.eq(Repl(a, 3)),
+			lambda y, a: y.eq(a.replicate(3)),
 			[Const(0b10, 2)], Const(0b101010, 6)
 		)
 
@@ -1343,11 +1343,6 @@ class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 	def test_bug_325(self):
 		dut = Module()
 		dut.d.comb += Signal().eq(Cat())
-		Simulator(dut).run()
-
-	def test_bug_325_bis(self):
-		dut = Module()
-		dut.d.comb += Signal().eq(Repl(Const(1), 0))
 		Simulator(dut).run()
 
 	def test_bug_473(self):

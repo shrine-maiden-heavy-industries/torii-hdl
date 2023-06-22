@@ -8,7 +8,7 @@ from ..util          import flatten, tracer
 from .ast            import (
 	AnyConst, AnySeq, ArrayProxy, Assert, Assign, Assume, Cat,
 	ClockSignal, Const, Cover, Initial, Mux, Operator, Part,
-	Property, Repl, ResetSignal, Sample, Signal, SignalDict,
+	Property, ResetSignal, Sample, Signal, SignalDict,
 	SignalSet, Slice, Statement, Switch, Value, ValueDict,
 	_StatementList
 )
@@ -77,10 +77,6 @@ class ValueVisitor(metaclass = ABCMeta):
 		pass # :nocov:
 
 	@abstractmethod
-	def on_Repl(self, value):
-		pass # :nocov:
-
-	@abstractmethod
 	def on_ArrayProxy(self, value):
 		pass # :nocov:
 
@@ -119,8 +115,6 @@ class ValueVisitor(metaclass = ABCMeta):
 			new_value = self.on_Part(value)
 		elif type(value) is Cat:
 			new_value = self.on_Cat(value)
-		elif type(value) is Repl:
-			new_value = self.on_Repl(value)
 		elif type(value) is ArrayProxy:
 			new_value = self.on_ArrayProxy(value)
 		elif type(value) is Sample:
@@ -168,9 +162,6 @@ class ValueTransformer(ValueVisitor):
 
 	def on_Cat(self, value):
 		return Cat(self.on_value(o) for o in value.parts)
-
-	def on_Repl(self, value):
-		return Repl(self.on_value(value.value), value.count)
 
 	def on_ArrayProxy(self, value):
 		return ArrayProxy(
@@ -397,9 +388,6 @@ class DomainCollector(ValueVisitor, StatementVisitor):
 	def on_Cat(self, value):
 		for o in value.parts:
 			self.on_value(o)
-
-	def on_Repl(self, value):
-		self.on_value(value.value)
 
 	def on_ArrayProxy(self, value):
 		for elem in value._iter_as_values():
