@@ -50,6 +50,8 @@ Unreleased template stuff
  - Fixed handling of `ValueKey.__eq__`.
  - Fixed source-location attribution for `Slice`es.
  - Fixed the order of when `Value.cast` should have been called in the `Part` and `Slice` constructors.
+ - Fixed a warning on python 3.12 with the `pyrtl` simulator warning about bitwise negations on booleans.
+ - Fixed a test case failure that would only occur on Windows due to it's backwards path separator.
 
 ## [0.4.5]
 
