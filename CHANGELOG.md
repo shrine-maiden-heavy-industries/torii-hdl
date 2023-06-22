@@ -31,6 +31,8 @@ Unreleased template stuff
  - Disabled the warning emitted on `~True`/`~False` when using it as a value in Torii in Python versions older than 3.12.
  - Relaxed the `PyVCD` dependency version to now also include `0.5`.
  - Ensured `Value.__abs__` now returns `unsigned` `Shape`
+ - Restructured the `torii.lib.coding` module away from being a monolithic file.
+
 ### Deprecated
 
  - Old Lattice platform names have been deprecated in favor of the new platform location.
