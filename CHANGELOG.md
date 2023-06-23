@@ -33,6 +33,7 @@ Unreleased template stuff
 - New `PCIeBusResources` for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
 - New `torii.lib.coding.nrz` for Non-Return-to-Zero like encoding/decoding schemes.
+- New `torii.lib.coding.manchester` module for Manchester encoding/decoding.
 
 ### Changed
 
