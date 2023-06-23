@@ -41,6 +41,7 @@ Unreleased template stuff
 - Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - New `torii.lib.coding.nrz` for Non-Return-to-Zero like encoding/decoding schemes.
+- New `torii.lib.coding.manchester` module for Manchester encoding/decoding.
 
 ### Changed
 
