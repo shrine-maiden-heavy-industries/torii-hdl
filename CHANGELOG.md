@@ -38,6 +38,7 @@ Unreleased template stuff
 - Added `torii.lib.stream.simple.ConstantStreamGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 - Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
 - New `torii.lib.coding.nrz` for Non-Return-to-Zero like encoding/decoding schemes.
+- New `torii.lib.coding.manchester` module for Manchester encoding/decoding.
 
 ### Changed
 
