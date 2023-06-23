@@ -35,6 +35,7 @@ Unreleased template stuff
 - New `platformdirs~=4.0` dependency used for platform correct cache, temp, and config directories.
 - Added a new `torii.util.directories` module for getting appropriate cross-platform directories for things such as cache and configuration directories.
 - New `torii.lib.coding.nrz` for Non-Return-to-Zero like encoding/decoding schemes.
+- New `torii.lib.coding.manchester` module for Manchester encoding/decoding.
 
 ### Changed
 
