@@ -44,6 +44,7 @@ Unreleased template stuff
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 - New enhanced diagnostics for Torii designs.
 - New `torii.lib.coding.nrz` for Non-Return-to-Zero like encoding/decoding schemes.
+- New `torii.lib.coding.manchester` module for Manchester encoding/decoding.
 
 ### Changed
 
