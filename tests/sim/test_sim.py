@@ -1382,3 +1382,14 @@ class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 			r'which is distinct from an identically named domain in the simulated design$'
 		):
 			sim.add_clock(1e-6, domain = ClockDomain('sync'))
+
+	def test_bug_826(self):
+		sim = Simulator(Module())
+
+		def process():
+			self.assertEqual((yield Const(0b0000, 4) | ~Const(1, 1)), 0b0000)
+			self.assertEqual((yield Const(0b1111, 4) & ~Const(1, 1)), 0b0000)
+			self.assertEqual((yield Const(0b1111, 4) ^ ~Const(1, 1)), 0b1111)
+
+		sim.add_process(process)
+		sim.run()
