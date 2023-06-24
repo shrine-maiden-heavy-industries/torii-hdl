@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-docs:
+    name: Build Torii Docs
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python

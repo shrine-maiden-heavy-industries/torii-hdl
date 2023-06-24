@@ -4,6 +4,7 @@ on:
 
 jobs:
   test-torii:
+    name: Torii PR Tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
