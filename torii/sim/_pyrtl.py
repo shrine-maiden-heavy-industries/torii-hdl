@@ -86,7 +86,11 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 				'in reasonable time'
 			)
 
-		return super().on_value(value)
+		val = super().on_value(value)
+		if isinstance(val, str) and len(val) > 1000:
+			# Avoid parser stack overflow on older Pythons.
+			return self.emitter.def_var('intermediate', val)
+		return val
 
 	def on_ClockSignal(self, value):
 		raise NotImplementedError # :nocov:
