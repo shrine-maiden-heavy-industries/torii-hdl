@@ -47,7 +47,7 @@ setup(
 		'git@dragonmux.network',
 	]),
 	description      = 'Torii hardware definition language',
-	license          = ' BSD-2-Clause',
+	license          = 'BSD-2-Clause',
 	python_requires  = '~=3.9',
 	zip_safe         = True,
 	url              = 'https://torii.shmdn.link/',

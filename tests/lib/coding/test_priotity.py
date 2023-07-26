@@ -4,9 +4,9 @@
 from torii.hdl                 import *
 from torii.asserts             import *
 from torii.sim                 import *
-from torii.lib.coding.priority import Encoder, Decoder
+from torii.lib.coding.priority import Encoder
 
-from ...utils              import ToriiTestSuiteCase
+from ...utils                  import ToriiTestSuiteCase
 
 
 class PriorityEncoderTestCase(ToriiTestSuiteCase):

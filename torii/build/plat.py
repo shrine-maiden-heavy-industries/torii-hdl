@@ -395,7 +395,10 @@ class TemplatedPlatform(Platform):
 				if value in ('1', 'yes', 'y', 'true'):
 					return True
 				else:
-					raise ValueError(f'Override \'{var}\' must be one of ("0", "n", "no", "false", "") or ("1", "y", "yes", "true"), not {value!r}')
+					raise ValueError(
+						f'Override \'{var}\' must be one of ("0", "n", "no", "false", "")'
+						f' or ("1", "y", "yes", "true"), not {value!r}'
+					)
 			return value
 
 		def emit_rtlil() -> str:

@@ -24,9 +24,9 @@ class TracerTestCase(ToriiTestCase):
         self.assertEqual(ns.s2.name, "s2")
 
     def test_index(self):
-        l = [None]
-        l[0] = Signal()
-        self.assertEqual(l[0].name, "$signal")
+        lst = [None]
+        lst[0] = Signal()
+        self.assertEqual(lst[0].name, "$signal")
 
     def test_deref_cell(self):
         s1 = Signal()
