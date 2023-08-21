@@ -970,7 +970,7 @@ class Slice(Value):
 @final
 class Part(Value):
 	def __init__(
-		self, value: Value, offset: ValueCastType, width: int, stride: int = 1, *,
+		self, value: ValueCastType, offset: ValueCastType, width: int, stride: int = 1, *,
 		src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
@@ -978,9 +978,14 @@ class Part(Value):
 		if not isinstance(stride, int) or stride <= 0:
 			raise TypeError(f'Part stride must be a positive integer, not {stride!r}')
 
+		value  = Value.cast(value)
+		offset = Value.cast(offset)
+		if offset.shape().signed:
+			raise TypeError('Part offset must be unsigned')
+
 		super().__init__(src_loc_at = src_loc_at)
 		self.value  = value
-		self.offset = Value.cast(offset)
+		self.offset = offset
 		self.width  = width
 		self.stride = stride
 

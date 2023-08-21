@@ -904,6 +904,9 @@ class BitSelectTestCase(ToriiTestSuiteCase):
 		s = self.c.bit_select(self.s, 2)
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 1)')
 
+	def test_offset_wrong(self):
+		with self.assertRaisesRegex(TypeError, r'^Part offset must be unsigned$'):
+			self.c.bit_select(self.s.as_signed(), 1)
 
 class WordSelectTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -936,6 +939,9 @@ class WordSelectTestCase(ToriiTestSuiteCase):
 		s = self.c.word_select(self.s, 2)
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 2)')
 
+	def test_offset_wrong(self):
+		with self.assertRaisesRegex(TypeError, r'^Part offset must be unsigned$'):
+			self.c.word_select(self.s.as_signed(), 1)
 
 class CatTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
