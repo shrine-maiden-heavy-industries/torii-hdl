@@ -5,6 +5,7 @@ Torii has support for many FPGA vendors, the following platforms implement the a
 ```{toctree}
 :maxdepth: 2
 
+gowin
 intel
 lattice-ecp5
 lattice-ice40

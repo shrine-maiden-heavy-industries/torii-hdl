@@ -22,6 +22,7 @@ Unreleased template stuff
 ### Added
 
  - Added some minor comments to the `torii.sim.core` module about the function of some of the objects.
+ - Added `torii.vendor.gowin.GowinPlatform`
 
 
 ### Changed
