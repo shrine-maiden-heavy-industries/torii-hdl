@@ -14,16 +14,16 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/platformpicker.js"></script>
         <script src="_static/wavedrom.skin.js"></script>
         <script src="_static/wavedrom.min.js"></script>
-        <script src="_static/js/wavedrom.min.js"></script>
-        <script src="_static/js/wavedrom.skin.js"></script>
+        <script src="_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="platforms/index.html">Platform Integration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="platforms/fpga/intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="platforms/fpga/intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -423,7 +427,7 @@
            <div itemprop="articleBody">
              
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <p>This section demonstrates the basic Torii workflow to provide a cursory overview of the language and the toolchain. See the <a class="reference internal" href="tutorials/index.html"><span class="std std-doc">Tutorials</span></a> section for a step-by-step introduction to the language, and the <a class="reference internal" href="language/index.html"><span class="std std-doc">Language Guide</span></a> for a detailed explanation of every language construct.</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
@@ -434,13 +438,13 @@
 <p>add link to more complex examples?</p>
 </div>
 <section id="a-counter">
-<h2>A counter<a class="headerlink" href="#a-counter" title="Permalink to this heading"></a></h2>
+<h2>A counter<a class="headerlink" href="#a-counter" title="Link to this heading"></a></h2>
 <p>As a first example, consider a counter with a fixed limit, enable, and overflow. The code for this example is shown below. <a class="reference download internal" download="" href="_downloads/9916e1f0618daa91d3860f1bdac16820/up_counter.py"><span class="xref download myst">Download</span></a> and run it:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="w">   </span>$<span class="w"> </span>python3<span class="w"> </span>up_counter.py
 </pre></div>
 </div>
 <section id="implementing-a-counter">
-<h3>Implementing a counter<a class="headerlink" href="#implementing-a-counter" title="Permalink to this heading"></a></h3>
+<h3>Implementing a counter<a class="headerlink" href="#implementing-a-counter" title="Link to this heading"></a></h3>
 <p>A 16-bit up counter with enable input, overflow output, and a limit fixed at design time can be implemented in Torii as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">torii</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="linenos"> 2</span>
@@ -492,7 +496,7 @@
 <!-- TODO: link to DSL reference -->
 </section>
 <section id="testing-a-counter">
-<h3>Testing a counter<a class="headerlink" href="#testing-a-counter" title="Permalink to this heading"></a></h3>
+<h3>Testing a counter<a class="headerlink" href="#testing-a-counter" title="Link to this heading"></a></h3>
 <p>To verify its functionality, the counter can be simulated for a small amount of time, with a test bench driving it and checking a few simple conditions:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">44</span><span class="kn">from</span> <span class="nn">torii.sim</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="linenos">45</span>
@@ -531,7 +535,7 @@
 <p><img alt="A screenshot of GTKWave displaying waveforms near the clock cycle where the counter overflows." src="_images/up_counter_gtkwave.png" /></p>
 </section>
 <section id="converting-a-counter">
-<h3>Converting a counter<a class="headerlink" href="#converting-a-counter" title="Permalink to this heading"></a></h3>
+<h3>Converting a counter<a class="headerlink" href="#converting-a-counter" title="Link to this heading"></a></h3>
 <p>Although some Torii workflows do not include Verilog at all, it is still the de facto standard for HDL interoperability. Any Torii design can be converted to synthesizable Verilog using the corresponding backend:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">74</span><span class="kn">from</span> <span class="nn">torii.back</span> <span class="kn">import</span> <span class="n">verilog</span>
 <span class="linenos">75</span>
@@ -602,7 +606,7 @@
 </section>
 </section>
 <section id="a-blinking-led">
-<h2>A blinking LED<a class="headerlink" href="#a-blinking-led" title="Permalink to this heading"></a></h2>
+<h2>A blinking LED<a class="headerlink" href="#a-blinking-led" title="Link to this heading"></a></h2>
 <p>Although Torii works well as a standalone HDL, it also includes a build system that integrates with FPGA toolchains, and many board definition files for common developer boards that include pinouts and programming adapter invocations. The following code will blink a LED with a frequency of 1 Hz on any board that has a LED and an oscillator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">torii</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="linenos"> 2</span>

@@ -14,16 +14,16 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/platformpicker.js"></script>
         <script src="../../_static/wavedrom.skin.js"></script>
         <script src="../../_static/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.skin.js"></script>
+        <script src="../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="../../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../platforms/index.html">Platform Integration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../platforms/fpga/intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -425,24 +429,24 @@
            <div itemprop="articleBody">
              
   <section id="records">
-<h1>Records<a class="headerlink" href="#records" title="Permalink to this heading"></a></h1>
+<h1>Records<a class="headerlink" href="#records" title="Link to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The Torii API reference is a work in progress and we are actively working on improving it,
 however it may be deficient or missing in places.</p>
 </div>
-<span class="target" id="module-torii.hdl.rec"></span><dl class="py class">
+<dl class="py class" id="module-torii.hdl.rec">
 <dt class="sig sig-object py" id="torii.hdl.rec.Direction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.rec.</span></span><span class="sig-name descname"><span class="pre">Direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.rec.Direction" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.rec.</span></span><span class="sig-name descname"><span class="pre">Direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.rec.Direction" title="Link to this definition"></a></dt>
 <dd><p>An enumeration.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.rec.</span></span><span class="sig-name descname"><span class="pre">Record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.rec.Record" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.rec.</span></span><span class="sig-name descname"><span class="pre">Record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.rec.Record" title="Link to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.all">
-<span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.all" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.all" title="Link to this definition"></a></dt>
 <dd><p>Check if all bits are <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -456,7 +460,7 @@ however it may be deficient or missing in places.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.any">
-<span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.any" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.any" title="Link to this definition"></a></dt>
 <dd><p>Check if any bits are <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -470,7 +474,7 @@ however it may be deficient or missing in places.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.as_signed">
-<span class="sig-name descname"><span class="pre">as_signed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_signed" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">as_signed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_signed" title="Link to this definition"></a></dt>
 <dd><p>Conversion to signed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -484,7 +488,7 @@ however it may be deficient or missing in places.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.as_unsigned">
-<span class="sig-name descname"><span class="pre">as_unsigned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_unsigned" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">as_unsigned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_unsigned" title="Link to this definition"></a></dt>
 <dd><p>Conversion to unsigned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -498,7 +502,7 @@ however it may be deficient or missing in places.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.bit_select">
-<span class="sig-name descname"><span class="pre">bit_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Part</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.bit_select" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">bit_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Part</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.bit_select" title="Link to this definition"></a></dt>
 <dd><p>Part-select with bit granularity.</p>
 <p>Selects a constant width but variable offset part of a <code class="docutils literal notranslate"><span class="pre">Value</span></code>, such that successive
 parts overlap by all but 1 bit.</p>
@@ -520,7 +524,7 @@ parts overlap by all but 1 bit.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.bool">
-<span class="sig-name descname"><span class="pre">bool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.bool" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">bool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.bool" title="Link to this definition"></a></dt>
 <dd><p>Conversion to boolean.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -534,7 +538,7 @@ parts overlap by all but 1 bit.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.eq">
-<span class="sig-name descname"><span class="pre">eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Assign</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.eq" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Assign</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.eq" title="Link to this definition"></a></dt>
 <dd><p>Assignment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -551,7 +555,7 @@ parts overlap by all but 1 bit.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.implies">
-<span class="sig-name descname"><span class="pre">implies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conclusion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><span class="pre">Enum</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ValueCastable" title="torii.hdl.ast.ValueCastable"><span class="pre">ValueCastable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.implies" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">implies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conclusion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><span class="pre">Enum</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ValueCastable" title="torii.hdl.ast.ValueCastable"><span class="pre">ValueCastable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.implies" title="Link to this definition"></a></dt>
 <dd><p>Implication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -565,7 +569,7 @@ parts overlap by all but 1 bit.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.matches">
-<span class="sig-name descname"><span class="pre">matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><span class="pre">enum.Enum</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.matches" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><span class="pre">Enum</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.matches" title="Link to this definition"></a></dt>
 <dd><p>Pattern matching.</p>
 <p>Matches against a set of patterns, which may be integers or bit strings, recognizing
 the same grammar as <code class="docutils literal notranslate"><span class="pre">Case()</span></code>.</p>
@@ -584,7 +588,7 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.rotate_left">
-<span class="sig-name descname"><span class="pre">rotate_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.rotate_left" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rotate_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.rotate_left" title="Link to this definition"></a></dt>
 <dd><p>Rotate left by constant amount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -601,7 +605,7 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.rotate_right">
-<span class="sig-name descname"><span class="pre">rotate_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.rotate_right" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rotate_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.rotate_right" title="Link to this definition"></a></dt>
 <dd><p>Rotate right by constant amount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -618,7 +622,7 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.shift_left">
-<span class="sig-name descname"><span class="pre">shift_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.shift_left" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">shift_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.shift_left" title="Link to this definition"></a></dt>
 <dd><p>Shift left by constant amount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -635,7 +639,7 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.shift_right">
-<span class="sig-name descname"><span class="pre">shift_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.shift_right" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">shift_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Value</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.shift_right" title="Link to this definition"></a></dt>
 <dd><p>Shift right by constant amount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -652,7 +656,7 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.word_select">
-<span class="sig-name descname"><span class="pre">word_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Part</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.word_select" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">word_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Part</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.word_select" title="Link to this definition"></a></dt>
 <dd><p>Part-select with word granularity.</p>
 <p>Selects a constant width but variable offset part of a <code class="docutils literal notranslate"><span class="pre">Value</span></code>, such that successive
 parts do not overlap.</p>
@@ -674,7 +678,7 @@ parts do not overlap.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.rec.Record.xor">
-<span class="sig-name descname"><span class="pre">xor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.xor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">xor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Operator</span></span></span><a class="headerlink" href="#torii.hdl.rec.Record.xor" title="Link to this definition"></a></dt>
 <dd><p>Compute pairwise exclusive-or of every bit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

@@ -14,16 +14,16 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/platformpicker.js"></script>
         <script src="../../../_static/wavedrom.skin.js"></script>
         <script src="../../../_static/wavedrom.min.js"></script>
-        <script src="../../../_static/js/wavedrom.min.js"></script>
-        <script src="../../../_static/js/wavedrom.skin.js"></script>
+        <script src="../../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="../../../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../platforms/index.html">Platform Integration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../platforms/fpga/gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../../platforms/fpga/intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../platforms/fpga/intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -425,21 +429,21 @@
            <div itemprop="articleBody">
              
   <section id="csrs">
-<h1>CSRs<a class="headerlink" href="#csrs" title="Permalink to this heading"></a></h1>
+<h1>CSRs<a class="headerlink" href="#csrs" title="Link to this heading"></a></h1>
 <section id="bus">
-<h2>Bus<a class="headerlink" href="#bus" title="Permalink to this heading"></a></h2>
+<h2>Bus<a class="headerlink" href="#bus" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.bus.Element">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">access</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Access</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Element" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">access</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Access</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Element" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.bus.Interface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Interface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Interface" title="Link to this definition"></a></dt>
 <dd><p>CPU-side CSR interface.</p>
 <p>A low-level interface to a set of atomically readable and writable peripheral CSR registers.</p>
 <section id="operation">
-<h3>Operation<a class="headerlink" href="#operation" title="Permalink to this heading"></a></h3>
+<h3>Operation<a class="headerlink" href="#operation" title="Link to this heading"></a></h3>
 <p>CSR registers mapped to the CSR bus are split into chunks according to the bus data width.
 Each chunk is assigned a consecutive address on the bus. This allows accessing CSRs of any
 size using any datapath width.</p>
@@ -516,11 +520,11 @@ nothing.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.bus.Decoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Decoder" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Decoder" title="Link to this definition"></a></dt>
 <dd><p>CSR bus decoder.</p>
 <p>An address decoder for subordinate CSR buses.</p>
 <section id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h3>
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
 <p>Although there is no functional difference between adding a set of registers directly to
 a <a class="reference internal" href="#torii.lib.soc.csr.bus.Multiplexer" title="torii.lib.soc.csr.bus.Multiplexer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Multiplexer</span></code></a> and adding a set of registers to multiple <code class="xref py py-class docutils literal notranslate"><span class="pre">Multiplexer`s</span> <span class="pre">that</span> <span class="pre">are</span>
 <span class="pre">aggregated</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">:class:`Decoder</span></code>, hierarchical CSR buses are useful for organizing
@@ -566,15 +570,15 @@ together with the peripheral.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.bus.Multiplexer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Multiplexer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Multiplexer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.bus.</span></span><span class="sig-name descname"><span class="pre">Multiplexer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.bus.Multiplexer" title="Link to this definition"></a></dt>
 <dd><p>CSR register multiplexer.</p>
 <p>An address-based multiplexer for CSR registers implementing atomic updates.</p>
 <section id="latency">
-<h3>Latency<a class="headerlink" href="#latency" title="Permalink to this heading"></a></h3>
+<h3>Latency<a class="headerlink" href="#latency" title="Link to this heading"></a></h3>
 <p>Writes are registered, and are performed 1 cycle after <code class="docutils literal notranslate"><span class="pre">w_stb</span></code> is asserted.</p>
 </section>
 <section id="alignment">
-<h3>Alignment<a class="headerlink" href="#alignment" title="Permalink to this heading"></a></h3>
+<h3>Alignment<a class="headerlink" href="#alignment" title="Link to this heading"></a></h3>
 <p>Because the CSR bus conserves logic and routing resources, it is common to e.g. access
 a CSR bus with an <em>n</em>-bit data path from a CPU with a <em>k</em>-bit datapath (<em>k&gt;n</em>) in cases
 where CSR access latency is less important than resource usage. In this case, two strategies
@@ -635,14 +639,14 @@ register occupies in the CPU address space, and the width of the CSR bus.</p>
 
 </section>
 <section id="events">
-<h2>Events<a class="headerlink" href="#events" title="Permalink to this heading"></a></h2>
+<h2>Events<a class="headerlink" href="#events" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.event.EventMonitor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.event.</span></span><span class="sig-name descname"><span class="pre">EventMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.event.EventMonitor" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.event.</span></span><span class="sig-name descname"><span class="pre">EventMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.event.EventMonitor" title="Link to this definition"></a></dt>
 <dd><p>Event monitor.</p>
 <p>A monitor for subordinate event sources, with a CSR bus interface.</p>
 <section id="csr-registers">
-<h3>CSR registers<a class="headerlink" href="#csr-registers" title="Permalink to this heading"></a></h3>
+<h3>CSR registers<a class="headerlink" href="#csr-registers" title="Link to this heading"></a></h3>
 <dl>
 <dt>enable<span class="classifier"><code class="docutils literal notranslate"><span class="pre">self.src.event_map.size</span></code>, read/write</span></dt><dd><p>Enabled events. See <code class="xref py py-meth docutils literal notranslate"><span class="pre">event.EventMap.sources()</span></code> for layout.</p>
 </dd>
@@ -674,15 +678,15 @@ register occupies in the CPU address space, and the width of the CSR bus.</p>
 
 </section>
 <section id="wishbone">
-<h2>Wishbone<a class="headerlink" href="#wishbone" title="Permalink to this heading"></a></h2>
+<h2>Wishbone<a class="headerlink" href="#wishbone" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.csr.wishbone.WishboneCSRBridge">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.wishbone.</span></span><span class="sig-name descname"><span class="pre">WishboneCSRBridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.wishbone.WishboneCSRBridge" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.csr.wishbone.</span></span><span class="sig-name descname"><span class="pre">WishboneCSRBridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.csr.wishbone.WishboneCSRBridge" title="Link to this definition"></a></dt>
 <dd><p>Wishbone to CSR bridge.</p>
 <p>A bus bridge for accessing CSR registers from Wishbone. This bridge supports any Wishbone
 data width greater or equal to CSR data width and performs appropriate address translation.</p>
 <section id="latency">
-<h3>Latency<a class="headerlink" href="#latency" title="Permalink to this heading"></a></h3>
+<h3>Latency<a class="headerlink" href="#latency" title="Link to this heading"></a></h3>
 <p>Reads and writes always take <code class="docutils literal notranslate"><span class="pre">self.data_width</span> <span class="pre">//</span> <span class="pre">csr_bus.data_width</span> <span class="pre">+</span> <span class="pre">1</span></code> cycles to complete,
 regardless of the select inputs. Write side effects occur simultaneously with acknowledgement.</p>
 <dl class="field-list simple">

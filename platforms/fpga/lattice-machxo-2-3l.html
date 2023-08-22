@@ -14,16 +14,16 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/platformpicker.js"></script>
         <script src="../../_static/wavedrom.skin.js"></script>
         <script src="../../_static/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.skin.js"></script>
+        <script src="../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="../../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Platform Integration</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Torii FPGA Platforms</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -425,17 +429,17 @@
            <div itemprop="articleBody">
              
   <section id="lattice-machxo2-and-machxo3l">
-<h1>Lattice MachXO2 and MachXO3L<a class="headerlink" href="#lattice-machxo2-and-machxo3l" title="Permalink to this heading"></a></h1>
+<h1>Lattice MachXO2 and MachXO3L<a class="headerlink" href="#lattice-machxo2-and-machxo3l" title="Link to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l</span></code> module provides a base platform to support Lattice MachXO2 and MachXO3L devices with the<a class="reference external" href="https://www.latticesemi.com/latticediamond">Diamond</a> toolchain.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="torii.platform.vendor.lattice.machxo_2_3l.MachXO2Platform">
-<span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO2Platform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Platform" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO2Platform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Platform" title="Link to this definition"></a></dt>
 <dd><p>alias of <a class="reference internal" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform" title="torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">MachXO2Or3LPlatform</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="torii.platform.vendor.lattice.machxo_2_3l.MachXO3LPlatform">
-<span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO3LPlatform" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO3LPlatform" title="Link to this definition"></a></dt>
 <dd><p>alias of <a class="reference internal" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform" title="torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">MachXO2Or3LPlatform</span></code></a></p>
 </dd></dl>
 
@@ -446,7 +450,7 @@ definitions are actually exported from the module for use.</p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO2Or3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.lattice.machxo_2_3l.</span></span><span class="sig-name descname"><span class="pre">MachXO2Or3LPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform" title="Link to this definition"></a></dt>
 <dd><dl class="simple">
 <dt>Required tools:</dt><dd><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pnmainc</span></code></p></li>

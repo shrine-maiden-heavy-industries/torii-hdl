@@ -14,21 +14,21 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/platformpicker.js"></script>
         <script src="../../_static/wavedrom.skin.js"></script>
         <script src="../../_static/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.min.js"></script>
-        <script src="../../_static/js/wavedrom.skin.js"></script>
+        <script src="../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="../../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Lattice ECP5" href="lattice-ecp5.html" />
-    <link rel="prev" title="Torii FPGA Platforms" href="index.html" /> 
+    <link rel="prev" title="Intel" href="gowin.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Platform Integration</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Torii FPGA Platforms</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -425,11 +429,11 @@
            <div itemprop="articleBody">
              
   <section id="intel">
-<h1>Intel<a class="headerlink" href="#intel" title="Permalink to this heading"></a></h1>
+<h1>Intel<a class="headerlink" href="#intel" title="Link to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.platform.vendor.intel</span></code> module provides a base platform to support Intel toolchains with the <a class="reference external" href="https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime.html">Quartus</a> and <a class="reference external" href="https://github.com/Ravenslofty/mistral">Mistral</a> toolchains.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.platform.vendor.intel.IntelPlatform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.intel.</span></span><span class="sig-name descname"><span class="pre">IntelPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolchain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Quartus'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Mistral'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Quartus'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.platform.vendor.intel.IntelPlatform" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.intel.</span></span><span class="sig-name descname"><span class="pre">IntelPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolchain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Quartus'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Mistral'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Quartus'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.platform.vendor.intel.IntelPlatform" title="Link to this definition"></a></dt>
 <dd><p class="rubric">Quartus toolchain</p>
 <dl class="simple">
 <dt>Required tools:</dt><dd><ul class="simple">
@@ -495,7 +499,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Torii FPGA Platforms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gowin.html" class="btn btn-neutral float-left" title="Intel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="lattice-ecp5.html" class="btn btn-neutral float-right" title="Lattice ECP5" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

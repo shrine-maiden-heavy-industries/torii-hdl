@@ -14,16 +14,16 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/platformpicker.js"></script>
         <script src="_static/wavedrom.skin.js"></script>
         <script src="_static/wavedrom.min.js"></script>
-        <script src="_static/js/wavedrom.min.js"></script>
-        <script src="_static/js/wavedrom.skin.js"></script>
+        <script src="_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="platforms/index.html">Platform Integration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="platforms/fpga/intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="platforms/fpga/intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -423,22 +427,22 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The following instructions are a work-in-progress and may not be entirely up to date.</p>
 </div>
 <section id="system-requirements">
-<h2>System requirements<a class="headerlink" href="#system-requirements" title="Permalink to this heading"></a></h2>
+<h2>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
 <p>Torii requires Python &gt;= 3.9, and <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> &gt;= 0.20. Torii has been tested with <a class="reference external" href="https://www.python.org/">CPython</a>, but might possibly run under <a class="reference external" href="https://www.pypy.org/">PyPy</a>.</p>
 <p>Simulating Torii code requires no additional software. However, a waveform viewer like <a class="reference external" href="http://gtkwave.sourceforge.net/">GTKWave</a> is invaluable for debugging.</p>
 <p>Synthesizing, placing and routing an Torii design for an FPGA requires the FPGA family specific toolchain. See the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform</span></a> specific documentation for more information regarding vendor toolchains.</p>
 </section>
 <section id="installing-prerequisites">
-<h2>Installing Prerequisites<a class="headerlink" href="#installing-prerequisites" title="Permalink to this heading"></a></h2>
+<h2>Installing Prerequisites<a class="headerlink" href="#installing-prerequisites" title="Link to this heading"></a></h2>
 <p>Prior to installing Torii, you must install all of its prerequisites and requirements.</p>
 <section id="installing-python">
-<h3>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this heading"></a></h3>
+<h3>Installing Python<a class="headerlink" href="#installing-python" title="Link to this heading"></a></h3>
 <p>First off, install <code class="docutils literal notranslate"><span class="pre">python</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> onto your system if the’re not there already.</p>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--arch platform-noaltname docutils container">
@@ -481,7 +485,7 @@
 </div>
 </section>
 <section id="installing-yosys-and-gtkwave">
-<h3>Installing Yosys and GTKWave<a class="headerlink" href="#installing-yosys-and-gtkwave" title="Permalink to this heading"></a></h3>
+<h3>Installing Yosys and GTKWave<a class="headerlink" href="#installing-yosys-and-gtkwave" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--arch platform-noaltname docutils container">
 <p class="platform-title">Arch Linux</p>
@@ -540,10 +544,10 @@
 </section>
 </section>
 <section id="installing-torii">
-<h2>Installing Torii<a class="headerlink" href="#installing-torii" title="Permalink to this heading"></a></h2>
+<h2>Installing Torii<a class="headerlink" href="#installing-torii" title="Link to this heading"></a></h2>
 <p>The <a class="reference internal" href="#latest-release"><span class="std std-ref">latest release</span></a> of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a <a class="reference internal" href="#development-snapshot"><span class="std std-ref">development snapshot</span></a> to get access to the bleeding-edge, however the API may be unstable.</p>
 <section id="latest-release">
-<h3>Latest release<a class="headerlink" href="#latest-release" title="Permalink to this heading"></a></h3>
+<h3>Latest release<a class="headerlink" href="#latest-release" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>
@@ -566,7 +570,7 @@
 </div>
 </section>
 <section id="development-snapshot">
-<h3>Development snapshot<a class="headerlink" href="#development-snapshot" title="Permalink to this heading"></a></h3>
+<h3>Development snapshot<a class="headerlink" href="#development-snapshot" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>
@@ -589,7 +593,7 @@
 </div>
 </section>
 <section id="editable-development-snapshot">
-<h3>Editable development snapshot<a class="headerlink" href="#editable-development-snapshot" title="Permalink to this heading"></a></h3>
+<h3>Editable development snapshot<a class="headerlink" href="#editable-development-snapshot" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>
@@ -643,11 +647,11 @@
 </section>
 </section>
 <section id="installing-board-definitions">
-<h2>Installing board definitions<a class="headerlink" href="#installing-board-definitions" title="Permalink to this heading"></a></h2>
+<h2>Installing board definitions<a class="headerlink" href="#installing-board-definitions" title="Link to this heading"></a></h2>
 <p>This section assumes you have already <a class="reference internal" href="#installation">installed Torii</a> to your system.</p>
 <p>Installing the <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards">Torii Development Board</a> definitions is much the same as installing Torii.</p>
 <section id="id1">
-<h3>Latest release<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<h3>Latest release<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>
@@ -670,7 +674,7 @@
 </div>
 </section>
 <section id="id2">
-<h3>Development snapshot<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<h3>Development snapshot<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>
@@ -693,7 +697,7 @@
 </div>
 </section>
 <section id="id3">
-<h3>Editable development snapshot<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<h3>Editable development snapshot<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <div class="platform-picker docutils container">
 <div class="platform-choice platform--linux platform-noaltname docutils container">
 <p class="platform-title">Linux</p>

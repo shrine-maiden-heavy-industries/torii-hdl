@@ -14,16 +14,16 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=4b1cca27"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/platformpicker.js"></script>
         <script src="../_static/wavedrom.skin.js"></script>
         <script src="../_static/wavedrom.min.js"></script>
-        <script src="../_static/js/wavedrom.min.js"></script>
-        <script src="../_static/js/wavedrom.skin.js"></script>
+        <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
+        <script src="../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -315,6 +315,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../platforms/index.html">Platform Integration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/gowin.html">Intel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/intel.html">Intel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/intel.html#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
 </ul>
@@ -424,11 +428,11 @@
            <div itemprop="articleBody">
              
   <section id="clock-domain-crossing">
-<h1>Clock Domain Crossing<a class="headerlink" href="#clock-domain-crossing" title="Permalink to this heading"></a></h1>
+<h1>Clock Domain Crossing<a class="headerlink" href="#clock-domain-crossing" title="Link to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.cdc</span></code> module provides building blocks for transferring data between clock domains.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.cdc.FFSynchronizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">FFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.FFSynchronizer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">FFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.FFSynchronizer" title="Link to this definition"></a></dt>
 <dd><p>Resynchronize a signal to a different clock domain.</p>
 <p>Consists of a chain of flip-flops. Eliminates metastabilities at the output, but provides
 no other guarantee as to the safe domain-crossing of a signal.</p>
@@ -472,7 +476,7 @@ its reset value until <code class="docutils literal notranslate"><span class="pr
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.cdc.AsyncFFSynchronizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">AsyncFFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.AsyncFFSynchronizer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">AsyncFFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.AsyncFFSynchronizer" title="Link to this definition"></a></dt>
 <dd><p>Synchronize de-assertion of an asynchronous signal.</p>
 <p>The signal driven by the <a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a> is asserted asynchronously and de-asserted
 synchronously, eliminating metastability during de-assertion.</p>
@@ -498,7 +502,7 @@ If specified and the platform does not support it, elaboration will fail.</p></l
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.cdc.ResetSynchronizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">ResetSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.ResetSynchronizer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">ResetSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.ResetSynchronizer" title="Link to this definition"></a></dt>
 <dd><p>Synchronize de-assertion of a clock domain reset.</p>
 <p>The reset of the clock domain driven by the <a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer" title="torii.lib.cdc.ResetSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a> is asserted
 asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.</p>
@@ -526,7 +530,7 @@ If specified and the platform does not support it, elaboration will fail.</p></l
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.cdc.PulseSynchronizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">PulseSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.PulseSynchronizer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">PulseSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.cdc.PulseSynchronizer" title="Link to this definition"></a></dt>
 <dd><p>A one-clock pulse on the input produces a one-clock pulse on the output.</p>
 <p>If the output clock is faster than the input clock, then the input may be safely asserted at
 100% duty cycle. Otherwise, if the clock ratio is <code class="docutils literal notranslate"><span class="pre">n</span></code>:1, the input may be asserted at most
