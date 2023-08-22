@@ -9,7 +9,7 @@ from .quicklogic import QuicklogicPlatform
 from .xilinx     import XilinxPlatform
 
 __all__ = (
-    'GowinPlatform',
+	'GowinPlatform',
 
 	'IntelPlatform',
 
