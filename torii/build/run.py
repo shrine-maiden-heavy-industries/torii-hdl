@@ -39,6 +39,9 @@ class BuildPlan:
 		forward slashes (``/``).
 		'''
 		assert isinstance(filename, str) and filename not in self.files
+		if Path(filename).is_absolute():
+			raise ValueError(f'Filename {filename} must not be an absolute path')
+
 		self.files[filename] = content
 
 	def digest(self, size: int = 64) -> bytes:
@@ -91,9 +94,9 @@ class BuildPlan:
 
 			for filename, content in self.files.items():
 				filename = Path(filename)
-				# Forbid parent directory components completely to avoid the possibility
-				# of writing outside the build root.
-				if '..' in filename.parts:
+				# Forbid parent directory components and absolute paths completely
+				# to avoid the possibility of writing outside the build root.
+				if '..' in filename.parts or filename.is_absolute():
 					raise RuntimeError(
 						f'Unable to write to \'{filename}\'\n'
 						'Writing to outside of the build root is forbidden.'
