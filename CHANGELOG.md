@@ -22,6 +22,7 @@ Unreleased template stuff
 ### Added
 
  - Added new `torii.platform.formal.FormalPlatform` for formal verification of Torii designs.
+ - Added `torii.vendor.asic` OpenLANE ASIC flow support
  - Added `Value.inc()` and `Value.dec()` calls to help deal with the `sig.eq(sig + 1)` pattern that is all too common.
 
 ### Changed
@@ -106,20 +107,6 @@ Unreleased template stuff
 
 ### Fixed
 
- - Fixed `ToriiTestCase.settle` to handle "0" count settles.
- - Fixed `torii.hdl.dsl.Module`'s constructor to properly use `super()` rather than a parent class name call.
- - Load of typing annotation fixes.
- - Cleaned up a load of blank `asserts`, they should now have more clear error diagnostics.
- - Fixed a handful of typos throughout the library and documentation.
- - Fixed tracer calls for Python 3.13
- - Fixed `Array` not being indexable by a `ValueCastable`.
- - Fixed `ValueCastable` not being accepted as a simulation coroutine command.
- - Fixed handling of redundant `Case` branches.
- - Fixed `Value.shift_right` and `Value.as_signed` edge cases.
- - Fixed using 0-width `Switch`'s with integer keys.
- - Trying to use the Python `in` operator on a `Value` now raises a sensible error.
- - When indexing or slicing a Value with another Value, it now raises an error and suggests to use `Value.bit_select` or `Value.word_select` instead.
- - Fixed simulation look when process catches an injected exception.
 
 ## [0.5.0]
 
