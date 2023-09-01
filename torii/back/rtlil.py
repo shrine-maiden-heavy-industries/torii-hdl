@@ -897,57 +897,26 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 		# Transform all subfragments to their respective cells. Transforming signals connected
 		# to their ports into wires eagerly makes sure they get sensible (prefixed with submodule
 		# name) names.
-		memories = OrderedDict()
 		for subfragment, sub_name in fragment.subfragments:
 			if sub_name is None:
 				sub_name = module.anonymous()
 
-			sub_params = OrderedDict()
-			if hasattr(subfragment, 'parameters'):
-				for param_name, param_value in subfragment.parameters.items():
-					if isinstance(param_value, mem.Memory):
-						memory = param_value
-						if memory not in memories:
-							memories[memory] = module.memory(
-								width = memory.width, size = memory.depth,
-								name = memory.name, attrs = memory.attrs
-							)
-							addr_bits = bits_for(memory.depth)
-							data_parts = []
-							data_mask = (1 << memory.width) - 1
-							for addr in range(memory.depth):
-								if addr < len(memory.init):
-									data = memory.init[addr] & data_mask
-								else:
-									data = 0
-								data_parts.append(f'{data:0{memory.width}b}')
-							module.cell('$meminit', ports = {
-								'\\ADDR': rhs_compiler(ast.Const(0, addr_bits)),
-								'\\DATA': f'{memory.width * memory.depth}\'' +
-											''.join(reversed(data_parts)),
-							}, params = {
-								'MEMID'   : memories[memory],
-								'ABITS'   : addr_bits,
-								'WIDTH'   : memory.width,
-								'WORDS'   : memory.depth,
-								'PRIORITY': 0,
-							})
-
-						param_value = memories[memory]
-
-					sub_params[param_name] = param_value
+			sub_params = OrderedDict(getattr(subfragment, 'parameters', {}))
 
 			sub_type, sub_port_map = _convert_fragment(
 				builder, subfragment, name_map,
 				hierarchy = hierarchy + (sub_name,)
 			)
 
+			if sub_type == '$mem_v2' and 'MEMID' not in sub_params:
+				sub_params['MEMID'] = f'${sub_name}'
+
 			sub_ports = OrderedDict()
 			for port, value in sub_port_map.items():
 				if not isinstance(subfragment, ir.Instance):
 					for signal in value._rhs_signals():
 						compiler_state.resolve_curr(signal, prefix = sub_name)
-				if len(value) > 0:
+				if len(value) > 0 or sub_type == '$mem_v2':
 					sub_ports[port] = rhs_compiler(value)
 
 			module.cell(sub_type, name = sub_name, ports = sub_ports, params = sub_params,
