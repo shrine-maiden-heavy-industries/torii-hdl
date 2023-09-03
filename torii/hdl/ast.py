@@ -114,8 +114,12 @@ class Shape:
 	'''  # noqa: E101
 
 	def __init__(self, width: int = 1, signed: bool = False) -> None:
-		if not isinstance(width, int) or width < 0:
-			raise TypeError(f'Width must be a non-negative integer, not {width!r}')
+		if not isinstance(width, int):
+			raise TypeError(f'Width must be an integer, not {width!r}')
+		if not signed and width < 0:
+			raise ValueError(f'Width of an unsigned value must be zero or a positive integer, not {width}')
+		if signed and width <= 0:
+			raise ValueError(f'Width of a signed value must be a positive integer, not {width}')
 
 		self.width = width
 		self.signed = signed
@@ -157,7 +161,7 @@ class Shape:
 				return Shape(obj)
 			elif isinstance(obj, range):
 				if len(obj) == 0:
-					return Shape(0, obj.start < 0)
+					return Shape(0)
 				signed = obj[0] < 0 or obj[-1] < 0
 				width  = max(
 					bits_for(obj[0], signed),

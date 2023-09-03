@@ -145,8 +145,8 @@ Casting a shape from an integer `i` is a shorthand for constructing a shape with
 
 Casting a shape from a {class}`range` `r` produces a shape that:
 
- * has a width large enough to represent both `min(r)` and `max(r)`, and
- * is signed if either `min(r)` or `max(r)` are negative, unsigned otherwise.
+ * has a width large enough to represent both `min(r)` and `max(r)`, but not larger, and
+ * is signed if `r` contains any negative values, unsigned otherwise.
 
 Specifying a shape with a range is convenient for counters, indexes, and all other values whose width is derived from a set of numbers they must be able to fit:
 
