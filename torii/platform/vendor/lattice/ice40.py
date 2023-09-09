@@ -178,6 +178,7 @@ class ICE40Platform(TemplatedPlatform):
 		r'''
 		{{invoke_tool("icepack")}}
 			{{verbose("-v")}}
+			{{get_override("icepack_opts")|options}}
 			{{name}}.asc
 			{{name}}.bin
 		'''
