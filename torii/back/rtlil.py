@@ -1035,7 +1035,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 
 def convert_fragment(
-	fragment: ir.Fragment, name: str = 'top', *, emit_src: str = True
+	fragment: ir.Fragment, name: str = 'top', *, emit_src: bool = True
 ) -> tuple[str, ast.SignalDict]:
 	if not isinstance(fragment, ir.Fragment):
 		raise ValueError(f'Expected an ir.Fragment not a {fragment!r}')
