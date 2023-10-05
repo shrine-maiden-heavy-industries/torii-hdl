@@ -299,6 +299,15 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			lambda y, a, b: y.eq(a & b),
 			[Const(0b1100, 4), Const(0b1010, 4)], Const(0b1000, 4)
 		)
+		self.assertStatement(
+			lambda y, a, b: y.eq(a & b),
+			[Const(0b1010, 4), Const(0b10, signed(2))], Const(0b1010, 4)
+		)
+		self.assertStatement(
+			lambda y, a: y.eq(a),
+			[Const(0b1010, 4) & Const(-2, 2).as_unsigned()], Const(0b0010, 4)
+		)
+
 
 	def test_or(self):
 		self.assertStatement(
@@ -425,6 +434,15 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			lambda y, a, b, c: y.eq(Mux(c, a, b)),
 			[Const(2, 4), Const(3, 4), Const(1)], Const(2, 4)
 		)
+		self.assertStatement(
+			lambda y, a: y.eq(a),
+			[Mux(0, Const(0b1010, 4), Const(0b10, 2).as_signed())], Const(0b1110, 4)
+		)
+		self.assertStatement(
+			lambda y, a: y.eq(a),
+			[Mux(0, Const(0b1010, 4), Const(-2, 2).as_unsigned())], Const(0b0010, 4)
+		)
+
 
 	def test_mux_invert(self):
 		self.assertStatement(
