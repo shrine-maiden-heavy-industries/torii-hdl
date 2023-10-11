@@ -6,7 +6,7 @@ from typing      import Optional, List
 
 from ..util      import tracer
 from .ast        import (
-	Array, Cat, ClockSignal, Const, Repl, Signal, Switch, Shape, Mux,
+	Array, Cat, ClockSignal, Const, Signal, Switch, Shape, Mux,
 	unsigned
 )
 from .ir         import Elaboratable, Instance, Fragment

@@ -5,7 +5,7 @@ from typing    import Literal, Union
 
 from ...build  import Attrs, Clock, TemplatedPlatform
 from ...hdl    import (
-	ClockDomain, ClockSignal, Const, Instance, Module, Record, Repl, Signal
+	ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 )
 from ...lib.io import Pin
 
@@ -402,7 +402,7 @@ class IntelPlatform(TemplatedPlatform):
 	def _get_oereg(m: Module, pin: Pin) -> Signal:
 		# altiobuf_ requires an output enable signal for each pin, but pin.oe is 1 bit wide.
 		if pin.xdr == 0:
-			return Repl(pin.oe, pin.width)
+			return pin.oe.replicate(pin.width)
 		elif pin.xdr in (1, 2):
 			oe_reg = Signal(pin.width, name = f'{pin.name}_oe_reg')
 			oe_reg.attrs['useioff'] = '1'

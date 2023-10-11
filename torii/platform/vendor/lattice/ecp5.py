@@ -5,7 +5,7 @@ from typing     import Literal, Optional
 
 from ....build  import Attrs, Clock, Subsignal, TemplatedPlatform
 from ....hdl    import (
-	ClockDomain, ClockSignal, Const, Instance, Module, Record, Repl, Signal
+	ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 )
 from ....lib.io import Pin
 
@@ -590,7 +590,7 @@ class ECP5Platform(TemplatedPlatform):
 			if 'o' in pin.dir:
 				o = pin_o
 			if pin.dir in ('oe', 'io'):
-				t = Repl(~pin.oe, pin.width)
+				t = ~pin.oe.replicate(pin.width)
 		elif pin.xdr == 1:
 			if 'i' in pin.dir:
 				get_ireg(pin.i_clk, i, pin_i)
