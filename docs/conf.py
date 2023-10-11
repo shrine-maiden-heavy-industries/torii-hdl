@@ -7,27 +7,12 @@ from torii import __version__ as torii_version
 
 ROOT_DIR = (Path(__file__).parent).parent
 
-def doc_version():
-	try:
-		from setuptools_scm.git import parse as parse_git
-	except ImportError:
-		return ''
-
-	git = parse_git(str(ROOT_DIR.resolve()))
-	if not git:
-		return ''
-	elif git.exact:
-		return git.format_with('v{tag}')
-	else:
-		return 'latest'
-
 
 project   = 'Torii-HDL'
 version   = torii_version
 release   = version.split('+')[0]
 copyright = '2022, Shrine Maiden Heavy Industries'
 language  = 'en'
-docver    = doc_version()
 
 extensions = [
 	'sphinx.ext.autodoc',
@@ -76,8 +61,8 @@ templates_path = [
 html_context = {
 	'display_lower_left': False,
 	'current_language'  : language,
-	'current_version'   : docver,
-	'version'           : docver,
+	'current_version'   : version,
+	'version'           : version,
 	'display_github'    : True,
 	'github_user'       : 'shrine-maiden-heavy-industries',
 	'github_repo'       : 'torii-hdl',
