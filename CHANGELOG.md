@@ -19,11 +19,16 @@ Unreleased template stuff
 
 ## [Unreleased]
 
+
+## [0.5.0]
+
 ### Added
 
  - Added some minor comments to the `torii.sim.core` module about the function of some of the objects.
- - Added `torii.vendor.gowin.GowinPlatform`
-
+ - Added `torii.vendor.gowin.GowinPlatform`.
+ - Added support for Xilinx Atrix UltraScale+ part numbers.
+ - Added `env` argument to `BuildPlan.execute_local`.
+ - Allowed removing `src` attributes on RTLIL output.
 
 ### Changed
 
@@ -31,12 +36,17 @@ Unreleased template stuff
  - Replaced the `distutils.ccompiler` with the `setuptools.command.build_ext` module for `torii.tools.cxx`.
  - Disabled the warning emitted on `~True`/`~False` when using it as a value in Torii in Python versions older than 3.12.
  - Relaxed the `PyVCD` dependency version to now also include `0.5`.
- - Ensured `Value.__abs__` now returns `unsigned` `Shape`
+ - Ensured `Value.__abs__` now returns `unsigned` `Shape`.
  - Restructured the `torii.lib.coding` module away from being a monolithic file.
+ - Prohibited absolute paths in `BuildPlan.add_file`.
+ - Added lowering of `Memory`'s directly to RTLIL `$mem_v2` cells.
+ - Ensured `Part` offsets are always unsigned.
+ - Disallowed `signed(0)` values.
 
 ### Deprecated
 
  - Old Lattice platform names have been deprecated in favor of the new platform location.
+ - Deprecated `Repl` in favor of `Value.replicate`.
 ### Removed
 
  - Removed the `torii.cli` module
@@ -55,6 +65,9 @@ Unreleased template stuff
  - Fixed the order of when `Value.cast` should have been called in the `Part` and `Slice` constructors.
  - Fixed a warning on python 3.12 with the `pyrtl` simulator warning about bitwise negations on booleans.
  - Fixed a test case failure that would only occur on Windows due to it's backwards path separator.
+ - Ensured `Value.cast` is inside `Part`'s and `Slice`s constructor.
+ - Fixed  test case that was having issues on Windows paths.
+ - Removed translation of empty subfragments as that would cause unintentional blackboxing on Vivado and Yosys.
 
 ## [0.4.5]
 
@@ -222,7 +235,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...main
+[0.5.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...v0.5.0
 [0.4.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3
