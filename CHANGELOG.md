@@ -31,7 +31,9 @@ Unreleased template stuff
 ### Removed
 
  - Removed deprecated `torii.platform.vendor.lattice_*` modules.
+
 ### Fixed
+
 
 ## [0.5.0]
 
