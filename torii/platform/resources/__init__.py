@@ -10,7 +10,7 @@ from .extensions import (
 from .interface  import (
 	CANResource, DirectUSBResource, I2CResource, IrDAResource,
 	JTAGResource, PS2Resource, SPIResource, UARTResource,
-	ULPIResource
+	ULPIResource, HyperBusResource
 )
 from .memory     import (
 	DDR3Resource, NORFlashResources, QSPIFlashResource,
@@ -44,6 +44,7 @@ __all__ = (
 	'SPIResource',
 	'UARTResource',
 	'ULPIResource',
+	'HyperBusResource',
 
 	'DDR3Resource',
 	'NORFlashResources',

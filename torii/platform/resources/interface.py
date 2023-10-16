@@ -2,7 +2,7 @@
 
 from typing   import Literal, Optional, Union
 
-from ...build import Attrs, Clock, Pins, PinsN, Resource, Subsignal
+from ...build import Attrs, Clock, Pins, PinsN, Resource, Subsignal, DiffPairs
 
 __all__ = (
 	'CANResource',
@@ -14,6 +14,7 @@ __all__ = (
 	'SPIResource',
 	'UARTResource',
 	'ULPIResource',
+	'HyperBusResource',
 )
 
 def UARTResource(
@@ -315,3 +316,59 @@ def EthernetResource(
 	if attrs is not None:
 		ios.append(attrs)
 	return Resource.family(*args, default_name = 'eth', ios = ios)
+
+def HyperBusResource(
+	*args, bus_type: Literal['controller', 'peripheral'],
+	cs_n: str, clk_p: str, clk_n: Optional[str], dq: str, rwds: str, rst_n: Optional[str] = None,
+	rsto_n: Optional[str] = None, int_n: Optional[str] = None,
+	conn: Optional[Union[tuple[str, int], int]] = None, diff_attrs = None, attrs: Optional[Attrs] = None,
+):
+	ios = []
+
+
+	ios.append(
+		Subsignal('cs', PinsN(
+			cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
+		)),
+		Subsignal('dq',   Pins(dq, dir = 'io', conn = conn, assert_width = 8)),
+		Subsignal('rwds', Pins(rwds, dir = 'io', conn = conn, assert_width = 1)),
+	)
+
+	if clk_n is None:
+		ios.append(
+			Subsignal('clk', Pins(
+				clk_p, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
+			))
+		)
+	else:
+		ios.append(
+			Subsignal('clk', DiffPairs(
+				clk_p, clk_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
+			), diff_attrs)
+		)
+
+	if rst_n is not None:
+		ios.append(
+			Subsignal('rst', PinsN(
+				rst_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
+			))
+		)
+
+	if rsto_n is not None:
+		ios.append(
+			Subsignal('rsto', PinsN(
+				rst_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
+			))
+		)
+
+	if int_n is not None:
+		ios.append(
+			Subsignal('int', PinsN(
+				int_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
+			))
+		)
+
+	if attrs is not None:
+		ios.append(attrs)
+
+	return Resource.family(*args, default_name = 'hyperbus', ios = ios)
