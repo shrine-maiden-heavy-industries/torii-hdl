@@ -237,6 +237,7 @@ class ToriiTestCase(TestCase):
 		for _ in range(count):
 			yield Settle()
 			yield
+		yield Settle()
 
 	@staticmethod
 	def wait_until_high(strobe: Signal, *, timeout: int = None):
