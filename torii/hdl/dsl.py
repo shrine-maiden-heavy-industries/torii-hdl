@@ -168,7 +168,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		)
 
 	def __init__(self):
-		_ModuleBuilderRoot.__init__(self, self, depth = 0)
+		super().__init__(builder = self, depth = 0)
 		self.submodules    = _ModuleBuilderSubmodules(self)
 		self.domains       = _ModuleBuilderDomainSet(self)
 
