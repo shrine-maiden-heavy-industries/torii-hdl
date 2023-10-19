@@ -93,7 +93,7 @@ class Memory(Elaboratable):
 		except TypeError as e:
 			raise TypeError(f'Memory initialization value at address {addr:x}: {e}') from None
 
-	def read_port(self, *, src_loc_at = 0, **kwargs):
+	def read_port(self, *, src_loc_at = 0, **kwargs) -> 'ReadPort':
 		'''
 		Get a read port.
 
@@ -112,7 +112,7 @@ class Memory(Elaboratable):
 
 		return ReadPort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
-	def write_port(self, *, src_loc_at = 0, **kwargs):
+	def write_port(self, *, src_loc_at = 0, **kwargs) -> 'WritePort':
 		'''
 		Get a write port.
 
