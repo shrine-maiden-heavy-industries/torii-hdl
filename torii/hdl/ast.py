@@ -205,7 +205,7 @@ ValueCastType = Union['Value', int, Enum, 'ValueCastable']
 
 class Value(metaclass = ABCMeta):
 	@staticmethod
-	def cast(obj: ValueCastType ) -> 'Value':
+	def cast(obj: ValueCastType) -> 'Value':
 		'''
 		Converts ``obj`` to an Torii value.
 
@@ -214,7 +214,6 @@ class Value(metaclass = ABCMeta):
 		:class:`ValueCastable` objects are recursively cast to an Torii value.
 
 		'''
-
 		while True:
 			if isinstance(obj, Value):
 				return obj
@@ -685,7 +684,7 @@ class Value(metaclass = ABCMeta):
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
 		return Cat(self for _ in range(count))
 
-	def eq(self, value: 'Value') -> 'Assign':
+	def eq(self, value: ValueCastType) -> 'Assign':
 		'''
 		Assignment.
 
