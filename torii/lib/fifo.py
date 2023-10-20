@@ -76,7 +76,7 @@ class FIFOInterface:
 		r_attributes = ''
 	)
 
-	def __init__(self, *, width: int, depth: int, fwft: bool) -> None:
+	def __init__(self, *, width: int, depth: int, fwft: bool = True) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'FIFO width must be a non-negative integer, not {width!r}')
 
@@ -235,7 +235,7 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 	)
 
 	def __init__(self, *, width: int, depth: int):
-		super().__init__(width = width, depth = depth, fwft = True)
+		super().__init__(width = width, depth = depth)
 
 		self.level = Signal(range(depth + 1))
 
@@ -327,7 +327,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 				) from None
 		else:
 			depth_bits = 0
-		super().__init__(width = width, depth = depth, fwft = True)
+		super().__init__(width = width, depth = depth)
 
 		self.r_rst = Signal()
 		self._r_domain = r_domain
@@ -508,7 +508,7 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 					'AsyncFIFOBuffered only supports depths that are one higher than powers of 2; '
 					f'requested exact depth {depth} is not'
 				) from None
-		super().__init__(width = width, depth = depth, fwft = True)
+		super().__init__(width = width, depth = depth)
 
 		self.r_rst = Signal()
 		self._r_domain = r_domain
