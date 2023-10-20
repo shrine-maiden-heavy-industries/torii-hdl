@@ -28,7 +28,9 @@ def get_var_name(depth: int = 2, default: Optional[Union[str, object]] = _raise_
 			call_index += 2
 		else:
 			break
-	if call_opc not in ('CALL_FUNCTION', 'CALL_FUNCTION_KW', 'CALL_FUNCTION_EX', 'CALL_METHOD', 'CALL'):
+	if call_opc not in (
+		'CALL_FUNCTION', 'CALL_FUNCTION_KW', 'CALL_FUNCTION_EX', 'CALL_METHOD', 'CALL', 'CALL_KW'
+	):
 		if default is _raise_exception:
 			raise NameNotFound
 		else:
