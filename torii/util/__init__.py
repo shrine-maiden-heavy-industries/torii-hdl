@@ -2,7 +2,7 @@
 
 from collections.abc import Iterable
 from linecache       import getlines
-from re              import compile
+from re              import compile, Match
 from typing          import Union
 
 __all__ = (
@@ -12,7 +12,9 @@ __all__ = (
 	'union',
 )
 
-def flatten(i):
+def flatten(i: Iterable):
+	''' Flatten nested iterables into a single linear iterable '''
+
 	for e in i:
 		if isinstance(e, str) or not isinstance(e, Iterable):
 			yield e
@@ -35,7 +37,7 @@ def get_linter_options(filename: str) -> dict[str, Union[int, str]]:
 	# Check the first five lines of the file, because it might not be first
 	lines = getlines(filename)[0:5]
 	if len(lines) > 0:
-		matches = list(filter(lambda m: m is not None, map(magic_comment.match, lines)))
+		matches: list[Match] = list(filter(lambda m: m is not None, map(magic_comment.match, lines)))
 
 		if len(matches) > 0:
 			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))

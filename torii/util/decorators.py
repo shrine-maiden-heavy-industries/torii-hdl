@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 
-from collections import OrderedDict
-from functools   import wraps
-from warnings    import warn
+from collections     import OrderedDict
+from collections.abc import Callable
+from functools       import wraps
+from typing          import Type
+from warnings        import warn
 
 __all__ = (
 	'deprecated',
@@ -12,7 +14,7 @@ __all__ = (
 	'memoize',
 )
 
-def memoize(f):
+def memoize(f: Callable):
 	memo = OrderedDict()
 
 	@wraps(f)
@@ -22,7 +24,7 @@ def memoize(f):
 		return memo[args]
 	return g
 
-def final(cls):
+def final(cls: Type):
 	def init_subclass():
 		raise TypeError(f'Subclassing {cls.__module__}.{cls.__name__} is not supported')
 	cls.__init_subclass__ = init_subclass
@@ -37,7 +39,7 @@ def deprecated(message: str, stacklevel: int = 2):
 		return wrapper
 	return decorator
 
-def extend(cls):
+def extend(cls: Type):
 	def decorator(f):
 		if isinstance(f, property):
 			name = f.fget.__name__

@@ -194,12 +194,13 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^Class \'MockShapeCastableNoOverride\' deriving from `ShapeCastable` must '
-			r'override the `as_shape` method$'
+			r'^Can\'t instantiate abstract class MockShapeCastableNoOverride with abstract method as_shape$'
 		):
 			class MockShapeCastableNoOverride(ShapeCastable):
 				def __init__(self):
 					pass
+
+			_ = MockShapeCastableNoOverride()
 
 	def test_cast(self):
 		sc = MockShapeCastable(unsigned(2))

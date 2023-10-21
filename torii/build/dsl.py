@@ -3,6 +3,8 @@
 from collections import OrderedDict
 from typing      import Callable, Generator, Iterator, Literal, Optional, Union
 
+from .._typing   import IODirWithOE
+
 __all__ = (
 	'Attrs',
 	'Clock',
@@ -17,7 +19,7 @@ __all__ = (
 
 class Pins:
 	def __init__(
-		self, names: str, *, dir: Literal['i', 'o', 'io', 'oe'] = 'io', invert: bool = False,
+		self, names: str, *, dir: IODirWithOE = 'io', invert: bool = False,
 		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[int] = None
 	) -> None:
 		if not isinstance(names, str):
@@ -69,7 +71,7 @@ def PinsN(*args, **kwargs) -> Pins:
 
 class DiffPairs:
 	def __init__(
-		self, p: str, n: str, *, dir: Literal['i', 'o', 'io', 'oe'] = 'io', invert: bool = False,
+		self, p: str, n: str, *, dir: IODirWithOE = 'io', invert: bool = False,
 		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[bool] = None
 	) -> None:
 		self.p = Pins(p, dir = dir, conn = conn, assert_width = assert_width)

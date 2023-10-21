@@ -7,11 +7,11 @@ import operator
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import (
-	Iterable, MutableMapping, MutableSequence, MutableSet
+	Iterable, MutableMapping, MutableSequence, MutableSet, Callable
 )
-from enum              import Enum, EnumMeta
+from enum              import Enum, EnumType, EnumMeta
 from itertools         import chain
-from typing            import Optional, Union
+from typing            import Optional, Union, Literal
 
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
@@ -62,6 +62,15 @@ __all__ = (
 )
 
 
+ShapeCastType = Union['Shape', int, range, type, 'ShapeCastable', EnumType]
+ValueCastType = Union['Value', int, EnumType, 'ValueCastable']
+OperatorType = Literal[
+	'+', '~', '-', 'b', 'r|', 'r&', 'r^', 'u', 's',
+	'*', '//', '%', '<', '<=', '==', '!=', '>', '>=',
+	'&', '^', '|', '<<', '>>', 'm'
+]
+SignalDecoderType = Union[EnumType, Callable[[int], str]]
+
 class DUID:
 	''' Deterministic Unique IDentifier. '''
 	__next_uid = 0
@@ -71,7 +80,7 @@ class DUID:
 		DUID.__next_uid += 1
 
 
-class ShapeCastable:
+class ShapeCastable(metaclass = ABCMeta):
 	'''
 	Interface of user-defined objects that can be cast to :class:`Shape`s.
 
@@ -132,7 +141,7 @@ class Shape:
 	# This implements an algorithm for inferring shape from standard Python enumerations
 	# for `Shape.cast()`.
 	@staticmethod
-	def _cast_plain_enum(obj):
+	def _cast_plain_enum(obj: EnumType) -> 'Shape':
 		signed = False
 		width  = 0
 		for member in obj:
@@ -153,10 +162,7 @@ class Shape:
 		return Shape(width, signed)
 
 	@staticmethod
-	def cast(
-		obj: Union['Shape', int, range, type, ShapeCastable], *,
-		src_loc_at: int = 0
-	) -> 'Shape':
+	def cast(obj: ShapeCastType, *, src_loc_at: int = 0) -> 'Shape':
 		while True:
 			if isinstance(obj, Shape):
 				return obj
@@ -189,7 +195,7 @@ class Shape:
 		else:
 			return f'unsigned({self.width})'
 
-	def __eq__(self, other: Union[tuple[int, bool], 'Shape']) -> bool:
+	def __eq__(self, other: Union[ShapeCastType, 'Shape']) -> bool:
 		if not isinstance(other, Shape):
 			try:
 				other = self.__class__.cast(other)
@@ -766,7 +772,7 @@ class Value(metaclass = ABCMeta):
 			amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
-	def replicate(self, count):
+	def replicate(self, count: int) -> 'Value':
 		'''
 		Replication.
 
@@ -828,11 +834,11 @@ class Value(metaclass = ABCMeta):
 
 		raise NotImplementedError('.shape has not been implemented')
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		raise TypeError(f'Value {self!r} cannot be used in assignments')
 
 	@abstractmethod
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
@@ -935,13 +941,13 @@ class Const(Value, metaclass = _ConstMeta):
 
 @final
 class Operator(Value):
-	def __init__(self, operator, operands , *, src_loc_at = 0) -> None:
+	def __init__(self, operator: OperatorType, operands: Iterable[ValueCastType], *, src_loc_at = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.operator = operator
 		self.operands = [Value.cast(op) for op in operands]
 
-	def shape(self):
-		def _bitwise_binary_shape(a_shape, b_shape):
+	def shape(self) -> Shape:
+		def _bitwise_binary_shape(a_shape: Shape, b_shape: Shape):
 			if not a_shape.signed and not b_shape.signed:
 				# both operands unsigned
 				return unsigned(max(a_shape.width, b_shape.width))
@@ -1002,15 +1008,15 @@ class Operator(Value):
 				return _bitwise_binary_shape(a_shape, b_shape)
 		raise NotImplementedError(f'Operator {self.operator}/{len(op_shapes)} not implemented') # :nocov:
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		if self.operator in ('u', 's'):
 			return union(op._lhs_signals() for op in self.operands)
 		return super()._lhs_signals()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return union(op._rhs_signals() for op in self.operands)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
 
@@ -1067,10 +1073,10 @@ class Slice(Value):
 	def shape(self) -> Shape:
 		return Shape(self.stop - self.start)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return self.value._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -1102,10 +1108,10 @@ class Part(Value):
 	def shape(self) -> Shape:
 		return Shape(self.width)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return self.value._rhs_signals() | self.offset._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -1165,10 +1171,10 @@ class Cat(Value):
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return union((part._lhs_signals() for part in self.parts), start = SignalSet())
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return union((part._rhs_signals() for part in self.parts), start = SignalSet())
 
 	def __repr__(self) -> str:
@@ -1220,8 +1226,8 @@ class Signal(Value, DUID):
 	'''
 
 	def __init__(
-		self, shape = None, *, name = None, reset = None, reset_less = False,
-		attrs = None, decoder = None, src_loc_at = 0
+		self, shape: Optional[ShapeCastType] = None, *, name: str = None, reset: int | None = None, reset_less: bool = False,
+		attrs: dict = None, decoder: Optional[SignalDecoderType] = None, src_loc_at: int = 0
 	):
 		super().__init__(src_loc_at = src_loc_at)
 
@@ -1307,7 +1313,9 @@ class Signal(Value, DUID):
 
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
-	def like(other, *, name = None, name_suffix = None, src_loc_at = 0, **kwargs):
+	def like(
+		other: Union[ValueCastType, 'Signal'], *, name: str = None, name_suffix: str = None, src_loc_at = 0, **kwargs
+	) -> 'Signal':
 		'''
 		Create Signal based on another.
 
@@ -1338,16 +1346,16 @@ class Signal(Value, DUID):
 		kw.update(kwargs)
 		return Signal(**kw, src_loc_at = 1 + src_loc_at)
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(sig {self.name})'
 
 
@@ -1367,7 +1375,7 @@ class ClockSignal(Value):
 
 	'''
 
-	def __init__(self, domain = 'sync', *, src_loc_at = 0):
+	def __init__(self, domain: str = 'sync', *, src_loc_at: int = 0):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
@@ -1375,16 +1383,16 @@ class ClockSignal(Value):
 			raise ValueError(f'Domain \'{domain}\' does not have a clock')
 		self.domain = domain
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		raise NotImplementedError('ClockSignal must be lowered to a concrete signal') # :nocov:
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(clk {self.domain})'
 
 
