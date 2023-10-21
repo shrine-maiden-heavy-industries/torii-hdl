@@ -8,6 +8,8 @@ from typing  import Callable, Optional
 
 from .       import has_tool, require_tool
 
+VersionTrip = tuple[int, int, int]
+
 __all__ = (
 	'find_yosys',
 	'YosysBinary',
@@ -26,7 +28,7 @@ class YosysBinary:
 	YOSYS_BINARY = 'yosys'
 
 	@classmethod
-	def available(cls) -> bool:
+	def available(cls: 'YosysBinary') -> bool:
 		'''
 		Check for Yosys availability.
 
@@ -41,7 +43,7 @@ class YosysBinary:
 		return has_tool(cls.YOSYS_BINARY)
 
 	@classmethod
-	def version(cls) -> Optional[tuple[int, int, int]]:
+	def version(cls: 'YosysBinary') -> Optional[VersionTrip]:
 		'''
 		Get Yosys version.
 
@@ -66,7 +68,7 @@ class YosysBinary:
 			return None
 
 	@classmethod
-	def data_dir(cls) -> Path:
+	def data_dir(cls: 'YosysBinary') -> Path:
 		'''
 		Get Yosys data directory.
 
@@ -89,7 +91,7 @@ class YosysBinary:
 
 	@classmethod
 	def run(
-		cls, args: list[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
+		cls: 'YosysBinary', args: list[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		'''
 		Run Yosys process.
@@ -134,7 +136,7 @@ class YosysBinary:
 
 	@classmethod
 	def _process_result(
-		cls, returncode: int, stdout: str, stderr: str, ignore_warnings: bool, src_loc_at: int
+		cls: 'YosysBinary', returncode: int, stdout: str, stderr: str, ignore_warnings: bool, src_loc_at: int
 	) -> str:
 		if returncode:
 			raise YosysError(stderr.strip())
@@ -144,7 +146,7 @@ class YosysBinary:
 				warnings.warn(message, YosysWarning, stacklevel = 3 + src_loc_at)
 		return stdout
 
-def min_yosys_version(version: tuple[int, int, int]) -> bool:
+def min_yosys_version(version: VersionTrip) -> bool:
 	'''
 	Returns if the yosys version is greater than or equal to the minimum
 	required version
@@ -164,7 +166,7 @@ def min_yosys_version(version: tuple[int, int, int]) -> bool:
 	return version >= (0, 30) and version != (0, 37)
 
 def find_yosys(
-	requirement: Callable[[Optional[tuple[int, int, int]]], bool] = min_yosys_version
+	requirement: Callable[[Optional[VersionTrip]], bool] = min_yosys_version
 ) -> YosysBinary:
 	'''
 	Find an available Yosys executable of required version.

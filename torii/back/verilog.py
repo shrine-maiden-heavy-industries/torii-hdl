@@ -14,19 +14,19 @@ __all__ = (
 
 
 def _convert_rtlil_text(
-	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str] = ()
+	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str, ...] = ()
 ) -> str:
 
 	yosys = find_yosys()
 
-	script = []
+	script: list[str] = []
 	script.append(f'read_rtlil <<rtlil\n{rtlil_text}\nrtlil')
 
 	script.append('proc -nomux -norom')
 	script.append('memory_collect')
 
 	if strip_internal_attrs:
-		attr_map = []
+		attr_map: list[str] = []
 		attr_map.append('-remove generator')
 		attr_map.append('-remove top')
 		attr_map.append('-remove src')

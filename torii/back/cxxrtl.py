@@ -12,8 +12,10 @@ __all__ = (
 	'YosysError',
 )
 
+BlackBoxes = dict[str, str]
+
 def _convert_rtlil_text(
-	rtlil_text: str, black_boxes: Optional[dict[str, str]], *, src_loc_at: int = 0
+	rtlil_text: str, black_boxes: Optional[BlackBoxes], *, src_loc_at: int = 0
 ) -> str:
 	if black_boxes is not None:
 		if not isinstance(black_boxes, dict):
@@ -26,7 +28,7 @@ def _convert_rtlil_text(
 
 	yosys = find_yosys()
 
-	script = []
+	script: list[str] = []
 	if black_boxes is not None:
 		for box_name, box_source in black_boxes.items():
 			script.append(f'read_rtlil <<rtlil\n{box_source}\nrtlil')
@@ -36,11 +38,11 @@ def _convert_rtlil_text(
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
 
-def convert_fragment(*args, black_boxes: Optional[dict[str, str]] = None, **kwargs) -> tuple[str, SignalDict]:
+def convert_fragment(*args, black_boxes: Optional[BlackBoxes] = None, **kwargs) -> tuple[str, SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
 
 
-def convert(*args, black_boxes: Optional[dict[str, str]] = None, **kwargs) -> str:
+def convert(*args, black_boxes: Optional[BlackBoxes] = None, **kwargs) -> str:
 	rtlil_text = rtlil.convert(*args, **kwargs)
 	return _convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1)
