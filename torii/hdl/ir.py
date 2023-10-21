@@ -4,7 +4,7 @@ import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
 from functools         import reduce
-from typing            import Any, Optional, Union
+from typing            import Optional, Union, TYPE_CHECKING, Literal
 
 from ..util            import flatten
 from ..util.tracer     import get_src_loc
@@ -15,6 +15,9 @@ from .ast              import (
 	Value
 )
 from .cd               import ClockDomain, DomainError
+
+if TYPE_CHECKING:
+	from ..build.plat import Platform
 
 __all__ = (
 	'DriverConflict',
@@ -41,7 +44,7 @@ class Elaboratable(MustUse, metaclass = ABCMeta):
 		return module
 
 	@abstractmethod
-	def elaborate(self, platform):
+	def elaborate(self, platform: 'Platform'):
 		''' '''
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
 
@@ -53,7 +56,7 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj: Union['Fragment', Elaboratable, object] , platform: Optional[Any],
+		obj: Union['Fragment', Elaboratable, object] , platform: Optional['Platform'],
 		*, formal: bool = False
 	) -> 'Fragment':
 		code = None
@@ -89,14 +92,14 @@ class Fragment:
 		self.generated = OrderedDict()
 		self.flatten = False
 
-	def add_ports(self, *ports, dir):
+	def add_ports(self, *ports, dir: Literal['i', 'o', 'io']) -> None:
 		if dir not in ('i', 'o', 'io'):
 			raise ValueError(f'Expected dir to be \'i\', \'o\', or \'io\', not \'{dir}\'')
 
 		for port in flatten(ports):
 			self.ports[port] = dir
 
-	def iter_ports(self, dir = None):
+	def iter_ports(self, dir: Optional[Literal['i', 'o', 'io']] = None):
 		if dir is None:
 			yield from self.ports
 		else:
@@ -104,7 +107,7 @@ class Fragment:
 				if port_dir == dir:
 					yield port
 
-	def add_driver(self, signal, domain = None):
+	def add_driver(self, signal: Signal, domain: Optional[str] = None):
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
 		self.drivers[domain].add(signal)
@@ -180,7 +183,7 @@ class Fragment:
 			item, = path
 			return self.generated[item]
 
-	def elaborate(self, platform):
+	def elaborate(self, platform: 'Platform'):
 		return self
 
 	def _merge_subfragment(self, subfragment):
@@ -693,7 +696,7 @@ class Instance(Fragment):
 
 	'''
 
-	def __init__(self, type, *args, src_loc = None, src_loc_at = 0, **kwargs):
+	def __init__(self, type: str, *args, src_loc = None, src_loc_at = 0, **kwargs) -> None:
 		super().__init__()
 
 		self.type        = type

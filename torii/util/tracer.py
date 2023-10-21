@@ -17,6 +17,7 @@ class NameNotFound(Exception):
 _raise_exception = object()
 
 def get_var_name(depth: int = 2, default: Optional[Union[str, object]] = _raise_exception) -> Union[str, object]:
+
 	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
@@ -76,6 +77,21 @@ def get_var_name(depth: int = 2, default: Optional[Union[str, object]] = _raise_
 
 
 def get_src_loc(src_loc_at: int = 0) -> tuple[str, int]:
+	'''
+	Get the source line from the call stack
+
+	Parameters
+	----------
+	src_loc_at : int
+		The position up the call stack to get the source location
+		from.
+
+	Returns
+	-------
+	tupl[str, int]
+		The file name and source line of the calling frame
+
+	'''
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
