@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+import tarfile
+
 from abc         import ABCMeta, abstractmethod
 from collections import OrderedDict
 from contextlib  import contextmanager
@@ -59,16 +61,36 @@ class BuildPlan:
 		hasher.update(self.script.encode('utf-8'))
 		return hasher.digest()
 
-	def archive(self, file: str) -> None:
+	def archive(self, file: Union[str, Path], archive_type: Literal['tar', 'zip'] = 'zip') -> None:
 		'''
-		Archive files from the build plan into ``file``, which can be either a filename, or
-		a file-like object. The produced archive is deterministic: exact same files will
-		always produce exact same archive.
+		Create an archive containing the results from the BuildPlan.
+
+		Parameters
+		----------
+		file : str | Path
+			The archive file path to write to.
+
+		archive_type : 'tar' | 'zip'
+			The type of archive to produce.
+
 		'''
-		with zipfile.ZipFile(file, 'w') as archive:
+		_archive_types = {
+			'zip': (zipfile.ZipFile, zipfile.ZipInfo, 'w',    '.zip'   ),
+			'tar': (tarfile.TarFile, tarfile.TarInfo, 'w:xz', '.tar.xz')
+		}
+
+		if archive_type not in ('tar', 'zip'):
+			raise ValueError(f'Archive type must be either \'tar\' or \'zip\' not {archive_type!r}')
+
+		arch_t, archinfo_t, arch_mode, arch_ext = _archive_types.get(archive_type)
+
+		if isinstance(file, str):
+			file = Path(file)
+
+		with arch_t(file.with_suffix(arch_ext), arch_mode) as archive:
 			# Write archive members in deterministic order and with deterministic timestamp.
 			for filename in sorted(self.files):
-				archive.writestr(zipfile.ZipInfo(filename), self.files[filename])
+				archive.writestr(archinfo_t(filename), self.files[filename])
 
 	def execute_local(
 		self, root: Union[str, Path] = 'build', *, run_script: bool = True, env: dict[str, str] = None
