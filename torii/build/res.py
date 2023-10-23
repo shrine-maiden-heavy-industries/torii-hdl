@@ -48,7 +48,10 @@ class ResourceManager:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
 			if (conn.name, conn.number) in self.connectors:
-				raise NameError(f'Trying to add {conn!r}, but {self.connectors[conn.name, conn.number]!r} has the same name and number')
+				raise NameError(
+					f'Trying to add {conn!r}, but {self.connectors[conn.name, conn.number]!r} '
+					'has the same name and number'
+				)
 
 			self.connectors[conn.name, conn.number] = conn
 
@@ -265,7 +268,9 @@ class ResourceManager:
 			raise TypeError(f'Frequency must be a number, not {frequency!r}')
 
 		if clock in self._clocks:
-			raise ValueError(f'Cannot add clock constraint on {clock!r}, which is already constrained to {self._clocks[clock]} Hz')
+			raise ValueError(
+				f'Cannot add clock constraint on {clock!r}, which is already constrained to {self._clocks[clock]} Hz'
+			)
 
 		else:
 			self._clocks[clock] = float(frequency)

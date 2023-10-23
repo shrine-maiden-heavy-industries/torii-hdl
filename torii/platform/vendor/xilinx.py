@@ -641,7 +641,11 @@ class XilinxPlatform(TemplatedPlatform):
 				toolchain = 'Vivado'
 
 		if toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
-			raise ValueError(f'Unknown toolchain {toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+			raise ValueError(
+				f'Unknown toolchain {toolchain}, must be one of '
+				'\'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\''
+			)
+
 		if toolchain == 'Vivado':
 			if self.family in ISE_FAMILIES:
 				raise ValueError(f'Family \'{self.family}\' is not supported by the Vivado toolchain, please use ISE instead')
@@ -659,7 +663,10 @@ class XilinxPlatform(TemplatedPlatform):
 	@property
 	def required_tools(self) -> list[str]:
 		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
-			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+			raise ValueError(
+				f'Unknown toolchain {self.toolchain}, must be one of '
+				'\'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\''
+			)
 
 		if self.toolchain == 'Vivado':
 			return self._vivado_required_tools
@@ -674,7 +681,10 @@ class XilinxPlatform(TemplatedPlatform):
 	@property
 	def file_templates(self) -> dict[str, str]:
 		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
-			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+			raise ValueError(
+				f'Unknown toolchain {self.toolchain}, must be one of '
+				'\'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\''
+			)
 
 		if self.toolchain == 'Vivado':
 			return self._vivado_file_templates
@@ -688,7 +698,10 @@ class XilinxPlatform(TemplatedPlatform):
 	@property
 	def command_templates(self) -> list[str]:
 		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
-			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+			raise ValueError(
+				f'Unknown toolchain {self.toolchain}, must be one of '
+				'\'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\''
+			)
 
 		if self.toolchain == 'Vivado':
 			return self._vivado_command_templates

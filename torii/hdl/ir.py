@@ -193,7 +193,7 @@ class Fragment:
 				found = True
 				break
 		if not found:
-			raise RuntimeError(f'Unable to find merged subfragment!')
+			raise RuntimeError('Unable to find merged subfragment!')
 
 	def _resolve_hierarchy_conflicts(self, hierarchy = ('top',), mode = 'warn'):
 		if mode not in ('silent', 'warn', 'error'):

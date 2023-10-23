@@ -6,7 +6,7 @@ from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import Literal, Optional, Union
 
-from ..hdl        import ast, ir, mem, xfrm
+from ..hdl        import ast, ir, xfrm
 from ..util       import flatten
 from ..util.units import bits_for
 

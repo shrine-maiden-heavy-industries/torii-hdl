@@ -307,7 +307,7 @@ class GowinPlatform(TemplatedPlatform):
 			create_clock -name {{port_signal.name|tcl_escape}} -period {{1000000000/frequency}}  [get_ports {{port_signal.name|tcl_escape}}]
 		{% endfor %}
 		{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		''',
+		''', # noqa: E501
 	}
 	_gowin_command_templates = [
 		r'''
