@@ -55,7 +55,9 @@ class Tick(Command):
 	def __init__(self, domain: Union[str, ClockDomain] = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
-		assert domain != 'comb'
+		if domain == 'comb':
+			raise ValueError('Unable to tick the combinatorial domain!')
+
 		self.domain = domain
 
 	def __repr__(self) -> str:
@@ -223,7 +225,10 @@ class Simulator:
 
 		# Convert deadline in seconds into internal 1 ps units
 		deadline = deadline * 1e12
-		assert self._engine.now <= deadline
+
+		if self._engine.now > deadline:
+			raise ValueError(f'Simulation engine time is ahead of given deadline! {self._engine.now} > {deadline}')
+
 		while (self.advance() or run_passive) and self._engine.now < deadline:
 			pass
 

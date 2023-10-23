@@ -25,12 +25,16 @@ class _RangeMap:
 		self._stops  = []
 
 	def insert(self, key: range, value: object):
-		assert isinstance(key, range)
-		assert not self.overlaps(key)
+		if not isinstance(key, range):
+			raise TypeError(f'key must be of type \'range\', not \'{type(key)}\'')
+
+		if self.overlaps(key):
+			raise ValueError(f'Key {key} overlaps an existing region!')
 
 		start_idx = bisect_right(self._starts, key.start)
 		stop_idx  = bisect_left(self._stops, key.stop)
-		assert start_idx == stop_idx
+		if start_idx != stop_idx:
+			raise ValueError(f'Start and stop indices are not equivalent: {start_idx} != {stop_idx}')
 
 		self._starts.insert(start_idx, key.start)
 		self._stops.insert(stop_idx, key.stop)
@@ -549,10 +553,15 @@ class MemoryMap:
 	def _translate(
 		resource_info: ResourceInfo, window, window_range: range
 	) -> ResourceInfo:
-		assert (resource_info.end - resource_info.start) % window_range.step == 0
+		if (resource_info.end - resource_info.start) % window_range.step != 0:
+			raise ValueError('Resource range does not fit in the window range step')
+
 		# Accessing a resource through a dense and then a sparse window results in very strange
 		# layouts that cannot be easily represented, so reject those.
-		assert window_range.step == 1 or resource_info.width == window.data_width
+		if window_range.step != 1 and resource_info.width != window.data_width:
+			raise ValueError(
+				'Window range step must be 1 or the resource info width and window data width must be the same!'
+			)
 
 		name  = resource_info.name if window.name is None else (window.name, *resource_info.name)
 		size  = (resource_info.end - resource_info.start) // window_range.step
@@ -583,7 +592,7 @@ class MemoryMap:
 				for resource_info in assignment.all_resources():
 					yield self._translate(resource_info, assignment, addr_range)
 			else:
-				assert False # :nocov:
+				raise ValueError(f'Assignment {assignment!r} not a known resource or in a known window') # :nocov:
 
 	def find_resource(self, resource: object) -> ResourceInfo:
 		'''
@@ -645,4 +654,4 @@ class MemoryMap:
 			_, addr_range = self._windows[id(assignment)]
 			return assignment.decode_address((address - addr_range.start) // addr_range.step)
 		else:
-			assert False # :nocov:
+			raise ValueError(f'Address {address} is not a known resource or in a valid address window') # :nocov:

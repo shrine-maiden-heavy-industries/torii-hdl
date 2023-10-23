@@ -62,7 +62,10 @@ class _Namer:
 
 	def anonymous(self) -> str:
 		name = f'U$${self._anon}'
-		assert name not in self._names
+
+		if name in self._names:
+			raise ValueError(f'Name \'{name}\' already exists!')
+
 		self._anon += 1
 		return name
 
@@ -400,7 +403,9 @@ class _ValueCompilerState:
 	@contextmanager
 	def expand_to(self, value, expansion):
 		try:
-			assert value not in self.expansions
+			if value in self.expansions:
+				raise ValueError(f'Value {value} expansion already exists!')
+
 			self.expansions[value] = expansion
 			yield
 		finally:
@@ -630,7 +635,9 @@ class _RHSValueCompiler(_ValueCompiler):
 		elif len(value.operands) == 2:
 			return self.on_Operator_binary(value)
 		elif len(value.operands) == 3:
-			assert value.operator == 'm'
+			if value.operator != 'm':
+				raise ValueError(f'Operator \'{value.operator}\' not applicable for 3 operands!')
+
 			return self.on_Operator_mux(value)
 		else:
 			raise TypeError # :nocov:
@@ -704,7 +711,8 @@ class _LHSValueCompiler(_ValueCompiler):
 		return wire_next or wire_curr
 
 	def _prepare_value_for_Slice(self, value):
-		assert isinstance(value, (ast.Signal, ast.Slice, ast.Cat, ast.Part))
+		if not isinstance(value, (ast.Signal, ast.Slice, ast.Cat, ast.Part)):
+			raise TypeError(f'value must be one of \'Signal\', \'Slice\', \'Cat\', or \'Part\', not \'{value!r}\'')
 		return self(value)
 
 	def on_Part(self, value):

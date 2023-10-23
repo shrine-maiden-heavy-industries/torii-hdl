@@ -330,7 +330,8 @@ class FragmentTransformer:
 
 class TransformedElaboratable(Elaboratable):
 	def __init__(self, elaboratable, *, src_loc_at = 0):
-		assert hasattr(elaboratable, 'elaborate')
+		if not hasattr(elaboratable, 'elaborate'):
+			raise TypeError(f'Unable to elaborate object of type \'{type(elaboratable)}\' which has no \'elaborate\' method')
 
 		# Fields prefixed and suffixed with underscore to avoid as many conflicts with the inner
 		# object as possible, since we're forwarding attribute requests to it.
@@ -476,7 +477,8 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 					# Rename the actual ClockDomain object.
 					cd.rename(self.domain_map[domain])
 				else:
-					assert cd.name == self.domain_map[domain]
+					if cd.name != self.domain_map[domain]:
+						raise ValueError(f'Clock domain mismatch! \'{cd.name}\' != \'{self.domain_map[domain]}\'')
 			new_fragment.add_domains(cd)
 
 	def map_drivers(self, fragment, new_fragment):
@@ -577,7 +579,9 @@ class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		if value.clocks == 0:
 			sample = sampled_value
 		else:
-			assert value.domain is not None
+			if value.domain is None:
+				raise ValueError(f'Domain for value \'{value!r}\' is None!')
+
 			sampled_name, sampled_reset = self._name_reset(value.value)
 			name = f'$sample${sampled_name}${value.domain}${value.clocks}'
 			sample = Signal.like(value.value, name = name, reset_less = True, reset = sampled_reset)

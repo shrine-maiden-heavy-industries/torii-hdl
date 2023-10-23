@@ -26,7 +26,8 @@ def UARTResource(
 ) -> Resource:
 
 	if any(line is not None for line in (rts, cts, dtr, dsr, dcd, ri)):
-		assert role in ('dce', 'dte')
+		if role not in ('dce', 'dte'):
+			raise ValueError(f'Invalid role, expected \'dce\' or \'dte\', not \'{role}\'')
 
 	if role == 'dte':
 		dce_to_dte = 'i'
@@ -70,7 +71,8 @@ def IrDAResource(
 ) -> Resource:
 	# Exactly one of en (active-high enable) or sd (shutdown, active-low enable) should
 	# be specified, and it is mapped to a logic level en subsignal.
-	assert (en is not None) ^ (sd is not None)
+	if not (en is not None) ^ (sd is not None):
+		raise ValueError('Only en or sd may be specified, not both!')
 
 	io = []
 
@@ -99,7 +101,9 @@ def SPIResource(
 	if role not in ('controller', 'peripheral'):
 		raise ValueError(f'role is expected to be \'controller\' or \'peripheral\', not {role!r}')
 
-	assert copi is not None or cipo is not None # support unidirectional SPI
+	# support unidirectional SPI
+	if copi is None and cipo is None:
+		raise ValueError('Either COPI or CIPO or both must be set, not none')
 
 	io = []
 
@@ -285,7 +289,8 @@ def EthernetResource(
 	]
 
 	if rx_dv is not None and rx_err is not None:
-		assert rx_ctl is None
+		if rx_ctl is not None:
+			raise ValueError('rx_ctl must be None!')
 		ios.append(Subsignal('rx_dv', Pins(rx_dv, dir = 'i', conn = conn, assert_width = 1)))
 		ios.append(Subsignal('rx_err', Pins(rx_err, dir = 'i', conn = conn, assert_width = 1)))
 	elif rx_ctl is not None:
@@ -294,7 +299,8 @@ def EthernetResource(
 		raise AssertionError('Must specify either MII RXDV + RXER pins or RGMII RXCTL')
 
 	if tx_en is not None and tx_err is not None:
-		assert tx_ctl is None
+		if tx_ctl is not None:
+			raise ValueError('tx_ctl must be None')
 		ios.append(Subsignal('tx_en', Pins(tx_en, dir = 'o', conn = conn, assert_width = 1)))
 		ios.append(Subsignal('tx_err', Pins(tx_err, dir = 'o', conn = conn, assert_width = 1)))
 		if col is not None:
@@ -302,7 +308,8 @@ def EthernetResource(
 		if crs is not None:
 			ios.append(Subsignal('crs', Pins(crs, dir = 'i', conn = conn, assert_width = 1)))
 	elif tx_ctl is not None:
-		assert col is None and crs is None
+		if col is not None and crs is not None:
+			raise ValueError('col and crs must not be specified if tx_ctl is')
 		ios.append(Subsignal('tx_ctl', Pins(tx_ctl, dir = 'o', conn = conn, assert_width = 1)))
 	else:
 		raise AssertionError('Must specify either MII TXDV + TXER pins or RGMII TXCTL')

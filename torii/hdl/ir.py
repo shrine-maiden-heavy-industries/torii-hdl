@@ -82,7 +82,9 @@ class Fragment:
 		self.flatten = False
 
 	def add_ports(self, *ports, dir):
-		assert dir in ('i', 'o', 'io')
+		if dir not in ('i', 'o', 'io'):
+			raise ValueError(f'Expected dir to be \'i\', \'o\', or \'io\', not \'{dir}\'')
+
 		for port in flatten(ports):
 			self.ports[port] = dir
 
@@ -129,8 +131,12 @@ class Fragment:
 
 	def add_domains(self, *domains):
 		for domain in flatten(domains):
-			assert isinstance(domain, ClockDomain)
-			assert domain.name not in self.domains
+			if not isinstance(domain, ClockDomain):
+				raise TypeError(f'Domain must be a \'ClockDomain\', not a \'{domain!r}\'')
+
+			if domain.name in self.domains:
+				raise ValueError(f'Domain \'{domain.name}\' already in the list of domains')
+
 			self.domains[domain.name] = domain
 
 	def iter_domains(self):
@@ -142,7 +148,8 @@ class Fragment:
 			self.statements.append(stmt)
 
 	def add_subfragment(self, subfragment, name = None):
-		assert isinstance(subfragment, Fragment)
+		if not isinstance(subfragment, Fragment):
+			raise TypeError(f'Unable to add subfragment that is of type \'{type(subfragment)}\', not \'Fragment\'')
 		self.subfragments.append((subfragment, name))
 
 	def find_subfragment(self, name_or_index):
@@ -185,10 +192,12 @@ class Fragment:
 				del self.subfragments[i]
 				found = True
 				break
-		assert found
+		if not found:
+			raise RuntimeError(f'Unable to find merged subfragment!')
 
 	def _resolve_hierarchy_conflicts(self, hierarchy = ('top',), mode = 'warn'):
-		assert mode in ('silent', 'warn', 'error')
+		if mode not in ('silent', 'warn', 'error'):
+			raise ValueError(f'Expected mode to be one of \'silent\', \'warn\', or \'error\', not \'{mode!r}\'')
 
 		driver_subfrags = SignalDict()
 
@@ -331,7 +340,11 @@ class Fragment:
 		for subfrag, name in self.subfragments:
 			for domain in self.iter_domains():
 				if domain in subfrag.domains:
-					assert self.domains[domain] is subfrag.domains[domain]
+					if self.domains[domain] is not subfrag.domains[domain]:
+						raise RuntimeError(
+							f'Subfragment domain propagation failure, mismatching domains: '
+							f'{self.domains[domain]!r} is not {subfrag.domains[domain]!r}'
+						)
 				else:
 					subfrag.add_domains(self.domains[domain])
 

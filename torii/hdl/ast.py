@@ -559,7 +559,8 @@ class Value(metaclass = ABCMeta):
 			elif isinstance(pattern, Enum):
 				matches.append(self == pattern.value)
 			else:
-				assert False
+				raise TypeError(f'Expected pattern to be either a \'str\', \'int\', or \'Enum\', not \'{pattern!r}\'')
+
 		if not matches:
 			return Const(1)
 		elif len(matches) == 1:
@@ -884,10 +885,14 @@ class Operator(Value):
 			if self.operator in ('&', '^', '|'):
 				return _bitwise_binary_shape(*op_shapes)
 			if self.operator == '<<':
-				assert not b_shape.signed
+				if b_shape.signed:
+					raise TypeError('Operator << operand must be unsigned!')
+
 				return Shape(a_shape.width + 2 ** b_shape.width - 1, a_shape.signed)
 			if self.operator == '>>':
-				assert not b_shape.signed
+				if b_shape.signed:
+					raise TypeError('Operator >> operand must be unsigned!')
+
 				return Shape(a_shape.width, a_shape.signed)
 		elif len(op_shapes) == 3:
 			if self.operator == 'm':
@@ -1743,7 +1748,8 @@ class Switch(Statement):
 					key = format(key.value & key_mask, 'b').rjust(len(self.test), '0')
 				else:
 					raise TypeError(f'Object {key!r} cannot be used as a switch key')
-				assert len(key) == len(self.test)
+				if len(key) != len(self.test):
+					raise ValueError(f'Length mismatch between switch key and test value {len(key)} != {len(self.test)}')
 				new_keys = (*new_keys, key)
 			if not isinstance(stmts, Iterable):
 				stmts = [stmts]

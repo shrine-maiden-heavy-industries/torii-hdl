@@ -102,20 +102,25 @@ def QSPIFlashResource(
 	]
 
 	if mode == QSPIMode.DualParallel:
-		assert dq is None and dq_a is not None and dq_b is not None
+		if dq is not None and (dq_a is None or dq_b is None):
+			raise ValueError(f'\'dq\' must be None and \'dq_a\' and \'dq_b\' must be specified for mode \'{mode}\'')
 		ios.append('dq_a', Pins(dq_a, dir = 'io', conn = conn, assert_width = 4))
 		ios.append('dq_b', Pins(dq_b, dir = 'io', conn = conn, assert_width = 4))
 	else:
-		assert dq is not None and dq_a is None and dq_b is None
+		if dq is None and (dq_a is not None or dq_b is not None):
+			raise ValueError(f'\'dq\' must be specified and \'dq_a\' and \'dq_b\' must be None for mode \'{mode}\'')
+
 		if data_mode == QSPIDataMode.x1:
 			dq = dq.split(' ')
-			assert len(dq) == 3
+			if len(dq) != 3:
+				raise ValueError(f'dq must have exactly 3 pins, not {len(dq)}')
 			ios.append('copi', Pins(dq[0], dir = 'o', conn = conn))
 			ios.append('cipo', Pins(dq[1], dir = 'i', conn = conn))
 			ios.append('hold', PinsN(dq[2], dir = 'io', conn = conn))
 		elif data_mode == QSPIDataMode.x2:
 			dq = dq.split(' ')
-			assert len(dq) == 3
+			if len(dq) != 3:
+				raise ValueError(f'dq must have exactly 3 pins not {len(dq)}')
 			ios.append('dq', Pins(f'{dq[0]} {dq[1]}', dir = 'io', conn = conn))
 			ios.append('hold', PinsN(dq[2], dir = 'io', conn = conn))
 		elif data_mode == QSPIDataMode.x4:

@@ -262,32 +262,39 @@ class IntelPlatform(TemplatedPlatform):
 	) -> None:
 		super().__init__()
 
-		assert toolchain in ('Quartus', 'Mistral')
+		if toolchain not in ('Quartus', 'Mistral'):
+			raise ValueError(f'Unknown toolchain {toolchain}, expected either \'Quartus\' or \'Mistral\'')
 		self.toolchain = toolchain
 
 	@property
 	def required_tools(self) -> list[str]:
+		if self.toolchain not in ('Quartus', 'Mistral'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, expected either \'Quartus\' or \'Mistral\'')
+
 		if self.toolchain == 'Quartus':
 			return self.quartus_required_tools
 		if self.toolchain == 'Mistral':
 			return self.mistral_required_tools
-		assert False
 
 	@property
 	def file_templates(self) -> dict[str, str]:
+		if self.toolchain not in ('Quartus', 'Mistral'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, expected either \'Quartus\' or \'Mistral\'')
+
 		if self.toolchain == 'Quartus':
 			return self.quartus_file_templates
 		if self.toolchain == 'Mistral':
 			return self.mistral_file_templates
-		assert False
 
 	@property
 	def command_templates(self) -> list[str]:
+		if self.toolchain not in ('Quartus', 'Mistral'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, expected either \'Quartus\' or \'Mistral\'')
+
 		if self.toolchain == 'Quartus':
 			return self.quartus_command_templates
 		if self.toolchain == 'Mistral':
 			return self.mistral_command_templates
-		assert False
 
 	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
 		super().add_clock_constraint(clock, frequency)
@@ -300,7 +307,9 @@ class IntelPlatform(TemplatedPlatform):
 		# frequency seems to vary a lot between devices. Measurements
 		# of 78 to 84 MHz have been observed.
 		if self.default_clk == 'cyclonev_oscillator':
-			assert self.device.startswith('5C')
+			if not self.device.startswith('5C'):
+				raise ValueError(f'Device {self.device} does not support the \'cyclonev_oscillator\' as a clock source')
+
 			return Clock(100e6)
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
@@ -308,7 +317,9 @@ class IntelPlatform(TemplatedPlatform):
 	def create_missing_domain(self, name: str) -> Module:
 		if name == 'sync' and self.default_clk == 'cyclonev_oscillator':
 			# Use the internal high-speed oscillator for Cyclone V devices
-			assert self.device.startswith('5C')
+			if not self.device.startswith('5C'):
+				raise ValueError(f'Device {self.device} does not support the \'cyclonev_oscillator\' as a clock source')
+
 			m = Module()
 			m.domains += ClockDomain('sync')
 			m.submodules += Instance(
@@ -360,7 +371,8 @@ class IntelPlatform(TemplatedPlatform):
 				o_dataout_l = get_ineg(pin.i1),
 			)
 			return i_ddr
-		assert False
+		raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
+
 
 	@staticmethod
 	def _get_oreg(m: Module, pin: Pin, invert: bool) -> Signal:
@@ -396,7 +408,8 @@ class IntelPlatform(TemplatedPlatform):
 				i_datain_l = get_oneg(pin.o1),
 			)
 			return o_ddr
-		assert False
+		raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
+
 
 	@staticmethod
 	def _get_oereg(m: Module, pin: Pin) -> Signal:
@@ -415,7 +428,7 @@ class IntelPlatform(TemplatedPlatform):
 				o_Q = oe_reg,
 			)
 			return oe_reg
-		assert False
+		raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
 
 	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
 		self._check_feature(

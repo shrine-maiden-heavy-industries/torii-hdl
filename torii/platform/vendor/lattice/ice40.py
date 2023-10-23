@@ -306,50 +306,79 @@ class ICE40Platform(TemplatedPlatform):
 	) -> None:
 		super().__init__()
 
-		assert toolchain in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2')
+		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+			raise ValueError(
+				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+			)
+
 		self.toolchain = toolchain
 
 	@property
 	def family(self) -> str:
+		if not (self.device.startswith('iCE40') or self.device.startswith('iCE5')):
+			raise ValueError(f'Unknown iCE40 device \'{self.device}\'')
+
 		if self.device.startswith('iCE40'):
 			return 'iCE40'
 		if self.device.startswith('iCE5'):
 			return 'iCE5'
-		assert False
+
 
 	@property
 	def _toolchain_env_var(self) -> str:
+		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+			raise ValueError(
+				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+			)
+
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return 'TORII_ENV_iCECube2'
 		elif self.toolchain == 'IceStorm':
 			return super()._toolchain_env_var
-		assert False
 
 	@property
 	def required_tools(self) -> list[str]:
+		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+			raise ValueError(
+				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+			)
+
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_required_tools
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return self._icecube2_required_tools
-		assert False
 
 	@property
 	def file_templates(self) -> dict[str, str]:
+		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+			raise ValueError(
+				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+			)
+
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_file_templates
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return self._icecube2_file_templates
-		assert False
 
 	@property
 	def command_templates(self) -> list[str]:
+		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+			raise ValueError(
+				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+			)
+
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_command_templates
 		if self.toolchain == 'LSE-iCECube2':
 			return self._lse_icecube2_command_templates
 		if self.toolchain == 'Synplify-iCECube2':
 			return self._synplify_icecube2_command_templates
-		assert False
+
 
 	@property
 	def default_clk_constraint(self) -> Clock:
@@ -513,7 +542,9 @@ class ICE40Platform(TemplatedPlatform):
 			del attrs['GLOBAL']
 		else:
 			is_global_input = False
-		assert not (is_global_input and i_invert)
+
+		if is_global_input and i_invert:
+			raise ValueError(f'Pin {pin.name} must not be a global input and inverted')
 
 		if 'i' in pin.dir:
 			if pin.xdr < 2:

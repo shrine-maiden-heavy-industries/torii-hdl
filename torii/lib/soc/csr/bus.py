@@ -432,7 +432,8 @@ class Decoder(Elaboratable):
 
 		with m.Switch(self.bus.addr):
 			for sub_map, (sub_pat, sub_ratio) in self._map.window_patterns():
-				assert sub_ratio == 1
+				if sub_ratio != 1:
+					raise ValueError(f'sub_ratio must be exactly 1, not {sub_ratio}')
 
 				sub_bus = self._subs[sub_map]
 				m.d.comb += sub_bus.addr.eq(self.bus.addr[:sub_bus.addr_width])

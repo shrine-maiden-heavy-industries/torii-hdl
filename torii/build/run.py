@@ -40,7 +40,9 @@ class BuildPlan:
 		as ``filename``. The file name can be a relative path with directories separated by
 		forward slashes (``/``).
 		'''
-		assert isinstance(filename, str) and filename not in self.files
+		if not isinstance(filename, str) or filename in self.files:
+			raise ValueError('filename must be a string and must not already exist inside the file set already!')
+
 		if Path(filename).is_absolute():
 			raise ValueError(f'Filename {filename} must not be an absolute path')
 

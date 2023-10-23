@@ -53,7 +53,8 @@ class ResourceManager:
 			self.connectors[conn.name, conn.number] = conn
 
 			for conn_pin, plat_pin in conn:
-				assert conn_pin not in self._conn_pins
+				if conn_pin in self._conn_pins:
+					raise ValueError(f'Connector pin {conn_pin!r} already in connector!')
 				self._conn_pins[conn_pin] = plat_pin
 
 	def lookup(self, name: str , number: int = 0) -> Resource:
@@ -127,7 +128,9 @@ class ResourceManager:
 			for attr_key, attr_value in attrs.items():
 				if hasattr(attr_value, '__call__'):
 					attr_value = attr_value(self)
-					assert attr_value is None or isinstance(attr_value, str)
+					if attr_value is not None or not isinstance(attr_value, str):
+						raise TypeError(f'attr_value is expected to be either a str or None, not \'{attr_value!r}\'')
+
 				if attr_value is None:
 					del attrs[attr_key]
 				else:
@@ -183,7 +186,7 @@ class ResourceManager:
 				return pin if pin is not None else port
 
 			else:
-				assert False # :nocov:
+				raise TypeError(f'Expected a Subsignal, Pin, or DiffPairs, not a \'{resource.ios[0]!r}\'') # :nocov:
 
 		value = resolve(
 			resource,
@@ -228,7 +231,7 @@ class ResourceManager:
 				if not self.should_skip_port_component(port, attrs, 'n'):
 					yield port.n
 			else:
-				assert False
+				raise TypeError(f'Expected either \'Pins\', or \'DiffPairs\', not \'{res.ios[0]!r}\'')
 
 	def iter_port_constraints(self) -> Generator[
 		tuple[str, str, Attrs], None, None
@@ -243,7 +246,7 @@ class ResourceManager:
 				if not self.should_skip_port_component(port, attrs, 'n'):
 					yield (port.n.name, res.ios[0].n.map_names(self._conn_pins, res), attrs)
 			else:
-				assert False
+				raise TypeError(f'Expected either \'Pins\', or \'DiffPairs\', not \'{res.ios[0]!r}\'')
 
 	def iter_port_constraints_bits(self) -> Generator[
 		tuple[str, str, Attrs], None, None

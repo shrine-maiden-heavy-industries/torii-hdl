@@ -164,7 +164,8 @@ class _Timeline:
 		self.deadlines.clear()
 
 	def at(self, run_at, process):
-		assert process not in self.deadlines
+		if process in self.deadlines:
+			raise ValueError(f'Process {process!r} already in deadline list')
 		self.deadlines[process] = run_at
 
 	def delay(self, delay_by, process):
@@ -185,7 +186,9 @@ class _Timeline:
 				nearest_deadline = self.now
 				break
 			elif nearest_deadline is None or deadline <= nearest_deadline:
-				assert deadline >= self.now
+				if deadline < self.now:
+					raise ValueError(f'Deadline of {deadline} is behind our current state of {self.now}')
+
 				if nearest_deadline is not None and deadline < nearest_deadline:
 					nearest_processes.clear()
 				nearest_processes.add(process)
@@ -253,13 +256,14 @@ class _PySimulation(BaseSimulation):
 
 	def add_trigger(self, process, signal, *, trigger = None):
 		index = self.get_signal(signal)
-		assert (process not in self.slots[index].waiters or
-				self.slots[index].waiters[process] == trigger)
+		if process in self.slots[index].waiters and self.slots[index].waiters[process] != trigger:
+			raise ValueError('Unable to add trigger for process!')
 		self.slots[index].waiters[process] = trigger
 
 	def remove_trigger(self, process, signal):
 		index = self.get_signal(signal)
-		assert process in self.slots[index].waiters
+		if process not in self.slots[index].waiters:
+			raise ValueError(f'Unable to remove trigger for process {process!r}, not in the slot list')
 		del self.slots[index].waiters[process]
 
 	def wait_interval(self, process, interval):

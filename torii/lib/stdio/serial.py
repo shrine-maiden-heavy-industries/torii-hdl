@@ -28,6 +28,9 @@ def _check_parity(parity: Literal['none', 'mark', 'space', 'even', 'odd']):
 def _compute_parity_bit(
 	data: Record , parity: Literal['none', 'mark', 'space', 'even', 'odd']
 ) -> Union[Const, Record, bool]:
+	if parity not in ('none', 'mark', 'space', 'even', 'odd'):
+		raise ValueError(f'Parity must be one of \'none\', \'mark\', \'space\', \'even\', or \'odd\', not \'{parity}\'')
+
 	if parity == 'none':
 		return Const(0, 0)
 	if parity == 'mark':
@@ -38,7 +41,6 @@ def _compute_parity_bit(
 		return data.xor()
 	if parity == 'odd':
 		return ~data.xor()
-	assert False
 
 
 def _wire_layout(

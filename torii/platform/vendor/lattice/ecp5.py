@@ -291,32 +291,40 @@ class ECP5Platform(TemplatedPlatform):
 	) -> None:
 		super().__init__()
 
-		assert toolchain in ('Trellis', 'Diamond')
+		if self.toolchain not in ('Trellis', 'Diamond'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
+
 		self.toolchain = toolchain
 
 	@property
 	def required_tools(self) -> list[str]:
+		if self.toolchain not in ('Trellis', 'Diamond'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
+
 		if self.toolchain == 'Trellis':
 			return self._trellis_required_tools
 		if self.toolchain == 'Diamond':
 			return self._diamond_required_tools
-		assert False
 
 	@property
 	def file_templates(self) -> dict[str, str]:
+		if self.toolchain not in ('Trellis', 'Diamond'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
+
 		if self.toolchain == 'Trellis':
 			return self._trellis_file_templates
 		if self.toolchain == 'Diamond':
 			return self._diamond_file_templates
-		assert False
 
 	@property
 	def command_templates(self) -> list[str]:
+		if self.toolchain not in ('Trellis', 'Diamond'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
+
 		if self.toolchain == 'Trellis':
 			return self._trellis_command_templates
 		if self.toolchain == 'Diamond':
 			return self._diamond_command_templates
-		assert False
 
 	@property
 	def default_clk_constraint(self) -> Clock:
@@ -620,7 +628,7 @@ class ECP5Platform(TemplatedPlatform):
 			if pin.dir in ('oe', 'io'):
 				get_oereg(pin.o_clk, ~pin.oe, t)
 		else:
-			assert False
+			raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be one of, 0, 1, 2, 4, or 7')
 
 		return (i, o, t)
 

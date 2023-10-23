@@ -227,7 +227,7 @@ class Monitor(Elaboratable):
 			elif sub.trigger == Source.Trigger.FALL:
 				m.d.comb += sub.trg.eq( sub_i_r & ~sub.i)
 			else:
-				assert False # :nocov:
+				raise ValueError(f'Trigger must be Level, Rise, or Fall, not {sub.trigger!r}') # :nocov:
 
 			with m.If(sub.trg):
 				m.d.sync += self.pending[index].eq(1)

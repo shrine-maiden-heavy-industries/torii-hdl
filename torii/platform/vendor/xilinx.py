@@ -640,7 +640,8 @@ class XilinxPlatform(TemplatedPlatform):
 			else:
 				toolchain = 'Vivado'
 
-		assert toolchain in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr')
+		if toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
+			raise ValueError(f'Unknown toolchain {toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
 		if toolchain == 'Vivado':
 			if self.family in ISE_FAMILIES:
 				raise ValueError(f'Family \'{self.family}\' is not supported by the Vivado toolchain, please use ISE instead')
@@ -657,6 +658,9 @@ class XilinxPlatform(TemplatedPlatform):
 
 	@property
 	def required_tools(self) -> list[str]:
+		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+
 		if self.toolchain == 'Vivado':
 			return self._vivado_required_tools
 		if self.toolchain == 'ISE':
@@ -665,10 +669,13 @@ class XilinxPlatform(TemplatedPlatform):
 			return self._symbiflow_required_tools
 		if self.toolchain == 'yosys_nextpnr':
 			return self._yosys_nextpnr_required_tools
-		assert False
+
 
 	@property
 	def file_templates(self) -> dict[str, str]:
+		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+
 		if self.toolchain == 'Vivado':
 			return self._vivado_file_templates
 		if self.toolchain == 'ISE':
@@ -677,10 +684,12 @@ class XilinxPlatform(TemplatedPlatform):
 			return self._symbiflow_file_templates
 		if self.toolchain == 'yosys_nextpnr':
 			return self._yosys_nextpnr_file_templates
-		assert False
 
 	@property
 	def command_templates(self) -> list[str]:
+		if self.toolchain not in ('Vivado', 'ISE', 'Symbiflow', 'yosys_nextpnr'):
+			raise ValueError(f'Unknown toolchain {self.toolchain}, must be one of \'Vivado\', \'ISE\', \'Symbiflow\', or \'yosys_nextpnr\'')
+
 		if self.toolchain == 'Vivado':
 			return self._vivado_command_templates
 		if self.toolchain == 'ISE':
@@ -689,7 +698,6 @@ class XilinxPlatform(TemplatedPlatform):
 			return self._symbiflow_command_templates
 		if self.toolchain == 'yosys_nextpnr':
 			return self._yosys_nextpnr_command_templates
-		assert False
 
 	def create_missing_domain(self, name: str) -> Module:
 		# Xilinx devices have a global write enable (GWE) signal that asserted during configuration
@@ -811,7 +819,9 @@ class XilinxPlatform(TemplatedPlatform):
 				)
 
 		def get_ifddr(clk: Signal, io: Signal, q0: Signal, q1: Signal) -> None:
-			assert self.family in XFDDR_FAMILIES
+			if self.family not in XFDDR_FAMILIES:
+				raise ValueError(f'Family {self.family} is not IFDDR capable')
+
 			for bit in range(len(q0)):
 				m.submodules += Instance(
 					'IFDDRCPE',
@@ -826,7 +836,9 @@ class XilinxPlatform(TemplatedPlatform):
 				)
 
 		def get_iddr2(clk: Signal, d: Signal, q0: Signal, q1: Signal, alignment) -> None:
-			assert self.family in XDDR2_FAMILIES
+			if self.family not in XDDR2_FAMILIES:
+				raise ValueError(f'Family {self.family} is not IDDR2 capable')
+
 			for bit in range(len(q0)):
 				m.submodules += Instance(
 					'IDDR2',
@@ -845,7 +857,9 @@ class XilinxPlatform(TemplatedPlatform):
 				)
 
 		def get_iddr(clk: Signal, d: Signal, q1: Signal, q2: Signal) -> None:
-			assert self.family in XDDR_FAMILIES or self.family in XDDRE1_FAMILIES
+			if self.family not in XDDR_FAMILIES or self.family not in XDDRE1_FAMILIES:
+				raise ValueError(f'Family {self.family} is not IDDR capable')
+
 			for bit in range(len(q1)):
 				if self.family in XDDR_FAMILIES:
 					m.submodules += Instance(
@@ -1076,7 +1090,7 @@ class XilinxPlatform(TemplatedPlatform):
 				else:
 					get_iob_dff(pin.o_clk, ~pin.oe, t)
 		else:
-			assert False
+			raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be one of, 0, 1, or 2')
 
 		return (i, o, t)
 

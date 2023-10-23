@@ -169,7 +169,10 @@ class GowinPlatform(TemplatedPlatform):
 		elif osc == 'OSCW':
 			return 200_000_000
 		else:
-			assert False
+			raise ValueError(
+				'Unknown oscillator, expected \'OSC\', \'OSCZ\', \'OSCO\', \'OSCF\','
+				f' \'OSCH\', or \'OSCW\', not \'{osc}\''
+			)
 
 	@property
 	def _osc_div(self):
@@ -316,34 +319,41 @@ class GowinPlatform(TemplatedPlatform):
 	def __init__(self, *, toolchain = 'Apicula'):
 		super().__init__()
 
-		assert toolchain in ('Apicula', 'Gowin')
+		if toolchain not in ('Apicula', 'Gowin'):
+			raise ValueError(f'Unknown toolchain \'{toolchain}\', expected \'Apicula\', or \'Gowin\'')
 		self.toolchain = toolchain
 
 		self.parse_part()
 
 	@property
 	def required_tools(self):
+		if self.toolchain not in ('Apicula', 'Gowin'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', expected \'Apicula\', or \'Gowin\'')
+
 		if self.toolchain == 'Apicula':
 			return self._apicula_required_tools
 		elif self.toolchain == 'Gowin':
 			return self._gowin_required_tools
-		assert False
 
 	@property
 	def file_templates(self):
+		if self.toolchain not in ('Apicula', 'Gowin'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', expected \'Apicula\', or \'Gowin\'')
+
 		if self.toolchain == 'Apicula':
 			return self._apicula_file_templates
 		elif self.toolchain == 'Gowin':
 			return self._gowin_file_templates
-		assert False
 
 	@property
 	def command_templates(self):
+		if self.toolchain not in ('Apicula', 'Gowin'):
+			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', expected \'Apicula\', or \'Gowin\'')
+
 		if self.toolchain == 'Apicula':
 			return self._apicula_command_templates
 		elif self.toolchain == 'Gowin':
 			return self._gowin_command_templates
-		assert False
 
 	def add_clock_constraint(self, clock, frequency):
 		super().add_clock_constraint(clock, frequency)
@@ -528,7 +538,7 @@ class GowinPlatform(TemplatedPlatform):
 			if pin.dir in ('oe', 'io'):
 				get_oeddr(pin.o_clk, pin_o0, pin_o1, ~pin.oe, o, t)
 		else:
-			assert False
+			raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be 0, 1, or 2')
 
 		return (i, o, t)
 

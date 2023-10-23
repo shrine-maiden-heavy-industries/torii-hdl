@@ -9,7 +9,8 @@ __all__ = (
 
 class PyClockProcess(BaseProcess):
 	def __init__(self, state, signal, *, phase, period):
-		assert len(signal) == 1
+		if len(signal) != 1:
+			raise TypeError(f'Clock signal must be exactly 1-wide, not {len(signal)}')
 
 		self.state  = state
 		self.slot   = self.state.get_signal(signal)

@@ -45,6 +45,9 @@ def get_linter_options(filename: str) -> dict[str, Union[int, str]]:
 def get_linter_option(
 	filename: str , name: str, type: Union[type[bool], type[int]], default: Union[bool, int]
 ) -> Union[bool, int]:
+	if type not in (bool, int):
+		raise TypeError(f'Expected type to be either \'bool\' or \'int\', not \'{type!r}\'')
+
 	options = get_linter_options(filename)
 	if name not in options:
 		return default
@@ -61,4 +64,3 @@ def get_linter_option(
 			return int(option, 0)
 		except ValueError:
 			return default
-	assert False

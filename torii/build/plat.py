@@ -155,7 +155,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def prepare(
 		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', **kwargs
 	) -> BuildPlan:
-		assert not self._prepared
+		if self._prepared:
+			raise RuntimeError(f'Design \'{name}\' is already prepared!')
+
 		self._prepared = True
 
 		fragment = Fragment.get(elaboratable, self)
@@ -429,7 +431,7 @@ class TemplatedPlatform(Platform):
 						'if [%{env_var}%] equ [\"\"] set {env_var}=\n' \
 						'if [%{env_var}%] equ [] set {env_var}={name}'
 				else:
-					assert False
+					raise ValueError(f'Shell syntax must be either \'bat\' or \'sh\', not \'{syntax}\'')
 				commands.append(template.format(env_var = env_var, name = name))
 
 			for index, command_tpl in enumerate(self.command_templates):
@@ -442,7 +444,7 @@ class TemplatedPlatform(Platform):
 				elif syntax == 'bat':
 					commands.append(command + ' || exit /b')
 				else:
-					assert False
+					raise ValueError(f'Shell syntax must be either \'bat\' or \'sh\', not \'{syntax}\'')
 
 			return '\n'.join(commands)
 
@@ -454,7 +456,7 @@ class TemplatedPlatform(Platform):
 			elif context.parent['syntax'] == 'bat':
 				return f'%{env_var}%'
 			else:
-				assert False
+				raise ValueError(f'Shell syntax must be either \'bat\' or \'sh\', not \'{context.parent["syntax"]}\'')
 
 		def options(opts: Union[str, Iterable[str]]) -> str:
 			if isinstance(opts, str):

@@ -28,7 +28,10 @@ class RangeMapTestCase(ToriiTestSuiteCase):
 	def test_insert_wrong_overlap(self):
 		range_map = _RangeMap()
 		range_map.insert(range(0, 10), 'a')
-		with self.assertRaises(AssertionError):
+		with self.assertRaisesRegex(
+			ValueError,
+			r'^Key range\(5, 15\) overlaps an existing region!$'
+		):
 			range_map.insert(range(5, 15), 'b')
 
 	def test_get(self):

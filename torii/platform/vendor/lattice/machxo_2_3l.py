@@ -181,7 +181,12 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 		# Internal high-speed oscillator on MachXO2/MachXO3L devices.
 		# It can have a range of frequencies.
 		if self.default_clk == 'OSCH':
-			assert self.osch_frequency in self._supported_osch_freqs
+			if self.osch_frequency not in self._supported_osch_freqs:
+				raise ValueError(
+					f'Invalid OSCH frequency \'{self.osch_frequency}\','
+					f' must be one of {", ".join(self._supported_osch_freqs)}'
+				)
+
 			return Clock(int(self.osch_frequency * 1e6))
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
@@ -373,7 +378,7 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 				# Similarly, nextpnr will not pack anything as a tristate register in a DDR PIO.
 				get_oreg(pin.o_clk, ~pin.oe, t)
 		else:
-			assert False
+			raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
 
 		return (i, o, t)
 

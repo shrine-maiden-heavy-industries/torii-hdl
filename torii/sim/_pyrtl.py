@@ -114,7 +114,8 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 class _RHSValueCompiler(_ValueCompiler):
 	def __init__(self, state, emitter, *, mode, inputs = None):
 		super().__init__(state, emitter)
-		assert mode in ('curr', 'next')
+		if mode not in ('curr', 'next'):
+			raise ValueError(f'Expected mode to be \'curr\', or \'next\', not \'{mode!r}\'')
 		self.mode = mode
 		# If not None, `inputs` gets populated with RHS signals.
 		self.inputs = inputs
