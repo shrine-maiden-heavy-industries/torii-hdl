@@ -97,7 +97,7 @@ class PyCoroProcess(BaseProcess):
                     return
 
                 elif type(command) is Delay:
-                    # Internal timeline is in 1ps integeral units, intervals are public API and in floating point
+                    # Internal timeline is in 1ps integral units, intervals are public API and in floating point
                     interval = int(command.interval * 1e12) if command.interval is not None else None
                     self.state.wait_interval(self, interval)
                     return

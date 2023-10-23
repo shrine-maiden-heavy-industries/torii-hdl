@@ -607,7 +607,7 @@ class GowinPlatform(TemplatedPlatform):
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
-		for bit in range(pin.wodth):
+		for bit in range(pin.width):
 			m.submodules[f'{pin.name}_{bit}'] = Instance(
 				'TLVDS_IBUF',
 				i_I  = port.p[bit],

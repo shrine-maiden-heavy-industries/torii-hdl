@@ -525,7 +525,7 @@ class XilinxPlatform(TemplatedPlatform):
 		PRJXRAY_DB_DIR={{get_override("prjxray_db_dir")|default("/usr/share/nextpnr/prjxray-db")}}
 		''',
 		r'''
-		NEXPNR_CHIPDB_DIR={{get_override("nextpnr_db_dir")|default("/usr/share/nextpnr/xilinx-chipdb")}}
+		NEXTPNR_CHIPDB_DIR={{get_override("nextpnr_db_dir")|default("/usr/share/nextpnr/xilinx-chipdb")}}
 		''',
 		r'''
 		PART={{platform._yosys_nextpnr_part_map.get(platform._part, platform._part)}}
@@ -545,7 +545,7 @@ class XilinxPlatform(TemplatedPlatform):
 			{{quiet("--quiet")}}
 			{{get_override("nextpnr_xilinx_opts")|options}}
 			--log {{name}}.tim
-			--chipdb "$NEXPNR_CHIPDB_DIR/$PART.bin"
+			--chipdb "$NEXTPNR_CHIPDB_DIR/$PART.bin"
 			--xdc {{name}}.xdc
 			--json {{name}}.json
 			--write {{name}}_routed.json
