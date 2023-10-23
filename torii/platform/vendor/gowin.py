@@ -4,9 +4,9 @@ from abc       import abstractproperty
 from fractions import Fraction
 import re
 
-from ...hdl     import *
+from ...hdl     import Const, Module, Instance, Signal, ClockDomain, ClockSignal
 from ...lib.cdc import ResetSynchronizer
-from ...build   import *
+from ...build   import TemplatedPlatform, Clock
 
 # Acknowledgments:
 #   Parts of this file originate from https://github.com/tcjie/Gowin
