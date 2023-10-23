@@ -2,7 +2,7 @@
 
 from sys      import _getframe, excepthook
 from types    import TracebackType
-from typing   import Optional, Type, Self
+from typing   import Optional, Type
 from warnings import warn_explicit
 
 from ..util   import get_linter_option
@@ -20,7 +20,7 @@ class MustUse:
 	_MustUse__silence = False
 	_MustUse__warning = UnusedMustUse
 
-	def __new__(cls, *args, src_loc_at: int = 0, **kwargs) -> Self:
+	def __new__(cls, *args, src_loc_at: int = 0, **kwargs) -> 'MustUse':
 		frame = _getframe(1 + src_loc_at)
 		self = super().__new__(cls)
 		self._MustUse__used    = False
