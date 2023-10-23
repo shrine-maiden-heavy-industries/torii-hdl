@@ -173,7 +173,8 @@ class Memory(Elaboratable):
 			p_WR_PORTS             = len(self._write_ports),
 			p_WR_CLK_ENABLE        = Const(-1, unsigned(len(self._write_ports))) if self._write_ports else Const(0, 1),
 			p_WR_CLK_POLARITY      = Const(-1, unsigned(len(self._write_ports))) if self._write_ports else Const(0, 1),
-			p_WR_PRIORITY_MASK     = Const(0, len(self._write_ports) * len(self._write_ports)) if self._write_ports else Const(0, 1),
+			p_WR_PRIORITY_MASK     = Const(0, len(self._write_ports) * len(self._write_ports))
+										if self._write_ports else Const(0, 1),
 			p_WR_WIDE_CONTINUATION = Const(0, len(self._write_ports)) if self._write_ports else Const(0, 1),
 			i_RD_CLK               = Cat(rd_clk),
 			i_RD_EN                = Cat(port.en for port in self._read_ports),
