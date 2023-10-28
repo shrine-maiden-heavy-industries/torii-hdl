@@ -153,9 +153,9 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		do_read  = self.r_rdy & self.r_en
 		do_write = self.w_rdy & self.w_en
 
-		storage = Memory(width = self.width, depth = self.depth)
-		w_port  = m.submodules.w_port = storage.write_port()
-		r_port  = m.submodules.r_port = storage.read_port(
+		m.submodules.storage = storage = Memory(width = self.width, depth = self.depth)
+		w_port = storage.write_port()
+		r_port = storage.read_port(
 			domain = 'comb' if self.fwft else 'sync', transparent = self.fwft)
 		produce = Signal(range(self.depth))
 		consume = Signal(range(self.depth))
@@ -404,9 +404,9 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		m.d[self._w_domain] += self.w_level.eq((produce_w_bin - consume_w_bin))
 		m.d.comb += self.r_level.eq((produce_r_bin - consume_r_bin))
 
-		storage = Memory(width = self.width, depth = self.depth)
-		w_port  = m.submodules.w_port = storage.write_port(domain = self._w_domain)
-		r_port  = m.submodules.r_port = storage.read_port(
+		m.submodules.storage = storage = Memory(width = self.width, depth = self.depth)
+		w_port = storage.write_port(domain = self._w_domain)
+		r_port = storage.read_port(
 			domain = self._r_domain, transparent = False
 		)
 		m.d.comb += [
