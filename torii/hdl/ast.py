@@ -7,7 +7,7 @@ from collections       import OrderedDict
 from collections.abc   import (
 	Iterable, MutableMapping, MutableSequence, MutableSet
 )
-from enum              import Enum
+from enum              import Enum, EnumMeta
 from itertools         import chain
 from typing            import Optional, Union
 
@@ -41,6 +41,7 @@ __all__ = (
 	'Sample',
 	'Shape',
 	'ShapeCastable',
+	'ShapeLike',
 	'Signal',
 	'SignalDict',
 	'SignalKey',
@@ -53,6 +54,7 @@ __all__ = (
 	'unsigned',
 	'Value',
 	'ValueCastable',
+	'ValueLike',
 	'ValueDict',
 	'ValueKey',
 	'ValueSet',
@@ -189,6 +191,50 @@ class Shape:
 			except TypeError as e:
 				raise TypeError(f'Shapes may be compared with shape-castable objects, not {other!r}') from e
 		return self.width == other.width and self.signed == other.signed
+
+class _ShapeLikeMeta(type):
+	def __subclasscheck__(cls, subclass):
+		return (
+			issubclass(subclass, (Shape, ShapeCastable, int, range, EnumMeta)) or
+			subclass is ShapeLike
+		)
+
+	def __instancecheck__(cls, instance):
+		if isinstance(instance, int):
+			return instance >= 0
+		if isinstance(instance, EnumMeta):
+			return all(isinstance(member.value, ValueLike) for member in instance)
+
+		return isinstance(instance, (Shape, ShapeCastable, range))
+
+@final
+class ShapeLike(metaclass = _ShapeLikeMeta):
+	'''
+	An abstract class representing all objects that can be cast to a :class:`Shape`.
+
+	``issubclass(cls, ShapeLike)`` returns ``True`` for:
+
+	- :class:`Shape`
+	- :class:`ShapeCastable` and its subclasses
+	- ``int`` and its subclasses
+	- ``range`` and its subclasses
+	- :class:`enum.EnumMeta` and its subclasses
+	- :class:`ShapeLike` itself
+
+	``isinstance(obj, ShapeLike)`` returns ``True`` for:
+
+	- :class:`Shape` instances
+	- :class:`ShapeCastable` instances
+	- non-negative ``int`` values
+	- ``range`` instances
+	- :class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
+
+	This class is only usable for the above checks — no instances and no (non-virtual)
+	subclasses can be created.
+	'''
+
+	def __new__(cls, *args, **kwargs):
+		raise TypeError('ShapeLike is an abstract class and cannot be constructed')
 
 
 def unsigned(width: int) -> Shape:
@@ -1586,6 +1632,42 @@ class ValueCastable:
 		wrapper_memoized.__memoized = True
 		return wrapper_memoized
 
+
+class _ValueLikeMeta(type):
+	'''
+	An abstract class representing all objects that can be cast to a :class:`Value`.
+
+	``issubclass(cls, ValueLike)`` returns ``True`` for:
+
+	- :class:`Value`
+	- :class:`ValueCastable` and its subclasses
+	- ``int`` and its subclasses
+	- :class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
+	- :class:`ValueLike` itself
+
+	``isinstance(obj, ValueLike)`` returns the same value as ``issubclass(type(obj), ValueLike)``.
+
+	This class is only usable for the above checks — no instances and no (non-virtual)
+	subclasses can be created.
+	'''
+
+	def __subclasscheck__(cls, subclass):
+		if issubclass(subclass, Enum):
+			return isinstance(subclass, ShapeLike)
+
+		return (
+			issubclass(subclass, (Value, ValueCastable, int)) or
+			subclass is ValueLike
+		)
+
+	def __instancecheck__(cls, instance):
+		return issubclass(type(instance), cls)
+
+
+@final
+class ValueLike(metaclass = _ValueLikeMeta):
+	def __new__(cls, *args, **kwargs):
+		raise TypeError('ValueLike is an abstract class and cannot be constructed')
 
 @final
 class Sample(Value):
