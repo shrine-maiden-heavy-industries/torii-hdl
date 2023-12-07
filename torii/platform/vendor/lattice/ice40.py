@@ -137,7 +137,6 @@ class ICE40Platform(TemplatedPlatform):
 				read_rtlil {{file}}
 			{% endfor %}
 			read_rtlil {{name}}.il
-			delete w:$verilog_initial_trigger
 			{{get_override("script_after_read")|default("# (script_after_read placeholder)")}}
 			synth_ice40 {{get_override("synth_opts")|options}} -top {{name}}
 			{{get_override("script_after_synth")|default("# (script_after_synth placeholder)")}}
