@@ -306,9 +306,9 @@ class ICE40Platform(TemplatedPlatform):
 	) -> None:
 		super().__init__()
 
-		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
+		if toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
 			raise ValueError(
-				f'Unknown toolchain \'{self.toolchain}\', must be either'
+				f'Unknown toolchain \'{toolchain}\', must be either'
 				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
 			)
 
