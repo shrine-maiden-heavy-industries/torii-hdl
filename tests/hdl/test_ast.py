@@ -964,6 +964,15 @@ class SliceTestCase(ToriiTestSuiteCase):
 		s1 = Const(10)[2]
 		self.assertEqual(repr(s1), '(slice (const 4\'d10) 2:3)')
 
+	def test_const(self):
+		a = Const.cast(Const(0x1234, 16)[4:12])
+		self.assertEqual(a.value, 0x23)
+		self.assertEqual(a.width, 8)
+		self.assertEqual(a.signed, False)
+		a = Const.cast(Const(-4, signed(8))[1:6])
+		self.assertEqual(a.value, 0x1e)
+		self.assertEqual(a.width, 5)
+		self.assertEqual(a.signed, False)
 
 class BitSelectTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -1369,6 +1378,10 @@ class SignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.shape(), signed(2))
 		self.assertEqual(s2.decoder(SignedEnum.FOO), 'FOO/-1')
 
+	def test_const_wrong(self):
+		s1 = Signal()
+		with self.assertRaises(TypeError, msg = 'Value (sig s1) cannot be converted to a Torii constant'):
+			Const.cast(s1)
 
 class ClockSignalTestCase(ToriiTestSuiteCase):
 	def test_domain(self):
