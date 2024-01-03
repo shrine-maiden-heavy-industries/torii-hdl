@@ -1121,6 +1121,18 @@ class ArrayTestCase(ToriiTestSuiteCase):
 		):
 			a.insert(1, 2)
 
+	def test_index_value_castable(self):
+		class MyValue(ValueCastable):
+			@ValueCastable.lowermethod
+			def as_value(self):
+				return Signal()
+
+			def shape():
+				return unsigned(1)
+
+		a = Array([1,2,3])
+		a[MyValue()]
+
 	def test_repr(self):
 		a = Array([1, 2, 3])
 		self.assertEqual(repr(a), '(array mutable [1, 2, 3])')
