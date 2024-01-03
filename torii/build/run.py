@@ -181,6 +181,48 @@ class BuildPlan:
 		'''
 		return self.execute_local()
 
+	def execute_docker(
+		self, image: str, root: str | Path = 'root', docker_mount: str = '/build', docker_args: list[str] = []
+	) -> 'LocalBuildProducts':
+		'''
+
+		Execute a build plan inside a Docker container.
+
+		The build root is mounted into the container under ``docker_mount``
+		and then the build script is ran in the container.
+
+		Additional arguments to docker may be supplied with ``docker_args``.
+
+		Parameters
+		----------
+		image : str
+			The docker container image to use
+
+		root : str | Path
+			The Torii build root.
+
+		docker_mount : str
+			The internal docker bind mount location for the build root. (default: /build)
+
+		docker_args : list[str]
+			Any additional arguments to pass to the docker engine.
+
+		Returns
+		-------
+			:class:`LocalBuildProducts`
+		'''
+		build_dir = self.extract(root)
+
+		subprocess.check_call([
+			'docker', 'run', *docker_args,
+			'--rm', '-v', f'"{build_dir}":{docker_mount}',
+			'--workdir', f'{docker_mount}',
+			image,
+			'sh', f'{self.script}.sh'
+		])
+
+		return LocalBuildProducts(build_dir)
+
 
 class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
