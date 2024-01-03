@@ -94,17 +94,14 @@ class BuildPlan:
 			for filename in sorted(self.files):
 				archive.writestr(archinfo_t(filename), self.files[filename])
 
-	def execute_local(
-		self, root: Union[str, Path] = 'build', *, run_script: bool = True, env: dict[str, str] = None
-	) -> 'LocalBuildProducts':
+	def extract(self, root: str | Path = 'build') -> Path:
 		'''
-		Execute build plan using the local strategy. Files from the build plan are placed in
-		the build root directory ``root``, and, if ``run_script`` is ``True``, the script
-		appropriate for the platform (``{script}.bat`` on Windows, ``{script}.sh`` elsewhere) is
-		executed in the build root. If ``env`` is not ``None``, the environment is extended
-		(not replaced) with ``env``.
+		Extracts the build plan files into the specified local build
+		root.
 
-		Returns :class:`LocalBuildProducts`.
+		Returns
+		-------
+			:class:`pathlib.Path`
 		'''
 
 		if isinstance(root, str):
@@ -137,30 +134,45 @@ class BuildPlan:
 				# If we're on unix-like and we're emitting the shell script, set it as +x
 				if not sys.platform.startswith('win32') and filename.suffix == '.sh':
 					filename.chmod(0o755) # rwxr-xr-x
-
-
-			if run_script:
-				script_env = dict(os.environ)
-				if env is not None:
-					script_env.update(env)
-				if sys.platform.startswith('win32'):
-					# Without "call", "cmd /c {}.bat" will return 0.
-					# See https://stackoverflow.com/a/30736987 for a detailed explanation of why.
-					# Running the script manually from a command prompt is unaffected.
-					subprocess.check_call(
-						[ 'cmd', '/c', f'call {self.script}.bat' ],
-						env = script_env
-					)
-				else:
-					subprocess.check_call(
-						[ 'sh', f'{self.script}.sh' ],
-						env = script_env
-					)
-
-			return LocalBuildProducts(Path.cwd())
-
+			return root
 		finally:
 			os.chdir(cwd)
+
+	def execute_local(
+		self, root: Union[str, Path] = 'build', *, run_script: bool = True, env: dict[str, str] = None
+	) -> 'LocalBuildProducts':
+		'''
+		Execute build plan using the local strategy. Files from the build plan are placed in
+		the build root directory ``root``, and, if ``run_script`` is ``True``, the script
+		appropriate for the platform (``{script}.bat`` on Windows, ``{script}.sh`` elsewhere) is
+		executed in the build root. If ``env`` is not ``None``, the environment is extended
+		(not replaced) with ``env``.
+
+		Returns :class:`LocalBuildProducts`.
+		'''
+
+		build_dir = self.extract(root)
+		if run_script:
+			script_env = dict(os.environ)
+			if env is not None:
+				script_env.update(env)
+			if sys.platform.startswith('win32'):
+				# Without "call", "cmd /c {}.bat" will return 0.
+				# See https://stackoverflow.com/a/30736987 for a detailed explanation of why.
+				# Running the script manually from a command prompt is unaffected.
+				subprocess.check_call(
+					[ 'cmd', '/c', f'call {self.script}.bat' ],
+					env = script_env,
+					cwd = build_dir
+				)
+			else:
+				subprocess.check_call(
+					[ 'sh', f'{self.script}.sh' ],
+					env = script_env,
+					cwd = build_dir
+				)
+
+		return LocalBuildProducts(build_dir)
 
 	def execute(self) -> 'LocalBuildProducts':
 		'''
