@@ -3,7 +3,7 @@
 from inspect   import getfile, getlineno, iscoroutine, isgenerator
 
 from ..hdl     import ClockDomain, Const, Value
-from ..hdl.ast import SignalSet, Statement
+from ..hdl.ast import SignalSet, Statement, ValueCastable
 from ._base    import BaseProcess
 from ._pyrtl   import _RHSValueCompiler, _StatementCompiler, _ValueCompiler
 from .core     import Active, Delay, Passive, Settle, Tick
@@ -69,6 +69,8 @@ class PyCoroProcess(BaseProcess):
                     command = self.default_cmd
                 response = None
 
+                if isinstance(command, ValueCastable):
+                    command = Value.cast(command)
                 if isinstance(command, Value):
                     exec(_RHSValueCompiler.compile(self.state, command, mode = 'curr'),
                         self.exec_locals)
