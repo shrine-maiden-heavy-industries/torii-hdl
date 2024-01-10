@@ -6,7 +6,7 @@ from typing       import Union
 
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from ..asserts    import Assert, Assume, Initial
-from ..util.units import log2_int
+from ..util.units import ceil_log2
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding.gray import Decoder, Encoder
 
@@ -318,13 +318,12 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
-			try:
-				depth_bits = log2_int(depth, need_pow2 = exact_depth)
-				depth = 1 << depth_bits
-			except ValueError:
+			depth_bits = ceil_log2(depth)
+			if exact_depth and depth != 1 << depth_bits:
 				raise ValueError(
 					f'AsyncFIFO only supports depths that are powers of 2; requested exact depth {depth} is not'
 				) from None
+			depth = 1 << depth_bits
 		else:
 			depth_bits = 0
 		super().__init__(width = width, depth = depth)
@@ -500,14 +499,14 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
-			try:
-				depth_bits = log2_int(max(0, depth - 1), need_pow2 = exact_depth)
-				depth = (1 << depth_bits) + 1
-			except ValueError:
+			depth_bits = ceil_log2(max(0, depth - 1))
+			if exact_depth and depth != (1 << depth_bits) + 1:
 				raise ValueError(
 					'AsyncFIFOBuffered only supports depths that are one higher than powers of 2; '
 					f'requested exact depth {depth} is not'
 				) from None
+			depth = (1 << depth_bits) + 1
+
 		super().__init__(width = width, depth = depth)
 
 		self.r_rst = Signal()

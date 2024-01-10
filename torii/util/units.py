@@ -2,6 +2,8 @@
 
 import operator
 
+from .decorators import deprecated
+
 __all__ = (
 	'ps_to_sec',
 	'ns_to_sec',
@@ -107,9 +109,10 @@ def exact_log2(n):
 		raise ValueError(f'{n} is not a power of 2')
 	return (n - 1).bit_length()
 
+@deprecated('Replace usage of `log2_int(n, True)` with `exact_log2(n)` and instances of `log2_int(n, False)` with `ceil_log2(n)`')
 def log2_int(n: int, need_pow2: bool = True) -> int:
 	''' '''
-
+	n = operator.index(n)
 	if n == 0:
 		return 0
 	r = (n - 1).bit_length()
@@ -121,11 +124,13 @@ def log2_int(n: int, need_pow2: bool = True) -> int:
 def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	''' Returns the number of bits needed to represent int ``n`` '''
 
+	n = operator.index(n)
+
 	if n > 0:
-		r = log2_int(n + 1, False)
+		r = ceil_log2(n + 1)
 	else:
 		require_sign_bit = True
-		r = log2_int(-n, False)
+		r = ceil_log2(-n)
 	if require_sign_bit:
 		r += 1
 	return r

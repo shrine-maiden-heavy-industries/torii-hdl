@@ -5,7 +5,7 @@ from typing         import Iterable, Literal, Optional
 
 from ....           import Cat, Elaboratable, Module, Record, Signal
 from ....hdl.rec    import Direction
-from ....util.units import log2_int
+from ....util.units import exact_log2
 from ..memory       import MemoryMap
 
 __all__ = (
@@ -170,7 +170,7 @@ class Interface(Record):
 				f'Memory map has data width {memory_map.data_width}, which is not the same as bus '
 				f'interface granularity {self.granularity}'
 			)
-		granularity_bits = log2_int(self.data_width // self.granularity)
+		granularity_bits = exact_log2(self.data_width // self.granularity)
 		if memory_map.addr_width != max(1, self.addr_width + granularity_bits):
 			raise ValueError(
 				f'Memory map has address width {memory_map.addr_width}, which is not the same as bus '
@@ -225,7 +225,7 @@ class Decoder(Elaboratable):
 		self.features    = set(features)
 		self.alignment   = alignment
 
-		granularity_bits = log2_int(data_width // granularity)
+		granularity_bits = exact_log2(data_width // granularity)
 		self._map        = MemoryMap(
 			addr_width = max(1, addr_width + granularity_bits),
 			data_width = granularity, alignment = alignment,
@@ -238,7 +238,7 @@ class Decoder(Elaboratable):
 	def bus(self) -> Interface:
 		if self._bus is None:
 			self._map.freeze()
-			granularity_bits = log2_int(self.data_width // self.granularity)
+			granularity_bits = exact_log2(self.data_width // self.granularity)
 			self._bus = Interface(
 				addr_width = self._map.addr_width - granularity_bits,
 				data_width = self.data_width, granularity = self.granularity,
@@ -318,7 +318,7 @@ class Decoder(Elaboratable):
 				sub_bus = self._subs[sub_map]
 
 				m.d.comb += [
-					sub_bus.adr.eq(self.bus.adr << log2_int(sub_ratio)),
+					sub_bus.adr.eq(self.bus.adr << exact_log2(sub_ratio)),
 					sub_bus.dat_w.eq(self.bus.dat_w),
 					sub_bus.sel.eq(Cat(sel.replicate(sub_ratio) for sel in self.bus.sel)),
 					sub_bus.we.eq(self.bus.we),
@@ -331,7 +331,7 @@ class Decoder(Elaboratable):
 				if hasattr(sub_bus, 'bte'):
 					m.d.comb += sub_bus.bte.eq(getattr(self.bus, 'bte', BurstTypeExt.LINEAR))
 
-				granularity_bits = log2_int(self.bus.data_width // self.bus.granularity)
+				granularity_bits = exact_log2(self.bus.data_width // self.bus.granularity)
 				with m.Case(sub_pat[:-granularity_bits if granularity_bits > 0 else None]):
 					m.d.comb += [
 						sub_bus.cyc.eq(self.bus.cyc),
