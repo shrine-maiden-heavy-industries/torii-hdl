@@ -2,6 +2,8 @@
 
 import functools
 import warnings
+import operator
+
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import (
@@ -850,7 +852,7 @@ class Const(Value):
 		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
-		self.value = int(value)
+		self.value = int(operator.index(value))
 		if shape is None:
 			shape = Shape(bits_for(self.value), signed = self.value < 0)
 		elif isinstance(shape, int):
@@ -1039,8 +1041,8 @@ class Slice(Value):
 
 		super().__init__(src_loc_at = src_loc_at)
 		self.value = value
-		self.start = int(start)
-		self.stop  = int(stop)
+		self.start = int(operator.index(start))
+		self.stop  = int(operator.index(stop))
 
 	def shape(self) -> Shape:
 		return Shape(self.stop - self.start)
