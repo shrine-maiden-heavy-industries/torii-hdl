@@ -445,6 +445,9 @@ class Value(metaclass = ABCMeta):
 		else:
 			raise TypeError(f'Cannot index value with {key!r}')
 
+	def __contains__(self, _):
+		raise TypeError('The python `in` operator is not supported on Torii values')
+
 	def as_unsigned(self)  -> 'Operator':
 		'''
 		Conversion to unsigned.

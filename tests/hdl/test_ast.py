@@ -898,6 +898,10 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		)
 		self.assertEqual(abs(s).shape(), unsigned(4))
 
+	def test_contains(self):
+		with self.assertRaises(TypeError, msg = 'The python `in` operator is not supported on Torii values'):
+			1 in Signal(3)
+
 
 class SliceTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
