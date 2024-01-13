@@ -7,6 +7,7 @@ from functools         import reduce
 from typing            import Any, Optional, Union
 
 from ..util            import flatten
+from ..util.tracer     import get_src_loc
 from ..util.decorators import memoize
 from ._unused          import MustUse, UnusedMustUse
 from .ast              import (
@@ -685,12 +686,13 @@ class Instance(Fragment):
 
 	'''
 
-	def __init__(self, type, *args, **kwargs):
+	def __init__(self, type, *args, src_loc = None, src_loc_at = 0, **kwargs):
 		super().__init__()
 
 		self.type        = type
 		self.parameters  = OrderedDict()
 		self.named_ports = OrderedDict()
+		self.src_loc     = src_loc or get_src_loc(src_loc_at)
 
 		for (kind, name, value) in args:
 			if kind == 'a':
