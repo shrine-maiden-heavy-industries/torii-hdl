@@ -644,6 +644,10 @@ class Value(metaclass = ABCMeta):
 				raise TypeError(f'Expected pattern to be either a \'str\', \'int\', or \'Enum\', not \'{pattern!r}\'')
 
 		if not matches:
+			warnings.warn(
+				'Value.matches() with an empty patterns clause will return `Const(0)` in a future release.',
+				SyntaxWarning, stacklevel = 2
+			)
 			return Const(1)
 		elif len(matches) == 1:
 			return matches[0]

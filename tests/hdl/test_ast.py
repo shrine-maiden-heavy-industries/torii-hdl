@@ -792,7 +792,11 @@ class OperatorTestCase(ToriiTestSuiteCase):
 
 	def test_matches(self):
 		s = Signal(4)
-		self.assertRepr(s.matches(), '(const 1\'d1)')
+		with self.assertWarns(
+			SyntaxWarning,
+			msg = 'Value.matches() with an empty patterns clause will return `Const(0)` in a future release.'
+		):
+			self.assertRepr(s.matches(), '(const 1\'d1)')
 		self.assertRepr(s.matches(1), '''
 		(== (sig s) (const 1'd1))
 		''')

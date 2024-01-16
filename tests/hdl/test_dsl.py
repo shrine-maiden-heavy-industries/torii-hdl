@@ -410,11 +410,17 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_Switch_default_Case(self):
 		m = Module()
-		with m.Switch(self.w1):
-			with m.Case(3):
-				m.d.comb += self.c1.eq(1)
-			with m.Case():
-				m.d.comb += self.c2.eq(1)
+		with self.assertRaises(
+			ValueError,
+			msg = 'Empty Case() clauses have been superseded by Default()'
+		):
+			with m.Switch(self.w1):
+				with m.Case(3):
+					m.d.comb += self.c1.eq(1)
+				with m.Default():
+					m.d.comb += self.c2.eq(1)
+				with m.Case():
+					m.d.comb += self.c2.eq(1)
 		m._flush()
 		self.assertRepr(m._statements, '''
 		(
@@ -534,7 +540,16 @@ class DSLTestCase(ToriiTestSuiteCase):
 			SyntaxError,
 			r'^Case is not permitted outside of Switch$'
 		):
-			with m.Case():
+			with m.Case(1):
+				pass
+
+	def test_Default_outside_Switch_wrong(self):
+		m = Module()
+		with self.assertRaisesRegex(
+			SyntaxError,
+			r'^Default is not permitted outside of Switch$'
+		):
+			with m.Default():
 				pass
 
 	def test_If_inside_Switch_wrong(self):

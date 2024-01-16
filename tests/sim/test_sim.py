@@ -940,7 +940,7 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 				self.m.d.sync += self.o.eq(self.a + self.b)
 			with self.m.Case(1):
 				self.m.d.sync += self.o.eq(self.a - self.b)
-			with self.m.Case():
+			with self.m.Default():
 				self.m.d.sync += self.o.eq(0)
 		self.m.domains += self.sync
 

@@ -354,6 +354,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def Case(self, *patterns):
+		if not patterns:
+			raise ValueError('Empty Case() clauses have been superseded by Default()')
+
 		self._check_context('Case', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
@@ -408,8 +411,28 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._ctrl_context = 'Switch'
 			self._statements = _outer_case
 
+	@contextmanager
 	def Default(self):
-		return self.Case()
+		self._check_context('Default', context = 'Switch')
+		src_loc = tracer.get_src_loc(src_loc_at = 1)
+		switch_data = self._get_ctrl('Switch')
+		if TYPE_CHECKING:
+			assert switch_data is None or isinstance(switch_data, _SwitchDict)
+		if switch_data is None:
+			raise SyntaxError('Default outside of Switch block')
+
+		_outer_case = self._statements
+		try:
+			self._statements = Statement.cast([])
+			self._ctrl_context = None
+			yield
+			self._flush_ctrl()
+			if () not in switch_data['cases']:
+				switch_data['cases'][()] = self._statements
+				switch_data['case_src_locs'][()] = src_loc
+		finally:
+			self._ctrl_context = 'Switch'
+			self._statements = _outer_case
 
 	@contextmanager
 	def FSM(self, reset: Optional[str] = None, domain = 'sync', name = 'fsm'):
