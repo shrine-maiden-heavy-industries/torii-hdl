@@ -340,6 +340,20 @@ class ValueTestCase(ToriiTestSuiteCase):
 		):
 			Const(31)['str']
 
+		with self.assertRaises(
+			SyntaxError,
+			msg = 'Slicing a value with a Value is unsupported, '
+				'use `Value.bit_select()` or `Value.word_select()` instead.'
+		):
+			Const(31)[Signal(3)]
+
+		s = Signal(3)
+		with self.assertRaises(
+			SyntaxError,
+			msg = 'Indexing a value with another value is not supported, use `Value.bit_select()` instead.'
+		):
+			Const(31)[s:s+3]
+
 	def test_shift_left(self):
 		self.assertRepr(
 			Const(256, unsigned(9)).shift_left(0),
