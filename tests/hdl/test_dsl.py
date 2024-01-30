@@ -585,6 +585,31 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.Default():
 				pass
 
+	def test_Case_after_Default_wrong(self):
+		m = Module()
+		with m.Switch(self.w1):
+			with m.Default():
+				pass
+			with self.assertWarns(
+				SyntaxWarning,
+				msg = 'Case statements are order-dependant, any Case after a Default will be ignored'
+			):
+				with m.Case('101-'):
+					pass
+
+	def test_Default_after_Default_wrong(self):
+		m = Module()
+		with m.Switch(self.w1):
+			with m.Default():
+				pass
+			with self.assertRaises(
+				SyntaxError,
+				msg = 'Multiple Default statements within a switch are not allowed, '
+					'as only the first Default will ever be considered.'
+			):
+				with m.Default():
+					pass
+
 	def test_If_inside_Switch_wrong(self):
 		m = Module()
 		with m.Switch(self.s1):

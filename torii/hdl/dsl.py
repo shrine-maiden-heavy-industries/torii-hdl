@@ -365,6 +365,12 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if switch_data is None:
 			raise SyntaxError('Case outside of Switch block')
 		new_patterns: _PatternTuple = ()
+		if () in switch_data['cases']:
+			warnings.warn(
+				'Case statements are order-dependant, any Case after a Default will be ignored',
+				SyntaxWarning, stacklevel = 3
+			)
+
 		# This code should accept exactly the same patterns as `v.matches(...)`.
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
@@ -424,6 +430,12 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('Default', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
+		if () in switch_data['cases']:
+			raise SyntaxError(
+				'Multiple Default statements within a switch are not allowed, '
+				'as only the first Default will ever be considered.',
+			)
+
 		if TYPE_CHECKING:
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
