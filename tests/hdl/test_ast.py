@@ -608,6 +608,24 @@ class ConstTestCase(ToriiTestSuiteCase):
 		with self.assertRaises(TypeError):
 			hash(Const(0))
 
+	def test_shape_castable(self):
+		class MockConstValue:
+			def __init__(self, value):
+				self.value = value
+
+		class MockConstShape(ShapeCastable):
+			def as_shape(self):
+				return unsigned(8)
+
+			def __call__(self, value):
+				return value
+
+			def const(self, init):
+				return MockConstValue(init)
+
+		s = Const(10, MockConstShape())
+		self.assertIsInstance(s, MockConstValue)
+		self.assertEqual(s.value, 10)
 
 class OperatorTestCase(ToriiTestSuiteCase):
 	def test_bool(self):
