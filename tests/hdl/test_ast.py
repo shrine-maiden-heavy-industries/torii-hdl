@@ -138,7 +138,7 @@ class ShapeTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s3.width, 4)
 		self.assertEqual(s3.signed, True)
 		s4 = Shape.cast(range(0, 1))
-		self.assertEqual(s4.width, 1)
+		self.assertEqual(s4.width, 0)
 		self.assertEqual(s4.signed, False)
 		s5 = Shape.cast(range(-1, 0))
 		self.assertEqual(s5.width, 1)
@@ -152,6 +152,9 @@ class ShapeTestCase(ToriiTestSuiteCase):
 		s8 = Shape.cast(range(0, 10, 3))
 		self.assertEqual(s8.width, 4)
 		self.assertEqual(s8.signed, False)
+		s9 = Shape.cast(range(0, 3, 3))
+		self.assertEqual(s9.width, 0)
+		self.assertEqual(s9.signed, False)
 
 	def test_cast_enum(self):
 		s1 = Shape.cast(UnsignedEnum)
@@ -1290,7 +1293,7 @@ class SignalTestCase(ToriiTestSuiteCase):
 		s10 = Signal(range(0))
 		self.assertEqual(s10.shape(), unsigned(0))
 		s11 = Signal(range(1))
-		self.assertEqual(s11.shape(), unsigned(1))
+		self.assertEqual(s11.shape(), unsigned(0))
 
 	def test_shape_wrong(self):
 		with self.assertRaisesRegex(

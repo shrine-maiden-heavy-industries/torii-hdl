@@ -173,6 +173,8 @@ class Shape:
 					bits_for(obj[0], signed),
 					bits_for(obj[-1], signed)
 				)
+				if obj[0] == obj[-1] == 0:
+					width = 0
 				return Shape(width, signed)
 			elif isinstance(obj, type) and issubclass(obj, Enum):
 				return Shape._cast_plain_enum(obj)
