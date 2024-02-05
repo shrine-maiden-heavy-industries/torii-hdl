@@ -927,36 +927,6 @@ class Const(Value):
 	def __repr__(self) -> str:
 		return f'(const {self.width}\'{"s" if self.signed else ""}d{self.value})'
 
-
-class AnyValue(Value, DUID):
-	def __init__(
-		self, shape: Union[Shape, int, tuple[int, bool], range, type, ShapeCastable] , *,
-		src_loc_at: int = 0
-	) -> None:
-		super().__init__(src_loc_at = src_loc_at)
-		shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
-		self.width  = shape.width
-		self.signed = shape.signed
-
-	def shape(self) -> Shape:
-		return Shape(self.width, self.signed)
-
-	def _rhs_signals(self) -> 'SignalSet':
-		return SignalSet()
-
-
-@final
-class AnyConst(AnyValue):
-	def __repr__(self) -> str:
-		return f'(anyconst {self.width}\'{"s" if self.signed else ""})'
-
-
-@final
-class AnySeq(AnyValue):
-	def __repr__(self) -> str:
-		return f'(anyseq {self.width}\'{"s" if self.signed else ""})'
-
-
 @final
 class Operator(Value):
 	def __init__(self, operator, operands , *, src_loc_at = 0) -> None:
@@ -1485,6 +1455,38 @@ class ResetSignal(Value):
 		return f'(rst {self.domain})'
 
 
+@final
+class AnyValue(Value, DUID):
+	class Kind(Enum):
+		AnyConst = 'anyconst'
+		AnySeq   = 'anyseq'
+
+	def __init__(self, kind: str, shape: ShapeCastable, *, src_loc_at: int = 0) -> None:
+		super().__init__(src_loc_at = src_loc_at)
+
+		self.kind   = self.Kind(kind)
+		# XXX(aki): Why the hecc are we not just caching the shape if we
+		# are re-creating it for the `shape()` call anyway???
+		shape       = Shape.cast(shape, src_loc_at = src_loc_at + 1)
+		self.width  = shape.width
+		self.signed = shape.signed
+
+	def shape(self):
+		return Shape(self.width, self.signed)
+
+	def _rhs_signals(self):
+		return SignalSet()
+
+	def __repr__(self) -> str:
+		return f'({self.kind.value} {self.width}\'{"s" if self.signed else ""})'
+
+
+def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
+	return AnyValue('anyconst', shape, src_loc_at = src_loc_at + 1)
+
+def AnySeq(shape, *, src_loc_at: int = 0) -> AnyValue:
+	return AnyValue('anyseq', shape, src_loc_at = src_loc_at + 1)
+
 class Array(MutableSequence):
 	'''
 	Addressable multiplexer.
@@ -1836,14 +1838,22 @@ class UnusedProperty(UnusedMustUse):
 	pass
 
 
+@final
 class Property(Statement, MustUse):
 	_MustUse__warning = UnusedProperty
 
+	class Kind(Enum):
+		Assert = 'assert'
+		Assume = 'assume'
+		Cover  = 'cover'
+
+
 	def __init__(
-		self, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None,
+		self, kind: str, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None,
 		name: Optional[str] = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
+		self.kind   = self.Kind(kind)
 		self.test   = Value.cast(test)
 		self._check = _check
 		self._en    = _en
@@ -1852,10 +1862,10 @@ class Property(Statement, MustUse):
 			raise TypeError(f'Property name must be a string of None, not {self.name!r}')
 
 		if self._check is None:
-			self._check = Signal(reset_less = True, name = f'${self._kind}$check')
+			self._check = Signal(reset_less = True, name = f'${self.kind.value}$check')
 			self._check.src_loc = self.src_loc
 		if _en is None:
-			self._en = Signal(reset_less = True, name = f'${self._kind}$en')
+			self._en = Signal(reset_less = True, name = f'${self.kind.value}$en')
 			self._en.src_loc = self.src_loc
 
 	def _lhs_signals(self):
@@ -1866,23 +1876,18 @@ class Property(Statement, MustUse):
 
 	def __repr__(self) -> str:
 		if self.name is not None:
-			return f'({self.name}: {self._kind} {self.test!r})'
-		return f'({self._kind} {self.test!r})'
+			return f'({self.name}: {self.kind.value} {self.test!r})'
+		return f'({self.kind.value} {self.test!r})'
 
 
-@final
-class Assert(Property):
-	_kind = 'assert'
+def Assert(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	return Property('assert', test, name = name, src_loc_at = src_loc_at + 1)
 
+def Assume(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	return Property('assume', test, name = name, src_loc_at = src_loc_at + 1)
 
-@final
-class Assume(Property):
-	_kind = 'assume'
-
-
-@final
-class Cover(Property):
-	_kind = 'cover'
+def Cover(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	return Property('cover', test, name = name, src_loc_at = src_loc_at + 1)
 
 
 # @final

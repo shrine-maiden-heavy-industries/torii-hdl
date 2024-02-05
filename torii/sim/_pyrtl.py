@@ -98,10 +98,7 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 	def on_ResetSignal(self, value):
 		raise NotImplementedError # :nocov:
 
-	def on_AnyConst(self, value):
-		raise NotImplementedError # :nocov:
-
-	def on_AnySeq(self, value):
+	def on_AnyValue(self, value):
 		raise NotImplementedError # :nocov:
 
 	def on_Sample(self, value):
@@ -397,13 +394,7 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 			with self.emitter.indent():
 				self(stmts)
 
-	def on_Assert(self, stmt):
-		raise NotImplementedError # :nocov:
-
-	def on_Assume(self, stmt):
-		raise NotImplementedError # :nocov:
-
-	def on_Cover(self, stmt):
+	def on_Property(self, stmt):
 		raise NotImplementedError # :nocov:
 
 	@classmethod

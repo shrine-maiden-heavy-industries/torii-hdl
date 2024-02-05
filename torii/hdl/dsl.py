@@ -13,8 +13,8 @@ from typing       import (
 from ..util       import flatten, tracer
 from ..util.units import bits_for
 from .ast         import (
-	Assert, Assign, Assume, Cat, Cover, Const, Operator, Signal, SignalDict,
-	Statement, Switch, Value, _StatementList, ValueCastType
+	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value,
+	_StatementList, ValueCastType
 )
 from .cd          import ClockDomain
 from .ir          import Elaboratable, Fragment
@@ -604,7 +604,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._pop_ctrl()
 
 		for stmt in Statement.cast(assigns):
-			if not compat_mode and not isinstance(stmt, (Assign, Assert, Assume, Cover)):
+			if not compat_mode and not isinstance(stmt, (Assign, Property)):
 				raise SyntaxError(f'Only assignments and property checks may be appended to d.{domain_name(domain)}')
 
 			stmt._MustUse__used = True
