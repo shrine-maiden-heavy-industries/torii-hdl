@@ -1133,7 +1133,7 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 					r'Received unsupported command 1 from process .+'
 				):
 					yield 1
-				yield Settle()
+				# yield Settle()
 				survived = True
 			sim.add_process(process)
 		self.assertTrue(survived)
