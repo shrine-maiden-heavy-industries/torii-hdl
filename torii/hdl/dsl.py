@@ -6,7 +6,7 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional, TypedDict
+from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional, TypedDict, TYPE_CHECKING
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
@@ -271,7 +271,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc' : src_loc,
 			'src_locs': [],
 		})
-		assert isinstance(if_data, _IfDict)
+		if TYPE_CHECKING:
+			assert isinstance(if_data, _IfDict)
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -291,7 +292,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._get_ctrl('If')
-		assert if_data is None or isinstance(if_data, _IfDict)
+		if TYPE_CHECKING:
+			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Elif without preceding If')
 		_outer_case = self._statements
@@ -312,7 +314,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('Else', context = None)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._get_ctrl('If')
-		assert if_data is None or isinstance(if_data, _IfDict)
+		if TYPE_CHECKING:
+			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Else without preceding If/Elif')
 		_outer_case = self._statements
@@ -351,7 +354,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('Case', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
-		assert switch_data is None or isinstance(switch_data, _SwitchDict)
+		if TYPE_CHECKING:
+			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
 			raise SyntaxError('Case outside of Switch block')
 		new_patterns: _PatternTuple = ()
@@ -418,7 +422,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc'       : tracer.get_src_loc(src_loc_at = 1),
 			'state_src_locs': {},
 		})
-		assert isinstance(fsm_data, _FSMDict)
+		if TYPE_CHECKING:
+			assert isinstance(fsm_data, _FSMDict)
 		self._generated[name] = fsm = FSM(
 			fsm_data['signal'], fsm_data['encoding'], fsm_data['decoding']
 		)
@@ -439,7 +444,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('FSM State', context = 'FSM')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		fsm_data = self._get_ctrl('FSM')
-		assert fsm_data is None or isinstance(fsm_data, _FSMDict)
+		if TYPE_CHECKING:
+			assert fsm_data is None or isinstance(fsm_data, _FSMDict)
 		if fsm_data is None:
 			raise SyntaxError('State outside of FSM block')
 		if name in fsm_data['states']:
@@ -467,7 +473,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if self._ctrl_context != 'FSM':
 			for level, (ctrl_name, ctrl_data) in enumerate(reversed(self._ctrl_stack)):
 				if ctrl_name == 'FSM':
-					assert isinstance(ctrl_data, _FSMDict)
+					if TYPE_CHECKING:
+						assert isinstance(ctrl_data, _FSMDict)
 					if name not in ctrl_data['encoding']:
 						ctrl_data['encoding'][name] = len(ctrl_data['encoding'])
 					self._add_statement(
@@ -484,7 +491,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		src_loc = data['src_loc']
 
 		if name == 'If':
-			assert isinstance(data, _IfDict)
+			if TYPE_CHECKING:
+				assert isinstance(data, _IfDict)
 			if_tests, if_bodies = data['tests'], data['bodies']
 			if_src_locs = data['src_locs']
 
@@ -505,7 +513,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				src_loc = src_loc, case_src_locs = dict(zip(cases, if_src_locs))))
 
 		if name == 'Switch':
-			assert isinstance(data, _SwitchDict)
+			if TYPE_CHECKING:
+				assert isinstance(data, _SwitchDict)
 			switch_test, switch_cases = data['test'], data['cases']
 			switch_case_src_locs = data['case_src_locs']
 
@@ -513,7 +522,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				src_loc = src_loc, case_src_locs = switch_case_src_locs))
 
 		if name == 'FSM':
-			assert isinstance(data, _FSMDict)
+			if TYPE_CHECKING:
+				assert isinstance(data, _FSMDict)
 			fsm_signal, fsm_reset, fsm_encoding, fsm_decoding, fsm_states = \
 				data['signal'], data['reset'], data['encoding'], data['decoding'], data['states']
 			fsm_state_src_locs = data['state_src_locs']
