@@ -366,7 +366,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			raise SyntaxError('Case outside of Switch block')
 		new_patterns: _PatternTuple = ()
 		for pattern in patterns:
-			if not isinstance(pattern, _Pattern):
+			if not isinstance(pattern, (int, str, Enum)):
 				raise SyntaxError(f'Case pattern must be an integer, a string, or an enumeration, not {pattern!r}')
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise SyntaxError(
