@@ -244,8 +244,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc' : src_loc,
 			'src_locs': [],
 		})
+		_outer_case = self._statements
 		try:
-			_outer_case, self._statements = self._statements, []
+			self._statements = Statement.cast([])
 			self.domain._depth += 1
 			yield
 			self._flush_ctrl()
@@ -264,8 +265,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if_data = self._get_ctrl('If')
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Elif without preceding If')
+		_outer_case = self._statements
 		try:
-			_outer_case, self._statements = self._statements, []
+			self._statements = Statement.cast([])
 			self.domain._depth += 1
 			yield
 			self._flush_ctrl()
@@ -283,8 +285,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if_data = self._get_ctrl('If')
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Else without preceding If/Elif')
+		_outer_case = self._statements
 		try:
-			_outer_case, self._statements = self._statements, []
+			self._statements = Statement.cast([])
 			self.domain._depth += 1
 			yield
 			self._flush_ctrl()
@@ -347,8 +350,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				)
 				continue
 			new_patterns = (*new_patterns, pattern)
+		_outer_case = self._statements
 		try:
-			_outer_case, self._statements = self._statements, []
+			self._statements = Statement.cast([])
 			self._ctrl_context = None
 			yield
 			self._flush_ctrl()
@@ -405,8 +409,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			raise NameError(f'FSM state \'{name}\' is already defined')
 		if name not in fsm_data['encoding']:
 			fsm_data['encoding'][name] = len(fsm_data['encoding'])
+		_outer_case = self._statements
 		try:
-			_outer_case, self._statements = self._statements, []
+			self._statements = Statement.cast([])
 			self._ctrl_context = None
 			yield
 			self._flush_ctrl()
