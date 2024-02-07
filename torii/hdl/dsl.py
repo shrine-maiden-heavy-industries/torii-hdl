@@ -6,7 +6,7 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, ParamSpec, Generator, Any
+from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
@@ -34,13 +34,16 @@ class SyntaxWarning(Warning):
 
 
 class _ModuleBuilderProxy:
-	def __init__(self, builder, depth):
+	_builder: 'Module'
+	_depth: int
+
+	def __init__(self, builder: 'Module', depth: int):
 		object.__setattr__(self, '_builder', builder)
 		object.__setattr__(self, '_depth', depth)
 
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
-	def __init__(self, builder, depth, domain):
+	def __init__(self, builder: 'Module', depth: int, domain: Optional[str]):
 		super().__init__(builder, depth)
 		self._domain = domain
 
@@ -50,7 +53,7 @@ class _ModuleBuilderDomain(_ModuleBuilderProxy):
 
 
 class _ModuleBuilderDomains(_ModuleBuilderProxy):
-	def __getattr__(self, name):
+	def __getattr__(self, name: str):
 		if name == 'submodules':
 			warnings.warn(
 				f'Using \'<module>.d.{name}\' would add statements to clock domain {name!r}; '
@@ -77,7 +80,7 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 
 
 class _ModuleBuilderRoot:
-	def __init__(self, builder, depth):
+	def __init__(self, builder: 'Module', depth: int):
 		self._builder = builder
 		self.domain = self.d = _ModuleBuilderDomains(builder, depth)
 
@@ -88,7 +91,9 @@ class _ModuleBuilderRoot:
 
 
 class _ModuleBuilderSubmodules:
-	def __init__(self, builder):
+	_builder: 'Module'
+
+	def __init__(self, builder: 'Module'):
 		object.__setattr__(self, '_builder', builder)
 
 	def __iadd__(self, modules):
@@ -110,10 +115,12 @@ class _ModuleBuilderSubmodules:
 
 
 class _ModuleBuilderDomainSet:
-	def __init__(self, builder):
+	_builder: 'Module'
+
+	def __init__(self, builder: 'Module'):
 		object.__setattr__(self, '_builder', builder)
 
-	def __iadd__(self, domains):
+	def __iadd__(self, domains: Iterable):
 		for domain in flatten([domains]):
 			if not isinstance(domain, ClockDomain):
 				raise TypeError(f'Only clock domains may be added to `m.domains`, not {domain!r}')
@@ -517,13 +524,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				raise NameError(f'Submodule named \'{name}\' already exists')
 			self._named_submodules[name] = submodule
 
-	def _get_submodule(self, name):
+	def _get_submodule(self, name: str):
 		if name in self._named_submodules:
 			return self._named_submodules[name]
 		else:
 			raise AttributeError(f'No submodule named \'{name}\' exists')
 
-	def _add_domain(self, cd):
+	def _add_domain(self, cd: ClockDomain):
 		if cd.name in self._domains:
 			raise NameError(f'Clock domain named \'{cd.name}\' already exists')
 		self._domains[cd.name] = cd
