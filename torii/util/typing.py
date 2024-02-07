@@ -2,14 +2,68 @@
 
 # The following is a backport of the Python Typing concepts required for Torii HDL
 
-from typing import (
-	_Final, _Immutable, _BoundVarianceMixin, _PickleUsingNameMixin, _ConcatenateGenericAlias,
-	_caller, _type_check
-)
+import sys
+from typing import Union, _Final, _Immutable, _GenericAlias, _caller, _type_check
 
 def _is_param_expr(arg):
     return arg is ... or isinstance(arg,
             (tuple, list, ParamSpec, _ConcatenateGenericAlias))
+
+def _caller(depth=1, default='__main__'):
+    try:
+        return sys._getframe(depth + 1).f_globals.get('__name__', default)
+    except (AttributeError, ValueError):  # For platforms without _getframe()
+        return None
+
+class _ConcatenateGenericAlias(_GenericAlias, _root=True):
+	def copy_with(self, params):
+		if isinstance(params[-1], (list, tuple)):
+			return (*params[:-1], *params[-1])
+		if isinstance(params[-1], _ConcatenateGenericAlias):
+			params = (*params[:-1], *params[-1].__args__)
+		return super().copy_with(params)
+
+class _PickleUsingNameMixin:
+	"""Mixin enabling pickling based on self.__name__."""
+
+	def __reduce__(self):
+		return self.__name__
+
+class _BoundVarianceMixin:
+	"""Mixin giving __init__ bound and variance arguments.
+
+	This is used by TypeVar and ParamSpec, which both employ the notions of
+	a type 'bound' (restricting type arguments to be a subtype of some
+	specified type) and type 'variance' (determining subtype relations between
+	generic types).
+	"""
+	def __init__(self, bound, covariant, contravariant):
+		"""Used to setup TypeVars and ParamSpec's bound, covariant and
+		contravariant attributes.
+		"""
+		if covariant and contravariant:
+			raise ValueError("Bivariant types are not supported.")
+		self.__covariant__ = bool(covariant)
+		self.__contravariant__ = bool(contravariant)
+		if bound:
+			self.__bound__ = _type_check(bound, "Bound must be a type.")
+		else:
+			self.__bound__ = None
+
+	def __or__(self, right):
+		return Union[self, right]
+
+	def __ror__(self, left):
+		return Union[left, self]
+
+	def __repr__(self):
+		if self.__covariant__:
+			prefix = '+'
+		elif self.__contravariant__:
+			prefix = '-'
+		else:
+			prefix = '~'
+		return prefix + self.__name__
 
 class ParamSpecArgs(_Final, _Immutable, _root=True):
 	"""The args for a ParamSpec object.
