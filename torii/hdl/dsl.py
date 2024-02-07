@@ -6,7 +6,11 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional, TypedDict, TYPE_CHECKING
+from typing       import Callable, Generator, Any, Iterable, Optional, TypedDict, TYPE_CHECKING
+try:
+	from typing   import ParamSpec
+except ImportError:
+	from ..util.typing import ParamSpec
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
@@ -134,12 +138,12 @@ class _ModuleBuilderDomainSet:
 			raise NameError(f'Clock domain name {domain.name!r} must match name in `m.domains.{name} += ...` syntax')
 		self._builder._add_domain(domain)
 
-P = ParamSpec('P')
+Params = ParamSpec('Params')
 
 # It's not particularly clean to depend on an internal interface, but, unfortunately, __bool__
 # must be defined on a class to be called during implicit conversion.
 class _GuardedContextManager(_GeneratorContextManager):
-	def __init__(self, keyword: str, func: Callable[P, Generator[Any, Any, None]],
+	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]],
 			  	args: tuple, kwds: dict):
 		self.keyword = keyword
 		return super().__init__(func, args, kwds)
@@ -148,9 +152,9 @@ class _GuardedContextManager(_GeneratorContextManager):
 		raise SyntaxError(f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`')
 
 def _guardedcontextmanager(keyword: str):
-	def decorator(func: Callable[P, Generator[Any, Any, None]]) -> Callable[P, _GeneratorContextManager]:
+	def decorator(func: Callable[Params, Generator[Any, Any, None]]) -> Callable[Params, _GeneratorContextManager]:
 		@wraps(func)
-		def helper(*args: P.args, **kwds: P.kwargs):
+		def helper(*args: Params.args, **kwds: Params.kwargs):
 			return _GuardedContextManager(keyword, func, args, kwds)
 		return helper
 	return decorator
