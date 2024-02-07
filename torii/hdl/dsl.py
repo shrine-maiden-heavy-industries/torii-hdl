@@ -6,7 +6,7 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, Generator, Any, Iterable, Optional, TypedDict, TYPE_CHECKING
+from typing       import Callable, Generator, Any, Iterable, Optional, TypedDict, Union, TYPE_CHECKING
 try:
 	from typing   import ParamSpec
 except ImportError:
@@ -171,7 +171,7 @@ class FSM:
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
 _SrcLoc = tuple[str, int]
-_Pattern = int | str | Enum
+_Pattern = Union[int, str, Enum]
 _PatternTuple = tuple[_Pattern, ...]
 
 class _IfDict(TypedDict):
