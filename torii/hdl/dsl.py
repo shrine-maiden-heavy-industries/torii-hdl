@@ -198,6 +198,8 @@ class _FSMDict(TypedDict):
 	src_loc: _SrcLoc
 	state_src_locs: dict[str, _SrcLoc]
 
+_CtrlEntry = Union[_IfDict, _SwitchDict, _FSMDict]
+
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
 	def __init_subclass__(cls):
@@ -213,7 +215,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		self._statements   = Statement.cast([])
 		self._ctrl_context = None
-		self._ctrl_stack : list[tuple[str, _IfDict | _SwitchDict | _FSMDict]]  = []
+		self._ctrl_stack : list[tuple[str, _CtrlEntry]]  = []
 
 		self._driving      = SignalDict()
 		self._named_submodules = {}
@@ -245,7 +247,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while len(self._ctrl_stack) > self.domain._depth:
 			self._pop_ctrl()
 
-	def _set_ctrl(self, name: str, data: _IfDict | _SwitchDict | _FSMDict):
+	def _set_ctrl(self, name: str, data: _CtrlEntry):
 		self._flush_ctrl()
 		self._ctrl_stack.append((name, data))
 		return data
