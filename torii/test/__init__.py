@@ -240,7 +240,7 @@ class ToriiTestCase(TestCase):
 		yield Settle()
 
 	@staticmethod
-	def wait_until_high(strobe: Signal, *, timeout: int = None):
+	def wait_until_high(strobe: Signal, *, timeout: Optional[int] = None):
 		'''
 		Run simulation until signal goes high.
 
@@ -271,7 +271,7 @@ class ToriiTestCase(TestCase):
 				raise RuntimeError(f'Timeout waiting for \'{strobe.name}\' to go high')
 
 	@staticmethod
-	def wait_until_low(strobe: Signal, *, timeout: int = None):
+	def wait_until_low(strobe: Signal, *, timeout: Optional[int] = None):
 		'''
 		Run simulation until signal goes low.
 
