@@ -6,13 +6,13 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional
+from typing       import Callable, ParamSpec, Generator, Any, Iterable, Optional, TypedDict
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
 from .ast         import (
 	Assert, Assign, Assume, Cat, Cover, Operator, Signal, SignalDict,
-	Statement, Switch, Value
+	Statement, Switch, Value, _StatementList
 )
 from .cd          import ClockDomain
 from .ir          import Elaboratable, Fragment
@@ -166,6 +166,33 @@ class FSM:
 			self.encoding[name] = len(self.encoding)
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
+_SrcLoc = tuple[str, int]
+_Pattern = int | str | Enum
+_PatternTuple = tuple[_Pattern, ...]
+
+class _IfDict(TypedDict):
+	depth: int
+	tests: list
+	bodies: list
+	src_loc: _SrcLoc
+	src_locs: list[_SrcLoc]
+
+class _SwitchDict(TypedDict):
+	test: Value
+	cases: OrderedDict[_PatternTuple, _StatementList]
+	src_loc: _SrcLoc
+	case_src_locs: dict[_PatternTuple, _SrcLoc]
+
+class _FSMDict(TypedDict):
+	name: str
+	signal: Signal
+	reset: Optional[str]
+	domain: str
+	encoding: OrderedDict
+	decoding: OrderedDict
+	states: OrderedDict
+	src_loc: _SrcLoc
+	state_src_locs: dict[str, _SrcLoc]
 
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
@@ -182,7 +209,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		self._statements   = Statement.cast([])
 		self._ctrl_context = None
-		self._ctrl_stack   = []
+		self._ctrl_stack : list[tuple[str, _IfDict | _SwitchDict | _FSMDict]]  = []
 
 		self._driving      = SignalDict()
 		self._named_submodules = {}
@@ -204,7 +231,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					f'it is permitted inside of {self._ctrl_context} {secondary_context}'
 				)
 
-	def _get_ctrl(self, name):
+	def _get_ctrl(self, name: str):
 		if self._ctrl_stack:
 			top_name, top_data = self._ctrl_stack[-1]
 			if top_name == name:
@@ -214,7 +241,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while len(self._ctrl_stack) > self.domain._depth:
 			self._pop_ctrl()
 
-	def _set_ctrl(self, name, data):
+	def _set_ctrl(self, name: str, data: _IfDict | _SwitchDict | _FSMDict):
 		self._flush_ctrl()
 		self._ctrl_stack.append((name, data))
 		return data
@@ -244,6 +271,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc' : src_loc,
 			'src_locs': [],
 		})
+		assert isinstance(if_data, _IfDict)
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -263,6 +291,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._get_ctrl('If')
+		assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Elif without preceding If')
 		_outer_case = self._statements
@@ -283,6 +312,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('Else', context = None)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._get_ctrl('If')
+		assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
 			raise SyntaxError('Else without preceding If/Elif')
 		_outer_case = self._statements
@@ -321,9 +351,12 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('Case', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
-		new_patterns = ()
+		assert switch_data is None or isinstance(switch_data, _SwitchDict)
+		if switch_data is None:
+			raise SyntaxError('Case outside of Switch block')
+		new_patterns: _PatternTuple = ()
 		for pattern in patterns:
-			if not isinstance(pattern, (int, str, Enum)):
+			if not isinstance(pattern, _Pattern):
 				raise SyntaxError(f'Case pattern must be an integer, a string, or an enumeration, not {pattern!r}')
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise SyntaxError(
@@ -370,7 +403,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		return self.Case()
 
 	@contextmanager
-	def FSM(self, reset = None, domain = 'sync', name = 'fsm'):
+	def FSM(self, reset: Optional[str] = None, domain = 'sync', name = 'fsm'):
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')
@@ -385,6 +418,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'src_loc'       : tracer.get_src_loc(src_loc_at = 1),
 			'state_src_locs': {},
 		})
+		assert isinstance(fsm_data, _FSMDict)
 		self._generated[name] = fsm = FSM(
 			fsm_data['signal'], fsm_data['encoding'], fsm_data['decoding']
 		)
@@ -401,10 +435,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._pop_ctrl()
 
 	@contextmanager
-	def State(self, name):
+	def State(self, name: str):
 		self._check_context('FSM State', context = 'FSM')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		fsm_data = self._get_ctrl('FSM')
+		assert fsm_data is None or isinstance(fsm_data, _FSMDict)
+		if fsm_data is None:
+			raise SyntaxError('State outside of FSM block')
 		if name in fsm_data['states']:
 			raise NameError(f'FSM state \'{name}\' is already defined')
 		if name not in fsm_data['encoding']:
@@ -430,6 +467,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if self._ctrl_context != 'FSM':
 			for level, (ctrl_name, ctrl_data) in enumerate(reversed(self._ctrl_stack)):
 				if ctrl_name == 'FSM':
+					assert isinstance(ctrl_data, _FSMDict)
 					if name not in ctrl_data['encoding']:
 						ctrl_data['encoding'][name] = len(ctrl_data['encoding'])
 					self._add_statement(
@@ -446,6 +484,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		src_loc = data['src_loc']
 
 		if name == 'If':
+			assert isinstance(data, _IfDict)
 			if_tests, if_bodies = data['tests'], data['bodies']
 			if_src_locs = data['src_locs']
 
@@ -466,6 +505,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				src_loc = src_loc, case_src_locs = dict(zip(cases, if_src_locs))))
 
 		if name == 'Switch':
+			assert isinstance(data, _SwitchDict)
 			switch_test, switch_cases = data['test'], data['cases']
 			switch_case_src_locs = data['case_src_locs']
 
@@ -473,6 +513,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				src_loc = src_loc, case_src_locs = switch_case_src_locs))
 
 		if name == 'FSM':
+			assert isinstance(data, _FSMDict)
 			fsm_signal, fsm_reset, fsm_encoding, fsm_decoding, fsm_states = \
 				data['signal'], data['reset'], data['encoding'], data['decoding'], data['states']
 			fsm_state_src_locs = data['state_src_locs']
