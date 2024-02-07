@@ -3,7 +3,7 @@
 # The following is a backport of the Python Typing concepts required for Torii HDL
 
 import sys
-from typing import Union, _Final, _Immutable, _GenericAlias, _caller, _type_check
+from typing import Union, _Final, _Immutable, _GenericAlias, _type_check
 
 def _is_param_expr(arg):
     return arg is ... or isinstance(arg,
