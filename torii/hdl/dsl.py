@@ -6,11 +6,9 @@ from contextlib   import _GeneratorContextManager, contextmanager
 from enum         import Enum
 from functools    import wraps
 from sys          import version_info
-from typing       import Callable, Generator, Any, Iterable, Optional, TypedDict, Union, TYPE_CHECKING
-try:
-	from typing   import ParamSpec
-except ImportError:
-	from ..util.typing import ParamSpec
+from typing       import (
+	Callable, Generator, ParamSpec, Any, Iterable, Optional, TypedDict, Union, TYPE_CHECKING
+)
 
 from ..util       import flatten, tracer
 from ..util.units import bits_for
