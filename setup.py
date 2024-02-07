@@ -48,7 +48,7 @@ setup(
 	]),
 	description      = 'Torii hardware definition language',
 	license          = 'BSD-2-Clause',
-	python_requires  = '~=3.9',
+	python_requires  = '~=3.10',
 	zip_safe         = True,
 	url              = 'https://torii.shmdn.link/',
 
@@ -65,7 +65,7 @@ setup(
 		'setuptools',
 		'pyvcd>=0.2.2',
 		'Jinja2~=3.0',
-		'rich>=12.6.0',
+		'rich',
 	],
 
 	extras_require   = {
@@ -102,9 +102,9 @@ setup(
 		'Operating System :: Microsoft :: Windows',
 		'Operating System :: POSIX :: Linux',
 
-		'Programming Language :: Python :: 3.9',
 		'Programming Language :: Python :: 3.10',
 		'Programming Language :: Python :: 3.11',
+		'Programming Language :: Python :: 3.12',
 
 		'Topic :: Scientific/Engineering',
 		'Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)',
