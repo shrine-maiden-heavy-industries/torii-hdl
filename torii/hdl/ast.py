@@ -1883,11 +1883,15 @@ class Switch(Statement):
 			key_mask = (1 << len(self.test)) - 1
 			for key in keys:
 				if isinstance(key, str):
-					key = "".join(key.split()) # remove whitespace
+					key = ''.join(key.split()) # remove whitespace
 				elif isinstance(key, int):
 					key = format(key & key_mask, 'b').rjust(len(self.test), '0')
+					if key_mask == 0:
+						key = ''
 				elif isinstance(key, Enum):
 					key = format(key.value & key_mask, 'b').rjust(len(self.test), '0')
+					if key_mask == 0:
+						key = ''
 				else:
 					raise TypeError(f'Object {key!r} cannot be used as a switch key')
 				if len(key) != len(self.test):
