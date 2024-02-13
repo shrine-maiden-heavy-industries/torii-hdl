@@ -1468,6 +1468,19 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 		m.d.comb += a.eq(op)
 		Simulator(m)
 
+	def test_switch_zero(self):
+		m = Module()
+		a = Signal(0)
+		o = Signal()
+		with m.Switch(a):
+			with m.Case(''):
+				m.d.comb += o.eq(1)
+		with self.assertSimulation(m) as sim:
+			def process():
+				yield Settle()
+				self.assertEqual((yield o), 1)
+			sim.add_process(process)
+
 class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 	def test_bug_325(self):
 		dut = Module()
