@@ -391,6 +391,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					) from error
 
 				pattern_len = bits_for(pattern.value)
+				if pattern.value == 0:
+					pattern_len = 0
 				if pattern_len > len(switch_data['test']):
 					warnings.warn(
 						f'Case pattern \'{orig_pattern!r}\' ({pattern_len}\'{pattern.value:b}) is wider than '
