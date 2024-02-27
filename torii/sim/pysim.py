@@ -25,10 +25,16 @@ class _VCDWriter:
 		return signal.decoder(value).expandtabs().replace(' ', '_')
 
 	def __init__(self, fragment: Fragment, *, vcd_file: str, gtkw_file: str | None = None, traces = ()):
+
+		self._close_vcd = False
+		self._close_gtkw = False
 		if isinstance(vcd_file, str):
 			vcd_file = open(vcd_file, 'wt')
+			self._close_vcd = True
+
 		if isinstance(gtkw_file, str):
 			gtkw_file = open(gtkw_file, 'wt')
+			self._close_gtkw = True
 
 		self.vcd_vars = SignalDict()
 		self.vcd_file = vcd_file
@@ -136,9 +142,9 @@ class _VCDWriter:
 					suffix = ''
 				self.gtkw_save.trace('.'.join(self.gtkw_names[signal]) + suffix)
 
-		if self.vcd_file is not None:
+		if self._close_vcd:
 			self.vcd_file.close()
-		if self.gtkw_file is not None:
+		if self._close_gtkw:
 			self.gtkw_file.close()
 
 
