@@ -389,6 +389,14 @@ class TemplatedPlatform(Platform):
 			value = _extract_override(var, expected_type = str)
 			return value
 
+		def get_override_int(var: str) -> int:
+			value = _extract_override(var, expected_type = int)
+			return value
+
+		def get_override_list(var: str) -> Iterable:
+			value = _extract_override(var, expected_type = Iterable)
+			return value
+
 		def get_override_flag(var: str) -> bool:
 			value = _extract_override(var, expected_type = bool)
 			if isinstance(value, str):
@@ -509,6 +517,8 @@ class TemplatedPlatform(Platform):
 				'syntax'            : syntax,
 				'invoke_tool'       : invoke_tool,
 				'get_override'      : get_override,
+				'get_override_list' : get_override_list,
+				'get_override_int'  : get_override_int,
 				'get_override_flag' : get_override_flag,
 				'verbose'           : verbose,
 				'quiet'             : quiet,
