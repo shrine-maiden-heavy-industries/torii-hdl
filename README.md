@@ -112,6 +112,10 @@ Torii can be used to target any FPGA or ASIC process that accepts behavioral Ver
       <td rowspan="10">OpenLANE</td>
       <td rowspan="10"></td>
     </tr>
+    <tr></tr>
+    <tr>
+      <td>gf180mcu</td>
+    </tr>
   </tbody>
 </table>
 
