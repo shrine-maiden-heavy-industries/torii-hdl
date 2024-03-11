@@ -4,7 +4,7 @@ from typing       import Literal
 
 from ..build.plat import TemplatedPlatform
 from ..build.run  import BuildPlan, BuildProducts
-from ..hdl.ir     import Fragment
+from ..hdl.ir     import Fragment, Elaboratable
 
 __all__ = (
 	'FormalPlatform'
@@ -174,6 +174,12 @@ class FormalPlatform(TemplatedPlatform):
 	def build(self, *args, **kwargs) -> BuildPlan | BuildProducts | None:
 		self._build_dir = kwargs.get('build_dir', 'build')
 		return super().build(*args, **kwargs, formal = True)
+
+	def prepare(
+		self, elaboratable: Fragment | Elaboratable, name: str = 'top', **kwargs
+	) -> BuildPlan:
+		fragment = Fragment.get(elaboratable, self, formal = True)
+		return self.toolchain_prepare(fragment.prepare(), name, **kwargs)
 
 	def toolchain_prepare(self, fragment: Fragment, name: str, **kwargs) -> BuildPlan:
 		# Propagate ports up so the formal tools have something to grab ahold of
