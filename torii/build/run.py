@@ -8,6 +8,9 @@ import subprocess
 import sys
 import tarfile
 import zipfile
+import selectors
+
+import logging       as log
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Generator
@@ -165,8 +168,10 @@ class BuildPlan:
 
 		build_dir = self.extract(root)
 		script_env = dict(os.environ)
+
 		if env is not None:
 			script_env.update(env)
+
 		if sys.platform.startswith('win32'):
 			# Without "call", "cmd /c {}.bat" will return 0.
 			# See https://stackoverflow.com/a/30736987 for a detailed explanation of why.
@@ -177,11 +182,35 @@ class BuildPlan:
 				cwd = build_dir
 			)
 		else:
-			subprocess.check_call(
-				[ 'sh', f'{self.script}.sh' ],
+			# This is only for Unix-likes as AFAIK you can't `select` an FD in windows
+			exec_line = [ 'sh', f'{self.script}.sh' ]
+			with subprocess.Popen(
+				exec_line,
 				env = script_env,
-				cwd = build_dir
-			)
+				cwd = build_dir,
+				stdout = subprocess.PIPE, stderr = subprocess.PIPE, text = True
+			) as proc:
+
+				with selectors.DefaultSelector() as selec:
+					selec.register(proc.stdout, selectors.EVENT_READ)
+					selec.register(proc.stderr, selectors.EVENT_READ)
+
+					while proc.poll() is None:
+						for k, _ in selec.select(0.05):
+							msg: str = k.fileobj.readline()
+
+							if not msg:
+								break
+
+							msg = msg.strip()
+
+							if k.fileobj is proc.stdout:
+								log.info(msg)
+							else:
+								log.error(msg)
+
+				if proc.returncode:
+					subprocess.runCalledProcessError(proc.returncode, ' '.join(exec_line))
 
 		return LocalBuildProducts(build_dir)
 
