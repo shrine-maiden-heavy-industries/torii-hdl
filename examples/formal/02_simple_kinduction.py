@@ -38,14 +38,14 @@ if __name__ == '__main__':
 	dut_sneaky = Counter(max_count = 800, buggy = True)
 
 	print('DUT Gold - Will pass, should')
-	FormalPlatform(mode = 'prove').build(dut_gold, ports = [dut_gold.clk], depth = 20, name = 'simple_kinduct_gold')
+	FormalPlatform(mode = 'prove').build(dut_gold, depth = 20, name = 'simple_kinduct_gold')
 	print('DUT Buggy - Won\'t pass, shouldn\'t')
 	try:
-		FormalPlatform(mode = 'prove').build(dut_buggy, ports = [dut_buggy.clk], depth = 20, name = 'simple_kinduct_buggy')
+		FormalPlatform(mode = 'prove').build(dut_buggy, depth = 20, name = 'simple_kinduct_buggy')
 	except Exception as e:
 		print(e)
 	print('DUT Sneaky - Won\'t pass, shouldn\'t')
 	try:
-		FormalPlatform(mode = 'prove').build(dut_sneaky, ports = [dut_sneaky.clk], depth = 20, name = 'simple_kinduct_sneaky')
+		FormalPlatform(mode = 'prove').build(dut_sneaky, depth = 20, name = 'simple_kinduct_sneaky')
 	except Exception as e:
 		print(e)
