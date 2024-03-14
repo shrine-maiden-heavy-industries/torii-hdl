@@ -291,7 +291,7 @@ class ECP5Platform(TemplatedPlatform):
 	) -> None:
 		super().__init__()
 
-		if self.toolchain not in ('Trellis', 'Diamond'):
+		if toolchain not in ('Trellis', 'Diamond'):
 			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
 
 		self.toolchain = toolchain
