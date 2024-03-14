@@ -43,6 +43,7 @@ def test(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'tests')
 	out_dir.mkdir(parents = True, exist_ok = True)
 	coverage = '--coverage' in session.posargs
+	formal   = '--formal'   in session.posargs
 
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
@@ -60,9 +61,20 @@ def test(session: Session) -> None:
 		coverage_args = ()
 
 	session.chdir(str(out_dir))
-	session.run(
-		'python', *coverage_args, *unitest_args
-	)
+
+	if formal:
+		FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
+		session.log('Running formal tests')
+
+		for example in FORMAL_EXAMPLES.iterdir():
+			session.run(
+				'python', *coverage_args, example
+			)
+	else:
+		session.log('Running standard test suite')
+		session.run(
+			'python', *coverage_args, *unitest_args
+		)
 	if coverage:
 		session.run(
 			'python', '-m', 'coverage', 'xml',
