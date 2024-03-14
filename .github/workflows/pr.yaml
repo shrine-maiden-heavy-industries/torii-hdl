@@ -52,3 +52,7 @@ jobs:
       - name: Codecov
         if: success() && github.repository == 'shrine-maiden-heavy-industries/torii-hdl'
         uses: codecov/codecov-action@v4
+        with:
+          verbose: true
+          files: ./build/tests/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}

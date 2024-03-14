@@ -39,6 +39,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          BRANCH: gh-pages
-          FOLDER: build/docs/
-          CLEAN: true
+          branch: gh-pages
+          folder: build/docs/
+          clean: true
