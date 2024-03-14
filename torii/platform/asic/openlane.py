@@ -115,7 +115,7 @@ class OpenLANEPlatform(TemplatedPlatform):
 				{% endif -%}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
-		''',
+		''', # noqa: E501
 		'run_flow_{{name}}.sh': r'''
 			./flow.tcl {{verbose("-verbose 2")}}			\
 				-design /design_{{name}}					\
