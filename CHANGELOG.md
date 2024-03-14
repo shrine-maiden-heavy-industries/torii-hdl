@@ -27,6 +27,7 @@ Unreleased template stuff
 
 ### Deprecated
 
+ - Moved the contents of `torii.asserts` to `torii.lib.formal`.
 
 ### Removed
 
