@@ -2,7 +2,7 @@
 
 from torii                 import Elaboratable, Module, Signal, ClockDomain, ClockSignal
 from torii.platform.formal import FormalPlatform
-from torii.asserts         import Assert, Initial, Assume
+from torii.lib.formal      import Assert, Initial, Assume
 
 class Counter(Elaboratable):
 	def __init__(self, max_count: int, buggy: bool) -> None:

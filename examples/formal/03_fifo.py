@@ -10,7 +10,7 @@ from torii                 import (
 )
 
 from torii.platform.formal import FormalPlatform
-from torii.asserts         import AnyConst, Past, Assume, Assert, Initial, Rose
+from torii.lib.formal      import AnyConst, Past, Assume, Assert, Initial, Rose
 
 
 class SyncFIFO(Elaboratable):
