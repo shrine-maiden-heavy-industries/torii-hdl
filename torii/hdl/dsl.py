@@ -141,8 +141,7 @@ Params = ParamSpec('Params')
 # It's not particularly clean to depend on an internal interface, but, unfortunately, __bool__
 # must be defined on a class to be called during implicit conversion.
 class _GuardedContextManager(_GeneratorContextManager):
-	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]],
-			  	args: tuple, kwds: dict):
+	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict):
 		self.keyword = keyword
 		return super().__init__(func, args, kwds)
 
@@ -528,8 +527,11 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if name == 'FSM':
 			if TYPE_CHECKING:
 				assert isinstance(data, _FSMDict)
-			fsm_signal, fsm_reset, fsm_encoding, fsm_decoding, fsm_states = \
-				data['signal'], data['reset'], data['encoding'], data['decoding'], data['states']
+			fsm_signal = data['signal']
+			fsm_reset = data['reset']
+			fsm_encoding = data['encoding']
+			fsm_decoding = data['decoding']
+			fsm_states = data['states']
 			fsm_state_src_locs = data['state_src_locs']
 			if not fsm_states:
 				return
