@@ -6,7 +6,7 @@ Torii has support for many FPGA vendors, the following platforms implement the a
 :maxdepth: 2
 
 gowin
-intel
+altera
 lattice-ecp5
 lattice-ice40
 lattice-machxo-2-3l
