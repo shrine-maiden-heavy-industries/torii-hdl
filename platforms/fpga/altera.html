@@ -11,7 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/platforms/fpga/intel.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/platforms/fpga/altera.html" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -45,7 +45,7 @@
             Torii-HDL
           </a>
               <div class="version">
-                0.1.dev1+g667ec01
+                0.1.dev1+gee74c71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -324,7 +324,7 @@
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Intel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.intel.IntelPlatform"><code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.platform.vendor.altera.AlteraPlatform"><code class="docutils literal notranslate"><span class="pre">AlteraPlatform</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="lattice-ecp5.html">Lattice ECP5</a><ul>
@@ -432,7 +432,7 @@
           <li class="breadcrumb-item"><a href="index.html">Torii FPGA Platforms</a></li>
       <li class="breadcrumb-item active">Intel</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/platforms/fpga/intel.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/platforms/fpga/altera.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -442,11 +442,61 @@
              
   <section id="intel">
 <h1>Intel<a class="headerlink" href="#intel" title="Link to this heading"></a></h1>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.platform.vendor.intel</span></code> module provides a base platform to support Intel toolchains with the <a class="reference external" href="https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime.html">Quartus</a> and <a class="reference external" href="https://github.com/Ravenslofty/mistral">Mistral</a> toolchains.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="torii.platform.vendor.intel.IntelPlatform">
-<span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.intel.</span></span><span class="sig-name descname"><span class="pre">IntelPlatform</span></span><a class="headerlink" href="#torii.platform.vendor.intel.IntelPlatform" title="Link to this definition"></a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">AlteraPlatform</span></code></p>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.platform.vendor.altera</span></code> module provides a base platform to support Altera toolchains with the <a class="reference external" href="https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime.html">Quartus</a> and <a class="reference external" href="https://github.com/Ravenslofty/mistral">Mistral</a> toolchains.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.platform.vendor.altera.AlteraPlatform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.altera.</span></span><span class="sig-name descname"><span class="pre">AlteraPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolchain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Quartus'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Mistral'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Quartus'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.platform.vendor.altera.AlteraPlatform" title="Link to this definition"></a></dt>
+<dd><p class="rubric">Quartus toolchain</p>
+<dl class="simple">
+<dt>Required tools:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_fit</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_asm</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_sta</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p>The environment is populated by running the script specified in the environment variable
+<code class="docutils literal notranslate"><span class="pre">TORII_ENV_QUARTUS</span></code>, if present.</p>
+<dl class="simple">
+<dt>Available overrides:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add_settings</span></code>: inserts commands at the end of the QSF file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_constraints</span></code>: inserts commands at the end of the SDC file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nproc</span></code>: sets the number of cores used by all tools.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_map_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">quartus_map</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_fit_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">quartus_fit</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_asm_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">quartus_asm</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartus_sta_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">quartus_sta</span></code>.</p></li>
+</ul>
+</dd>
+<dt>Build products:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.rpt</span></code>: toolchain reports.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.sof</span></code>: bitstream as SRAM object file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.rbf</span></code>: bitstream as raw binary file.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Mistral toolchain</p>
+<dl class="simple">
+<dt>Required tools:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">yosys</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextpnr-mistral</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p>The environment is populated by running the script specified in the environment variable
+<code class="docutils literal notranslate"><span class="pre">TORII_ENV_MISTRAL</span></code>, if present.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: enables logging of informational messages to standard error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_verilog_opts</span></code>: adds options for <code class="docutils literal notranslate"><span class="pre">read_verilog</span></code> Yosys command.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">synth_opts</span></code>: adds options for <code class="docutils literal notranslate"><span class="pre">synth_intel_alm</span></code> Yosys command.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">script_after_read</span></code>: inserts commands after <code class="docutils literal notranslate"><span class="pre">read_rtlil</span></code> in Yosys script.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">script_after_synth</span></code>: inserts commands after <code class="docutils literal notranslate"><span class="pre">synth_intel_alm</span></code> in Yosys script.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yosys_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">yosys</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextpnr_opts</span></code>: adds extra options for <code class="docutils literal notranslate"><span class="pre">nextpnr-mistral</span></code>.</p></li>
+</ul>
+</div></blockquote>
 </dd></dl>
 
 </section>
