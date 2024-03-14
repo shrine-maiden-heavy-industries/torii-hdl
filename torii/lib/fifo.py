@@ -5,7 +5,7 @@
 from typing       import Union
 
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
-from ..asserts    import Assert, Assume, Initial
+from .formal      import Assert, Assume, Initial
 from ..util.units import log2_ceil
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding.gray import Decoder, Encoder
