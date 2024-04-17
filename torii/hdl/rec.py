@@ -157,6 +157,9 @@ class Record(ValueCastable):
 					)
 
 	def __getattr__(self, name):
+		# TODO: Add tests for this!
+		if name is 'fields' and name not in self.__dict__:
+			raise AssertionError('Record has not been properly constructed and does not have any fields')
 		return self[name]
 
 	def __getitem__(self, item):
