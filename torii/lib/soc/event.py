@@ -3,7 +3,7 @@
 
 from collections import OrderedDict
 from enum        import Enum
-from typing      import Generator, Optional
+from typing      import Generator
 
 from ...         import Elaboratable, Module, Record, Signal
 
@@ -41,7 +41,7 @@ class Source(Record):
 	'''
 
 	def __init__(
-		self, *, trigger: Trigger = 'level', name: Optional[str] = None, src_loc_at: int = 0
+		self, *, trigger: Trigger = 'level', name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		choices = ("level", 'rise', 'fall')
 		if not isinstance(trigger, Source.Trigger) and trigger not in choices:

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Literal, Optional, Union
+from typing   import Literal
 
 from ...build import Attrs, Pins, Resource, Subsignal
 
@@ -13,9 +13,9 @@ __all__ = (
 
 def _SplitResources(
 	*args,
-	pins: Union[str, list[str], dict[str, str]], invert: bool = False,
-	conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None, default_name: str, dir: Literal['i', 'o', 'io']
+	pins: str | list[str] | dict[str, str], invert: bool = False,
+	conn: tuple[str, int] | int | None = None,
+	attrs: Attrs | None = None, default_name: str, dir: Literal['i', 'o', 'io']
 ) -> list[Resource]:
 
 	if not isinstance(pins, (str, list, dict)):
@@ -45,7 +45,7 @@ def LEDResources(*args, **kwargs) -> list[Resource]:
 def RGBLEDResource(
 	*args,
 	r: str, g: str, b: str, invert: bool = False,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: tuple[str, int] | int | None = None, attrs: Attrs | None = None
 ) -> Resource:
 
 	ios = []

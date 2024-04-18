@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 from typing import (
-	Literal, Optional, Union, Generator, Iterator, Callable,
+	Literal, Generator, Iterator, Callable,
 	TypeVar, TYPE_CHECKING
 )
 

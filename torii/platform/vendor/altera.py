@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc       import abstractmethod
-from typing    import Literal, Union
+from typing    import Literal
 
 from ...build  import Attrs, Clock, TemplatedPlatform
 from ...hdl    import (
@@ -296,7 +296,7 @@ class AlteraPlatform(TemplatedPlatform):
 		if self.toolchain == 'Mistral':
 			return self.mistral_command_templates
 
-	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'true'
 
