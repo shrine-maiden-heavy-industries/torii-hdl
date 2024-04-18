@@ -11,12 +11,15 @@ from collections.abc   import (
 )
 from enum              import Enum, EnumType, EnumMeta
 from itertools         import chain
-from typing            import Optional, Union, Literal
+from typing            import Optional, Union, Literal, GenericAlias, TYPE_CHECKING, Type
 
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
 from ..util.units      import bits_for
 from ._unused          import MustUse, UnusedMustUse
+
+if TYPE_CHECKING:
+	from .rec import Direction
 
 __all__ = (
 	'AnyConst',
@@ -126,6 +129,18 @@ class Shape:
 		If ``False``, the value is unsigned. If ``True``, the value is signed two's complement.
 
 	'''  # noqa: E101
+
+	# This is a rough stub to allow for typing of shapes like `Shape[8, True]`
+	def __class_getitem__(cls: 'Shape', key: int | tuple[int, bool]) -> GenericAlias:
+		if isinstance(key, int):
+			return GenericAlias(Shape, (key, ))
+		elif isinstance(key, tuple) and len(key) == 2:
+			return GenericAlias(Shape, key)
+
+		raise TypeError(
+			'Invalid type specialization for torii.hdl.ast.Shape, '
+			'must be either an int or an int and a bool.'
+		)
 
 	def __init__(self, width: int = 1, signed: bool = False) -> None:
 		if not isinstance(width, int):
@@ -1224,6 +1239,17 @@ class Signal(Value, DUID):
 	decoder : function
 
 	'''
+
+	# See: https://docs.python.org/3/reference/datamodel.html#object.__class_getitem__
+	# See: https://docs.python.org/3/library/types.html#types.GenericAlias
+	def __class_getitem__(
+		cls: 'Signal', key: int | tuple[int, Type['Direction'] | bool] | tuple[int, bool, 'Direction']
+	) -> GenericAlias:
+		if isinstance(key, int):
+			return GenericAlias(Signal, (key, ))
+		elif key is isinstance(key, tuple):
+			# There should be more checking here, probably.
+			return GenericAlias(Signal, key)
 
 	def __init__(
 		self, shape: Optional[ShapeCastType] = None, *, name: str = None, reset: int | None = None, reset_less: bool = False,
