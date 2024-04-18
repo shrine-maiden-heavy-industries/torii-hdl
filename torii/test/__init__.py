@@ -5,7 +5,6 @@ from functools import wraps
 from math      import ceil
 from os        import getenv
 from pathlib   import Path
-from typing    import Optional
 from unittest  import TestCase
 
 from ..hdl.ast import Signal
@@ -55,7 +54,7 @@ class ToriiTestCase(TestCase):
 		''' Return the name used to generate VCD files '''
 		return f'test-{self.__class__.__name__}'
 
-	def clk_period(self, domain: Optional[str] = None) -> float:
+	def clk_period(self, domain: str | None = None) -> float:
 		''' Returns the period of the clock on the given domain '''
 		if domain is None:
 			return 1 / self.domains[0][1]
@@ -64,7 +63,7 @@ class ToriiTestCase(TestCase):
 
 		return 1 / freq
 
-	def run_sim(self, *, suffix: Optional[str] = None) -> None:
+	def run_sim(self, *, suffix: str | None = None) -> None:
 		'''
 		Run the simulation
 
@@ -117,7 +116,7 @@ class ToriiTestCase(TestCase):
 
 		yield Signal()
 
-	def wait_for(self, time: float, domain: Optional[str] = None):
+	def wait_for(self, time: float, domain: str | None = None):
 		'''
 		Waits for the number time units.
 
@@ -240,7 +239,7 @@ class ToriiTestCase(TestCase):
 		yield Settle()
 
 	@staticmethod
-	def wait_until_high(strobe: Signal, *, timeout: Optional[int] = None):
+	def wait_until_high(strobe: Signal, *, timeout: int | None = None):
 		'''
 		Run simulation until signal goes high.
 
@@ -271,7 +270,7 @@ class ToriiTestCase(TestCase):
 				raise RuntimeError(f'Timeout waiting for \'{strobe.name}\' to go high')
 
 	@staticmethod
-	def wait_until_low(strobe: Signal, *, timeout: Optional[int] = None):
+	def wait_until_low(strobe: Signal, *, timeout: int | None = None):
 		'''
 		Run simulation until signal goes low.
 

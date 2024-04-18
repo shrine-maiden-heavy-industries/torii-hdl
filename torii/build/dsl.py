@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
-from typing      import Callable, Generator, Iterator, Literal, Optional, Union
+from typing      import Callable, Generator, Iterator, Type
 
 from .._typing   import IODirWithOE
 
@@ -20,7 +20,7 @@ __all__ = (
 class Pins:
 	def __init__(
 		self, names: str, *, dir: IODirWithOE = 'io', invert: bool = False,
-		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[int] = None
+		conn: tuple[str, int | str] | None = None, assert_width: int | None = None
 	) -> None:
 		if not isinstance(names, str):
 			raise TypeError(f'Names must be a whitespace-separated string, not {names!r}')
@@ -72,7 +72,7 @@ def PinsN(*args, **kwargs) -> Pins:
 class DiffPairs:
 	def __init__(
 		self, p: str, n: str, *, dir: IODirWithOE = 'io', invert: bool = False,
-		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[bool] = None
+		conn: tuple[str, int | str] | None = None, assert_width: bool | None = None
 	) -> None:
 		self.p = Pins(p, dir = dir, conn = conn, assert_width = assert_width)
 		self.n = Pins(n, dir = dir, conn = conn, assert_width = assert_width)
@@ -99,7 +99,7 @@ def DiffPairsN(*args, **kwargs) -> DiffPairs:
 
 
 class Attrs(OrderedDict):
-	def __init__(self, **attrs: dict[str, Union[int, str, Callable]]) -> None:
+	def __init__(self, **attrs: dict[str, int | str | Callable]) -> None:
 		for key, value in attrs.items():
 			if not (value is None or isinstance(value, (str, int)) or hasattr(value, '__call__')):
 				raise TypeError(f'Value of attribute {key} must be None, int, str, or callable, not {value!r}')
@@ -117,7 +117,7 @@ class Attrs(OrderedDict):
 
 
 class Clock:
-	def __init__(self, frequency: Union[float, int]) -> None:
+	def __init__(self, frequency: float | int) -> None:
 		if not isinstance(frequency, (float, int)):
 			raise TypeError('Clock frequency must be a number')
 
@@ -133,7 +133,7 @@ class Clock:
 
 class Subsignal:
 	def __init__(
-		self, name: str, *args: Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]
+		self, name: str, *args: Pins | DiffPairs | Type['Subsignal'] | Attrs | Clock
 	) -> None:
 		self.name  = name
 		self.ios   = []
@@ -189,8 +189,8 @@ class Subsignal:
 class Resource(Subsignal):
 	@classmethod
 	def family(
-		cls, name_or_number: Union[str, int], number: Optional[int] = None, *,
-		ios: list[Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]], default_name: str, name_suffix: str = ''
+		cls, name_or_number: str | int, number: int | None = None, *,
+		ios: list[Pins | DiffPairs | Type['Subsignal'] | Attrs | Clock], default_name: str, name_suffix: str = ''
 	) -> 'Resource':
 		# This constructor accepts two different forms:
 		#  1. Number-only form:
@@ -210,7 +210,7 @@ class Resource(Subsignal):
 			return cls(name_or_number + name_suffix, number, *ios)
 
 	def __init__(
-		self, name: str, number: int, *args: Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]
+		self, name: str, number: int, *args: Pins | DiffPairs | Type['Subsignal'] | Attrs | Clock
 	) -> None:
 		if not isinstance(number, int):
 			raise TypeError(f'Resource number must be an integer, not {number!r}')
@@ -223,7 +223,7 @@ class Resource(Subsignal):
 
 class Connector:
 	def __init__(
-		self, name: str, number: int, io: Union[str, dict[str, str]], *, conn: Optional[tuple[str, Union[int, str]]] = None
+		self, name: str, number: int, io: str | dict[str, str], *, conn: tuple[str, int | str] | None = None
 	) -> None:
 		self.name    = name
 		self.number  = number

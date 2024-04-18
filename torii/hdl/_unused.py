@@ -2,7 +2,7 @@
 
 from sys      import _getframe, excepthook
 from types    import TracebackType
-from typing   import Optional, Type, TypeVar
+from typing   import Type, TypeVar
 from warnings import warn_explicit
 
 from ..util   import get_linter_option
@@ -50,7 +50,7 @@ class MustUse:
 
 _old_excepthook = excepthook
 def _silence_elaboratable(
-	type: Type[BaseException], value: BaseException, traceback: Optional[TracebackType]
+	type: Type[BaseException], value: BaseException, traceback: TracebackType | None
 ) -> None:
 	# Don't show anything if the interpreter crashed; that'd just obscure the exception
 	# traceback instead of helping.

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum           import Enum
-from typing         import Iterable, Literal, Optional
+from typing         import Iterable, Literal
 
 from ....           import Cat, Elaboratable, Module, Record, Signal
 from ....hdl.rec    import Direction
@@ -118,7 +118,7 @@ class Interface(Record):
 	def __init__(
 		self, *, addr_width: int, data_width: int, granularity: int = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
-		name: Optional[str] = None
+		name: str | None = None
 	) -> None:
 		if granularity is None:
 			granularity  = data_width
@@ -211,9 +211,9 @@ class Decoder(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
+		self, *, addr_width: int, data_width: int, granularity: int | None = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset(),
-		alignment: int = 0, name: Optional[str] = None
+		alignment: int = 0, name: str | None = None
 	) -> None:
 		if granularity is None:
 			granularity  = data_width
@@ -258,7 +258,7 @@ class Decoder(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, sub_bus: Interface, *, addr: Optional[int] = None, sparse: bool = False,
+		self, sub_bus: Interface, *, addr: int | None = None, sparse: bool = False,
 		extend: bool = False
 	) -> tuple[int, int, int]:
 		'''
@@ -381,7 +381,7 @@ class Arbiter(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, addr_width: int, data_width: int, granularity: Optional[int] = None,
+		self, *, addr_width: int, data_width: int, granularity: int | None = None,
 		features: Iterable[Literal['rty', 'err', 'stall', 'lock', 'cti', 'bte']] = frozenset()
 	) -> None:
 		self.bus    = Interface(
