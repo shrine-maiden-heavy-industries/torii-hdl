@@ -4,7 +4,7 @@ import re
 import subprocess
 import warnings
 from pathlib import Path
-from typing  import Callable, Optional
+from typing  import Callable
 
 from .       import has_tool, require_tool
 
@@ -43,7 +43,7 @@ class YosysBinary:
 		return has_tool(cls.YOSYS_BINARY)
 
 	@classmethod
-	def version(cls: 'YosysBinary') -> Optional[VersionTrip]:
+	def version(cls: 'YosysBinary') -> VersionTrip | None:
 		'''
 		Get Yosys version.
 
@@ -166,7 +166,7 @@ def min_yosys_version(version: VersionTrip) -> bool:
 	return version >= (0, 30) and version != (0, 37)
 
 def find_yosys(
-	requirement: Callable[[Optional[VersionTrip]], bool] = min_yosys_version
+	requirement: Callable[[VersionTrip | None], bool] = min_yosys_version
 ) -> YosysBinary:
 	'''
 	Find an available Yosys executable of required version.

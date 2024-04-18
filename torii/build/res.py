@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections import OrderedDict
-from typing      import Generator, Literal, Optional, Union
+from typing      import Generator, Literal
 
 from ..hdl.ast   import Signal, SignalDict
 from ..hdl.rec   import Record
@@ -68,23 +68,20 @@ class ResourceManager:
 
 	def request(
 		self, name: str, number: int = 0, *,
-		dir: Optional[Literal['i', 'o', 'oe', 'io', '-']] = None,
-		xdr: Optional[dict[str, int]] = None
-	) -> Union[Record, Pin]:
+		dir: Literal['i', 'o', 'oe', 'io', '-'] | None = None,
+		xdr: dict[str, int] | None = None
+	) -> Record | Pin:
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
 			raise ResourceError(f'Resource {name}#{number} has already been requested')
 
 		def merge_options(
 			subsignal: Subsignal,
-			dir: Optional[Union[Literal['i', 'o', 'oe', 'io', '-'], dict[str, Literal['i', 'o', 'oe', 'io', '-']]]],
-			xdr: Optional[Union[int, dict[str, int]]]
+			dir: Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']] | None,
+			xdr: int | dict[str, int] | None
 		) -> tuple[
-			Union[
-				Literal['i', 'o', 'oe', 'io', '-'],
-				dict[str, Literal['i', 'o', 'oe', 'io', '-']]
-			],
-			Union[int, dict[str, int]]
+			Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']],
+			int | dict[str, int]
 		]:
 			if isinstance(subsignal.ios[0], Subsignal):
 				if dir is None:
@@ -124,10 +121,10 @@ class ResourceManager:
 
 		def resolve(
 			resource: Resource,
-			dir: Union[Literal['i', 'o', 'oe', 'io', '-'], dict[str, Literal['i', 'o', 'oe', 'io', '-']]],
-			xdr: Union[int, dict[str, int]],
+			dir: Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']],
+			xdr: int | dict[str, int],
 			name: str, attrs: Attrs
-		) -> Union[Record, Pin]:
+		) -> Record | Pin:
 			for attr_key, attr_value in attrs.items():
 				if hasattr(attr_value, '__call__'):
 					attr_value = attr_value(self)
@@ -261,7 +258,7 @@ class ResourceManager:
 				for bit, pin_name in enumerate(pin_names):
 					yield (f'{port_name}[{bit}]', pin_name, attrs)
 
-	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
 		if not isinstance(clock, Signal):
 			raise TypeError(f'Object {clock!r} is not a Signal')
 		if not isinstance(frequency, (int, float)):

@@ -4,7 +4,7 @@ import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
 from functools         import reduce
-from typing            import Optional, Union, TYPE_CHECKING, Literal
+from typing            import TYPE_CHECKING, Literal, Type
 
 from ..util            import flatten
 from ..util.tracer     import get_src_loc
@@ -56,7 +56,7 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj: Union['Fragment', Elaboratable, object] , platform: Optional['Platform'],
+		obj: Type['Fragment'] | Elaboratable | object, platform: Type['Platform'] | None,
 		*, formal: bool = False
 	) -> 'Fragment':
 		code = None
@@ -99,7 +99,7 @@ class Fragment:
 		for port in flatten(ports):
 			self.ports[port] = dir
 
-	def iter_ports(self, dir: Optional[Literal['i', 'o', 'io']] = None):
+	def iter_ports(self, dir: Literal['i', 'o', 'io'] | None = None):
 		if dir is None:
 			yield from self.ports
 		else:
@@ -107,7 +107,7 @@ class Fragment:
 				if port_dir == dir:
 					yield port
 
-	def add_driver(self, signal: Signal, domain: Optional[str] = None):
+	def add_driver(self, signal: Signal, domain: str | None = None):
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
 		self.drivers[domain].add(signal)

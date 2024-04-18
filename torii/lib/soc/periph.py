@@ -2,7 +2,7 @@
 
 from collections     import OrderedDict
 from collections.abc import Mapping
-from typing          import Generator, Optional
+from typing          import Generator
 
 from ...util.units   import bits_for
 from .               import event
@@ -61,7 +61,7 @@ class ConstantInt(ConstantValue):
 	'''
 
 	def __init__(
-		self, value: int, *, width: Optional[int] = None, signed: Optional[bool] = None
+		self, value: int, *, width: int | None = None, signed: bool | None = None
 	) -> None:
 		if not isinstance(value, int):
 			raise TypeError(f'Value must be an integer, not {value!r}')
@@ -158,8 +158,8 @@ class PeripheralInfo:
 	'''
 
 	def __init__(
-		self, *, memory_map: MemoryMap, irq: Optional[event.Source] = None,
-		constant_map: Optional[ConstantMap] = None
+		self, *, memory_map: MemoryMap, irq: event.Source | None = None,
+		constant_map: ConstantMap | None = None
 	) -> None:
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')

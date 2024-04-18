@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing    import Literal, Optional
+from typing    import Literal
 
 from ..        import Record
 from ..hdl.rec import Layout
@@ -112,7 +112,7 @@ class Pin(Record):
 	'''
 	def __init__(
 		self, width: int, dir: Literal['i', 'o', 'oe', 'io'], *,
-		xdr: int = 0, name: Optional[str] = None, src_loc_at: int = 0
+		xdr: int = 0, name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		self.width = width
 		self.dir   = dir

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from inspect  import iscoroutinefunction, isgeneratorfunction
-from typing   import IO, Coroutine, Generator, Iterable, Literal, Optional, Union
+from typing   import IO, Coroutine, Generator, Iterable, Literal
 from warnings import warn
 
 from ..hdl    import Signal
@@ -32,7 +32,7 @@ class Settle(Command):
 
 
 class Delay(Command):
-	def __init__(self, interval: Optional[Union[int, float]] = None) -> None:
+	def __init__(self, interval: int | float | None = None) -> None:
 		self.interval = None if interval is None else float(interval)
 
 	def __repr__(self) -> str:
@@ -52,7 +52,7 @@ class Tick(Command):
 			This can cause things to appear out-of-step.
 
 	'''
-	def __init__(self, domain: Union[str, ClockDomain] = 'sync') -> None:
+	def __init__(self, domain: str | ClockDomain = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
 		if domain == 'comb':
@@ -88,12 +88,12 @@ class Simulator:
 		self._engine   = engine(self._fragment)
 		self._clocked  = set()
 
-	def _check_process(self, process: Union[Generator, Coroutine]) -> Union[Generator, Coroutine]:
+	def _check_process(self, process: Generator | Coroutine) -> Generator | Coroutine:
 		if not (isgeneratorfunction(process) or iscoroutinefunction(process)):
 			raise TypeError(f'Cannot add a process {process!r} because it is not a generator function')
 		return process
 
-	def add_process(self, process: Union[Generator, Coroutine]) -> None:
+	def add_process(self, process: Generator | Coroutine) -> None:
 		process = self._check_process(process)
 
 		def wrapper():
@@ -104,7 +104,7 @@ class Simulator:
 		self._engine.add_coroutine_process(wrapper, default_cmd = None)
 
 	def add_sync_process(
-		self, process: Union[Generator, Coroutine], *, domain: Union[str, ClockDomain] = 'sync'
+		self, process: Generator | Coroutine, *, domain: str | ClockDomain = 'sync'
 	) -> None:
 		process = self._check_process(process)
 
@@ -117,8 +117,8 @@ class Simulator:
 		self._engine.add_coroutine_process(wrapper, default_cmd = Tick(domain))
 
 	def add_clock(
-		self, period: float, *, phase: Optional[float] = None,
-		domain: Union[str, ClockDomain] = 'sync', if_exists: bool = False
+		self, period: float, *, phase: float | None = None,
+		domain: str | ClockDomain = 'sync', if_exists: bool = False
 	) -> None:
 		'''
 		Add a clock process.
@@ -233,7 +233,7 @@ class Simulator:
 			pass
 
 	def write_vcd(
-		self, vcd_file: Optional[Union[IO, str]], gtkw_file: Optional[Union[IO, str]] = None, *,
+		self, vcd_file: IO | str | None, gtkw_file: IO | str | None = None, *,
 		traces: Iterable[Signal] = ()
 	) -> None:
 		'''

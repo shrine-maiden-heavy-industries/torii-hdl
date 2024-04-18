@@ -7,7 +7,7 @@ from enum         import Enum
 from functools    import wraps
 from sys          import version_info
 from typing       import (
-	Callable, Generator, ParamSpec, Any, Iterable, Optional, TypedDict, Union, TYPE_CHECKING
+	Callable, Generator, ParamSpec, Any, Iterable, TypedDict, TYPE_CHECKING
 )
 
 from ..util       import flatten, tracer
@@ -45,7 +45,7 @@ class _ModuleBuilderProxy:
 
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
-	def __init__(self, builder: 'Module', depth: int, domain: Optional[str]):
+	def __init__(self, builder: 'Module', depth: int, domain: str | None):
 		super().__init__(builder, depth)
 		self._domain = domain
 
@@ -168,7 +168,7 @@ class FSM:
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
 _SrcLoc = tuple[str, int]
-_Pattern = Union[int, str, Enum]
+_Pattern = int | str | Enum
 _PatternTuple = tuple[_Pattern, ...]
 
 class _IfDict(TypedDict):
@@ -187,7 +187,7 @@ class _SwitchDict(TypedDict):
 class _FSMDict(TypedDict):
 	name: str
 	signal: Signal
-	reset: Optional[str]
+	reset: str | None
 	domain: str
 	encoding: OrderedDict
 	decoding: OrderedDict
@@ -195,7 +195,7 @@ class _FSMDict(TypedDict):
 	src_loc: _SrcLoc
 	state_src_locs: dict[str, _SrcLoc]
 
-_CtrlEntry = Union[_IfDict, _SwitchDict, _FSMDict]
+_CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
@@ -455,7 +455,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._statements = _outer_case
 
 	@contextmanager
-	def FSM(self, reset: Optional[str] = None, domain = 'sync', name = 'fsm'):
+	def FSM(self, reset: str | None = None, domain = 'sync', name = 'fsm'):
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')

@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from enum     import Enum, auto, unique
-from typing   import Optional, Union
 
 from ...build import Attrs, DiffPairs, Pins, PinsN, Resource, Subsignal
 
@@ -34,9 +33,9 @@ class QSPIDataMode(Enum):
 
 def SPIFlashResources(
 	*args,
-	cs_n: str, clk: str, copi: str, cipo: str, wp_n: Optional[str] = None,
-	hold_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	cs_n: str, clk: str, copi: str, cipo: str, wp_n: str | None = None,
+	hold_n: str | None = None, conn: tuple[str, int] | int | None = None,
+	attrs: Attrs | None = None
 ) -> list[Resource]:
 
 	resources = []
@@ -135,9 +134,9 @@ def QSPIFlashResource(
 
 def SDCardResources(
 	*args,
-	clk: str, cmd: str, dat0: str, dat1: Optional[str] = None, dat2: Optional[str] = None,
-	dat3: Optional[str] = None, cd: Optional[str] = None, wp_n: Optional[str] = None,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	clk: str, cmd: str, dat0: str, dat1: str | None = None, dat2: str | None = None,
+	dat3: str | None = None, cd: str | None = None, wp_n: str | None = None,
+	conn: tuple[str, int] | int | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
 
 	resources = []
@@ -192,9 +191,9 @@ def SDCardResources(
 
 def SRAMResource(
 	*args,
-	cs_n: str, oe_n: Optional[str] = None, we_n: str, a: str, d: str,
-	dm_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	cs_n: str, oe_n: str | None = None, we_n: str, a: str, d: str,
+	dm_n: str | None = None, conn: tuple[str, int] | int | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
 
 	io = []
@@ -220,10 +219,10 @@ def SRAMResource(
 
 def SDRAMResource(
 	*args,
-	clk: str, cke: Optional[str] = None, cs_n: Optional[str] = None,
+	clk: str, cke: str | None = None, cs_n: str | None = None,
 	we_n: str, ras_n: str, cas_n: str, ba: str, a: str, dq: str,
-	dqm: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	dqm: str | None = None, conn: tuple[str, int] | int | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
 
 	io = []
@@ -253,9 +252,9 @@ def SDRAMResource(
 
 def NORFlashResources(
 	*args,
-	rst: Optional[str] = None, byte_n: Optional[str] = None,
+	rst: str | None = None, byte_n: str | None = None,
 	cs_n: str, oe_n: str, we_n: str, wp_n: str, by: str, a: str, dq: str,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: tuple[str, int] | int | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
 
 	resources = []
@@ -304,11 +303,11 @@ def NORFlashResources(
 
 def DDR3Resource(
 	*args,
-	rst_n: Optional[str] = None,
+	rst_n: str | None = None,
 	clk_p: str, clk_n: str, clk_en: str, cs_n: str, we_n: str, ras_n: str, cas_n: str,
 	a: str, ba: str, dqs_p: str, dqs_n: str, dq: str, dm: str, odt: str,
-	conn: Optional[Union[tuple[str, int], int]] = None,
-	diff_attrs = None, attrs: Optional[Attrs] = None
+	conn: tuple[str, int] | int | None = None,
+	diff_attrs = None, attrs: Attrs | None = None
 ) -> Resource:
 
 	ios = []

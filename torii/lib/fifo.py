@@ -2,13 +2,14 @@
 
 ''' First-in first-out queues. '''
 
-from typing       import Union
-
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from .formal      import Assert, Assume, Initial
+from ..hdl.ast    import Operator
 from ..util.units import log2_ceil
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding.gray import Decoder, Encoder
+
+
 
 __all__ = (
 	'AsyncFIFO',
@@ -98,7 +99,7 @@ class FIFOInterface:
 		self.r_level = Signal(range(depth + 1))
 
 
-def _incr(signal, modulo: int) -> Union[Mux, int]:
+def _incr(signal, modulo: int) -> Operator | int:
 	if modulo == 2 ** len(signal):
 		return signal + 1
 	else:

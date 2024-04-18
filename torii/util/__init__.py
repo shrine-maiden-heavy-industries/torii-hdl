@@ -3,7 +3,6 @@
 from collections.abc import Iterable
 from linecache       import getlines
 from re              import compile, Match
-from typing          import Union
 
 __all__ = (
 	'flatten',
@@ -31,7 +30,7 @@ def union(i, start = None):
 			r |= e
 	return r
 
-def get_linter_options(filename: str) -> dict[str, Union[int, str]]:
+def get_linter_options(filename: str) -> dict[str, int | str]:
 	magic_comment = compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$')
 
 	# Check the first five lines of the file, because it might not be first
@@ -45,8 +44,8 @@ def get_linter_options(filename: str) -> dict[str, Union[int, str]]:
 
 
 def get_linter_option(
-	filename: str , name: str, type: Union[type[bool], type[int]], default: Union[bool, int]
-) -> Union[bool, int]:
+	filename: str , name: str, type: type[bool] | type[int], default: bool | int
+) -> bool | int:
 	if type not in (bool, int):
 		raise TypeError(f'Expected type to be either \'bool\' or \'int\', not \'{type!r}\'')
 

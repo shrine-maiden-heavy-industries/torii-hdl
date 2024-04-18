@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import IO, Iterable, Optional, Union
+from typing import IO, Iterable
 
 from ..hdl  import Signal
 
@@ -74,7 +74,7 @@ class BaseEngine:
 		raise NotImplementedError
 
 	def write_vcd(
-		self, *, vcd_file: Optional[Union[IO, str]], gtkw_file: Optional[Union[IO, str]] = None,
+		self, *, vcd_file: IO | str | None, gtkw_file: IO | str | None = None,
 		traces: Iterable[Signal]
 	) -> None:
 		raise NotImplementedError
