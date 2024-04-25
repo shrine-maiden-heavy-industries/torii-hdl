@@ -3,7 +3,8 @@
 from collections import OrderedDict
 from enum        import Enum
 from functools   import reduce, wraps
-from typing      import Any, Generator, Iterable, Optional, Union
+from typing      import Any, Generator, Iterable, Optional, Union, get_args, get_origin
+from inspect     import get_annotations, isclass
 
 from ..util      import tracer, union
 from .ast        import Cat, Shape, Signal, SignalSet, Value, ValueCastable
@@ -122,7 +123,31 @@ class Record(ValueCastable):
 
 		return Record(other.layout, name = new_name, fields = fields, src_loc_at = 1)
 
-	def __init__(self, layout, *, name: Optional[str] = None, fields = None, src_loc_at: int = 0) -> None:
+	def __init_subclass__(cls, /, **kwargs):
+		super().__init_subclass__(**kwargs)
+		cls._annotations = get_annotations(cls)
+
+	def _extract_layout(self, annotations):
+		layout = list()
+		for name, typ in annotations.items():
+			# We have nested records
+			if isclass(typ) and issubclass(typ, Record):
+				layout.append(
+					(name, self._extract_layout(get_annotations(typ)))
+				)
+			elif isinstance(get_origin(typ), type(Signal)):
+				params = get_args(typ)
+				if len(params) == 1:
+					layout.append(
+						(name, params[0], DIR_NONE)
+					)
+				elif len(params) == 2:
+					layout.append(
+						(name, params[0], params[1])
+					)
+		return layout
+
+	def __init__(self, layout = None, *, name: Optional[str] = None, fields = None, src_loc_at: int = 0) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
@@ -133,6 +158,12 @@ class Record(ValueCastable):
 			if a is None:
 				return b
 			return f'{a}__{b}'
+
+		if layout is None:
+			if len(self._annotations) > 0:
+				layout = self._extract_layout(self._annotations)
+			else:
+				raise ValueError('No layout specified and unable to construct one from type annotations')
 
 		self.layout = Layout.cast(layout, src_loc_at = 1 + src_loc_at)
 		self.fields = OrderedDict()
