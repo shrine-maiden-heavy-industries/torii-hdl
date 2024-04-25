@@ -11,7 +11,10 @@ from collections.abc   import (
 )
 from enum              import Enum, EnumMeta
 from itertools         import chain
-from typing            import Optional, Union
+from typing            import Optional, Union, Generic, TYPE_CHECKING
+
+# For Python <= 3.10
+from typing_extensions import TypeVarTuple, Unpack
 
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
@@ -1175,8 +1178,9 @@ class Cat(Value):
 		return f'(cat {" ".join(map(repr, self.parts))})'
 
 
+_SigParams = TypeVarTuple('_SigParams')
 # @final
-class Signal(Value, DUID):
+class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	'''
 	A varying integer value.
 
