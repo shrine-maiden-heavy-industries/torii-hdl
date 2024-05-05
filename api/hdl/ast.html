@@ -45,7 +45,7 @@
             Torii-HDL
           </a>
               <div class="version">
-                0.1.dev1+gdfda999
+                0.1.dev1+gd4d5a4f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -106,12 +106,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../language/index.html#the-prelude">The prelude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../language/index.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../language/index.html#shapes-of-values">Shapes of values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../language/index.html#values">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../language/index.html#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../language/index.html#shapes">Shapes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../language/index.html#shapes-of-values">Shapes of values</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../../language/index.html#shape-casting">Shape casting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../language/index.html#shapes-from-integers">Shapes from integers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../language/index.html#shapes-from-ranges">Shapes from ranges</a></li>
@@ -123,6 +121,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../language/index.html#constant-casting">Constant casting</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../language/index.html#signal-names">Signal names</a></li>
@@ -185,6 +186,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
@@ -616,6 +618,15 @@ in this constant and whether it is signed (can represent negative values).
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ast.Const.cast">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.Const.cast" title="Link to this definition"></a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">obj</span></code> to an Torii constant.</p>
+<p>First, <code class="docutils literal notranslate"><span class="pre">obj</span></code> is converted to a value using <code class="xref py py-meth docutils literal notranslate"><span class="pre">Value.cast()</span></code>. If it is a constant, it
+is returned. If it is a constant-castable expression, it is evaluated and returned.
+Otherwise, <a href="#id1"><span class="problematic" id="id2">:exn:`TypeError`</span></a> is raised.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.ast.Const.shape">
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Const.shape" title="Link to this definition"></a></dt>
 <dd><p>Bit width and signedness of a value.</p>
@@ -822,11 +833,36 @@ the enumeration is signed.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.ShapeCastable">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Link to this definition"></a></dt>
-<dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>Shape`s.</p>
+<dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>Shape`s.</p>
 <p>An object deriving from <a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> is automatically converted to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>
 when it is used in a context where a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is expected. Such objects can contain
 a richer description of the shape than what is supported by the core Torii language, yet
 still be transparently used with it.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ast.ShapeLike">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ast.ShapeLike" title="Link to this definition"></a></dt>
+<dd><p>An abstract class representing all objects that can be cast to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">issubclass(cls,</span> <span class="pre">ShapeLike)</span></code> returns <code class="docutils literal notranslate"><span class="pre">True</span></code> for:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></p></li>
+<li><p><a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> and its subclasses</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> and its subclasses</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> and its subclasses</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.EnumMeta</span></code> and its subclasses</p></li>
+<li><p><a class="reference internal" href="#torii.hdl.ast.ShapeLike" title="torii.hdl.ast.ShapeLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeLike</span></code></a> itself</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">isinstance(obj,</span> <span class="pre">ShapeLike)</span></code> returns <code class="docutils literal notranslate"><span class="pre">True</span></code> for:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> instances</p></li>
+<li><p><a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> instances</p></li>
+<li><p>non-negative <code class="docutils literal notranslate"><span class="pre">int</span></code> values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> instances</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclasses where all values are <span class="xref std std-ref">value-like</span></p></li>
+</ul>
+<p>This class is only usable for the above checks — no instances and no (non-virtual)
+subclasses can be created.</p>
 </dd></dl>
 
 <dl class="py class">

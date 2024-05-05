@@ -45,7 +45,7 @@
             Torii-HDL
           </a>
               <div class="version">
-                0.1.dev1+gdfda999
+                0.1.dev1+gd4d5a4f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -106,12 +106,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="language/index.html">Language Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#the-prelude">The prelude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language/index.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language/index.html#shapes-of-values">Shapes of values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#values">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="language/index.html#shapes">Shapes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="language/index.html#shapes-of-values">Shapes of values</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#shape-casting">Shape casting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#shapes-from-integers">Shapes from integers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#shapes-from-ranges">Shapes from ranges</a></li>
@@ -123,6 +121,9 @@
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language/index.html#constant-casting">Constant casting</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-names">Signal names</a></li>
@@ -185,6 +186,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
@@ -446,7 +448,7 @@
 </div>
 <section id="system-requirements">
 <h2>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
-<p>Torii requires Python &gt;= 3.9, and <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> &gt;= 0.20. Torii has been tested with <a class="reference external" href="https://www.python.org/">CPython</a>, but might possibly run under <a class="reference external" href="https://www.pypy.org/">PyPy</a>.</p>
+<p>Torii requires Python &gt;= 3.10, and <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> &gt;= 0.30 except Yosys version 0.37 due to a Verilog backend bug. Torii has been tested with <a class="reference external" href="https://www.python.org/">CPython</a>, but might possibly run under <a class="reference external" href="https://www.pypy.org/">PyPy</a>.</p>
 <p>Simulating Torii code requires no additional software. However, a waveform viewer like <a class="reference external" href="http://gtkwave.sourceforge.net/">GTKWave</a> is invaluable for debugging.</p>
 <p>Synthesizing, placing and routing an Torii design for an FPGA requires the FPGA family specific toolchain. See the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform</span></a> specific documentation for more information regarding vendor toolchains.</p>
 </section>
@@ -524,8 +526,8 @@
 </div>
 <p>With other Linux distributions, it is recommended to use the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build">OSS Cad Suite</a> nightly build. It provides a full environment of all the tools needed built on a nightly basis. This includes Yosys and GTKWave</p>
 <p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2022-04-26/oss-cad-suite-linux-x64-20220426.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-linux-x64-20220426.tgz
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-linux-x64-20240504.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-linux-x64-20240504.tgz
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;`pwd`/oss-cad-suite/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
@@ -534,8 +536,8 @@
 <p class="platform-title">macOS</p>
 <p>For macOS systems, it is recommended to use the YoWASP distribution of the toolchain. However if you want to use the native tools, and you are using an Intel based Mac, then the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build">OSS Cad Suite</a> has nightly builds for x86_64 versions of Darwin. This includes Yosys and GTKWave</p>
 <p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2022-04-26/oss-cad-suite-darwin-x64-20220426.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-darwin-x64-20220426.tgz
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-darwin-x64-20240504.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-darwin-x64-20240504.tgz
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;`pwd`/oss-cad-suite/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 </pre></div>
 </div>

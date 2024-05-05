@@ -45,7 +45,7 @@
             Torii-HDL
           </a>
               <div class="version">
-                0.1.dev1+gdfda999
+                0.1.dev1+gd4d5a4f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -106,12 +106,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">Language Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#the-prelude">The prelude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../language/index.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../language/index.html#shapes-of-values">Shapes of values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#values">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../language/index.html#shapes">Shapes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../language/index.html#shapes-of-values">Shapes of values</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#shape-casting">Shape casting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#shapes-from-integers">Shapes from integers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#shapes-from-ranges">Shapes from ranges</a></li>
@@ -123,6 +121,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../language/index.html#constant-casting">Constant casting</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#signal-names">Signal names</a></li>
@@ -185,6 +186,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
@@ -444,7 +446,7 @@
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.fifo</span></code> module provides building blocks for first-in, first-out queues.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.fifo.FIFOInterface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">FIFOInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.FIFOInterface" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">FIFOInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.FIFOInterface" title="Link to this definition"></a></dt>
 <dd><blockquote>
 <div><p>Data written to the input interface (<code class="docutils literal notranslate"><span class="pre">w_data</span></code>, <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code>, <code class="docutils literal notranslate"><span class="pre">w_en</span></code>) is buffered and can be
 read at the output interface (<code class="docutils literal notranslate"><span class="pre">r_data</span></code>, <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code>, <code class="docutils literal notranslate"><span class="pre">r_en</span></code>). The data entry written first
