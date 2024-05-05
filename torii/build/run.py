@@ -134,6 +134,11 @@ class BuildPlan:
 				with filename.resolve().open('wb') as f:
 					f.write(content)
 
+				# If we're on unix-like and we're emitting the shell script, set it as +x
+				if not sys.platform.startswith('win32') and filename.suffix == '.sh':
+					filename.chmod(0o755) # rwxr-xr-x
+
+
 			if run_script:
 				script_env = dict(os.environ)
 				if env is not None:
