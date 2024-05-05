@@ -287,7 +287,7 @@ class DecoderSimulationTestCase(ToriiTestSuiteCase):
 
 		sim = Simulator(dut)
 		sim.add_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_addr_translate(self):
@@ -406,7 +406,7 @@ class DecoderSimulationTestCase(ToriiTestSuiteCase):
 		m.submodules += dut, loop_1, loop_2, loop_3, loop_4
 		sim = Simulator(m)
 		sim.add_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_coarse_granularity(self):
@@ -428,7 +428,7 @@ class DecoderSimulationTestCase(ToriiTestSuiteCase):
 
 		sim = Simulator(dut)
 		sim.add_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 
@@ -554,7 +554,7 @@ class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 		sim = Simulator(dut)
 		sim.add_clock(1e-6)
 		sim.add_sync_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_lock(self):
@@ -606,7 +606,7 @@ class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 		sim = Simulator(dut)
 		sim.add_clock(1e-6)
 		sim.add_sync_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_stall(self):
@@ -631,7 +631,7 @@ class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 
 		sim = Simulator(dut)
 		sim.add_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_stall_compat(self):
@@ -655,7 +655,7 @@ class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 
 		sim = Simulator(dut)
 		sim.add_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_roundrobin(self):
@@ -716,5 +716,5 @@ class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 		sim = Simulator(dut)
 		sim.add_clock(1e-6)
 		sim.add_sync_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()

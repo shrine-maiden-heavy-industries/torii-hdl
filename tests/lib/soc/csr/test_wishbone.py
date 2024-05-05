@@ -147,7 +147,7 @@ class WishboneCSRBridgeTestCase(ToriiTestSuiteCase):
 		sim = Simulator(m)
 		sim.add_clock(1e-6)
 		sim.add_sync_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
 
 	def test_wide(self):
@@ -239,5 +239,5 @@ class WishboneCSRBridgeTestCase(ToriiTestSuiteCase):
 		sim = Simulator(m)
 		sim.add_clock(1e-6)
 		sim.add_sync_process(sim_test)
-		with sim.write_vcd(vcd_file = open('test.vcd', 'w')):
+		with sim.write_vcd('test.vcd'):
 			sim.run()
