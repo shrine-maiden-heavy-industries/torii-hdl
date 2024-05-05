@@ -7,7 +7,7 @@ The following instructions are a work-in-progress and may not be entirely up to 
 
 ## System requirements
 
-Torii requires Python >= 3.9, and [Yosys](https://github.com/YosysHQ/yosys) >= 0.20. Torii has been tested with [CPython](https://www.python.org/), but might possibly run under [PyPy](https://www.pypy.org/).
+Torii requires Python >= 3.10, and [Yosys](https://github.com/YosysHQ/yosys) >= 0.35. Torii has been tested with [CPython](https://www.python.org/), but might possibly run under [PyPy](https://www.pypy.org/).
 
 
 Simulating Torii code requires no additional software. However, a waveform viewer like [GTKWave](http://gtkwave.sourceforge.net/) is invaluable for debugging.
@@ -108,8 +108,8 @@ First off, install `python` and `pip` onto your system if the're not there alrea
 
 		.. code-block:: console
 
-		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2022-04-26/oss-cad-suite-linux-x64-20220426.tgz
-		  $ tar xfv oss-cad-suite-linux-x64-20220426.tgz
+		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-linux-x64-20240504.tgz
+		  $ tar xfv oss-cad-suite-linux-x64-20240504.tgz
 		  $ export PATH="`pwd`/oss-cad-suite/bin:$PATH"
 
 
@@ -122,8 +122,8 @@ First off, install `python` and `pip` onto your system if the're not there alrea
 
 		.. code-block:: console
 
-		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2022-04-26/oss-cad-suite-darwin-x64-20220426.tgz
-		  $ tar xfv oss-cad-suite-darwin-x64-20220426.tgz
+		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-darwin-x64-20240504.tgz
+		  $ tar xfv oss-cad-suite-darwin-x64-20240504.tgz
 		  $ export PATH="`pwd`/oss-cad-suite/bin:$PATH"
 
 	.. platform-choice:: windows

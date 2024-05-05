@@ -18,14 +18,11 @@ def _convert_rtlil_text(
 ) -> str:
 
 	yosys = find_yosys()
-	yosys_version = yosys.version()
 
 	script = []
 	script.append(f'read_rtlil <<rtlil\n{rtlil_text}\nrtlil')
-	if yosys_version >= (0, 17):
-		script.append('proc -nomux -norom')
-	else:
-		script.append('proc -nomux')
+
+	script.append('proc -nomux -norom')
 	script.append('memory_collect')
 
 	if strip_internal_attrs:
