@@ -157,11 +157,11 @@ def min_yosys_version(version: tuple[int, int, int]) -> bool:
 	Returns
 	-------
 	bool:
-		If the version meets the minimum requirement. (currently 0.35)
+		If the version meets the minimum requirement. (currently 0.30+ except 0.37)
 
 	'''
 
-	return version >= (0, 35)
+	return version >= (0, 30) and version != (0, 37)
 
 def find_yosys(
 	requirement: Callable[[Optional[tuple[int, int, int]]], bool] = min_yosys_version

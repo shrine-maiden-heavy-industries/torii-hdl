@@ -7,7 +7,7 @@ The following instructions are a work-in-progress and may not be entirely up to 
 
 ## System requirements
 
-Torii requires Python >= 3.10, and [Yosys](https://github.com/YosysHQ/yosys) >= 0.35. Torii has been tested with [CPython](https://www.python.org/), but might possibly run under [PyPy](https://www.pypy.org/).
+Torii requires Python >= 3.10, and [Yosys](https://github.com/YosysHQ/yosys) >= 0.30 except Yosys version 0.37 due to a Verilog backend bug. Torii has been tested with [CPython](https://www.python.org/), but might possibly run under [PyPy](https://www.pypy.org/).
 
 
 Simulating Torii code requires no additional software. However, a waveform viewer like [GTKWave](http://gtkwave.sourceforge.net/) is invaluable for debugging.
