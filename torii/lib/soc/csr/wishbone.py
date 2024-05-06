@@ -3,7 +3,7 @@
 from typing         import Optional
 
 from ....           import Cat, Elaboratable, Module, Signal
-from ....util.units import exact_log2
+from ....util.units import log2_exact
 from ..memory       import MemoryMap
 from ..wishbone     import Interface as WishboneInterface
 from .              import Interface as CSRInterface
@@ -53,7 +53,7 @@ class WishboneCSRBridge(Elaboratable):
 
 		self.csr_bus = csr_bus
 		self.wb_bus  = WishboneInterface(
-			addr_width = max(0, csr_bus.addr_width - exact_log2(data_width // csr_bus.data_width)),
+			addr_width = max(0, csr_bus.addr_width - log2_exact(data_width // csr_bus.data_width)),
 			data_width = data_width,
 			granularity = csr_bus.data_width,
 			name = 'wb'
@@ -76,7 +76,7 @@ class WishboneCSRBridge(Elaboratable):
 		m = Module()
 
 		cycle = Signal(range(len(wb_bus.sel) + 1))
-		m.d.comb += csr_bus.addr.eq(Cat(cycle[:exact_log2(len(wb_bus.sel))], wb_bus.adr))
+		m.d.comb += csr_bus.addr.eq(Cat(cycle[:log2_exact(len(wb_bus.sel))], wb_bus.adr))
 
 		with m.If(wb_bus.cyc & wb_bus.stb):
 			with m.Switch(cycle):

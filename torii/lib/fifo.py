@@ -6,7 +6,7 @@ from typing       import Union
 
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from ..asserts    import Assert, Assume, Initial
-from ..util.units import ceil_log2
+from ..util.units import log2_ceil
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding.gray import Decoder, Encoder
 
@@ -318,7 +318,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
-			depth_bits = ceil_log2(depth)
+			depth_bits = log2_ceil(depth)
 			if exact_depth and depth != 1 << depth_bits:
 				raise ValueError(
 					f'AsyncFIFO only supports depths that are powers of 2; requested exact depth {depth} is not'
@@ -499,7 +499,7 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 		exact_depth: bool = False
 	) -> None:
 		if depth != 0:
-			depth_bits = ceil_log2(max(0, depth - 1))
+			depth_bits = log2_ceil(max(0, depth - 1))
 			if exact_depth and depth != (1 << depth_bits) + 1:
 				raise ValueError(
 					'AsyncFIFOBuffered only supports depths that are one higher than powers of 2; '

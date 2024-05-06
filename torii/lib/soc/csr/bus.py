@@ -5,7 +5,7 @@ from enum           import Enum
 from typing         import Optional
 
 from ....           import Elaboratable, Module, Mux, Record, Signal
-from ....util.units import ceil_log2
+from ....util.units import log2_ceil
 from ..memory       import MemoryMap
 
 __all__ = (
@@ -242,13 +242,13 @@ class Multiplexer(Elaboratable):
 			Arguments
 			---------
 			elem_range : :class:`range`
-				Address range of a CSR :class:`Element`. It uses ``2 ** ceil_log2(elem_range.stop -
+				Address range of a CSR :class:`Element`. It uses ``2 ** log2_ceil(elem_range.stop -
 				elem_range.start)`` chunks of the shadow register. If this amount is greater than
 				:attr:`~Multiplexer._Shadow.size`, it replaces the latter.
 			'''
 			assert isinstance(elem_range, range)
 			self._ranges.add(elem_range)
-			elem_size  = 2 ** ceil_log2(elem_range.stop - elem_range.start)
+			elem_size  = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			self._size = max(self._size, elem_size)
 
 		def decode_address(self, addr, elem_range):
@@ -274,7 +274,7 @@ class Multiplexer(Elaboratable):
 					|0001|11|00|
 					+----+--+--+
 							│  └─ 0
-							└──── ceil_log2(elem_range.stop - elem_range.start)
+							└──── log2_ceil(elem_range.stop - elem_range.start)
 
 				The upper bits of the offset would be ``0b10``, extracted from ``elem_range.start``:
 
@@ -284,14 +284,14 @@ class Multiplexer(Elaboratable):
 					|0001|10|11|
 					+----+--+--+
 						 │  │
-						 │  └──── ceil_log2(elem_range.stop - elem_range.start)
+						 │  └──── log2_ceil(elem_range.stop - elem_range.start)
 						 └─────── log2(self.size)
 
 
 				The decoded offset would therefore be ``8`` (i.e. ``0b1000``).
 			''' # noqa: E101
 			assert elem_range in self._ranges and addr in elem_range
-			elem_size = 2 ** ceil_log2(elem_range.stop - elem_range.start)
+			elem_size = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			self_mask = self.size - 1
 			elem_mask = elem_size - 1
 			return elem_range.start & self_mask & ~elem_mask | addr & elem_mask
@@ -307,7 +307,7 @@ class Multiplexer(Elaboratable):
 				located at ``offset``. See :meth:`~Multiplexer._Shadow.decode_address` for details.
 			'''
 			assert elem_range in self._ranges and isinstance(offset, int)
-			elem_size = 2 ** ceil_log2(elem_range.stop - elem_range.start)
+			elem_size = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			return elem_range.start + ((offset - elem_range.start) % elem_size)
 
 		def prepare(self):

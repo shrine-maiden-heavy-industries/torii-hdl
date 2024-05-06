@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import operator
-
-from .decorators import deprecated
+import warnings
 
 __all__ = (
 	'ps_to_sec',
@@ -16,8 +15,8 @@ __all__ = (
 	'bits_for',
 	'iec_size',
 	'log2_int',
-	'ceil_log2',
-	'exact_log2',
+	'log2_ceil',
+	'log2_exact',
 )
 
 PS = 1e-12
@@ -82,7 +81,7 @@ def iec_size(size: int, dec: int = 2) -> str:
 
 	return f'{fixed}{suffixes[scale]}'
 
-def ceil_log2(n):
+def log2_ceil(n):
 	'''
 	Returns the integer log2 of the smallest power-of-2 greater than or equal to `n`.
 
@@ -97,7 +96,7 @@ def ceil_log2(n):
 	return (n - 1).bit_length()
 
 
-def exact_log2(n):
+def log2_exact(n):
 	'''
 	Returns the integer log2 of `n`, which must be an exact power of two.
 
@@ -109,9 +108,22 @@ def exact_log2(n):
 		raise ValueError(f'{n} is not a power of 2')
 	return (n - 1).bit_length()
 
-@deprecated('Replace usage of `log2_int(n, True)` with `exact_log2(n)` and instances of `log2_int(n, False)` with `ceil_log2(n)`')
 def log2_int(n: int, need_pow2: bool = True) -> int:
 	''' '''
+	if need_pow2:
+		warnings.warn(
+			'`log2_int` is deprecated, replace usage of `log2_int(n, True)` with `log2_exact(n)`',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+	else:
+		warnings.warn(
+			'`log2_int` is deprecated, replace usage of `log2_int(n, False)` with `log2_ceil(n)`',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+
+
 	n = operator.index(n)
 	if n == 0:
 		return 0
@@ -127,10 +139,10 @@ def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	n = operator.index(n)
 
 	if n > 0:
-		r = ceil_log2(n + 1)
+		r = log2_ceil(n + 1)
 	else:
 		require_sign_bit = True
-		r = ceil_log2(-n)
+		r = log2_ceil(-n)
 	if require_sign_bit:
 		r += 1
 	return r

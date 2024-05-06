@@ -23,30 +23,30 @@ class UnitUtilTestCase(ToriiTestCase):
 			'15.9999999998EiB'
 		)
 
-	def test_ceil_log2(self):
-		self.assertEqual(util_units.ceil_log2(0), 0)
-		self.assertEqual(util_units.ceil_log2(1), 0)
-		self.assertEqual(util_units.ceil_log2(2), 1)
-		self.assertEqual(util_units.ceil_log2(3), 2)
-		self.assertEqual(util_units.ceil_log2(4), 2)
-		self.assertEqual(util_units.ceil_log2(5), 3)
-		self.assertEqual(util_units.ceil_log2(8), 3)
-		self.assertEqual(util_units.ceil_log2(9), 4)
+	def test_log2_ceil(self):
+		self.assertEqual(util_units.log2_ceil(0), 0)
+		self.assertEqual(util_units.log2_ceil(1), 0)
+		self.assertEqual(util_units.log2_ceil(2), 1)
+		self.assertEqual(util_units.log2_ceil(3), 2)
+		self.assertEqual(util_units.log2_ceil(4), 2)
+		self.assertEqual(util_units.log2_ceil(5), 3)
+		self.assertEqual(util_units.log2_ceil(8), 3)
+		self.assertEqual(util_units.log2_ceil(9), 4)
 		with self.assertRaises(TypeError):
-			util_units.ceil_log2(1.5)
+			util_units.log2_ceil(1.5)
 		with self.assertRaises(ValueError, msg = '-1 is negative'):
-			util_units.ceil_log2(-1)
+			util_units.log2_ceil(-1)
 
-	def test_exact_log2(self):
-		self.assertEqual(util_units.exact_log2(1), 0)
-		self.assertEqual(util_units.exact_log2(2), 1)
-		self.assertEqual(util_units.exact_log2(4), 2)
-		self.assertEqual(util_units.exact_log2(8), 3)
+	def test_log2_exact(self):
+		self.assertEqual(util_units.log2_exact(1), 0)
+		self.assertEqual(util_units.log2_exact(2), 1)
+		self.assertEqual(util_units.log2_exact(4), 2)
+		self.assertEqual(util_units.log2_exact(8), 3)
 		for val in [-1, 0, 3, 5, 6, 7, 9]:
 			with self.assertRaises(ValueError, msg = f'{val} is not a power of 2'):
-				util_units.exact_log2(val)
+				util_units.log2_exact(val)
 		with self.assertRaises(TypeError):
-			util_units.exact_log2(1.5)
+			util_units.log2_exact(1.5)
 
 	def test_log2_int(self):
 		self.assertEqual(util_units.log2_int(0), 0)
