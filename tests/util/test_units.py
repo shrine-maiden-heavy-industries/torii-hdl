@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+import warnings
+
 from torii.util import units as util_units
 from torii.test import ToriiTestCase
 
@@ -49,24 +51,29 @@ class UnitUtilTestCase(ToriiTestCase):
 			util_units.log2_exact(1.5)
 
 	def test_log2_int(self):
-		self.assertEqual(util_units.log2_int(0), 0)
-		self.assertEqual(util_units.log2_int(2), 1)
-		self.assertEqual(util_units.log2_int(4), 2)
-		self.assertEqual(util_units.log2_int(8), 3)
-		self.assertEqual(util_units.log2_int(9, False), 4)
 
-		for val in [-1, 3, 5, 6, 7, 9]:
-			with self.assertRaises(ValueError, msg = f'{val} is not a power of 2'):
-				util_units.log2_int(val)
+		# So we don't fill our test logs with warnings that don't mean anything
+		with warnings.catch_warnings():
+			warnings.filterwarnings(action = 'ignore', category = DeprecationWarning)
 
-		self.assertEqual(util_units.log2_int(0, False), 0)
-		self.assertEqual(util_units.log2_int(1, False), 0)
-		self.assertEqual(util_units.log2_int(2, False), 1)
-		self.assertEqual(util_units.log2_int(3, False), 2)
-		self.assertEqual(util_units.log2_int(4, False), 2)
-		self.assertEqual(util_units.log2_int(5, False), 3)
-		self.assertEqual(util_units.log2_int(8, False), 3)
-		self.assertEqual(util_units.log2_int(9, False), 4)
+			self.assertEqual(util_units.log2_int(0), 0)
+			self.assertEqual(util_units.log2_int(2), 1)
+			self.assertEqual(util_units.log2_int(4), 2)
+			self.assertEqual(util_units.log2_int(8), 3)
+			self.assertEqual(util_units.log2_int(9, False), 4)
+
+			for val in [-1, 3, 5, 6, 7, 9]:
+				with self.assertRaises(ValueError, msg = f'{val} is not a power of 2'):
+					util_units.log2_int(val)
+
+			self.assertEqual(util_units.log2_int(0, False), 0)
+			self.assertEqual(util_units.log2_int(1, False), 0)
+			self.assertEqual(util_units.log2_int(2, False), 1)
+			self.assertEqual(util_units.log2_int(3, False), 2)
+			self.assertEqual(util_units.log2_int(4, False), 2)
+			self.assertEqual(util_units.log2_int(5, False), 3)
+			self.assertEqual(util_units.log2_int(8, False), 3)
+			self.assertEqual(util_units.log2_int(9, False), 4)
 
 	def test_bits_for(self):
 		self.assertEqual(util_units.bits_for(1024), 11)
