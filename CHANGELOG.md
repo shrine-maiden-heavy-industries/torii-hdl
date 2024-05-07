@@ -31,6 +31,7 @@ Unreleased template stuff
 ### Removed
 
  - Removed deprecated `log2_int`
+ - Removed deprecated `torii.platform.vendor.intel` Module
 
 ### Fixed
 
