@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import operator
-import warnings
 
 __all__ = (
 	'ps_to_sec',
@@ -14,7 +13,6 @@ __all__ = (
 	'sec_to_ms',
 	'bits_for',
 	'iec_size',
-	'log2_int',
 	'log2_ceil',
 	'log2_exact',
 )
@@ -107,31 +105,6 @@ def log2_exact(n):
 	if n <= 0 or (n & (n - 1)):
 		raise ValueError(f'{n} is not a power of 2')
 	return (n - 1).bit_length()
-
-def log2_int(n: int, need_pow2: bool = True) -> int:
-	''' '''
-	if need_pow2:
-		warnings.warn(
-			'`log2_int` is deprecated, replace usage of `log2_int(n, True)` with `log2_exact(n)`',
-			DeprecationWarning,
-			stacklevel = 2
-		)
-	else:
-		warnings.warn(
-			'`log2_int` is deprecated, replace usage of `log2_int(n, False)` with `log2_ceil(n)`',
-			DeprecationWarning,
-			stacklevel = 2
-		)
-
-
-	n = operator.index(n)
-	if n == 0:
-		return 0
-	r = (n - 1).bit_length()
-	if need_pow2 and (1 << r) != n:
-		raise ValueError(f'{n} is not a power of 2')
-	return r
-
 
 def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	''' Returns the number of bits needed to represent int ``n`` '''

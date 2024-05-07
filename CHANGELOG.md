@@ -30,6 +30,7 @@ Unreleased template stuff
 
 ### Removed
 
+ - Removed deprecated `log2_int`
 
 ### Fixed
 
