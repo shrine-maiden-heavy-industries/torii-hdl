@@ -30,10 +30,76 @@ Unreleased template stuff
 
 ### Removed
 
- - Removed deprecated `torii.platform.vendor.lattice_*` modules.
 
 ### Fixed
 
+## [0.6.0]
+
+### Added
+
+ - Rough initial type annotations to `torii.hdl.mem`
+ - Added the ability to specify `tar` for the `torii.build.run.BuildPlan.archive` call.
+ - Added check inside `Record`s to ensure they're properly constructed prior to accessing their fields.
+ - Added the ability to override a Value's operators.
+ - Added the ability to put non-signals into `write_vcd`'s `traces` parameter.
+ - Added name disambiguation for traced signals where they share the same name.
+ - Added `ValueLike` and `ShapeLike`, mainly for additional typing and instance checking assistance.
+ - Added the ability for `Cat` and `Slice`, statements to be cast as a `Const` value.
+ - Added `#!/bin/sh` to the top of build shell scripts.
+ - Added `BuildPlan.extract` to extract files from the build plan without having to run it, this replaces the functionality that occurred when `BuildPlan.execute_local` was passed with `run_script = False`.
+ - Added `BuildPlan.execute_docker` to allow for invoking a build inside a specified docker container.
+ - Added `log2_ceil` and `log2_exact` to replace `log2_int` with the `False` and `True` params respectively.
+ - `ShapeCastable` objects can now be const initialized.
+
+### Changed
+
+ - Improved Oscillator frequency diagnostics for `torii.vendor.GowinPlatform`.
+ - Fixed `torii.lib.fifo` FIFOs to use the new memory semantics correctly.
+ - `torii.lib.soc.csr` Multiplexer shadow registers have been re-designed.
+ - Bumped minimum Python version from 3.9 to 3.10.
+ - Renamed `IntelPlatform` to `AlteraPlatform`.
+ - FWFT mode is default for all FIFOs now.
+ - Bumped the minimum version of Yosys to 0.30.
+ - Empty `Case` blocks now throw an exception when being used in place of a `Default` block
+ - Behavioral change warning in empty `Value.matches()` where currently it returns `Const(1)` but will return `Const(0)` in the future.
+ - We now only close a VCD or GTKW file in the simulator if it was opened by the simulator.
+ - Build shell scripts will now be marked as executable on unix-like hosts.
+ - `Instance` objects know collect source location information.
+ - Memories have been turned into a first-class IR representation.
+ - Out-of-range rests now error, not just warn.
+ - A warning is now generated when a `Case()` falls after a `Default()`, and an error is raised when there are multiple `Default()`'s in a `Switch`
+ - Shape casting a `range(1)` now resolves to an `unsigned(0)`
+
+### Deprecated
+
+ - Deprecated `torii.vendor.intel` and `torii.vendor.intel.IntelPlatform` in favor of `torii.vendor.altera` and `torii.vendor.altera.AlteraPlatform`.
+ - Deprecated `execute_local()`'s `run_script` param in favor of `extract`
+ - Deprecated use of `log2_int` in favor of `log2_ceil` and `log2_exact` where appropriate.
+
+### Removed
+
+ - Removed deprecated `torii.platform.vendor.lattice_*` modules.
+ - Removed deprecated `Repl` call in favor of `Value.replicate`.
+ - Removed `set -x` if the `verbose` param is set for platform builds.
+ - Removed the last little bit of `$verilog_initial_trigger` traces.
+ - Removed sub-classing of `AnyValue` and `Property`
+
+### Fixed
+
+ - Fixed `ToriiTestCase.settle` to handle "0" count settles.
+ - Fixed `torii.hdl.dsl.Module`'s constructor to properly use `super()` rather than a parent class name call.
+ - Load of typing annotation fixes.
+ - Cleaned up a load of blank `asserts`, they should now have more clear error diagnostics.
+ - Fixed a handful of typos throughout the library and documentation.
+ - Fixed tracer calls for Python 3.13
+ - Fixed `Array` not being indexable by a `ValueCastable`.
+ - Fixed `ValueCastable` not being accepted as a simulation coroutine command.
+ - Fixed handling of redundant `Case` branches.
+ - Fixed `Value.shift_right` and `Value.as_signed` edge cases.
+ - Fixed using 0-width `Switch`'s with integer keys.
+ - Trying to use the Python `in` operator on a `Value` now raises a sensible error.
+ - When indexing or slicing a Value with another Value, it now raises an error and suggests to use `Value.bit_select` or `Value.word_select` instead.
+ - Fixed simulation look when process catches an injected exception.
 
 ## [0.5.0]
 
@@ -62,6 +128,7 @@ Unreleased template stuff
 
  - Old Lattice platform names have been deprecated in favor of the new platform location.
  - Deprecated `Repl` in favor of `Value.replicate`.
+
 ### Removed
 
  - Removed the `torii.cli` module
@@ -250,7 +317,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.0...main
+[0.6.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...v0.5.0
 [0.4.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4
