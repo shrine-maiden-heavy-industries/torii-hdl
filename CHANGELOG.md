@@ -32,6 +32,7 @@ Unreleased template stuff
 
  - Removed deprecated `log2_int`
  - Removed deprecated `torii.platform.vendor.intel` Module
+ - Removed deprecated parameter `run_script` from `BuildPlan.execute_local`
 
 ### Fixed
 
