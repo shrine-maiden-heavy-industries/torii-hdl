@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .ast  import (
-	Array, Cat, ClockSignal, Const, Mux, Repl, ResetSignal,
+	Array, Cat, ClockSignal, Const, Mux, ResetSignal,
 	Shape, Signal, Value, signed, unsigned
 )
 from .cd   import ClockDomain
@@ -26,7 +26,6 @@ __all__ = (
 	'Module',
 	'Mux',
 	'Record',
-	'Repl',
 	'ResetInserter',
 	'ResetSignal',
 	'Shape',

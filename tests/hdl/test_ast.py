@@ -1166,27 +1166,6 @@ class CatTestCase(ToriiTestSuiteCase):
 		self.assertEqual(a.width, 16)
 		self.assertEqual(a.signed, False)
 
-
-class ReplTestCase(ToriiTestSuiteCase):
-	def test_cast(self):
-		r = Repl(0, 3)
-		self.assertEqual(repr(r), '(cat (const 1\'d0) (const 1\'d0) (const 1\'d0))')
-
-	def test_int_01(self):
-		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'error', category = SyntaxWarning)
-			Repl(0, 3)
-			Repl(1, 3)
-
-	def test_int_wrong(self):
-		with self.assertWarnsRegex(
-			SyntaxWarning,
-			r'^Value argument of Repl\(\) is a bare integer 2 used in bit vector context; '
-			r'consider specifying explicit width using Const\(2, 2\) instead$'
-		):
-			Repl(2, 3)
-
-
 class ArrayTestCase(ToriiTestSuiteCase):
 	def test_acts_like_array(self):
 		a = Array([1, 2, 3])

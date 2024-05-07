@@ -14,7 +14,7 @@ from itertools         import chain
 from typing            import Optional, Union
 
 from ..util            import flatten, tracer, union
-from ..util.decorators import final, deprecated
+from ..util.decorators import final
 from ..util.units      import bits_for
 from ._unused          import MustUse, UnusedMustUse
 
@@ -37,7 +37,6 @@ __all__ = (
 	'Part',
 	'Past',
 	'Property',
-	'Repl',
 	'ResetSignal',
 	'Rose',
 	'Sample',
@@ -1174,39 +1173,6 @@ class Cat(Value):
 
 	def __repr__(self) -> str:
 		return f'(cat {" ".join(map(repr, self.parts))})'
-
-
-@deprecated('instead of `Repl(value, count)`, use `value.replicate(count)`')
-def Repl(value: ValueCastType, count: int):
-	'''
-	Replicate a value
-
-	An input value is replicated (repeated) several times
-	to be used on the RHS of assignments::
-
-		len(Repl(s, n)) == len(s) * n
-
-	Parameters
-	----------
-	value : Value, in
-		Input value to be replicated.
-	count : int
-		Number of replications.
-
-	Returns
-	-------
-	Value, out
-		Replicated value.
-
-	'''
-	if isinstance(value, int) and value not in [0, 1]:
-		warnings.warn(
-			f'Value argument of Repl() is a bare integer {value} used in bit vector '
-			f'context; consider specifying explicit width using Const({value}, {bits_for(value)}) instead',
-			SyntaxWarning, stacklevel = 3
-		)
-
-	return Value.cast(value).replicate(count)
 
 
 # @final

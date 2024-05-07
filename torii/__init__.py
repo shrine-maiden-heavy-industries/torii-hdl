@@ -12,7 +12,7 @@ except ImportError: # pragma: no cover
 from .hdl import (
 	Array, Cat, ClockDomain, ClockSignal, Const, DomainRenamer,
 	Elaboratable, EnableInserter, Fragment, Instance, Memory,
-	Module, Mux, Record, Repl, ResetInserter, ResetSignal, Shape,
+	Module, Mux, Record, ResetInserter, ResetSignal, Shape,
 	Signal, Value, signed, unsigned
 )
 
@@ -31,7 +31,6 @@ __all__ = (
 	'Module',
 	'Mux',
 	'Record',
-	'Repl',
 	'ResetInserter',
 	'ResetSignal',
 	'Shape',
