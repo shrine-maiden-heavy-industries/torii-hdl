@@ -38,9 +38,9 @@ The Torii standard library is optional: the Torii language can be used without i
 ## The Torii simulator
 
 
-The Torii project includes an advanced simulator for Torii code implemented in Python with no system dependencies; in this simulator, test benches are written as Python generator functions. Of course, it is always possible to convert an Torii design to Verilog for use with well-known tool like [Icarus Verilog](http://iverilog.icarus.com/) or [Verilator](https://www.veripool.org/wiki/verilator).
+The Torii project includes an advanced simulator for Torii code implemented in Python with no system dependencies; in this simulator, test benches are written as Python generator functions. Of course, it is always possible to convert an Torii design to Verilog for use with well-known tool like [Icarus Verilog](https://steveicarus.github.io/iverilog/) or [Verilator](https://www.veripool.org/wiki/verilator).
 
-The Torii simulator is event-driven and can simulate designs with multiple clocks or asynchronous resets. Although it is slower than [Icarus Verilog](http://iverilog.icarus.com/), it compiles the netlist to Python code ahead of time, achieving remarkably high performance for a pure Python implementation---especially when running on [PyPy](https://www.pypy.org/).
+The Torii simulator is event-driven and can simulate designs with multiple clocks or asynchronous resets. Although it is slower than [Icarus Verilog](https://steveicarus.github.io/iverilog/), it compiles the netlist to Python code ahead of time, achieving remarkably high performance for a pure Python implementation---especially when running on [PyPy](https://www.pypy.org/).
 
 Although Torii does not support native code simulation or co-simulation at the moment, such support will be added in near future.
 
