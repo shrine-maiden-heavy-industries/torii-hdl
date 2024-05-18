@@ -1,0 +1,79 @@
+name: "Torii-HDL Tests - ASIC"
+on:
+  push:
+    branches:
+     - '**/**asic**'
+
+jobs:
+  test-torii-asic-openlane:
+    name: Torii OpenLANE Test
+    runs-on: ubuntu-latest
+    env:
+      OPENLANE_IMAGE_NAME: efabless/openlane:latest
+      OPENLANE_ROOT: /home/runner/work/torii-hdl/torii-hdl/openlane
+      PDK_ROOT: /home/runner/work/torii-hdl/torii-hdl/pdk
+      PDK_TAG: 3df14f84ab167baf757134739bb1d2c5c044849c
+      TORII_OPENLANE_ROOT: ${OPENLANE_ROOT}
+      TORII_PDK_ROOT: ${PDK_ROOT}
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Initialize Env
+        shell: bash
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: |
+          echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
+          echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup OSS CAD Suite
+        uses: YosysHQ/setup-oss-cad-suite@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install magic + klayout
+        run: |
+          sudo apt-get update
+          sudo apt-get install klayout magic
+
+      - name: Setup
+        shell: bash
+        run: |
+          python -m pip install --user --upgrade pip setuptools wheel setuptools_scm nox volare
+
+      - name: Checkout OpenLANE
+        uses: actions/checkout@v3
+        with:
+          repository: 'The-OpenROAD-Project/OpenLane'
+          ref: '2023.06.22'
+          path: 'openlane'
+          fetch-depth: 1
+
+      - name: Setup PDK / OpenLane
+        shell: bash
+        run: |
+          volare enable --pdk sky130 ${PDK_TAG}
+          pushd ${OPENLANE_ROOT}
+          make
+          make test
+          popd
+
+
+      - name: Run ASIC Tests
+        shell: bash
+        run: |
+          nox -s test -- --asic --coverage
+
+      - name: Codecov Upload
+        uses: codecov/codecov-action@v4
+        with:
+          verbose: true
+          files: ./build/tests/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
