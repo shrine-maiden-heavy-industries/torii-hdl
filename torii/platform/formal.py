@@ -154,9 +154,6 @@ class FormalPlatform(TemplatedPlatform):
 
 		self.mode = mode
 
-	@property
-	def _toolchain_env_var(self) -> str:
-		return super()._toolchain_env_var
 
 	@property
 	def required_tools(self) -> list[str]:
