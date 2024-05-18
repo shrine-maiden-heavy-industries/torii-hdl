@@ -946,3 +946,18 @@ class InstanceTestCase(ToriiTestSuiteCase):
 			f: ('top',),
 			a_f: ('top', 'a$U$0')
 		})
+
+
+class ElaboratableTestCase(ToriiTestSuiteCase):
+	def test_formal_on_nonformal_elaboratable(self):
+		from torii.platform.formal import FormalPlatform
+		from torii                 import Module
+
+		class SimpleElaboratable(Elaboratable):
+			def elaborate(self, _):
+				m = Module()
+
+				return m
+
+		# The `mode` here is meaningless for this test, but we need to specify one
+		FormalPlatform(mode = "bmc").build(SimpleElaboratable())
