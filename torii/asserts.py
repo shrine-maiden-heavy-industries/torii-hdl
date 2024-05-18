@@ -8,7 +8,7 @@ from .lib.formal import (
 )
 
 warn(
-	'The contents of `torii.asserts` have moved to `<FORMAL LIB MODULE>`',
+	'The contents of `torii.asserts` have moved to `torii.lib.formal`',
 	DeprecationWarning, stacklevel = 2
 )
 
