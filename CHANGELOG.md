@@ -21,9 +21,11 @@ Unreleased template stuff
 
 ### Added
 
+ - Added new `torii.platform.formal.FormalPlatform` for formal verification of Torii designs.
 
 ### Changed
 
+ - Torii `Elaboratable`'s now have a new optional `formal` function for use in formal verification with the Torii `FormalPlatform`.
 
 ### Deprecated
 
