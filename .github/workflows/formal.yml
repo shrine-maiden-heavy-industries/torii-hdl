@@ -1,18 +1,24 @@
 name: 'Torii-HDL Tests - Formal Verification'
 on:
   push:
-    branches:
-      - '**/**formal**'
+    paths:
+      - 'examples/formal/**'
+      - 'torii/**'
+      - 'tests/**'
 
 jobs:
   test-torii-formal:
-    name: 'Torii Formal Tests'
+    name: 'Torii Formal Tests (Python ${{ matrix.python-version }})'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', 'pypy3.10-v7.3.16']
+      fail-fast: false
     steps:
-      - name: 'Setup Python'
+      - name: 'Setup Python ${{ matrix.python-version }}'
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
 
       - name: 'Initialize Env'
         shell: bash
