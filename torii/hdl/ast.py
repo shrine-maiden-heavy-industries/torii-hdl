@@ -11,7 +11,7 @@ from collections.abc   import (
 )
 from enum              import Enum, EnumMeta
 from itertools         import chain
-from typing            import Optional, Union, Generic, TYPE_CHECKING
+from typing            import Optional, Union, Generic
 
 # For Python <= 3.10
 from typing_extensions import TypeVarTuple, Unpack
