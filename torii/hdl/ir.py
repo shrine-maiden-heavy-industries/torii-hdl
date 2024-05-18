@@ -64,10 +64,9 @@ class Fragment:
 				code = obj.elaborate.__code__
 				UnusedElaboratable._MustUse__silence = False
 				obj._MustUse__used = True
+				new_obj = obj.elaborate(platform)
 				if formal:
-					new_obj = obj.formal(obj.elaborate(platform))
-				else:
-					new_obj = obj.elaborate(platform)
+					new_obj = obj.formal(new_obj)
 			else:
 				raise AttributeError(f'Object {obj!r} cannot be elaborated')
 			if new_obj is obj:
