@@ -361,6 +361,38 @@ class RecordTestCase(ToriiTestSuiteCase):
 		self.assertEqual(repr(r1.eq(1)), '(eq (cat (sig r1__a)) (const 1\'d1))')
 		self.assertEqual(repr(r1.eq(s1)), '(eq (cat (sig r1__a)) (sig s1))')
 
+	def test_structured(self):
+		class ULPIDataRecord(Record):
+			i: Signal[8, Direction.FANIN]
+			o: Signal[8, Direction.FANOUT]
+			oe: Signal[8, Direction.FANOUT]
+
+		class ULPIDirRecord(Record):
+			i: Signal[1, Direction.FANIN]
+
+		class ULPIInterface(Record):
+			data: ULPIDataRecord
+			nxt: Signal[1, Direction.FANIN]
+			stp: Signal[1, Direction.FANOUT]
+			dir: ULPIDirRecord
+			rst: Signal[1, Direction.FANOUT]
+
+		ulpi_data = ULPIDataRecord()
+		ulpi_dir  = ULPIDirRecord()
+		ulpi_int  = ULPIInterface()
+
+		self.assertEqual(
+			repr(ulpi_data),
+			'(rec ulpi_data i o oe)'
+		)
+		self.assertEqual(
+			repr(ulpi_dir),
+			'(rec ulpi_dir i)'
+		)
+		self.assertEqual(
+			repr(ulpi_int),
+			'(rec ulpi_int (rec ulpi_int__data i o oe) nxt stp (rec ulpi_int__dir i) rst)'
+		)
 
 class ConnectTestCase(ToriiTestSuiteCase):
 	def setUp_flat(self):
