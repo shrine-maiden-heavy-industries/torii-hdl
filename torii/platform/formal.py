@@ -149,11 +149,10 @@ class FormalPlatform(TemplatedPlatform):
 		'''
 	]
 
-	def __init__(self, mode: Literal['bmc', 'prove', 'cover', 'live'] | None = None) -> None:
+	def __init__(self, mode: Literal['bmc', 'prove', 'cover', 'live']) -> None:
 		super().__init__()
 
-		if mode:
-			self.mode = mode
+		self.mode = mode
 
 	@property
 	def _toolchain_env_var(self) -> str:
