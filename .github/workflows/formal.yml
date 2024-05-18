@@ -3,8 +3,6 @@ on:
   push:
     paths:
       - 'examples/formal/**'
-      - 'torii/**'
-      - 'tests/**'
 
 jobs:
   test-torii-formal:
