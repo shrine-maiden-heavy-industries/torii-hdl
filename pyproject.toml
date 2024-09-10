@@ -65,6 +65,9 @@ classifiers = [
 	'Typing :: Typed',
 ]
 
+[project.scripts]
+torii = 'torii.cli:main'
+
 [project.optional-dependencies]
 dev = ['nox']
 wasm-sim = ['torii-sim-wasm']
