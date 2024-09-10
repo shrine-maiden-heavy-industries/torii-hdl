@@ -1,6 +1,4 @@
 $(function() {
-    var top_sel = {}
-
     $('.platform-picker').each(function() {
         var selector = $('<ul />', { class: 'platform-selector' });
         $('.platform-choice', this).eq(0).before(selector);
@@ -29,6 +27,9 @@ $(function() {
         $('li', selector).click(function(event) {
             event.preventDefault();
 
+            const startPosition = $(this).offset();
+            const startScroll = window.scrollY;
+
             $('.platform-selector li').removeClass('selected');
             $('.platform-choice').hide();
 
@@ -46,6 +47,11 @@ $(function() {
                     });
                 }
             });
+
+            const newPosition = $(this).offset();
+            const scrollOffset = newPosition.top - startPosition.top;
+
+            window.scrollTo({ top: startScroll + scrollOffset, behavior: "instant" });
         });
     });
 });

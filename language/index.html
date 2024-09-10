@@ -45,7 +45,7 @@
             Torii-HDL
           </a>
               <div class="version">
-                0.1.dev1+g783edd2
+                0.1.dev1+g21a3176
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -849,22 +849,22 @@
 <td><p>bitwise <a class="reference external" href="https://en.wikipedia.org/wiki/IMPLY_gate">IMPLY</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;&gt;</span> <span class="pre">b</span></code></p></td>
-<td><p>arithmetic right shift by variable amount <a class="footnote-reference brackets" href="#id15" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#id16" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>arithmetic right shift by variable amount <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;&lt;</span> <span class="pre">b</span></code></p></td>
-<td><p>left shift by variable amount <a class="footnote-reference brackets" href="#id16" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>left shift by variable amount <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_left(i)</span></code></p></td>
-<td><p>left rotate by constant amount <a class="footnote-reference brackets" href="#id17" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>left rotate by constant amount <a class="footnote-reference brackets" href="#id11" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_right(i)</span></code></p></td>
-<td><p>right rotate by constant amount <a class="footnote-reference brackets" href="#id17" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>right rotate by constant amount <a class="footnote-reference brackets" href="#id11" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_left(i)</span></code></p></td>
-<td><p>left shift by constant amount <a class="footnote-reference brackets" href="#id17" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>left shift by constant amount <a class="footnote-reference brackets" href="#id11" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_right(i)</span></code></p></td>
-<td><p>right shift by constant amount <a class="footnote-reference brackets" href="#id17" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>right shift by constant amount <a class="footnote-reference brackets" href="#id11" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -891,16 +891,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.all()</span></code></p></td>
-<td><p>reduction AND; are all bits set? <a class="footnote-reference brackets" href="#id18" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+<td><p>reduction AND; are all bits set? <a class="footnote-reference brackets" href="#id15" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.any()</span></code></p></td>
-<td><p>reduction OR; is any bit set? <a class="footnote-reference brackets" href="#id18" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+<td><p>reduction OR; is any bit set? <a class="footnote-reference brackets" href="#id15" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.xor()</span></code></p></td>
 <td><p>reduction XOR; is an odd number of bits set?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.bool()</span></code></p></td>
-<td><p>conversion to boolean; is non-zero? <a class="footnote-reference brackets" href="#id19" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
+<td><p>conversion to boolean; is non-zero? <a class="footnote-reference brackets" href="#id16" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -994,10 +994,10 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">len(a)</span></code></p></td>
-<td><p>bit length; value width <a class="footnote-reference brackets" href="#id20" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
+<td><p>bit length; value width <a class="footnote-reference brackets" href="#id20" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[i:j:k]</span></code></p></td>
-<td><p>bit slicing by constant subscripts <a class="footnote-reference brackets" href="#id21" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
+<td><p>bit slicing by constant subscripts <a class="footnote-reference brackets" href="#id21" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">iter(a)</span></code></p></td>
 <td><p>bit iteration</p></td>
@@ -1009,7 +1009,7 @@
 <td><p>non-overlapping part select with variable offset</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Cat(a,</span> <span class="pre">b,</span> <span class="pre">...)</span></code></p></td>
-<td><p>concatenation <a class="footnote-reference brackets" href="#id22" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
+<td><p>concatenation <a class="footnote-reference brackets" href="#id22" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.replicate(n)</span></code></p></td>
 <td><p>replication</p></td>
@@ -1255,47 +1255,47 @@ inside `Else`
 <h3>Synchronous evaluation<a class="headerlink" href="#synchronous-evaluation" title="Link to this heading"></a></h3>
 <p>Signals in synchronous <a class="reference internal" href="#control-domains">control domains</a> change whenever a specific transition (positive or negative edge) occurs on the clock of the synchronous domain. In addition, the signals in clock domains with an asynchronous reset change when such a reset is asserted. The final value of a synchronous signal is equal to its <a class="reference internal" href="#initial-signal-values">initial value</a> if the reset (of any type) is asserted, or to its current value updated by the <a class="reference internal" href="#active-and-inactive-assignments">active assignments</a> in the <a class="reference internal" href="#assignment-order">assignment order</a> otherwise. Synchronous signals always hold state.</p>
 <!-- TODO: link to clock domains -->
+</section>
+</section>
+</section>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id15" role="doc-footnote">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>Logical and arithmetic right shift of an unsigned value are equivalent. Logical right shift of a signed value can be expressed by <a class="reference internal" href="#conversion-operators">converting it to unsigned</a> first.</p>
 </aside>
-<aside class="footnote brackets" id="id16" role="doc-footnote">
+<aside class="footnote brackets" id="id10" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
 <p>Shift amount must be unsigned; integer shifts in Python require the amount to be positive.</p>
 </aside>
-<aside class="footnote brackets" id="id17" role="doc-footnote">
+<aside class="footnote brackets" id="id11" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id6">2</a>,<a role="doc-backlink" href="#id7">3</a>,<a role="doc-backlink" href="#id8">4</a>)</span>
 <p>Shift and rotate amounts can be negative, in which case the direction is reversed.</p>
 </aside>
-<aside class="footnote brackets" id="id18" role="doc-footnote">
+<aside class="footnote brackets" id="id15" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id9">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id12">1</a>,<a role="doc-backlink" href="#id13">2</a>)</span>
 <p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#all" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">all()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">any()</span></code></a> function to the value viewed as a collection of bits.</p>
 </aside>
-<aside class="footnote brackets" id="id19" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">5</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">5</a><span class="fn-bracket">]</span></span>
 <p>Conceptually the same as applying the Python <code class="xref py py-func docutils literal notranslate"><span class="pre">bool()</span></code> function to the value viewed as an integer.</p>
 </aside>
 <aside class="footnote brackets" id="id20" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">6</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">6</a><span class="fn-bracket">]</span></span>
 <p>Words “length” and “width” have the same meaning when talking about Torii values. Conventionally, “width” is used.</p>
 </aside>
 <aside class="footnote brackets" id="id21" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">7</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">7</a><span class="fn-bracket">]</span></span>
 <p>All variations of the Python slice notation are supported, including “extended slicing”. E.g. all of <code class="docutils literal notranslate"><span class="pre">a[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[1:9]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[2:]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[:-2]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[::-1]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[0:8:2]</span></code> select bits in the same way as other Python sequence types select their elements.</p>
 </aside>
 <aside class="footnote brackets" id="id22" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">8</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">8</a><span class="fn-bracket">]</span></span>
 <p>In the concatenated value, <code class="docutils literal notranslate"><span class="pre">a</span></code> occupies the least significant bits, and <code class="docutils literal notranslate"><span class="pre">b</span></code> the most significant bits. An arbitrary number of arguments for <code class="docutils literal notranslate"><span class="pre">Cat</span></code> is supported.</p>
 </aside>
 </aside>
-</section>
-</section>
-</section>
 
     <script type="text/javascript">
         function init() {
