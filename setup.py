@@ -87,6 +87,11 @@ setup(
 			'py.typed'
 		],
 	},
+	entry_points = {
+		'console_scripts': [
+			'torii = torii.cli:main',
+		]
+	},
 
 	classifiers       = [
 		'Development Status :: 4 - Beta',
