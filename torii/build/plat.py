@@ -39,6 +39,14 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
+	def description(self):
+		return None
+
+	@property
+	def pretty_name(self):
+		return None
+
+	@property
 	def connectors(self):
 		return [] # Connectors are very rarely used, so make declaring them optional
 
