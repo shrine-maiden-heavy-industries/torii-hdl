@@ -104,8 +104,8 @@ def QSPIFlashResource(
 	if mode == QSPIMode.DualParallel:
 		if dq is not None and (dq_a is None or dq_b is None):
 			raise ValueError(f'\'dq\' must be None and \'dq_a\' and \'dq_b\' must be specified for mode \'{mode}\'')
-		ios.append('dq_a', Pins(dq_a, dir = 'io', conn = conn, assert_width = 4))
-		ios.append('dq_b', Pins(dq_b, dir = 'io', conn = conn, assert_width = 4))
+		ios.append(Subsignal('dq_a', Pins(dq_a, dir = 'io', conn = conn, assert_width = 4)))
+		ios.append(Subsignal('dq_b', Pins(dq_b, dir = 'io', conn = conn, assert_width = 4)))
 	else:
 		if dq is None and (dq_a is not None or dq_b is not None):
 			raise ValueError(f'\'dq\' must be specified and \'dq_a\' and \'dq_b\' must be None for mode \'{mode}\'')
@@ -114,17 +114,17 @@ def QSPIFlashResource(
 			dq = dq.split(' ')
 			if len(dq) != 3:
 				raise ValueError(f'dq must have exactly 3 pins, not {len(dq)}')
-			ios.append('copi', Pins(dq[0], dir = 'o', conn = conn))
-			ios.append('cipo', Pins(dq[1], dir = 'i', conn = conn))
-			ios.append('hold', PinsN(dq[2], dir = 'io', conn = conn))
+			ios.append(Subsignal('copi', Pins(dq[0], dir = 'o', conn = conn)))
+			ios.append(Subsignal('cipo', Pins(dq[1], dir = 'i', conn = conn)))
+			ios.append(Subsignal('hold', PinsN(dq[2], dir = 'io', conn = conn)))
 		elif data_mode == QSPIDataMode.x2:
 			dq = dq.split(' ')
 			if len(dq) != 3:
 				raise ValueError(f'dq must have exactly 3 pins not {len(dq)}')
-			ios.append('dq', Pins(f'{dq[0]} {dq[1]}', dir = 'io', conn = conn))
-			ios.append('hold', PinsN(dq[2], dir = 'io', conn = conn))
+			ios.append(Subsignal('dq', Pins(f'{dq[0]} {dq[1]}', dir = 'io', conn = conn)))
+			ios.append(Subsignal('hold', PinsN(dq[2], dir = 'io', conn = conn)))
 		elif data_mode == QSPIDataMode.x4:
-			ios.append('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 4))
+			ios.append(Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 4)))
 
 	if clk_fb is not None:
 		ios.append(Subsignal('clk_fb', Pins(clk_fb, dir = 'i', conn = conn, assert_width = 1)))
