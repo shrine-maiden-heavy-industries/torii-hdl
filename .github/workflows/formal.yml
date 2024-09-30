@@ -2,6 +2,7 @@ name: 'Torii-HDL Tests - Formal Verification'
 on:
   push:
     paths:
+      - '.github/workflows/formal.yml'
       - 'examples/formal/**'
 
 jobs:
