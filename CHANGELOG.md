@@ -33,6 +33,13 @@ Unreleased template stuff
 
 ### Fixed
 
+## [0.6.2]
+
+### Fixed
+
+ - Fixed a bug in the definition of the `QSPIResource` in `torii.platform.resources.memory`, again...
+
+
 ## [0.6.1]
 
 ### Fixed
@@ -323,7 +330,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.1...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...main
+[0.6.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...v0.5.0
