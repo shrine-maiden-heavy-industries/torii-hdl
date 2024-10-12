@@ -130,7 +130,7 @@ def QSPIFlashResource(
 		ios.append(Subsignal('clk_fb', Pins(clk_fb, dir = 'i', conn = conn, assert_width = 1)))
 	if attrs is not None:
 		ios.append(attrs)
-	return Resource.family(*args, ios = ios)
+	return Resource.family(*args, default_name = 'qspi', ios = ios)
 
 
 def SDCardResources(
