@@ -15,13 +15,13 @@ __all__ = (
 class UnusedMustUse(Warning):
 	pass
 
-Self = TypeVar('Self', bound = 'MustUse')
+T = TypeVar('T')
 
 class MustUse:
 	_MustUse__silence = False
 	_MustUse__warning = UnusedMustUse
 
-	def __new__(cls, *args, src_loc_at: int = 0, **kwargs) -> Self:
+	def __new__(cls: Type[T], *args, src_loc_at: int = 0, **kwargs) -> T:
 		frame = _getframe(1 + src_loc_at)
 		self = super().__new__(cls)
 		self._MustUse__used    = False
