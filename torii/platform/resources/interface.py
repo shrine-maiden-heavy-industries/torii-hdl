@@ -341,16 +341,11 @@ def HyperBusResource(
 	rsto_n: Optional[str] = None, int_n: Optional[str] = None,
 	conn: Optional[Union[tuple[str, int], int]] = None, diff_attrs = None, attrs: Optional[Attrs] = None,
 ):
-	ios = []
-
-
-	ios.append(
-		Subsignal('cs', PinsN(
-			cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
-		)),
+	ios = [
+		Subsignal('cs', PinsN(cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1)),
 		Subsignal('dq',   Pins(dq, dir = 'io', conn = conn, assert_width = 8)),
 		Subsignal('rwds', Pins(rwds, dir = 'io', conn = conn, assert_width = 1)),
-	)
+	]
 
 	if clk_n is None:
 		ios.append(
