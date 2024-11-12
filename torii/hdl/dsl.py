@@ -1,24 +1,23 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
-from collections  import OrderedDict
-from contextlib   import _GeneratorContextManager, contextmanager
-from enum         import Enum
-from functools    import wraps
-from sys          import version_info
-from typing       import (
-	Callable, Generator, ParamSpec, Any, Iterable, Optional, TypedDict, Union, TYPE_CHECKING
-)
+from collections     import OrderedDict
+from collections.abc import Callable, Iterable, Generator
+from contextlib      import _GeneratorContextManager, contextmanager
+from enum            import Enum
+from functools       import wraps
+from sys             import version_info
+from typing          import ParamSpec, Any, TypedDict, TYPE_CHECKING
 
-from ..util       import flatten, tracer
-from ..util.units import bits_for
-from .ast         import (
+from ..util          import flatten, tracer
+from ..util.units    import bits_for
+from .ast            import (
 	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value,
 	_StatementList, ValueCastType
 )
-from .cd          import ClockDomain
-from .ir          import Elaboratable, Fragment
-from .xfrm        import SampleDomainInjector
+from .cd             import ClockDomain
+from .ir             import Elaboratable, Fragment
+from .xfrm           import SampleDomainInjector
 
 __all__ = (
 	'Module',
@@ -45,7 +44,7 @@ class _ModuleBuilderProxy:
 
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
-	def __init__(self, builder: 'Module', depth: int, domain: Optional[str]):
+	def __init__(self, builder: 'Module', depth: int, domain: str | None):
 		super().__init__(builder, depth)
 		self._domain = domain
 
@@ -168,7 +167,7 @@ class FSM:
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
 _SrcLoc = tuple[str, int]
-_Pattern = Union[int, str, Enum]
+_Pattern = int | str | Enum
 _PatternTuple = tuple[_Pattern, ...]
 
 class _IfDict(TypedDict):
@@ -187,7 +186,7 @@ class _SwitchDict(TypedDict):
 class _FSMDict(TypedDict):
 	name: str
 	signal: Signal
-	reset: Optional[str]
+	reset: str | None
 	domain: str
 	encoding: OrderedDict
 	decoding: OrderedDict
@@ -195,7 +194,7 @@ class _FSMDict(TypedDict):
 	src_loc: _SrcLoc
 	state_src_locs: dict[str, _SrcLoc]
 
-_CtrlEntry = Union[_IfDict, _SwitchDict, _FSMDict]
+_CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
@@ -455,7 +454,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._statements = _outer_case
 
 	@contextmanager
-	def FSM(self, reset: Optional[str] = None, domain = 'sync', name = 'fsm'):
+	def FSM(self, reset: str | None = None, domain = 'sync', name = 'fsm'):
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')

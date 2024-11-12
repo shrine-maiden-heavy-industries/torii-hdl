@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing        import Optional
-
 from ..hdl.ast     import SignalDict
 from ..tools.yosys import YosysError, find_yosys
 from .             import rtlil
@@ -13,7 +11,7 @@ __all__ = (
 )
 
 def _convert_rtlil_text(
-	rtlil_text: str, black_boxes: Optional[dict[str, str]], *, src_loc_at: int = 0
+	rtlil_text: str, black_boxes: dict[str, str] | None, *, src_loc_at: int = 0
 ) -> str:
 	if black_boxes is not None:
 		if not isinstance(black_boxes, dict):
@@ -36,11 +34,11 @@ def _convert_rtlil_text(
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
 
-def convert_fragment(*args, black_boxes: Optional[dict[str, str]] = None, **kwargs) -> tuple[str, SignalDict]:
+def convert_fragment(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> tuple[str, SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
 
 
-def convert(*args, black_boxes: Optional[dict[str, str]] = None, **kwargs) -> str:
+def convert(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> str:
 	rtlil_text = rtlil.convert(*args, **kwargs)
 	return _convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1)

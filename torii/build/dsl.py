@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections import OrderedDict
-from typing      import Callable, Generator, Iterator, Literal, Optional, Union
+from collections     import OrderedDict
+from collections.abc import Callable, Iterator, Generator, Sequence
+from typing          import TypeAlias, Type
+
+from .._typing       import IODirectionOE
 
 __all__ = (
 	'Attrs',
@@ -15,14 +18,17 @@ __all__ = (
 	'Subsignal',
 )
 
+ResourceConn: TypeAlias = tuple[str, str | int]
+
 class Pins:
 	def __init__(
-		self, names: str, *, dir: Literal['i', 'o', 'io', 'oe'] = 'io', invert: bool = False,
-		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[int] = None
+		self, names: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
+		assert_width: int | None = None
 	) -> None:
 		if not isinstance(names, str):
 			raise TypeError(f'Names must be a whitespace-separated string, not {names!r}')
-		names = names.split()
+
+		names: list[str] = names.split()
 
 		if conn is not None:
 			conn_name, conn_number = conn
@@ -52,7 +58,7 @@ class Pins:
 	def map_names(self, mapping: dict[str, str], resource) -> list[str]:
 		mapped_names = []
 		for name in self.names:
-			while ":" in name:
+			while ':' in name:
 				if name not in mapping:
 					raise NameError(f'Resource {resource!r} refers to nonexistent connector pin {name}')
 				name = mapping[name]
@@ -63,14 +69,16 @@ class Pins:
 		return f'(pins{"-n" if self.invert else ""} {self.dir} {" ".join(self.names)})'
 
 
-def PinsN(*args, **kwargs) -> Pins:
-	return Pins(*args, invert = True, **kwargs)
+def PinsN(
+	names: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
+) -> Pins:
+	return Pins(names, dir = dir, invert = True, conn = conn, assert_width = assert_width)
 
 
 class DiffPairs:
 	def __init__(
-		self, p: str, n: str, *, dir: Literal['i', 'o', 'io', 'oe'] = 'io', invert: bool = False,
-		conn: Optional[tuple[str, Union[int, str]]] = None, assert_width: Optional[bool] = None
+		self, p: str, n: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
+		assert_width: int | None = None
 	) -> None:
 		self.p = Pins(p, dir = dir, conn = conn, assert_width = assert_width)
 		self.n = Pins(n, dir = dir, conn = conn, assert_width = assert_width)
@@ -92,12 +100,14 @@ class DiffPairs:
 		return f'(diffpairs{"-n" if self.invert else ""} {self.dir} (p {" ".join(self.p.names)}) (n {" ".join(self.n.names)}))'
 
 
-def DiffPairsN(*args, **kwargs) -> DiffPairs:
-	return DiffPairs(*args, invert = True, **kwargs)
+def DiffPairsN(
+	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
+) -> DiffPairs:
+	return DiffPairs(p = p, n = n, dir = dir, invert = True, conn = conn, assert_width = assert_width)
 
 
-class Attrs(OrderedDict):
-	def __init__(self, **attrs: dict[str, Union[int, str, Callable]]) -> None:
+class Attrs(OrderedDict[str, int | str | Callable]):
+	def __init__(self, **attrs: int | str | Callable) -> None:
 		for key, value in attrs.items():
 			if not (value is None or isinstance(value, (str, int)) or hasattr(value, '__call__')):
 				raise TypeError(f'Value of attribute {key} must be None, int, str, or callable, not {value!r}')
@@ -115,7 +125,7 @@ class Attrs(OrderedDict):
 
 
 class Clock:
-	def __init__(self, frequency: Union[float, int]) -> None:
+	def __init__(self, frequency: float | int) -> None:
 		if not isinstance(frequency, (float, int)):
 			raise TypeError('Clock frequency must be a number')
 
@@ -129,14 +139,14 @@ class Clock:
 		return f'(clock {self.frequency})'
 
 
+SubsigArgT: TypeAlias = 'Pins | DiffPairs | Subsignal | Attrs | Clock'
+
 class Subsignal:
-	def __init__(
-		self, name: str, *args: Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]
-	) -> None:
-		self.name  = name
-		self.ios   = []
-		self.attrs = Attrs()
-		self.clock = None
+	def __init__(self, name: str, *args: SubsigArgT) -> None:
+		self.name                  = name
+		self.ios: list[SubsigArgT] = []
+		self.attrs                 = Attrs()
+		self.clock: Clock | None   = None
 
 		if not args:
 			raise ValueError('Missing I/O constraints')
@@ -172,7 +182,8 @@ class Subsignal:
 				raise TypeError(f'Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, not {arg!r}')
 
 	def _content_repr(self) -> str:
-		parts = []
+		parts: list[str] = []
+
 		for io in self.ios:
 			parts.append(repr(io))
 		if self.clock is not None:
@@ -187,10 +198,11 @@ class Subsignal:
 class Resource(Subsignal):
 	@classmethod
 	def family(
-		cls, name_or_number: Union[str, int], number: Optional[int] = None, *,
-		ios: list[Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]], default_name: str, name_suffix: str = ''
+		cls: 'Type[Resource]',
+		name_or_number: str | int, number: int | None = None, *,
+		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
 	) -> 'Resource':
-		# This constructor accepts two different forms:
+		# This cosnstructor accepts two different forms:
 		#  1. Number-only form:
 		#       Resource.family(0, default_name = 'name', ios = [ Pins('A0 A1') ])
 		#  2. Name-and-number (name override) form:
@@ -202,14 +214,14 @@ class Resource(Subsignal):
 		if name_suffix:  # Only add '_' if we actually have a suffix.
 			name_suffix = '_' + name_suffix
 
+		# NOTE(aki): The type ignores here are silly but unless we do extra work to coerce the
+		#            `name_or_number` type due to the silly call then mypy will forever complain
 		if number is None: # name_or_number is number
-			return cls(default_name + name_suffix, name_or_number, *ios)
+			return cls(default_name + name_suffix, name_or_number, *ios) # type: ignore
 		else: # name_or_number is name
-			return cls(name_or_number + name_suffix, number, *ios)
+			return cls(name_or_number + name_suffix, number, *ios) # type: ignore
 
-	def __init__(
-		self, name: str, number: int, *args: Union[Pins, DiffPairs, 'Subsignal', Attrs, Clock]
-	) -> None:
+	def __init__(self, name: str, number: int, *args: SubsigArgT) -> None:
 		if not isinstance(number, int):
 			raise TypeError(f'Resource number must be an integer, not {number!r}')
 
@@ -220,15 +232,13 @@ class Resource(Subsignal):
 		return f'(resource {self.name} {self.number} {self._content_repr()})'
 
 class Connector:
-	def __init__(
-		self, name: str, number: int, io: Union[str, dict[str, str]], *, conn: Optional[tuple[str, Union[int, str]]] = None
-	) -> None:
-		self.name    = name
-		self.number  = number
-		mapping = OrderedDict()
+	def __init__(self, name: str, number: int, io: str | dict[str, str], *, conn: ResourceConn | None = None) -> None:
+		self.name   = name
+		self.number = number
+		mapping     = OrderedDict[str, str]()
 
 		if isinstance(io, dict):
-			for conn_pin, plat_pin in io.items():
+			for (conn_pin, plat_pin) in io.items():
 				if not isinstance(conn_pin, str):
 					raise TypeError(f'Connector pin name must be a string, not {conn_pin!r}')
 				if not isinstance(plat_pin, str):
@@ -236,7 +246,8 @@ class Connector:
 				mapping[conn_pin] = plat_pin
 
 		elif isinstance(io, str):
-			for conn_pin, plat_pin in enumerate(io.split(), start = 1):
+			# NOTE(aki): once-again, mypy is being silly about redefinitions
+			for (conn_pin, plat_pin) in enumerate(io.split(), start = 1): # type: ignore
 				if plat_pin == '-':
 					continue
 

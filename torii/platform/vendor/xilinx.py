@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc        import abstractmethod
-from typing     import Literal, Optional, Union
+from typing     import Literal
 
 from ...build   import Attrs, TemplatedPlatform
 from ...hdl     import (
@@ -781,13 +781,13 @@ class XilinxPlatform(TemplatedPlatform):
 				m.submodules.reset_sync = ResetSynchronizer(rst_i, domain = 'sync')
 			return m
 
-	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'TRUE'
 
 	def _get_xdr_buffer(
 		self, m: Module , pin: Pin, iostd, *, i_invert: bool = False, o_invert: bool = False
-	) -> tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
+	) -> tuple[Signal | None, Signal | None, Signal | None]:
 		XFDDR_FAMILIES = {
 			'virtex2',
 			'virtex2p',
@@ -1110,10 +1110,7 @@ class XilinxPlatform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def _get_valid_xdrs(self) -> Union[
-		tuple[Literal[0], Literal[1]],
-		tuple[Literal[0], Literal[1], Literal[2]]
-	]:
+	def _get_valid_xdrs(self) -> tuple[Literal[0], Literal[1]] | tuple[Literal[0], Literal[1], Literal[2]]:
 		if self.family in { 'virtex', 'virtexe' }:
 			return (0, 1)
 		else:

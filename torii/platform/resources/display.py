@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Optional, Union
-
-from ...build import Attrs, Pins, Resource, Subsignal
+from ...build.dsl import Attrs, Pins, Resource, Subsignal, SubsigArgT, ResourceConn
 
 __all__ = (
 	'Display7SegResource',
@@ -12,13 +10,12 @@ __all__ = (
 
 
 def Display7SegResource(
-	*args,
-	a: str, b: str, c: str, d: str, e: str, f: str, g: str, dp: Optional[str] = None,
-	invert: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
-	attrs: Optional[Attrs] = None
+	name_or_number: str | int, number: int | None = None, *,
+	a: str, b: str, c: str, d: str, e: str, f: str, g: str, dp: str | None = None,
+	invert: bool = False, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
-
-	ios = []
+	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('a', Pins(a, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
 	ios.append(Subsignal('b', Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
@@ -35,17 +32,16 @@ def Display7SegResource(
 
 	if attrs is not None:
 		ios.append(attrs)
-	return Resource.family(*args, default_name = 'display_7seg', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'display_7seg', ios = ios)
 
 
 def VGAResource(
-	*args,
+	name_or_number: str | int, number: int | None = None, *,
 	r: str, g: str, b: str, vs: str, hs: str,
-	invert_sync: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
-	attrs: Optional[Attrs] = None
+	invert_sync: bool = False, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
-
-	ios = []
+	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
 	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
@@ -60,17 +56,16 @@ def VGAResource(
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(*args, default_name = 'vga', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'vga', ios = ios)
 
 
 def VGADACResource(
-	*args,
+	name_or_number: str | int, number: int | None = None, *,
 	clk: str, r: str, g: str, b: str, vs: str, hs: str, extras: list[Subsignal] = [],
-	invert_sync: bool = False, conn: Optional[Union[tuple[str, int], str]] = None,
-	attrs: Optional[Attrs] = None
+	invert_sync: bool = False, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
-
-	ios = []
+	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
 	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
@@ -88,4 +83,4 @@ def VGADACResource(
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(*args, default_name = 'vgadac', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'vgadac', ios = ios)

@@ -5,8 +5,8 @@ import re
 import textwrap
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
-from collections.abc import Iterable
-from typing          import IO, Generator, Literal, Optional, Type, TypeVar, Union
+from collections.abc import Iterable, Generator
+from typing          import IO, Literal, Type, TypeVar
 
 import jinja2
 
@@ -81,7 +81,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		return constraint.frequency
 
-	def add_file(self, filename: str, content: Union[str, bytes, IO]) -> None:
+	def add_file(self, filename: str, content: str | bytes | IO) -> None:
 		if not isinstance(filename, str):
 			raise TypeError(f'File name must be a string, not {filename!r}')
 		if hasattr(content, 'read'):
@@ -105,9 +105,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return f'TORII_ENV_{tool_env_var(self.toolchain)}'
 
 	def build(
-		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', build_dir: str = 'build',
-		do_build: bool = True, program_opts: Optional[dict[str, str]] = None, do_program: bool = False, **kwargs
-	) -> Union[BuildPlan, BuildProducts, None]:
+		self, elaboratable: Fragment | Elaboratable, name: str = 'top', build_dir: str = 'build',
+		do_build: bool = True, program_opts: dict[str, str] | None = None, do_program: bool = False, **kwargs
+	) -> BuildPlan | BuildProducts | None:
 		# The following code performs a best-effort check for presence of required tools upfront,
 		# before performing any build actions, to provide a better diagnostic. It does not handle
 		# several corner cases:
@@ -161,7 +161,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			return m
 
 	def prepare(
-		self, elaboratable: Union[Fragment, Elaboratable], name: str = 'top', **kwargs
+		self, elaboratable: Fragment | Elaboratable, name: str = 'top', **kwargs
 	) -> BuildPlan:
 		if self._prepared:
 			raise RuntimeError(f'Design \'{name}\' is already prepared!')
@@ -217,7 +217,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
 
 	def _check_feature(
-		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int], valid_attrs: Optional[str]
+		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None
 	) -> None:
 		if len(valid_xdrs) == 0:
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature}')
@@ -306,7 +306,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 class TemplatedPlatform(Platform):
 	@property
 	@abstractmethod
-	def toolchain(self) -> Optional[str]:
+	def toolchain(self) -> str | None:
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
@@ -372,7 +372,7 @@ class TemplatedPlatform(Platform):
 
 		def _extract_override(
 			var: str, *, expected_type: Type[_ETYPE]
-		) -> Union[jinja2.Undefined, _ETYPE]:
+		) -> jinja2.Undefined | _ETYPE:
 			var_env = f'TORII_{tool_env_var(var)}'
 			if var_env in os.environ:
 				# On Windows, there is no way to define an "empty but set" variable; it is tempting
@@ -423,12 +423,12 @@ class TemplatedPlatform(Platform):
 		def emit_rtlil() -> str:
 			return rtlil_text
 
-		def emit_verilog(opts: tuple[str] = ()) -> str:
+		def emit_verilog(opts: tuple[str, ...] = ()) -> str:
 			return verilog._convert_rtlil_text(
 				rtlil_text, strip_internal_attrs = True, write_verilog_opts = opts
 			)
 
-		def emit_debug_verilog(opts: str = ()) -> str:
+		def emit_debug_verilog(opts: tuple[str, ...] = ()) -> str:
 			if not get_override_flag('debug_verilog'):
 				return '/* Debug Verilog generation was disabled. */'
 			else:
@@ -475,7 +475,7 @@ class TemplatedPlatform(Platform):
 			else:
 				raise ValueError(f'Shell syntax must be either \'bat\' or \'sh\', not \'{context.parent["syntax"]}\'')
 
-		def options(opts: Union[str, Iterable[str]]) -> str:
+		def options(opts: str | Iterable[str]) -> str:
 			if isinstance(opts, str):
 				return opts
 			else:
@@ -484,20 +484,20 @@ class TemplatedPlatform(Platform):
 		def hierarchy(signal, separator):
 			return separator.join(self._name_map[signal][1:])
 
-		def verbose(arg: str) -> Union[jinja2.Undefined, str]:
+		def verbose(arg: str) -> jinja2.Undefined | str:
 			if get_override_flag('verbose'):
 				return arg
 			else:
 				return jinja2.Undefined(name = 'quiet')
 
-		def quiet(arg: str) -> Union[jinja2.Undefined, str]:
+		def quiet(arg: str) -> jinja2.Undefined | str:
 			if get_override_flag('verbose'):
 				return jinja2.Undefined(name = 'quiet')
 			else:
 				return arg
 
 		def render(
-			source: str, origin: str, syntax: Optional[Literal['sh', 'bat']] = None
+			source: str, origin: str, syntax: Literal['sh', 'bat'] | None = None
 		) -> str:
 			try:
 				source   = textwrap.dedent(source).strip()

@@ -4,7 +4,7 @@ import io
 import re
 from collections  import OrderedDict
 from contextlib   import contextmanager
-from typing       import Literal, Optional, Union
+from typing       import Literal
 
 from ..hdl        import ast, ir, xfrm, mem
 from ..util       import flatten
@@ -24,7 +24,7 @@ _escape_map = str.maketrans({
 })
 
 
-def _signed(value: Union[str, int, ast.Const]) -> bool:
+def _signed(value: str | int | ast.Const) -> bool:
 	if isinstance(value, str):
 		return False
 	elif isinstance(value, int):
@@ -35,7 +35,7 @@ def _signed(value: Union[str, int, ast.Const]) -> bool:
 		raise TypeError(f'Expected one of \'str\', \'int\', \'Const\', not {value!r}')
 
 
-def _const(value: Union[str, int, ast.Const]) -> str:
+def _const(value: str | int | ast.Const) -> str:
 	if isinstance(value, str):
 		return f'\"{value.translate(_escape_map)}\"'
 	elif isinstance(value, int):
@@ -69,7 +69,7 @@ class _Namer:
 		self._anon += 1
 		return name
 
-	def _make_name(self, name: Optional[str], local: bool) -> str:
+	def _make_name(self, name: str | None, local: bool) -> str:
 		if name is None:
 			self._index += 1
 			name = f'${self._index}'
@@ -104,10 +104,10 @@ class _AttrBuilder:
 		super().__init__(*args, **kwargs)
 		self.emit_src = emit_src
 
-	def _attribute(self, name: str, value: Union[str, int, ast.Const], *, indent: int = 0) -> None:
+	def _attribute(self, name: str, value: str | int | ast.Const, *, indent: int = 0) -> None:
 		self._append('{}attribute \\{} {}\n', '  ' * indent, name, _const(value))
 
-	def _attributes(self, attrs: dict[str, Union[str, int, ast.Const]], *, src: str = None, **kwargs) -> None:
+	def _attributes(self, attrs: dict[str, str | int | ast.Const], *, src: str = None, **kwargs) -> None:
 		for name, value in attrs.items():
 			self._attribute(name, value, **kwargs)
 		if src and self.emit_src:
@@ -118,12 +118,12 @@ class _Builder(_BufferedBuilder, _Namer):
 		super().__init__()
 		self.emit_src = emit_src
 
-	def module(self, name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}) -> '_ModuleBuilder':
+	def module(self, name: str = None, attrs: dict[str, str | int | ast.Const] = {}) -> '_ModuleBuilder':
 		name = self._make_name(name, local = False)
 		return _ModuleBuilder(self, name, attrs)
 
 class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
-	def __init__(self, rtlil, name: str, attrs: dict[str, Union[str, int, ast.Const]]) -> None:
+	def __init__(self, rtlil, name: str, attrs: dict[str, str | int | ast.Const]) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
@@ -141,8 +141,8 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 
 	# FIXME: Type annotation for `port_id` seems to be incorrect
 	def wire(
-		self, width: int, port_id: Optional[str] = None, port_kind: Literal['input', 'output', 'inout'] = None,
-		name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, width: int, port_id: str | None = None, port_kind: Literal['input', 'output', 'inout'] = None,
+		name: str = None, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> str:
 		# Very large wires are unlikely to work. Verilog 1364-2005 requires the limit on vectors
 		# to be at least 2**16 bits, and Yosys 0.9 cannot read RTLIL with wires larger than 2**32
@@ -177,7 +177,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		self._append('  connect {} {}\n', lhs, rhs)
 
 	def memory(
-		self, width: int, size: int, name: str = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, width: int, size: int, name: str = None, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
@@ -185,8 +185,8 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		return name
 
 	def cell(
-		self, kind: str, name: str = None, params: dict[str, Union[str, int, float, ast.Const]] = {},
-		ports: dict[str, str] = {}, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, kind: str, name: str = None, params: dict[str, str | int | float | ast.Const] = {},
+		ports: dict[str, str] = {}, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> str:
 		self._attributes(attrs, src = src, indent = 1)
 		name = self._make_name(name, local = False)
@@ -211,13 +211,13 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		return name
 
 	def process(
-		self, name: Optional[str] = None, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, name: str | None = None, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> '_ProcessBuilder':
 		name = self._make_name(name, local = True)
 		return _ProcessBuilder(self, name, attrs, src)
 
 class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
-	def __init__(self, rtlil, name: str , attrs: dict[str, Union[str, int, ast.Const]], src: str) -> None:
+	def __init__(self, rtlil, name: str , attrs: dict[str, str | int | ast.Const], src: str) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
@@ -252,14 +252,14 @@ class _CaseBuilder(_ProxiedBuilder):
 		self._append('{}assign {} {}\n', '  ' * self.indent, lhs, rhs)
 
 	def switch(
-		self, cond, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, cond, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> '_SwitchBuilder':
 		return _SwitchBuilder(self.rtlil, cond, attrs, src, self.indent)
 
 
 class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 	def __init__(
-		self, rtlil, cond, attrs: dict[str, Union[str, int, ast.Const]] , src: str, indent: int
+		self, rtlil, cond, attrs: dict[str, str | int | ast.Const] , src: str, indent: int
 	) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil  = rtlil
@@ -277,7 +277,7 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 		self._append('{}end\n', '  ' * self.indent)
 
 	def case(
-		self, *values, attrs: dict[str, Union[str, int, ast.Const]] = {}, src: str = ''
+		self, *values, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> '_CaseBuilder':
 		self._attributes(attrs, src = src, indent = self.indent + 1)
 		if values == ():
@@ -289,7 +289,7 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 		return _CaseBuilder(self.rtlil, self.indent + 2)
 
 
-def _src(src_loc: Optional[tuple[str, int]]) -> Optional[str]:
+def _src(src_loc: tuple[str, int] | None) -> str | None:
 	if src_loc is None:
 		return None
 	file, line = src_loc
@@ -297,7 +297,7 @@ def _src(src_loc: Optional[tuple[str, int]]) -> Optional[str]:
 
 
 class _LegalizeValue(Exception):
-	def __init__(self, value, branches, src_loc: Optional[tuple[str, int]]) -> None:
+	def __init__(self, value, branches, src_loc: tuple[str, int] | None) -> None:
 		self.value    = value
 		self.branches = list(branches)
 		self.src_loc  = src_loc

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from bisect        import bisect_left, bisect_right
-from typing        import Generator, Iterable, Optional, Union
+from bisect          import bisect_left, bisect_right
+from collections.abc import Generator, Iterable
 
 from ...util.units import bits_for
 
@@ -84,7 +84,7 @@ class ResourceInfo:
 	'''
 
 	def __init__(
-		self, resource: object, name: Union[str, Iterable[str]], start: int, end: int, width: int
+		self, resource: object, name: str | Iterable[str], start: int, end: int, width: int
 	) -> None:
 		if isinstance(name, str):
 			name = (name,)
@@ -108,7 +108,7 @@ class ResourceInfo:
 		return self._resource
 
 	@property
-	def name(self) -> tuple[str]:
+	def name(self) -> tuple[str, ...]:
 		return self._name
 
 	@property
@@ -158,7 +158,7 @@ class MemoryMap:
 	'''
 
 	def __init__(
-		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: str | None = None
 	) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
@@ -208,7 +208,7 @@ class MemoryMap:
 		return self._alignment
 
 	@property
-	def name(self) -> Optional[str]:
+	def name(self) -> str | None:
 		return self._name
 
 	def freeze(self) -> None:
@@ -289,8 +289,8 @@ class MemoryMap:
 		return addr_range
 
 	def add_resource(
-		self, resource: object, *, name: str, size: int, addr: Optional[int] = None,
-		alignment: Optional[int] = None, extend: bool = False
+		self, resource: object, *, name: str, size: int, addr: int | None = None,
+		alignment: int | None = None, extend: bool = False
 	) -> tuple[int, int]:
 		'''
 		Add a resource.
@@ -380,7 +380,7 @@ class MemoryMap:
 			yield (resource, resource_name, (resource_range.start, resource_range.stop))
 
 	def add_window(
-		self, window: 'MemoryMap', *, addr: Optional[int] = None, sparse: Optional[int] = None,
+		self, window: 'MemoryMap', *, addr: int | None = None, sparse: int | None = None,
 		extend: bool = False
 	) -> tuple[int, int, int]:
 		'''
@@ -629,7 +629,7 @@ class MemoryMap:
 
 		raise KeyError(resource)
 
-	def decode_address(self, address: int) -> Optional[object]:
+	def decode_address(self, address: int) -> object | None:
 		'''
 		Decode an address to a resource.
 

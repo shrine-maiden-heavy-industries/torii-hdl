@@ -2,7 +2,6 @@
 
 from collections    import defaultdict
 from enum           import Enum
-from typing         import Optional
 
 from ....           import Elaboratable, Module, Mux, Record, Signal
 from ....util.units import log2_ceil
@@ -67,7 +66,7 @@ class Element(Record):
 	'''
 
 	def __init__(
-		self, width: int, access: Access, *, name: Optional[str] = None, src_loc_at: int = 0
+		self, width: int, access: Access, *, name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise ValueError(f'Width must be a non-negative integer, not {width!r}')
@@ -142,7 +141,7 @@ class Interface(Record):
 
 	'''
 
-	def __init__(self, *, addr_width: int, data_width: int, name: Optional[str] = None) -> None:
+	def __init__(self, *, addr_width: int, data_width: int, name: str | None = None) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
 		if not isinstance(data_width, int) or data_width <= 0:
@@ -423,8 +422,8 @@ class Multiplexer(Elaboratable):
 	''' # noqa: E101
 
 	def __init__(
-		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None,
-		shadow_overlaps: Optional[int] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: str | None = None,
+		shadow_overlaps: int | None = None
 	) -> None:
 		self._map = MemoryMap(
 			addr_width = addr_width, data_width = data_width,
@@ -457,7 +456,7 @@ class Multiplexer(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, element: Element, *, addr: Optional[int] = None, alignment: Optional[int] = None,
+		self, element: Element, *, addr: int | None = None, alignment: int | None = None,
 		extend: bool = False
 	) -> tuple[int, int]:
 		'''
@@ -591,7 +590,7 @@ class Decoder(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, addr_width: int, data_width: int, alignment: int = 0, name: Optional[str] = None
+		self, *, addr_width: int, data_width: int, alignment: int = 0, name: str | None = None
 	) -> None:
 		self._map  = MemoryMap(
 			addr_width = addr_width, data_width = data_width,
@@ -623,7 +622,7 @@ class Decoder(Elaboratable):
 		return self._map.align_to(alignment)
 
 	def add(
-		self, sub_bus: Interface, *, addr: Optional[int] = None, extend: bool = False
+		self, sub_bus: Interface, *, addr: int | None = None, extend: bool = False
 	) -> tuple[int, int, int]:
 		'''
 		Add a window to a subordinate bus.

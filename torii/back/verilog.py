@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing        import Union
-
 from ..hdl         import ast, ir
 from ..tools.yosys import YosysError, find_yosys
 from .             import rtlil
@@ -14,7 +12,7 @@ __all__ = (
 
 
 def _convert_rtlil_text(
-	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str] = ()
+	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str, ...] = ()
 ) -> str:
 
 	yosys = find_yosys()
@@ -51,7 +49,7 @@ def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tup
 
 
 def convert(
-	elaboratable: Union[ir.Fragment, ir.Elaboratable], name: str = 'top', platform = None, *, ports,
+	elaboratable: ir.Fragment | ir.Elaboratable, name: str = 'top', platform = None, *, ports,
 	emit_src: bool = True, strip_internal_attrs: bool = False, **kwargs
 ) -> str:
 

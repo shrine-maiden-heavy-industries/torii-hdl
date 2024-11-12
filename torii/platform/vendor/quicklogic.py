@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc        import abstractmethod
-from typing     import Union
 
 from ...build   import Clock, TemplatedPlatform
 from ...hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Signal
@@ -152,7 +151,7 @@ class QuicklogicPlatform(TemplatedPlatform):
 			return Clock(self.osc_freq / self.osc_div)
 		return super().default_clk_constraint
 
-	def add_clock_constraint(self, clock: Signal, frequency: Union[int, float]) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'TRUE'
 

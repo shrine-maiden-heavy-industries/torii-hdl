@@ -4,7 +4,7 @@ import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
 from functools         import reduce
-from typing            import Any, Optional, Union
+from typing            import TYPE_CHECKING
 
 from ..util            import flatten
 from ..util.tracer     import get_src_loc
@@ -15,6 +15,9 @@ from .ast              import (
 	Value
 )
 from .cd               import ClockDomain, DomainError
+
+if TYPE_CHECKING:
+	from ..build.plat import Platform
 
 __all__ = (
 	'DriverConflict',
@@ -53,7 +56,7 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj: Union['Fragment', Elaboratable, object] , platform: Optional[Any],
+		obj: 'Fragment | Elaboratable', platform: 'Platform | None',
 		*, formal: bool = False
 	) -> 'Fragment':
 		code = None

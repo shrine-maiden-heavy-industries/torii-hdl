@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from enum     import Enum, auto, unique
-from typing   import Optional, Union
+from enum         import Enum, auto, unique
 
-from ...build import Attrs, DiffPairs, Pins, PinsN, Resource, Subsignal
+from ...build.dsl import Attrs, DiffPairs, Pins, PinsN, Resource, Subsignal, SubsigArgT, ResourceConn
 
 __all__ = (
 	'QSPIMode',
@@ -33,15 +32,13 @@ class QSPIDataMode(Enum):
 
 
 def SPIFlashResources(
-	*args,
-	cs_n: str, clk: str, copi: str, cipo: str, wp_n: Optional[str] = None,
-	hold_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	name_or_number: str | int, number: int | None = None, *,
+	cs_n: str, clk: str, copi: str, cipo: str, wp_n: str | None = None,
+	hold_n: str | None = None, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> list[Resource]:
-
-	resources = []
-
-	io_all = []
+	resources: list[Resource] = []
+	io_all: list[SubsigArgT]  = []
 
 	if attrs is not None:
 		io_all.append(attrs)
@@ -58,7 +55,7 @@ def SPIFlashResources(
 		io_1x.append(Subsignal('hold', PinsN(hold_n, dir = 'o', conn = conn, assert_width = 1)))
 
 	resources.append(Resource.family(
-		*args, default_name = 'spi_flash', ios = io_1x, name_suffix = '1x'
+		name_or_number, number, default_name = 'spi_flash', ios = io_1x, name_suffix = '1x'
 	))
 
 	io_2x = list(io_all)
@@ -66,7 +63,7 @@ def SPIFlashResources(
 		'dq', Pins(' '.join([copi, cipo]), dir = 'io', conn = conn, assert_width = 2)
 	))
 	resources.append(Resource.family(
-		*args, default_name = 'spi_flash', ios = io_2x, name_suffix = '2x'
+		name_or_number, number, default_name = 'spi_flash', ios = io_2x, name_suffix = '2x'
 	))
 
 	if wp_n is not None and hold_n is not None:
@@ -75,13 +72,14 @@ def SPIFlashResources(
 			'dq', Pins(' '.join([copi, cipo, wp_n, hold_n]), dir = 'io', conn = conn, assert_width = 4)
 		))
 		resources.append(Resource.family(
-			*args, default_name = 'spi_flash', ios = io_4x, name_suffix = '4x'
+			name_or_number, number, default_name = 'spi_flash', ios = io_4x, name_suffix = '4x'
 		))
 
 	return resources
 
 def QSPIFlashResource(
-	*args, cs_n, clk, mode: QSPIMode, data_mode: QSPIDataMode,
+	name_or_number: str | int, number: int | None = None, *,
+	cs_n, clk, mode: QSPIMode, data_mode: QSPIDataMode,
 	dq = None, dq_a = None, dq_b = None, clk_fb = None, conn = None, attrs = None
 ):
 	if not isinstance(mode, QSPIMode) or not isinstance(data_mode, QSPIDataMode):
@@ -96,7 +94,7 @@ def QSPIFlashResource(
 	clk_count = 2 if mode == QSPIMode.DualParallel else 1
 	cs_count = 1 if mode == QSPIMode.Single else 2
 
-	ios = [
+	ios: list[SubsigArgT] = [
 		Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = cs_count)),
 		Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = clk_count)),
 	]
@@ -130,18 +128,17 @@ def QSPIFlashResource(
 		ios.append(Subsignal('clk_fb', Pins(clk_fb, dir = 'i', conn = conn, assert_width = 1)))
 	if attrs is not None:
 		ios.append(attrs)
-	return Resource.family(*args, default_name = 'qspi', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'qspi', ios = ios)
 
 
 def SDCardResources(
-	*args,
-	clk: str, cmd: str, dat0: str, dat1: Optional[str] = None, dat2: Optional[str] = None,
-	dat3: Optional[str] = None, cd: Optional[str] = None, wp_n: Optional[str] = None,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	name_or_number: str | int, number: int | None = None, *,
+	clk: str, cmd: str, dat0: str, dat1: str | None = None, dat2: str | None = None,
+	dat3: str | None = None, cd: str | None = None, wp_n: str | None = None,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
-
-	resources = []
-	io_common = []
+	resources: list[Resource]   = []
+	io_common: list[SubsigArgT] = []
 
 	if attrs is not None:
 		io_common.append(attrs)
@@ -164,7 +161,7 @@ def SDCardResources(
 		io_1bit.append(Subsignal('ecd', Pins(dat3, dir = 'i', conn = conn, assert_width = 1)))
 
 	resources.append(Resource.family(
-		*args, default_name = 'sd_card', ios = io_1bit, name_suffix = '1bit'
+		name_or_number, number, default_name = 'sd_card', ios = io_1bit, name_suffix = '1bit'
 	))
 
 	if dat1 is not None and dat2 is not None and dat3 is not None:
@@ -173,7 +170,7 @@ def SDCardResources(
 			'dat', Pins(' '.join((dat0, dat1, dat2, dat3)), dir = 'io', conn = conn, assert_width = 4)
 		))
 		resources.append(Resource.family(
-			*args, default_name = 'sd_card', ios = io_4bit, name_suffix = '4bit'
+			name_or_number, number, default_name = 'sd_card', ios = io_4bit, name_suffix = '4bit'
 		))
 
 	if dat3 is not None:
@@ -184,20 +181,19 @@ def SDCardResources(
 		io_spi.append(Subsignal('copi', Pins(cmd, dir = 'o', conn = conn, assert_width = 1)))
 		io_spi.append(Subsignal('cipo', Pins(dat0, dir = 'i', conn = conn, assert_width = 1)))
 		resources.append(Resource.family(
-			*args, default_name = 'sd_card', ios = io_spi, name_suffix = 'spi'
+			name_or_number, number, default_name = 'sd_card', ios = io_spi, name_suffix = 'spi'
 		))
 
 	return resources
 
 
 def SRAMResource(
-	*args,
-	cs_n: str, oe_n: Optional[str] = None, we_n: str, a: str, d: str,
-	dm_n: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	name_or_number: str | int, number: int | None = None, *,
+	cs_n: str, oe_n: str | None = None, we_n: str, a: str, d: str,
+	dm_n: str | None = None, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
-
-	io = []
+	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1)))
 
@@ -215,18 +211,17 @@ def SRAMResource(
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(*args, default_name = 'sram', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'sram', ios = io)
 
 
 def SDRAMResource(
-	*args,
-	clk: str, cke: Optional[str] = None, cs_n: Optional[str] = None,
+	name_or_number: str | int, number: int | None = None, *,
+	clk: str, cke: str | None = None, cs_n: str | None = None,
 	we_n: str, ras_n: str, cas_n: str, ba: str, a: str, dq: str,
-	dqm: Optional[str] = None, conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None
+	dqm: str | None = None, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
 ) -> Resource:
-
-	io = []
+	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
 	if cke is not None:
@@ -248,19 +243,17 @@ def SDRAMResource(
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(*args, default_name = 'sdram', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'sdram', ios = io)
 
 
 def NORFlashResources(
-	*args,
-	rst: Optional[str] = None, byte_n: Optional[str] = None,
+	name_or_number: str | int, number: int | None = None, *,
+	rst: str | None = None, byte_n: str | None = None,
 	cs_n: str, oe_n: str, we_n: str, wp_n: str, by: str, a: str, dq: str,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
-
-	resources = []
-
-	io_common = []
+	resources: list[Resource]   = []
+	io_common: list[SubsigArgT] = []
 
 	if rst is not None:
 		io_common.append(Subsignal('rst', Pins(rst, dir = 'o', conn = conn, assert_width = 1)))
@@ -276,7 +269,7 @@ def NORFlashResources(
 		io_8bit.append(Subsignal('a', Pins(a, dir = 'o', conn = conn)))
 		io_8bit.append(Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 8)))
 		resources.append(Resource.family(
-			*args, default_name = 'nor_flash', ios = io_8bit, name_suffix = '8bit'
+			name_or_number, number, default_name = 'nor_flash', ios = io_8bit, name_suffix = '8bit'
 		))
 	else:
 		*dq_0_14, dq15_am1 = dq.split()
@@ -289,29 +282,28 @@ def NORFlashResources(
 		io_8bit.append(Subsignal('dq', Pins(' '.join(dq_0_14[:8]), dir = 'io', conn = conn,
 											assert_width = 8)))
 		resources.append(Resource.family(
-			*args, default_name = 'nor_flash', ios = io_8bit, name_suffix = '8bit'
+			name_or_number, number, default_name = 'nor_flash', ios = io_8bit, name_suffix = '8bit'
 		))
 
 		io_16bit = list(io_common)
 		io_16bit.append(Subsignal('a', Pins(a, dir = 'o', conn = conn)))
 		io_16bit.append(Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 16)))
 		resources.append(Resource.family(
-			*args, default_name = 'nor_flash', ios = io_16bit, name_suffix = '16bit'
+			name_or_number, number, default_name = 'nor_flash', ios = io_16bit, name_suffix = '16bit'
 		))
 
 	return resources
 
 
 def DDR3Resource(
-	*args,
-	rst_n: Optional[str] = None,
+	name_or_number: str | int, number: int | None = None, *,
+	rst_n: str | None = None,
 	clk_p: str, clk_n: str, clk_en: str, cs_n: str, we_n: str, ras_n: str, cas_n: str,
 	a: str, ba: str, dqs_p: str, dqs_n: str, dq: str, dm: str, odt: str,
-	conn: Optional[Union[tuple[str, int], int]] = None,
-	diff_attrs = None, attrs: Optional[Attrs] = None
+	conn: ResourceConn | None = None,
+	diff_attrs = None, attrs: Attrs | None = None
 ) -> Resource:
-
-	ios = []
+	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('rst', PinsN(rst_n, dir = 'o', conn = conn, assert_width = 1)))
 	ios.append(Subsignal('clk', DiffPairs(clk_p, clk_n, dir = 'o', conn = conn, assert_width = 1), diff_attrs))
@@ -330,4 +322,4 @@ def DDR3Resource(
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(*args, default_name = 'ddr3', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'ddr3', ios = ios)

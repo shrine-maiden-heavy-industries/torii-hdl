@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from sys    import _getframe, version_info
-from typing import Optional, Union
 
 from opcode import opname
 
@@ -16,7 +15,7 @@ class NameNotFound(Exception):
 
 _raise_exception = object()
 
-def get_var_name(depth: int = 2, default: Optional[Union[str, object]] = _raise_exception) -> Union[str, object]:
+def get_var_name(depth: int = 2, default: str | object | None = _raise_exception) -> str | object :
 	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import operator
+from typing import Final
 
 __all__ = (
 	'ps_to_sec',
@@ -17,10 +18,10 @@ __all__ = (
 	'log2_exact',
 )
 
-PS = 1e-12
-NS = 1e-9
-US = 1e-6
-MS = 1e-3
+PS: Final = 1e-12
+NS: Final = 1e-9
+US: Final = 1e-6
+MS: Final = 1e-3
 
 def ps_to_sec(val: float) -> float:
 	''' Convert the given number of picoseconds into fractional seconds '''
@@ -116,6 +117,9 @@ def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	else:
 		require_sign_bit = True
 		r = log2_ceil(-n)
+
 	if require_sign_bit:
 		r += 1
-	return r
+
+	# NOTE(aki): mypy can't see through the if-else assignment and thinks `r` can be an `Any`, which is wrong
+	return r # type: ignore

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # Reference: https://www.digilentinc.com/Pmods/Digilent-Pmod_%20Interface_Specification.pdf
 
-from ....build import Pins, PinsN, Resource, Subsignal
+from ....build.dsl import Pins, PinsN, Resource, Subsignal, SubsigArgT
 
 __all__ = (
 	'PmodDualHBridgeType6Resource',
@@ -14,15 +14,11 @@ __all__ = (
 	'PmodUARTType4Resource',
 )
 
-def PmodGPIOType1Resource(name: str, number: int, *args, pmod: int) -> Resource:
-	return Resource(
-		name, number,
-		Pins('1 2 3 4', dir = 'io', conn = ('pmod', pmod)),
-		*args
-	)
+def PmodGPIOType1Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	return Resource(name, number, Pins('1 2 3 4', dir = 'io', conn = ('pmod', pmod)), *args)
 
 
-def PmodSPIType2Resource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodSPIType2Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('cs',   PinsN('1', dir = 'o', conn = ('pmod', pmod))),
@@ -33,7 +29,7 @@ def PmodSPIType2Resource(name: str, number: int, *args, pmod: int) -> Resource:
 	)
 
 
-def PmodSPIType2AResource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodSPIType2AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('cs',   PinsN('1', dir = 'o', conn = ('pmod', pmod))),
@@ -46,7 +42,7 @@ def PmodSPIType2AResource(name: str, number: int, *args, pmod: int) -> Resource:
 	)
 
 
-def PmodUARTType3Resource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodUARTType3Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'o', conn = ('pmod', pmod))),
@@ -57,7 +53,7 @@ def PmodUARTType3Resource(name: str, number: int, *args, pmod: int) -> Resource:
 	)
 
 
-def PmodUARTType4Resource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodUARTType4Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'i', conn = ('pmod', pmod))),
@@ -68,7 +64,7 @@ def PmodUARTType4Resource(name: str, number: int, *args, pmod: int) -> Resource:
 	)
 
 
-def PmodUARTType4AResource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodUARTType4AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'i', conn = ('pmod', pmod))),
@@ -81,7 +77,7 @@ def PmodUARTType4AResource(name: str, number: int, *args, pmod: int) -> Resource
 	)
 
 
-def PmodHBridgeType5Resource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodHBridgeType5Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('dir',   Pins('1', dir = 'o', conn = ('pmod', pmod))),
@@ -92,7 +88,7 @@ def PmodHBridgeType5Resource(name: str, number: int, *args, pmod: int) -> Resour
 	)
 
 
-def PmodDualHBridgeType6Resource(name: str, number: int, *args, pmod: int) -> Resource:
+def PmodDualHBridgeType6Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
 		Subsignal('dir',   Pins('1 3', dir = 'o', conn = ('pmod', pmod))),

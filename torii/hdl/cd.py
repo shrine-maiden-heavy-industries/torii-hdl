@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Literal, Optional
+from typing import Literal
 
 from ..util import tracer
 from .ast   import Signal
@@ -56,7 +56,7 @@ class ClockDomain:
 			return f'{domain_name}_{signal_name}'
 
 	def __init__(self,
-		name: Optional[str] = None, *, clk_edge: Literal['pos', 'neg'] = 'pos',
+		name: str | None = None, *, clk_edge: Literal['pos', 'neg'] = 'pos',
 		reset_less: bool = False, async_reset: bool = False, local: bool = False
 	) -> None:
 		if name is None:

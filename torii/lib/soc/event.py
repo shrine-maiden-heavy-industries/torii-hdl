@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from collections     import OrderedDict
+from collections.abc import Generator
+from enum            import Enum
 
-from collections import OrderedDict
-from enum        import Enum
-from typing      import Generator, Optional
-
-from ...         import Elaboratable, Module, Record, Signal
+from ...             import Elaboratable, Module, Record, Signal
 
 __all__ = (
 	'EventMap',
@@ -41,7 +40,7 @@ class Source(Record):
 	'''
 
 	def __init__(
-		self, *, trigger: Trigger = 'level', name: Optional[str] = None, src_loc_at: int = 0
+		self, *, trigger: Trigger = 'level', name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		choices = ("level", 'rise', 'fall')
 		if not isinstance(trigger, Source.Trigger) and trigger not in choices:

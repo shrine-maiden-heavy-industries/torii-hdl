@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from abc        import abstractmethod
-from typing     import Literal, Optional
+from typing     import Literal
 
 from ....build  import Attrs, Clock, Subsignal, TemplatedPlatform
 from ....hdl    import (
@@ -398,7 +398,7 @@ class ECP5Platform(TemplatedPlatform):
 
 	def _get_xdr_buffer(
 		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
-	) -> tuple[Optional[Signal], Optional[Signal], Optional[Signal]]:
+	) -> tuple[Signal | None, Signal | None, Signal | None]:
 		def get_ireg(clk: Signal, d: Signal, q: Signal) -> None:
 			for bit in range(len(q)):
 				m.submodules += Instance(

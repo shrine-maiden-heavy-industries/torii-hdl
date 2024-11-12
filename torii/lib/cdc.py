@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Literal, Optional
+from typing import Literal
 
 from ..     import (
 	ClockDomain, ClockSignal, Elaboratable, Module, ResetSignal, Signal
@@ -76,7 +76,7 @@ class FFSynchronizer(Elaboratable):
 
 	def __init__(
 		self, i: Signal, o: Signal, *, o_domain: str = 'sync', reset: int = 0,
-		reset_less: bool = True, stages: int = 2, max_input_delay: Optional[float] = None
+		reset_less: bool = True, stages: int = 2, max_input_delay: float | None = None
 	) -> None:
 		_check_stages(stages)
 
@@ -145,7 +145,7 @@ class AsyncFFSynchronizer(Elaboratable):
 
 	def __init__(
 		self, i: Signal, o: Signal, *, o_domain: str = 'sync', stages: int = 2,
-		async_edge: Literal['pos', 'neg'] = 'pos', max_input_delay: Optional[float] = None
+		async_edge: Literal['pos', 'neg'] = 'pos', max_input_delay: float | None = None
 	) -> None:
 		_check_stages(stages)
 
@@ -233,7 +233,7 @@ class ResetSynchronizer(Elaboratable):
 
 	def __init__(
 		self, arst: Signal, *, domain: str = 'sync', stages: int = 2,
-		max_input_delay: Optional[float] = None
+		max_input_delay: float | None = None
 	) -> None:
 		_check_stages(stages)
 

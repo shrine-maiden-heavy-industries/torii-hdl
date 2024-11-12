@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing         import Optional
-
 from ....           import Cat, Elaboratable, Module, Signal
 from ....util.units import log2_exact
 from ..memory       import MemoryMap
@@ -42,7 +40,7 @@ class WishboneCSRBridge(Elaboratable):
 	'''
 
 	def __init__(
-		self, csr_bus: CSRInterface, *, data_width: Optional[int] = None, name: Optional[str] = None
+		self, csr_bus: CSRInterface, *, data_width: int | None = None, name: str | None = None
 	) -> None:
 		if not isinstance(csr_bus, CSRInterface):
 			raise ValueError(f'CSR bus must be an instance of CSRInterface, not {csr_bus!r}')

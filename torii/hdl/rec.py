@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections import OrderedDict
-from enum        import Enum
-from functools   import reduce, wraps
-from typing      import Any, Generator, Iterable, Optional, Union, get_args, get_origin
-from inspect     import get_annotations, isclass
+from collections     import OrderedDict
+from collections.abc import Iterable, Generator
+from enum            import Enum
+from functools       import reduce, wraps
+from typing          import Any, get_args, get_origin
+from inspect         import get_annotations, isclass
 
-from ..util      import tracer, union
-from .ast        import Cat, Shape, Signal, SignalSet, Value, ValueCastable
+from ..util          import tracer, union
+from .ast            import Cat, Shape, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
 	'DIR_FANIN',
@@ -35,7 +36,7 @@ class Layout:
 
 	# TODO: The `Any` type is not correct but the types need to be refactored again eventually to fix it
 	def __init__(
-		self, fields: Iterable[Union[tuple[str, Any], tuple[str, Any, Direction]]], *,
+		self, fields: Iterable[tuple[str, Any] | tuple[str, Any, Direction]], *,
 		src_loc_at: int = 0
 	) -> None:
 		self.fields = OrderedDict()
@@ -147,7 +148,7 @@ class Record(ValueCastable):
 					)
 		return layout
 
-	def __init__(self, layout = None, *, name: Optional[str] = None, fields = None, src_loc_at: int = 0) -> None:
+	def __init__(self, layout = None, *, name: str | None = None, fields = None, src_loc_at: int = 0) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 

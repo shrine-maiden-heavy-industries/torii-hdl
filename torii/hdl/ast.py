@@ -6,12 +6,11 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import (
-	Iterable, MutableMapping, MutableSequence, MutableSet
-)
+from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet
+from typing            import TypeAlias, Type, TypeVar
 from enum              import Enum, EnumMeta
 from itertools         import chain
-from typing            import Optional, Union, Generic
+from typing            import Generic
 
 # For Python <= 3.10
 from typing_extensions import TypeVarTuple, Unpack
@@ -92,6 +91,7 @@ class ShapeCastable:
 		if not hasattr(cls, 'const'):
 			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
+ShapeCastT: TypeAlias = 'Shape | int | range | type | ShapeCastable'
 
 class Shape:
 	'''
@@ -135,7 +135,7 @@ class Shape:
 	# This implements an algorithm for inferring shape from standard Python enumerations
 	# for `Shape.cast()`.
 	@staticmethod
-	def _cast_plain_enum(obj):
+	def _cast_plain_enum(obj: Enum) -> 'Shape':
 		signed = False
 		width  = 0
 		for member in obj:
@@ -156,10 +156,7 @@ class Shape:
 		return Shape(width, signed)
 
 	@staticmethod
-	def cast(
-		obj: Union['Shape', int, range, type, ShapeCastable], *,
-		src_loc_at: int = 0
-	) -> 'Shape':
+	def cast(obj: ShapeCastT, *, src_loc_at: int = 0) -> 'Shape':
 		while True:
 			if isinstance(obj, Shape):
 				return obj
@@ -192,12 +189,13 @@ class Shape:
 		else:
 			return f'unsigned({self.width})'
 
-	def __eq__(self, other: Union[tuple[int, bool], 'Shape']) -> bool:
+	def __eq__(self, other: ShapeCastT) -> bool:
 		if not isinstance(other, Shape):
 			try:
 				other = self.__class__.cast(other)
 			except TypeError as e:
 				raise TypeError(f'Shapes may be compared with shape-castable objects, not {other!r}') from e
+
 		return self.width == other.width and self.signed == other.signed
 
 class _ShapeLikeMeta(type):
@@ -255,7 +253,7 @@ def signed(width: int) -> Shape:
 	return Shape(width, signed = True)
 
 
-ValueCastType = Union['Value', int, Enum, 'ValueCastable']
+ValueCastType: TypeAlias = 'Value | int | Enum | ValueCastable'
 
 def _overridable_by_swapping(method_name: str):
 	'''
@@ -435,7 +433,7 @@ class Value(metaclass = ABCMeta):
 	def __len__(self) -> int:
 		return self.shape().width
 
-	def __getitem__(self, key: Union[int, slice]) -> 'Slice':
+	def __getitem__(self, key: int | slice) -> 'Slice':
 		n = len(self)
 		if isinstance(key, int):
 			if key not in range(-n, n):
@@ -553,7 +551,7 @@ class Value(metaclass = ABCMeta):
 
 		return ~premise | conclusion
 
-	def bit_select(self, offset: Union['Value', int] , width: int) -> 'Part':
+	def bit_select(self, offset: 'Value | int' , width: int) -> 'Part':
 		'''
 		Part-select with bit granularity.
 
@@ -579,7 +577,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
-	def word_select(self, offset: Union['Value', int] , width: int) -> 'Part':
+	def word_select(self, offset: 'Value | int' , width: int) -> 'Part':
 		'''
 		Part-select with word granularity.
 
@@ -605,7 +603,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
-	def matches(self, *patterns: tuple[Union[int, str, Enum]]) -> 'Value':
+	def matches(self, *patterns: tuple[int | str | Enum, ...]) -> 'Value':
 		'''
 		Pattern matching.
 
@@ -944,7 +942,7 @@ class Const(Value, metaclass = _ConstMeta):
 
 
 	def __init__(
-		self, value: int, shape: Optional[Union[int, tuple[int, bool]]] = None, *,
+		self, value: int, shape: int | tuple[int, bool] | None = None, *,
 		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
@@ -1866,8 +1864,8 @@ class Property(Statement, MustUse):
 
 
 	def __init__(
-		self, kind: str, test: ValueCastType, *, _check: Optional[Signal] = None, _en: Optional[Signal] = None,
-		name: Optional[str] = None, src_loc_at: int = 0
+		self, kind: str, test: ValueCastType, *, _check: Signal | None = None, _en: Signal | None = None,
+		name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.kind   = self.Kind(kind)
@@ -2204,7 +2202,7 @@ class ValueSet(_MappedKeySet):
 
 
 class SignalKey:
-	def __init__(self, signal: Union[Signal, ClockSignal, ResetSignal]) -> None:
+	def __init__(self, signal: Signal | ClockSignal | ResetSignal) -> None:
 		self.signal = signal
 		if isinstance(signal, Signal):
 			self._intern = (0, signal.duid)

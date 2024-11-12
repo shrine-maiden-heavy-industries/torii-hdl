@@ -2,7 +2,6 @@
 
 import operator
 from collections import OrderedDict
-from typing      import Optional, List
 
 from ..util      import tracer
 from .ast        import Array, Cat, Const, Signal, Switch, Mux
@@ -46,8 +45,8 @@ class Memory(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, width: int, depth: int, init = None, name: Optional[str] = None,
-		attrs: Optional[OrderedDict] = None, simulate: bool = True
+		self, *, width: int, depth: int, init = None, name: str | None = None,
+		attrs: OrderedDict | None = None, simulate: bool = True
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')
@@ -68,8 +67,8 @@ class Memory(Elaboratable):
 				self._array.append(Signal(self.width, name = f'{name or "memory"}({addr})'))
 
 		self.init = init
-		self._read_ports: List[ReadPort] = []
-		self._write_ports: List[WritePort] = []
+		self._read_ports: list[ReadPort] = []
+		self._write_ports: list[WritePort] = []
 
 	@property
 	def init(self):

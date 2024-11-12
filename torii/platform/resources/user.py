@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing   import Literal, Optional, Union
-
-from ...build import Attrs, Pins, Resource, Subsignal
+from ..._typing   import IODirectionIO
+from ...build.dsl import Attrs, Pins, Resource, Subsignal, SubsigArgT, ResourceConn
 
 __all__ = (
 	'ButtonResources',
@@ -12,10 +11,10 @@ __all__ = (
 )
 
 def _SplitResources(
-	*args,
-	pins: Union[str, list[str], dict[str, str]], invert: bool = False,
-	conn: Optional[Union[tuple[str, int], int]] = None,
-	attrs: Optional[Attrs] = None, default_name: str, dir: Literal['i', 'o', 'io']
+	name_or_number: str | int, number: int | None = None, *,
+	default_name: str, dir: IODirectionIO, pins: str | list[str] | dict[str, str], invert: bool = False,
+	conn: ResourceConn | None = None,
+	attrs: Attrs | None = None,
 ) -> list[Resource]:
 
 	if not isinstance(pins, (str, list, dict)):
@@ -27,28 +26,32 @@ def _SplitResources(
 	if isinstance(pins, list):
 		pins = dict(enumerate(pins))
 
-	resources = []
+	resources: list[Resource] = []
 
 	for number, pin in pins.items():
 		ios = [Pins(pin, dir = dir, invert = invert, conn = conn)]
 		if attrs is not None:
 			ios.append(attrs)
-		resources.append(Resource.family(*args, number, default_name = default_name, ios = ios))
+		resources.append(Resource.family(name_or_number, number, default_name = default_name, ios = ios))
 
 	return resources
 
 
-def LEDResources(*args, **kwargs) -> list[Resource]:
-	return _SplitResources(*args, **kwargs, default_name = 'led', dir = 'o')
+def LEDResources(
+	name_or_number: str | int, number: int | None = None, *, pins: str | list[str] | dict[str, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
+) -> list[Resource]:
+	return _SplitResources(
+		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert, conn = conn, attrs = attrs
+	)
 
 
 def RGBLEDResource(
-	*args,
+	name_or_number: str | int, number: int | None = None, *,
 	r: str, g: str, b: str, invert: bool = False,
-	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None
+	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
-
-	ios = []
+	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('r', Pins(r, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
 	ios.append(Subsignal('g', Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
@@ -57,12 +60,22 @@ def RGBLEDResource(
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(*args, default_name = 'rgb_led', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'rgb_led', ios = ios)
 
 
-def ButtonResources(*args, **kwargs) -> list[Resource]:
-	return _SplitResources(*args, **kwargs, default_name = 'button', dir = 'i')
+def ButtonResources(
+	name_or_number: str | int, number: int | None = None, *, pins: str | list[str] | dict[str, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
+) -> list[Resource]:
+	return _SplitResources(
+		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
+	)
 
 
-def SwitchResources(*args, **kwargs) -> list[Resource]:
-	return _SplitResources(*args, **kwargs, default_name = 'switch', dir = 'i')
+def SwitchResources(
+	name_or_number: str | int, number: int | None = None, *, pins: str | list[str] | dict[str, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
+) -> list[Resource]:
+	return _SplitResources(
+		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
+	)

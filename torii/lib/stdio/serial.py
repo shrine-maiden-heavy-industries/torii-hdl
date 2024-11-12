@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing        import Literal, Optional, Union
+from typing        import Literal
 
 from ...           import Cat, Const, Elaboratable, Module, Record, Signal
 from ...util.units import bits_for
@@ -27,7 +27,7 @@ def _check_parity(parity: Literal['none', 'mark', 'space', 'even', 'odd']):
 
 def _compute_parity_bit(
 	data: Record , parity: Literal['none', 'mark', 'space', 'even', 'odd']
-) -> Union[Const, Record, bool]:
+) -> Const | Record | bool:
 	if parity not in ('none', 'mark', 'space', 'even', 'odd'):
 		raise ValueError(f'Parity must be one of \'none\', \'mark\', \'space\', \'even\', or \'odd\', not \'{parity}\'')
 
@@ -93,9 +93,9 @@ class AsyncSerialRX(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
+		self, *, divisor: int, divisor_bits: int | None = None, data_bits: int = 8,
 		parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
-		pins: Optional[Pin] = None
+		pins: Pin | None = None
 	) -> None:
 		_check_parity(parity)
 		self._parity = parity
@@ -200,9 +200,9 @@ class AsyncSerialTX(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, divisor: int, divisor_bits: Optional[int] = None, data_bits: int = 8,
+		self, *, divisor: int, divisor_bits: int | None = None, data_bits: int = 8,
 		parity  : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
-		pins: Optional[Pin] = None
+		pins: Pin | None = None
 	) -> None:
 		_check_parity(parity)
 		self._parity = parity
@@ -286,7 +286,7 @@ class AsyncSerial(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, divisor: int, divisor_bits: Optional[int] = None, **kwargs
+		self, *, divisor: int, divisor_bits: int | None = None, **kwargs
 	) -> None:
 		self.divisor = Signal(divisor_bits or bits_for(divisor), reset = divisor)
 

@@ -8,11 +8,12 @@ import tempfile
 import zipfile
 import tarfile
 
-from abc         import ABCMeta, abstractmethod
-from collections import OrderedDict
-from contextlib  import contextmanager
-from pathlib     import Path
-from typing      import Generator, Literal, Union
+from abc             import ABCMeta, abstractmethod
+from collections     import OrderedDict
+from collections.abc import Generator
+from contextlib      import contextmanager
+from pathlib         import Path
+from typing          import Literal
 
 __all__ = (
 	'BuildPlan',
@@ -32,9 +33,9 @@ class BuildPlan:
 
 		'''
 		self.script = script
-		self.files  = OrderedDict()
+		self.files  = OrderedDict[str, str | bytes]()
 
-	def add_file(self, filename: str, content: Union[str, bytes]) -> None:
+	def add_file(self, filename: str, content: str | bytes) -> None:
 		'''
 		Add ``content``, which can be a :class:`str`` or :class:`bytes`, to the build plan
 		as ``filename``. The file name can be a relative path with directories separated by
@@ -63,7 +64,7 @@ class BuildPlan:
 		hasher.update(self.script.encode('utf-8'))
 		return hasher.digest()
 
-	def archive(self, file: Union[str, Path], archive_type: Literal['tar', 'zip'] = 'zip') -> None:
+	def archive(self, file: str | Path, archive_type: Literal['tar', 'zip'] = 'zip') -> None:
 		'''
 		Create an archive containing the results from the BuildPlan.
 
@@ -139,7 +140,7 @@ class BuildPlan:
 			os.chdir(cwd)
 
 	def execute_local(
-		self, root: Union[str, Path] = 'build', *, env: dict[str, str] = None
+		self, root: str | Path = 'build', *, env: dict[str, str] = None
 	) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
@@ -225,7 +226,7 @@ class BuildPlan:
 
 class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
-	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> Union[str, bytes]:
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
 		'''
 		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
 		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
@@ -235,8 +236,8 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 	@contextmanager
-	def extract(self, *filenames: tuple[str]) -> Generator[
-		Union[None, str, list[str]], None, None
+	def extract(self, *filenames: tuple[str, ...]) -> Generator[
+		None | str | list[str], None, None
 	]:
 		'''
 		Extract ``filenames`` from build products, place them in an OS-specific temporary file
@@ -272,7 +273,7 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 class LocalBuildProducts(BuildProducts):
-	def __init__(self, root: Union[str, Path]) -> None:
+	def __init__(self, root: str | Path) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
 		# any way other than through `products.get()`) in general, so downstream code must never
 		# rely on this, even when we happen to use a local build most of the time.
@@ -281,7 +282,7 @@ class LocalBuildProducts(BuildProducts):
 		else:
 			self.__root = root
 
-	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> Union[str, bytes]:
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
 		super().get(filename, mode)
 		with (self.__root / filename).resolve().open(f'r{mode}') as f:
 			return f.read()
