@@ -95,11 +95,11 @@ def SPIResource(
 	*args,
 	cs_n: str, clk: str, copi: str, cipo: str, int: str = None, reset: str = None,
 	conn: Optional[Union[tuple[str, int], int]] = None, attrs: Optional[Attrs] = None,
-	role: Literal['controller', 'peripheral'] = 'controller'
+	role: Literal['controller', 'peripheral', 'generic'] = 'controller'
 ) -> Resource:
 
-	if role not in ('controller', 'peripheral'):
-		raise ValueError(f'role is expected to be \'controller\' or \'peripheral\', not {role!r}')
+	if role not in ('controller', 'peripheral', 'generic'):
+		raise ValueError(f'role must be one of \'controller\', \'peripheral\', or \'generic\' not {role!r}')
 
 	# support unidirectional SPI
 	if copi is None and cipo is None:
@@ -114,25 +114,36 @@ def SPIResource(
 			io.append(Subsignal('copi', Pins(copi, dir = 'o', conn = conn, assert_width = 1)))
 		if cipo is not None:
 			io.append(Subsignal('cipo', Pins(cipo, dir = 'i', conn = conn, assert_width = 1)))
-	else:  # peripheral
+	elif role == 'peripheral':
 		io.append(Subsignal('cs', PinsN(cs_n, dir = 'i', conn = conn, assert_width = 1)))
 		io.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1)))
 		if copi is not None:
 			io.append(Subsignal('copi', Pins(copi, dir = 'i', conn = conn, assert_width = 1)))
 		if cipo is not None:
 			io.append(Subsignal('cipo', Pins(cipo, dir = 'oe', conn = conn, assert_width = 1)))
+	else: # generic
+		io.append(Subsignal('cs', PinsN(cs_n, dir = 'io', conn = conn, assert_width = 1)))
+		io.append(Subsignal('clk', Pins(clk, dir = 'io', conn = conn, assert_width = 1)))
+		if copi is not None:
+			io.append(Subsignal('copi', Pins(copi, dir = 'io', conn = conn, assert_width = 1)))
+		if cipo is not None:
+			io.append(Subsignal('cipo', Pins(cipo, dir = 'io', conn = conn, assert_width = 1)))
 
 	if int is not None:
 		if role == 'controller':
 			io.append(Subsignal('int', Pins(int, dir = 'i', conn = conn)))
-		else:
+		elif role == 'peripheral':
 			io.append(Subsignal('int', Pins(int, dir = 'oe', conn = conn, assert_width = 1)))
+		else: # generic
+			io.append(Subsignal('int', Pins(int, dir = 'io', conn = conn, assert_width = 1)))
 
 	if reset is not None:
 		if role == 'controller':
 			io.append(Subsignal('reset', Pins(reset, dir = 'o', conn = conn)))
-		else:
+		elif role == 'peripheral':
 			io.append(Subsignal('reset', Pins(reset, dir = 'i', conn = conn, assert_width = 1)))
+		else:  # generic
+			io.append(Subsignal('reset', Pins(reset, dir = 'io', conn = conn, assert_width = 1)))
 
 	if attrs is not None:
 		io.append(attrs)
