@@ -488,7 +488,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		se = Signal(2)
 		with m.Switch(se):
-			with warnings.catch_warnings(action = 'ignore'):
+			with warnings.catch_warnings():
+				warnings.simplefilter('ignore')
 				with m.Case(Cat(Color.RED, Color.BLUE)):
 					m.d.comb += self.c1.eq(1)
 		self.assertRepr(m._statements, '''
