@@ -72,8 +72,7 @@ class DUID:
 		self.duid = DUID.__next_uid
 		DUID.__next_uid += 1
 
-
-class ShapeCastable:
+class ShapeCastable(metaclass = ABCMeta):
 	'''
 	Interface of user-defined objects that can be cast to :class:`Shape`s.
 
@@ -84,12 +83,13 @@ class ShapeCastable:
 
 	'''
 
-	def __init_subclass__(cls, **kwargs):
-		if not hasattr(cls, 'as_shape'):
-			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
+	@abstractmethod
+	def as_shape(self) -> 'Shape':
+		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
 
-		if not hasattr(cls, 'const'):
-			raise TypeError(f'Class \'{cls.__name__}\' deriving from `ShapeCastable` must override the `const` method')
+	@abstractmethod
+	def const(self) -> 'Const':
+		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
 ShapeCastT: TypeAlias = 'Shape | int | range | type | ShapeCastable'
 
