@@ -4,6 +4,7 @@ from collections.abc import Iterable
 from typing          import IO
 
 from ..hdl           import Signal
+from ..hdl.ir        import Fragment
 
 __all__ = (
 	'BaseEngine',
@@ -58,6 +59,9 @@ class BaseSimulation:
 
 
 class BaseEngine:
+	def __init__(self, fragment: Fragment):
+		pass
+
 	def add_coroutine_process(self, process, *, default_cmd):
 		raise NotImplementedError
 
