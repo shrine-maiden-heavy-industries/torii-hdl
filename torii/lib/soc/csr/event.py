@@ -64,8 +64,8 @@ class EventMonitor(Elaboratable):
 		if self._frozen:
 			return
 		self._monitor = event.Monitor(self._map, trigger = self._trigger)
-		self._enable  = Element(self._map.size, 'rw')
-		self._pending = Element(self._map.size, 'rw')
+		self._enable  = Element(self._map.size, Element.Access.RW)
+		self._pending = Element(self._map.size, Element.Access.RW)
 		self._mux.add(self._enable,  extend = True)
 		self._mux.add(self._pending, extend = True)
 		self._frozen  = True
@@ -83,6 +83,7 @@ class EventMonitor(Elaboratable):
 		'''
 
 		self.freeze()
+		assert self._monitor is not None
 		return self._monitor.src
 
 	@property
@@ -111,6 +112,9 @@ class EventMonitor(Elaboratable):
 
 	def elaborate(self, platform) -> Module:
 		self.freeze()
+		assert self._monitor is not None
+		assert self._enable is not None
+		assert self._pending is not None
 
 		m = Module()
 		m.submodules.monitor = self._monitor
