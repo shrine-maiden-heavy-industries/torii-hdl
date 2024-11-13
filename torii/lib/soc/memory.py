@@ -19,10 +19,10 @@ class _RangeMap:
 	'''
 
 	def __init__(self) -> None:
-		self._keys   = []
-		self._values = dict()
-		self._starts = []
-		self._stops  = []
+		self._keys: list[range]           = []
+		self._values: dict[range, object] = {}
+		self._starts: list[int]           = []
+		self._stops: list[int]            = []
 
 	def insert(self, key: range, value: object):
 		if not isinstance(key, range):
@@ -41,12 +41,13 @@ class _RangeMap:
 		self._keys.insert(start_idx, key)
 		self._values[key] = value
 
-	def get(self, point: int) -> object:
+	def get(self, point: int) -> object | None:
 		point_idx = bisect_right(self._stops, point)
 		if point_idx < len(self._keys):
 			point_range = self._keys[point_idx]
 			if point >= point_range.start and point < point_range.stop:
 				return self._values[point_range]
+		return None
 
 	def overlaps(self, key: range) -> list[object]:
 		start_idx = bisect_right(self._stops, key.start)
@@ -174,10 +175,10 @@ class MemoryMap:
 		self._alignment  = alignment
 		self._name       = name
 
-		self._ranges     = _RangeMap()
-		self._resources  = dict()
-		self._windows    = dict()
-		self._namespace  = dict()
+		self._ranges                                          = _RangeMap()
+		self._resources: dict[int, tuple[object, str, range]] = {}
+		self._windows: dict[int, tuple[MemoryMap, range]]     = {}
+		self._namespace: dict[str, MemoryMap | object]        = {}
 
 		self._next_addr  = 0
 		self._frozen     = False
@@ -250,7 +251,7 @@ class MemoryMap:
 		return self._next_addr
 
 	def _compute_addr_range(
-		self, addr: int, size: int, step: int = 1, *, alignment: int, extend: bool
+		self, addr: int | None, size: int, step: int = 1, *, alignment: int, extend: bool
 	) -> range:
 		if addr is not None:
 			if not isinstance(addr, int) or addr < 0:
@@ -523,7 +524,7 @@ class MemoryMap:
 		for window, window_range in self._windows.values():
 			yield (window, (window_range.start, window_range.stop, window_range.step))
 
-	def window_patterns(self) -> Generator[tuple[object, tuple[str, int]], None, None]:
+	def window_patterns(self) -> Generator[tuple['MemoryMap', tuple[str, int]], None, None]:
 		'''
 		Iterate local windows and patterns that match their address ranges.
 
@@ -646,12 +647,12 @@ class MemoryMap:
 
 		assignment = self._ranges.get(address)
 		if assignment is None:
-			return
+			return None
 
 		if id(assignment) in self._resources:
 			return assignment
 		elif id(assignment) in self._windows:
-			_, addr_range = self._windows[id(assignment)]
-			return assignment.decode_address((address - addr_range.start) // addr_range.step)
+			memory_map, addr_range = self._windows[id(assignment)]
+			return memory_map.decode_address((address - addr_range.start) // addr_range.step)
 		else:
 			raise ValueError(f'Address {address} is not a known resource or in a valid address window') # :nocov:
