@@ -19,6 +19,9 @@ from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment
 from .xfrm           import SampleDomainInjector
 
+if TYPE_CHECKING:
+	from ..build.plat import Platform
+
 __all__ = (
 	'Module',
 	'SyntaxError',
@@ -645,7 +648,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while self._ctrl_stack:
 			self._pop_ctrl()
 
-	def elaborate(self, platform):
+	def elaborate(self, platform: 'Platform | None'):
 		self._flush()
 
 		fragment = Fragment()
