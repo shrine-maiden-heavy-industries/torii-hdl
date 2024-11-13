@@ -2,8 +2,10 @@
 
 from collections    import defaultdict
 from enum           import Enum
+from typing         import Generator
 
 from ....           import Elaboratable, Module, Mux, Record, Signal
+from ....hdl.ast    import Operator
 from ....util.units import log2_ceil
 from ..memory       import MemoryMap
 
@@ -33,6 +35,11 @@ class Element(Record):
 
 		def writable(self) -> bool:
 			return self == self.W or self == self.RW
+
+	r_data: Signal
+	r_stb: Signal
+	w_data: Signal
+	w_stb: Signal
 
 	'''
 	Peripheral-side CSR interface.
@@ -141,6 +148,12 @@ class Interface(Record):
 
 	'''
 
+	addr: Signal
+	r_data: Signal
+	r_stb: Signal
+	w_data: Signal
+	w_stb: Signal
+
 	def __init__(self, *, addr_width: int, data_width: int, name: str | None = None) -> None:
 		if not isinstance(addr_width, int) or addr_width <= 0:
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
@@ -186,14 +199,14 @@ class Multiplexer(Elaboratable):
 	class _Shadow:
 		class Chunk:
 			'''The interface between a CSR multiplexer and a shadow register chunk.'''
-			def __init__(self, shadow, offset, elements):
+			def __init__(self, shadow: 'Multiplexer._Shadow', offset: int, elements: list[range]):
 				self.name = f'{shadow.name}__{offset}'
 				self.data = Signal(shadow.granularity, name = f'{self.name}__data')
 				self.r_en = Signal(name = f'{self.name}__r_en')
 				self.w_en = Signal(name = f'{self.name}__w_en')
 				self._elements = tuple(elements)
 
-			def elements(self):
+			def elements(self) -> Generator[range, None, None]:
 				'''Iterate the address ranges of CSR elements using this chunk.'''
 				yield from self._elements
 
@@ -210,16 +223,16 @@ class Multiplexer(Elaboratable):
 			Maximum number of CSR elements that can share a chunk of the shadow register. Optional.
 			If ``None``, it is implicitly set by :meth:`Multiplexer._Shadow.prepare`.
 		'''
-		def __init__(self, granularity, overlaps, *, name):
+		def __init__(self, granularity: int, overlaps: int | None, *, name: str):
 			assert isinstance(name, str)
 			assert isinstance(granularity, int) and granularity >= 0
 			assert overlaps is None or isinstance(overlaps, int) and overlaps >= 0
-			self.name        = name
-			self.granularity = granularity
-			self.overlaps    = overlaps
-			self._ranges     = set()
-			self._size       = 1
-			self._chunks     = None
+			self.name                                                 = name
+			self.granularity                                          = granularity
+			self.overlaps                                             = overlaps
+			self._ranges: set[range] | frozenset[range]               = set()
+			self._size                                                = 1
+			self._chunks: dict[int, Multiplexer._Shadow.Chunk] | None = None
 
 		@property
 		def size(self):
@@ -234,7 +247,7 @@ class Multiplexer(Elaboratable):
 			'''
 			return self._size
 
-		def add(self, elem_range):
+		def add(self, elem_range: range):
 			'''
 			Add a CSR element to the shadow.
 
@@ -246,11 +259,12 @@ class Multiplexer(Elaboratable):
 				:attr:`~Multiplexer._Shadow.size`, it replaces the latter.
 			'''
 			assert isinstance(elem_range, range)
+			assert isinstance(self._ranges, set)
 			self._ranges.add(elem_range)
 			elem_size  = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			self._size = max(self._size, elem_size)
 
-		def decode_address(self, addr, elem_range):
+		def decode_address(self, addr: int, elem_range: range) -> int:
 			'''
 			Decode a bus address into a shadow register offset.
 
@@ -290,12 +304,12 @@ class Multiplexer(Elaboratable):
 				The decoded offset would therefore be ``8`` (i.e. ``0b1000``).
 			''' # noqa: E101
 			assert elem_range in self._ranges and addr in elem_range
-			elem_size = 2 ** log2_ceil(elem_range.stop - elem_range.start)
+			elem_size: int = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			self_mask = self.size - 1
 			elem_mask = elem_size - 1
 			return elem_range.start & self_mask & ~elem_mask | addr & elem_mask
 
-		def encode_offset(self, offset, elem_range):
+		def encode_offset(self, offset: int, elem_range: range) -> int:
 			'''
 			Encode a shadow register offset into a bus address.
 
@@ -309,7 +323,7 @@ class Multiplexer(Elaboratable):
 			elem_size = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			return elem_range.start + ((offset - elem_range.start) % elem_size)
 
-		def prepare(self):
+		def prepare(self) -> None:
 			'''
 			Balance out and instantiate the shadow register chunks.
 
@@ -330,7 +344,7 @@ class Multiplexer(Elaboratable):
 			if self.overlaps is None:
 				self.overlaps = len(self._ranges)
 
-			elements = defaultdict(list)
+			elements: defaultdict[int, list[range]] = defaultdict(list)
 			balanced = True
 
 			for elem_range in self._ranges:
@@ -343,7 +357,7 @@ class Multiplexer(Elaboratable):
 
 			if balanced:
 				self._ranges = frozenset(self._ranges)
-				self._chunks = dict()
+				self._chunks = {}
 				for chunk_offset, chunk_elements in elements.items():
 					chunk = Multiplexer._Shadow.Chunk(self, chunk_offset, chunk_elements)
 					self._chunks[chunk_offset] = chunk
@@ -351,8 +365,10 @@ class Multiplexer(Elaboratable):
 				self._size *= 2
 				self.prepare()
 
-		def chunks(self):
+		def chunks(self) -> Generator[tuple[int, Chunk], None, None]:
 			'''Iterate shadow register chunks used by at least one CSR element.'''
+			if self._chunks is None:
+				return None
 			for chunk_offset, chunk in self._chunks.items():
 				yield chunk_offset, chunk
 
@@ -479,6 +495,7 @@ class Multiplexer(Elaboratable):
 		m = Module()
 
 		for elem, _, (elem_start, elem_end) in self._map.resources():
+			assert isinstance(elem, Element)
 			elem_range = range(elem_start, elem_end)
 			if elem.access.readable():
 				self._r_shadow.add(elem_range)
@@ -493,12 +510,12 @@ class Multiplexer(Elaboratable):
 		# If the toolchain doesn't already synthesize multiplexer trees this way, this trick can
 		# save a significant amount of logic, since e.g. one 4-LUT can pack one 2-MUX, but two
 		# 2-AND or 2-OR gates.
-		r_data_fanin = 0
+		r_data_fanin: int | Operator = 0
 
 		for chunk_offset, r_chunk, in self._r_shadow.chunks():
 			# Use the same trick to select which element is read into a shadow register chunk.
-			r_chunk_w_en_fanin = 0
-			r_chunk_data_fanin = 0
+			r_chunk_w_en_fanin: int | Operator = 0
+			r_chunk_data_fanin: int | Operator = 0
 
 			m.d.sync += r_chunk.r_en.eq(0)
 
@@ -506,6 +523,7 @@ class Multiplexer(Elaboratable):
 				for elem_range in r_chunk.elements():
 					chunk_addr  = self._r_shadow.encode_offset(chunk_offset, elem_range)
 					elem        = self._map.decode_address(elem_range.start)
+					assert isinstance(elem, Element)
 					elem_offset = chunk_addr - elem_range.start
 					elem_slice  = elem.r_data.word_select(elem_offset, self.bus.data_width)
 
@@ -531,6 +549,7 @@ class Multiplexer(Elaboratable):
 				for elem_range in w_chunk.elements():
 					chunk_addr  = self._w_shadow.encode_offset(chunk_offset, elem_range)
 					elem        = self._map.decode_address(elem_range.start)
+					assert isinstance(elem, Element)
 					elem_offset = chunk_addr - elem_range.start
 					elem_slice  = elem.w_data.word_select(elem_offset, self.bus.data_width)
 
@@ -550,7 +569,6 @@ class Multiplexer(Elaboratable):
 				m.d.sync += w_chunk.data.eq(self.bus.w_data)
 
 		return m
-
 
 
 class Decoder(Elaboratable):
@@ -645,7 +663,7 @@ class Decoder(Elaboratable):
 		m = Module()
 
 		# See Multiplexer.elaborate above.
-		r_data_fanin = 0
+		r_data_fanin: int | Operator = 0
 
 		with m.Switch(self.bus.addr):
 			for sub_map, (sub_pat, sub_ratio) in self._map.window_patterns():
