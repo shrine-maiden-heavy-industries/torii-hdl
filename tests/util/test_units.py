@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import warnings
-
 from torii.util import units as util_units
 from torii.test import ToriiTestCase
 

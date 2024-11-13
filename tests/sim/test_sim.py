@@ -1147,7 +1147,7 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 			def shape():
 				return unsigned(1)
 
-		a = Array([1,2,3])
+		a = Array([1, 2, 3])
 		a[MyValue()]
 
 		survived = False

@@ -873,7 +873,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 			'RD_PORTS': len(fragment.read_ports),
 			'RD_CLK_ENABLE': ast.Const(rd_clk_enable, max(1, len(fragment.read_ports))),
 			'RD_CLK_POLARITY': ast.Const(rd_clk_polarity, max(1, len(fragment.read_ports))),
-			'RD_TRANSPARENCY_MASK': ast.Const(rd_transparency_mask, max(1, len(fragment.read_ports) * len(fragment.write_ports))),
+			'RD_TRANSPARENCY_MASK': ast.Const(rd_transparency_mask, max(1, len(fragment.read_ports) * len(fragment.write_ports))), # noqa: E501
 			'RD_COLLISION_X_MASK': ast.Const(0, max(1, len(fragment.read_ports) * len(fragment.write_ports))),
 			'RD_WIDE_CONTINUATION': ast.Const(0, max(1, len(fragment.read_ports))),
 			'RD_CE_OVER_SRST': ast.Const(0, max(1, len(fragment.read_ports))),
@@ -895,7 +895,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 			'\\RD_ADDR': ast.Cat(port.addr for port in fragment.read_ports),
 			'\\RD_DATA': ast.Cat(port.data for port in fragment.read_ports),
 			'\\WR_CLK': ast.Cat(wr_clk),
-			'\\WR_EN': ast.Cat(ast.Cat(en_bit.replicate(port.granularity) for en_bit in port.en) for port in fragment.write_ports),
+			'\\WR_EN': ast.Cat(ast.Cat(en_bit.replicate(port.granularity) for en_bit in port.en) for port in fragment.write_ports), # noqa: E501
 			'\\WR_ADDR': ast.Cat(port.addr for port in fragment.write_ports),
 			'\\WR_DATA': ast.Cat(port.data for port in fragment.write_ports),
 		}

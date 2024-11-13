@@ -939,7 +939,7 @@ class InstanceTestCase(ToriiTestSuiteCase):
 	def test_assign_names_to_fragments_collide_with_signal(self):
 		f = Fragment()
 		f.add_subfragment(a_f := Fragment(), name = 'a')
-		f.add_ports((a_s := Signal(name = 'a'),), dir = 'o')
+		f.add_ports((a_s := Signal(name = 'a'),), dir = 'o') # noqa: F841
 
 		names = f._assign_names_to_fragments()
 		self.assertEqual(names, {
