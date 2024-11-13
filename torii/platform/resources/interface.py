@@ -370,7 +370,7 @@ def HyperBusResource(
 	if rsto_n is not None:
 		ios.append(
 			Subsignal('rsto', PinsN(
-				rst_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
+				rsto_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
 			))
 		)
 
