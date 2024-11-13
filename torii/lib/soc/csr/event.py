@@ -6,6 +6,8 @@ from ..   import event
 from .    import Element, Multiplexer
 from .bus import Interface
 
+from typing import Literal
+
 __all__ = (
 	'EventMonitor',
 )
@@ -36,19 +38,20 @@ class EventMonitor(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, data_width: int, alignment: int = 0, trigger: event.Source.Trigger = 'level'
+		self, *, data_width: int, alignment: int = 0,
+		trigger: event.Source.Trigger | Literal['level', 'rise', 'fall'] = 'level'
 	) -> None:
 		choices = ('level', 'rise', 'fall')
 		if not isinstance(trigger, event.Source.Trigger) and trigger not in choices:
 			raise ValueError(f'Invalid trigger mode {trigger!r}; must be one of {", ".join(choices)}')
 
-		self._trigger = event.Source.Trigger(trigger)
-		self._map     = event.EventMap()
-		self._monitor = None
-		self._enable  = None
-		self._pending = None
-		self._mux     = Multiplexer(addr_width = 1, data_width = data_width, alignment = alignment)
-		self._frozen  = False
+		self._trigger                       = event.Source.Trigger(trigger)
+		self._map                           = event.EventMap()
+		self._monitor: event.Monitor | None = None
+		self._enable: Element | None        = None
+		self._pending: Element | None       = None
+		self._mux                           = Multiplexer(addr_width = 1, data_width = data_width, alignment = alignment)
+		self._frozen                        = False
 
 	def freeze(self) -> None:
 		'''
