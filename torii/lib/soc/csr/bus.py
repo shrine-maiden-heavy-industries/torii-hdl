@@ -198,6 +198,10 @@ class Interface(Record):
 class Multiplexer(Elaboratable):
 	class _Shadow:
 		class Chunk:
+			data: Signal
+			r_en: Signal
+			w_en: Signal
+
 			'''The interface between a CSR multiplexer and a shadow register chunk.'''
 			def __init__(self, shadow: 'Multiplexer._Shadow', offset: int, elements: list[range]):
 				self.name = f'{shadow.name}__{offset}'
