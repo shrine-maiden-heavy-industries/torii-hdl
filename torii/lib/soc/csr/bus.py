@@ -146,9 +146,9 @@ class Interface(Record):
 			raise ValueError(f'Address width must be a positive integer, not {addr_width!r}')
 		if not isinstance(data_width, int) or data_width <= 0:
 			raise ValueError(f'Data width must be a positive integer, not {data_width!r}')
-		self.addr_width = addr_width
-		self.data_width = data_width
-		self._map       = None
+		self.addr_width             = addr_width
+		self.data_width             = data_width
+		self._map: MemoryMap | None = None
 
 		super().__init__([
 			('addr',    addr_width),
@@ -429,9 +429,9 @@ class Multiplexer(Elaboratable):
 			addr_width = addr_width, data_width = data_width,
 			alignment = alignment, name = name
 		)
-		self._bus = None
-		self._r_shadow = Multiplexer._Shadow(data_width, shadow_overlaps, name = 'r_shadow')
-		self._w_shadow = Multiplexer._Shadow(data_width, shadow_overlaps, name = 'w_shadow')
+		self._bus: Interface | None = None
+		self._r_shadow              = Multiplexer._Shadow(data_width, shadow_overlaps, name = 'r_shadow')
+		self._w_shadow              = Multiplexer._Shadow(data_width, shadow_overlaps, name = 'w_shadow')
 
 	@property
 	def bus(self) -> Interface:
@@ -596,8 +596,8 @@ class Decoder(Elaboratable):
 			addr_width = addr_width, data_width = data_width,
 			alignment = alignment, name = name,
 		)
-		self._bus  = None
-		self._subs = dict()
+		self._bus: Interface | None            = None
+		self._subs: dict[MemoryMap, Interface] = {}
 
 	@property
 	def bus(self) -> Interface:
