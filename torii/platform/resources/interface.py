@@ -42,23 +42,26 @@ def UARTResource(
 	io.append(Subsignal('rx', Pins(rx, dir = 'i', conn = conn, assert_width = 1)))
 	io.append(Subsignal('tx', Pins(tx, dir = 'o', conn = conn, assert_width = 1)))
 
+	# NOTE(aki): The mess of `# type: ignore` below is because the dte/dce
+	# 　　　　　　　role determination is hard to see through for mypy
+
 	if rts is not None:
-		io.append(Subsignal('rts', Pins(rts, dir = dte_to_dce, conn = conn, assert_width = 1)))
+		io.append(Subsignal('rts', Pins(rts, dir = dte_to_dce, conn = conn, assert_width = 1))) # type: ignore
 
 	if cts is not None:
-		io.append(Subsignal('cts', Pins(cts, dir = dce_to_dte, conn = conn, assert_width = 1)))
+		io.append(Subsignal('cts', Pins(cts, dir = dce_to_dte, conn = conn, assert_width = 1))) # type: ignore
 
 	if dtr is not None:
-		io.append(Subsignal('dtr', Pins(dtr, dir = dte_to_dce, conn = conn, assert_width = 1)))
+		io.append(Subsignal('dtr', Pins(dtr, dir = dte_to_dce, conn = conn, assert_width = 1))) # type: ignore
 
 	if dsr is not None:
-		io.append(Subsignal('dsr', Pins(dsr, dir = dce_to_dte, conn = conn, assert_width = 1)))
+		io.append(Subsignal('dsr', Pins(dsr, dir = dce_to_dte, conn = conn, assert_width = 1))) # type: ignore
 
 	if dcd is not None:
-		io.append(Subsignal('dcd', Pins(dcd, dir = dce_to_dte, conn = conn, assert_width = 1)))
+		io.append(Subsignal('dcd', Pins(dcd, dir = dce_to_dte, conn = conn, assert_width = 1))) # type: ignore
 
 	if ri is not None:
-		io.append(Subsignal('ri', Pins(ri, dir = dce_to_dte, conn = conn, assert_width = 1)))
+		io.append(Subsignal('ri', Pins(ri, dir = dce_to_dte, conn = conn, assert_width = 1))) # type: ignore
 
 	if attrs is not None:
 		io.append(attrs)
@@ -95,7 +98,7 @@ def IrDAResource(
 
 def SPIResource(
 	name_or_number: str | int, number: int | None = None, *,
-	cs_n: str, clk: str, copi: str, cipo: str, int: str = None, reset: str = None,
+	cs_n: str, clk: str, copi: str, cipo: str, int: str | None = None, reset: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 	role: Literal['controller', 'peripheral', 'generic'] = 'controller'
 ) -> Resource:
@@ -234,8 +237,8 @@ def PS2Resource(
 ) -> Resource:
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1))),
-	ios.append(Subsignal('dat', Pins(dat, dir = 'io', conn = conn, assert_width = 1))),
+	ios.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1)))
+	ios.append(Subsignal('dat', Pins(dat, dir = 'io', conn = conn, assert_width = 1)))
 
 	if attrs is not None:
 		ios.append(attrs)
@@ -330,7 +333,7 @@ def EthernetResource(
 	assert (rx_dv is not None and rx_err is not None) == (tx_en is not None and tx_err is not None)
 	assert (rx_ctl is not None) == (tx_ctl is not None)
 
-	if mdc is not None and mdio is not None:
+	if mdc is not None and mdio is not None and mdio_attrs is not None:
 		ios.append(Subsignal('mdc', Pins(mdc, dir = 'o', conn = conn, assert_width = 1), mdio_attrs))
 		ios.append(Subsignal('mdio', Pins(mdio, dir = 'io', conn = conn, assert_width = 1), mdio_attrs))
 	if attrs is not None:
@@ -346,7 +349,7 @@ def HyperBusResource(
 ):
 	ios: list[SubsigArgT] = [
 		Subsignal('cs', PinsN(cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1)),
-		Subsignal('dq',   Pins(dq, dir = 'io', conn = conn, assert_width = 8)),
+		Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 8)),
 		Subsignal('rwds', Pins(rwds, dir = 'io', conn = conn, assert_width = 1)),
 	]
 

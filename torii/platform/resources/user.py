@@ -24,12 +24,14 @@ def _SplitResources(
 		pins = pins.split()
 
 	if isinstance(pins, list):
-		pins = dict(enumerate(pins))
+		# NOTE(aki): mypy is /probably/ correct about this one, but
+		pins = dict(enumerate(pins)) # type: ignore
 
 	resources: list[Resource] = []
 
-	for number, pin in pins.items():
-		ios = [Pins(pin, dir = dir, invert = invert, conn = conn)]
+	# NOTE(aki): We re-define `number` here is that correct or a bug?
+	for number, pin in pins.items():  # type: ignore
+		ios: list[Pins | Attrs] = [ Pins(pin, dir = dir, invert = invert, conn = conn) ]
 		if attrs is not None:
 			ios.append(attrs)
 		resources.append(Resource.family(name_or_number, number, default_name = default_name, ios = ios))

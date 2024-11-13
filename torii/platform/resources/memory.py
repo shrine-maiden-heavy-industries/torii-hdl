@@ -305,7 +305,9 @@ def DDR3Resource(
 ) -> Resource:
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('rst', PinsN(rst_n, dir = 'o', conn = conn, assert_width = 1)))
+	if rst_n is not None:
+		ios.append(Subsignal('rst', PinsN(rst_n, dir = 'o', conn = conn, assert_width = 1)))
+
 	ios.append(Subsignal('clk', DiffPairs(clk_p, clk_n, dir = 'o', conn = conn, assert_width = 1), diff_attrs))
 	ios.append(Subsignal('clk_en', Pins(clk_en, dir = 'o', conn = conn, assert_width = 1)))
 	ios.append(Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1)))
