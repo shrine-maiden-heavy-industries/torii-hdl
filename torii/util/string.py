@@ -15,7 +15,7 @@ def ascii_escape(string: str) -> str:
 	def esc_match(m: Match) -> str:
 		if m.group(1) is not None:
 			return f'_{ord(m.group(1)[0]):02x}_'
-		return m.group(2)
+		return m.group(2) # type: ignore
 
 	return ''.join(
 		map(esc_match, finditer(r'([^A-Za-z0-9_])|(.)', string))
