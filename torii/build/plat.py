@@ -133,13 +133,14 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			return products
 
 		self.toolchain_program(products, name, **(program_opts or {}))
+		return None
 
 	def has_required_tools(self) -> bool:
 		if self._toolchain_env_var in os.environ:
 			return True
 		return all(has_tool(name) for name in self.required_tools)
 
-	def create_missing_domain(self, name: str) -> Module:
+	def create_missing_domain(self, name: str) -> Module | None:
 		# Simple instantiation of a clock domain driven directly by the board clock and reset.
 		# This implementation uses a single ResetSynchronizer to ensure that:
 		#   * an external reset is definitely synchronized to the system clock;
@@ -159,6 +160,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			m.d.comb += ClockSignal('sync').eq(clk_i)
 			m.submodules.reset_sync = ResetSynchronizer(rst_i, domain = 'sync')
 			return m
+		return None
 
 	def prepare(
 		self, elaboratable: Fragment | Elaboratable, name: str = 'top', **kwargs
@@ -393,19 +395,19 @@ class TemplatedPlatform(Platform):
 			else:
 				return jinja2.Undefined(name = var)
 
-		def get_override(var: str) -> str:
+		def get_override(var: str) -> str | jinja2.Undefined:
 			value = _extract_override(var, expected_type = str)
 			return value
 
-		def get_override_int(var: str) -> int:
+		def get_override_int(var: str) -> int | jinja2.Undefined:
 			value = _extract_override(var, expected_type = int)
 			return value
 
-		def get_override_list(var: str) -> Iterable:
+		def get_override_list(var: str) -> Iterable | jinja2.Undefined:
 			value = _extract_override(var, expected_type = Iterable)
 			return value
 
-		def get_override_flag(var: str) -> bool:
+		def get_override_flag(var: str) -> bool | jinja2.Undefined:
 			value = _extract_override(var, expected_type = bool)
 			if isinstance(value, str):
 				value = value.lower()
