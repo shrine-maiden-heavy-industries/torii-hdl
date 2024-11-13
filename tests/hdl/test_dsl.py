@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
+import warnings
 from collections   import OrderedDict
 from enum          import Enum
 from sys           import version_info
@@ -487,8 +488,9 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		se = Signal(2)
 		with m.Switch(se):
-			with m.Case(Cat(Color.RED, Color.BLUE)):
-				m.d.comb += self.c1.eq(1)
+			with warnings.catch_warnings(action = 'ignore'):
+				with m.Case(Cat(Color.RED, Color.BLUE)):
+					m.d.comb += self.c1.eq(1)
 		self.assertRepr(m._statements, '''
 		(
 			(switch (sig se)
