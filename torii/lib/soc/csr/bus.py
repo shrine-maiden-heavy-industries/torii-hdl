@@ -40,6 +40,7 @@ class Element(Record):
 	r_stb: Signal
 	w_data: Signal
 	w_stb: Signal
+	name: str
 
 	'''
 	Peripheral-side CSR interface.
@@ -94,6 +95,9 @@ class Element(Record):
 				('w_stb',  1),
 			]
 		super().__init__(layout, name = name, src_loc_at = 1 + src_loc_at)
+
+		if self.name is None:
+			AssertionError('CSR name could not be computed and must be specified')
 
 
 class Interface(Record):
