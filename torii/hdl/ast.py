@@ -1055,7 +1055,7 @@ class Operator(Value):
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
 
-def Mux(sel: Value, val1: Value, val0: Value) -> Operator:
+def Mux(sel: ValueCastType, val1: ValueCastType, val0: ValueCastType) -> Operator:
 	'''
 	Choose between two values.
 
