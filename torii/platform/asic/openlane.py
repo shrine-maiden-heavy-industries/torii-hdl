@@ -3,6 +3,7 @@
 from abc           import abstractmethod
 from pathlib       import Path
 
+from ...           import Elaboratable, Module, Signal, ClockDomain, ClockSignal, Instance
 from ...build.plat import TemplatedPlatform
 from ...build.run  import BuildPlan
 from ...hdl.ir     import Fragment
@@ -200,7 +201,9 @@ class OpenLANEPlatform(TemplatedPlatform):
 
 		res = self.lookup(self.default_clk)
 
-		for resource, pin, _, _ in self._ports:
+		#port = self._requested[resource.name, resource.number]
+		#assert isinstance(resource.ios[0], Pins)
+		for res, pin, port, attrs in self._ports:
 			if resource == res:
 				return pin.i.name if res.ios[0].dir == 'i' else pin.o.name
 
@@ -210,11 +213,44 @@ class OpenLANEPlatform(TemplatedPlatform):
 		self._build_dir = Path(kwargs.get('build_dir', 'build')).resolve()
 		return super().build(*args, **kwargs)
 
-	def toolchain_prepare(self, fragment: Fragment, name: str, **kwargs) -> BuildPlan:
+	def prepare(self, elaboratable: Elaboratable, name: str, **kwargs) -> BuildPlan:
+		# Pull out the already defined port for the design
+		if 'ports' not in kwargs:
+			raise ValueError('"ports" must be present in build keyword arguments')
+		ports = kwargs['ports']
+
+		fragment = Fragment.get(elaboratable, self)
+
+		# Helper to add IO pins to the design
+		def add_pin_fragment(pin, pin_fragment):
+			pin_fragment = Fragment.get(pin_fragment, self)
+			if not isinstance(pin_fragment, Instance):
+				pin_fragment.flatten = True
+			fragment.add_subfragment(pin_fragment, name="pin_{}".format(pin.name))
 
 		# Propagate module ports for io placement
-		a_ports = kwargs.get('ports', None)
-		if a_ports is not None:
-			fragment._propagate_ports(ports = a_ports, all_undef_as_ports = False)
+		fragment._propagate_ports(ports = ports, all_undef_as_ports = False)
 
-		return super().toolchain_prepare(fragment, name, **kwargs)
+		return super().prepare(fragment, name, **kwargs)
+
+	def create_missing_domain(self, ports):
+		def create_domain(name):
+			if name == "sync" and self.default_clk is not None:
+				clk_i = self.request(self.default_clk).i
+				ports.append(clk_i)
+				m = Module()
+
+				if self.default_rst is not None:
+					rst_i = self.request(self.default_rst).i
+				else:
+					assert 'rst' not in (signal.name for signal in ports)
+					rst_i = Signal(name = 'rst')
+					ports.append(rst_i)
+					self.default_rst = 'rst'
+
+				m.domains += ClockDomain("sync")
+				m.d.comb += ClockSignal("sync").eq(clk_i)
+				m.submodules.reset_sync = ResetSynchronizer(rst_i, domain="sync")
+
+				return m
+		return create_domain
