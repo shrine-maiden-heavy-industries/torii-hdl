@@ -7,11 +7,9 @@ from copy            import copy
 
 from ..util          import flatten, tracer
 from .ast            import (
-	AnyConst, AnySeq, AnyValue, ArrayProxy, Assert, Assign, Assume, Cat,
-	ClockSignal, Const, Cover, Initial, Mux, Operator, Part,
-	Property, ResetSignal, Sample, Signal, SignalDict,
-	SignalSet, Slice, Statement, Switch, Value, ValueDict,
-	_StatementList
+	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const, Initial, Mux, Operator, Part,
+	Property, ResetSignal, Sample, Signal, SignalDict, SignalSet, Slice, Statement, Switch,
+	Value, ValueDict, _StatementList
 )
 from .cd             import DomainError
 from .ir             import Elaboratable, Fragment, Instance

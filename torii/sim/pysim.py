@@ -7,7 +7,6 @@ from re         import search
 from vcd        import VCDWriter
 from vcd.gtkw   import GTKWSave
 
-from ..hdl      import ClockSignal, ResetSignal
 from ..hdl.ast  import SignalDict, Value
 from ..hdl.ir   import Fragment
 from ._base     import BaseEngine, BaseSignalState, BaseSimulation

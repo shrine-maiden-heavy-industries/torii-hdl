@@ -5,11 +5,8 @@ from collections import OrderedDict
 from typing      import Optional, List
 
 from ..util      import tracer
-from .ast        import (
-	Array, Cat, ClockSignal, Const, Signal, Switch, Shape, Mux,
-	unsigned
-)
-from .ir         import Elaboratable, Instance, Fragment
+from .ast        import Array, Cat, Const, Signal, Switch, Mux
+from .ir         import Elaboratable, Fragment
 
 __all__ = (
 	'DummyPort',
