@@ -905,7 +905,7 @@ class Const(Value, metaclass = _ConstMeta):
 	src_loc = None
 
 	@staticmethod
-	def normalize(value: int, shape: tuple[int, bool]):
+	def normalize(value: int, shape: 'Shape'):
 		mask = (1 << shape.width) - 1
 		value &= mask
 		if shape.signed and (value >> (shape.width - 1)) & 1:
@@ -942,7 +942,7 @@ class Const(Value, metaclass = _ConstMeta):
 
 
 	def __init__(
-		self, value: int, shape: int | tuple[int, bool] | None = None, *,
+		self, value: int, shape: 'Shape | int | range | type | ShapeCastable | None' = None, *,
 		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
