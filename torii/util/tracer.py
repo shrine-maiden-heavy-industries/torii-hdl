@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from sys    import _getframe, version_info
+from typing import TYPE_CHECKING
 
 from opcode import opname
 
@@ -15,7 +16,7 @@ class NameNotFound(Exception):
 
 _raise_exception = object()
 
-def get_var_name(depth: int = 2, default: str | object | None = _raise_exception) -> str | object :
+def get_var_name(depth: int = 2, default: str | object | None = _raise_exception) -> str | None:
 	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
@@ -33,6 +34,8 @@ def get_var_name(depth: int = 2, default: str | object | None = _raise_exception
 		if default is _raise_exception:
 			raise NameNotFound
 		else:
+			if TYPE_CHECKING:
+				assert not isinstance(default, object)
 			return default
 
 	index = call_index + 2
@@ -71,6 +74,8 @@ def get_var_name(depth: int = 2, default: str | object | None = _raise_exception
 			if default is _raise_exception:
 				raise NameNotFound
 			else:
+				if TYPE_CHECKING:
+					assert not isinstance(default, object)
 				return default
 
 
