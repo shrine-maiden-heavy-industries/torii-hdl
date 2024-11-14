@@ -52,13 +52,13 @@ def get_var_name(depth: int = 2, default: str | object | None = _raise_exception
 		elif opc == 'STORE_FAST':
 			imm |= int(code.co_code[index + 1])
 			if version_info >= (3, 11):
-				return code._varname_from_oparg(imm)
+				return code._varname_from_oparg(imm) # type: ignore
 			else:
 				return code.co_varnames[imm]
 		elif opc == 'STORE_DEREF':
 			imm |= int(code.co_code[index + 1])
 			if version_info >= (3, 11):
-				return code._varname_from_oparg(imm)
+				return code._varname_from_oparg(imm) # type: ignore
 			else:
 				if imm < len(code.co_cellvars):
 					return code.co_cellvars[imm]
