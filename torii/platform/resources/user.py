@@ -29,13 +29,12 @@ def _SplitResources(
 
 	resources: list[Resource] = []
 
-	# NOTE(aki): We re-define `number` here is that correct or a bug?
-	for number, pin in pins.items():  # type: ignore
+	for idx, pin in pins.items():  # type: ignore
 		ios: list[Pins | Attrs] = [ Pins(pin, dir = dir, invert = invert, conn = conn) ]
 		if attrs is not None:
 			ios.append(attrs)
 		# NOTE(aki): This is likely problematic, but
-		resources.append(Resource.family(number, None, default_name = default_name, ios = ios))
+		resources.append(Resource.family(idx, None, default_name = default_name, ios = ios))
 
 	return resources
 
@@ -50,7 +49,7 @@ def LEDResources(
 
 
 def RGBLEDResource(
-	name_or_number: str | int | None = None, number: int | None = None, *,
+	name_or_number: str | int, number: int | None = None, *,
 	r: str, g: str, b: str, invert: bool = False,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
