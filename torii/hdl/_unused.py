@@ -2,7 +2,7 @@
 
 from sys      import _getframe, excepthook
 from types    import TracebackType
-from typing   import Type, TypeVar
+from typing   import Type, TypeVar, TypedDict
 from warnings import warn_explicit
 
 from ..util   import get_linter_option
@@ -15,22 +15,30 @@ __all__ = (
 class UnusedMustUse(Warning):
 	pass
 
+class _MustUseCtx(TypedDict):
+	filename: str
+	lineno: int
+	source: object
+
 T = TypeVar('T')
 
 class MustUse:
 	_MustUse__silence = False
 	_MustUse__warning = UnusedMustUse
+	# NOTE(aki): There should be a better way to keep mypy typing happy and default it *shrug*
+	_MustUse__context: _MustUseCtx = dict() # type: ignore
 
+	# TODO(aki): Figure out the proper way to type this nonsense
 	def __new__(cls: Type[T], *args, src_loc_at: int = 0, **kwargs) -> T:
 		frame = _getframe(1 + src_loc_at)
-		self = super().__new__(cls)
+		self = super().__new__(cls) # type: ignore
 		self._MustUse__used    = False
 		self._MustUse__context = dict(
 			filename = frame.f_code.co_filename,
 			lineno   = frame.f_lineno,
 			source   = self
 		)
-		return self
+		return self # type: ignore
 
 	def __del__(self) -> None:
 		if self._MustUse__silence:
