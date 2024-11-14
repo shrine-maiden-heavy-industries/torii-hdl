@@ -1003,8 +1003,8 @@ class Operator(Value):
 		self.operator = operator
 		self.operands = [ Value.cast(op) for op in operands ]
 
-	def shape(self):
-		def _bitwise_binary_shape(a_shape, b_shape):
+	def shape(self) -> Shape:
+		def _bitwise_binary_shape(a_shape: Shape, b_shape: Shape) -> Shape:
 			if not a_shape.signed and not b_shape.signed:
 				# both operands unsigned
 				return unsigned(max(a_shape.width, b_shape.width))
@@ -1065,15 +1065,15 @@ class Operator(Value):
 				return _bitwise_binary_shape(a_shape, b_shape)
 		raise NotImplementedError(f'Operator {self.operator}/{len(op_shapes)} not implemented') # :nocov:
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		if self.operator in ('u', 's'):
 			return union(op._lhs_signals() for op in self.operands)
 		return super()._lhs_signals()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return union(op._rhs_signals() for op in self.operands)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
 
