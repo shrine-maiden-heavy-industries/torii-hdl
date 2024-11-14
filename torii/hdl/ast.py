@@ -924,7 +924,7 @@ class Const(Value, metaclass = _ConstMeta):
 		return value
 
 	@staticmethod
-	def cast(obj):
+	def cast(obj: ValueCastT) -> 'Const':
 		'''
 		Converts ``obj`` to an Torii constant.
 
@@ -946,7 +946,13 @@ class Const(Value, metaclass = _ConstMeta):
 				width += len(const)
 			return Const(value, width)
 		elif type(obj) is Slice:
-			value = Const.cast(obj.value)
+			# NOTE(aki): mypy leaks type of `value` from above `elif`
+			value = Const.cast(obj.value) # type: ignore
+
+			# Do type coercion
+			if TYPE_CHECKING:
+				assert isinstance(value, Const)
+
 			return Const(value.value >> obj.start, unsigned(obj.stop - obj.start))
 		else:
 			raise TypeError(f'Value {obj!r} cannot be converted to an Torii constant')
