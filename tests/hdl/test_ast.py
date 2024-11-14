@@ -2,6 +2,7 @@
 
 import warnings
 from enum          import Enum, EnumMeta
+from sys           import version_info
 
 from torii.hdl.ast import *
 
@@ -192,16 +193,21 @@ class MockShapeCastable(ShapeCastable):
 
 class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
-		with self.assertRaisesRegex(
-			TypeError,
-			r'^Can\'t instantiate abstract class MockShapeCastableNoOverride without an implementation for abstract methods '
+		# NOTE(aki): Seems like the wording changed in 3.12
+		if version_info >= (3, 12):
+			err_msg_regex = r'^Can\'t instantiate abstract class MockShapeCastableNoOverride without an implementation'
+			r'for abstract methods \'as_shape\', \'const\'$'
+		else:
+			err_msg_regex = r'^Can\'t instantiate abstract class MockShapeCastableNoOverride with abstract methods '
 			r'\'as_shape\', \'const\'$'
-		):
+
+		with self.assertRaisesRegex(TypeError, err_msg_regex):
 			class MockShapeCastableNoOverride(ShapeCastable):
 				def __init__(self):
 					pass
 
 			_ = MockShapeCastableNoOverride()
+
 
 	def test_cast(self):
 		sc = MockShapeCastable(unsigned(2))
