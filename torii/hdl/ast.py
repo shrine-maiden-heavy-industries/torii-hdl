@@ -6,7 +6,7 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence
+from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence, Callable
 from typing            import TYPE_CHECKING, TypeAlias, Literal, NoReturn
 from enum              import Enum, EnumMeta
 from itertools         import chain
@@ -1238,6 +1238,8 @@ class Cat(Value):
 		return f'(cat {" ".join(map(repr, self.parts))})'
 
 
+SignalAttrs: TypeAlias = dict[str, int | str | bool]
+SignalDecoder: TypeAlias = Callable[[int], str] | Enum
 _SigParams = TypeVarTuple('_SigParams')
 # @final
 class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
@@ -1284,8 +1286,9 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	'''
 
 	def __init__(
-		self, shape = None, *, name = None, reset = None, reset_less = False,
-		attrs = None, decoder = None, src_loc_at = 0
+		self, shape: 'ShapeCastT | None' = None, *,
+		name: str | None = None, reset: int | Enum | None = None, reset_less: bool = False, attrs: SignalAttrs | None = None,
+		decoder: SignalDecoder | None = None, src_loc_at: int = 0
 	):
 		super().__init__(src_loc_at = src_loc_at)
 
@@ -1371,7 +1374,9 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
-	def like(other, *, name = None, name_suffix = None, src_loc_at = 0, **kwargs):
+	def like(
+		other: 'Value', *, name: str | None = None, name_suffix: str | None = None, src_loc_at: int = 0, **kwargs
+	) -> 'Signal':
 		'''
 		Create Signal based on another.
 
@@ -1402,16 +1407,16 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 		kw.update(kwargs)
 		return Signal(**kw, src_loc_at = 1 + src_loc_at)
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(sig {self.name})'
 
 
