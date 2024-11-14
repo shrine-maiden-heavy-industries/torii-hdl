@@ -7,7 +7,7 @@ import operator
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence
-from typing            import TYPE_CHECKING, TypeAlias, Literal, Type, TypeVar
+from typing            import TYPE_CHECKING, TypeAlias, Literal, NoReturn
 from enum              import Enum, EnumMeta
 from itertools         import chain
 from typing            import Generic
@@ -649,13 +649,15 @@ class Value(metaclass = ABCMeta):
 			else:
 				orig_pattern = pattern
 				try:
-					pattern = Const.cast(pattern)
+					# NOTE(aki): mypy has issues with this re-assignment, but it's fine
+					pattern = Const.cast(pattern) # type: ignore
 				except TypeError as error:
 					raise SyntaxError(
 						'Match pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}'
 					) from error
 
+				# Type coercion
 				if TYPE_CHECKING:
 					assert isinstance(pattern, Const)
 
@@ -878,15 +880,15 @@ class Value(metaclass = ABCMeta):
 
 		raise NotImplementedError('.shape has not been implemented')
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		raise TypeError(f'Value {self!r} cannot be used in assignments')
 
 	@abstractmethod
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
-	def __call__(cls, value, shape = None, src_loc_at: int = 0, **kwargs):
+	def __call__(cls, value: int, shape: ShapeCastable | None = None, src_loc_at: int = 0, **kwargs):
 		if isinstance(shape, ShapeCastable):
 			return shape.const(value)
 		return super().__call__(value, shape, **kwargs, src_loc_at = src_loc_at + 1)
