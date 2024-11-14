@@ -12,22 +12,26 @@ __all__ = (
 	'union',
 )
 
-def flatten(i):
+
+Flattenable: TypeAlias = Iterable['str | object | Flattenable']
+
+def flatten(i: Flattenable):
 	for e in i:
 		if isinstance(e, str) or not isinstance(e, Iterable):
 			yield e
 		else:
 			yield from flatten(e)
 
-
-def union(i, start = None):
+T = TypeVar('T')
+def union(i: Iterable[T], start: T | None = None) -> T:
+	# NOTE(aki): The two ignores below are due to mypy having a hard time seeing through the loop/if-else
 	r = start
 	for e in i:
 		if r is None:
 			r = e
 		else:
-			r |= e
-	return r
+			r |= e # type: ignore
+	return r # type: ignore
 
 
 
@@ -45,9 +49,10 @@ def get_linter_options(filename: str) -> dict[str, str]:
 	return dict()
 
 
+LinterOptionType: TypeAlias = bool | int
 def get_linter_option( # type: ignore
-	filename: str , name: str, type: type[bool] | type[int], default: bool | int
-) -> bool | int:
+	filename: str , name: str, type: type[LinterOptionType], default: LinterOptionType
+) -> LinterOptionType:
 	if type not in (bool, int):
 		raise TypeError(f'Expected type to be either \'bool\' or \'int\', not \'{type!r}\'')
 
