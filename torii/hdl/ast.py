@@ -159,7 +159,7 @@ class Shape:
 		return Shape(width, signed)
 
 	@staticmethod
-	def cast(obj: ShapeCastT, *, src_loc_at: int = 0) -> 'Shape':
+	def cast(obj: object, *, src_loc_at: int = 0) -> 'Shape':
 		while True:
 			if isinstance(obj, Shape):
 				return obj
@@ -192,7 +192,7 @@ class Shape:
 		else:
 			return f'unsigned({self.width})'
 
-	def __eq__(self, other: ShapeCastT) -> bool:
+	def __eq__(self, other: object) -> bool:
 		if not isinstance(other, Shape):
 			try:
 				other = self.__class__.cast(other)
