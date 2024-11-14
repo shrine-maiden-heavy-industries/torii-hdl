@@ -135,10 +135,13 @@ class Shape:
 	# This implements an algorithm for inferring shape from standard Python enumerations
 	# for `Shape.cast()`.
 	@staticmethod
-	def _cast_plain_enum(obj: Enum) -> 'Shape':
+	def _cast_plain_enum(obj: EnumMeta) -> 'Shape':
 		signed = False
 		width  = 0
-		for member in obj:
+		# TODO(aki): This needs proper typing, rather than just being ignored, however I'm not sure that
+		#         	 it's possible as EnumMeta is not generically typed therefore we can't really ensure
+		#            that the `.value` is a `ValueCastType`
+		for member in obj: # type: ignore
 			try:
 				member_shape = Const.cast(member.value).shape()
 			except TypeError:
