@@ -1130,10 +1130,10 @@ class Slice(Value):
 	def shape(self) -> Shape:
 		return Shape(self.stop - self.start)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return self.value._rhs_signals()
 
 	def __repr__(self) -> str:
