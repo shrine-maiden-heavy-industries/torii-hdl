@@ -277,6 +277,9 @@ def _overridable_by_swapping(method_name: str):
 	return decorator
 
 class Value(metaclass = ABCMeta):
+
+	src_loc: tuple[str, int] | None = None
+
 	@staticmethod
 	def cast(obj: ValueCastT) -> 'Value':
 		'''
