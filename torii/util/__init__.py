@@ -37,7 +37,8 @@ def get_linter_options(filename: str) -> dict[str, str]:
 	# Check the first five lines of the file, because it might not be first
 	lines = getlines(filename)[0:5]
 	if len(lines) > 0:
-		matches = list(filter(lambda m: m is not None, map(magic_comment.match, lines)))
+		# NOTE(aki): using the lambda in `filter` is aa mypy blind-spot, ignore this
+		matches: list[Match] = list(filter(lambda m: m is not None, map(magic_comment.match, lines))) # type: ignore
 
 		if len(matches) > 0:
 			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))
