@@ -73,7 +73,7 @@ class DUID:
 		DUID.__next_uid += 1
 
 ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
-ValueCastT: TypeAlias = 'Value | int | bool | Enum | ValueCastable | ValueLike'
+ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
 
 class ShapeCastable(metaclass = ABCMeta):
 	'''
