@@ -6,8 +6,8 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet
-from typing            import TypeAlias, Type, TypeVar
+from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence
+from typing            import TYPE_CHECKING, TypeAlias, Literal, Type, TypeVar
 from enum              import Enum, EnumMeta
 from itertools         import chain
 from typing            import Generic
@@ -72,6 +72,9 @@ class DUID:
 		self.duid = DUID.__next_uid
 		DUID.__next_uid += 1
 
+ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
+ValueCastT: TypeAlias = 'Value | int | bool | Enum | ValueCastable | ValueLike'
+
 class ShapeCastable(metaclass = ABCMeta):
 	'''
 	Interface of user-defined objects that can be cast to :class:`Shape`s.
@@ -88,10 +91,8 @@ class ShapeCastable(metaclass = ABCMeta):
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
 
 	@abstractmethod
-	def const(self) -> 'Const':
+	def const(self, val: ValueCastT) -> 'Const':
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
-
-ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
 
 class Shape:
 	'''
@@ -275,8 +276,6 @@ def _overridable_by_swapping(method_name: str):
 		return wrapper
 	return decorator
 
-
-ValueCastT: TypeAlias = 'Value | int | bool | Enum | ValueCastable | ValueLike'
 class Value(metaclass = ABCMeta):
 	@staticmethod
 	def cast(obj: ValueCastT) -> 'Value':
@@ -292,7 +291,8 @@ class Value(metaclass = ABCMeta):
 			if isinstance(obj, Value):
 				return obj
 			elif isinstance(obj, ValueCastable):
-				new_obj = obj.as_value()
+				# NOTE(aki): See TODO on `ValueCastable.__init_subclass__`
+				new_obj = obj.as_value() # type: ignore
 			elif isinstance(obj, Enum):
 				return Const(obj.value, Shape.cast(type(obj)))
 			elif isinstance(obj, int):
@@ -436,7 +436,7 @@ class Value(metaclass = ABCMeta):
 	def __len__(self) -> int:
 		return self.shape().width
 
-	def __getitem__(self, key: int | slice) -> 'Slice':
+	def __getitem__(self, key: int | slice) -> 'Value':
 		n = len(self)
 		if isinstance(key, int):
 			if key not in range(-n, n):
@@ -452,7 +452,7 @@ class Value(metaclass = ABCMeta):
 				)
 			start, stop, step = key.indices(n)
 			if step != 1:
-				return Cat(self[i] for i in range(start, stop, step))
+				return Cat(*(self[i] for i in range(start, stop, step)))
 			return Slice(self, start, stop, src_loc_at = 1)
 		elif isinstance(key, Value):
 			raise SyntaxError('Indexing a value with another value is not supported, use `Value.bit_select()` instead.')
@@ -551,10 +551,10 @@ class Value(metaclass = ABCMeta):
 			``0`` if ``premise`` is true and ``conclusion`` is not, ``1`` otherwise.
 
 		'''
+		# NOTE(aki): For some reason this is opaque to mypy, but I promise, it does return an Operator
+		return ~premise | conclusion # type: ignore
 
-		return ~premise | conclusion
-
-	def bit_select(self, offset: 'Value | int' , width: int) -> 'Part':
+	def bit_select(self, offset: 'Value | int' , width: int) -> 'Value':
 		'''
 		Part-select with bit granularity.
 
@@ -580,7 +580,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
-	def word_select(self, offset: 'Value | int' , width: int) -> 'Part':
+	def word_select(self, offset: 'Value | int' , width: int) -> 'Value':
 		'''
 		Part-select with word granularity.
 
@@ -606,7 +606,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
-	def matches(self, *patterns: tuple[int | str | Enum, ...]) -> 'Value':
+	def matches(self, *patterns: int | str | EnumMeta) -> 'Value':
 		'''
 		Pattern matching.
 
@@ -625,7 +625,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		matches = []
+		matches: list[Value] = []
 		# This code should accept exactly the same patterns as `with m.Case(...):`.
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
@@ -652,6 +652,9 @@ class Value(metaclass = ABCMeta):
 						'Match pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}'
 					) from error
+
+				if TYPE_CHECKING:
+					assert isinstance(pattern, Const)
 
 				pattern_len = bits_for(pattern.value)
 				if pattern_len > len(self):
@@ -770,7 +773,7 @@ class Value(metaclass = ABCMeta):
 			amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
-	def replicate(self, count):
+	def replicate(self, count: int) -> 'Value':
 		'''
 		Replication.
 
@@ -791,7 +794,7 @@ class Value(metaclass = ABCMeta):
 		'''
 		if not isinstance(count, int) or count < 0:
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
-		return Cat(self for _ in range(count))
+		return Cat(*(self for _ in range(count)))
 
 	def eq(self, value: ValueCastT) -> 'Assign':
 		'''
