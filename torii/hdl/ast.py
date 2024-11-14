@@ -983,12 +983,17 @@ class Const(Value, metaclass = _ConstMeta):
 	def __repr__(self) -> str:
 		return f'(const {self.width}\'{"s" if self.signed else ""}d{self.value})'
 
+
+OperatorsT: TypeAlias = Literal[
+	'+', '~', '-', 'b', 'r|', 'r&', 'r^', 'u', 's', '*', '//', '%',
+	'<', '<=', '==', '!=', '>', '>=', '&', '^', '|', '<<', '>>', 'm'
+]
 @final
 class Operator(Value):
-	def __init__(self, operator, operands , *, src_loc_at = 0) -> None:
+	def __init__(self, operator: OperatorsT, operands: Sequence[ValueCastT] , *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.operator = operator
-		self.operands = [Value.cast(op) for op in operands]
+		self.operands = [ Value.cast(op) for op in operands ]
 
 	def shape(self):
 		def _bitwise_binary_shape(a_shape, b_shape):
