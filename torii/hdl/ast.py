@@ -1228,10 +1228,10 @@ class Cat(Value):
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return union((part._lhs_signals() for part in self.parts), start = SignalSet())
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return union((part._rhs_signals() for part in self.parts), start = SignalSet())
 
 	def __repr__(self) -> str:
