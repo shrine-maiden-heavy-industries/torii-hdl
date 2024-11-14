@@ -13,7 +13,7 @@ from ..util          import flatten, tracer
 from ..util.units    import bits_for
 from .ast            import (
 	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value,
-	_StatementList, ValueCastType
+	_StatementList, ValueCastT
 )
 from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment
@@ -251,7 +251,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._ctrl_stack.append((name, data))
 		return data
 
-	def _check_signed_cond(self, cond: ValueCastType):
+	def _check_signed_cond(self, cond: ValueCastT):
 		cond = Value.cast(cond)
 		if version_info < (3, 12, 0) and cond.shape().signed:
 			# TODO(py3.11): remove; ~True is a warning in 3.12+, finally!
@@ -265,7 +265,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		return cond
 
 	@_guardedcontextmanager('If')
-	def If(self, cond: ValueCastType):
+	def If(self, cond: ValueCastT):
 		self._check_context('If', context = None)
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
@@ -292,7 +292,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._statements = _outer_case
 
 	@_guardedcontextmanager('Elif')
-	def Elif(self, cond: ValueCastType):
+	def Elif(self, cond: ValueCastT):
 		self._check_context('Elif', context = None)
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)

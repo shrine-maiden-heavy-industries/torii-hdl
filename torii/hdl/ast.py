@@ -91,7 +91,7 @@ class ShapeCastable(metaclass = ABCMeta):
 	def const(self) -> 'Const':
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
-ShapeCastT: TypeAlias = 'Shape | int | range | type | ShapeCastable'
+ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
 
 class Shape:
 	'''
@@ -256,8 +256,6 @@ def signed(width: int) -> Shape:
 	return Shape(width, signed = True)
 
 
-ValueCastType: TypeAlias = 'Value | int | Enum | ValueCastable'
-
 def _overridable_by_swapping(method_name: str):
 	'''
 	Allow overriding the decorated method.
@@ -277,9 +275,11 @@ def _overridable_by_swapping(method_name: str):
 		return wrapper
 	return decorator
 
+
+ValueCastT: TypeAlias = 'Value | int | bool | Enum | ValueCastable | ValueLike'
 class Value(metaclass = ABCMeta):
 	@staticmethod
-	def cast(obj: ValueCastType) -> 'Value':
+	def cast(obj: ValueCastT) -> 'Value':
 		'''
 		Converts ``obj`` to an Torii value.
 
@@ -320,38 +320,38 @@ class Value(metaclass = ABCMeta):
 		return Operator('-', [self])
 
 	@_overridable_by_swapping('__radd__')
-	def __add__(self, other: ValueCastType) -> 'Operator':
+	def __add__(self, other: ValueCastT) -> 'Operator':
 		return Operator('+', [self, other], src_loc_at = 1)
 
-	def __radd__(self, other: ValueCastType) -> 'Operator':
+	def __radd__(self, other: ValueCastT) -> 'Operator':
 		return Operator('+', [other, self])
 
 	@_overridable_by_swapping('__rsub__')
-	def __sub__(self, other: ValueCastType) -> 'Operator':
+	def __sub__(self, other: ValueCastT) -> 'Operator':
 		return Operator('-', [self, other], src_loc_at = 1)
 
-	def __rsub__(self, other: ValueCastType) -> 'Operator':
+	def __rsub__(self, other: ValueCastT) -> 'Operator':
 		return Operator('-', [other, self])
 
 	@_overridable_by_swapping('__rmul__')
-	def __mul__(self, other: ValueCastType) -> 'Operator':
+	def __mul__(self, other: ValueCastT) -> 'Operator':
 		return Operator('*', [self, other], src_loc_at = 1)
 
-	def __rmul__(self, other: ValueCastType) -> 'Operator':
+	def __rmul__(self, other: ValueCastT) -> 'Operator':
 		return Operator('*', [other, self])
 
 	@_overridable_by_swapping('__rmod__')
-	def __mod__(self, other: ValueCastType) -> 'Operator':
+	def __mod__(self, other: ValueCastT) -> 'Operator':
 		return Operator('%', [self, other], src_loc_at = 1)
 
-	def __rmod__(self, other: ValueCastType) -> 'Operator':
+	def __rmod__(self, other: ValueCastT) -> 'Operator':
 		return Operator('%', [other, self])
 
 	@_overridable_by_swapping('__rfloordiv__')
-	def __floordiv__(self, other: ValueCastType) -> 'Operator':
+	def __floordiv__(self, other: ValueCastT) -> 'Operator':
 		return Operator('//', [self, other], src_loc_at = 1)
 
-	def __rfloordiv__(self, other: ValueCastType) -> 'Operator':
+	def __rfloordiv__(self, other: ValueCastT) -> 'Operator':
 		return Operator('//', [other, self])
 
 
@@ -363,68 +363,68 @@ class Value(metaclass = ABCMeta):
 			raise TypeError('Shift amount must be unsigned')
 
 	@_overridable_by_swapping('__rlshift__')
-	def __lshift__(self, other: ValueCastType) -> 'Operator':
+	def __lshift__(self, other: ValueCastT) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('<<', [self, other], src_loc_at = 1)
 
-	def __rlshift__(self, other: ValueCastType) -> 'Operator':
+	def __rlshift__(self, other: ValueCastT) -> 'Operator':
 		self.__check_shamt()
 		return Operator('<<', [other, self])
 
 	@_overridable_by_swapping('__rrshift__')
-	def __rshift__(self, other: ValueCastType) -> 'Operator':
+	def __rshift__(self, other: ValueCastT) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('>>', [self, other], src_loc_at = 1)
 
-	def __rrshift__(self, other: ValueCastType) -> 'Operator':
+	def __rrshift__(self, other: ValueCastT) -> 'Operator':
 		self.__check_shamt()
 		return Operator('>>', [other, self])
 
 	@_overridable_by_swapping('__rand__')
-	def __and__(self, other: ValueCastType) -> 'Operator':
+	def __and__(self, other: ValueCastT) -> 'Operator':
 		return Operator('&', [self, other], src_loc_at = 1)
 
-	def __rand__(self, other: ValueCastType) -> 'Operator':
+	def __rand__(self, other: ValueCastT) -> 'Operator':
 		return Operator('&', [other, self])
 
 	@_overridable_by_swapping('__rxor__')
-	def __xor__(self, other: ValueCastType) -> 'Operator':
+	def __xor__(self, other: ValueCastT) -> 'Operator':
 		return Operator('^', [self, other], src_loc_at = 1)
 
-	def __rxor__(self, other: ValueCastType) -> 'Operator':
+	def __rxor__(self, other: ValueCastT) -> 'Operator':
 		return Operator('^', [other, self])
 
 	@_overridable_by_swapping('__ror__')
-	def __or__(self, other: ValueCastType) -> 'Operator':
+	def __or__(self, other: ValueCastT) -> 'Operator':
 		return Operator('|', [self, other], src_loc_at = 1)
 
-	def __ror__(self, other: ValueCastType) -> 'Operator':
+	def __ror__(self, other: ValueCastT) -> 'Operator':
 		return Operator('|', [other, self])
 
 	@_overridable_by_swapping('__eq__')
-	def __eq__(self, other: ValueCastType) -> 'Operator':
+	def __eq__(self, other: ValueCastT) -> 'Operator':
 		return Operator('==', [self, other], src_loc_at = 1)
 
 	@_overridable_by_swapping('__ne__')
-	def __ne__(self, other: ValueCastType) -> 'Operator':
+	def __ne__(self, other: ValueCastT) -> 'Operator':
 		return Operator('!=', [self, other], src_loc_at = 1)
 
 	@_overridable_by_swapping('__gt__')
-	def __lt__(self, other: ValueCastType) -> 'Operator':
+	def __lt__(self, other: ValueCastT) -> 'Operator':
 		return Operator('<', [self, other], src_loc_at = 1)
 
 	@_overridable_by_swapping('__ge__')
-	def __le__(self, other: ValueCastType) -> 'Operator':
+	def __le__(self, other: ValueCastT) -> 'Operator':
 		return Operator('<=', [self, other], src_loc_at = 1)
 
 	@_overridable_by_swapping('__lt__')
-	def __gt__(self, other: ValueCastType) -> 'Operator':
+	def __gt__(self, other: ValueCastT) -> 'Operator':
 		return Operator('>', [self, other], src_loc_at = 1)
 
 	@_overridable_by_swapping('__le__')
-	def __ge__(self, other: ValueCastType) -> 'Operator':
+	def __ge__(self, other: ValueCastT) -> 'Operator':
 		return Operator('>=', [self, other], src_loc_at = 1)
 
 	def __abs__(self) -> 'Value':
@@ -541,7 +541,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('r^', [self])
 
-	def implies(premise, conclusion: ValueCastType)  -> 'Operator':
+	def implies(premise, conclusion: ValueCastT)  -> 'Operator':
 		'''
 		Implication.
 
@@ -793,7 +793,7 @@ class Value(metaclass = ABCMeta):
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
 		return Cat(self for _ in range(count))
 
-	def eq(self, value: ValueCastType) -> 'Assign':
+	def eq(self, value: ValueCastT) -> 'Assign':
 		'''
 		Assignment.
 
@@ -1058,7 +1058,7 @@ class Operator(Value):
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
 
-def Mux(sel: ValueCastType, val1: ValueCastType, val0: ValueCastType) -> Operator:
+def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 	'''
 	Choose between two values.
 
@@ -1083,7 +1083,7 @@ def Mux(sel: ValueCastType, val1: ValueCastType, val0: ValueCastType) -> Operato
 @final
 class Slice(Value):
 	def __init__(
-		self, value: ValueCastType, start: int, stop: int, *, src_loc_at: int = 0
+		self, value: ValueCastT, start: int, stop: int, *, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(start, int):
 			raise TypeError(f'Slice start must be an integer, not {start!r}')
@@ -1124,7 +1124,7 @@ class Slice(Value):
 @final
 class Part(Value):
 	def __init__(
-		self, value: ValueCastType, offset: ValueCastType, width: int, stride: int = 1, *,
+		self, value: ValueCastT, offset: ValueCastT, width: int, stride: int = 1, *,
 		src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
@@ -1184,7 +1184,7 @@ class Cat(Value):
 
 	'''
 
-	def __init__(self, *args: ValueCastType, src_loc_at: int = 0) -> None:
+	def __init__(self, *args: ValueCastT, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts = []
 		for index, arg in enumerate(flatten(args)):
@@ -1867,7 +1867,7 @@ class Property(Statement, MustUse):
 
 
 	def __init__(
-		self, kind: str, test: ValueCastType, *, _check: Signal | None = None, _en: Signal | None = None,
+		self, kind: str, test: ValueCastT, *, _check: Signal | None = None, _en: Signal | None = None,
 		name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
@@ -1898,13 +1898,13 @@ class Property(Statement, MustUse):
 		return f'({self.kind.value} {self.test!r})'
 
 
-def Assert(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+def Assert(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	return Property('assert', test, name = name, src_loc_at = src_loc_at + 1)
 
-def Assume(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+def Assume(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	return Property('assume', test, name = name, src_loc_at = src_loc_at + 1)
 
-def Cover(test: ValueCastType, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	return Property('cover', test, name = name, src_loc_at = src_loc_at + 1)
 
 
@@ -2065,7 +2065,7 @@ class _MappedKeySet(MutableSet, _MappedKeyCollection):
 
 
 class ValueKey:
-	def __init__(self, value: ValueCastType) -> None:
+	def __init__(self, value: ValueCastT) -> None:
 		self.value = Value.cast(value)
 		if isinstance(self.value, Const):
 			self._hash = hash(self.value.value)
