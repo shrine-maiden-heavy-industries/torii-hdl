@@ -1947,18 +1947,23 @@ class Property(Statement, MustUse):
 		super().__init__(src_loc_at = src_loc_at)
 		self.kind   = self.Kind(kind)
 		self.test   = Value.cast(test)
-		self._check = _check
-		self._en    = _en
+
 		self.name   = name
+
 		if not isinstance(self.name, str) and self.name is not None:
 			raise TypeError(f'Property name must be a string of None, not {self.name!r}')
 
-		if self._check is None:
-			self._check = Signal(reset_less = True, name = f'${self.kind.value}$check')
+		if _check is None:
+			self._check: Signal = Signal(reset_less = True, name = f'${self.kind.value}$check')
 			self._check.src_loc = self.src_loc
+		else:
+			self._check = _check
+
 		if _en is None:
-			self._en = Signal(reset_less = True, name = f'${self.kind.value}$en')
+			self._en: Signal = Signal(reset_less = True, name = f'${self.kind.value}$en')
 			self._en.src_loc = self.src_loc
+		else:
+			self._en = _en
 
 	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self._en, self._check))
