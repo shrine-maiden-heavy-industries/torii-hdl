@@ -6,7 +6,7 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
+from collections.abc   import Iterable, Iterator, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
 from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic
 from enum              import Enum, EnumMeta
 from itertools         import chain
@@ -2063,48 +2063,68 @@ class Switch(Statement):
 		case_reprs = [ case_repr(keys, stmts) for keys, stmts in self.cases.items() ]
 		return f'(switch {self.test!r} {" ".join(case_reprs)})'
 
+Key    = TypeVar('Key')
+IntKey = TypeVar('IntKey', bound = 'SignalKey | ValueKey')
+Val    = TypeVar('Val')
 
-class _MappedKeyCollection(metaclass = ABCMeta):
+class _MappedKeyCollection(Generic[IntKey, Key], metaclass = ABCMeta):
+	''' Turn a normally non-key item, a `Signal` or `Value` into a `SignalKey` or `ValueKey` for collection indexing '''
+
 	@abstractmethod
-	def _map_key(self, key):
+	def _map_key(self, key: Key) -> IntKey:
+		''' Map the incoming key of type V to a `SignalKey` or `ValueKey` '''
 		pass # :nocov:
 
 	@abstractmethod
-	def _unmap_key(self, key):
+	def _unmap_key(self, key: IntKey) -> Key:
+		''' Extract the `Signal` or `Value` from the key object '''
 		pass # :nocov:
 
 
-class _MappedKeyDict(MutableMapping, _MappedKeyCollection):
-	def __init__(self, pairs = ()):
-		self._storage = OrderedDict()
+class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKey, Key]):
+	def __init__(self, pairs: tuple[tuple[Key, Val], ...] = ()):
+		self._storage = OrderedDict[IntKey | None, Val]()
 		for key, value in pairs:
 			self[key] = value
 
-	def __getitem__(self, key):
-		key = None if key is None else self._map_key(key)
-		return self._storage[key]
+	def __getitem__(self, key: Key | None) -> Val:
+		if key is not None:
+			internal_key = self._map_key(key)
+		else:
+			internal_key = None
+		return self._storage[internal_key]
 
-	def __setitem__(self, key, value):
-		key = None if key is None else self._map_key(key)
-		self._storage[key] = value
+	def __setitem__(self, key: Key | None, value: Val) -> None:
+		if key is not None:
+			internal_key = self._map_key(key)
+		else:
+			internal_key = None
 
-	def __delitem__(self, key):
-		key = None if key is None else self._map_key(key)
-		del self._storage[key]
+		self._storage[internal_key] = value
 
-	def __iter__(self):
-		for key in self._storage:
-			if key is None:
+
+	def __delitem__(self, key: Key | None) -> None:
+		if key is not None:
+			internal_key = self._map_key(key)
+		else:
+			internal_key = None
+
+		del self._storage[internal_key]
+
+	def __iter__(self) -> Iterator[Key | None]:
+		for internal_key in self._storage:
+			if internal_key is None:
 				yield None
 			else:
-				yield self._unmap_key(key)
+				yield self._unmap_key(internal_key)
 
 	def __eq__(self, other: object) -> bool:
 		if not isinstance(other, type(self)):
 			return False
 		if len(self) != len(other):
 			return False
-		for ak, bk in zip(sorted(self._storage), sorted(other._storage)):
+		# NOTE(aki): ValueKey and SignalKey /should/ be Rich Comparison viable, but mypy just can't see it
+		for ak, bk in zip(sorted(self._storage), sorted(other._storage)): # type: ignore
 			if ak != bk:
 				return False
 			if self._storage[ak] != other._storage[bk]:
@@ -2119,29 +2139,33 @@ class _MappedKeyDict(MutableMapping, _MappedKeyCollection):
 		return f'{type(self).__module__}.{type(self).__name__}([{", ".join(pairs)}])'
 
 
-class _MappedKeySet(MutableSet, _MappedKeyCollection):
-	def __init__(self, elements = ()) -> None:
-		self._storage = OrderedDict()
+class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
+	def __init__(self, elements: tuple[Key, ...] = ()) -> None:
+		self._storage = OrderedDict[IntKey, None]()
 		for elem in elements:
 			self.add(elem)
 
-	def add(self, value) -> None:
-		self._storage[self._map_key(value)] = None
+	def add(self, key: Key) -> None:
+		self._storage[self._map_key(key)] = None
 
-	def update(self, values) -> None:
-		for value in values:
-			self.add(value)
+	def update(self, keys: Iterable[Key]) -> None:
+		for key in keys:
+			self.add(key)
 
-	def discard(self, value) -> None:
-		if value in self:
-			del self._storage[self._map_key(value)]
+	def discard(self, key: Key) -> None:
+		if key in self:
+			del self._storage[self._map_key(key)]
 
-	def __contains__(self, value) -> bool:
-		return self._map_key(value) in self._storage
+	def __contains__(self, key: object) -> bool:
+		try:
+			# NOTE(aki): The only real solution here it to give up and explode and ignore the type error
+			return self._map_key(key) in self._storage # type: ignore
+		except TypeError:
+			return False
 
-	def __iter__(self):
-		for key in [ k for k in self._storage ]:
-			yield self._unmap_key(key)
+	def __iter__(self) -> Generator[Key]:
+		for internal_key in [ int_k for int_k in self._storage ]:
+			yield self._unmap_key(internal_key)
 
 	def __len__(self) -> int:
 		return len(self._storage)
