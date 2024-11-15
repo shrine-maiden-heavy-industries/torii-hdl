@@ -1515,10 +1515,10 @@ class AnyValue(Value, DUID):
 		self.width  = shape.width
 		self.signed = shape.signed
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet()
 
 	def __repr__(self) -> str:
