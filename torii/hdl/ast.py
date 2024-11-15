@@ -2300,19 +2300,25 @@ class ValueKey:
 		return f'<{__name__}.ValueKey {self.value!r}>'
 
 
-class ValueDict(_MappedKeyDict):
-	_map_key = ValueKey
+class ValueDict(_MappedKeyDict[Value, Val, ValueKey]):
+	''' Mapping of `Value` objects to arbitrary value types '''
 
-	def _unmap_key(self, key):
+	def _map_key(self, key: Value) -> ValueKey:
+		return ValueKey(key)
+
+	def _unmap_key(self, key: ValueKey) -> Value:
 		return key.value
 
+class ValueSet(_MappedKeySet[Value, ValueKey]):
+	''' Collection of unique `Value` objects '''
 
-class ValueSet(_MappedKeySet):
-	_map_key = ValueKey
+	def _map_key(self, key: Value) -> ValueKey:
+		return ValueKey(key)
 
-	def _unmap_key(self, key):
+	def _unmap_key(self, key: ValueKey) -> Value:
 		return key.value
 
+SignalLikeT: TypeAlias = Signal | ClockSignal | ResetSignal
 
 class SignalKey:
 	def __init__(self, signal: Signal | ClockSignal | ResetSignal) -> None:
@@ -2343,15 +2349,21 @@ class SignalKey:
 		return f'<{__name__}.SignalKey {self.signal!r}>'
 
 
-class SignalDict(_MappedKeyDict):
-	_map_key = SignalKey
+class SignalDict(_MappedKeyDict[SignalLikeT, Val, SignalKey]):
+	''' Mapping of `Signal` objects to arbitrary value types '''
 
-	def _unmap_key(self, key):
+	def _map_key(self, key: SignalLikeT) -> SignalKey:
+		return SignalKey(key)
+
+	def _unmap_key(self, key: SignalKey) -> SignalLikeT:
 		return key.signal
 
 
-class SignalSet(_MappedKeySet):
-	_map_key = SignalKey
+class SignalSet(_MappedKeySet[SignalLikeT, SignalKey]):
+	''' Collection of unique `Signal` objects '''
 
-	def _unmap_key(self, key):
+	def _map_key(self, key: SignalLikeT) -> SignalKey:
+		return SignalKey(key)
+
+	def _unmap_key(self, key: SignalKey) -> SignalLikeT:
 		return key.signal
