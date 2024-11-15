@@ -1477,7 +1477,7 @@ class ResetSignal(Value):
 
 	'''
 
-	def __init__(self, domain: str = 'sync', allow_reset_less: bool = False, *, src_loc_at: int = 0):
+	def __init__(self, domain: str = 'sync', allow_reset_less: bool = False, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
@@ -1492,7 +1492,7 @@ class ResetSignal(Value):
 	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def _rhs_signals(self) -> None:
+	def _rhs_signals(self) -> NoReturn:
 		raise NotImplementedError('ResetSignal must be lowered to a concrete signal') # :nocov:
 
 	def __repr__(self) -> str:
