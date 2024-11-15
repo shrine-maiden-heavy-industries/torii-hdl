@@ -1694,6 +1694,8 @@ class ValueCastable:
 
 	'''
 
+	# TODO(aki): This check for `_ValueCastable__memoized` prevents us from being an ABC, so we need to figure out
+	#            a sane way to keep that check but also let us properly type as_value and as_shape
 	def __init_subclass__(cls, **kwargs):
 		if not hasattr(cls, 'as_value'):
 			raise TypeError(
