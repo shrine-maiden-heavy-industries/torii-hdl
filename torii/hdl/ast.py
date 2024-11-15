@@ -1438,7 +1438,7 @@ class ClockSignal(Value):
 
 	'''
 
-	def __init__(self, domain = 'sync', *, src_loc_at = 0):
+	def __init__(self, domain: str = 'sync', *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
@@ -1446,16 +1446,16 @@ class ClockSignal(Value):
 			raise ValueError(f'Domain \'{domain}\' does not have a clock')
 		self.domain = domain
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> NoReturn:
 		raise NotImplementedError('ClockSignal must be lowered to a concrete signal') # :nocov:
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(clk {self.domain})'
 
 
