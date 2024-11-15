@@ -1289,7 +1289,7 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 
 	'''
 
-	decoder: Callable[[int], str]
+	decoder: Callable[[int], str] | None
 	_enum_class: type[Enum] | None
 
 	def __init__(
@@ -1371,8 +1371,6 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 			if TYPE_CHECKING:
 				assert isinstance(decoder, type) and issubclass(decoder, Enum)
 
-		# NOTE(aki): This should not fire, it's just to smack the type checker
-		assert decoder is not None
 
 		if isinstance(decoder, type) and issubclass(decoder, Enum):
 			def enum_decoder(value: int) -> str:
