@@ -1064,12 +1064,12 @@ class Operator(Value):
 				return _bitwise_binary_shape(a_shape, b_shape)
 		raise NotImplementedError(f'Operator {self.operator}/{len(op_shapes)} not implemented') # :nocov:
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
 		if self.operator in ('u', 's'):
 			return union(op._lhs_signals() for op in self.operands)
 		return super()._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
 		return union(op._rhs_signals() for op in self.operands)
 
 	def __repr__(self) -> str:
@@ -1129,10 +1129,10 @@ class Slice(Value):
 	def shape(self) -> Shape:
 		return Shape(self.stop - self.start)
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
 		return self.value._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -1164,12 +1164,16 @@ class Part(Value):
 	def shape(self) -> Shape:
 		return Shape(self.width)
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet':
-		# NOTE(aki): The mypy diagnostic for this is /technically/ correct but snuff it for now
-		return self.value._rhs_signals() | self.offset._rhs_signals() # type: ignore
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+		signals = self.value._rhs_signals() | self.offset._rhs_signals()
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (ValueSet, SignalSet))
+
+		return signals
 
 	def __repr__(self) -> str:
 		return f'(part {repr(self.value)} {repr(self.offset)} {self.width} {self.stride})'
@@ -1228,10 +1232,10 @@ class Cat(Value):
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
 		return union((part._lhs_signals() for part in self.parts), start = SignalSet())
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
 		return union((part._rhs_signals() for part in self.parts), start = SignalSet())
 
 	def __repr__(self) -> str:
@@ -1664,15 +1668,24 @@ class ArrayProxy(Value):
 			# are zero-extended.
 			return Shape(max(unsigned_width, signed_width), has_signed)
 
-	def _lhs_signals(self):
-		signals = union((elem._lhs_signals() for elem in self._iter_as_values()),
-						start = SignalSet())
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+		signals = union((elem._lhs_signals() for elem in self._iter_as_values()), start = SignalSet())
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (ValueSet, SignalSet))
+
 		return signals
 
-	def _rhs_signals(self):
-		signals = union((elem._rhs_signals() for elem in self._iter_as_values()),
-						start = SignalSet())
-		return self.index._rhs_signals() | signals
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+		signals = self.index._rhs_signals() | union(
+			(elem._rhs_signals() for elem in self._iter_as_values()),
+			start = SignalSet()
+		)
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (ValueSet, SignalSet))
+
+		return signals
 
 	def __repr__(self):
 		return f'(proxy (array [{", ".join(map(repr, self.elems))}]) {self.index!r})'
@@ -1801,8 +1814,8 @@ class Sample(Value):
 	def shape(self) -> Shape:
 		return self.value.shape()
 
-	def _rhs_signals(self) -> 'SignalSet':
-		return SignalSet((self,))
+	def _rhs_signals(self) -> 'ValueSet':
+		return ValueSet((self,))
 
 	def __repr__(self) -> str:
 		return f'(sample {self.value!r} @ {"<default>" if self.domain is None else self.domain}[{self.clocks}])'
@@ -1840,8 +1853,8 @@ class Initial(Value):
 	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _rhs_signals(self) -> 'SignalSet':
-		return SignalSet((self,))
+	def _rhs_signals(self) -> 'ValueSet':
+		return ValueSet((self,))
 
 	def __repr__(self) -> str:
 		return '(initial)'
@@ -1874,11 +1887,16 @@ class Assign(Statement):
 		self.lhs = Value.cast(lhs)
 		self.rhs = Value.cast(rhs)
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'ValueSet | SignalSet':
 		return self.lhs._lhs_signals()
 
-	def _rhs_signals(self):
-		return self.lhs._rhs_signals() | self.rhs._rhs_signals()
+	def _rhs_signals(self) -> 'ValueSet | SignalSet':
+		signals = self.lhs._rhs_signals() | self.rhs._rhs_signals()
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (ValueSet, SignalSet))
+
+		return signals
 
 	def __repr__(self):
 		return f'(eq {self.lhs!r} {self.rhs!r})'
@@ -1918,10 +1936,10 @@ class Property(Statement, MustUse):
 			self._en = Signal(reset_less = True, name = f'${self.kind.value}$en')
 			self._en.src_loc = self.src_loc
 
-	def _lhs_signals(self):
+	def _lhs_signals(self) -> 'SignalSet':
 		return SignalSet((self._en, self._check))
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
 		return self.test._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -1987,15 +2005,24 @@ class Switch(Statement):
 			if orig_keys in case_src_locs:
 				self.case_src_locs[new_keys] = case_src_locs[orig_keys]
 
-	def _lhs_signals(self):
-		signals = union((s._lhs_signals() for ss in self.cases.values() for s in ss),
-						start = SignalSet())
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+		signals = union((s._lhs_signals() for ss in self.cases.values() for s in ss), start = SignalSet())
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (SignalSet, ValueSet))
+
 		return signals
 
-	def _rhs_signals(self):
-		signals = union((s._rhs_signals() for ss in self.cases.values() for s in ss),
-						start = SignalSet())
-		return self.test._rhs_signals() | signals
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+		signals = self.test._rhs_signals() | union(
+			(s._rhs_signals() for ss in self.cases.values() for s in ss),
+			start = SignalSet()
+		)
+
+		if TYPE_CHECKING:
+			assert isinstance(signals, (SignalSet, ValueSet))
+
+		return signals
 
 	def __repr__(self) -> str:
 		def case_repr(keys, stmts):
