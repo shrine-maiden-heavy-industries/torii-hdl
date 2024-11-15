@@ -90,7 +90,7 @@ class ShapeCastable(metaclass = ABCMeta):
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
 
 	@abstractmethod
-	def const(self, val: ValueCastT) -> 'Const':
+	def const(self, val: 'ValueCastT | None') -> 'Const':
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
 class Shape:
