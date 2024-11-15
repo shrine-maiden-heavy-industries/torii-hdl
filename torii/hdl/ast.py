@@ -6,7 +6,9 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import Iterable, Iterator, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
+from collections.abc   import (
+	Iterable, Iterator, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
+)
 from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic
 from enum              import Enum, EnumMeta
 from itertools         import chain
@@ -62,6 +64,12 @@ __all__ = (
 	'ValueSet',
 )
 
+T = TypeVar('T')
+U = TypeVar('U')
+
+ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
+ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
+
 
 class DUID:
 	''' Deterministic Unique IDentifier. '''
@@ -70,9 +78,6 @@ class DUID:
 	def __init__(self) -> None:
 		self.duid = DUID.__next_uid
 		DUID.__next_uid += 1
-
-ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
-ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
 
 class ShapeCastable(metaclass = ABCMeta):
 	'''
