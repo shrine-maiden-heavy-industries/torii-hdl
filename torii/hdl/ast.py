@@ -277,7 +277,7 @@ def _overridable_by_swapping(method_name: str):
 
 class Value(metaclass = ABCMeta):
 
-	src_loc: tuple[str, int] | None = None
+	src_loc: tuple[str, int] | None
 
 	@staticmethod
 	def cast(obj: ValueCastT) -> 'Value':
@@ -1284,6 +1284,9 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	decoder : function
 
 	'''
+
+	decoder: Callable[[int], str]
+	_enum_class: type[Enum] | None
 
 	def __init__(
 		self, shape: 'ShapeCastT | None' = None, *,
