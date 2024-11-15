@@ -1239,7 +1239,7 @@ class Cat(Value):
 
 
 SignalAttrs: TypeAlias = dict[str, int | str | bool]
-SignalDecoder: TypeAlias = Callable[[int], str] | Enum
+SignalDecoder: TypeAlias = Callable[[int], str] | type[Enum]
 _SigParams = TypeVarTuple('_SigParams')
 # @final
 class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
@@ -1287,13 +1287,14 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 
 	def __init__(
 		self, shape: 'ShapeCastT | None' = None, *,
-		name: str | None = None, reset: int | Enum | None = None, reset_less: bool = False, attrs: SignalAttrs | None = None,
+		name: str | None = None, reset: int | EnumMeta | None = None, reset_less: bool = False, attrs: SignalAttrs | None = None,
 		decoder: SignalDecoder | None = None, src_loc_at: int = 0
-	):
+	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 
 		if name is not None and not isinstance(name, str):
 			raise TypeError(f'Name must be a string, not {name!r}')
+
 		self.name = name or tracer.get_var_name(depth = 2 + src_loc_at, default = '$signal')
 
 		orig_shape = shape
@@ -1304,64 +1305,63 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 		self.width  = shape.width
 		self.signed = shape.signed
 
-		orig_reset = reset
 		if isinstance(orig_shape, ShapeCastable):
 			try:
-				reset = Const.cast(orig_shape.const(reset))
+				reset_val = Const.cast(orig_shape.const(reset))
 			except Exception:
 				raise TypeError(
 					f'Reset value must be a constant initializer of {orig_shape!r}'
 				)
 
-			if reset.shape() != Shape.cast(orig_shape):
+			if reset_val.shape() != Shape.cast(orig_shape):
 				raise ValueError(
 					f'Constant returned by {orig_shape!r}.const() must have the shape that it casts '
-					f'to, {Shape.cast(orig_shape)!r}, and not {reset.shape()!r}'
+					f'to, {Shape.cast(orig_shape)!r}, and not {reset_val.shape()!r}'
 				)
 		else:
 			try:
-				reset = Const.cast(reset or 0)
+				reset_val = Const.cast(reset or 0)
 			except TypeError:
 				raise TypeError(
-					f'Reset value must be a constant-castable expression, not {orig_reset!r}'
+					f'Reset value must be a constant-castable expression, not {reset!r}'
 				)
 
 		# Avoid false positives for all-zeroes and all-ones
-		if orig_reset not in (None, 0, -1):
-			if reset.shape().signed and not self.signed:
+		if reset not in (None, 0, -1):
+			if reset_val.shape().signed and not self.signed:
 				warnings.warn(
-					message = f'Reset value {orig_reset!r} is signed, but the signal shape is {shape!r}',
+					message = f'Reset value {reset!r} is signed, but the signal shape is {shape!r}',
 					category = SyntaxWarning,
 					stacklevel = 2
 				)
 			elif (
-				reset.shape().width > self.width or
-				reset.shape().width == self.width and
-				self.signed and not reset.shape().signed
+				reset_val.shape().width > self.width or
+				reset_val.shape().width == self.width and
+				self.signed and not reset_val.shape().signed
 			):
 				warnings.warn(
-					message = f'Reset value {orig_reset!r} will be truncated to the signal shape {shape!r}',
+					message = f'Reset value {reset!r} will be truncated to the signal shape {shape!r}',
 					category = SyntaxWarning,
 					stacklevel = 2
 				)
-		self.reset = reset.value
+		self.reset = reset_val.value
 		self.reset_less = bool(reset_less)
 
-		if isinstance(orig_shape, range) and orig_reset is not None and orig_reset not in orig_shape:
-			if orig_reset == orig_shape.stop:
+		if isinstance(orig_shape, range) and reset is not None and reset not in orig_shape:
+			if reset == orig_shape.stop:
 				raise SyntaxError(
-					f'Reset value {orig_reset!r} equals the non-inclusive end of the signal '
+					f'Reset value {reset!r} equals the non-inclusive end of the signal '
 					f'shape {orig_shape!r}; this is likely an off-by-one error',
 				)
 			else:
-				raise SyntaxError(f'Reset value {orig_reset!r} is not within the signal shape {orig_shape!r}')
+				raise SyntaxError(f'Reset value {reset!r} is not within the signal shape {orig_shape!r}')
 
 		self.attrs = OrderedDict(() if attrs is None else attrs)
 
 		if decoder is None and isinstance(orig_shape, type) and issubclass(orig_shape, Enum):
 			decoder = orig_shape
 		if isinstance(decoder, type) and issubclass(decoder, Enum):
-			def enum_decoder(value):
+			def enum_decoder(value: int) -> str:
 				try:
 					return '{0.name:}/{0.value:}'.format(decoder(value))
 				except ValueError:
@@ -1369,13 +1369,14 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 			self.decoder = enum_decoder
 			self._enum_class = decoder
 		else:
-			self.decoder = decoder
-			self._enum_class = None
+			# NOTE(aki): Only to shut up mypy, not ideal but works for now
+			self.decoder = decoder # type: ignore
+			self._enum_class = None # type: ignore
 
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
 	def like(
-		other: 'Value', *, name: str | None = None, name_suffix: str | None = None, src_loc_at: int = 0, **kwargs
+		other: 'Signal', *, name: str | None = None, name_suffix: str | None = None, src_loc_at: int = 0, **kwargs
 	) -> 'Signal':
 		'''
 		Create Signal based on another.
@@ -1405,7 +1406,8 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 				attrs = other.attrs, decoder = other.decoder
 			)
 		kw.update(kwargs)
-		return Signal(**kw, src_loc_at = 1 + src_loc_at)
+		# NOTE(aki): mypy will complain about this due to the param expansion
+		return Signal(**kw, src_loc_at = 1 + src_loc_at) # type: ignore
 
 	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
