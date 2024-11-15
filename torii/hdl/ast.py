@@ -6,7 +6,7 @@ import operator
 
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
-from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence, Callable
+from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
 from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic
 from enum              import Enum, EnumMeta
 from itertools         import chain
