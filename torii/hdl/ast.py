@@ -7,10 +7,9 @@ import operator
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import Iterable, MutableMapping, MutableSequence, MutableSet, Sequence, Callable
-from typing            import TYPE_CHECKING, TypeAlias, Literal, NoReturn
+from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic
 from enum              import Enum, EnumMeta
 from itertools         import chain
-from typing            import Generic
 
 # For Python <= 3.10
 from typing_extensions import TypeVarTuple, Unpack
