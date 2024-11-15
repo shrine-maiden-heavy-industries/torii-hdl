@@ -1367,6 +1367,13 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 
 		if decoder is None and isinstance(orig_shape, type) and issubclass(orig_shape, Enum):
 			decoder = orig_shape
+
+			if TYPE_CHECKING:
+				assert isinstance(decoder, type) and issubclass(decoder, Enum)
+
+		# NOTE(aki): This should not fire, it's just to smack the type checker
+		assert decoder is not None
+
 		if isinstance(decoder, type) and issubclass(decoder, Enum):
 			def enum_decoder(value: int) -> str:
 				try:
@@ -1376,9 +1383,11 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 			self.decoder = enum_decoder
 			self._enum_class = decoder
 		else:
-			# NOTE(aki): Only to shut up mypy, not ideal but works for now
-			self.decoder = decoder # type: ignore
-			self._enum_class = None # type: ignore
+			if TYPE_CHECKING:
+				assert not isinstance(decoder, type)
+
+			self.decoder = decoder
+			self._enum_class = None
 
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
