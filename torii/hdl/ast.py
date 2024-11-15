@@ -1783,7 +1783,7 @@ class Sample(Value):
 
 	'''
 
-	def __init__(self, expr, clocks, domain, *, src_loc_at = 0):
+	def __init__(self, expr: ValueCastT, clocks: int, domain: str | None, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.value  = Value.cast(expr)
 		self.clocks = int(clocks)
@@ -1795,30 +1795,31 @@ class Sample(Value):
 		if not (self.domain is None or isinstance(self.domain, str)):
 			raise TypeError(f'Domain name must be a string or None, not {self.domain!r}')
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return self.value.shape()
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(sample {self.value!r} @ {"<default>" if self.domain is None else self.domain}[{self.clocks}])'
 
 
-def Past(expr, clocks = 1, domain = None):
+def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 	return Sample(expr, clocks, domain)
 
 
-def Stable(expr, clocks = 0, domain = None):
-	return Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain)
+# NOTE(aki): For Stable, Rose, and Fell, mypy can't see through the operators
+def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
+	return Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain) # type: ignore
 
 
-def Rose(expr, clocks = 0, domain = None):
-	return ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain)
+def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
+	return ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain) # type: ignore
 
 
-def Fell(expr, clocks = 0, domain = None):
-	return Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
+def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
+	return Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain) # type: ignore
 
 
 @final
@@ -1830,16 +1831,16 @@ class Initial(Value):
 
 	'''
 
-	def __init__(self, *, src_loc_at = 0):
+	def __init__(self, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 
-	def shape(self):
+	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _rhs_signals(self):
+	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet((self,))
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return '(initial)'
 
 
