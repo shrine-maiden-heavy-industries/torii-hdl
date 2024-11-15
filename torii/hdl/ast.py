@@ -2212,13 +2212,15 @@ class ValueKey:
 	def __hash__(self) -> int:
 		return self._hash
 
-	def __eq__(self, other: 'ValueKey'):
+	def __eq__(self, other: object) -> bool:
 		if not isinstance(other, ValueKey):
 			return False
 		if not isinstance(self.value, type(other.value)):
 			return False
 
 		if isinstance(self.value, Const):
+			assert isinstance(self.value, Const)
+			assert isinstance(other.value, Const)
 			return (
 				self.value.value == other.value.value and
 				self.value.width == other.value.width
@@ -2226,8 +2228,12 @@ class ValueKey:
 		elif isinstance(self.value, (Signal, AnyValue)):
 			return self.value is other.value
 		elif isinstance(self.value, (ClockSignal, ResetSignal)):
+			assert isinstance(self.value, (ClockSignal, ResetSignal))
+			assert isinstance(other.value, (ClockSignal, ResetSignal))
 			return self.value.domain == other.value.domain
 		elif isinstance(self.value, Operator):
+			assert isinstance(self.value, Operator)
+			assert isinstance(other.value, Operator)
 			return (
 				self.value.operator == other.value.operator and
 				len(self.value.operands) == len(other.value.operands) and
@@ -2237,12 +2243,16 @@ class ValueKey:
 				)
 			)
 		elif isinstance(self.value, Slice):
+			assert isinstance(self.value, Slice)
+			assert isinstance(other.value, Slice)
 			return (
 				ValueKey(self.value.value) == ValueKey(other.value.value) and
 				self.value.start == other.value.start and
 				self.value.stop == other.value.stop
 			)
 		elif isinstance(self.value, Part):
+			assert isinstance(self.value, Part)
+			assert isinstance(other.value, Part)
 			return (
 				ValueKey(self.value.value) == ValueKey(other.value.value) and
 				ValueKey(self.value.offset) == ValueKey(other.value.offset) and
@@ -2250,6 +2260,8 @@ class ValueKey:
 				self.value.stride == other.value.stride
 			)
 		elif isinstance(self.value, Cat):
+			assert isinstance(self.value, Cat)
+			assert isinstance(other.value, Cat)
 			return (
 				len(self.value.parts) == len(other.value.parts) and
 				all(
@@ -2258,6 +2270,8 @@ class ValueKey:
 				)
 			)
 		elif isinstance(self.value, ArrayProxy):
+			assert isinstance(self.value, ArrayProxy)
+			assert isinstance(other.value, ArrayProxy)
 			return (
 				ValueKey(self.value.index) == ValueKey(other.value.index) and
 				len(self.value.elems) == len(other.value.elems) and
@@ -2267,12 +2281,15 @@ class ValueKey:
 				)
 			)
 		elif isinstance(self.value, Sample):
+			assert isinstance(self.value, Sample)
+			assert isinstance(other.value, Sample)
 			return (
 				ValueKey(self.value.value) == ValueKey(other.value.value) and
 				self.value.clocks == other.value.clocks and
 				self.value.domain == self.value.domain
 			)
 		elif isinstance(self.value, Initial):
+
 			return True
 		else: # :nocov:
 			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
