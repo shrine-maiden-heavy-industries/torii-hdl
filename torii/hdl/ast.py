@@ -1600,7 +1600,7 @@ class Array(MutableSequence):
 
 	'''
 
-	def __init__(self, iterable = ()):
+	def __init__(self, iterable = ()) -> None:
 		self._inner    = list(iterable)
 		self._proxy_at = None
 		self._mutable  = True
@@ -1616,45 +1616,45 @@ class Array(MutableSequence):
 		else:
 			return self._inner[index]
 
-	def __len__(self):
+	def __len__(self) -> int:
 		return len(self._inner)
 
 	def _check_mutability(self):
 		if not self._mutable:
 			raise ValueError('Array can no longer be mutated after it was indexed with a value at {}:{}'.format(*self._proxy_at))
 
-	def __setitem__(self, index, value):
+	def __setitem__(self, index, value) -> None:
 		self._check_mutability()
 		self._inner[index] = value
 
-	def __delitem__(self, index):
+	def __delitem__(self, index) -> None:
 		self._check_mutability()
 		del self._inner[index]
 
-	def insert(self, index, value):
+	def insert(self, index, value) -> None:
 		self._check_mutability()
 		self._inner.insert(index, value)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(array{" mutable" if self._mutable else ""} [{", ".join(map(repr, self._inner))}])'
 
 @final
 class ArrayProxy(Value):
-	def __init__(self, elems, index, *, src_loc_at = 0):
+	def __init__(self, elems, index, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.elems = elems
 		self.index = Value.cast(index)
 
-	def __getattr__(self, attr):
+	def __getattr__(self, attr) -> 'ArrayProxy':
 		return ArrayProxy([getattr(elem, attr) for elem in self.elems], self.index)
 
-	def __getitem__(self, index):
+	def __getitem__(self, index) -> 'ArrayProxy':
 		return ArrayProxy([        elem[index] for elem in self.elems], self.index)
 
 	def _iter_as_values(self):
 		return (Value.cast(elem) for elem in self.elems)
 
-	def shape(self):
+	def shape(self) -> Shape:
 		unsigned_width = signed_width = 0
 		has_unsigned = has_signed = False
 		for elem_shape in (elem.shape() for elem in self._iter_as_values()):
@@ -1696,7 +1696,7 @@ class ArrayProxy(Value):
 
 		return signals
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(proxy (array [{", ".join(map(repr, self.elems))}]) {self.index!r})'
 
 class ValueCastable:
@@ -1885,16 +1885,16 @@ class Initial(Value):
 
 
 class _StatementList(list):
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'({" ".join(map(repr, self))})'
 
 
 class Statement:
-	def __init__(self, *, src_loc_at = 0):
+	def __init__(self, *, src_loc_at: int = 0) -> None:
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
 	@staticmethod
-	def cast(obj):
+	def cast(obj: 'Iterable | Statement'):
 		if isinstance(obj, Iterable):
 			return _StatementList(list(chain.from_iterable(map(Statement.cast, obj))))
 		else:
@@ -1906,7 +1906,7 @@ class Statement:
 
 @final
 class Assign(Statement):
-	def __init__(self, lhs, rhs, *, src_loc_at = 0):
+	def __init__(self, lhs: ValueCastT, rhs: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.lhs = Value.cast(lhs)
 		self.rhs = Value.cast(rhs)
@@ -1922,7 +1922,7 @@ class Assign(Statement):
 
 		return signals
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'(eq {self.lhs!r} {self.rhs!r})'
 
 
@@ -1984,7 +1984,7 @@ def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> 
 
 # @final
 class Switch(Statement):
-	def __init__(self, test, cases, *, src_loc = None, src_loc_at = 0, case_src_locs = {}):
+	def __init__(self, test, cases, *, src_loc = None, src_loc_at: int = 0, case_src_locs = {}) -> None:
 		if src_loc is None:
 			super().__init__(src_loc_at = src_loc_at)
 		else:
@@ -2096,7 +2096,7 @@ class _MappedKeyDict(MutableMapping, _MappedKeyCollection):
 			else:
 				yield self._unmap_key(key)
 
-	def __eq__(self, other):
+	def __eq__(self, other: object) -> bool:
 		if not isinstance(other, type(self)):
 			return False
 		if len(self) != len(other):
@@ -2108,10 +2108,10 @@ class _MappedKeyDict(MutableMapping, _MappedKeyCollection):
 				return False
 		return True
 
-	def __len__(self):
+	def __len__(self) -> int:
 		return len(self._storage)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		pairs = [ f'({k!r}, {v!r})' for k, v in self.items() ]
 		return f'{type(self).__module__}.{type(self).__name__}([{", ".join(pairs)}])'
 
