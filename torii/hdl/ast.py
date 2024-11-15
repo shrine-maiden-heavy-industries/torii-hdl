@@ -2338,7 +2338,23 @@ class ValueSet(_MappedKeySet[Value, ValueKey]):
 SignalLikeT: TypeAlias = Signal | ClockSignal | ResetSignal
 
 class SignalKey:
-	def __init__(self, signal: Signal | ClockSignal | ResetSignal) -> None:
+	'''
+	Allow aliasing of the same internal signal in a design from multiple object instances.
+
+
+	This allows you to map them as the same key in the resolution collections.
+
+	Doing so allows for multiple instances of, say, a ``ClockSignal`` with the same domain to
+	refer internally to the same signal upon design flatting.
+
+	Meaning that wherever there is a ``ClockSignal('sync')`` they all refer to the same internal
+	signal ID.
+
+	'''
+
+	_intern: tuple[Literal[0], int] | tuple[Literal[1, 2], str]
+
+	def __init__(self, signal: SignalLikeT) -> None:
 		self.signal = signal
 		if isinstance(signal, Signal):
 			self._intern = (0, signal.duid)
@@ -2352,12 +2368,12 @@ class SignalKey:
 	def __hash__(self) -> int:
 		return hash(self._intern)
 
-	def __eq__(self, other: 'SignalKey') -> bool:
+	def __eq__(self, other: object) -> bool:
 		if type(other) is not SignalKey:
 			return False
 		return self._intern == other._intern
 
-	def __lt__(self, other: 'SignalKey') -> bool:
+	def __lt__(self, other: object) -> bool:
 		if type(other) is not SignalKey:
 			raise TypeError(f'Object {other!r} cannot be compared to a SignalKey')
 		return self._intern < other._intern
