@@ -16,7 +16,7 @@ class NameNotFound(Exception):
 
 _raise_exception = object()
 
-def get_var_name(depth: int = 2, default: str | object | None = _raise_exception) -> str | None:
+def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> str:
 	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
@@ -35,7 +35,7 @@ def get_var_name(depth: int = 2, default: str | object | None = _raise_exception
 			raise NameNotFound
 		else:
 			if TYPE_CHECKING:
-				assert not isinstance(default, object)
+				assert isinstance(default, str)
 			return default
 
 	index = call_index + 2
@@ -75,7 +75,7 @@ def get_var_name(depth: int = 2, default: str | object | None = _raise_exception
 				raise NameNotFound
 			else:
 				if TYPE_CHECKING:
-					assert not isinstance(default, object)
+					assert isinstance(default, str)
 				return default
 
 
