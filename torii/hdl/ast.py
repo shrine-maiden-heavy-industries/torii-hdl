@@ -915,7 +915,7 @@ class Const(Value, metaclass = _ConstMeta):
 	src_loc = None
 
 	@staticmethod
-	def normalize(value: int, shape: 'Shape'):
+	def normalize(value: int, shape: 'Shape') -> int:
 		mask = (1 << shape.width) - 1
 		value &= mask
 		if shape.signed and (value >> (shape.width - 1)) & 1:
@@ -1168,7 +1168,8 @@ class Part(Value):
 		return self.value._lhs_signals()
 
 	def _rhs_signals(self) -> 'SignalSet':
-		return self.value._rhs_signals() | self.offset._rhs_signals()
+		# NOTE(aki): The mypy diagnostic for this is /technically/ correct but snuff it for now
+		return self.value._rhs_signals() | self.offset._rhs_signals() # type: ignore
 
 	def __repr__(self) -> str:
 		return f'(part {repr(self.value)} {repr(self.offset)} {self.width} {self.stride})'
