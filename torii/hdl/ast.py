@@ -1835,16 +1835,31 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 
 
 # NOTE(aki): For Stable, Rose, and Fell, mypy can't see through the operators
-def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
-	return Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain) # type: ignore
+def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	op = Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain)
+
+	if TYPE_CHECKING:
+		assert isinstance(op, Operator)
+
+	return op
 
 
-def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
-	return ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain) # type: ignore
+def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	op = ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain)
+
+	if TYPE_CHECKING:
+		assert isinstance(op, Operator)
+
+	return op
 
 
-def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Value:
-	return Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain) # type: ignore
+def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	op = Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
+
+	if TYPE_CHECKING:
+		assert isinstance(op, Operator)
+
+	return op
 
 
 @final
