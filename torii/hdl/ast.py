@@ -553,8 +553,13 @@ class Value(metaclass = ABCMeta):
 			``0`` if ``premise`` is true and ``conclusion`` is not, ``1`` otherwise.
 
 		'''
-		# NOTE(aki): For some reason this is opaque to mypy, but I promise, it does return an Operator
-		return ~premise | conclusion # type: ignore
+
+		op = ~premise | conclusion
+
+		if TYPE_CHECKING:
+			assert isinstance(op, Operator)
+
+		return op
 
 	def bit_select(self, offset: 'Value | int' , width: int) -> 'Value':
 		'''
@@ -646,29 +651,24 @@ class Value(metaclass = ABCMeta):
 				pattern = int(pattern.replace('-', '0'), 2)
 				matches.append((self & mask) == pattern)
 			else:
-				orig_pattern = pattern
 				try:
 					# NOTE(aki): mypy has issues with this re-assignment, but it's fine
-					pattern = Const.cast(pattern) # type: ignore
+					new_pattern: Const = Const.cast(pattern)
 				except TypeError as error:
 					raise SyntaxError(
 						'Match pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}'
 					) from error
 
-				# Type coercion
-				if TYPE_CHECKING:
-					assert isinstance(pattern, Const)
-
-				pattern_len = bits_for(pattern.value)
+				pattern_len = bits_for(new_pattern.value)
 				if pattern_len > len(self):
 					warnings.warn(
-						f'Match pattern \'{orig_pattern}\' ({pattern_len}\'{pattern.value:b}) is wider than '
+						f'Match pattern \'{pattern}\' ({pattern_len}\'{new_pattern.value:b}) is wider than '
 						f'match value (which has width {len(self)}); comparison will never be true',
 						SyntaxWarning, stacklevel = 2
 					)
 					continue
-				matches.append(self == pattern)
+				matches.append(self == new_pattern)
 
 		if not matches:
 			warnings.warn(
@@ -879,11 +879,11 @@ class Value(metaclass = ABCMeta):
 
 		raise NotImplementedError('.shape has not been implemented')
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> 'SignalSet | ValueSet':
 		raise TypeError(f'Value {self!r} cannot be used in assignments')
 
 	@abstractmethod
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> 'SignalSet | ValueSet':
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
