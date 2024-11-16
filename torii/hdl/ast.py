@@ -21,6 +21,7 @@ from ..util            import flatten, tracer, union
 from ..util.decorators import final
 from ..util.units      import bits_for
 from ._unused          import MustUse, UnusedMustUse
+from .._typing         import SrcLoc, SwitchCaseT
 
 __all__ = (
 	'AnyConst',
@@ -1994,10 +1995,11 @@ def Assume(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) ->
 def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	return Property('cover', test, name = name, src_loc_at = src_loc_at + 1)
 
-
 # @final
 class Switch(Statement):
-	def __init__(self, test, cases, *, src_loc = None, src_loc_at: int = 0, case_src_locs = {}) -> None:
+	def __init__(self, test: ValueCastT, cases: dict[SwitchCaseT, Iterable[object] | object], *,
+		src_loc: SrcLoc | None = None, src_loc_at: int = 0, case_src_locs: dict[SwitchCaseT, SrcLoc] = {}
+	) -> None:
 		if src_loc is None:
 			super().__init__(src_loc_at = src_loc_at)
 		else:
@@ -2006,36 +2008,37 @@ class Switch(Statement):
 			self.src_loc = src_loc
 		# Switch is also a bit special in that its parts also have location information. It can't
 		# be automatically traced, so whatever constructs a Switch may optionally provide it.
-		self.case_src_locs = {}
+		self.case_src_locs: dict[tuple[str, ...], SrcLoc] = {}
 
 		self.test  = Value.cast(test)
-		self.cases = OrderedDict()
+		self.cases = OrderedDict[tuple[str, ...], _StatementList]()
 		for orig_keys, stmts in cases.items():
 			# Map: None -> (); key -> (key,); (key...) -> (key...)
-			keys = orig_keys
-			if keys is None:
-				keys = ()
-			if not isinstance(keys, tuple):
-				keys = (keys,)
+			if orig_keys is None:
+				keys = tuple[SwitchCaseT, ...]()
+			elif not isinstance(orig_keys, tuple):
+				keys = (orig_keys,)
+			else:
+				keys = orig_keys
 			# Map: 2 -> "0010"; "0010" -> "0010"
-			new_keys = ()
+			new_keys = tuple[str, ...]()
 			key_mask = (1 << len(self.test)) - 1
 			for key in keys:
 				if isinstance(key, str):
-					key = ''.join(key.split()) # remove whitespace
+					new_key = ''.join(key.split()) # remove whitespace
 				elif isinstance(key, int):
-					key = format(key & key_mask, 'b').rjust(len(self.test), '0')
+					new_key = format(key & key_mask, 'b').rjust(len(self.test), '0')
 					if key_mask == 0:
-						key = ''
+						new_key = ''
 				elif isinstance(key, Enum):
-					key = format(key.value & key_mask, 'b').rjust(len(self.test), '0')
+					new_key = format(key.value & key_mask, 'b').rjust(len(self.test), '0')
 					if key_mask == 0:
-						key = ''
+						new_key = ''
 				else:
 					raise TypeError(f'Object {key!r} cannot be used as a switch key')
-				if len(key) != len(self.test):
-					raise ValueError(f'Length mismatch between switch key and test value {len(key)} != {len(self.test)}')
-				new_keys = (*new_keys, key)
+				if len(new_key) != len(self.test):
+					raise ValueError(f'Length mismatch between switch key and test value {len(new_key)} != {len(self.test)}')
+				new_keys = (*new_keys, new_key)
 			if not isinstance(stmts, Iterable):
 				stmts = [stmts]
 			self.cases[new_keys] = Statement.cast(stmts)
