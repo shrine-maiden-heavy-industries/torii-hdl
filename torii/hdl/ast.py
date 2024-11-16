@@ -328,45 +328,45 @@ class Value(metaclass = ABCMeta):
 		return self
 
 	def __invert__(self) -> 'Operator':
-		return Operator('~', [self])
+		return Operator('~', (self,))
 
 	def __neg__(self) -> 'Operator':
-		return Operator('-', [self])
+		return Operator('-', (self,))
 
 	@_overridable_by_swapping('__radd__')
 	def __add__(self, other: ValueCastT) -> 'Operator':
-		return Operator('+', [self, other], src_loc_at = 1)
+		return Operator('+', (self, other), src_loc_at = 1)
 
 	def __radd__(self, other: ValueCastT) -> 'Operator':
-		return Operator('+', [other, self])
+		return Operator('+', (other, self))
 
 	@_overridable_by_swapping('__rsub__')
 	def __sub__(self, other: ValueCastT) -> 'Operator':
-		return Operator('-', [self, other], src_loc_at = 1)
+		return Operator('-', (self, other), src_loc_at = 1)
 
 	def __rsub__(self, other: ValueCastT) -> 'Operator':
-		return Operator('-', [other, self])
+		return Operator('-', (other, self))
 
 	@_overridable_by_swapping('__rmul__')
 	def __mul__(self, other: ValueCastT) -> 'Operator':
-		return Operator('*', [self, other], src_loc_at = 1)
+		return Operator('*', (self, other), src_loc_at = 1)
 
 	def __rmul__(self, other: ValueCastT) -> 'Operator':
-		return Operator('*', [other, self])
+		return Operator('*', (other, self))
 
 	@_overridable_by_swapping('__rmod__')
 	def __mod__(self, other: ValueCastT) -> 'Operator':
-		return Operator('%', [self, other], src_loc_at = 1)
+		return Operator('%', (self, other), src_loc_at = 1)
 
 	def __rmod__(self, other: ValueCastT) -> 'Operator':
-		return Operator('%', [other, self])
+		return Operator('%', (other, self))
 
 	@_overridable_by_swapping('__rfloordiv__')
 	def __floordiv__(self, other: ValueCastT) -> 'Operator':
-		return Operator('//', [self, other], src_loc_at = 1)
+		return Operator('//', (self, other), src_loc_at = 1)
 
 	def __rfloordiv__(self, other: ValueCastT) -> 'Operator':
-		return Operator('//', [other, self])
+		return Operator('//', (other, self))
 
 
 	def __check_shamt(self) -> None:
@@ -380,66 +380,66 @@ class Value(metaclass = ABCMeta):
 	def __lshift__(self, other: ValueCastT) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
-		return Operator('<<', [self, other], src_loc_at = 1)
+		return Operator('<<', (self, other), src_loc_at = 1)
 
 	def __rlshift__(self, other: ValueCastT) -> 'Operator':
 		self.__check_shamt()
-		return Operator('<<', [other, self])
+		return Operator('<<', (other, self))
 
 	@_overridable_by_swapping('__rrshift__')
 	def __rshift__(self, other: ValueCastT) -> 'Operator':
 		other = Value.cast(other)
 		other.__check_shamt()
-		return Operator('>>', [self, other], src_loc_at = 1)
+		return Operator('>>', (self, other), src_loc_at = 1)
 
 	def __rrshift__(self, other: ValueCastT) -> 'Operator':
 		self.__check_shamt()
-		return Operator('>>', [other, self])
+		return Operator('>>', (other, self))
 
 	@_overridable_by_swapping('__rand__')
 	def __and__(self, other: ValueCastT) -> 'Operator':
-		return Operator('&', [self, other], src_loc_at = 1)
+		return Operator('&', (self, other), src_loc_at = 1)
 
 	def __rand__(self, other: ValueCastT) -> 'Operator':
-		return Operator('&', [other, self])
+		return Operator('&', (other, self))
 
 	@_overridable_by_swapping('__rxor__')
 	def __xor__(self, other: ValueCastT) -> 'Operator':
-		return Operator('^', [self, other], src_loc_at = 1)
+		return Operator('^', (self, other), src_loc_at = 1)
 
 	def __rxor__(self, other: ValueCastT) -> 'Operator':
-		return Operator('^', [other, self])
+		return Operator('^', (other, self))
 
 	@_overridable_by_swapping('__ror__')
 	def __or__(self, other: ValueCastT) -> 'Operator':
-		return Operator('|', [self, other], src_loc_at = 1)
+		return Operator('|', (self, other), src_loc_at = 1)
 
 	def __ror__(self, other: ValueCastT) -> 'Operator':
-		return Operator('|', [other, self])
+		return Operator('|', (other, self))
 
 	@_overridable_by_swapping('__eq__')
 	def __eq__(self, other: ValueCastT) -> 'Operator':
-		return Operator('==', [self, other], src_loc_at = 1)
+		return Operator('==', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__ne__')
 	def __ne__(self, other: ValueCastT) -> 'Operator':
-		return Operator('!=', [self, other], src_loc_at = 1)
+		return Operator('!=', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__gt__')
 	def __lt__(self, other: ValueCastT) -> 'Operator':
-		return Operator('<', [self, other], src_loc_at = 1)
+		return Operator('<', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__ge__')
 	def __le__(self, other: ValueCastT) -> 'Operator':
-		return Operator('<=', [self, other], src_loc_at = 1)
+		return Operator('<=', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__lt__')
 	def __gt__(self, other: ValueCastT) -> 'Operator':
-		return Operator('>', [self, other], src_loc_at = 1)
+		return Operator('>', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__le__')
 	def __ge__(self, other: ValueCastT) -> 'Operator':
-		return Operator('>=', [self, other], src_loc_at = 1)
+		return Operator('>=', (self, other), src_loc_at = 1)
 
 	def __abs__(self) -> 'Value':
 		if self.shape().signed:
