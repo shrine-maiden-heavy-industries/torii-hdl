@@ -191,9 +191,9 @@ class _FSMDict(TypedDict):
 	signal: Signal
 	reset: str | None
 	domain: str
-	encoding: OrderedDict
+	encoding: OrderedDict[str, int]
 	decoding: OrderedDict
-	states: OrderedDict
+	states: OrderedDict[str, object]
 	src_loc: SrcLoc
 	state_src_locs: dict[str, SrcLoc]
 
@@ -590,10 +590,17 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			# The FSM is encoded such that the state with encoding 0 is always the reset state.
 			fsm_decoding.update((n, s) for s, n in fsm_encoding.items())
 			fsm_signal.decoder = lambda n: "{}/{}".format(fsm_decoding[n], n)
-			self._statements.append(Switch(fsm_signal,
-				OrderedDict((fsm_encoding[name], stmts) for name, stmts in fsm_states.items()),
-				src_loc = src_loc, case_src_locs = {fsm_encoding[name]: fsm_state_src_locs[name]
-												for name in fsm_states}))
+			self._statements.append(
+				Switch(
+					fsm_signal,
+					OrderedDict((fsm_encoding[name], stmts) for name, stmts in fsm_states.items()),
+					src_loc = src_loc,
+					case_src_locs = {
+						fsm_encoding[name]: fsm_state_src_locs[name]
+						for name in fsm_states
+					}
+				)
+			)
 
 	def _add_statement(self, assigns, domain, depth, compat_mode = False):
 		def domain_name(domain):
