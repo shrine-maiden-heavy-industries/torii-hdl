@@ -18,6 +18,7 @@ from .ast            import (
 from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment
 from .xfrm           import SampleDomainInjector
+from .._typing       import SrcLoc
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
@@ -169,7 +170,6 @@ class FSM:
 			self.encoding[name] = len(self.encoding)
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
-_SrcLoc = tuple[str, int]
 _Pattern = int | str | Enum
 _PatternTuple = tuple[_Pattern, ...]
 
@@ -177,14 +177,14 @@ class _IfDict(TypedDict):
 	depth: int
 	tests: list
 	bodies: list
-	src_loc: _SrcLoc
-	src_locs: list[_SrcLoc]
+	src_loc: SrcLoc
+	src_locs: list[SrcLoc]
 
 class _SwitchDict(TypedDict):
 	test: Value
 	cases: OrderedDict[_PatternTuple, _StatementList]
-	src_loc: _SrcLoc
-	case_src_locs: dict[_PatternTuple, _SrcLoc]
+	src_loc: SrcLoc
+	case_src_locs: dict[_PatternTuple, SrcLoc]
 
 class _FSMDict(TypedDict):
 	name: str
@@ -194,8 +194,8 @@ class _FSMDict(TypedDict):
 	encoding: OrderedDict
 	decoding: OrderedDict
 	states: OrderedDict
-	src_loc: _SrcLoc
-	state_src_locs: dict[str, _SrcLoc]
+	src_loc: SrcLoc
+	state_src_locs: dict[str, SrcLoc]
 
 _CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 

@@ -11,3 +11,5 @@ IODirection: TypeAlias      = Literal['i', 'o']
 IODirectionIO: TypeAlias    = IODirection   | Literal['io']
 IODirectionOE: TypeAlias    = IODirectionIO | Literal['oe']
 IODirectionEmpty: TypeAlias = IODirectionOE | Literal['-']
+
+SrcLoc = tuple[str, int]
