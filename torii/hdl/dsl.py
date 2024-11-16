@@ -4,7 +4,6 @@ import warnings
 from collections     import OrderedDict
 from collections.abc import Callable, Iterable, Generator
 from contextlib      import _GeneratorContextManager, contextmanager
-from enum            import Enum
 from functools       import wraps
 from sys             import version_info
 from typing          import ParamSpec, Any, TypedDict, TYPE_CHECKING
@@ -18,7 +17,7 @@ from .ast            import (
 from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment
 from .xfrm           import SampleDomainInjector
-from .._typing       import SrcLoc
+from .._typing       import SrcLoc, SwitchCaseT
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
@@ -170,9 +169,6 @@ class FSM:
 			self.encoding[name] = len(self.encoding)
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
-_Pattern = int | str | Enum
-_PatternTuple = tuple[_Pattern, ...]
-
 class _IfDict(TypedDict):
 	depth: int
 	tests: list
@@ -182,9 +178,9 @@ class _IfDict(TypedDict):
 
 class _SwitchDict(TypedDict):
 	test: Value
-	cases: OrderedDict[_PatternTuple, _StatementList]
+	cases: OrderedDict[SwitchCaseT, _StatementList]
 	src_loc: SrcLoc
-	case_src_locs: dict[_PatternTuple, SrcLoc]
+	case_src_locs: dict[SwitchCaseT, SrcLoc]
 
 class _FSMDict(TypedDict):
 	name: str
@@ -193,7 +189,7 @@ class _FSMDict(TypedDict):
 	domain: str
 	encoding: OrderedDict[str, int]
 	decoding: OrderedDict
-	states: OrderedDict[str, object]
+	states: OrderedDict[str, _StatementList]
 	src_loc: SrcLoc
 	state_src_locs: dict[str, SrcLoc]
 
@@ -568,8 +564,14 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			switch_test, switch_cases = data['test'], data['cases']
 			switch_case_src_locs = data['case_src_locs']
 
-			self._statements.append(Switch(switch_test, switch_cases,
-				src_loc = src_loc, case_src_locs = switch_case_src_locs))
+			self._statements.append(
+				Switch(
+					switch_test,
+					switch_cases,
+					src_loc = src_loc,
+					case_src_locs = switch_case_src_locs
+				)
+			)
 
 		if name == 'FSM':
 			if TYPE_CHECKING:

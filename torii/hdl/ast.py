@@ -7,7 +7,7 @@ import operator
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import (
-	Iterable, Iterator, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
+	Iterable, Iterator, Mapping, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
 )
 from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic, ParamSpec
 from types             import NotImplementedType
@@ -1997,7 +1997,7 @@ def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> 
 
 # @final
 class Switch(Statement):
-	def __init__(self, test: ValueCastT, cases: dict[SwitchCaseT, Iterable[object] | object], *,
+	def __init__(self, test: ValueCastT, cases: Mapping[SwitchCaseT, Iterable[object] | _StatementList], *,
 		src_loc: SrcLoc | None = None, src_loc_at: int = 0, case_src_locs: dict[SwitchCaseT, SrcLoc] = {}
 	) -> None:
 		if src_loc is None:
