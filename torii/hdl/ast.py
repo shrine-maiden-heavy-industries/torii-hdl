@@ -9,7 +9,8 @@ from collections       import OrderedDict
 from collections.abc   import (
 	Iterable, Iterator, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
 )
-from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic
+from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic, ParamSpec
+from types             import NotImplementedType
 from enum              import Enum, EnumMeta
 from itertools         import chain
 
@@ -66,6 +67,9 @@ __all__ = (
 
 T = TypeVar('T')
 U = TypeVar('U')
+
+Params     = ParamSpec('Params')
+ReturnType = TypeVar('ReturnType')
 
 ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
 ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
@@ -261,7 +265,6 @@ def signed(width: int) -> Shape:
 	''' Shorthand for ``Shape(width, signed = True)``. '''
 	return Shape(width, signed = True)
 
-
 def _overridable_by_swapping(method_name: str):
 	'''
 	Allow overriding the decorated method.
@@ -270,12 +273,15 @@ def _overridable_by_swapping(method_name: str):
 	a reflected method named ``method_name``. Intended for operators, but
 	also usable for other methods that have a reflected counterpart.
 	'''
-	def decorator(f):
+	def decorator(f: Callable[[T, U], ReturnType]):
 		@functools.wraps(f)
-		def wrapper(self, other):
+		def wrapper(self: T, other: U) -> ReturnType:
 			if isinstance(other, ValueCastable) and hasattr(other, method_name):
-				res = getattr(other, method_name)(self)
+				res: ReturnType | NotImplementedType = getattr(other, method_name)(self)
 				if res is not NotImplemented:
+					if TYPE_CHECKING:
+						assert not isinstance(res, NotImplementedType)
+
 					return res
 			return f(self, other)
 		return wrapper
