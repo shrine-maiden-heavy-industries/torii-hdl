@@ -892,7 +892,7 @@ class Value(metaclass = ABCMeta):
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
-	def __call__(cls, value: int, shape: ShapeCastable | None = None, src_loc_at: int = 0, **kwargs):
+	def __call__(cls, value: int, shape: 'Shape | int | range | type | ShapeCastable | None' = None, src_loc_at: int = 0, **kwargs):
 		if isinstance(shape, ShapeCastable):
 			return shape.const(value)
 		return super().__call__(value, shape, **kwargs, src_loc_at = src_loc_at + 1)
