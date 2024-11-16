@@ -152,7 +152,7 @@ class Shape:
 		#            that the `.value` is a `ValueCastType`
 		for member in obj: # type: ignore
 			try:
-				member_shape = Const.cast(member.value).shape()
+				member_shape = Const.cast(member.value).shape() # type: ignore
 			except TypeError:
 				raise TypeError(
 					'Only enumerations whose members have constant-castable '
