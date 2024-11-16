@@ -1108,7 +1108,7 @@ def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 
 	'''
 
-	return Operator('m', [sel, val1, val0])
+	return Operator('m', (sel, val1, val0))
 
 
 @final
