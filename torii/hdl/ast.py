@@ -207,17 +207,18 @@ class Shape:
 		return self.width == other.width and self.signed == other.signed
 
 class _ShapeLikeMeta(type):
-	def __subclasscheck__(cls, subclass):
+	def __subclasscheck__(cls: type[T], subclass: type[U]) -> bool:
 		return (
 			issubclass(subclass, (Shape, ShapeCastable, int, range, EnumMeta)) or
 			subclass is ShapeLike
 		)
 
-	def __instancecheck__(cls, instance):
+	def __instancecheck__(cls: type[T], instance: object) -> bool:
 		if isinstance(instance, int):
 			return instance >= 0
 		if isinstance(instance, EnumMeta):
-			return all(isinstance(member.value, ValueLike) for member in instance)
+			# NOTE(aki): once again, because `Enum`/`EnumMeta` is untypable we can't properly type the `member.value`
+			return all(isinstance(member.value, ValueLike) for member in instance) # type: ignore
 
 		return isinstance(instance, (Shape, ShapeCastable, range))
 
