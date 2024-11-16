@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Generator
 from linecache       import getlines
 from re              import compile, Match
 from typing          import TypeAlias, TypeVar
@@ -12,17 +12,15 @@ __all__ = (
 	'union',
 )
 
+T = TypeVar('T')
 
-Flattenable: TypeAlias = Iterable['str | object | Flattenable']
-
-def flatten(i: Flattenable):
+def flatten(i: Iterable[str | T | Iterable]) -> Generator[str | T]:
 	for e in i:
 		if isinstance(e, str) or not isinstance(e, Iterable):
 			yield e
 		else:
 			yield from flatten(e)
 
-T = TypeVar('T')
 def union(i: Iterable[T], start: T | None = None) -> T:
 	# NOTE(aki): The two ignores below are due to mypy having a hard time seeing through the loop/if-else
 	r = start
