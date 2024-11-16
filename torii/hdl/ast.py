@@ -487,7 +487,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		return Operator('u', [self])
+		return Operator('u', (self,))
 
 	def as_signed(self)  -> 'Operator':
 		'''
@@ -501,7 +501,7 @@ class Value(metaclass = ABCMeta):
 		'''
 		if len(self) == 0:
 			raise ValueError('Cannot create a 0-width signed value')
-		return Operator('s', [self])
+		return Operator('s', (self,))
 
 	def bool(self)  -> 'Operator':
 		'''
@@ -514,7 +514,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		return Operator('b', [self])
+		return Operator('b', (self,))
 
 	def any(self)  -> 'Operator':
 		'''
@@ -527,7 +527,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		return Operator('r|', [self])
+		return Operator('r|', (self,))
 
 	def all(self)  -> 'Operator':
 		'''
@@ -540,7 +540,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		return Operator('r&', [self])
+		return Operator('r&', (self,))
 
 	def xor(self)  -> 'Operator':
 		'''
@@ -553,7 +553,7 @@ class Value(metaclass = ABCMeta):
 
 		'''
 
-		return Operator('r^', [self])
+		return Operator('r^', (self,))
 
 	def implies(premise, conclusion: ValueCastT)  -> 'Operator':
 		'''
