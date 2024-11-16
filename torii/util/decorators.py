@@ -27,23 +27,26 @@ def memoize(f: Callable[Params, ReturnType]):
 		return memo[args]
 	return g
 
-def final(cls):
+T = TypeVar('T')
+
+def final(cls: type[T]) -> type[T]:
 	def init_subclass():
 		raise TypeError(f'Subclassing {cls.__module__}.{cls.__name__} is not supported')
-	cls.__init_subclass__ = init_subclass
+	# NOTE(aki): mypy says you can't assign to a method, it's wrong, you can, you just normally /shouldn't/
+	cls.__init_subclass__ = init_subclass # type: ignore
 	return cls
 
 def deprecated(message: str, stacklevel: int = 2):
-	def decorator(f):
+	def decorator(f: Callable[Params, ReturnType]):
 		@wraps(f)
-		def wrapper(*args, **kwargs):
+		def wrapper(*args: Params.args, **kwargs: Params.kwargs) -> ReturnType:
 			warn(message, DeprecationWarning, stacklevel = stacklevel)
 			return f(*args, **kwargs)
 		return wrapper
 	return decorator
 
-def extend(cls):
-	def decorator(f):
+def extend(cls: type[T]):
+	def decorator(f: Callable[Params, ReturnType]):
 		if isinstance(f, property):
 			name = f.fget.__name__
 		else:
