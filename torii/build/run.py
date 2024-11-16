@@ -85,7 +85,7 @@ class BuildPlan:
 		if archive_type not in ('tar', 'zip'):
 			raise ValueError(f'Archive type must be either \'tar\' or \'zip\' not {archive_type!r}')
 
-		arch_t, archinfo_t, arch_mode, arch_ext = _archive_types.get(archive_type)
+		arch_t, archinfo_t, arch_mode, arch_ext = _archive_types.get(archive_type) # type: ignore
 
 		if isinstance(file, str):
 			file = Path(file)
@@ -115,32 +115,32 @@ class BuildPlan:
 			os.chdir(root)
 
 			for filename, content in self.files.items():
-				filename = Path(filename)
+				file = Path(filename)
 				# Forbid parent directory components and absolute paths completely
 				# to avoid the possibility of writing outside the build root.
-				if '..' in filename.parts or filename.is_absolute():
+				if '..' in file.parts or file.is_absolute():
 					raise RuntimeError(
-						f'Unable to write to \'{filename}\'\n'
+						f'Unable to write to \'{file}\'\n'
 						'Writing to outside of the build root is forbidden.'
 					)
 
-				filename.parent.mkdir(parents = True, exist_ok = True)
+				file.parent.mkdir(parents = True, exist_ok = True)
 
 				if isinstance(content, str):
 					content = content.encode('utf-8')
 
-				with filename.resolve().open('wb') as f:
+				with file.resolve().open('wb') as f:
 					f.write(content)
 
 				# If we're on unix-like and we're emitting the shell script, set it as +x
-				if not sys.platform.startswith('win32') and filename.suffix == '.sh':
-					filename.chmod(0o755) # rwxr-xr-x
+				if not sys.platform.startswith('win32') and file.suffix == '.sh':
+					file.chmod(0o755) # rwxr-xr-x
 			return root
 		finally:
 			os.chdir(cwd)
 
 	def execute_local(
-		self, root: str | Path = 'build', *, env: dict[str, str] = None
+		self, root: str | Path = 'build', *, env: dict[str, str] | None = None
 	) -> 'LocalBuildProducts':
 		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
@@ -234,9 +234,11 @@ class BuildProducts(metaclass = ABCMeta):
 		if mode not in ('b', 't'):
 			raise ValueError(f'Unsupported file access mode \'{mode}\', must be either \'b\' or \'t\'.')
 
+		raise NotImplementedError()
+
 
 	@contextmanager
-	def extract(self, *filenames: tuple[str, ...]) -> Generator[
+	def extract(self, *filenames: str) -> Generator[
 		None | str | list[str], None, None
 	]:
 		'''
