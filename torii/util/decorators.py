@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 
-from collections import OrderedDict
-from functools   import wraps
-from warnings    import warn
+from collections     import OrderedDict
+from collections.abc import Callable
+from typing          import ParamSpec, TypeVar, Any
+from functools       import wraps
+from warnings        import warn
 
 __all__ = (
 	'deprecated',
@@ -12,13 +14,16 @@ __all__ = (
 	'memoize',
 )
 
-def memoize(f):
-	memo = OrderedDict()
+Params     = ParamSpec('Params')
+ReturnType = TypeVar('ReturnType')
+
+def memoize(f: Callable[Params, ReturnType]):
+	memo = OrderedDict[Any, ReturnType]()
 
 	@wraps(f)
-	def g(*args):
+	def g(*args: Params.args, **kwargs: Params.kwargs) -> ReturnType:
 		if args not in memo:
-			memo[args] = f(*args)
+			memo[args] = f(*args, **kwargs)
 		return memo[args]
 	return g
 
