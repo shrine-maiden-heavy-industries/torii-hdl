@@ -2311,14 +2311,17 @@ class ValueKey:
 			return False
 
 		if isinstance(self.value, Const):
+			assert isinstance(other.value, Const)
 			return self.value < other.value
 		elif isinstance(self.value, (Signal, AnyValue)):
+			assert isinstance(other.value, (Signal, AnyValue))
 			return self.value.duid < other.value.duid
 		elif isinstance(self.value, Slice):
+			assert isinstance(other.value, Slice)
 			return (
 				ValueKey(self.value.value) < ValueKey(other.value.value) and
 				self.value.start < other.value.start and
-				self.value.end < other.value.end
+				self.value.stop < other.value.stop
 			)
 		else: # :nocov:
 			raise TypeError(f'Object {other!r} cannot be used as a key in value collections')
