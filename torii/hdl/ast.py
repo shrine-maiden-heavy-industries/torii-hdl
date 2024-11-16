@@ -1528,14 +1528,12 @@ class AnyValue(Value, DUID):
 		super().__init__(src_loc_at = src_loc_at)
 
 		self.kind   = self.Kind(kind)
-		# XXX(aki): Why the hecc are we not just caching the shape if we
-		# are re-creating it for the `shape()` call anyway???
-		shape       = Shape.cast(shape, src_loc_at = src_loc_at + 1)
-		self.width  = shape.width
-		self.signed = shape.signed
+		self._shape = Shape.cast(shape, src_loc_at = src_loc_at + 1)
+		self.width  = self._shape.width
+		self.signed = self._shape.signed
 
 	def shape(self) -> Shape:
-		return Shape(self.width, self.signed)
+		return self._shape
 
 	def _rhs_signals(self) -> 'SignalSet':
 		return SignalSet()
