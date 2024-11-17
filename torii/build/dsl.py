@@ -22,13 +22,13 @@ ResourceConn: TypeAlias = tuple[str, str | int]
 
 class Pins:
 	def __init__(
-		self, names: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
+		self, pins: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
 		assert_width: int | None = None
 	) -> None:
-		if not isinstance(names, str):
-			raise TypeError(f'Names must be a whitespace-separated string, not {names!r}')
+		if not isinstance(pins, str):
+			raise TypeError(f'Names must be a whitespace-separated string, not {pins!r}')
 
-		names: list[str] = names.split()
+		names: list[str] = pins.split()
 
 		if conn is not None:
 			conn_name, conn_number = conn
@@ -56,7 +56,7 @@ class Pins:
 		return iter(self.names)
 
 	def map_names(self, mapping: dict[str, str], resource) -> list[str]:
-		mapped_names = []
+		mapped_names: list[str] = []
 		for name in self.names:
 			while ':' in name:
 				if name not in mapping:
@@ -198,7 +198,7 @@ class Subsignal:
 class Resource(Subsignal):
 	@classmethod
 	def family(
-		cls: 'Type[Resource]',
+		cls: 'type[Resource]',
 		name_or_number: str | int, number: int | None = None, *,
 		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
 	) -> 'Resource':
