@@ -1222,17 +1222,16 @@ class Cat(Value):
 
 	def __init__(self, *args: ValueCastT, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
-		self.parts = []
+		self.parts: list[Value] = []
 		for index, arg in enumerate(flatten(args)):
-			if isinstance(arg, Enum) and (not isinstance(type(arg), ShapeCastable) or
-				not hasattr(arg, '_torii_shape_')
-			):
+			if isinstance(arg, Enum) and (not isinstance(type(arg), ShapeCastable) or not hasattr(arg, '_torii_shape_')):
 				warnings.warn(
 					f'Argument #{index + 1} of \'Cat()\' is an enumerated value {arg!r} without '
 					'a defined shape used in a bit vector context; use \'Const\' to specify '
 					'the shape.',
 					SyntaxWarning, stacklevel = 2 + src_loc_at
 				)
+
 			if isinstance(arg, int) and not isinstance(arg, Enum) and arg not in [0, 1]:
 				warnings.warn(
 					f'Argument #{index + 1} of \'Cat()\' is a bare integer {arg} used in bit vector '
