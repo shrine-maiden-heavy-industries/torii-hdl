@@ -1239,7 +1239,9 @@ class Cat(Value):
 					'instead',
 					SyntaxWarning, stacklevel = 2 + src_loc_at
 				)
-			self.parts.append(Value.cast(arg))
+
+			# NOTE(aki): Type inference is scrambled by the check above, so as painful as it is we ignore it
+			self.parts.append(Value.cast(arg)) # type: ignore
 
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
@@ -1555,7 +1557,7 @@ def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
 def AnySeq(shape, *, src_loc_at: int = 0) -> AnyValue:
 	return AnyValue('anyseq', shape, src_loc_at = src_loc_at + 1)
 
-class Array(MutableSequence['Value | ArrayProxy']):
+class Array(MutableSequence[Value]):
 	'''
 	Addressable multiplexer.
 
@@ -1615,7 +1617,8 @@ class Array(MutableSequence['Value | ArrayProxy']):
 		self._proxy_at = None
 		self._mutable  = True
 
-	def __getitem__(self, index: 'Value | ValueCastable | int') -> 'Value | ArrayProxy':
+	# NOTE(aki): We overload this method, so we need to shush the type checker
+	def __getitem__(self, index: 'Value | ValueCastable | int') -> 'Value | ArrayProxy': # type: ignore
 		if isinstance(index, ValueCastable):
 			index = Value.cast(index)
 
