@@ -1555,7 +1555,7 @@ def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
 def AnySeq(shape, *, src_loc_at: int = 0) -> AnyValue:
 	return AnyValue('anyseq', shape, src_loc_at = src_loc_at + 1)
 
-class Array(MutableSequence):
+class Array(MutableSequence['Value | ArrayProxy']):
 	'''
 	Addressable multiplexer.
 
@@ -1608,14 +1608,17 @@ class Array(MutableSequence):
 
 	'''
 
-	def __init__(self, iterable = ()) -> None:
+	_proxy_at: SrcLoc | None
+
+	def __init__(self, iterable: Sequence[Value] = ()) -> None:
 		self._inner    = list(iterable)
 		self._proxy_at = None
 		self._mutable  = True
 
-	def __getitem__(self, index):
+	def __getitem__(self, index: 'Value | ValueCastable | int') -> 'Value | ArrayProxy':
 		if isinstance(index, ValueCastable):
 			index = Value.cast(index)
+
 		if isinstance(index, Value):
 			if self._mutable:
 				self._proxy_at = tracer.get_src_loc()
@@ -1648,7 +1651,7 @@ class Array(MutableSequence):
 
 @final
 class ArrayProxy(Value):
-	def __init__(self, elems, index, *, src_loc_at: int = 0) -> None:
+	def __init__(self, elems, index: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.elems = elems
 		self.index = Value.cast(index)
