@@ -67,7 +67,7 @@ class YosysBinary:
 		version = cls.run(['-V'])
 		match = re.match(r'^Yosys (\d+)\.(\d+)(?:\+(\d+))?', version)
 		if match:
-			return (int(match[1]), int(match[2]), int(match[3] or 0))
+			return YosysVersion(int(match[1]), int(match[2]), int(match[3] or 0))
 		else:
 			return None
 
@@ -170,8 +170,8 @@ def min_yosys_version(version: YosysVersion) -> bool:
 	return version >= (0, 30) and version != (0, 37)
 
 def find_yosys(
-	requirement: Callable[[YosysVersion | None], bool] = min_yosys_version
-) -> YosysBinary:
+	requirement: Callable[[YosysVersion], bool] = min_yosys_version
+) -> type[YosysBinary]:
 	'''
 	Find an available Yosys executable of required version.
 
