@@ -23,10 +23,10 @@ class _MustUseCtx(TypedDict):
 T = TypeVar('T')
 
 class MustUse:
-	_MustUse__silence = False
-	_MustUse__warning = UnusedMustUse
-	# NOTE(aki): There should be a better way to keep mypy typing happy and default it *shrug*
-	_MustUse__context: _MustUseCtx = dict() # type: ignore
+	_MustUse__silence: bool = False
+	_MustUse__warning: type[Warning] = UnusedMustUse
+	_MustUse__used: bool
+	_MustUse__context: _MustUseCtx
 
 	# TODO(aki): Figure out the proper way to type this nonsense
 	def __new__(cls: Type[T], *args, src_loc_at: int = 0, **kwargs) -> T:
@@ -35,7 +35,7 @@ class MustUse:
 		self._MustUse__used    = False
 		self._MustUse__context = dict(
 			filename = frame.f_code.co_filename,
-			lineno   = frame.f_lineno,
+			lineno   = int(frame.f_lineno),
 			source   = self
 		)
 		return self # type: ignore
@@ -58,7 +58,7 @@ class MustUse:
 
 _old_excepthook = excepthook
 def _silence_elaboratable(
-	type: Type[BaseException], value: BaseException, traceback: TracebackType | None
+	type: type[BaseException], value: BaseException, traceback: TracebackType | None
 ) -> None:
 	# Don't show anything if the interpreter crashed; that'd just obscure the exception
 	# traceback instead of helping.
