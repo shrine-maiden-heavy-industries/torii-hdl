@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys    import _getframe, version_info
-from typing import TYPE_CHECKING
+from sys       import _getframe, version_info
+from typing    import TYPE_CHECKING
 
-from opcode import opname
+from opcode    import opname
+
+from .._typing import SrcLoc
 
 __all__ = (
 	'get_src_loc',
@@ -79,7 +81,7 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 				return default
 
 
-def get_src_loc(src_loc_at: int = 0) -> tuple[str, int]:
+def get_src_loc(src_loc_at: int = 0) -> SrcLoc:
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
