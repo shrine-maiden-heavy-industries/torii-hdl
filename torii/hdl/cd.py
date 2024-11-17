@@ -48,6 +48,9 @@ class ClockDomain:
 
 	'''
 
+	clk: Signal
+	rst: Signal | None
+
 	@staticmethod
 	def _name_for(domain_name: str, signal_name: str) -> str:
 		if domain_name == 'sync':
