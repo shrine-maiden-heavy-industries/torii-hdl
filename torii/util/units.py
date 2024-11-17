@@ -18,42 +18,56 @@ __all__ = (
 	'log2_exact',
 )
 
-PS: Final = 1e-12
-NS: Final = 1e-9
-US: Final = 1e-6
-MS: Final = 1e-3
+# SI Prefix constants
+EXA:   Final = 1e+18
+PETA:  Final = 1e+15
+TERA:  Final = 1e+12
+GIGA:  Final = 1e+9
+MEGA:  Final = 1e+6
+KILO:  Final = 1e+3
+HECTO: Final = 1e+2
+DEKA:  Final = 1e+1
+DECI:  Final = 1e-1
+CENTI: Final = 1e-2
+MILLI: Final = 1e-3
+MICRO: Final = 1e-6
+NANO:  Final = 1e-9
+PICO:  Final = 1e-12
+FEMTO: Final = 1e-15
+ATTO:  Final = 1e-18
+
 
 def ps_to_sec(val: float) -> float:
 	''' Convert the given number of picoseconds into fractional seconds '''
-	return val * PS
+	return val * PICO
 
 def ns_to_sec(val: float) -> float:
 	''' Convert the given number of nanoseconds into fractional seconds '''
-	return val * NS
+	return val * NANO
 
 def us_to_sec(val: float) -> float:
 	''' Convert the given number of microseconds into fractional seconds '''
-	return val * US
+	return val * MICRO
 
 def ms_to_sec(val: float) -> float:
 	''' Convert the given number of milliseconds into fractional seconds '''
-	return val * MS
+	return val * MILLI
 
 def sec_to_ps(val: float) -> float:
 	''' Convert the give number of sections into picoseconds '''
-	return val / PS
+	return val / PICO
 
 def sec_to_ns(val: float) -> float:
 	''' Convert the give number of sections into nanoseconds '''
-	return val / NS
+	return val / NANO
 
 def sec_to_us(val: float) -> float:
 	''' Convert the give number of sections into microseconds '''
-	return val / US
+	return val / MICRO
 
 def sec_to_ms(val: float) -> float:
 	''' Convert the give number of sections into milliseconds '''
-	return val / MS
+	return val / MILLI
 
 def iec_size(size: int, dec: int = 2) -> str:
 	''' Converts the given number of bytes to an IEC suffixed string '''
@@ -82,9 +96,23 @@ def iec_size(size: int, dec: int = 2) -> str:
 
 def log2_ceil(value: SupportsIndex) -> int:
 	'''
-	Returns the integer log2 of the smallest power-of-2 greater than or equal to `n`.
+	Calculate the integer result of ``⌈log₂(value)⌉``
 
-	Raises a `ValueError` for negative inputs.
+	Parameters
+	----------
+	value: SupportsIndex
+		The value to calculate the ``⌈log₂(value)⌉`` for.
+
+	Returns
+	-------
+	int
+		The integer log₂ of smallest power of 2 that is equal to or greater than ``value``
+
+	Raises
+	------
+	ValueError
+		when ``value`` is negative
+
 	'''
 
 	n = operator.index(value)
@@ -97,9 +125,23 @@ def log2_ceil(value: SupportsIndex) -> int:
 
 def log2_exact(value: SupportsIndex) -> int:
 	'''
-	Returns the integer log2 of `n`, which must be an exact power of two.
+	Calculate the integer result of ``log₂(value)`` where ``value`` is an exact power of 2.
 
-	Raises a `ValueError` if `n` is not a power of two.
+	Parameters
+	----------
+	value: SupportsIndex
+		The value to calculate the ``log₂(value)` for.
+
+	Returns
+	-------
+	int
+		The integer log₂ of ``value``
+
+	Raises
+	------
+	ValueError
+		when ``value`` is  not a power of 2
+
 	'''
 
 	n = operator.index(value)
@@ -107,10 +149,27 @@ def log2_exact(value: SupportsIndex) -> int:
 		raise ValueError(f'{n} is not a power of 2')
 	return (n - 1).bit_length()
 
-def bits_for(n: int, require_sign_bit: bool = False) -> int:
-	''' Returns the number of bits needed to represent int ``n`` '''
+def bits_for(value: SupportsIndex, require_sign_bit: bool = False) -> int:
+	'''
+	Get the number of bits needed to represent the integer value ``n``.
 
-	n = operator.index(n)
+	Parameters
+	----------
+	value: SupportsIndex
+		The value to find the number of bits to fit for.
+
+	require_sign_bit: bool
+		If ``value`` is signed, requiring us to add a sign bit. This is calculated automatically
+		if ``value`` is less than ``0``.
+
+	Returns
+	-------
+	int
+		The minimum number of bits needed to represent ``n``
+
+	'''
+
+	n = operator.index(value)
 
 	if n > 0:
 		r = log2_ceil(n + 1)
@@ -121,5 +180,4 @@ def bits_for(n: int, require_sign_bit: bool = False) -> int:
 	if require_sign_bit:
 		r += 1
 
-	# NOTE(aki): mypy can't see through the if-else assignment and thinks `r` can be an `Any`, which is wrong
-	return r # type: ignore
+	return r
