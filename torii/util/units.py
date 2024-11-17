@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import operator
-from typing import Final
+from typing import Final, SupportsIndex
 
 __all__ = (
 	'ps_to_sec',
@@ -80,14 +80,14 @@ def iec_size(size: int, dec: int = 2) -> str:
 
 	return f'{fixed}{suffixes[scale]}'
 
-def log2_ceil(n):
+def log2_ceil(value: SupportsIndex) -> int:
 	'''
 	Returns the integer log2 of the smallest power-of-2 greater than or equal to `n`.
 
 	Raises a `ValueError` for negative inputs.
 	'''
 
-	n = operator.index(n)
+	n = operator.index(value)
 	if n < 0:
 		raise ValueError(f'{n} is negative')
 	if n == 0:
@@ -95,14 +95,14 @@ def log2_ceil(n):
 	return (n - 1).bit_length()
 
 
-def log2_exact(n):
+def log2_exact(value: SupportsIndex) -> int:
 	'''
 	Returns the integer log2 of `n`, which must be an exact power of two.
 
 	Raises a `ValueError` if `n` is not a power of two.
 	'''
 
-	n = operator.index(n)
+	n = operator.index(value)
 	if n <= 0 or (n & (n - 1)):
 		raise ValueError(f'{n} is not a power of 2')
 	return (n - 1).bit_length()
