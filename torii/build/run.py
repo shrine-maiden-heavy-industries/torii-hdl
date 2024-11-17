@@ -226,14 +226,47 @@ class BuildPlan:
 
 class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
+	def get_str(self, filename: str) -> str:
+		'''
+		Get the contents of ``filename`` from the build products as a string.
+
+		Parameters
+		----------
+		filename: str
+			The name of the file to extract from the build products.
+
+		Returns
+		-------
+		str
+			The contents of ``filename`` as a UTF-8 encoded string.
+
+		'''
+		raise NotImplementedError()
+
+	@abstractmethod
+	def get_bin(self, filename: str) -> bytes:
+		'''
+		Get the contents of ``filename`` from the build products as raw bytes.
+
+		Parameters
+		----------
+		filename: str
+			The name of the file to extract from the build products.
+
+		Returns
+		-------
+		bytes
+			The contents of ``filename`` as raw bytes.
+
+		'''
+		raise NotImplementedError()
+
+	@abstractmethod
 	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
 		'''
 		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
 		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
 		'''
-		if mode not in ('b', 't'):
-			raise ValueError(f'Unsupported file access mode \'{mode}\', must be either \'b\' or \'t\'.')
-
 		raise NotImplementedError()
 
 
@@ -260,7 +293,7 @@ class BuildProducts(metaclass = ABCMeta):
 					prefix = 'torii_', suffix = '_' + os.path.basename(filename),
 					delete = False)
 				files.append(file)
-				file.write(self.get(filename))
+				file.write(self.get_bin(filename))
 				file.close()
 
 			if len(files) == 0:
@@ -284,7 +317,20 @@ class LocalBuildProducts(BuildProducts):
 		else:
 			self.__root = root
 
-	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
-		super().get(filename, mode)
-		with (self.__root / filename).resolve().open(f'r{mode}') as f:
+	def get_str(self, filename: str) -> str:
+		with (self.__root / filename).resolve().open('rt') as f:
 			return f.read()
+
+
+	def get_bin(self, filename: str) -> bytes:
+		with (self.__root / filename).resolve().open('rb') as f:
+			return f.read()
+
+	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
+		match mode:
+			case 'b':
+				return self.get_bin(filename)
+			case 't':
+				return self.get_str(filename)
+			case _:
+				raise ValueError(f'Unsupported file access mode \'{mode}\', must be either \'b\' or \'t\'.')
