@@ -4,7 +4,6 @@ import hashlib
 import os
 import subprocess
 import sys
-import tempfile
 import zipfile
 import tarfile
 
@@ -14,6 +13,7 @@ from collections.abc import Generator
 from contextlib      import contextmanager
 from pathlib         import Path
 from typing          import Literal
+from tempfile        import NamedTemporaryFile, _TemporaryFileWrapper
 
 __all__ = (
 	'BuildPlan',
@@ -271,9 +271,7 @@ class BuildProducts(metaclass = ABCMeta):
 
 
 	@contextmanager
-	def extract(self, *filenames: str) -> Generator[
-		None | str | list[str], None, None
-	]:
+	def extract(self, *filenames: str) -> Generator[str | list[str] | None]:
 		'''
 		Extract ``filenames`` from build products, place them in an OS-specific temporary file
 		location, with the extension preserved, and delete them afterwards. This method is used
@@ -283,13 +281,13 @@ class BuildProducts(metaclass = ABCMeta):
 					as bitstream_filename, config_filename:
 				subprocess.check_call(["program", "-c", config_filename, bitstream_filename])
 		'''
-		files = []
+		files: list[_TemporaryFileWrapper[bytes]] = []
 		try:
 			for filename in filenames:
 				# On Windows, a named temporary file (as created by Python) is not accessible to
 				# others if it's still open within the Python process, so we close it and delete
 				# it manually.
-				file = tempfile.NamedTemporaryFile(
+				file = NamedTemporaryFile(
 					prefix = 'torii_', suffix = '_' + os.path.basename(filename),
 					delete = False)
 				files.append(file)
@@ -297,7 +295,7 @@ class BuildProducts(metaclass = ABCMeta):
 				file.close()
 
 			if len(files) == 0:
-				return (yield)
+				return (yield None)
 			elif len(files) == 1:
 				return (yield files[0].name)
 			else:
