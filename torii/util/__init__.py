@@ -48,7 +48,8 @@ def get_linter_options(filename: str) -> dict[str, str]:
 
 
 LinterOptionType: TypeAlias = bool | int
-def get_linter_option( # type: ignore
+
+def get_linter_option(
 	filename: str , name: str, type: type[LinterOptionType], default: LinterOptionType
 ) -> LinterOptionType:
 	if type not in (bool, int):
@@ -70,3 +71,5 @@ def get_linter_option( # type: ignore
 			return int(option, 0)
 		except ValueError:
 			return default
+
+	return default
