@@ -29,8 +29,8 @@ class ResourceManager:
 		self._conn_pins = OrderedDict()
 
 		# Constraint lists
-		self._ports     = []
-		self._clocks    = SignalDict()
+		self._ports     = list[tuple[Resource, Pin | None, Record, Attrs]]()
+		self._clocks    = SignalDict[float]()
 
 		self.add_resources(resources)
 		self.add_connectors(connectors)
@@ -199,7 +199,7 @@ class ResourceManager:
 		return value
 
 	def iter_single_ended_pins(self) -> Generator[tuple[
-		Pin, Subsignal, Attrs, bool
+		Pin, Record, Attrs, bool
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
@@ -208,7 +208,7 @@ class ResourceManager:
 				yield (pin, port, attrs, res.ios[0].invert)
 
 	def iter_differential_pins(self) -> Generator[tuple[
-		Pin, Subsignal, Attrs, bool
+		Pin, Record, Attrs, bool
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
@@ -217,7 +217,7 @@ class ResourceManager:
 				yield (pin, port, attrs, res.ios[0].invert)
 
 	def should_skip_port_component(
-		self, port: Subsignal, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
+		self, port: Record | None, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
 	) -> bool:
 		return False
 
@@ -274,7 +274,7 @@ class ResourceManager:
 			self._clocks[clock] = float(frequency)
 
 	def iter_clock_constraints(self) -> Generator[
-		tuple[str, Signal, float], None, None
+		tuple[Signal | None, Signal | None, float], None, None
 	]:
 		# Back-propagate constraints through the input buffer. For clock constraints on pins
 		# (the majority of cases), toolchains work better if the constraint is defined on the pin
@@ -285,9 +285,10 @@ class ResourceManager:
 		#
 		# Constraints on nets with no corresponding input pin (e.g. PLL or SERDES outputs) are not
 		# affected.
-		pin_i_to_port = SignalDict()
+		pin_i_to_port = SignalDict[Signal]()
 		for res, pin, port, attrs in self._ports:
 			if hasattr(pin, 'i'):
+				assert pin is not None
 				if isinstance(res.ios[0], Pins):
 					pin_i_to_port[pin.i] = port.io
 				elif isinstance(res.ios[0], DiffPairs):
