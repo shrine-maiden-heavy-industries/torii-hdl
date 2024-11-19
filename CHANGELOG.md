@@ -22,6 +22,7 @@ Unreleased template stuff
 ### Added
 
  - Added new `torii.platform.formal.FormalPlatform` for formal verification of Torii designs.
+ - Added `Value.inc()` and `Value.dec()` calls to help deal with the `sig.eq(sig + 1)` pattern that is all too common.
 
 ### Changed
 
