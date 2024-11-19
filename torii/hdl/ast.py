@@ -831,7 +831,7 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, value, src_loc_at = 1)
 
-	def inc(self, value: ValueCastType = 1) -> 'Assign':
+	def inc(self, value: ValueCastT = 1) -> 'Assign':
 		'''
 		Increment value.
 
@@ -851,7 +851,7 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, self + value, src_loc_at = 1)
 
-	def dec(self, value: ValueCastType = 1) -> 'Assign':
+	def dec(self, value: ValueCastT = 1) -> 'Assign':
 		'''
 		Decrement value.
 
