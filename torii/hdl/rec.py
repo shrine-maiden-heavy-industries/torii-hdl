@@ -2,7 +2,7 @@
 
 from collections     import OrderedDict
 from collections.abc import Iterable, Generator
-from enum            import Enum
+from enum            import Enum, unique, auto
 from functools       import reduce, wraps
 from typing          import Any, get_args, get_origin
 from inspect         import get_annotations, isclass
@@ -14,18 +14,26 @@ __all__ = (
 	'DIR_FANIN',
 	'DIR_FANOUT',
 	'DIR_NONE',
+
 	'Direction',
 	'Layout',
 	'Record',
 )
 
+@unique
+class Direction(Enum):
+	''' Signal/Subsignal Direction '''
 
-Direction = Enum('Direction', ('NONE', 'FANOUT', 'FANIN'))
+	NONE   = auto()
+	FANOUT = auto()
+	FANIN  = auto()
 
 DIR_NONE   = Direction.NONE
+''' An alias for ``Direction.NONE`` '''
 DIR_FANOUT = Direction.FANOUT
+''' An alias for ``Direction.FANOUT`` '''
 DIR_FANIN  = Direction.FANIN
-
+''' An alias for ``Direction.FANIN`` '''
 
 class Layout:
 	@staticmethod
