@@ -5,6 +5,7 @@ from enum           import Enum
 from typing         import Generator
 
 from ....           import Elaboratable, Module, Mux, Record, Signal
+from ....build      import Platform
 from ....hdl.ast    import Operator
 from ....util.units import log2_ceil
 from ..memory       import MemoryMap
@@ -231,7 +232,7 @@ class Multiplexer(Elaboratable):
 			Maximum number of CSR elements that can share a chunk of the shadow register. Optional.
 			If ``None``, it is implicitly set by :meth:`Multiplexer._Shadow.prepare`.
 		'''
-		def __init__(self, granularity: int, overlaps: int | None, *, name: str):
+		def __init__(self, granularity: int, overlaps: int | None, *, name: str) -> None:
 			assert isinstance(name, str)
 			assert isinstance(granularity, int) and granularity >= 0
 			assert overlaps is None or isinstance(overlaps, int) and overlaps >= 0
@@ -243,7 +244,7 @@ class Multiplexer(Elaboratable):
 			self._chunks: dict[int, Multiplexer._Shadow.Chunk] | None = None
 
 		@property
-		def size(self):
+		def size(self) -> int:
 			'''
 			Size of the shadow register.
 
@@ -255,7 +256,7 @@ class Multiplexer(Elaboratable):
 			'''
 			return self._size
 
-		def add(self, elem_range: range):
+		def add(self, elem_range: range) -> None:
 			'''
 			Add a CSR element to the shadow.
 
@@ -373,7 +374,7 @@ class Multiplexer(Elaboratable):
 				self._size *= 2
 				self.prepare()
 
-		def chunks(self) -> Generator[tuple[int, Chunk], None, None]:
+		def chunks(self) -> Generator[tuple[int, Chunk]]:
 			'''Iterate shadow register chunks used by at least one CSR element.'''
 			if self._chunks is None:
 				return None
@@ -499,7 +500,7 @@ class Multiplexer(Elaboratable):
 			extend = extend, name = element.name
 		)
 
-	def elaborate(self, platform) -> Module:
+	def elaborate(self, platform: Platform | None) -> Module:
 		m = Module()
 
 		for elem, _, (elem_start, elem_end) in self._map.resources():
@@ -667,7 +668,7 @@ class Decoder(Elaboratable):
 		self._subs[sub_bus.memory_map] = sub_bus
 		return self._map.add_window(sub_bus.memory_map, addr = addr, extend = extend)
 
-	def elaborate(self, platform) -> Module:
+	def elaborate(self, _: Platform | None) -> Module:
 		m = Module()
 
 		# See Multiplexer.elaborate above.

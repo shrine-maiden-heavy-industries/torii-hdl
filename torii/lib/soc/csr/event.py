@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from .... import Elaboratable, Module
-from ..   import event
-from .    import Element, Multiplexer
-from .bus import Interface
+from typing    import Literal
 
-from typing import Literal
+from ....      import Elaboratable, Module
+from ....build import Platform
+from ..        import event
+from .         import Element, Multiplexer
+from .bus      import Interface
 
 __all__ = (
 	'EventMonitor',
@@ -110,7 +111,7 @@ class EventMonitor(Elaboratable):
 
 		self._map.add(src)
 
-	def elaborate(self, platform) -> Module:
+	def elaborate(self, _: Platform | None) -> Module:
 		self.freeze()
 		assert self._monitor is not None
 		assert self._enable is not None
