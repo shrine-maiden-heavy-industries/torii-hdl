@@ -4,11 +4,11 @@ from collections     import defaultdict
 from enum            import Enum
 from collections.abc import Generator
 
-from ....            import Elaboratable, Module, Mux, Record, Signal
-from ....build       import Platform
-from ....hdl.ast     import Operator
-from ....util.units  import log2_ceil
-from ..memory        import MemoryMap
+from ....           import Elaboratable, Module, Mux, Record, Signal
+from ....build      import Platform
+from ....hdl.ast    import Operator
+from ....util.units import log2_ceil
+from ..memory       import MemoryMap
 
 __all__ = (
 	'Decoder',
@@ -374,7 +374,7 @@ class Multiplexer(Elaboratable):
 				self._size *= 2
 				self.prepare()
 
-		def chunks(self) -> Generator[tuple[int, Chunk], None, None]:
+		def chunks(self) -> Generator[tuple[int, Chunk]]:
 			'''Iterate shadow register chunks used by at least one CSR element.'''
 			if self._chunks is None:
 				return None
