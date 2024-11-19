@@ -563,6 +563,25 @@ class ValueTestCase(ToriiTestSuiteCase):
 		s = Const(10).replicate(3)
 		self.assertEqual(repr(s), '(cat (const 4\'d10) (const 4\'d10) (const 4\'d10))')
 
+	def test_inc_value(self):
+		self.assertRepr(
+			Value.cast(1).inc(),
+			'(eq (const 1\'d1) (+ (const 1\'d1) (const 1\'d1)))'
+		)
+		self.assertRepr(
+			Value.cast(1).inc(Const(4)),
+			'(eq (const 1\'d1) (+ (const 1\'d1) (const 3\'d4)))'
+		)
+
+	def test_dec_value(self):
+		self.assertRepr(
+			Value.cast(1).dec(),
+			'(eq (const 1\'d1) (- (const 1\'d1) (const 1\'d1)))'
+		)
+		self.assertRepr(
+			Value.cast(1).dec(Const(4)),
+			'(eq (const 1\'d1) (- (const 1\'d1) (const 3\'d4)))'
+		)
 
 class ConstTestCase(ToriiTestSuiteCase):
 	def test_shape(self):

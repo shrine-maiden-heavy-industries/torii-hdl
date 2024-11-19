@@ -810,6 +810,46 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, value, src_loc_at = 1)
 
+	def inc(self, value: ValueCastType = 1) -> 'Assign':
+		'''
+		Increment value.
+
+		This is shorthand for ``a.eq(a + n)``
+
+		Parameters
+		----------
+		value : Value, in
+			Value to increment by. (default: 1)
+
+		Returns
+		-------
+		Assign
+			Assignment statement that can be used in combinatorial or synchronous context.
+
+		'''
+
+		return Assign(self, self + value, src_loc_at = 1)
+
+	def dec(self, value: ValueCastType = 1) -> 'Assign':
+		'''
+		Decrement value.
+
+		This is shorthand for ``a.eq(a - n)``
+
+		Parameters
+		----------
+		value : Value, in
+			Value to decrement by. (default: 1)
+
+		Returns
+		-------
+		Assign
+			Assignment statement that can be used in combinatorial or synchronous context.
+
+		'''
+
+		return Assign(self, self - value, src_loc_at = 1)
+
 	@abstractmethod
 	def shape(self) -> Shape:
 		'''
