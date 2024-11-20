@@ -74,7 +74,7 @@ class Layout:
 				raise NameError(f'Field {field!r} has a name that is already present in the layout')
 			self.fields[name] = (shape, direction)
 
-	def __getitem__(self, item: object) -> 'Layout | tuple[Layout | ShapeCastT, Direction]':
+	def __getitem__(self, item: object) -> LayoutFieldT:
 		if not isinstance(item, (str, Iterable)):
 			raise TypeError()
 
@@ -107,8 +107,10 @@ class Layout:
 
 
 class Record(ValueCastable):
+	_annotations: dict[str, Any]
+
 	@staticmethod
-	def like(other, *, name = None, name_suffix = None, src_loc_at = 0):
+	def like(other: 'Record', *, name = None, name_suffix = None, src_loc_at = 0) -> 'Record':
 		if name is not None:
 			new_name = str(name)
 		elif name_suffix is not None:
@@ -116,12 +118,12 @@ class Record(ValueCastable):
 		else:
 			new_name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
-		def concat(a, b):
+		def concat(a: str | None, b: str) -> str:
 			if a is None:
 				return b
 			return f'{a}__{b}'
 
-		fields = {}
+		fields = dict[str, Record | Signal]()
 		for field_name in other.fields:
 			field = other[field_name]
 			if isinstance(field, Record):
@@ -130,6 +132,7 @@ class Record(ValueCastable):
 					src_loc_at = 1 + src_loc_at
 				)
 			else:
+				assert isinstance(field, Signal)
 				fields[field_name] = Signal.like(
 					field, name = concat(new_name, field_name),
 					src_loc_at = 1 + src_loc_at
@@ -141,8 +144,8 @@ class Record(ValueCastable):
 		super().__init_subclass__(**kwargs)
 		cls._annotations = get_annotations(cls)
 
-	def _extract_layout(self, annotations):
-		layout = list()
+	def _extract_layout(self, annotations: dict[str, Any]) -> LayoutFieldT:
+		layout = list[tuple[str, 'LayoutFieldT'] | tuple[str, 'Layout', Direction]]()
 		for name, typ in annotations.items():
 			# We have nested records
 			if isclass(typ) and issubclass(typ, Record):
@@ -161,14 +164,16 @@ class Record(ValueCastable):
 					)
 		return layout
 
-	def __init__(self, layout = None, *, name: str | None = None, fields = None, src_loc_at: int = 0) -> None:
+	def __init__(
+		self, layout: 'LayoutFieldT | None' = None, *, name: str | None = None, fields = None, src_loc_at: int = 0
+	) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
 		self.name    = name
 		self.src_loc = tracer.get_src_loc(src_loc_at)
 
-		def concat(a, b):
+		def concat(a: str | None, b: str) -> str:
 			if a is None:
 				return b
 			return f'{a}__{b}'
@@ -180,7 +185,7 @@ class Record(ValueCastable):
 				raise ValueError('No layout specified and unable to construct one from type annotations')
 
 		self.layout = Layout.cast(layout, src_loc_at = 1 + src_loc_at)
-		self.fields = OrderedDict()
+		self.fields = OrderedDict[str, Record | Signal]()
 		for field_name, field_shape, field_dir in self.layout:
 			if fields is not None and field_name in fields:
 				field = fields[field_name]
@@ -201,13 +206,13 @@ class Record(ValueCastable):
 						src_loc_at = 1 + src_loc_at
 					)
 
-	def __getattr__(self, name):
+	def __getattr__(self, name: str):
 		# TODO: Add tests for this!
 		if name == 'fields' and name not in self.__dict__:
 			raise AssertionError('Record has not been properly constructed and does not have any fields')
 		return self[name]
 
-	def __getitem__(self, item):
+	def __getitem__(self, item: object) -> 'ValueCastable | Value':
 		if isinstance(item, str):
 			try:
 				return self.fields[item]
@@ -227,7 +232,7 @@ class Record(ValueCastable):
 			})
 		else:
 			try:
-				return Value.__getitem__(self, item)
+				return super().__getitem__(item)
 			except KeyError:
 				if self.name is None:
 					reference = 'Unnamed record'
