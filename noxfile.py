@@ -44,6 +44,7 @@ def test(session: Session) -> None:
 	out_dir.mkdir(parents = True, exist_ok = True)
 	coverage = '--coverage' in session.posargs
 	formal   = '--formal'   in session.posargs
+	asic     = '--asic' in session.posargs
 
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
@@ -70,11 +71,18 @@ def test(session: Session) -> None:
 			session.run(
 				'python', *coverage_args, example
 			)
-	else:
-		session.log('Running standard test suite')
+	elif asic:
+		ASIC_EXAMPLES = ROOT_DIR / 'examples' / 'asic'
+
+		session.log('Running ASIC tests')
 		session.run(
-			'python', *coverage_args, *unitest_args
+			'python', *coverage_args, f'{ASIC_EXAMPLES / "alu.py"}'
 		)
+	else:
+		session.log('Running standard tests')
+		session.run(
+				'python', *coverage_args, *unitest_args
+			)
 	if coverage:
 		session.run(
 			'python', '-m', 'coverage', 'xml',
