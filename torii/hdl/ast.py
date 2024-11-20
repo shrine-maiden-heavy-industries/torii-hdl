@@ -276,7 +276,7 @@ def _overridable_by_swapping(method_name: str):
 	a reflected method named ``method_name``. Intended for operators, but
 	also usable for other methods that have a reflected counterpart.
 	'''
-	def decorator(f: Callable[[T, U], ReturnType]):
+	def decorator(f: Callable[[T, U], ReturnType]) -> Callable[[T, U], ReturnType]:
 		@functools.wraps(f)
 		def wrapper(self: T, other: U) -> ReturnType:
 			if isinstance(other, ValueCastable) and hasattr(other, method_name):
@@ -2330,7 +2330,7 @@ class ValueKey:
 		else: # :nocov:
 			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
 
-	def __lt__(self, other: 'ValueKey') -> bool:
+	def __lt__(self, other: 'ValueKey') -> bool | Operator:
 		if not isinstance(other, ValueKey):
 			return False
 		if not isinstance(self.value, type(other.value)):
@@ -2338,8 +2338,9 @@ class ValueKey:
 
 		if isinstance(self.value, Const):
 			assert isinstance(other.value, Const)
-			# FIXME(aki): what the hell do we do to fix this type issue (returns Operator, expects bool)
-			return self.value < other.value
+			result = self.value < other.value
+			assert isinstance(result, Operator)
+			return result
 		elif isinstance(self.value, (Signal, AnyValue)):
 			assert isinstance(other.value, (Signal, AnyValue))
 			return self.value.duid < other.value.duid
