@@ -258,11 +258,11 @@ class ResourceManager:
 				if not self.should_skip_port_component(port, attrs, 'io'):
 					yield (port.io.name, res.ios[0].map_names(self._conn_pins, res), attrs)
 			elif isinstance(res.ios[0], DiffPairs):
-				assert isinstance(port.p, Signal)
-				assert isinstance(port.n, Signal)
 				if not self.should_skip_port_component(port, attrs, 'p'):
+					assert isinstance(port.p, Signal)
 					yield (port.p.name, res.ios[0].p.map_names(self._conn_pins, res), attrs)
 				if not self.should_skip_port_component(port, attrs, 'n'):
+					assert isinstance(port.n, Signal)
 					yield (port.n.name, res.ios[0].n.map_names(self._conn_pins, res), attrs)
 			else:
 				raise TypeError(f'Expected either \'Pins\', or \'DiffPairs\', not \'{res.ios[0]!r}\'')
