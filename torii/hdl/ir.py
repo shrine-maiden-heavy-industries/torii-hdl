@@ -4,15 +4,16 @@ import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
 from functools         import reduce
-from typing            import TYPE_CHECKING
+from typing            import TYPE_CHECKING, Literal, TypeAlias
 
+from .._typing         import SrcLoc, IODirectionIO
 from ..util            import flatten
 from ..util.tracer     import get_src_loc
 from ..util.decorators import memoize
 from ._unused          import MustUse, UnusedMustUse
 from .ast              import (
 	ClockSignal, ResetSignal, Signal, SignalDict, SignalSet, Statement,
-	Value
+	Value, ValueCastT
 )
 from .cd               import ClockDomain, DomainError
 
@@ -653,6 +654,8 @@ class Fragment:
 		return _names
 
 
+InstanceArgsT: TypeAlias = tuple[Literal['a', 'p'] | IODirectionIO, str, ValueCastT]
+
 class Instance(Fragment):
 	'''
 	Allows for the direct instantiation of external modules, cells, or primitives.
@@ -696,12 +699,15 @@ class Instance(Fragment):
 
 	'''
 
-	def __init__(self, type, *args, src_loc = None, src_loc_at = 0, **kwargs):
+	def __init__(
+		self, type: str, *args: InstanceArgsT, src_loc: SrcLoc | None = None, src_loc_at: int = 0,
+		**kwargs: 'ValueCastT | str'
+	):
 		super().__init__()
 
 		self.type        = type
-		self.parameters  = OrderedDict()
-		self.named_ports = OrderedDict()
+		self.parameters  = OrderedDict[str, 'ValueCastT | str']()
+		self.named_ports = OrderedDict[str, tuple[Value, IODirectionIO]]()
 		self.src_loc     = src_loc or get_src_loc(src_loc_at)
 
 		for (kind, name, value) in args:
@@ -718,15 +724,24 @@ class Instance(Fragment):
 				)
 
 		for kw, arg in kwargs.items():
+			if kw.startswith(('i_', 'o_', 'io_')) and isinstance(arg, str):
+				raise TypeError(
+					'The argument for \'i_\', \'o_\', or \'io_\', parameters to an'
+					f'Instance must be a valid Value castable type, not \'{arg!r}\''
+				)
+
 			if kw.startswith('a_'):
 				self.attrs[kw[2:]] = arg
 			elif kw.startswith('p_'):
 				self.parameters[kw[2:]] = arg
 			elif kw.startswith('i_'):
+				assert not isinstance(arg, str)
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'i')
 			elif kw.startswith('o_'):
+				assert not isinstance(arg, str)
 				self.named_ports[kw[2:]] = (Value.cast(arg), 'o')
 			elif kw.startswith('io_'):
+				assert not isinstance(arg, str)
 				self.named_ports[kw[3:]] = (Value.cast(arg), 'io')
 			else:
 				raise NameError(
