@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing    import Literal
 
 from ..        import Record
+from .._typing import IODirectionOE
 from ..hdl.rec import Layout, LayoutFieldT
 from ..hdl.ast import ShapeCastT
 
@@ -12,7 +12,7 @@ __all__ = (
 )
 
 
-def pin_layout(width: int, dir: Literal['i', 'o', 'oe', 'io'], xdr: int = 0) -> Layout:
+def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
 	'''
 	Layout of the platform interface of a pin or several pins, which may be used inside
 	user-defined records.
@@ -112,7 +112,7 @@ class Pin(Record):
 		is present.
 	'''
 	def __init__(
-		self, width: int, dir: Literal['i', 'o', 'oe', 'io'], *,
+		self, width: int, dir: IODirectionOE, *,
 		xdr: int = 0, name: str | None = None, src_loc_at: int = 0
 	) -> None:
 		self.width = width
