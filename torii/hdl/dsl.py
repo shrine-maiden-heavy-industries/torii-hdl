@@ -604,7 +604,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				)
 			)
 
-	def _add_statement(self, assigns, domain: ClockDomain, depth, compat_mode = False):
+	def _add_statement(self, assigns, domain: str, depth, compat_mode = False):
 		def domain_name(domain):
 			if domain is None:
 				return 'comb'
