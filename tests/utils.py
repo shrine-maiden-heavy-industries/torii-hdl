@@ -11,7 +11,7 @@ from pathlib          import Path
 from torii.hdl.ast    import *
 from torii.hdl.ir     import *
 from torii.back       import rtlil
-from torii.tools      import require_tool
+from torii.tools      import require_tool, ToolNotFound
 from torii.test       import ToriiTestCase
 
 
@@ -80,8 +80,13 @@ class ToriiTestSuiteCase(ToriiTestCase):
 		{rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]}
 		''')
 
+		try:
+			sby = require_tool('sby')
+		except ToolNotFound:
+			self.skipTest('SBY not installed')
+
 		with subprocess.Popen([
-				require_tool('sby'), '-f', '-d', spec_name
+				sby, '-f', '-d', spec_name
 			],
 			cwd                = formal_dir,
 			env                = {
