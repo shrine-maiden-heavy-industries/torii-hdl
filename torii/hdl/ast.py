@@ -2167,7 +2167,7 @@ class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKe
 
 
 class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
-	def __init__(self, elements: tuple[Key, ...] = ()) -> None:
+	def __init__(self, elements: Iterable[Key] = ()) -> None:
 		self._storage = OrderedDict[IntKey, None]()
 		for elem in elements:
 			self.add(elem)
@@ -2415,17 +2415,23 @@ class SignalKey:
 class SignalDict(_MappedKeyDict[SignalLikeT, Val, SignalKey]):
 	''' Mapping of `Signal` objects to arbitrary value types '''
 
-	def _map_key(self, key: SignalLikeT) -> SignalKey:
+	def _map_key(self, key: SignalLikeT | None) -> SignalKey:
+		if key is None:
+			raise TypeError('Key to SignalDict must not be None')
+
 		return SignalKey(key)
 
 	def _unmap_key(self, key: SignalKey) -> SignalLikeT:
 		return key.signal
 
 
-class SignalSet(_MappedKeySet[SignalLikeT, SignalKey]):
+class SignalSet(_MappedKeySet[SignalLikeT | None, SignalKey]):
 	''' Collection of unique `Signal` objects '''
 
-	def _map_key(self, key: SignalLikeT) -> SignalKey:
+	def _map_key(self, key: SignalLikeT | None) -> SignalKey:
+		if key is None:
+			raise TypeError('Key to SignalSet must not be None')
+
 		return SignalKey(key)
 
 	def _unmap_key(self, key: SignalKey) -> SignalLikeT:
