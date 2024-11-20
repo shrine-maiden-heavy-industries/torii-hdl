@@ -1916,7 +1916,7 @@ class Initial(Value):
 		return '(initial)'
 
 
-class _StatementList(list):
+class _StatementList(list['Statement']):
 	def __repr__(self) -> str:
 		return f'({" ".join(map(repr, self))})'
 

@@ -13,7 +13,7 @@ from ..util.decorators import memoize
 from ._unused          import MustUse, UnusedMustUse
 from .ast              import (
 	ClockSignal, ResetSignal, Signal, SignalDict, SignalSet, Statement,
-	Value, ValueCastT
+	Value, ValueCastT, SignalLikeT
 )
 from .cd               import ClockDomain, DomainError
 
@@ -85,7 +85,7 @@ class Fragment:
 
 	def __init__(self):
 		self.ports = SignalDict()
-		self.drivers = OrderedDict()
+		self.drivers = OrderedDict[str | None, SignalSet]()
 		self.statements = []
 		self.domains = OrderedDict()
 		self.subfragments = []
@@ -108,7 +108,7 @@ class Fragment:
 				if port_dir == dir:
 					yield port
 
-	def add_driver(self, signal, domain = None):
+	def add_driver(self, signal: SignalLikeT | None, domain: str | None = None):
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
 		self.drivers[domain].add(signal)

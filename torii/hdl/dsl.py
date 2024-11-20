@@ -212,7 +212,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._ctrl_context = None
 		self._ctrl_stack : list[tuple[str, _CtrlEntry]]  = []
 
-		self._driving      = SignalDict()
+		self._driving      = SignalDict[str]()
 		self._named_submodules = {}
 		self._anon_submodules  = []
 		self._domains      = {}
@@ -604,7 +604,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				)
 			)
 
-	def _add_statement(self, assigns, domain, depth, compat_mode = False):
+	def _add_statement(self, assigns, domain: ClockDomain, depth, compat_mode = False):
 		def domain_name(domain):
 			if domain is None:
 				return 'comb'
