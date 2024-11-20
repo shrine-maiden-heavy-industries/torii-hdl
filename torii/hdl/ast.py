@@ -290,6 +290,29 @@ def _overridable_by_swapping(method_name: str):
 		return wrapper
 	return decorator
 
+def _index_valuelike(value: 'Value | ValueCastable', key: object) -> 'Value':
+	n = len(value)
+	if isinstance(key, int):
+		if key not in range(-n, n):
+			raise IndexError(f'Index {key} is out of bounds for a {n}-bit value')
+		if key < 0:
+			key += n
+		return Slice(value, key, key + 1, src_loc_at = 1)
+	elif isinstance(key, slice):
+		if isinstance(key.start, Value) or isinstance(key.stop, Value):
+			raise SyntaxError(
+				'Slicing a value with a Value is unsupported, '
+				'use `Value.bit_select()` or `Value.word_select()` instead.'
+			)
+		start, stop, step = key.indices(n)
+		if step != 1:
+			return Cat(*(value[i] for i in range(start, stop, step)))
+		return Slice(value, start, stop, src_loc_at = 1)
+	elif isinstance(key, Value):
+		raise SyntaxError('Indexing a value with another value is not supported, use `Value.bit_select()` instead.')
+	else:
+		raise TypeError(f'Cannot index value with {key!r}')
+
 class Value(metaclass = ABCMeta):
 
 	src_loc: tuple[str, int] | None
@@ -453,28 +476,8 @@ class Value(metaclass = ABCMeta):
 	def __len__(self) -> int:
 		return self.shape().width
 
-	def __getitem__(self, key: int | slice) -> 'Value':
-		n = len(self)
-		if isinstance(key, int):
-			if key not in range(-n, n):
-				raise IndexError(f'Index {key} is out of bounds for a {n}-bit value')
-			if key < 0:
-				key += n
-			return Slice(self, key, key + 1, src_loc_at = 1)
-		elif isinstance(key, slice):
-			if isinstance(key.start, Value) or isinstance(key.stop, Value):
-				raise SyntaxError(
-					'Slicing a value with a Value is unsupported, '
-					'use `Value.bit_select()` or `Value.word_select()` instead.'
-				)
-			start, stop, step = key.indices(n)
-			if step != 1:
-				return Cat(*(self[i] for i in range(start, stop, step)))
-			return Slice(self, start, stop, src_loc_at = 1)
-		elif isinstance(key, Value):
-			raise SyntaxError('Indexing a value with another value is not supported, use `Value.bit_select()` instead.')
-		else:
-			raise TypeError(f'Cannot index value with {key!r}')
+	def __getitem__(self, key: object) -> 'Value':
+		return _index_valuelike(self, key)
 
 	def __contains__(self, _):
 		raise TypeError('The python `in` operator is not supported on Torii values')
@@ -1782,6 +1785,12 @@ class ValueCastable:
 			return self.__lowered_to
 		setattr(wrapper_memoized, '_ValueCastable__memoized', True)
 		return wrapper_memoized
+
+	def __getitem__(self, key: object) -> 'ValueCastable | Value':
+		return _index_valuelike(self, key)
+
+	def __len__(self) -> int:
+		raise NotImplementedError()
 
 
 class _ValueLikeMeta(type):
