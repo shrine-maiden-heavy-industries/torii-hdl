@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections     import OrderedDict
-from collections.abc import Generator
+from collections.abc import Generator, Iterable, Callable
 from typing          import Literal
 
-from ..hdl.ast       import Signal, SignalDict
+
+from .._typing       import IODirectionEmpty
+from ..hdl.ast       import Signal, SignalDict, Value, ValueCastable
 from ..hdl.rec       import Record
 from ..lib.io        import Pin
 from .dsl            import Attrs, Connector, DiffPairs, Pins, Resource, Subsignal
@@ -21,12 +23,12 @@ class ResourceError(Exception):
 
 class ResourceManager:
 	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:
-		self.resources  = OrderedDict()
-		self._requested = OrderedDict()
-		self._phys_reqd = OrderedDict()
+		self.resources  = OrderedDict[tuple[str, int], Resource]()
+		self._requested = OrderedDict[tuple[str, int], Record | Pin]()
+		self._phys_reqd = OrderedDict[str, str]()
 
-		self.connectors = OrderedDict()
-		self._conn_pins = OrderedDict()
+		self.connectors = OrderedDict[tuple[str, int], Connector]()
+		self._conn_pins = OrderedDict[str, str]()
 
 		# Constraint lists
 		self._ports     = list[tuple[Resource, Pin | None, Record, Attrs]]()
@@ -35,7 +37,7 @@ class ResourceManager:
 		self.add_resources(resources)
 		self.add_connectors(connectors)
 
-	def add_resources(self, resources: list[Resource]) -> None:
+	def add_resources(self, resources: Iterable[Resource]) -> None:
 		for res in resources:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
@@ -44,7 +46,7 @@ class ResourceManager:
 
 			self.resources[res.name, res.number] = res
 
-	def add_connectors(self, connectors: list[Connector]) -> None:
+	def add_connectors(self, connectors: Iterable[Connector]) -> None:
 		for conn in connectors:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
@@ -69,7 +71,7 @@ class ResourceManager:
 
 	def request(
 		self, name: str, number: int = 0, *,
-		dir: Literal['i', 'o', 'oe', 'io', '-'] | None = None,
+		dir: IODirectionEmpty | None = None,
 		xdr: dict[str, int] | None = None
 	) -> Record | Pin:
 		resource = self.lookup(name, number)
@@ -78,17 +80,16 @@ class ResourceManager:
 
 		def merge_options(
 			subsignal: Subsignal,
-			dir: Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']] | None,
+			dir: IODirectionEmpty | dict[str, IODirectionEmpty] | None,
 			xdr: int | dict[str, int] | None
-		) -> tuple[
-			Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']],
-			int | dict[str, int]
-		]:
+		) -> tuple[IODirectionEmpty, int] | tuple[dict[str, IODirectionEmpty], dict[str, int]]:
+
 			if isinstance(subsignal.ios[0], Subsignal):
 				if dir is None:
-					dir = dict()
+					dir = dict[str, IODirectionEmpty]()
 				if xdr is None:
-					xdr = dict()
+					xdr = dict[str, int]()
+
 				if not isinstance(dir, dict):
 					raise TypeError(f'Directions must be a dict, not {dir!r}, because {subsignal!r} has subsignals')
 
@@ -96,21 +97,28 @@ class ResourceManager:
 					raise TypeError(f'Data rate must be a dict, not {xdr!r}, because {subsignal!r} has subsignals')
 
 				for sub in subsignal.ios:
+					assert isinstance(sub, Subsignal)
+
 					sub_dir = dir.get(sub.name, None)
 					sub_xdr = xdr.get(sub.name, None)
 					dir[sub.name], xdr[sub.name] = merge_options(sub, sub_dir, sub_xdr)
 			else:
+				pin = subsignal.ios[0]
+				assert isinstance(pin, (Pins, DiffPairs))
+
 				if dir is None:
-					dir = subsignal.ios[0].dir
+					dir: str = pin.dir
+
 				if xdr is None:
 					xdr = 0
+
 				if dir not in ('i', 'o', 'oe', 'io', '-'):
 					raise TypeError(
 						f'Direction must be one of \'i\', \'o\', \'oe\', \'io\', or \'-\', not {dir!r}'
 					)
-				if dir != subsignal.ios[0].dir and not (subsignal.ios[0].dir == 'io' or dir == '-'):
+				if dir != pin.dir and not (pin.dir == 'io' or dir == '-'):
 					raise ValueError(
-						f'Direction of {subsignal.ios[0]!r} cannot be changed from \'{subsignal.ios[0].dir}\' '
+						f'Direction of {pin!r} cannot be changed from \'{pin.dir}\' '
 						f'to \'{dir}\'; direction can be changed from \'io\' to \'i\', \'o\', or '
 						'\'oe\', or from anything to \'-\''
 					)
@@ -121,13 +129,13 @@ class ResourceManager:
 			return (dir, xdr)
 
 		def resolve(
-			resource: Resource,
-			dir: Literal['i', 'o', 'oe', 'io', '-'] | dict[str, Literal['i', 'o', 'oe', 'io', '-']],
+			resource: Resource | Subsignal,
+			dir: IODirectionEmpty | dict[str, IODirectionEmpty],
 			xdr: int | dict[str, int],
 			name: str, attrs: Attrs
 		) -> Record | Pin:
 			for attr_key, attr_value in attrs.items():
-				if hasattr(attr_value, '__call__'):
+				if isinstance(attr_value, Callable):
 					attr_value = attr_value(self)
 					if attr_value is not None or not isinstance(attr_value, str):
 						raise TypeError(f'attr_value is expected to be either a str or None, not \'{attr_value!r}\'')
@@ -138,23 +146,29 @@ class ResourceManager:
 					attrs[attr_key] = attr_value
 
 			if isinstance(resource.ios[0], Subsignal):
-				fields = OrderedDict()
+				fields = OrderedDict[str, Record | Pin]()
+				assert isinstance(dir, dict)
+				assert isinstance(xdr, dict)
 				for sub in resource.ios:
+					assert isinstance(sub, Subsignal)
 					fields[sub.name] = resolve(
 						sub, dir[sub.name], xdr[sub.name],
 						name = f'{name}__{sub.name}',
-						attrs = {**attrs, **sub.attrs}
+						attrs = Attrs(**attrs, **sub.attrs)
 					)
 				return Record([
 					(f_name, f.layout) for (f_name, f) in fields.items()
 				], fields = fields, name = name)
 
 			elif isinstance(resource.ios[0], (Pins, DiffPairs)):
+				assert isinstance(xdr, int)
+				assert isinstance(dir, str)
+
 				phys = resource.ios[0]
 				if isinstance(phys, Pins):
 					phys_names = phys.names
 					port = Record([('io', len(phys))], name = name)
-				if isinstance(phys, DiffPairs):
+				elif isinstance(phys, DiffPairs):
 					phys_names = []
 					record_fields = []
 					if not self.should_skip_port_component(None, attrs, 'p'):
@@ -164,6 +178,9 @@ class ResourceManager:
 						phys_names += phys.n.names
 						record_fields.append(('n', len(phys)))
 					port = Record(record_fields, name = name)
+				else:
+					raise TypeError(f'How did you even get here? type: {phys!r}')
+
 				if dir == '-':
 					pin = None
 				else:
@@ -221,7 +238,7 @@ class ResourceManager:
 	) -> bool:
 		return False
 
-	def iter_ports(self) -> Generator[Signal, None, None]:
+	def iter_ports(self) -> Generator[ValueCastable | Value, None, None]:
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
 				if not self.should_skip_port_component(port, attrs, 'io'):
@@ -234,14 +251,15 @@ class ResourceManager:
 			else:
 				raise TypeError(f'Expected either \'Pins\', or \'DiffPairs\', not \'{res.ios[0]!r}\'')
 
-	def iter_port_constraints(self) -> Generator[
-		tuple[str, str, Attrs], None, None
-	]:
+	def iter_port_constraints(self):
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
+				assert isinstance(port.io, Signal)
 				if not self.should_skip_port_component(port, attrs, 'io'):
 					yield (port.io.name, res.ios[0].map_names(self._conn_pins, res), attrs)
 			elif isinstance(res.ios[0], DiffPairs):
+				assert isinstance(port.p, Signal)
+				assert isinstance(port.n, Signal)
 				if not self.should_skip_port_component(port, attrs, 'p'):
 					yield (port.p.name, res.ios[0].p.map_names(self._conn_pins, res), attrs)
 				if not self.should_skip_port_component(port, attrs, 'n'):
