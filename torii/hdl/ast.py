@@ -2338,6 +2338,7 @@ class ValueKey:
 
 		if isinstance(self.value, Const):
 			assert isinstance(other.value, Const)
+			# FIXME(aki): what the hell do we do to fix this type issue (returns Operator, expects bool)
 			return self.value < other.value
 		elif isinstance(self.value, (Signal, AnyValue)):
 			assert isinstance(other.value, (Signal, AnyValue))
@@ -2415,7 +2416,8 @@ class SignalKey:
 	def __lt__(self, other: object) -> bool:
 		if type(other) is not SignalKey:
 			raise TypeError(f'Object {other!r} cannot be compared to a SignalKey')
-		return self._intern < other._intern
+		# NOTE(aki): This comparison works fine, but typing is having a hard time seeing through it
+		return self._intern < other._intern # type: ignore
 
 	def __repr__(self) -> str:
 		return f'<{__name__}.SignalKey {self.signal!r}>'
