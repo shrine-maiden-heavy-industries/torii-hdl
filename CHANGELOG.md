@@ -21,6 +21,19 @@ Unreleased template stuff
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+
+## [0.7.0]
+
+### Added
+
  - Added new `torii.platform.formal.FormalPlatform` for formal verification of Torii designs.
  - Added [formal platform examples](https://github.com/shrine-maiden-heavy-industries/torii-hdl/tree/main/examples/formal)
  - Added `Value.inc()` and `Value.dec()` calls to help deal with the `sig.eq(sig + 1)` pattern that is all too common.
@@ -348,7 +361,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.0...main
+[0.7.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...v0.6.0
