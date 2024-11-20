@@ -9,7 +9,9 @@ from collections       import OrderedDict
 from collections.abc   import (
 	Iterable, Iterator, Mapping, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
 )
-from typing            import TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic, ParamSpec
+from typing            import (
+	TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic, ParamSpec, SupportsIndex
+)
 from types             import NotImplementedType
 from enum              import Enum, EnumMeta
 from itertools         import chain
@@ -1633,19 +1635,26 @@ class Array(MutableSequence[Value]):
 	def __len__(self) -> int:
 		return len(self._inner)
 
-	def _check_mutability(self):
+	def _check_mutability(self) -> None:
 		if not self._mutable:
-			raise ValueError('Array can no longer be mutated after it was indexed with a value at {}:{}'.format(*self._proxy_at))
+			if self._proxy_at is None:
+				raise AttributeError('Array is not mutable, however no proxy location has been specified')
 
-	def __setitem__(self, index, value) -> None:
+			filename, lineno = self._proxy_at
+			raise ValueError(
+				f'Array can no longer be mutated after it was indexed with a value at {filename}:{lineno}'
+			)
+
+	# NOTE(aki): The ignore on the type is because we're once again, overloading this method
+	def __setitem__(self, index: int, value: Value) -> None: # type: ignore
 		self._check_mutability()
 		self._inner[index] = value
 
-	def __delitem__(self, index) -> None:
+	def __delitem__(self, index: slice | int) -> None:
 		self._check_mutability()
 		del self._inner[index]
 
-	def insert(self, index, value) -> None:
+	def insert(self, index: SupportsIndex, value: Value) -> None:
 		self._check_mutability()
 		self._inner.insert(index, value)
 
