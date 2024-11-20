@@ -2,13 +2,13 @@
 
 from collections     import OrderedDict
 from collections.abc import Iterable, Generator
-from enum            import Enum, unique, auto
+from enum            import Enum, unique, auto, EnumMeta
 from functools       import reduce, wraps
 from typing          import Any, get_args, get_origin, TypeAlias
 from inspect         import get_annotations, isclass
 
 from ..util          import tracer, union
-from .ast            import Cat, Shape, Signal, SignalSet, Value, ValueCastable
+from .ast            import Cat, Shape, Signal, SignalSet, Value, ValueCastable, ShapeCastT
 
 __all__ = (
 	'DIR_FANIN',
@@ -35,7 +35,7 @@ DIR_FANOUT = Direction.FANOUT
 DIR_FANIN  = Direction.FANIN
 ''' An alias for ``Direction.FANIN`` '''
 
-LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT] | tuple[str, Layout, Direction]] | Layout'
+LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout'
 
 class Layout:
 	@staticmethod
@@ -45,15 +45,15 @@ class Layout:
 		return Layout(obj, src_loc_at = 1 + src_loc_at)
 
 	def __init__(self, fields: LayoutFieldT, *, src_loc_at: int = 0) -> None:
-		self.fields = OrderedDict[str, tuple[Layout, Direction]]()
+		self.fields = OrderedDict[str, tuple['Layout | ShapeCastT', Direction]]()
 		for field in fields:
 			if not isinstance(field, tuple) or len(field) not in (2, 3):
 				raise TypeError(f'Field {field!r} has invalid layout: should be either (name, shape) or (name, shape, direction)')
 			if len(field) == 2:
 				name, layout = field
 				direction = DIR_NONE
-				if not isinstance(layout, Layout):
-					shape = Layout.cast(layout)
+				if isinstance(layout, Iterable) and not isinstance(layout, (Layout, EnumMeta, range, str)):
+					shape: 'Layout | ShapeCastT' = Layout.cast(layout)
 				else:
 					shape = layout
 			else:
@@ -74,7 +74,7 @@ class Layout:
 				raise NameError(f'Field {field!r} has a name that is already present in the layout')
 			self.fields[name] = (shape, direction)
 
-	def __getitem__(self, item: object) -> 'Layout | tuple[Layout, Direction]':
+	def __getitem__(self, item: object) -> 'Layout | tuple[Layout | ShapeCastT, Direction]':
 		if not isinstance(item, (str, Iterable)):
 			raise TypeError()
 
@@ -87,7 +87,7 @@ class Layout:
 
 		return self.fields[item]
 
-	def __iter__(self) -> Generator[tuple[str, 'Layout', Direction]]:
+	def __iter__(self) -> Generator[tuple[str, 'Layout | ShapeCastT', Direction]]:
 		for name, (shape, dir) in self.fields.items():
 			yield (name, shape, dir)
 
