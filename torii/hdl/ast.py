@@ -1225,7 +1225,7 @@ class Cat(Value):
 
 	'''
 
-	def __init__(self, *args: ValueCastT, src_loc_at: int = 0) -> None:
+	def __init__(self, *args: 'ValueCastT | Iterable[ValueCastT]', src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts: list[Value] = []
 		for index, arg in enumerate(flatten(args)):
