@@ -22,11 +22,18 @@ Unreleased template stuff
 ### Added
 
  - Added new `torii.platform.formal.FormalPlatform` for formal verification of Torii designs.
+ - Added [formal platform examples](https://github.com/shrine-maiden-heavy-industries/torii-hdl/tree/main/examples/formal)
  - Added `Value.inc()` and `Value.dec()` calls to help deal with the `sig.eq(sig + 1)` pattern that is all too common.
+ - Added explicit mention of Python 3.13 support.
+ - Added `structured records` to allow for ease of typing `torii.hdl.rec.Record`'s
+
 
 ### Changed
 
  - Torii `Elaboratable`'s now have a new optional `formal` function for use in formal verification with the Torii `FormalPlatform`.
+ - Torii platforms now have `get_override_list` and `get_override_int` overrides for platform template support.
+ - Torii platforms now have optional `description` and `pretty_name` properties.
+ - Use of `read_ilang` has been replaced with `read_rtlil` in the Gowin platform, which was the only platform that used the deprecated Yosys command.
 
 ### Deprecated
 
@@ -39,6 +46,10 @@ Unreleased template stuff
  - Removed deprecated parameter `run_script` from `BuildPlan.execute_local`
 
 ### Fixed
+
+ - Fixed huge chunk of typing, lots to do but should improve useability and ergonomics.
+ - Fixed a resource layout issue within the `torii.platform.resources.interface.HyperBusResource`
+
 
 ## [0.6.2]
 
