@@ -7,6 +7,7 @@ from torii.hdl.ast import *
 from torii.hdl.cd  import *
 from torii.hdl.ir  import *
 from torii.hdl.mem import *
+from torii.tools   import ToolNotFound
 
 from ..utils       import ToriiTestSuiteCase
 
@@ -959,5 +960,8 @@ class ElaboratableTestCase(ToriiTestSuiteCase):
 
 				return m
 
-		# The `mode` here is meaningless for this test, but we need to specify one
-		FormalPlatform(mode = "bmc").build(SimpleElaboratable())
+		try:
+			# The `mode` here is meaningless for this test, but we need to specify one
+			FormalPlatform(mode = "bmc").build(SimpleElaboratable())
+		except ToolNotFound:
+			self.skipTest('SBY not found')
