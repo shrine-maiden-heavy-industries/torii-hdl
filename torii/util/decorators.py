@@ -17,7 +17,7 @@ __all__ = (
 Params     = ParamSpec('Params')
 ReturnType = TypeVar('ReturnType')
 
-def memoize(f: Callable[Params, ReturnType]):
+def memoize(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
 	memo = OrderedDict[Any, ReturnType]()
 
 	@wraps(f)
@@ -37,7 +37,7 @@ def final(cls: type[T]) -> type[T]:
 	return cls
 
 def deprecated(message: str, stacklevel: int = 2):
-	def decorator(f: Callable[Params, ReturnType]):
+	def decorator(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
 		@wraps(f)
 		def wrapper(*args: Params.args, **kwargs: Params.kwargs) -> ReturnType:
 			warn(message, DeprecationWarning, stacklevel = stacklevel)
