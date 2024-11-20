@@ -35,7 +35,7 @@ DIR_FANOUT = Direction.FANOUT
 DIR_FANIN  = Direction.FANIN
 ''' An alias for ``Direction.FANIN`` '''
 
-LayoutFieldT: TypeAlias = Iterable[tuple[str, 'LayoutFieldT'] | tuple[str, 'Layout', Direction]] | 'Layout'
+LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT] | tuple[str, Layout, Direction]] | Layout'
 
 class Layout:
 	@staticmethod
@@ -74,7 +74,7 @@ class Layout:
 				raise NameError(f'Field {field!r} has a name that is already present in the layout')
 			self.fields[name] = (shape, direction)
 
-	def __getitem__(self, item: object) -> 'Layout' | tuple['Layout', Direction]:
+	def __getitem__(self, item: object) -> 'Layout | tuple[Layout, Direction]':
 		if not isinstance(item, (str, Iterable)):
 			raise TypeError()
 
@@ -87,7 +87,7 @@ class Layout:
 
 		return self.fields[item]
 
-	def __iter__(self) -> Generator[tuple[str, 'Layout', Direction], None, None]:
+	def __iter__(self) -> Generator[tuple[str, 'Layout', Direction]]:
 		for name, (shape, dir) in self.fields.items():
 			yield (name, shape, dir)
 
