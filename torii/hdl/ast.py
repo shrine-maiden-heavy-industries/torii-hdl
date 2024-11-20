@@ -1780,7 +1780,7 @@ class ValueCastable:
 			if '_ValueCastable__lowered_to' not in self.__dict__:
 				self.__lowered_to = func(self, *args, **kwargs)
 			return self.__lowered_to
-		wrapper_memoized.__memoized = True
+		setattr(wrapper_memoized, '_ValueCastable__memoized', True)
 		return wrapper_memoized
 
 
