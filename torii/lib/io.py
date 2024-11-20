@@ -3,7 +3,8 @@
 from typing    import Literal
 
 from ..        import Record
-from ..hdl.rec import Layout
+from ..hdl.rec import Layout, LayoutFieldT
+from ..hdl.ast import ShapeCastT
 
 __all__ = (
 	'pin_layout',
@@ -25,7 +26,7 @@ def pin_layout(width: int, dir: Literal['i', 'o', 'oe', 'io'], xdr: int = 0) -> 
 	if not isinstance(xdr, int) or xdr < 0:
 		raise TypeError(f'Gearing ratio must be a non-negative integer, not {xdr!r}')
 
-	fields = []
+	fields = list[tuple[str, 'LayoutFieldT | ShapeCastT']]()
 	if dir in ('i', 'io'):
 		if xdr > 0:
 			fields.append(('i_clk', 1))
