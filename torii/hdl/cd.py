@@ -95,3 +95,6 @@ class ClockDomain:
 		self.clk.name = self._name_for(new_name, 'clk')
 		if self.rst is not None:
 			self.rst.name = self._name_for(new_name, 'rst')
+
+	def __repr__(self) -> str:
+		return f'(clock-domain \'{self.name}\' (edge {self.clk_edge}) {self.clk!r})'
