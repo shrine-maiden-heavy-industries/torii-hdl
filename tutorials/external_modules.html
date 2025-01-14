@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Including External non-Torii Modules &mdash; Torii-HDL 0.1.dev1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b20cc3f5" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/platformpicker.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
@@ -513,17 +513,17 @@
 <p>When you are using a generated or a raw <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a> module, then you need to tell torii to include it so it can properly synthesize, you do this with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">torii.build.plat.Platform.add_file()</span></code> method, it takes the name and contents of a file to add to the sources collection which is then used in the synthesis step.</p>
 <p>An example Torii elaboratable for a <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a>  module would look like this:</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">torii</span> <span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Instance</span>
 
-<span class="k">class</span> <span class="nc">MyInverter</span><span class="p">(</span><span class="n">Elaboratable</span><span class="p">):</span>
-	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyInverter</span><span class="p">(</span><span class="n">Elaboratable</span><span class="p">):</span>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">extern_module</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./my_inverter.v&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
 
-	<span class="k">def</span> <span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Module</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Module</span><span class="p">:</span>
 		<span class="c1"># Add the file to the platform</span>
 		<span class="k">if</span> <span class="n">platform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 			<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">extern_module</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
