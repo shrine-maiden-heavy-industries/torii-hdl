@@ -5,6 +5,7 @@ from functools import wraps
 from math      import ceil
 from os        import getenv
 from pathlib   import Path
+from typing    import Literal
 from unittest  import TestCase
 from typing    import Any
 
@@ -44,6 +45,7 @@ class ToriiTestCase(TestCase):
 	dut       = None
 	dut_args  = dict[str, Any]()
 	platform  = None
+	sim_engine: Literal['pysim', 'verilator'] = 'pysim'
 
 	def __init__(self, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
@@ -95,7 +97,7 @@ class ToriiTestCase(TestCase):
 		if self.dut is not None:
 			self.dut   = self.init_dut()
 			self._frag = Fragment.get(self.dut, self.platform)
-			self.sim   = Simulator(self._frag)
+			self.sim   = Simulator(self._frag, engine = self.sim_engine)
 
 			if self.out_dir is None:
 				if (Path.cwd() / 'build').exists():
