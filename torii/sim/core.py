@@ -76,13 +76,24 @@ class Active(Command):
 
 class Simulator:
 	def __init__(
-		self, fragment: Fragment | Elaboratable, *, engine: type[BaseEngine] | Literal['pysim'] = 'pysim'
+		self, fragment: Fragment | Elaboratable, *, engine: type[BaseEngine] | Literal['pysim', 'verilator'] = 'pysim'
 	) -> None:
-		if engine == 'pysim':
-			from .pysim import PySimEngine
-			engine = PySimEngine
-		elif not issubclass(engine, BaseEngine):
-			raise TypeError(f'Value \'{engine!r}\' is not a simulation engine class or a simulation engine name')
+		match engine:
+			case 'pysim':
+				from .pysim import PySimEngine
+				engine = PySimEngine
+			case 'verilator':
+				try:
+					from torii_sim_verilator.sim import VerilatorEngine
+				except ImportError:
+					raise ModuleNotFoundError(
+						'To use the torii \'verilator\' simulation engine the \'torii_sim_verilator\' package must be installed'
+					)
+
+				engine = VerilatorEngine
+			case _:
+				if not issubclass(engine, BaseEngine):
+					raise TypeError(f'Value \'{engine!r}\' is not a simulation engine class or a simulation engine name')
 
 		self._fragment = Fragment.get(fragment, platform = None).prepare()
 		self._engine   = engine(self._fragment)
