@@ -164,7 +164,7 @@ class EventMap:
 			raise TypeError(f'Event source must be an instance of event.Source, not {src!r}')
 		return self._sources[src]
 
-	def sources(self) -> Generator[tuple[Source, int], None, None]:
+	def sources(self) -> Generator[tuple[Source, int]]:
 		'''
 		Iterate event sources.
 
@@ -174,8 +174,7 @@ class EventMap:
 
 		'''
 
-		for src, index in self._sources.items():
-			yield (src, index)
+		yield from self._sources.items()
 
 
 class Monitor(Elaboratable):

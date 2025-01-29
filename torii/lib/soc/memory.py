@@ -55,7 +55,7 @@ class _RangeMap:
 		stop_idx  = bisect_left(self._starts, key.stop)
 		return [self._values[key] for key in self._keys[start_idx:stop_idx]]
 
-	def items(self) -> Generator[tuple[range, object], None, None]:
+	def items(self) -> Generator[tuple[range, object]]:
 		for key in self._keys:
 			yield (key, self._values[key])
 
@@ -525,7 +525,7 @@ class MemoryMap:
 		for window, window_range in self._windows.values():
 			yield (window, (window_range.start, window_range.stop, window_range.step))
 
-	def window_patterns(self) -> Generator[tuple[MemoryMap, tuple[str, int]], None, None]:
+	def window_patterns(self) -> Generator[tuple[MemoryMap, tuple[str, int]]]:
 		'''
 		Iterate local windows and patterns that match their address ranges.
 
@@ -571,7 +571,7 @@ class MemoryMap:
 		width = resource_info.width * window_range.step
 		return ResourceInfo(resource_info.resource, name, start, start + size, width)
 
-	def all_resources(self) -> Generator[ResourceInfo, None, None]:
+	def all_resources(self) -> Generator[ResourceInfo]:
 		'''
 		Iterate all resources and their address ranges.
 

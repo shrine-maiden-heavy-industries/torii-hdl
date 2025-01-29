@@ -272,6 +272,6 @@ class Connector:
 	def __len__(self) -> int:
 		return len(self.mapping)
 
-	def __iter__(self) -> Generator[tuple[str, str], None, None]:
+	def __iter__(self) -> Generator[tuple[str, str]]:
 		for conn_pin, plat_pin in self.mapping.items():
 			yield f'{self.name}_{self.number}:{conn_pin}', plat_pin

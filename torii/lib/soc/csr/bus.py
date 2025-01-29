@@ -216,7 +216,7 @@ class Multiplexer(Elaboratable):
 				self.w_en = Signal(name = f'{self.name}__w_en')
 				self._elements = tuple(elements)
 
-			def elements(self) -> Generator[range, None, None]:
+			def elements(self) -> Generator[range]:
 				'''Iterate the address ranges of CSR elements using this chunk.'''
 				yield from self._elements
 
@@ -379,8 +379,7 @@ class Multiplexer(Elaboratable):
 			'''Iterate shadow register chunks used by at least one CSR element.'''
 			if self._chunks is None:
 				return None
-			for chunk_offset, chunk in self._chunks.items():
-				yield chunk_offset, chunk
+			yield from self._chunks.items()
 
 	'''
 	CSR register multiplexer.
