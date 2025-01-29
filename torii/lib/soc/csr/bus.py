@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 from collections     import defaultdict
 from enum            import Enum
@@ -208,7 +209,7 @@ class Multiplexer(Elaboratable):
 			w_en: Signal
 
 			'''The interface between a CSR multiplexer and a shadow register chunk.'''
-			def __init__(self, shadow: 'Multiplexer._Shadow', offset: int, elements: list[range]):
+			def __init__(self, shadow: Multiplexer._Shadow, offset: int, elements: list[range]):
 				self.name = f'{shadow.name}__{offset}'
 				self.data = Signal(shadow.granularity, name = f'{self.name}__data')
 				self.r_en = Signal(name = f'{self.name}__r_en')

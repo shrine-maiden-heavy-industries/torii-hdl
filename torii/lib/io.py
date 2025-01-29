@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__ import annotations
 
-
-from ..        import Record
-from .._typing import IODirectionOE
-from ..hdl.rec import Layout, LayoutFieldT
-from ..hdl.ast import ShapeCastT
+from ..         import Record
+from .._typing  import IODirectionOE
+from ..hdl.rec  import Layout, LayoutFieldT
+from ..hdl.ast  import ShapeCastT
 
 __all__ = (
 	'pin_layout',

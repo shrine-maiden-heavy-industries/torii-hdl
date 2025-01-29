@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__   import annotations
 
 import io
 import re
@@ -118,7 +119,7 @@ class _Builder(_BufferedBuilder, _Namer):
 		super().__init__()
 		self.emit_src = emit_src
 
-	def module(self, name: str = None, attrs: dict[str, str | int | ast.Const] = {}) -> '_ModuleBuilder':
+	def module(self, name: str = None, attrs: dict[str, str | int | ast.Const] = {}) -> _ModuleBuilder:
 		name = self._make_name(name, local = False)
 		return _ModuleBuilder(self, name, attrs)
 
@@ -130,7 +131,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		self.attrs = { 'generator': 'Torii' }
 		self.attrs.update(attrs)
 
-	def __enter__(self) -> '_ModuleBuilder':
+	def __enter__(self) -> _ModuleBuilder:
 		self._attributes(self.attrs)
 		self._append('module {}\n', self.name)
 		return self
@@ -212,7 +213,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 
 	def process(
 		self, name: str | None = None, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
-	) -> '_ProcessBuilder':
+	) -> _ProcessBuilder:
 		name = self._make_name(name, local = True)
 		return _ProcessBuilder(self, name, attrs, src)
 
@@ -224,7 +225,7 @@ class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
 		self.attrs = {}
 		self.src   = src
 
-	def __enter__(self) -> '_ProcessBuilder':
+	def __enter__(self) -> _ProcessBuilder:
 		self._attributes(self.attrs, src = self.src, indent = 1)
 		self._append('  process {}\n', self.name)
 		return self
@@ -233,7 +234,7 @@ class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
 		self._append('  end\n')
 		self.rtlil._buffer.write(str(self))
 
-	def case(self) -> '_CaseBuilder':
+	def case(self) -> _CaseBuilder:
 		return _CaseBuilder(self, indent = 2)
 
 
@@ -242,7 +243,7 @@ class _CaseBuilder(_ProxiedBuilder):
 		self.rtlil  = rtlil
 		self.indent = indent
 
-	def __enter__(self) -> '_CaseBuilder':
+	def __enter__(self) -> _CaseBuilder:
 		return self
 
 	def __exit__(self, *args) -> None:
@@ -253,7 +254,7 @@ class _CaseBuilder(_ProxiedBuilder):
 
 	def switch(
 		self, cond, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
-	) -> '_SwitchBuilder':
+	) -> _SwitchBuilder:
 		return _SwitchBuilder(self.rtlil, cond, attrs, src, self.indent)
 
 
@@ -268,7 +269,7 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 		self.src    = src
 		self.indent = indent
 
-	def __enter__(self) -> '_SwitchBuilder':
+	def __enter__(self) -> _SwitchBuilder:
 		self._attributes(self.attrs, src = self.src, indent = self.indent)
 		self._append('{}switch {}\n', '  ' * self.indent, self.cond)
 		return self
@@ -278,7 +279,7 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 
 	def case(
 		self, *values, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
-	) -> '_CaseBuilder':
+	) -> _CaseBuilder:
 		self._attributes(attrs, src = src, indent = self.indent + 1)
 		if values == ():
 			self._append('{}case\n', '  ' * (self.indent + 1))

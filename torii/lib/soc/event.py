@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 from collections     import OrderedDict
 from collections.abc import Generator
@@ -54,7 +55,7 @@ class Source(Record):
 		], name = name, src_loc_at = 1 + src_loc_at)
 
 	@property
-	def event_map(self) -> 'EventMap':
+	def event_map(self) -> EventMap:
 		'''
 		Event map.
 
@@ -73,7 +74,7 @@ class Source(Record):
 		return self._map
 
 	@event_map.setter
-	def event_map(self, event_map: 'EventMap') -> None:
+	def event_map(self, event_map: EventMap) -> None:
 		if not isinstance(event_map, EventMap):
 			raise TypeError(f'Event map must be an instance of EventMap, not {event_map!r}')
 		event_map.freeze()

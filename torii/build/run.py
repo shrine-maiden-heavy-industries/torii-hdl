@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 import hashlib
 import os
@@ -141,7 +142,7 @@ class BuildPlan:
 
 	def execute_local(
 		self, root: str | Path = 'build', *, env: dict[str, str] | None = None
-	) -> 'LocalBuildProducts':
+	) -> LocalBuildProducts:
 		'''
 		Execute build plan using the local strategy. Files from the build plan are placed in
 		the build root directory ``root``, and the script appropriate for the platform
@@ -174,7 +175,7 @@ class BuildPlan:
 
 		return LocalBuildProducts(build_dir)
 
-	def execute(self) -> 'LocalBuildProducts':
+	def execute(self) -> LocalBuildProducts:
 		'''
 		Execute build plan using the default strategy. Use one of the ``execute_*`` methods
 		explicitly to have more control over the strategy.
@@ -183,7 +184,7 @@ class BuildPlan:
 
 	def execute_docker(
 		self, image: str, root: str | Path = 'root', docker_mount: str = '/build', docker_args: list[str] = []
-	) -> 'LocalBuildProducts':
+	) -> LocalBuildProducts:
 		'''
 
 		Execute a build plan inside a Docker container.

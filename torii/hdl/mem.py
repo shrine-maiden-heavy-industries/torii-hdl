@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__  import annotations
 
 import operator
 from collections import OrderedDict
@@ -89,7 +90,7 @@ class Memory(Elaboratable):
 		except TypeError as e:
 			raise TypeError(f'Memory initialization value at address {addr:x}: {e}') from None
 
-	def read_port(self, *, src_loc_at = 0, **kwargs) -> 'ReadPort':
+	def read_port(self, *, src_loc_at = 0, **kwargs) -> ReadPort:
 		'''
 		Get a read port.
 
@@ -108,7 +109,7 @@ class Memory(Elaboratable):
 
 		return ReadPort(self, src_loc_at = 1 + src_loc_at, **kwargs)
 
-	def write_port(self, *, src_loc_at = 0, **kwargs) -> 'WritePort':
+	def write_port(self, *, src_loc_at = 0, **kwargs) -> WritePort:
 		'''
 		Get a write port.
 

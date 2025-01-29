@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 from bisect          import bisect_left, bisect_right
 from collections.abc import Generator, Iterable
@@ -381,7 +382,7 @@ class MemoryMap:
 			yield (resource, resource_name, (resource_range.start, resource_range.stop))
 
 	def add_window(
-		self, window: 'MemoryMap', *, addr: int | None = None, sparse: int | None = None,
+		self, window: MemoryMap, *, addr: int | None = None, sparse: int | None = None,
 		extend: bool = False
 	) -> tuple[int, int, int]:
 		'''
@@ -524,7 +525,7 @@ class MemoryMap:
 		for window, window_range in self._windows.values():
 			yield (window, (window_range.start, window_range.stop, window_range.step))
 
-	def window_patterns(self) -> Generator[tuple['MemoryMap', tuple[str, int]], None, None]:
+	def window_patterns(self) -> Generator[tuple[MemoryMap, tuple[str, int]], None, None]:
 		'''
 		Iterate local windows and patterns that match their address ranges.
 

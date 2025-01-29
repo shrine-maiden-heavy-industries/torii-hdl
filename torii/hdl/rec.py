@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 from collections     import OrderedDict
 from collections.abc import Iterable, Generator
@@ -39,7 +40,7 @@ LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tupl
 
 class Layout:
 	@staticmethod
-	def cast(obj: LayoutFieldT, *, src_loc_at: int = 0) -> 'Layout':
+	def cast(obj: LayoutFieldT, *, src_loc_at: int = 0) -> Layout:
 		if isinstance(obj, Layout):
 			return obj
 		return Layout(obj, src_loc_at = 1 + src_loc_at)
@@ -53,7 +54,7 @@ class Layout:
 				name, layout = field
 				direction = DIR_NONE
 				if isinstance(layout, Iterable) and not isinstance(layout, (Layout, EnumMeta, range, str)):
-					shape: 'Layout | ShapeCastT' = Layout.cast(layout)
+					shape: Layout | ShapeCastT = Layout.cast(layout)
 				else:
 					shape = layout
 			else:
@@ -87,7 +88,7 @@ class Layout:
 
 		return self.fields[item]
 
-	def __iter__(self) -> Generator[tuple[str, 'Layout | ShapeCastT', Direction]]:
+	def __iter__(self) -> Generator[tuple[str, Layout | ShapeCastT, Direction]]:
 		for name, (shape, dir) in self.fields.items():
 			yield (name, shape, dir)
 
@@ -110,7 +111,7 @@ class Record(ValueCastable):
 	_annotations: dict[str, Any]
 
 	@staticmethod
-	def like(other: 'Record', *, name = None, name_suffix = None, src_loc_at = 0) -> 'Record':
+	def like(other: Record, *, name = None, name_suffix = None, src_loc_at = 0) -> Record:
 		if name is not None:
 			new_name = str(name)
 		elif name_suffix is not None:
@@ -145,7 +146,7 @@ class Record(ValueCastable):
 		cls._annotations = get_annotations(cls)
 
 	def _extract_layout(self, annotations: dict[str, Any]) -> LayoutFieldT:
-		layout = list[tuple[str, 'LayoutFieldT'] | tuple[str, 'Layout', Direction]]()
+		layout = list[tuple[str, LayoutFieldT] | tuple[str, Layout, Direction]]()
 		for name, typ in annotations.items():
 			# We have nested records
 			if isclass(typ) and issubclass(typ, Record):
@@ -165,7 +166,7 @@ class Record(ValueCastable):
 		return layout
 
 	def __init__(
-		self, layout: 'LayoutFieldT | None' = None, *, name: str | None = None, fields = None, src_loc_at: int = 0
+		self, layout: LayoutFieldT | None = None, *, name: str | None = None, fields = None, src_loc_at: int = 0
 	) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
@@ -212,7 +213,7 @@ class Record(ValueCastable):
 			raise AssertionError('Record has not been properly constructed and does not have any fields')
 		return self[name]
 
-	def __getitem__(self, item: object) -> 'ValueCastable | Value':
+	def __getitem__(self, item: object) -> ValueCastable | Value:
 		if isinstance(item, str):
 			try:
 				return self.fields[item]

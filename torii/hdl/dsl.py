@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__     import annotations
 
 import warnings
 from collections     import OrderedDict
@@ -38,16 +39,16 @@ class SyntaxWarning(Warning):
 
 
 class _ModuleBuilderProxy:
-	_builder: 'Module'
+	_builder: Module
 	_depth: int
 
-	def __init__(self, builder: 'Module', depth: int):
+	def __init__(self, builder: Module, depth: int):
 		object.__setattr__(self, '_builder', builder)
 		object.__setattr__(self, '_depth', depth)
 
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
-	def __init__(self, builder: 'Module', depth: int, domain: str | None):
+	def __init__(self, builder: Module, depth: int, domain: str | None):
 		super().__init__(builder, depth)
 		self._domain = domain
 
@@ -84,7 +85,7 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 
 
 class _ModuleBuilderRoot:
-	def __init__(self, builder: 'Module', depth: int):
+	def __init__(self, builder: Module, depth: int):
 		self._builder = builder
 		self.domain = self.d = _ModuleBuilderDomains(builder, depth)
 
@@ -95,9 +96,9 @@ class _ModuleBuilderRoot:
 
 
 class _ModuleBuilderSubmodules:
-	_builder: 'Module'
+	_builder: Module
 
-	def __init__(self, builder: 'Module'):
+	def __init__(self, builder: Module):
 		object.__setattr__(self, '_builder', builder)
 
 	def __iadd__(self, modules):
@@ -119,9 +120,9 @@ class _ModuleBuilderSubmodules:
 
 
 class _ModuleBuilderDomainSet:
-	_builder: 'Module'
+	_builder: Module
 
-	def __init__(self, builder: 'Module'):
+	def __init__(self, builder: Module):
 		object.__setattr__(self, '_builder', builder)
 
 	def __iadd__(self, domains: Iterable):
@@ -657,7 +658,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while self._ctrl_stack:
 			self._pop_ctrl()
 
-	def elaborate(self, platform: 'Platform | None'):
+	def elaborate(self, platform: Platform | None):
 		self._flush()
 
 		fragment = Fragment()

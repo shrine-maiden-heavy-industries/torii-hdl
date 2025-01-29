@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__        import annotations
 
 import functools
 import warnings
@@ -98,11 +99,11 @@ class ShapeCastable(metaclass = ABCMeta):
 	'''
 
 	@abstractmethod
-	def as_shape(self) -> 'Shape':
+	def as_shape(self) -> Shape:
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
 
 	@abstractmethod
-	def const(self, val: 'ValueCastT | None') -> 'Const':
+	def const(self, val: ValueCastT | None) -> Const:
 		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
 
 class Shape:
@@ -147,7 +148,7 @@ class Shape:
 	# This implements an algorithm for inferring shape from standard Python enumerations
 	# for `Shape.cast()`.
 	@staticmethod
-	def _cast_plain_enum(obj: EnumMeta) -> 'Shape':
+	def _cast_plain_enum(obj: EnumMeta) -> Shape:
 		signed = False
 		width  = 0
 		# TODO(aki): This needs proper typing, rather than just being ignored, however I'm not sure that
@@ -171,7 +172,7 @@ class Shape:
 		return Shape(width, signed)
 
 	@staticmethod
-	def cast(obj: object, *, src_loc_at: int = 0) -> 'Shape':
+	def cast(obj: object, *, src_loc_at: int = 0) -> Shape:
 		while True:
 			if isinstance(obj, Shape):
 				return obj
@@ -290,7 +291,7 @@ def _overridable_by_swapping(method_name: str):
 		return wrapper
 	return decorator
 
-def _index_valuelike(value: 'Value | ValueCastable', key: object) -> 'Value':
+def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 	n = len(value)
 	if isinstance(key, int):
 		if key not in range(-n, n):
@@ -318,7 +319,7 @@ class Value(metaclass = ABCMeta):
 	src_loc: tuple[str, int] | None
 
 	@staticmethod
-	def cast(obj: ValueCastT) -> 'Value':
+	def cast(obj: ValueCastT) -> Value:
 		'''
 		Converts ``obj`` to an Torii value.
 
@@ -350,48 +351,48 @@ class Value(metaclass = ABCMeta):
 	def __bool__(self) -> None:
 		raise TypeError('Attempted to convert Torii value to Python boolean')
 
-	def __pos__(self) -> 'Value':
+	def __pos__(self) -> Value:
 		return self
 
-	def __invert__(self) -> 'Operator':
+	def __invert__(self) -> Operator:
 		return Operator('~', (self,))
 
-	def __neg__(self) -> 'Operator':
+	def __neg__(self) -> Operator:
 		return Operator('-', (self,))
 
 	@_overridable_by_swapping('__radd__')
-	def __add__(self, other: ValueCastT) -> 'Operator':
+	def __add__(self, other: ValueCastT) -> Operator:
 		return Operator('+', (self, other), src_loc_at = 1)
 
-	def __radd__(self, other: ValueCastT) -> 'Operator':
+	def __radd__(self, other: ValueCastT) -> Operator:
 		return Operator('+', (other, self))
 
 	@_overridable_by_swapping('__rsub__')
-	def __sub__(self, other: ValueCastT) -> 'Operator':
+	def __sub__(self, other: ValueCastT) -> Operator:
 		return Operator('-', (self, other), src_loc_at = 1)
 
-	def __rsub__(self, other: ValueCastT) -> 'Operator':
+	def __rsub__(self, other: ValueCastT) -> Operator:
 		return Operator('-', (other, self))
 
 	@_overridable_by_swapping('__rmul__')
-	def __mul__(self, other: ValueCastT) -> 'Operator':
+	def __mul__(self, other: ValueCastT) -> Operator:
 		return Operator('*', (self, other), src_loc_at = 1)
 
-	def __rmul__(self, other: ValueCastT) -> 'Operator':
+	def __rmul__(self, other: ValueCastT) -> Operator:
 		return Operator('*', (other, self))
 
 	@_overridable_by_swapping('__rmod__')
-	def __mod__(self, other: ValueCastT) -> 'Operator':
+	def __mod__(self, other: ValueCastT) -> Operator:
 		return Operator('%', (self, other), src_loc_at = 1)
 
-	def __rmod__(self, other: ValueCastT) -> 'Operator':
+	def __rmod__(self, other: ValueCastT) -> Operator:
 		return Operator('%', (other, self))
 
 	@_overridable_by_swapping('__rfloordiv__')
-	def __floordiv__(self, other: ValueCastT) -> 'Operator':
+	def __floordiv__(self, other: ValueCastT) -> Operator:
 		return Operator('//', (self, other), src_loc_at = 1)
 
-	def __rfloordiv__(self, other: ValueCastT) -> 'Operator':
+	def __rfloordiv__(self, other: ValueCastT) -> Operator:
 		return Operator('//', (other, self))
 
 
@@ -403,71 +404,71 @@ class Value(metaclass = ABCMeta):
 			raise TypeError('Shift amount must be unsigned')
 
 	@_overridable_by_swapping('__rlshift__')
-	def __lshift__(self, other: ValueCastT) -> 'Operator':
+	def __lshift__(self, other: ValueCastT) -> Operator:
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('<<', (self, other), src_loc_at = 1)
 
-	def __rlshift__(self, other: ValueCastT) -> 'Operator':
+	def __rlshift__(self, other: ValueCastT) -> Operator:
 		self.__check_shamt()
 		return Operator('<<', (other, self))
 
 	@_overridable_by_swapping('__rrshift__')
-	def __rshift__(self, other: ValueCastT) -> 'Operator':
+	def __rshift__(self, other: ValueCastT) -> Operator:
 		other = Value.cast(other)
 		other.__check_shamt()
 		return Operator('>>', (self, other), src_loc_at = 1)
 
-	def __rrshift__(self, other: ValueCastT) -> 'Operator':
+	def __rrshift__(self, other: ValueCastT) -> Operator:
 		self.__check_shamt()
 		return Operator('>>', (other, self))
 
 	@_overridable_by_swapping('__rand__')
-	def __and__(self, other: ValueCastT) -> 'Operator':
+	def __and__(self, other: ValueCastT) -> Operator:
 		return Operator('&', (self, other), src_loc_at = 1)
 
-	def __rand__(self, other: ValueCastT) -> 'Operator':
+	def __rand__(self, other: ValueCastT) -> Operator:
 		return Operator('&', (other, self))
 
 	@_overridable_by_swapping('__rxor__')
-	def __xor__(self, other: ValueCastT) -> 'Operator':
+	def __xor__(self, other: ValueCastT) -> Operator:
 		return Operator('^', (self, other), src_loc_at = 1)
 
-	def __rxor__(self, other: ValueCastT) -> 'Operator':
+	def __rxor__(self, other: ValueCastT) -> Operator:
 		return Operator('^', (other, self))
 
 	@_overridable_by_swapping('__ror__')
-	def __or__(self, other: ValueCastT) -> 'Operator':
+	def __or__(self, other: ValueCastT) -> Operator:
 		return Operator('|', (self, other), src_loc_at = 1)
 
-	def __ror__(self, other: ValueCastT) -> 'Operator':
+	def __ror__(self, other: ValueCastT) -> Operator:
 		return Operator('|', (other, self))
 
 	@_overridable_by_swapping('__eq__')
-	def __eq__(self, other: ValueCastT) -> 'Operator':
+	def __eq__(self, other: ValueCastT) -> Operator:
 		return Operator('==', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__ne__')
-	def __ne__(self, other: ValueCastT) -> 'Operator':
+	def __ne__(self, other: ValueCastT) -> Operator:
 		return Operator('!=', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__gt__')
-	def __lt__(self, other: ValueCastT) -> 'Operator':
+	def __lt__(self, other: ValueCastT) -> Operator:
 		return Operator('<', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__ge__')
-	def __le__(self, other: ValueCastT) -> 'Operator':
+	def __le__(self, other: ValueCastT) -> Operator:
 		return Operator('<=', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__lt__')
-	def __gt__(self, other: ValueCastT) -> 'Operator':
+	def __gt__(self, other: ValueCastT) -> Operator:
 		return Operator('>', (self, other), src_loc_at = 1)
 
 	@_overridable_by_swapping('__le__')
-	def __ge__(self, other: ValueCastT) -> 'Operator':
+	def __ge__(self, other: ValueCastT) -> Operator:
 		return Operator('>=', (self, other), src_loc_at = 1)
 
-	def __abs__(self) -> 'Value':
+	def __abs__(self) -> Value:
 		if self.shape().signed:
 			return Mux(self >= 0, self, -self)[:len(self)]
 		else:
@@ -476,13 +477,13 @@ class Value(metaclass = ABCMeta):
 	def __len__(self) -> int:
 		return self.shape().width
 
-	def __getitem__(self, key: object) -> 'Value':
+	def __getitem__(self, key: object) -> Value:
 		return _index_valuelike(self, key)
 
 	def __contains__(self, _):
 		raise TypeError('The python `in` operator is not supported on Torii values')
 
-	def as_unsigned(self)  -> 'Operator':
+	def as_unsigned(self)  -> Operator:
 		'''
 		Conversion to unsigned.
 
@@ -495,7 +496,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('u', (self,))
 
-	def as_signed(self)  -> 'Operator':
+	def as_signed(self)  -> Operator:
 		'''
 		Conversion to signed.
 
@@ -509,7 +510,7 @@ class Value(metaclass = ABCMeta):
 			raise ValueError('Cannot create a 0-width signed value')
 		return Operator('s', (self,))
 
-	def bool(self)  -> 'Operator':
+	def bool(self)  -> Operator:
 		'''
 		Conversion to boolean.
 
@@ -522,7 +523,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('b', (self,))
 
-	def any(self)  -> 'Operator':
+	def any(self)  -> Operator:
 		'''
 		Check if any bits are ``1``.
 
@@ -535,7 +536,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('r|', (self,))
 
-	def all(self)  -> 'Operator':
+	def all(self)  -> Operator:
 		'''
 		Check if all bits are ``1``.
 
@@ -548,7 +549,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('r&', (self,))
 
-	def xor(self)  -> 'Operator':
+	def xor(self)  -> Operator:
 		'''
 		Compute pairwise exclusive-or of every bit.
 
@@ -561,7 +562,7 @@ class Value(metaclass = ABCMeta):
 
 		return Operator('r^', (self,))
 
-	def implies(premise, conclusion: ValueCastT)  -> 'Operator':
+	def implies(premise, conclusion: ValueCastT)  -> Operator:
 		'''
 		Implication.
 
@@ -579,7 +580,7 @@ class Value(metaclass = ABCMeta):
 
 		return op
 
-	def bit_select(self, offset: 'Value | int' , width: int) -> 'Value':
+	def bit_select(self, offset: Value | int , width: int) -> Value:
 		'''
 		Part-select with bit granularity.
 
@@ -605,7 +606,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
-	def word_select(self, offset: 'Value | int' , width: int) -> 'Value':
+	def word_select(self, offset: Value | int , width: int) -> Value:
 		'''
 		Part-select with word granularity.
 
@@ -631,7 +632,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value * width:(offset.value + 1) * width]
 		return Part(self, offset, width, stride = width, src_loc_at = 1)
 
-	def matches(self, *patterns: int | str | EnumMeta) -> 'Value':
+	def matches(self, *patterns: int | str | EnumMeta) -> Value:
 		'''
 		Pattern matching.
 
@@ -699,7 +700,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return Cat(*matches).any()
 
-	def shift_left(self, amount: int) -> 'Value':
+	def shift_left(self, amount: int) -> Value:
 		'''
 		Shift left by constant amount.
 
@@ -724,7 +725,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return Cat(Const(0, amount), self) # unsigned
 
-	def shift_right(self, amount: int) -> 'Value':
+	def shift_right(self, amount: int) -> Value:
 		'''
 		Shift right by constant amount.
 
@@ -751,7 +752,7 @@ class Value(metaclass = ABCMeta):
 		else:
 			return self[amount:] # unsigned
 
-	def rotate_left(self, amount: int) -> 'Value':
+	def rotate_left(self, amount: int) -> Value:
 		'''
 		Rotate left by constant amount.
 
@@ -773,7 +774,7 @@ class Value(metaclass = ABCMeta):
 			amount %= len(self)
 		return Cat(self[-amount:], self[:-amount]) # meow :3
 
-	def rotate_right(self, amount: int) -> 'Value':
+	def rotate_right(self, amount: int) -> Value:
 		'''
 		Rotate right by constant amount.
 
@@ -795,7 +796,7 @@ class Value(metaclass = ABCMeta):
 			amount %= len(self)
 		return Cat(self[amount:], self[:amount])
 
-	def replicate(self, count: int) -> 'Value':
+	def replicate(self, count: int) -> Value:
 		'''
 		Replication.
 
@@ -818,7 +819,7 @@ class Value(metaclass = ABCMeta):
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
 		return Cat(*(self for _ in range(count)))
 
-	def eq(self, value: ValueCastT) -> 'Assign':
+	def eq(self, value: ValueCastT) -> Assign:
 		'''
 		Assignment.
 
@@ -836,7 +837,7 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, value, src_loc_at = 1)
 
-	def inc(self, value: ValueCastT = 1) -> 'Assign':
+	def inc(self, value: ValueCastT = 1) -> Assign:
 		'''
 		Increment value.
 
@@ -856,7 +857,7 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, self + value, src_loc_at = 1)
 
-	def dec(self, value: ValueCastT = 1) -> 'Assign':
+	def dec(self, value: ValueCastT = 1) -> Assign:
 		'''
 		Decrement value.
 
@@ -897,15 +898,15 @@ class Value(metaclass = ABCMeta):
 
 		raise NotImplementedError('.shape has not been implemented')
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		raise TypeError(f'Value {self!r} cannot be used in assignments')
 
 	@abstractmethod
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
-	def __call__(cls, value: int, shape: 'Shape | int | range | type | ShapeCastable | None' = None, src_loc_at: int = 0, **kwargs):
+	def __call__(cls, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, src_loc_at: int = 0, **kwargs):
 		if isinstance(shape, ShapeCastable):
 			return shape.const(value)
 		return super().__call__(value, shape, **kwargs, src_loc_at = src_loc_at + 1)
@@ -933,7 +934,7 @@ class Const(Value, metaclass = _ConstMeta):
 	src_loc = None
 
 	@staticmethod
-	def normalize(value: int, shape: 'Shape') -> int:
+	def normalize(value: int, shape: Shape) -> int:
 		mask = (1 << shape.width) - 1
 		value &= mask
 		if shape.signed and (value >> (shape.width - 1)) & 1:
@@ -941,7 +942,7 @@ class Const(Value, metaclass = _ConstMeta):
 		return value
 
 	@staticmethod
-	def cast(obj: ValueCastT) -> 'Const':
+	def cast(obj: ValueCastT) -> Const:
 		'''
 		Converts ``obj`` to an Torii constant.
 
@@ -976,7 +977,7 @@ class Const(Value, metaclass = _ConstMeta):
 
 
 	def __init__(
-		self, value: int, shape: 'Shape | int | range | type | ShapeCastable | None' = None, *,
+		self, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, *,
 		src_loc_at: int = 0
 	) -> None:
 		# We deliberately do not call Value.__init__ here.
@@ -1002,7 +1003,7 @@ class Const(Value, metaclass = _ConstMeta):
 	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> SignalSet:
 		return SignalSet()
 
 	def __repr__(self) -> str:
@@ -1082,12 +1083,12 @@ class Operator(Value):
 				return _bitwise_binary_shape(a_shape, b_shape)
 		raise NotImplementedError(f'Operator {self.operator}/{len(op_shapes)} not implemented') # :nocov:
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		if self.operator in ('u', 's'):
 			return union(op._lhs_signals() for op in self.operands)
 		return super()._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		return union(op._rhs_signals() for op in self.operands)
 
 	def __repr__(self) -> str:
@@ -1147,10 +1148,10 @@ class Slice(Value):
 	def shape(self) -> Shape:
 		return Shape(self.stop - self.start)
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		return self.value._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -1182,10 +1183,10 @@ class Part(Value):
 	def shape(self) -> Shape:
 		return Shape(self.width)
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return self.value._lhs_signals()
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		signals = self.value._rhs_signals() | self.offset._rhs_signals()
 
 		if TYPE_CHECKING:
@@ -1225,7 +1226,7 @@ class Cat(Value):
 
 	'''
 
-	def __init__(self, *args: 'ValueCastT | Iterable[ValueCastT]', src_loc_at: int = 0) -> None:
+	def __init__(self, *args: ValueCastT | Iterable[ValueCastT], src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts: list[Value] = []
 		for index, arg in enumerate(flatten(args)):
@@ -1251,10 +1252,10 @@ class Cat(Value):
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return union((part._lhs_signals() for part in self.parts), start = SignalSet())
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		return union((part._rhs_signals() for part in self.parts), start = SignalSet())
 
 	def __repr__(self) -> str:
@@ -1312,7 +1313,7 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	_enum_class: type[Enum] | None
 
 	def __init__(
-		self, shape: 'ShapeCastT | None' = None, *,
+		self, shape: ShapeCastT | None = None, *,
 		name: str | None = None, reset: int | EnumMeta | None = None, reset_less: bool = False, attrs: SignalAttrs | None = None,
 		decoder: SignalDecoder | None = None, src_loc_at: int = 0
 	) -> None:
@@ -1409,8 +1410,8 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	# Not a @classmethod because torii.compat requires it.
 	@staticmethod
 	def like(
-		other: 'Signal', *, name: str | None = None, name_suffix: str | None = None, src_loc_at: int = 0, **kwargs
-	) -> 'Signal':
+		other: Signal, *, name: str | None = None, name_suffix: str | None = None, src_loc_at: int = 0, **kwargs
+	) -> Signal:
 		'''
 		Create Signal based on another.
 
@@ -1445,10 +1446,10 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	def shape(self) -> Shape:
 		return Shape(self.width, self.signed)
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> SignalSet:
 		return SignalSet((self,))
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> SignalSet:
 		return SignalSet((self,))
 
 	def __repr__(self) -> str:
@@ -1482,7 +1483,7 @@ class ClockSignal(Value):
 	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> SignalSet:
 		return SignalSet((self,))
 
 	def _rhs_signals(self) -> NoReturn:
@@ -1522,7 +1523,7 @@ class ResetSignal(Value):
 	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> SignalSet:
 		return SignalSet((self,))
 
 	def _rhs_signals(self) -> NoReturn:
@@ -1549,7 +1550,7 @@ class AnyValue(Value, DUID):
 	def shape(self) -> Shape:
 		return self._shape
 
-	def _rhs_signals(self) -> 'SignalSet':
+	def _rhs_signals(self) -> SignalSet:
 		return SignalSet()
 
 	def __repr__(self) -> str:
@@ -1623,7 +1624,7 @@ class Array(MutableSequence[Value]):
 		self._mutable  = True
 
 	# NOTE(aki): We overload this method, so we need to shush the type checker
-	def __getitem__(self, index: 'Value | ValueCastable | int') -> 'Value | ArrayProxy': # type: ignore
+	def __getitem__(self, index: Value | ValueCastable | int) -> Value | ArrayProxy: # type: ignore
 		if isinstance(index, ValueCastable):
 			index = Value.cast(index)
 
@@ -1671,10 +1672,10 @@ class ArrayProxy(Value):
 		self.elems = elems
 		self.index = Value.cast(index)
 
-	def __getattr__(self, attr) -> 'ArrayProxy':
+	def __getattr__(self, attr) -> ArrayProxy:
 		return ArrayProxy([getattr(elem, attr) for elem in self.elems], self.index)
 
-	def __getitem__(self, index) -> 'ArrayProxy':
+	def __getitem__(self, index) -> ArrayProxy:
 		return ArrayProxy([        elem[index] for elem in self.elems], self.index)
 
 	def _iter_as_values(self):
@@ -1703,7 +1704,7 @@ class ArrayProxy(Value):
 			# are zero-extended.
 			return Shape(max(unsigned_width, signed_width), has_signed)
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		signals = union((elem._lhs_signals() for elem in self._iter_as_values()), start = SignalSet())
 
 		if TYPE_CHECKING:
@@ -1711,7 +1712,7 @@ class ArrayProxy(Value):
 
 		return signals
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		signals = self.index._rhs_signals() | union(
 			(elem._rhs_signals() for elem in self._iter_as_values()),
 			start = SignalSet()
@@ -1786,7 +1787,7 @@ class ValueCastable:
 		setattr(wrapper_memoized, '_ValueCastable__memoized', True)
 		return wrapper_memoized
 
-	def __getitem__(self, key: object) -> 'ValueCastable | Value':
+	def __getitem__(self, key: object) -> ValueCastable | Value:
 		return _index_valuelike(self, key)
 
 	def __len__(self) -> int:
@@ -1855,7 +1856,7 @@ class Sample(Value):
 	def shape(self) -> Shape:
 		return self.value.shape()
 
-	def _rhs_signals(self) -> 'ValueSet':
+	def _rhs_signals(self) -> ValueSet:
 		return ValueSet((self,))
 
 	def __repr__(self) -> str:
@@ -1909,7 +1910,7 @@ class Initial(Value):
 	def shape(self) -> Shape:
 		return Shape(1)
 
-	def _rhs_signals(self) -> 'ValueSet':
+	def _rhs_signals(self) -> ValueSet:
 		return ValueSet((self,))
 
 	def __repr__(self) -> str:
@@ -1926,7 +1927,7 @@ class Statement:
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
 	@staticmethod
-	def cast(obj: 'Iterable | Statement'):
+	def cast(obj: Iterable | Statement):
 		if isinstance(obj, Iterable):
 			return _StatementList(list(chain.from_iterable(map(Statement.cast, obj))))
 		else:
@@ -1943,10 +1944,10 @@ class Assign(Statement):
 		self.lhs = Value.cast(lhs)
 		self.rhs = Value.cast(rhs)
 
-	def _lhs_signals(self) -> 'ValueSet | SignalSet':
+	def _lhs_signals(self) -> ValueSet | SignalSet:
 		return self.lhs._lhs_signals()
 
-	def _rhs_signals(self) -> 'ValueSet | SignalSet':
+	def _rhs_signals(self) -> ValueSet | SignalSet:
 		signals = self.lhs._rhs_signals() | self.rhs._rhs_signals()
 
 		if TYPE_CHECKING:
@@ -1997,10 +1998,10 @@ class Property(Statement, MustUse):
 		else:
 			self._en = _en
 
-	def _lhs_signals(self) -> 'SignalSet':
+	def _lhs_signals(self) -> SignalSet:
 		return SignalSet((self._en, self._check))
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		return self.test._rhs_signals()
 
 	def __repr__(self) -> str:
@@ -2068,7 +2069,7 @@ class Switch(Statement):
 			if orig_keys in case_src_locs:
 				self.case_src_locs[new_keys] = case_src_locs[orig_keys]
 
-	def _lhs_signals(self) -> 'SignalSet | ValueSet':
+	def _lhs_signals(self) -> SignalSet | ValueSet:
 		signals = union((s._lhs_signals() for ss in self.cases.values() for s in ss), start = SignalSet())
 
 		if TYPE_CHECKING:
@@ -2076,7 +2077,7 @@ class Switch(Statement):
 
 		return signals
 
-	def _rhs_signals(self) -> 'SignalSet | ValueSet':
+	def _rhs_signals(self) -> SignalSet | ValueSet:
 		signals = self.test._rhs_signals() | union(
 			(s._rhs_signals() for ss in self.cases.values() for s in ss),
 			start = SignalSet()
@@ -2330,7 +2331,7 @@ class ValueKey:
 		else: # :nocov:
 			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
 
-	def __lt__(self, other: 'ValueKey') -> bool | Operator:
+	def __lt__(self, other: ValueKey) -> bool | Operator:
 		if not isinstance(other, ValueKey):
 			return False
 		if not isinstance(self.value, type(other.value)):

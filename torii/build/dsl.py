@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__      import annotations
 
 from collections     import OrderedDict
 from collections.abc import Callable, Iterator, Generator, Sequence
@@ -198,10 +199,10 @@ class Subsignal:
 class Resource(Subsignal):
 	@classmethod
 	def family(
-		cls: 'type[Resource]',
+		cls: type[Resource],
 		name_or_number: str | int, number: int | None = None, *,
 		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
-	) -> 'Resource':
+	) -> Resource:
 		# This cosnstructor accepts two different forms:
 		#  1. Number-only form:
 		#       Resource.family(0, default_name = 'name', ios = [ Pins('A0 A1') ])

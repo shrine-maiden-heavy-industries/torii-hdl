@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+from __future__        import annotations
 
 import warnings
 from abc               import ABCMeta, abstractmethod
@@ -57,9 +58,9 @@ class DriverConflict(UserWarning):
 class Fragment:
 	@staticmethod
 	def get(
-		obj: 'Fragment | Elaboratable', platform: 'Platform | None',
+		obj: Fragment | Elaboratable, platform: Platform | None,
 		*, formal: bool = False
-	) -> 'Fragment':
+	) -> Fragment:
 		code = None
 		while True:
 			if isinstance(obj, Fragment):
@@ -701,7 +702,7 @@ class Instance(Fragment):
 
 	def __init__(
 		self, type: str, *args: InstanceArgsT, src_loc: SrcLoc | None = None, src_loc_at: int = 0,
-		**kwargs: 'ValueCastT | str'
+		**kwargs: ValueCastT | str
 	):
 		super().__init__()
 

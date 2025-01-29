@@ -2,6 +2,8 @@
 
 ''' First-in first-out queues. '''
 
+from __future__   import annotations
+
 from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 from .formal      import Assert, Assume, Initial
 from ..util.units import log2_ceil
@@ -96,7 +98,7 @@ class FIFOInterface:
 		self.r_level = Signal(range(depth + 1))
 
 
-def _incr(signal, modulo: int) -> 'Mux | int':
+def _incr(signal, modulo: int) -> Mux | int:
 	if modulo == 2 ** len(signal):
 		return signal + 1
 	else:
