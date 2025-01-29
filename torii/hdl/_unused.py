@@ -2,7 +2,7 @@
 
 from sys      import _getframe, excepthook
 from types    import TracebackType
-from typing   import Type, TypeVar, TypedDict, Any
+from typing   import TypeVar, TypedDict, Any
 from warnings import warn_explicit
 
 from ..util   import get_linter_option
@@ -29,7 +29,7 @@ class MustUse:
 	_MustUse__context: _MustUseCtx
 
 	# TODO(aki): Figure out the proper way to type this nonsense
-	def __new__(cls: Type[T], *args: Any, src_loc_at: int = 0, **kwargs: Any) -> T:
+	def __new__(cls: type[T], *args: Any, src_loc_at: int = 0, **kwargs: Any) -> T:
 		frame = _getframe(1 + src_loc_at)
 		self = super().__new__(cls) # type: ignore
 		self._MustUse__used    = False

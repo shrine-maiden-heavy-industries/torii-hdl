@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from inspect         import iscoroutinefunction, isgeneratorfunction
-from typing          import IO, Literal, Type, TYPE_CHECKING
+from typing          import IO, Literal, TYPE_CHECKING
 from collections.abc import Coroutine, Iterable, Generator
 from warnings        import warn
 
@@ -76,7 +76,7 @@ class Active(Command):
 
 
 class Simulator:
-	def __init__(self, fragment: Fragment, *, engine: Type[BaseEngine] | Literal['pysim'] = 'pysim') -> None:
+	def __init__(self, fragment: Fragment, *, engine: type[BaseEngine] | Literal['pysim'] = 'pysim') -> None:
 		if engine == 'pysim':
 			from .pysim import PySimEngine
 			engine = PySimEngine

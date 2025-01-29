@@ -6,7 +6,7 @@ import textwrap
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Iterable, Generator
-from typing          import IO, Literal, Type, TypeVar
+from typing          import IO, Literal, TypeVar
 
 import jinja2
 
@@ -373,7 +373,7 @@ class TemplatedPlatform(Platform):
 		_ETYPE = TypeVar('_ETYPE')
 
 		def _extract_override(
-			var: str, *, expected_type: Type[_ETYPE]
+			var: str, *, expected_type: type[_ETYPE]
 		) -> jinja2.Undefined | _ETYPE:
 			var_env = f'TORII_{tool_env_var(var)}'
 			if var_env in os.environ:
