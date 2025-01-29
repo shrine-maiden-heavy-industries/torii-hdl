@@ -592,7 +592,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				fsm_signal.reset = fsm_encoding[fsm_reset]
 			# The FSM is encoded such that the state with encoding 0 is always the reset state.
 			fsm_decoding.update((n, s) for s, n in fsm_encoding.items())
-			fsm_signal.decoder = lambda n: "{}/{}".format(fsm_decoding[n], n)
+			fsm_signal.decoder = lambda n: f'{fsm_decoding[n]}/{n}'
 			self._statements.append(
 				Switch(
 					fsm_signal,

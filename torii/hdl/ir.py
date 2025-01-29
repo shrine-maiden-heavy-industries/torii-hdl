@@ -297,7 +297,7 @@ class Fragment:
 	def _propagate_domains_up(self, hierarchy = ('top',)):
 		from .xfrm import DomainRenamer
 
-		domain_subfrags = defaultdict(lambda: set())
+		domain_subfrags = defaultdict(set)
 
 		# For each domain defined by a subfragment, determine which subfragments define it.
 		for i, (subfrag, name) in enumerate(self.subfragments):
@@ -387,7 +387,7 @@ class Fragment:
 					defined = new_fragment.domains.keys()
 					raise DomainError(
 						'Fragment returned by missing domain callback does not define '
-						f'requested domain \'{domain_name}\' (defines {", ".join("`{}`".format(n) for n in defined)}).')
+						f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).')
 				self.add_subfragment(new_fragment, f'cd_{domain_name}')
 				self.add_domains(new_fragment.domains.values())
 		return new_domains
