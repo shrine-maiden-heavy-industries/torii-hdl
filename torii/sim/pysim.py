@@ -28,11 +28,11 @@ class _VCDWriter:
 		self._close_vcd = False
 		self._close_gtkw = False
 		if isinstance(vcd_file, str):
-			vcd_file = open(vcd_file, 'wt')
+			vcd_file = open(vcd_file, 'w')
 			self._close_vcd = True
 
 		if isinstance(gtkw_file, str):
-			gtkw_file = open(gtkw_file, 'wt')
+			gtkw_file = open(gtkw_file, 'w')
 			self._close_gtkw = True
 
 		self.vcd_vars = SignalDict()
