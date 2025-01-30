@@ -11,7 +11,7 @@ library/index
 platforms/index
 sim/index
 changelog
-
+migration_guide
 projects
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
