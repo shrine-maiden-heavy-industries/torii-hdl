@@ -21,9 +21,13 @@ Unreleased template stuff
 
 ### Added
 
+- Added kwargs-based constructor to `DomainRenamer` to allow for more ergonomic usage (`DomainRenamer(sync = 'pipe')`)
+
 ### Changed
 
 ### Deprecated
+
+- Deprecated constructing the `DomainRenamer` with a single domain as a string (`DomainRenamer('sync')`), or a literal dictionary (`DomainRenamer({'sync': 'pipe'})`) in favor of kwargs-based construction
 
 ### Removed
 

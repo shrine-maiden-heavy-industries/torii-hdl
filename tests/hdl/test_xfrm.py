@@ -21,7 +21,8 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		self.s5 = Signal()
 		self.c1 = Signal()
 
-	def test_rename_signals(self):
+	# TODO(aki): remove - v1.0.0
+	def test_rename_signals_deprecated(self):
 		f = Fragment()
 		f.add_statements(
 			self.s1.eq(ClockSignal()),
@@ -34,7 +35,12 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		f.add_driver(self.s2, None)
 		f.add_driver(self.s3, 'sync')
 
-		f = DomainRenamer('pix')(f)
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f = DomainRenamer('pix')(f)
+
 		self.assertRepr(f.statements, '''
 		(
 			(eq (sig s1) (clk pix))
@@ -49,6 +55,55 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 			'pix': SignalSet((self.s3,)),
 		})
 
+	def test_rename_signals(self):
+		f = Fragment()
+		f.add_statements(
+			self.s1.eq(ClockSignal()),
+			ResetSignal().eq(self.s2),
+			self.s3.eq(0),
+			self.s4.eq(ClockSignal('other')),
+			self.s5.eq(ResetSignal('other')),
+		)
+		f.add_driver(self.s1, None)
+		f.add_driver(self.s2, None)
+		f.add_driver(self.s3, 'sync')
+
+		f = DomainRenamer(sync = 'pix')(f)
+		self.assertRepr(f.statements, '''
+		(
+			(eq (sig s1) (clk pix))
+			(eq (rst pix) (sig s2))
+			(eq (sig s3) (const 1'd0))
+			(eq (sig s4) (clk other))
+			(eq (sig s5) (rst other))
+		)
+		''')
+		self.assertEqual(f.drivers, {
+			None: SignalSet((self.s1, self.s2)),
+			'pix': SignalSet((self.s3,)),
+		})
+
+	# TODO(aki): remove - v1.0.0
+	def test_rename_multi_deprecated(self):
+		f = Fragment()
+		f.add_statements(
+			self.s1.eq(ClockSignal()),
+			self.s2.eq(ResetSignal('other')),
+		)
+
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f = DomainRenamer({'sync': 'pix', 'other': 'pix2'})(f)
+
+		self.assertRepr(f.statements, '''
+		(
+			(eq (sig s1) (clk pix))
+			(eq (sig s2) (rst pix2))
+		)
+		''')
+
 	def test_rename_multi(self):
 		f = Fragment()
 		f.add_statements(
@@ -56,13 +111,33 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 			self.s2.eq(ResetSignal('other')),
 		)
 
-		f = DomainRenamer({'sync': 'pix', 'other': 'pix2'})(f)
+		f = DomainRenamer(sync = 'pix', other = 'pix2')(f)
 		self.assertRepr(f.statements, '''
 		(
 			(eq (sig s1) (clk pix))
 			(eq (sig s2) (rst pix2))
 		)
 		''')
+
+	# TODO(aki): remove - v1.0.0
+	def test_rename_cd_deprecated(self):
+		cd_sync = ClockDomain()
+		cd_pix  = ClockDomain()
+
+		f = Fragment()
+		f.add_domains(cd_sync, cd_pix)
+
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f = DomainRenamer('ext')(f)
+
+		self.assertEqual(cd_sync.name, 'ext')
+		self.assertEqual(f.domains, {
+			'ext': cd_sync,
+			'pix': cd_pix,
+		})
 
 	def test_rename_cd(self):
 		cd_sync = ClockDomain()
@@ -71,12 +146,35 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		f = Fragment()
 		f.add_domains(cd_sync, cd_pix)
 
-		f = DomainRenamer('ext')(f)
+		f = DomainRenamer(sync = 'ext')(f)
 		self.assertEqual(cd_sync.name, 'ext')
 		self.assertEqual(f.domains, {
 			'ext': cd_sync,
 			'pix': cd_pix,
 		})
+
+	# TODO(aki): remove - v1.0.0
+	def test_rename_cd_preserves_allow_reset_less_deprecated(self):
+		cd_pix  = ClockDomain(reset_less = True)
+
+		f = Fragment()
+		f.add_domains(cd_pix)
+		f.add_statements(
+			self.s1.eq(ResetSignal(allow_reset_less = True)),
+		)
+
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f = DomainRenamer('pix')(f)
+
+		f = DomainLowerer()(f)
+		self.assertRepr(f.statements, '''
+		(
+			(eq (sig s1) (const 1'd0))
+		)
+		''')
 
 	def test_rename_cd_preserves_allow_reset_less(self):
 		cd_pix  = ClockDomain(reset_less = True)
@@ -87,7 +185,7 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 			self.s1.eq(ResetSignal(allow_reset_less = True)),
 		)
 
-		f = DomainRenamer('pix')(f)
+		f = DomainRenamer(sync = 'pix')(f)
 		f = DomainLowerer()(f)
 		self.assertRepr(f.statements, '''
 		(
@@ -95,6 +193,27 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		)
 		''')
 
+	# TODO(aki): remove - v1.0.0
+	def test_rename_cd_subfragment_deprecated(self):
+		cd_sync = ClockDomain()
+		cd_pix  = ClockDomain()
+
+		f1 = Fragment()
+		f1.add_domains(cd_sync, cd_pix)
+		f2 = Fragment()
+		f2.add_domains(cd_sync)
+		f1.add_subfragment(f2)
+
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f1 = DomainRenamer('ext')(f1)
+		self.assertEqual(cd_sync.name, 'ext')
+		self.assertEqual(f1.domains, {
+			'ext': cd_sync,
+			'pix': cd_pix,
+		})
 
 	def test_rename_cd_subfragment(self):
 		cd_sync = ClockDomain()
@@ -106,12 +225,35 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		f2.add_domains(cd_sync)
 		f1.add_subfragment(f2)
 
-		f1 = DomainRenamer('ext')(f1)
+		f1 = DomainRenamer(sync = 'ext')(f1)
 		self.assertEqual(cd_sync.name, 'ext')
 		self.assertEqual(f1.domains, {
 			'ext': cd_sync,
 			'pix': cd_pix,
 		})
+
+	# TODO(aki): remove - v1.0.0
+	def test_rename_mem_ports_deprecated(self):
+		m = Module()
+		mem = Memory(depth = 4, width = 16)
+		m.submodules.mem = mem
+		mem.read_port(domain = 'a')
+		mem.read_port(domain = 'b')
+		mem.write_port(domain = 'c')
+
+		f = Fragment.get(m, None)
+
+		with self.assertWarnsRegex(
+			DeprecationWarning,
+			r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+		):
+			f = DomainRenamer({'a': 'd', 'c': 'e'})(f)
+
+		mem = f.subfragments[0][0]
+		self.assertIsInstance(mem, MemoryInstance)
+		self.assertEqual(mem.read_ports[0].domain, 'd')
+		self.assertEqual(mem.read_ports[1].domain, 'b')
+		self.assertEqual(mem.write_ports[0].domain, 'e')
 
 	def test_rename_mem_ports(self):
 		m = Module()
@@ -122,27 +264,50 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		mem.write_port(domain = 'c')
 
 		f = Fragment.get(m, None)
-		f = DomainRenamer({'a': 'd', 'c': 'e'})(f)
+		f = DomainRenamer(a = 'd', c = 'e')(f)
 		mem = f.subfragments[0][0]
 		self.assertIsInstance(mem, MemoryInstance)
 		self.assertEqual(mem.read_ports[0].domain, 'd')
 		self.assertEqual(mem.read_ports[1].domain, 'b')
 		self.assertEqual(mem.write_ports[0].domain, 'e')
 
-
-	def test_rename_wrong_to_comb(self):
+	# TODO(aki): remove - v1.0.0
+	def test_rename_wrong_to_comb_deprecated(self):
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Domain \'sync\' may not be renamed to \'comb\'$'
 		):
-			DomainRenamer('comb')
+			with self.assertWarnsRegex(
+				DeprecationWarning,
+				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+			):
+				DomainRenamer('comb')
 
-	def test_rename_wrong_from_comb(self):
+	def test_rename_wrong_to_comb(self):
+		with self.assertRaisesRegex(
+			ValueError,
+			r'^Domains may not be renamed to the combinatorial domain \'comb\'$'
+		):
+			DomainRenamer(sync = 'comb')
+
+	# TODO(aki): remove - v1.0.0
+	def test_rename_wrong_from_comb_deprecated(self):
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Domain \'comb\' may not be renamed$'
 		):
-			DomainRenamer({'comb': 'sync'})
+			with self.assertWarnsRegex(
+				DeprecationWarning,
+				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+			):
+				DomainRenamer({'comb': 'sync'})
+
+	def test_rename_wrong_from_comb(self):
+		with self.assertRaisesRegex(
+			ValueError,
+			r'^The combinatorial domain \'comb\' may not be renamed to \'sync\'$'
+		):
+			DomainRenamer(comb = 'sync')
 
 
 class DomainLowererTestCase(ToriiTestSuiteCase):

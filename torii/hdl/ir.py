@@ -339,7 +339,7 @@ class Fragment:
 
 			for subfrag, name, i in subfrags:
 				domain_name_map = { domain_name: f'{name}_{domain_name}' }
-				self.subfragments[i] = (DomainRenamer(domain_name_map)(subfrag), name)
+				self.subfragments[i] = (DomainRenamer(**domain_name_map)(subfrag), name)
 
 		# Finally, collect the (now unique) subfragment domains, and merge them into our domains.
 		for subfrag, name in self.subfragments:
