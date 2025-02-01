@@ -435,7 +435,10 @@
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#id48">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">Projects Using Torii</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
@@ -471,6 +474,25 @@
 <p class="admonition-title">Todo</p>
 <p>This document is a work in progress and should be updated as the progression v1.0 progresses</p>
 </div>
+<section id="domainrenamer">
+<h2><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code><a class="headerlink" href="#domainrenamer" title="Link to this heading"></a></h2>
+<p>In past versions of Torii, you could use the <code class="xref py py-class docutils literal notranslate"><span class="pre">DomainRenamer</span></code> in two ways, the first was to pass a single string into it, which would be used to re-map the <code class="docutils literal notranslate"><span class="pre">sync</span></code> domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.</p>
+<p>These have been replaced with using <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">DomainRenamer</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+
+<span class="n">DomainRenamer</span><span class="p">({</span><span class="s1">&#39;sync&#39;</span><span class="p">:</span> <span class="s1">&#39;meow&#39;</span><span class="p">})(</span><span class="n">elab</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should now be written as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="n">sync</span> <span class="o">=</span> <span class="s1">&#39;meow&#39;</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you need to pass a dictionary that is built at runtime to the domain renamer, then you can simply un-pack the dictionary into the constructor like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="o">**</span><span class="n">domain_map</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/javascript">

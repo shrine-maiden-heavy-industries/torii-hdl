@@ -435,7 +435,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#id48">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="migration_guide.html">Torii v0.X to v1.0 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">Projects Using Torii</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
@@ -485,12 +488,18 @@ Unreleased template stuff
 <h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Link to this heading"></a></h2>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added kwargs-based constructor to <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> to allow for more ergonomic usage (<code class="docutils literal notranslate"><span class="pre">DomainRenamer(sync</span> <span class="pre">=</span> <span class="pre">'pipe')</span></code>)</p></li>
+</ul>
 </section>
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Link to this heading"></a></h3>
 </section>
 <section id="deprecated">
 <h3>Deprecated<a class="headerlink" href="#deprecated" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Deprecated constructing the <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> with a single domain as a string (<code class="docutils literal notranslate"><span class="pre">DomainRenamer('sync')</span></code>), or a literal dictionary (<code class="docutils literal notranslate"><span class="pre">DomainRenamer({'sync':</span> <span class="pre">'pipe'})</span></code>) in favor of kwargs-based construction</p></li>
+</ul>
 </section>
 <section id="removed">
 <h3>Removed<a class="headerlink" href="#removed" title="Link to this heading"></a></h3>
