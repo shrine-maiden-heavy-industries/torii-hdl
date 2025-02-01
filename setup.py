@@ -63,7 +63,7 @@ setup(
 
 	install_requires = [
 		'setuptools',
-		'pyvcd>=0.2.2',
+		'pyvcd>=0.4.0,<0.5',
 		'Jinja2~=3.0',
 		'rich',
 		'typing-extensions',
