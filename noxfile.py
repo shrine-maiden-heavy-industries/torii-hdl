@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 import shutil
+from os             import getenv
 from pathlib        import Path
-from setuptools_scm import (
-	get_version, ScmVersion
-)
+from setuptools_scm import get_version, ScmVersion
 
 import nox
 from nox.sessions   import Session
@@ -16,6 +15,9 @@ CNTRB_DIR = (ROOT_DIR  / 'contrib')
 DOCS_DIR  = (ROOT_DIR  / 'docs')
 DIST_DIR  = (BUILD_DIR / 'dist')
 
+IN_CI           = getenv('GITHUB_WORKSPACE') is not None
+ENABLE_COVERAGE = IN_CI or (getenv('TORII_TEST_COVERAGE') is not None)
+ENABLE_FORMAL   = getenv('TORII_TEST_FORMAL') is not None
 
 # Default sessions to run
 nox.options.sessions = (
@@ -42,15 +44,11 @@ def torii_version() -> str:
 def test(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'tests')
 	out_dir.mkdir(parents = True, exist_ok = True)
-	coverage = '--coverage' in session.posargs
-	formal   = '--formal'   in session.posargs
 
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('.')
-	# For sby
-	session.install('click')
-	if coverage:
+	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
 		session.install('coverage')
 		coverage_args = (
@@ -62,10 +60,10 @@ def test(session: Session) -> None:
 
 	session.chdir(str(out_dir))
 
-	if formal:
+	if ENABLE_FORMAL:
 		FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
 		session.log('Running formal tests')
-
+		session.install('click')
 		for example in FORMAL_EXAMPLES.iterdir():
 			session.run(
 				'python', *coverage_args, example
@@ -73,9 +71,10 @@ def test(session: Session) -> None:
 	else:
 		session.log('Running standard test suite')
 		session.run(
-			'python', *coverage_args, *unitest_args
+			'python', *coverage_args, *unitest_args, *session.posargs
 		)
-	if coverage:
+
+	if ENABLE_COVERAGE:
 		session.run(
 			'python', '-m', 'coverage', 'xml',
 			f'--rcfile={CNTRB_DIR / "coveragerc"}'
