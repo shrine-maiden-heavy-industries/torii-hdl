@@ -22,6 +22,8 @@ Unreleased template stuff
 ### Added
 
 - Added kwargs-based constructor to `DomainRenamer` to allow for more ergonomic usage (`DomainRenamer(sync = 'pipe')`)
+- Added new library components `torii.lib.stream`
+  - `torii.lib.stream.StreamInterface` - A unidirectional stream interface.
 
 ### Changed
 
