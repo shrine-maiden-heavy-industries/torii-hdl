@@ -2,14 +2,19 @@
 from __future__      import annotations
 
 from collections.abc import Iterable
+from typing          import Generic, TypeVar
 from warnings        import warn
 
 from ..hdl.ast       import Signal
+from ..hdl.dsl       import Module
+from ..hdl.ir        import Elaboratable
 from ..hdl.rec       import Record
+from ..hdl.xfrm      import DomainRenamer
 
 
 __all__ = (
 	'StreamInterface',
+	'StreamArbiter',
 )
 
 
@@ -217,3 +222,84 @@ class StreamInterface(Record):
 			name = 'data'
 
 		return super().__getattr__(name)
+
+T = TypeVar('T', bound = StreamInterface)
+class StreamArbiter(Generic[T], Elaboratable):
+	'''
+	A simple multi-input-single-output stream arbiter.
+
+	This uses a very simple priority scheduler and relies on the standard ``valid``/``ready`` handshake
+	that occurs between streams to schedule which stream is connected to the output stream.
+
+
+	Parameters
+	----------
+	domain : str
+		The domain in which the arbiter should operate.
+		(default: sync)
+
+	stream_type : type
+		The type of stream to create, must be either :py:class:`StreamInterface <torii.lib.stream.StreamInterface>`
+		or a subtype there of.
+		(default: torii.lib.stream.StreamInterface)
+
+	Attributes
+	----------
+	out : stream_type, out
+		The output stream.
+
+	idle : Signal, out
+		Indicates the arbiter is idle, this occurs when the input source stream is not active.
+
+	'''
+
+	def __init__(self, *, domain: str = 'sync', stream_type: type[T] = StreamInterface) -> None:
+		self._domain = domain
+
+		self._sinks: list[T] = list()
+
+		self.out  = stream_type()
+		self.idle = Signal()
+
+	def connect(self, stream: T, priority: int = -1) -> None:
+		'''
+		Connect an output stream to the arbiter.
+
+		Parameters
+		----------
+		stream : torii.lib.stream.StreamInterface
+			The stream to connect to the arbiter.
+
+		priority : int
+			The stream priority.
+			(default: -1)
+		'''
+		if priority > 0:
+			self._sinks.append(stream)
+		else:
+			self._sinks.insert(priority, stream)
+
+	def elaborate(self, _) -> Module:
+		m = Module()
+
+		count = len(self._sinks)
+		index = Signal(range(count))
+
+		with m.Switch(index):
+			for idx, stream in enumerate(self._sinks):
+				with m.Case(idx):
+					m.d.comb += [ self.out.stream_eq(stream), ]
+
+		with m.If(~self.out.valid):
+			m.d.comb += [ self.idle.eq(1), ]
+
+			for idx in reversed(range(count)):
+				with m.If(self._sinks[idx].valid):
+					m.d.comb += [ self.idle.eq(0), ]
+					m.d.sync += [ index.eq(idx),   ]
+
+		if self._domain != 'sync':
+			m = DomainRenamer(sync = self._domain)(m)
+
+		return m
+
