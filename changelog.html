@@ -490,6 +490,12 @@ Unreleased template stuff
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Added kwargs-based constructor to <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> to allow for more ergonomic usage (<code class="docutils literal notranslate"><span class="pre">DomainRenamer(sync</span> <span class="pre">=</span> <span class="pre">'pipe')</span></code>)</p></li>
+<li><p>Added new library components <code class="docutils literal notranslate"><span class="pre">torii.lib.stream</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.stream.StreamInterface</span></code> - A unidirectional stream interface.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.stream.StreamArbiter</span></code> - A simple N:1 stream arbiter for <code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code>s</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="changed">
