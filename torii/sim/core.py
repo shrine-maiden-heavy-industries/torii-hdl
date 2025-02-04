@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from inspect         import iscoroutinefunction, isgeneratorfunction
-from typing          import IO, Literal, TYPE_CHECKING
-from collections.abc import Coroutine, Iterable, Generator
+from typing          import IO, Literal, TYPE_CHECKING, ContextManager
+from collections.abc import Callable, Coroutine, Iterable, Generator
 from warnings        import warn
 
-from ..hdl           import Signal
+from ..hdl           import Signal, Elaboratable
 from ..hdl.cd        import ClockDomain
 from ..hdl.ir        import Fragment
 from ._base          import BaseEngine
@@ -74,9 +74,10 @@ class Active(Command):
 	def __repr__(self) -> str:
 		return '(active)'
 
-
 class Simulator:
-	def __init__(self, fragment: Fragment, *, engine: type[BaseEngine] | Literal['pysim'] = 'pysim') -> None:
+	def __init__(
+		self, fragment: Fragment | Elaboratable, *, engine: type[BaseEngine] | Literal['pysim'] = 'pysim'
+	) -> None:
 		if engine == 'pysim':
 			from .pysim import PySimEngine
 			engine = PySimEngine
@@ -85,14 +86,16 @@ class Simulator:
 
 		self._fragment = Fragment.get(fragment, platform = None).prepare()
 		self._engine   = engine(self._fragment)
-		self._clocked  = set()
+		self._clocked  = set[ClockDomain]()
 
-	def _check_process(self, process: Generator | Coroutine) -> Generator | Coroutine:
+	def _check_process(
+		self, process: Callable[[], Generator] | Callable[[], Coroutine]
+	) -> Callable[[], Generator] | Callable[[], Coroutine]:
 		if not (isgeneratorfunction(process) or iscoroutinefunction(process)):
 			raise TypeError(f'Cannot add a process {process!r} because it is not a generator function')
 		return process
 
-	def add_process(self, process: Generator | Coroutine) -> None:
+	def add_process(self, process: Callable[[], Generator] | Callable[[], Coroutine]) -> None:
 		process = self._check_process(process)
 
 		def wrapper():
@@ -103,7 +106,7 @@ class Simulator:
 		self._engine.add_coroutine_process(wrapper, default_cmd = None)
 
 	def add_sync_process(
-		self, process: Generator | Coroutine, *, domain: str | ClockDomain = 'sync'
+		self, process: Callable[[], Generator] | Callable[[], Coroutine], *, domain: str | ClockDomain = 'sync'
 	) -> None:
 		process = self._check_process(process)
 
@@ -234,7 +237,7 @@ class Simulator:
 	def write_vcd(
 		self, vcd_file: IO | str | None, gtkw_file: IO | str | None = None, *,
 		traces: Iterable[Signal] = ()
-	) -> None:
+	) -> ContextManager[None]:
 		'''
 		Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
 
