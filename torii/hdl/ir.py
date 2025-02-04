@@ -87,9 +87,9 @@ class Fragment:
 	def __init__(self):
 		self.ports = SignalDict()
 		self.drivers = OrderedDict[str | None, SignalSet]()
-		self.statements = []
-		self.domains = OrderedDict()
-		self.subfragments = []
+		self.statements: list[Statement] = []
+		self.domains = OrderedDict[str, ClockDomain]()
+		self.subfragments = list[tuple[Fragment, str | None]]()
 		self.attrs = OrderedDict()
 		self.generated = OrderedDict()
 		self.flatten = False
@@ -160,7 +160,7 @@ class Fragment:
 			stmt._MustUse__used = True
 			self.statements.append(stmt)
 
-	def add_subfragment(self, subfragment, name = None):
+	def add_subfragment(self, subfragment, name: str | None = None) -> None:
 		if not isinstance(subfragment, Fragment):
 			raise TypeError(f'Unable to add subfragment that is of type \'{type(subfragment)}\', not \'Fragment\'')
 		self.subfragments.append((subfragment, name))
@@ -573,7 +573,7 @@ class Fragment:
 			fragment._propagate_ports(ports = mapped_ports, all_undef_as_ports = False)
 		return fragment
 
-	def _assign_names_to_signals(self):
+	def _assign_names_to_signals(self) -> SignalDict[str]:
 		'''
 		Assign names to signals used in this fragment.
 
@@ -585,10 +585,10 @@ class Fragment:
 			may get a different name.
 		'''
 
-		signal_names   = SignalDict()
+		signal_names   = SignalDict[str]()
 		assigned_names = set()
 
-		def add_signal_name(signal):
+		def add_signal_name(signal: Signal):
 			if signal not in signal_names:
 				if signal.name not in assigned_names:
 					name = signal.name
@@ -601,7 +601,7 @@ class Fragment:
 		for port in self.ports.keys():
 			add_signal_name(port)
 
-		for domain_name, domain_signals in self.drivers.items():
+		for domain_name, _ in self.drivers.items():
 			if domain_name is not None:
 				domain = self.domains[domain_name]
 				add_signal_name(domain.clk)
@@ -615,7 +615,9 @@ class Fragment:
 
 		return signal_names
 
-	def _assign_names_to_fragments(self, hierarchy = ('top',), *, _names = None):
+	def _assign_names_to_fragments(
+		self, hierarchy: tuple[str, ...] = ('top',), *, _names: dict[Fragment, tuple[str, ...]] | None = None
+	):
 		'''
 		Assign names to this fragment and its subfragments.
 
@@ -638,7 +640,7 @@ class Fragment:
 		'''
 
 		if _names is None:
-			_names = dict()
+			_names = dict[Fragment, tuple[str, ...]]()
 		_names[self] = hierarchy
 
 		signal_names = set(self._assign_names_to_signals().values())
