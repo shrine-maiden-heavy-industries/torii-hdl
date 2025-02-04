@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections.abc import Iterable
-from typing          import IO
+from typing          import IO, Generator
+from contextlib      import contextmanager
 
 from ..hdl           import Signal
 from ..hdl.ir        import Fragment
@@ -78,8 +79,9 @@ class BaseEngine:
 	def advance(self) -> bool:
 		raise NotImplementedError
 
+	@contextmanager
 	def write_vcd(
 		self, *, vcd_file: IO | str | None, gtkw_file: IO | str | None = None,
 		traces: Iterable[Signal]
-	) -> None:
+	) -> Generator[None, None, None]:
 		raise NotImplementedError
