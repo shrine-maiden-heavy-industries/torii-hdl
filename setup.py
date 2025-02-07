@@ -66,7 +66,7 @@ setup(
 		'pyvcd>=0.4.0,<0.5',
 		'Jinja2~=3.0',
 		'rich',
-		'typing-extensions',
+		'typing-extensions;python_version<"3.12"',
 	],
 
 	extras_require   = {

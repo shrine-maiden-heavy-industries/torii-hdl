@@ -16,9 +16,12 @@ from typing            import (
 from types             import NotImplementedType
 from enum              import Enum, EnumMeta
 from itertools         import chain
+from sys               import version_info
 
-# For Python <= 3.10
-from typing_extensions import TypeVarTuple, Unpack
+if version_info < (3, 12):
+	from typing_extensions import TypeVarTuple, Unpack
+else:
+	from typing        import TypeVarTuple, Unpack
 
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
