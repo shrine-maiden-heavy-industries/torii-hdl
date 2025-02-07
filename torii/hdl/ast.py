@@ -1,33 +1,33 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__        import annotations
 
 import functools
-import warnings
 import operator
-
+import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import (
-	Iterable, Iterator, Mapping, MutableMapping, MutableSequence, MutableSet, Sequence, Callable, Generator
+	Callable, Generator, Iterable, Iterator, Mapping,
+	MutableMapping, MutableSequence, MutableSet,
+	Sequence
 )
-from typing            import (
-	TYPE_CHECKING, TypeAlias, TypeVar, Literal, NoReturn, Generic, ParamSpec, SupportsIndex
-)
-from types             import NotImplementedType
 from enum              import Enum, EnumMeta
 from itertools         import chain
 from sys               import version_info
+from types             import NotImplementedType
+from typing            import TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec,  SupportsIndex, TypeAlias, TypeVar
 
 if version_info < (3, 12):
 	from typing_extensions import TypeVarTuple, Unpack
 else:
 	from typing        import TypeVarTuple, Unpack
 
+from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
 from ..util.units      import bits_for
 from ._unused          import MustUse, UnusedMustUse
-from .._typing         import SrcLoc, SwitchCaseT
 
 __all__ = (
 	'AnyConst',
@@ -66,9 +66,9 @@ __all__ = (
 	'unsigned',
 	'Value',
 	'ValueCastable',
-	'ValueLike',
 	'ValueDict',
 	'ValueKey',
+	'ValueLike',
 	'ValueSet',
 )
 
