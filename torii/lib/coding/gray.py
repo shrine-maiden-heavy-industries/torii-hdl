@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ... import Const, Elaboratable, Module, Signal
+from ...hdl.ast import Const, Signal
+from ...hdl.dsl import Module
+from ...hdl.ir  import Elaboratable
 
 __all__ = (
 	'Decoder',
