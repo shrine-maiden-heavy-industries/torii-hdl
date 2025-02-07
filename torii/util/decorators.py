@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-
 from collections     import OrderedDict
 from collections.abc import Callable
-from typing          import ParamSpec, TypeVar, Any
 from functools       import wraps
+from typing          import Any, ParamSpec, TypeVar
 from warnings        import warn
 
 __all__ = (
