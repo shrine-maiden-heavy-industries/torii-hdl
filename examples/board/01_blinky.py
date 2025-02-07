@@ -2,8 +2,10 @@
 # If the design does not create a "sync" clock domain, it is created by the Torii build system
 # using the platform default clock (and default reset, if any).
 
-from torii                                     import Elaboratable, Signal, Module
+from torii                                     import Elaboratable, Module, Signal
+
 from torii_boards.lattice.ice40_hx1k_blink_evn import ICE40HX1KBlinkEVNPlatform
+
 
 class Blinky(Elaboratable):
 	def elaborate(self, platform) -> Module:
