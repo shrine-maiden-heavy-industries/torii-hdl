@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import Elaboratable, Module, Signal, ClockDomain
+from torii      import ClockDomain, Elaboratable, Module, Signal
 from torii.back import verilog
+
 
 class ClockDivisor(Elaboratable):
 	def __init__(self, factor: int):
