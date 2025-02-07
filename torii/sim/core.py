@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from collections.abc import Callable, Coroutine, Generator, Iterable
 from inspect         import iscoroutinefunction, isgeneratorfunction
-from typing          import IO, Literal, TYPE_CHECKING, ContextManager
-from collections.abc import Callable, Coroutine, Iterable, Generator
+from typing          import IO, ContextManager, Literal
 from warnings        import warn
 
-from ..hdl           import Signal, Elaboratable
+from ..hdl           import Elaboratable, Signal
 from ..hdl.cd        import ClockDomain
 from ..hdl.ir        import Fragment
 from ._base          import BaseEngine
