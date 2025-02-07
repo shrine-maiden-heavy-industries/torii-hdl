@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-
-from torii.lib.soc.periph import *
-from torii.lib.soc.memory import MemoryMap
 from torii.lib.soc        import event
+from torii.lib.soc.memory import MemoryMap
+from torii.lib.soc.periph import *
 
 from ...utils             import ToriiTestSuiteCase
+
 
 class ConstantBoolTestCase(ToriiTestSuiteCase):
 	def test_init(self):
