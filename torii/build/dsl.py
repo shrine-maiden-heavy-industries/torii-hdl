@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__      import annotations
 
 from collections     import OrderedDict
