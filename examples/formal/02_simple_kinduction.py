@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii                 import Elaboratable, Module, Signal, ClockDomain, ClockSignal
+from torii                 import ClockDomain, ClockSignal, Elaboratable, Module, Signal
+from torii.lib.formal      import Assert, Assume, Initial
 from torii.platform.formal import FormalPlatform
-from torii.lib.formal      import Assert, Initial, Assume
+
 
 class Counter(Elaboratable):
 	def __init__(self, max_count: int, buggy: bool) -> None:
