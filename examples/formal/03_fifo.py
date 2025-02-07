@@ -5,12 +5,10 @@
 # in a single Elaboratable.
 
 from torii                 import (
-	Elaboratable, Module, Signal, ClockDomain, ClockSignal, ResetSignal,
-	Memory, Mux
+	ClockDomain, ClockSignal, Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 )
-
+from torii.lib.formal      import AnyConst, Assert, Assume, Initial, Past, Rose
 from torii.platform.formal import FormalPlatform
-from torii.lib.formal      import AnyConst, Past, Assume, Assert, Initial, Rose
 
 
 class SyncFIFO(Elaboratable):
