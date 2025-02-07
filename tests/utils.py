@@ -6,14 +6,13 @@ import shutil
 import subprocess
 import textwrap
 import traceback
-from pathlib          import Path
+from pathlib       import Path
 
-from torii.hdl.ast    import *
-from torii.hdl.ir     import *
-from torii.back       import rtlil
-from torii.tools      import require_tool, ToolNotFound
-from torii.test       import ToriiTestCase
-
+from torii.back    import rtlil
+from torii.hdl.ast import *
+from torii.hdl.ir  import *
+from torii.test    import ToriiTestCase
+from torii.tools   import ToolNotFound, require_tool
 
 __all__ = (
 	'ToriiTestSuiteCase',
