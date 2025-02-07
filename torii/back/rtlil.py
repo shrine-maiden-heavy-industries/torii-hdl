@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__   import annotations
 
 import io
@@ -7,7 +8,7 @@ from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import Literal
 
-from ..hdl        import ast, ir, xfrm, mem
+from ..hdl        import ast, ir, mem, xfrm
 from ..util       import flatten
 from ..util.units import bits_for
 
