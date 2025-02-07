@@ -1,7 +1,11 @@
-from torii.hdl.ast import *
-from torii.hdl     import ast
-from torii.test    import ToriiTestCase
+# SPDX-License-Identifier: BSD-2-Clause
+
 from types         import SimpleNamespace
+
+from torii.hdl     import ast
+from torii.hdl.ast import *
+from torii.test    import ToriiTestCase
+
 
 class TracerTestCase(ToriiTestCase):
 	def test_fast(self):
