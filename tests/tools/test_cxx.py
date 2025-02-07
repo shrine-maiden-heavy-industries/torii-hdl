@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import os
 import ctypes
+import os
 import tempfile
 
-from torii.tools.cxx import build_cxx
 from torii.test      import ToriiTestCase
+from torii.tools.cxx import build_cxx
+
 
 class ToolchainCxxTestCase(ToriiTestCase):
 	def setUp(self):
