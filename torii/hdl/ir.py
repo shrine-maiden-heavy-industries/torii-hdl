@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__        import annotations
 
 import warnings
@@ -7,15 +8,12 @@ from collections       import OrderedDict, defaultdict
 from functools         import reduce
 from typing            import TYPE_CHECKING, Literal, TypeAlias
 
-from .._typing         import SrcLoc, IODirectionIO
+from .._typing         import IODirectionIO, SrcLoc
 from ..util            import flatten
-from ..util.tracer     import get_src_loc
 from ..util.decorators import memoize
+from ..util.tracer     import get_src_loc
 from ._unused          import MustUse, UnusedMustUse
-from .ast              import (
-	ClockSignal, ResetSignal, Signal, SignalDict, SignalSet, Statement,
-	Value, ValueCastT, SignalLikeT
-)
+from .ast              import ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT
 from .cd               import ClockDomain, DomainError
 
 if TYPE_CHECKING:
