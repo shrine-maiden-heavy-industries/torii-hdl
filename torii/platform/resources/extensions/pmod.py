@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # Reference: https://www.digilentinc.com/Pmods/Digilent-Pmod_%20Interface_Specification.pdf
 
-from ....build.dsl import Pins, PinsN, Resource, Subsignal, SubsigArgT
+from ....build.dsl import Pins, PinsN, Resource, SubsigArgT, Subsignal
 
 __all__ = (
 	'PmodDualHBridgeType6Resource',
