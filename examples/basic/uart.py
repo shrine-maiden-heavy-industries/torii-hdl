@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii import Elaboratable, Signal, Module, Cat, Const
+from torii import Cat, Const, Elaboratable, Module, Signal
 
 
 class UART(Elaboratable):
@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
 	args = parser.parse_args()
 	if args.action == 'simulate':
-		from torii.sim import Simulator, Passive
+		from torii.sim import Passive, Simulator
 
 		sim = Simulator(uart)
 		sim.add_clock(1e-6)
