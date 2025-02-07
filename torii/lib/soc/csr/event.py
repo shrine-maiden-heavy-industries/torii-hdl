@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from typing    import Literal
+from typing      import Literal
 
-from ....      import Elaboratable, Module
-from ....build import Platform
-from ..        import event
-from .         import Element, Multiplexer
-from .bus      import Interface
+from ....build   import Platform
+from ....hdl.dsl import Module
+from ....hdl.ir  import Elaboratable
+from ..          import event
+from .bus        import Element, Interface, Multiplexer
 
 __all__ = (
 	'EventMonitor',
