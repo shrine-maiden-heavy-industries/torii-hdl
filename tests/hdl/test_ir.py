@@ -951,8 +951,8 @@ class InstanceTestCase(ToriiTestSuiteCase):
 
 class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):
-		from torii.platform.formal import FormalPlatform
 		from torii                 import Module
+		from torii.platform.formal import FormalPlatform
 
 		class SimpleElaboratable(Elaboratable):
 			def elaborate(self, _):
