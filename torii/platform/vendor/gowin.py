@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractproperty
+from abc       import abstractmethod
 from fractions import Fraction
 import re
 
@@ -46,8 +46,15 @@ class GowinPlatform(TemplatedPlatform):
 
 	toolchain = None # selected when creating platform
 
-	part   = abstractproperty()
-	family = abstractproperty()
+	@property
+	@abstractmethod
+	def part(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
+	def family(self) -> str:
+		raise NotImplementedError('Platform must implement this property')
 
 	def parse_part(self):
 		# These regular expressions match all >900 parts of Gowin device_info.csv
