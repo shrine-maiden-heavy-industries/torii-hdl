@@ -4,18 +4,18 @@ import operator
 from typing import Final, SupportsIndex
 
 __all__ = (
-	'ps_to_sec',
-	'ns_to_sec',
-	'us_to_sec',
-	'ms_to_sec',
-	'sec_to_ps',
-	'sec_to_ns',
-	'sec_to_us',
-	'sec_to_ms',
 	'bits_for',
 	'iec_size',
 	'log2_ceil',
 	'log2_exact',
+	'ms_to_sec',
+	'ns_to_sec',
+	'ps_to_sec',
+	'sec_to_ms',
+	'sec_to_ns',
+	'sec_to_ps',
+	'sec_to_us',
+	'us_to_sec',
 )
 
 # SI Prefix constants
