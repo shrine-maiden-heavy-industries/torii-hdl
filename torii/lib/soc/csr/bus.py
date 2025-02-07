@@ -1,15 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__      import annotations
 
 from collections     import defaultdict
-from enum            import Enum
 from collections.abc import Generator
+from enum            import Enum
 
-from ....           import Elaboratable, Module, Mux, Record, Signal
-from ....build      import Platform
-from ....hdl.ast    import Operator
-from ....util.units import log2_ceil
-from ..memory       import MemoryMap
+from ....build       import Platform
+from ....hdl.ast     import Mux, Operator, Signal
+from ....hdl.dsl     import Module
+from ....hdl.ir      import Elaboratable
+from ....hdl.rec     import Record
+from ....util.units  import log2_ceil
+from ..memory        import MemoryMap
 
 __all__ = (
 	'Decoder',
