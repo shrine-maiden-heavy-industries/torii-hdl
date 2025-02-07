@@ -2,11 +2,13 @@
 # torii: UnusedElaboratable=no
 
 from torii                      import *
-from torii.sim                  import *
 from torii.lib.soc              import csr
 from torii.lib.soc.csr.wishbone import *
+from torii.sim                  import *
 
 from ....utils                  import ToriiTestSuiteCase
+
+
 class MockRegister(Elaboratable):
 	def __init__(self, width, name):
 		self.element = csr.Element(width, 'rw', name = name)
