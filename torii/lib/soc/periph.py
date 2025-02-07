@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections     import OrderedDict
-from collections.abc import Mapping, Generator
+from collections.abc import Generator, Mapping
 
 from ...util.units   import bits_for
 from .               import event
