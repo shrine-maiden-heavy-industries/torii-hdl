@@ -4,7 +4,7 @@ from random                  import randbytes
 
 from torii.hdl.dsl           import Module
 from torii.hdl.ir            import Elaboratable
-from torii.lib.stream.simple import StreamInterface, StreamArbiter
+from torii.lib.stream.simple import StreamArbiter, StreamInterface
 from torii.sim.core          import Settle
 from torii.test              import ToriiTestCase
 
