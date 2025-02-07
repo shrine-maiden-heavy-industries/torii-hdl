@@ -8,8 +8,9 @@ from warnings        import warn
 
 from ..util          import flatten, tracer
 from .ast            import (
-	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const, Initial, Mux, Operator, Part,
-	Property, ResetSignal, Sample, Signal, SignalDict, SignalSet, Slice, Statement, Switch,
+	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const,
+	Initial, Mux, Operator, Part, Property, ResetSignal, Sample,
+	Signal, SignalDict, SignalSet, Slice, Statement, Switch,
 	Value, ValueDict, _StatementList
 )
 from .cd             import DomainError
