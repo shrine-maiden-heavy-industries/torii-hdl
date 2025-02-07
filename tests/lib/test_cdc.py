@@ -2,10 +2,11 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl     import *
-from torii.sim     import *
 from torii.lib.cdc import *
+from torii.sim     import *
 
 from ..utils       import ToriiTestSuiteCase
+
 
 class FFSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
