@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from contextlib import contextmanager
-from itertools  import chain
-from re         import search
-from typing     import Generator, Iterable, IO
+from contextlib      import contextmanager
+from itertools       import chain
+from re              import search
+from typing          import IO
+from collections.abc import Generator, Iterable
 
-from vcd        import VCDWriter
-from vcd.writer import Variable
-from vcd.gtkw   import GTKWSave
+from vcd             import VCDWriter
+from vcd.writer      import Variable
+from vcd.gtkw        import GTKWSave
 
-from ..hdl.ast  import SignalDict, Value, Signal
-from ..hdl.ir   import Fragment
-from ._base     import BaseEngine, BaseSignalState, BaseSimulation
-from ._pyclock  import PyClockProcess
-from ._pycoro   import PyCoroProcess
-from ._pyrtl    import _FragmentCompiler
+from ..hdl.ast       import SignalDict, Value, Signal
+from ..hdl.ir        import Fragment
+from ._base          import BaseEngine, BaseSignalState, BaseSimulation
+from ._pyclock       import PyClockProcess
+from ._pycoro        import PyCoroProcess
+from ._pyrtl         import _FragmentCompiler
 
 __all__ = (
 	'PySimEngine',
