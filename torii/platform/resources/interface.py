@@ -3,11 +3,12 @@
 from typing       import Literal
 
 from ..._typing   import IODirection
-from ...build.dsl import Attrs, Clock, Pins, PinsN, Resource, Subsignal, DiffPairs, SubsigArgT, ResourceConn
+from ...build.dsl import Attrs, Clock, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'CANResource',
 	'DirectUSBResource',
+	'HyperBusResource',
 	'I2CResource',
 	'IrDAResource',
 	'JTAGResource',
@@ -15,7 +16,6 @@ __all__ = (
 	'SPIResource',
 	'UARTResource',
 	'ULPIResource',
-	'HyperBusResource',
 )
 
 def UARTResource(
