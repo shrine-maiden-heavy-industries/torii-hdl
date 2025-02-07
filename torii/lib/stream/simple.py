@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__      import annotations
 
 from collections.abc import Iterable
@@ -11,10 +12,9 @@ from ...hdl.ir       import Elaboratable
 from ...hdl.rec      import Record
 from ...hdl.xfrm     import DomainRenamer
 
-
 __all__ = (
-	'StreamInterface',
 	'StreamArbiter',
+	'StreamInterface',
 )
 
 
