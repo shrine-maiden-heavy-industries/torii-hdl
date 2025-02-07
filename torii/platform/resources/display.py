@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ...build.dsl import Attrs, Pins, Resource, Subsignal, SubsigArgT, ResourceConn
+from ...build.dsl import Attrs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'Display7SegResource',
