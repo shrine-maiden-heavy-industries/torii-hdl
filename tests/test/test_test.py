@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import Elaboratable, Module, Signal
+from torii.hdl  import Elaboratable, Module, Signal
 from torii.sim  import Settle
 from torii.test import ToriiTestCase
+
 
 class TestSyncDUT(Elaboratable):
 	def __init__(self) -> None:
