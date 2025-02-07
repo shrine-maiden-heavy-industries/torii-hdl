@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .ast  import (
-	Array, Cat, ClockSignal, Const, Mux, ResetSignal,
-	Shape, Signal, Value, signed, unsigned, Rose, Fell, Stable
+	Array, Cat, ClockSignal, Const, Fell, Mux, ResetSignal, Rose, Shape, Signal, Stable, Value,
+	signed, unsigned
 )
 from .cd   import ClockDomain
 from .dsl  import Module
@@ -20,6 +20,7 @@ __all__ = (
 	'DomainRenamer',
 	'Elaboratable',
 	'EnableInserter',
+	'Fell',
 	'Fragment',
 	'Instance',
 	'Memory',
@@ -28,12 +29,11 @@ __all__ = (
 	'Record',
 	'ResetInserter',
 	'ResetSignal',
+	'Rose',
 	'Shape',
 	'Signal',
 	'signed',
+	'Stable',
 	'unsigned',
 	'Value',
-	'Rose',
-	'Fell',
-	'Stable'
 )
