@@ -2,8 +2,8 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl                 import *
-from torii.sim                 import *
 from torii.lib.coding.priority import Encoder
+from torii.sim                 import *
 
 from ...utils                  import ToriiTestSuiteCase
 
