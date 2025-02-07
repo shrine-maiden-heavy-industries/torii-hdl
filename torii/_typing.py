@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import TYPE_CHECKING
-from typing import TypeAlias, Literal
-from enum   import Enum
+from __future__ import annotations
+
+from enum       import Enum
+from typing     import TYPE_CHECKING, Literal, TypeAlias
 
 # Import any circular deps
 if TYPE_CHECKING:
