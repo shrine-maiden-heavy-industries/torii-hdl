@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .. import Elaboratable, Module, Signal
+from ..hdl.ast import Signal
+from ..hdl.dsl import Module
+from ..hdl.ir  import Elaboratable
 
 __all__ = (
 	'RoundRobin',
