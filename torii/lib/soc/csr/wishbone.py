@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ....           import Cat, Elaboratable, Module, Signal
+from ....hdl.ast    import Cat, Signal
+from ....hdl.dsl    import Module
+from ....hdl.ir     import Elaboratable
 from ....util.units import log2_exact
 from ..memory       import MemoryMap
 from ..wishbone     import Interface as WishboneInterface
