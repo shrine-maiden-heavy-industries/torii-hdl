@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ...      import Elaboratable, Module, Signal
-from .one_hot import Decoder as OneHotDecoder
+from ...hdl.ast import Signal
+from ...hdl.dsl import Module
+from ...hdl.ir  import Elaboratable
+from .one_hot   import Decoder as OneHotDecoder
 
 __all__ = (
 	'Decoder',
