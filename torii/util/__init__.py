@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections.abc import Iterable, Generator
+from collections.abc import Generator, Iterable
 from linecache       import getlines
-from re              import compile, Match
+from re              import Match, compile
 from typing          import TypeAlias, TypeVar
 
 __all__ = (
