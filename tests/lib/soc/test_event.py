@@ -2,10 +2,11 @@
 # torii: UnusedElaboratable=no
 
 from torii               import *
-from torii.sim           import *
 from torii.lib.soc.event import *
+from torii.sim           import *
 
 from ...utils            import ToriiTestSuiteCase
+
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
