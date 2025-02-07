@@ -2,10 +2,11 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl                import *
+from torii.lib.coding.one_hot import Decoder, Encoder
 from torii.sim                import *
-from torii.lib.coding.one_hot import Encoder, Decoder
 
-from ...utils              import ToriiTestSuiteCase
+from ...utils                 import ToriiTestSuiteCase
+
 
 class EncoderTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
