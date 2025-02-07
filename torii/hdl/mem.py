@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__  import annotations
 
 import operator
 from collections import OrderedDict
 
 from ..util      import tracer
-from .ast        import Array, Cat, Const, Signal, Switch, Mux
+from .ast        import Array, Cat, Const, Mux, Signal, Switch
 from .ir         import Elaboratable, Fragment
 
 __all__ = (
