@@ -5,16 +5,17 @@ import os
 from contextlib    import contextmanager
 from warnings      import catch_warnings
 
-from torii.util    import flatten
 from torii.hdl.ast import *
 from torii.hdl.cd  import *
-from torii.hdl.mem import *
-from torii.hdl.rec import *
 from torii.hdl.dsl import *
 from torii.hdl.ir  import *
+from torii.hdl.mem import *
+from torii.hdl.rec import *
 from torii.sim     import *
+from torii.util    import flatten
 
 from ..utils       import *
+
 
 class SimulatorUnitTestCase(ToriiTestSuiteCase):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
