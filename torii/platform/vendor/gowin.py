@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc       import abstractmethod
-from fractions import Fraction
 import re
+from abc        import abstractmethod
+from fractions  import Fraction
 
-from ...hdl     import Const, Module, Instance, Signal, ClockDomain, ClockSignal
+from ...build   import Clock, TemplatedPlatform
+from ...hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Signal
 from ...lib.cdc import ResetSynchronizer
-from ...build   import TemplatedPlatform, Clock
 
 # Acknowledgments:
 #   Parts of this file originate from https://github.com/tcjie/Gowin
