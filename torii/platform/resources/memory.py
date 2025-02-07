@@ -2,7 +2,7 @@
 
 from enum         import Enum, auto, unique
 
-from ...build.dsl import Attrs, DiffPairs, Pins, PinsN, Resource, Subsignal, SubsigArgT, ResourceConn
+from ...build.dsl import Attrs, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'QSPIMode',
