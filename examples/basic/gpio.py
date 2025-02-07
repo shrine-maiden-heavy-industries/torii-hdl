@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import Elaboratable, Module, Signal, Record, Array
+from torii      import Array, Elaboratable, Module, Record, Signal
 from torii.back import verilog
 
 
