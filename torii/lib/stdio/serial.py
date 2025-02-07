@@ -2,7 +2,10 @@
 
 from typing        import Literal
 
-from ...           import Cat, Const, Elaboratable, Module, Record, Signal
+from ...hdl.ast    import Signal
+from ...hdl.dsl    import Cat, Const, Module
+from ...hdl.ir     import Elaboratable
+from ...hdl.rec    import Record
 from ...util.units import bits_for
 from ..cdc         import FFSynchronizer
 from ..io          import Pin
