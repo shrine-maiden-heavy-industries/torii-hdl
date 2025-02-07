@@ -2,11 +2,12 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl             import *
-from torii.sim             import *
+from torii.lib.coding.gray import Decoder, Encoder
 from torii.lib.formal      import Assert, Assume
-from torii.lib.coding.gray import Encoder, Decoder
+from torii.sim             import *
 
 from ...utils              import ToriiTestSuiteCase
+
 
 class ReversibleSpec(Elaboratable):
 	def __init__(self, encoder_cls, decoder_cls, args):
