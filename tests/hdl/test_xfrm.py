@@ -5,9 +5,9 @@ from torii.hdl.ast  import *
 from torii.hdl.cd   import *
 from torii.hdl.dsl  import Module
 from torii.hdl.ir   import *
-from torii.hdl.xfrm import *
 from torii.hdl.mem  import *
 from torii.hdl.mem  import MemoryInstance
+from torii.hdl.xfrm import *
 
 from ..utils        import ToriiTestSuiteCase
 
