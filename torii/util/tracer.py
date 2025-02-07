@@ -2,7 +2,6 @@
 
 from sys       import _getframe, version_info
 from typing    import TYPE_CHECKING
-
 from opcode    import opname
 
 from .._typing import SrcLoc
