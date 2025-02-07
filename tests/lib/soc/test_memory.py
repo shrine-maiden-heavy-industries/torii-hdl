@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.lib.soc.memory import _RangeMap, ResourceInfo, MemoryMap
+from torii.lib.soc.memory import MemoryMap, ResourceInfo, _RangeMap
 
 from ...utils             import ToriiTestSuiteCase
+
 
 class RangeMapTestCase(ToriiTestSuiteCase):
 	def test_insert(self):
