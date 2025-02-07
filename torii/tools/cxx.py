@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from setuptools.command.build_ext import new_compiler
 from os                           import chdir, getcwd
 from sysconfig                    import get_config_var
 from tempfile                     import TemporaryDirectory
+
+from setuptools.command.build_ext import new_compiler
 
 __all__ = (
 	'build_cxx',
