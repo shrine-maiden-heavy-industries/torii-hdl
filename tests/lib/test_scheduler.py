@@ -2,10 +2,11 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl           import *
-from torii.sim           import *
 from torii.lib.scheduler import *
+from torii.sim           import *
 
 from ..utils             import ToriiTestSuiteCase
+
 
 class RoundRobinTestCase(ToriiTestSuiteCase):
 	def test_count(self):
