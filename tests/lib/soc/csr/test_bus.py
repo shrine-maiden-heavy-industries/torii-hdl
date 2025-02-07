@@ -3,11 +3,13 @@
 
 from torii                 import *
 from torii.hdl.rec         import Layout
-from torii.sim             import *
 from torii.lib.soc.csr.bus import *
 from torii.lib.soc.memory  import MemoryMap
+from torii.sim             import *
 
 from ....utils             import ToriiTestSuiteCase
+
+
 class ElementTestCase(ToriiTestSuiteCase):
 	def test_layout_1_ro(self):
 		elem = Element(1, 'r')
