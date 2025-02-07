@@ -4,9 +4,7 @@ from abc        import abstractmethod
 from typing     import Literal
 
 from ....build  import Attrs, Clock, Subsignal, TemplatedPlatform
-from ....hdl    import (
-	ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
-)
+from ....hdl    import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 from ....lib.io import Pin
 
 __all__ = (
