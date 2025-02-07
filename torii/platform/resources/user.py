@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from ..._typing   import IODirectionIO
-from ...build.dsl import Attrs, Pins, Resource, Subsignal, SubsigArgT, ResourceConn
+from ...build.dsl import Attrs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'ButtonResources',
