@@ -1,11 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__      import annotations
 
 from collections     import OrderedDict
 from collections.abc import Generator
 from enum            import Enum
 
-from ...             import Elaboratable, Module, Record, Signal
+from ...hdl.ast      import Signal
+from ...hdl.dsl      import Module
+from ...hdl.ir       import Elaboratable
+from ...hdl.rec      import Record
 
 __all__ = (
 	'EventMap',
