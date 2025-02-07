@@ -4,9 +4,7 @@ from abc        import abstractmethod
 from typing     import Literal
 
 from ...build   import Attrs, TemplatedPlatform
-from ...hdl     import (
-	ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
-)
+from ...hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
 from ...lib.cdc import ResetSynchronizer
 from ...lib.io  import Pin
 
