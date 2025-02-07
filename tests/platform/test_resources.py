@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from torii.build.dsl               import Attrs
-from torii.platform.resources.user import (
-	_SplitResources, LEDResources, ButtonResources, SwitchResources
-)
+from torii.platform.resources.user import ButtonResources, LEDResources, SwitchResources, _SplitResources
 from torii.test                    import ToriiTestCase
 
 
