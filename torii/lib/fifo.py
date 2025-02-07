@@ -4,11 +4,14 @@
 
 from __future__   import annotations
 
-from ..           import Elaboratable, Memory, Module, Mux, ResetSignal, Signal
-from .formal      import Assert, Assume, Initial
+from ..hdl.ast    import Mux, ResetSignal, Signal
+from ..hdl.dsl    import Module
+from ..hdl.ir     import Elaboratable
+from ..hdl.mem    import Memory
 from ..util.units import log2_ceil
 from .cdc         import AsyncFFSynchronizer, FFSynchronizer
 from .coding.gray import Decoder, Encoder
+from .formal      import Assert, Assume, Initial
 
 __all__ = (
 	'AsyncFIFO',
