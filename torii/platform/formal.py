@@ -4,10 +4,10 @@ from typing       import Literal
 
 from ..build.plat import TemplatedPlatform
 from ..build.run  import BuildPlan, BuildProducts
-from ..hdl.ir     import Fragment, Elaboratable
+from ..hdl.ir     import Elaboratable, Fragment
 
 __all__ = (
-	'FormalPlatform'
+	'FormalPlatform',
 )
 
 # TODO(aki): Support other engines, not just smtbmc
