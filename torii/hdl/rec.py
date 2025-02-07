@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
-from __future__      import annotations
+
+from __future__ import annotations
 
 from collections     import OrderedDict
-from collections.abc import Iterable, Generator
-from enum            import Enum, unique, auto, EnumMeta
+from collections.abc import Generator, Iterable
+from enum            import Enum, EnumMeta, auto, unique
 from functools       import reduce, wraps
-from typing          import Any, get_args, get_origin, TypeAlias
 from inspect         import get_annotations, isclass
+from typing          import Any, TypeAlias, get_args, get_origin
 
 from ..util          import tracer, union
-from .ast            import Cat, Shape, Signal, SignalSet, Value, ValueCastable, ShapeCastT
+from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
 	'DIR_FANIN',
