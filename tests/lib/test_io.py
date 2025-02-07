@@ -2,8 +2,8 @@
 
 from torii.hdl     import *
 from torii.hdl.rec import *
-from torii.sim     import *
 from torii.lib.io  import *
+from torii.sim     import *
 
 from ..utils       import ToriiTestSuiteCase
 
