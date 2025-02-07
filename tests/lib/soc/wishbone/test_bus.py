@@ -3,11 +3,12 @@
 
 from torii                      import *
 from torii.hdl.rec              import *
-from torii.sim                  import *
-from torii.lib.soc.wishbone.bus import *
 from torii.lib.soc.memory       import MemoryMap
+from torii.lib.soc.wishbone.bus import *
+from torii.sim                  import *
 
 from ....utils                  import ToriiTestSuiteCase
+
 
 class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
