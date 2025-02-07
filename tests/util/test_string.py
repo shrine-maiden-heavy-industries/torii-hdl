@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.util import string as util_string
 from torii.test import ToriiTestCase
+from torii.util import string as util_string
+
 
 class StringUtilTestCase(ToriiTestCase):
 
