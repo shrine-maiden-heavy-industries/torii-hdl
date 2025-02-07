@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from collections.abc import Iterable, Generator
-from typing          import IO
+from collections.abc import Generator, Iterable
 from contextlib      import contextmanager
+from typing          import IO
 
 from ..hdl           import Signal
 from ..hdl.ir        import Fragment
