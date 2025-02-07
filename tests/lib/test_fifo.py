@@ -2,9 +2,9 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl        import *
-from torii.sim        import *
 from torii.lib.fifo   import *
 from torii.lib.formal import *
+from torii.sim        import *
 
 from ..utils          import ToriiTestSuiteCase
 
