@@ -4,11 +4,11 @@
 from torii                  import *
 from torii.lib.fifo         import SyncFIFO
 from torii.lib.io           import pin_layout
+from torii.lib.stdio.serial import *
 from torii.sim              import *
 
-from torii.lib.stdio.serial import *
-
 from ...utils               import ToriiTestSuiteCase
+
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
