@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from collections.abc import Generator, Iterable
 from contextlib      import contextmanager
 from itertools       import chain
 from re              import search
 from typing          import IO
-from collections.abc import Generator, Iterable
 
 from vcd             import VCDWriter
-from vcd.writer      import Variable
 from vcd.gtkw        import GTKWSave
+from vcd.writer      import Variable
 
-from ..hdl.ast       import SignalDict, Value, Signal
+from ..hdl.ast       import Signal, SignalDict, Value
 from ..hdl.ir        import Fragment
 from ._base          import BaseEngine, BaseSignalState, BaseSimulation
 from ._pyclock       import PyClockProcess
