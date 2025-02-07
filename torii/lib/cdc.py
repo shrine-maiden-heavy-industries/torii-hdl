@@ -2,9 +2,10 @@
 
 from typing import Literal
 
-from ..     import (
-	ClockDomain, ClockSignal, Elaboratable, Module, ResetSignal, Signal
-)
+from ..hdl.ast import ClockSignal, ResetSignal, Signal
+from ..hdl.cd  import ClockDomain
+from ..hdl.dsl import Module
+from ..hdl.ir  import Elaboratable
 
 __all__ = (
 	'AsyncFFSynchronizer',
