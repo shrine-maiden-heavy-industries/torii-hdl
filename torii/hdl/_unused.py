@@ -3,7 +3,7 @@
 import sys
 from sys      import _getframe
 from types    import TracebackType
-from typing   import TypeVar, TypedDict, Any
+from typing   import Any, TypedDict, TypeVar
 from warnings import warn_explicit
 
 from ..util   import get_linter_option
