@@ -6,6 +6,7 @@ from torii.hdl.mem import *
 
 from ..utils       import ToriiTestSuiteCase
 
+
 class MemoryTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		m1 = Memory(width = 8, depth = 4)
