@@ -1,24 +1,24 @@
 # SPDX-License-Identifier: BSD-2-Clause
-from __future__     import annotations
+
+from __future__      import annotations
 
 import warnings
 from collections     import OrderedDict
-from collections.abc import Callable, Iterable, Generator
+from collections.abc import Callable, Generator, Iterable
 from contextlib      import _GeneratorContextManager, contextmanager
 from functools       import wraps
 from sys             import version_info
-from typing          import ParamSpec, Any, TypedDict, TYPE_CHECKING
+from typing          import TYPE_CHECKING, Any, ParamSpec, TypedDict
 
+from .._typing       import SrcLoc, SwitchCaseT
 from ..util          import flatten, tracer
 from ..util.units    import bits_for
 from .ast            import (
-	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value,
-	_StatementList, ValueCastT
+	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value, ValueCastT, _StatementList
 )
 from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment
 from .xfrm           import SampleDomainInjector
-from .._typing       import SrcLoc, SwitchCaseT
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
