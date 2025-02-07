@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from __future__      import annotations
 
 from bisect          import bisect_left, bisect_right
 from collections.abc import Generator, Iterable
 
-from ...util.units import bits_for
+from ...util.units   import bits_for
 
 __all__ = (
 	'MemoryMap',
