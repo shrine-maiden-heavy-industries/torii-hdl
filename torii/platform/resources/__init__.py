@@ -8,18 +8,16 @@ from .extensions import (
 	PmodUARTType4AResource, PmodUARTType4Resource
 )
 from .interface  import (
-	CANResource, DirectUSBResource, I2CResource, IrDAResource,
-	JTAGResource, PS2Resource, SPIResource, UARTResource,
-	ULPIResource, HyperBusResource
+	CANResource, DirectUSBResource, HyperBusResource,
+	I2CResource, IrDAResource, JTAGResource, PS2Resource,
+	SPIResource, UARTResource, ULPIResource
 )
 from .memory     import (
 	DDR3Resource, NORFlashResources, QSPIFlashResource,
 	SDCardResources, SDRAMResource, SPIFlashResources,
 	SRAMResource
 )
-from .user       import (
-	ButtonResources, LEDResources, RGBLEDResource, SwitchResources
-)
+from .user       import ButtonResources, LEDResources, RGBLEDResource, SwitchResources
 
 __all__ = (
 	'Display7SegResource',
@@ -37,6 +35,7 @@ __all__ = (
 
 	'CANResource',
 	'DirectUSBResource',
+	'HyperBusResource',
 	'I2CResource',
 	'IrDAResource',
 	'JTAGResource',
@@ -44,7 +43,6 @@ __all__ = (
 	'SPIResource',
 	'UARTResource',
 	'ULPIResource',
-	'HyperBusResource',
 
 	'DDR3Resource',
 	'NORFlashResources',
