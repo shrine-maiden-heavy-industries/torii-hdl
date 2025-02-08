@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from random           import randbytes
+from random                  import randbytes
 
-from torii.hdl.dsl    import Module
-from torii.hdl.ir     import Elaboratable
-from torii.lib.stream import StreamInterface, StreamArbiter
-from torii.sim.core   import Settle
-from torii.test       import ToriiTestCase
+from torii.hdl.dsl           import Module
+from torii.hdl.ir            import Elaboratable
+from torii.lib.stream.simple import StreamInterface, StreamArbiter
+from torii.sim.core          import Settle
+from torii.test              import ToriiTestCase
 
-from ..utils          import ToriiTestSuiteCase
+from ...utils                import ToriiTestSuiteCase
 
 
 class StreamInterfaceTestCase(ToriiTestSuiteCase):
