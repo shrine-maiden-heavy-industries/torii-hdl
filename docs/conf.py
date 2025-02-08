@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
-import os, sys
+import os, sys, datetime
 from pathlib import Path
 sys.path.insert(0, os.path.abspath('.'))
 
@@ -11,7 +11,7 @@ ROOT_DIR = (Path(__file__).parent).parent
 project   = 'Torii-HDL'
 version   = torii_version
 release   = version.split('+')[0]
-copyright = '2022, Shrine Maiden Heavy Industries'
+copyright = f'{datetime.date.today().year}, Shrine Maiden Heavy Industries'
 language  = 'en'
 
 extensions = [
