@@ -26,6 +26,8 @@ Unreleased template stuff
   - `torii.lib.stream.StreamInterface` - A unidirectional stream interface.
   - `torii.lib.stream.StreamArbiter` - A simple N:1 stream arbiter for `StreamInterface`s
 
+- Added `torii.vendor.asic` OpenLANE ASIC flow support
+
 ### Changed
 
 ### Deprecated
