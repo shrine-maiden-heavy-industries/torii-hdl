@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys      import _getframe, excepthook
+import sys
+from sys      import _getframe
 from types    import TracebackType
 from typing   import TypeVar, TypedDict, Any
 from warnings import warn_explicit
@@ -56,7 +57,7 @@ class MustUse:
 					**self._MustUse__context
 				)
 
-_old_excepthook = excepthook
+_old_excepthook = sys.excepthook
 def _silence_elaboratable(
 	type: type[BaseException], value: BaseException, traceback: TracebackType | None
 ) -> None:
@@ -64,4 +65,4 @@ def _silence_elaboratable(
 	# traceback instead of helping.
 	MustUse._MustUse__silence = True
 	_old_excepthook(type, value, traceback)
-excepthook = _silence_elaboratable
+sys.excepthook = _silence_elaboratable
