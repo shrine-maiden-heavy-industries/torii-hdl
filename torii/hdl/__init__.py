@@ -2,7 +2,7 @@
 
 from .ast  import (
 	Array, Cat, ClockSignal, Const, Mux, ResetSignal,
-	Shape, Signal, Value, signed, unsigned
+	Shape, Signal, Value, signed, unsigned, Rose, Fell, Stable
 )
 from .cd   import ClockDomain
 from .dsl  import Module
@@ -33,4 +33,7 @@ __all__ = (
 	'signed',
 	'unsigned',
 	'Value',
+	'Rose',
+	'Fell',
+	'Stable'
 )
