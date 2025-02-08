@@ -34,6 +34,8 @@ Unreleased template stuff
 
 ### Removed
 
+- Removed deprecated `torii.asserts` module, it's now only in `torii.lib.formal`
+
 ### Fixed
 
 ## [0.7.1]

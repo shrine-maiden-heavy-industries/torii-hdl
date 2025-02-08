@@ -2,7 +2,6 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl           import *
-from torii.asserts       import *
 from torii.sim           import *
 from torii.lib.scheduler import *
 

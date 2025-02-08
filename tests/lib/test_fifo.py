@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl      import *
-from torii.asserts  import *
-from torii.sim      import *
-from torii.lib.fifo import *
+from torii.hdl        import *
+from torii.sim        import *
+from torii.lib.fifo   import *
+from torii.lib.formal import *
 
-from ..utils        import ToriiTestSuiteCase
+from ..utils          import ToriiTestSuiteCase
 
 
 class FIFOTestCase(ToriiTestSuiteCase):
