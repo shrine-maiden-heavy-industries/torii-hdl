@@ -1,6 +1,5 @@
 from torii import *
 
-
 class UpCounter(Elaboratable):
     '''
     A 16-bit up counter with a fixed limit.
