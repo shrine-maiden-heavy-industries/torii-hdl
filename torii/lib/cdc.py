@@ -14,7 +14,6 @@ __all__ = (
 	'ResetSynchronizer',
 )
 
-
 def _check_stages(stages: int):
 	if not isinstance(stages, int) or stages < 1:
 		raise TypeError(f'Synchronization stage count must be a positive integer, not {stages!r}')

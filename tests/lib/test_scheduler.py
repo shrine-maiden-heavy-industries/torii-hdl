@@ -7,7 +7,6 @@ from torii.sim           import *
 
 from ..utils             import ToriiTestSuiteCase
 
-
 class RoundRobinTestCase(ToriiTestSuiteCase):
 	def test_count(self):
 		dut = RoundRobin(count = 32)

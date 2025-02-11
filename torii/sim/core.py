@@ -19,7 +19,6 @@ __all__ = (
 	'Tick',
 )
 
-
 class Command:
 	pass
 

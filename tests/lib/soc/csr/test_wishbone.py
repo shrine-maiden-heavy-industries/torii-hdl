@@ -8,7 +8,6 @@ from torii.sim                  import *
 
 from ....utils                  import ToriiTestSuiteCase
 
-
 class MockRegister(Elaboratable):
 	def __init__(self, width, name):
 		self.element = csr.Element(width, 'rw', name = name)

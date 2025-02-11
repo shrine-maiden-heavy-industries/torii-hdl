@@ -8,7 +8,6 @@ from torii.hdl.ast import *
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class UnsignedEnum(Enum):
 	FOO = 1
 	BAR = 2

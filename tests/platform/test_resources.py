@@ -4,7 +4,6 @@ from torii.build.dsl               import Attrs
 from torii.platform.resources.user import ButtonResources, LEDResources, SwitchResources, _SplitResources
 from torii.test                    import ToriiTestCase
 
-
 class ResourcesTestCase(ToriiTestCase):
 
 	def test_split_resources(self):

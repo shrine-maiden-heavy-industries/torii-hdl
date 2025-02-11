@@ -36,7 +36,6 @@ __all__ = (
 	'ValueVisitor',
 )
 
-
 class ValueVisitor(metaclass = ABCMeta):
 	@abstractmethod
 	def on_Const(self, value):

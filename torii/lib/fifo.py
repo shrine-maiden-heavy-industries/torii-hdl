@@ -21,7 +21,6 @@ __all__ = (
 	'SyncFIFOBuffered',
 )
 
-
 class FIFOInterface:
 	_doc_template = '''
 	{description}

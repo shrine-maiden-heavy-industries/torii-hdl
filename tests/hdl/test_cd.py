@@ -4,7 +4,6 @@ from torii.hdl.cd import *
 
 from ..utils      import ToriiTestSuiteCase
 
-
 class ClockDomainTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		sync = ClockDomain()

@@ -4,7 +4,6 @@ from torii.hdl  import Elaboratable, Module, Signal
 from torii.sim  import Settle
 from torii.test import ToriiTestCase
 
-
 class TestSyncDUT(Elaboratable):
 	def __init__(self) -> None:
 		self.a = Signal(reset = 1)

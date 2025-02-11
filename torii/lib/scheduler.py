@@ -8,7 +8,6 @@ __all__ = (
 	'RoundRobin',
 )
 
-
 class RoundRobin(Elaboratable):
 	'''
 	Round-robin scheduler.

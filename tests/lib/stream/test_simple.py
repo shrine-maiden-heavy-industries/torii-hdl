@@ -10,7 +10,6 @@ from torii.test              import ToriiTestCase
 
 from ...utils                import ToriiTestSuiteCase
 
-
 class StreamInterfaceTestCase(ToriiTestSuiteCase):
 
 	def test_record(self) -> None:

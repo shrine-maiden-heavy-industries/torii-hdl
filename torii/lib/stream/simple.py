@@ -17,7 +17,6 @@ __all__ = (
 	'StreamInterface',
 )
 
-
 class StreamInterface(Record):
 	'''
 	A simple interface representing a unidirectional stream.

@@ -7,12 +7,10 @@ from torii.hdl.rec import *
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class UnsignedEnum(Enum):
 	FOO = 1
 	BAR = 2
 	BAZ = 3
-
 
 class LayoutTestCase(ToriiTestSuiteCase):
 	def assertFieldEqual(self, field, expected):

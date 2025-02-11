@@ -19,7 +19,6 @@ __all__ = (
 	'Interface',
 )
 
-
 class CycleType(Enum):
 	''' Wishbone Registered Feedback cycle type. '''
 	CLASSIC      = 0b000

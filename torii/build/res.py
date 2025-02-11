@@ -16,7 +16,6 @@ __all__ = (
 	'ResourceManager',
 )
 
-
 class ResourceError(Exception):
 	pass
 

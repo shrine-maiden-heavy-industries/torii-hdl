@@ -3,7 +3,6 @@
 from torii.test import ToriiTestCase
 from torii.util import string as util_string
 
-
 class StringUtilTestCase(ToriiTestCase):
 
 	def test_ascii_escape(self):

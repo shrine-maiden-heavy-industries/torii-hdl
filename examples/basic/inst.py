@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Instance, Module, Signal
 from torii.back import verilog
 
-
 class System(Elaboratable):
 	def __init__(self):
 		self.adr   = Signal(16)

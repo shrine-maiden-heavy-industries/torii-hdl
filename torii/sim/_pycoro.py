@@ -12,7 +12,6 @@ __all__ = (
 	'PyCoroProcess',
 )
 
-
 class PyCoroProcess(BaseProcess):
 	def __init__(self, state, domains, constructor, *, default_cmd = None):
 		self.state = state

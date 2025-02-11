@@ -2,7 +2,6 @@
 
 from torii import Cat, Const, Elaboratable, Module, Signal
 
-
 class UART(Elaboratable):
 	'''
 	Parameters

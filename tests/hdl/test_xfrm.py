@@ -11,7 +11,6 @@ from torii.hdl.xfrm import *
 
 from ..utils        import ToriiTestSuiteCase
 
-
 class DomainRenamerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()

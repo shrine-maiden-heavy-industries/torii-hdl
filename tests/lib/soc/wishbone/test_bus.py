@@ -9,7 +9,6 @@ from torii.sim                  import *
 
 from ....utils                  import ToriiTestSuiteCase
 
-
 class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		iface = Interface(addr_width = 32, data_width = 8)

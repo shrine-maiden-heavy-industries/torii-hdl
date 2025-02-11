@@ -16,7 +16,6 @@ __all__ = (
 	'GowinPlatform',
 )
 
-
 class GowinPlatform(TemplatedPlatform):
 	'''
 	.. rubric:: Apicula toolchain

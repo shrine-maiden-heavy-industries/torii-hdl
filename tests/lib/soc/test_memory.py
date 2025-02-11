@@ -4,7 +4,6 @@ from torii.lib.soc.memory import MemoryMap, ResourceInfo, _RangeMap
 
 from ...utils             import ToriiTestSuiteCase
 
-
 class RangeMapTestCase(ToriiTestSuiteCase):
 	def test_insert(self):
 		range_map = _RangeMap()

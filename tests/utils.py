@@ -18,7 +18,6 @@ __all__ = (
 	'ToriiTestSuiteCase',
 )
 
-
 class ToriiTestSuiteCase(ToriiTestCase):
 	def assertRepr(self, obj, repr_str):
 		if isinstance(obj, list):

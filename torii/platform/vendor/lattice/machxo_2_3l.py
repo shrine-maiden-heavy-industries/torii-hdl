@@ -13,7 +13,6 @@ __all__ = (
 	'MachXO3LPlatform',
 )
 
-
 # MachXO2 and MachXO3L primitives are the same. Handle both using
 # one class and expose user-aliases for convenience.
 class MachXO2Or3LPlatform(TemplatedPlatform):

@@ -7,7 +7,6 @@ from torii.sim     import *
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class FFSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(

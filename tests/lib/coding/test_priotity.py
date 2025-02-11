@@ -7,7 +7,6 @@ from torii.sim                 import *
 
 from ...utils                  import ToriiTestSuiteCase
 
-
 class PriorityEncoderTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		enc = Encoder(4)

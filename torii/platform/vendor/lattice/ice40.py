@@ -12,7 +12,6 @@ __all__ = (
 	'ICE40Platform',
 )
 
-
 class ICE40Platform(TemplatedPlatform):
 	'''
 	.. rubric:: IceStorm toolchain

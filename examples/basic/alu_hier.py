@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Module, Signal
 from torii.back import verilog
 
-
 class Adder(Elaboratable):
 	def __init__(self, width: int):
 		self.a   = Signal(width)

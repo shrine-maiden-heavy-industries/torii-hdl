@@ -6,7 +6,6 @@ __all__ = (
 	'PyClockProcess',
 )
 
-
 class PyClockProcess(BaseProcess):
 	def __init__(self, state, signal, *, phase, period):
 		if len(signal) != 1:

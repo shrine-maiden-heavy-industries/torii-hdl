@@ -1,6 +1,5 @@
 from torii import *
 
-
 class LEDBlinker(Elaboratable):
     def elaborate(self, platform):
         m = Module()

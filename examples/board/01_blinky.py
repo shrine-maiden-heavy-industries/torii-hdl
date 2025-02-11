@@ -6,7 +6,6 @@ from torii                                     import Elaboratable, Module, Sign
 
 from torii_boards.lattice.ice40_hx1k_blink_evn import ICE40HX1KBlinkEVNPlatform
 
-
 class Blinky(Elaboratable):
 	def elaborate(self, platform) -> Module:
 		led   = platform.request('led', 0)

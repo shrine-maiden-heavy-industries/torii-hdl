@@ -27,7 +27,6 @@ __all__ = (
 	'UnusedElaboratable',
 )
 
-
 class UnusedElaboratable(UnusedMustUse):
 	# The warning is initially silenced. If everything that has been constructed remains unused,
 	# it means the application likely crashed (with an exception, or in another way that does not

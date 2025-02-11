@@ -8,7 +8,6 @@ __all__ = (
 	'VGAResource',
 )
 
-
 def Display7SegResource(
 	name_or_number: str | int, number: int | None = None, *,
 	a: str, b: str, c: str, d: str, e: str, f: str, g: str, dp: str | None = None,

@@ -3,7 +3,6 @@
 from torii      import ClockDomain, ClockSignal, Module, ResetSignal, Signal
 from torii.back import verilog
 
-
 m = Module()
 cd_por  = ClockDomain(reset_less = True)
 cd_sync = ClockDomain()

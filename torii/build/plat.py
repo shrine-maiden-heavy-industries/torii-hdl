@@ -31,7 +31,6 @@ __all__ = (
 	'TemplatedPlatform',
 )
 
-
 class Platform(ResourceManager, metaclass = ABCMeta):
 	@property
 	@abstractmethod

@@ -4,7 +4,6 @@ from torii                 import ClockDomain, ClockSignal, Elaboratable, Module
 from torii.lib.formal      import Assert, Assume, Initial
 from torii.platform.formal import FormalPlatform
 
-
 class Counter(Elaboratable):
 	def __init__(self, max_count: int, buggy: bool) -> None:
 		self.max = max_count

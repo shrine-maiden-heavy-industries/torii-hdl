@@ -16,7 +16,6 @@ __all__ = (
 	'AsyncSerialTX',
 )
 
-
 def _check_divisor(divisor: int, bound: int):
 	if divisor < bound:
 		raise ValueError(f'Invalid divisor {divisor!r}; must be greater than or equal to {bound}')

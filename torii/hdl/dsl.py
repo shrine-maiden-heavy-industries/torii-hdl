@@ -29,7 +29,6 @@ __all__ = (
 	'SyntaxWarning',
 )
 
-
 class SyntaxError(Exception):
 	pass
 

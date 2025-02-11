@@ -13,7 +13,6 @@ __all__ = (
 	'EventMonitor',
 )
 
-
 class EventMonitor(Elaboratable):
 	'''
 	Event monitor.

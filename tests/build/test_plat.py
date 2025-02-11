@@ -5,7 +5,6 @@ from torii.build.plat import *
 
 from ..utils          import ToriiTestSuiteCase
 
-
 class MockPlatform(Platform):
 	resources  = []
 	connectors = []

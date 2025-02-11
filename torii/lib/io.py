@@ -11,7 +11,6 @@ __all__ = (
 	'Pin',
 )
 
-
 def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
 	'''
 	Layout of the platform interface of a pin or several pins, which may be used inside

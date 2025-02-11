@@ -6,7 +6,6 @@ from torii.build.dsl import *
 
 from ..utils         import ToriiTestSuiteCase
 
-
 class PinsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		p = Pins('A0 A1 A2')

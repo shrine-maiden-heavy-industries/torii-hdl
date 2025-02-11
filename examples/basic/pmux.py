@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Module, Signal
 from torii.back import verilog
 
-
 class ParMux(Elaboratable):
 	def __init__(self, width):
 		self.s = Signal(3)

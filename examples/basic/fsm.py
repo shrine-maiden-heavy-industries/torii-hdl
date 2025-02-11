@@ -3,7 +3,6 @@
 from torii      import Cat, Elaboratable, Module, Signal
 from torii.back import verilog
 
-
 class UARTReceiver(Elaboratable):
 	def __init__(self, divisor: int):
 		self.divisor = divisor

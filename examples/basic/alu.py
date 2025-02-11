@@ -3,7 +3,6 @@
 from torii      import Cat, Elaboratable, Module, Signal
 from torii.back import verilog
 
-
 class ALU(Elaboratable):
 	def __init__(self, width: int):
 		self.sel = Signal(2)

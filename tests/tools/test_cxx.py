@@ -7,7 +7,6 @@ import tempfile
 from torii.test      import ToriiTestCase
 from torii.tools.cxx import build_cxx
 
-
 class ToolchainCxxTestCase(ToriiTestCase):
 	def setUp(self):
 		self.include_dir = None

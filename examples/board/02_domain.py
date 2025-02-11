@@ -10,7 +10,6 @@ from torii                                     import (
 
 from torii_boards.lattice.ice40_hx1k_blink_evn import ICE40HX1KBlinkEVNPlatform
 
-
 class BlinkyWithDomain(Elaboratable):
 	def elaborate(self, platform) -> Module:
 		clk3p3 = platform.request('clk3p3')

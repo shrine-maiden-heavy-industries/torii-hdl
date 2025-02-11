@@ -12,7 +12,6 @@ __all__ = (
 	'XilinxPlatform',
 )
 
-
 class XilinxPlatform(TemplatedPlatform):
 	'''
 	.. rubric:: Vivado toolchain

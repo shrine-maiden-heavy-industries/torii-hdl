@@ -15,7 +15,6 @@ __all__ = (
 	'PeripheralInfo',
 )
 
-
 class ConstantValue:
 	pass
 

@@ -12,7 +12,6 @@ from torii.hdl.dsl import *
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class DSLTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s1 = Signal()

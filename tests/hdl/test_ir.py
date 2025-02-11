@@ -11,7 +11,6 @@ from torii.tools   import ToolNotFound
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class ElaboratesToNone(Elaboratable):
 	def elaborate(self, platform):
 		return

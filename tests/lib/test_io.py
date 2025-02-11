@@ -7,7 +7,6 @@ from torii.sim     import *
 
 from ..utils       import ToriiTestSuiteCase
 
-
 class PinLayoutTestCase(ToriiTestSuiteCase):
 	def assertLayoutEqual(self, layout, expected):
 		casted_layout = {}

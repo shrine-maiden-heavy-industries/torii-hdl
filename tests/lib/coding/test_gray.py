@@ -8,7 +8,6 @@ from torii.sim             import *
 
 from ...utils              import ToriiTestSuiteCase
 
-
 class ReversibleSpec(Elaboratable):
 	def __init__(self, encoder_cls, decoder_cls, args):
 		self.encoder_cls = encoder_cls

@@ -7,7 +7,6 @@ from torii.sim           import *
 
 from ...utils            import ToriiTestSuiteCase
 
-
 def simulation_test(dut, process):
 	sim = Simulator(dut)
 	sim.add_clock(1e-6)

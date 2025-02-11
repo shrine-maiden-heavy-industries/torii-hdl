@@ -10,7 +10,6 @@ from torii                 import (
 from torii.lib.formal      import AnyConst, Assert, Assume, Initial, Past, Rose
 from torii.platform.formal import FormalPlatform
 
-
 class SyncFIFO(Elaboratable):
 	def _incr(self, signal, modulo: int):
 		if modulo == 2 ** len(signal):

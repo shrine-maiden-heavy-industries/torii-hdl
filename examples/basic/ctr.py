@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Module, Signal
 from torii.back import verilog
 
-
 class Counter(Elaboratable):
 	def __init__(self, width: int):
 		self.v = Signal(width, reset = 2**width-1)

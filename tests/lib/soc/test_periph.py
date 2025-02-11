@@ -6,7 +6,6 @@ from torii.lib.soc.periph import *
 
 from ...utils             import ToriiTestSuiteCase
 
-
 class ConstantBoolTestCase(ToriiTestSuiteCase):
 	def test_init(self):
 		a = ConstantBool(True)

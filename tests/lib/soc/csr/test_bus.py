@@ -9,7 +9,6 @@ from torii.sim             import *
 
 from ....utils             import ToriiTestSuiteCase
 
-
 class ElementTestCase(ToriiTestSuiteCase):
 	def test_layout_1_ro(self):
 		elem = Element(1, 'r')

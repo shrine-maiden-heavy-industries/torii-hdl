@@ -16,7 +16,6 @@ from torii.util    import flatten
 
 from ..utils       import *
 
-
 class SimulatorUnitTestCase(ToriiTestSuiteCase):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
 		inputs = [Value.cast(i) for i in inputs]

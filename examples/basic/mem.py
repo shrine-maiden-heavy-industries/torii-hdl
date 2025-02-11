@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Memory, Module, Signal
 from torii.back import verilog
 
-
 class RegisterFile(Elaboratable):
 	def __init__(self):
 		self.adr   = Signal(4)

@@ -17,7 +17,6 @@ __all__ = (
 	'Source',
 )
 
-
 class Source(Record):
 	class Trigger(Enum):
 		''' Event trigger mode. '''

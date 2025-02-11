@@ -16,7 +16,6 @@ __all__ = (
 	'WritePort',
 )
 
-
 class Memory(Elaboratable):
 	'''
 	A word addressable storage.

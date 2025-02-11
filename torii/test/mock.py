@@ -7,7 +7,6 @@ __all__ = (
 	'MockRecord',
 )
 
-
 class MockRecord(Record):
 	'''
 	Mock Torii Record

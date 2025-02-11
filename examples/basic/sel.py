@@ -3,7 +3,6 @@
 from torii      import Elaboratable, Module, Record, Signal
 from torii.back import verilog
 
-
 class FlatGPIO(Elaboratable):
 	def __init__(self, pins, bus):
 		self.pins = pins

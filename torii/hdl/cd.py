@@ -10,7 +10,6 @@ __all__ = (
 	'DomainError',
 )
 
-
 class DomainError(Exception):
 	pass
 

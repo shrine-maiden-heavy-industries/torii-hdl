@@ -10,7 +10,6 @@ __all__ = (
 	'YosysError',
 )
 
-
 def _convert_rtlil_text(
 	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str, ...] = ()
 ) -> str:

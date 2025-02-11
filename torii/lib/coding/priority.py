@@ -10,7 +10,6 @@ __all__ = (
 	'Encoder',
 )
 
-
 class Encoder(Elaboratable):
 	'''
 	Priority encode requests to binary.

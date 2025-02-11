@@ -8,7 +8,6 @@ from torii.sim        import *
 
 from ..utils          import ToriiTestSuiteCase
 
-
 class FIFOTestCase(ToriiTestSuiteCase):
 	def test_depth_wrong(self):
 		with self.assertRaisesRegex(
