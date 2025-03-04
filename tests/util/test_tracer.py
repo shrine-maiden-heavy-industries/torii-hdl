@@ -3,7 +3,7 @@
 from types         import SimpleNamespace
 
 from torii.hdl     import ast
-from torii.hdl.ast import *
+from torii.hdl.ast import Signal
 from torii.test    import ToriiTestCase
 
 class TracerTestCase(ToriiTestCase):
