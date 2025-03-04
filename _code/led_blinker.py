@@ -19,5 +19,4 @@ class LEDBlinker(Elaboratable):
 # --- BUILD ---
 from torii_boards.icestick import *
 
-
 ICEStickPlatform().build(LEDBlinker(), do_program = True)

@@ -42,7 +42,6 @@ class UpCounter(Elaboratable):
 # --- TEST ---
 from torii.sim import Simulator
 
-
 dut = UpCounter(25)
 def bench():
     # Disabled counter should not overflow.
@@ -63,7 +62,6 @@ def bench():
     yield
     assert not (yield dut.ovf)
 
-
 sim = Simulator(dut)
 sim.add_clock(1e-6) # 1 MHz
 sim.add_sync_process(bench)
@@ -71,7 +69,6 @@ with sim.write_vcd('up_counter.vcd'):
     sim.run()
 # --- CONVERT ---
 from torii.back import verilog
-
 
 top = UpCounter(25)
 with open('up_counter.v', 'w') as f:

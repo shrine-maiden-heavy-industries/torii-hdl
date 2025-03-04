@@ -7,7 +7,6 @@ from torii import __version__ as torii_version
 
 ROOT_DIR = (Path(__file__).parent).parent
 
-
 project   = 'Torii-HDL'
 version   = torii_version
 release   = version.split('+')[0]
@@ -57,7 +56,6 @@ templates_path = [
 	'_templates',
 ]
 
-
 html_context = {
 	'display_lower_left': False,
 	'current_language'  : language,
@@ -71,7 +69,6 @@ html_context = {
 		('latest', '/latest')
 	]
 }
-
 
 html_baseurl     = 'https://torii.shmdn.link/'
 html_theme       = 'sphinx_rtd_theme'
