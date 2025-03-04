@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl             import *
+from torii.hdl.dsl         import Module
+from torii.hdl.ir          import Elaboratable
 from torii.lib.coding.gray import Decoder, Encoder
 from torii.lib.formal      import Assert, Assume
-from torii.sim             import *
 
 from ...utils              import ToriiTestSuiteCase
 

@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl                 import *
 from torii.lib.coding.priority import Encoder
-from torii.sim                 import *
+from torii.sim                 import Settle, Simulator
 
 from ...utils                  import ToriiTestSuiteCase
 
