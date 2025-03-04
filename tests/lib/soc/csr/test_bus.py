@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii                 import *
+from torii.hdl.dsl         import Module
 from torii.hdl.rec         import Layout
-from torii.lib.soc.csr.bus import *
+from torii.hdl.ir          import Fragment
+from torii.lib.soc.csr.bus import Decoder, Element, Interface, Multiplexer
 from torii.lib.soc.memory  import MemoryMap
-from torii.sim             import *
+from torii.sim             import Delay, Simulator
 
 from ....utils             import ToriiTestSuiteCase
 

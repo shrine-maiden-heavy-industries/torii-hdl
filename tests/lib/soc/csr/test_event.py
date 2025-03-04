@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii             import *
 from torii.lib.soc     import event
-from torii.lib.soc.csr import *
-from torii.sim         import *
+from torii.lib.soc.csr import Element, EventMonitor
+from torii.sim         import Delay, Simulator
 
 from ....utils         import ToriiTestSuiteCase
 
