@@ -68,7 +68,7 @@ sim.add_sync_process(bench)
 with sim.write_vcd('up_counter.vcd'):
     sim.run()
 # --- CONVERT ---
-from torii.back import verilog
+from torii.back import verilog  # noqa: E402
 
 top = UpCounter(25)
 with open('up_counter.v', 'w') as f:

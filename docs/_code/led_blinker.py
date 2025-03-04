@@ -17,6 +17,6 @@ class LEDBlinker(Elaboratable):
 
         return m
 # --- BUILD ---
-from torii_boards.icestick import *
+from torii_boards.lattice.icestick import ICEStickPlatform # noqa: E402
 
 ICEStickPlatform().build(LEDBlinker(), do_program = True)
