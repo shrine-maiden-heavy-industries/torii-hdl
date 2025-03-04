@@ -4,8 +4,7 @@ __pycache__/
 /.eggs
 /dist
 /.venv
-/.vs
-/.vscode
+/.env
 .nox/
 .mypy_cache/
 
@@ -25,3 +24,7 @@ __pycache__/
 /*.vhd
 /*.vhdl
 /build
+
+# Code Editors/IDEs
+/.vs
+/.vscode
