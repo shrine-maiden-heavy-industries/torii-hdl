@@ -10,7 +10,6 @@ from torii.sim              import Simulator
 
 from ...utils               import ToriiTestSuiteCase
 
-
 def simulation_test(dut, process):
 	sim = Simulator(dut)
 	with sim.write_vcd('test.vcd'):
