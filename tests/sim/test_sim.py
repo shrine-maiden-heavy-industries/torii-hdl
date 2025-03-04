@@ -5,16 +5,19 @@ import os
 from contextlib    import contextmanager
 from warnings      import catch_warnings
 
-from torii.hdl.ast import *
-from torii.hdl.cd  import *
-from torii.hdl.dsl import *
-from torii.hdl.ir  import *
-from torii.hdl.mem import *
-from torii.hdl.rec import *
-from torii.sim     import *
+from torii.hdl.ast import (
+	Array, Cat, Const, Fell, Mux, Past, Rose, Signal, Stable, Value, ValueCastable, signed, unsigned,
+)
+from torii.hdl.cd  import ClockDomain
+from torii.hdl.dsl import Module, Statement
+from torii.hdl.ir  import Fragment
+from torii.hdl.mem import Memory
+from torii.hdl.rec import Record
+from torii.sim     import Delay, Passive, Settle, Simulator, Tick
 from torii.util    import flatten
 
-from ..utils       import *
+from ..utils       import ToriiTestSuiteCase
+
 
 class SimulatorUnitTestCase(ToriiTestSuiteCase):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
