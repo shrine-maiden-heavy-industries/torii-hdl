@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii                      import *
+from torii.hdl.ast              import Signal
+from torii.hdl.dsl              import Module
+from torii.hdl.ir               import Elaboratable
 from torii.lib.soc              import csr
-from torii.lib.soc.csr.wishbone import *
-from torii.sim                  import *
+from torii.lib.soc.csr.wishbone import WishboneCSRBridge
+from torii.sim                  import Simulator
 
 from ....utils                  import ToriiTestSuiteCase
 
