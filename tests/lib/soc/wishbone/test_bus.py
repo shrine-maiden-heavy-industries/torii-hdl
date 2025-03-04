@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii                      import *
-from torii.hdl.rec              import *
+from torii.hdl.dsl              import Module
+from torii.hdl.ir               import Elaboratable
+from torii.hdl.rec              import DIR_FANIN, DIR_FANOUT, Layout
 from torii.lib.soc.memory       import MemoryMap
-from torii.lib.soc.wishbone.bus import *
-from torii.sim                  import *
+from torii.lib.soc.wishbone.bus import Arbiter, BurstTypeExt, CycleType, Decoder, Interface
+from torii.sim                  import Delay, Simulator, Tick
 
 from ....utils                  import ToriiTestSuiteCase
 
