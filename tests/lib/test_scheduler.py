@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl           import *
-from torii.lib.scheduler import *
-from torii.sim           import *
+from torii.lib.scheduler import RoundRobin
+from torii.sim           import Delay, Simulator
 
 from ..utils             import ToriiTestSuiteCase
 

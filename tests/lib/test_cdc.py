@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl     import *
-from torii.lib.cdc import *
-from torii.sim     import *
+from torii.hdl.ast import Signal
+from torii.hdl.cd  import ClockDomain
+from torii.hdl.dsl import Module
+from torii.lib.cdc import AsyncFFSynchronizer, FFSynchronizer, PulseSynchronizer, ResetSynchronizer
+from torii.sim     import Delay, Simulator, Tick
 
 from ..utils       import ToriiTestSuiteCase
 

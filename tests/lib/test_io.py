@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl     import *
-from torii.hdl.rec import *
-from torii.lib.io  import *
-from torii.sim     import *
+from torii.hdl.ast import Shape, unsigned
+from torii.hdl.rec import DIR_NONE
+from torii.lib.io  import Pin, pin_layout
 
 from ..utils       import ToriiTestSuiteCase
 

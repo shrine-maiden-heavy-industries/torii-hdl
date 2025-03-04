@@ -1,12 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl        import *
-from torii.lib.fifo   import *
-from torii.lib.formal import *
-from torii.sim        import *
+from torii.hdl.ast  import AnyConst, Assert, Assume, ClockSignal, Initial, Past, ResetSignal, Rose, Signal
+from torii.hdl.cd   import ClockDomain
+from torii.hdl.dsl  import Module
+from torii.hdl.ir   import Elaboratable
+from torii.hdl.mem  import Memory
+from torii.lib.fifo import AsyncFIFO, AsyncFIFOBuffered, FIFOInterface, SyncFIFO, SyncFIFOBuffered
+from torii.sim      import Simulator, Tick
 
-from ..utils          import ToriiTestSuiteCase
+from ..utils        import ToriiTestSuiteCase
 
 class FIFOTestCase(ToriiTestSuiteCase):
 	def test_depth_wrong(self):
