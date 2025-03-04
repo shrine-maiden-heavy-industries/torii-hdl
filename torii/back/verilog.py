@@ -41,11 +41,9 @@ def _convert_rtlil_text(
 		ignore_warnings = True
 	)
 
-
 def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tuple[str, ast.SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs = strip_internal_attrs), name_map)
-
 
 def convert(
 	elaboratable: ir.Fragment | ir.Elaboratable, name: str = 'top', platform = None, *, ports,

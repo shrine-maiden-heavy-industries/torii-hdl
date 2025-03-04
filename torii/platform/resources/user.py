@@ -38,7 +38,6 @@ def _SplitResources(
 
 	return resources
 
-
 def LEDResources(
 	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],
 	invert: bool = False, conn: ResourceConn | None = None, attrs: Attrs | None = None,
@@ -46,7 +45,6 @@ def LEDResources(
 	return _SplitResources(
 		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert, conn = conn, attrs = attrs
 	)
-
 
 def RGBLEDResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -64,7 +62,6 @@ def RGBLEDResource(
 
 	return Resource.family(name_or_number, number, default_name = 'rgb_led', ios = ios)
 
-
 def ButtonResources(
 	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],
 	invert: bool = False, conn: ResourceConn | None = None, attrs: Attrs | None = None,
@@ -72,7 +69,6 @@ def ButtonResources(
 	return _SplitResources(
 		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
 	)
-
 
 def SwitchResources(
 	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],

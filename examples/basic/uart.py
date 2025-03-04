@@ -88,7 +88,6 @@ class UART(Elaboratable):
 
 		return m
 
-
 if __name__ == '__main__':
 	uart = UART(divisor = 5)
 	ports = [

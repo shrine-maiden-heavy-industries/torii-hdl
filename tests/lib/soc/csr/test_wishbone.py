@@ -28,7 +28,6 @@ class MockRegister(Elaboratable):
 
 		return m
 
-
 class WishboneCSRBridgeTestCase(ToriiTestSuiteCase):
 	def test_wrong_csr_bus(self):
 		with self.assertRaisesRegex(

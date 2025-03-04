@@ -13,23 +13,19 @@ class UnsignedEnum(Enum):
 	BAR = 2
 	BAZ = 3
 
-
 class SignedEnum(Enum):
 	FOO = -1
 	BAR = 0
 	BAZ = +1
 
-
 class StringEnum(Enum):
 	FOO = 'a'
 	BAR = 'b'
-
 
 class TypedEnum(int, Enum):
 	FOO = 1
 	BAR = 2
 	BAZ = 3
-
 
 class ShapeTestCase(ToriiTestSuiteCase):
 	def test_make(self):
@@ -178,7 +174,6 @@ class ShapeTestCase(ToriiTestSuiteCase):
 		):
 			Shape.cast('foo')
 
-
 class MockShapeCastable(ShapeCastable):
 	def __init__(self, dest):
 		self.dest = dest
@@ -188,7 +183,6 @@ class MockShapeCastable(ShapeCastable):
 
 	def const(self, obj):
 		return Const(obj, self.dest)
-
 
 class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_no_override(self):
@@ -207,7 +201,6 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 
 			_ = MockShapeCastableNoOverride()
 
-
 	def test_cast(self):
 		sc = MockShapeCastable(unsigned(2))
 		self.assertEqual(Shape.cast(sc), unsigned(2))
@@ -224,7 +217,6 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 	def test_recurse(self):
 		sc = MockShapeCastable(MockShapeCastable(unsigned(1)))
 		self.assertEqual(Shape.cast(sc), unsigned(1))
-
 
 class ShapeLikeTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
@@ -265,7 +257,6 @@ class ShapeLikeTestCase(ToriiTestSuiteCase):
 		self.assertTrue(isinstance(EnumA, ShapeLike))
 		self.assertFalse(isinstance(EnumB, ShapeLike))
 		self.assertTrue(isinstance(EnumC, ShapeLike))
-
 
 class ValueTestCase(ToriiTestSuiteCase):
 	def test_cast(self):
@@ -511,7 +502,6 @@ class ValueTestCase(ToriiTestSuiteCase):
 			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
 		)
 
-
 	def test_rotate_left_wrong(self):
 		with self.assertRaisesRegex(
 			TypeError,
@@ -544,7 +534,6 @@ class ValueTestCase(ToriiTestSuiteCase):
 			Const(0, 0).rotate_right(-3),
 			'(cat (slice (const 0\'d0) 0:0) (slice (const 0\'d0) 0:0))'
 		)
-
 
 	def test_rotate_right_wrong(self):
 		with self.assertRaisesRegex(
@@ -966,7 +955,6 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		with self.assertRaises(TypeError, msg = 'The python `in` operator is not supported on Torii values'):
 			1 in Signal(3)
 
-
 class SliceTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		s1 = Const(10)[2]
@@ -1245,7 +1233,6 @@ class ArrayTestCase(ToriiTestSuiteCase):
 		a[s]
 		self.assertEqual(repr(a), '(array [1, 2, 3])')
 
-
 class ArrayProxyTestCase(ToriiTestSuiteCase):
 	def test_index_shape(self):
 		m = Array(Array(x * y for y in range(1, 4)) for x in range(1, 4))
@@ -1290,7 +1277,6 @@ class ArrayProxyTestCase(ToriiTestSuiteCase):
 		s = Signal(range(3))
 		v = a[s]
 		self.assertEqual(repr(v), '(proxy (array [1, 2, 3]) (sig s))')
-
 
 class SignalTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
@@ -1494,7 +1480,6 @@ class ClockSignalTestCase(ToriiTestSuiteCase):
 		):
 			ClockSignal('comb')
 
-
 class ResetSignalTestCase(ToriiTestSuiteCase):
 	def test_domain(self):
 		s1 = ResetSignal()
@@ -1535,7 +1520,6 @@ class MockValueCastable(ValueCastable):
 	def as_value(self):
 		return self.dest
 
-
 class MockValueCastableChanges(ValueCastable):
 	def __init__(self, width = 0):
 		self.width = width
@@ -1561,7 +1545,6 @@ class MockValueCastableCustomGetattr(ValueCastable):
 	def __getattr__(self, attr):
 		assert False
 
-
 class ValueCastableTestCase(ToriiTestSuiteCase):
 	def test_not_decorated(self):
 		with self.assertRaisesRegex(
@@ -1578,7 +1561,6 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 
 				def as_value(self):
 					return Signal()
-
 
 	def test_no_override(self):
 		with self.assertRaisesRegex(
@@ -1628,7 +1610,6 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 	def test_recurse(self):
 		vc = MockValueCastable(MockValueCastable(Signal()))
 		self.assertIsInstance(Value.cast(vc), Signal)
-
 
 class ValueLikeTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
@@ -1712,12 +1693,10 @@ class SampleTestCase(ToriiTestSuiteCase):
 		):
 			Sample(Signal(), 1, 0)
 
-
 class InitialTestCase(ToriiTestSuiteCase):
 	def test_initial(self):
 		i = Initial()
 		self.assertEqual(i.shape(), unsigned(1))
-
 
 class SwitchTestCase(ToriiTestSuiteCase):
 	def test_default_case(self):

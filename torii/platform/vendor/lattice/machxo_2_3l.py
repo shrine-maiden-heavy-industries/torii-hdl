@@ -508,6 +508,5 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 
 	# CDC primitives are not currently specialized for MachXO2/MachXO3L.
 
-
 MachXO2Platform = MachXO2Or3LPlatform
 MachXO3LPlatform = MachXO2Or3LPlatform

@@ -15,7 +15,6 @@ class PinLayoutTestCase(ToriiTestSuiteCase):
 
 		self.assertEqual(casted_layout, expected)
 
-
 class PinLayoutCombTestCase(PinLayoutTestCase):
 	def test_pin_layout_i(self):
 		layout_1 = pin_layout(1, dir = 'i')
@@ -66,7 +65,6 @@ class PinLayoutCombTestCase(PinLayoutTestCase):
 			'o':  (unsigned(2), DIR_NONE),
 			'oe': (unsigned(1), DIR_NONE),
 		})
-
 
 class PinLayoutSDRTestCase(PinLayoutTestCase):
 	def test_pin_layout_i(self):
@@ -128,7 +126,6 @@ class PinLayoutSDRTestCase(PinLayoutTestCase):
 			'o':  (unsigned(2), DIR_NONE),
 			'oe': (unsigned(1), DIR_NONE),
 		})
-
 
 class PinLayoutDDRTestCase(PinLayoutTestCase):
 	def test_pin_layout_i(self):
@@ -200,7 +197,6 @@ class PinLayoutDDRTestCase(PinLayoutTestCase):
 			'o1': (unsigned(2), DIR_NONE),
 			'oe': (unsigned(1), DIR_NONE),
 		})
-
 
 class PinTestCase(ToriiTestSuiteCase):
 	def test_attributes(self):

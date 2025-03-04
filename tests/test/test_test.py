@@ -37,7 +37,6 @@ class TestMultiSyncDUT(Elaboratable):
 
 		return m
 
-
 class ToriiTestCaseSyncTest(ToriiTestCase):
 	domains = (('sync', 1e6), )
 	dut: TestSyncDUT = TestSyncDUT

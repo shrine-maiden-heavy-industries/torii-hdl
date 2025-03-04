@@ -68,7 +68,6 @@ def UARTResource(
 
 	return Resource.family(name_or_number, number, default_name = 'uart', ios = io)
 
-
 def IrDAResource(
 	number: int, *,
 	rx: str, tx: str, en: str | None = None, sd: str | None = None,
@@ -94,7 +93,6 @@ def IrDAResource(
 		io.append(attrs)
 
 	return Resource('irda', number, *io)
-
 
 def SPIResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -155,7 +153,6 @@ def SPIResource(
 
 	return Resource.family(name_or_number, number, default_name = 'spi', ios = io)
 
-
 def I2CResource(
 	name_or_number: str | int, number: int | None = None, *,
 	scl: str, sda: str, conn: ResourceConn | None = None,
@@ -170,7 +167,6 @@ def I2CResource(
 		io.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'i2c', ios = io)
-
 
 def DirectUSBResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -192,7 +188,6 @@ def DirectUSBResource(
 		io.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'usb', ios = io)
-
 
 def ULPIResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -228,7 +223,6 @@ def ULPIResource(
 		io.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'usb', ios = io)
-
 
 def PS2Resource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -295,7 +289,6 @@ def EthernetResource(
 		raise ValueError(
 			f'{len(txd.split())} names are specified ({txd}) but one of (4, 8) was expected'
 		)
-
 
 	ios: list[SubsigArgT] = [
 		Subsignal('rx_clk', Pins(rxck, dir = 'i', conn = conn, assert_width = 1)),

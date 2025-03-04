@@ -86,7 +86,6 @@ class Source(Record):
 	# FIXME: get rid of this
 	__hash__ = object.__hash__
 
-
 class EventMap:
 	'''
 	Event map.
@@ -178,7 +177,6 @@ class EventMap:
 		'''
 
 		yield from self._sources.items()
-
 
 class Monitor(Elaboratable):
 	'''

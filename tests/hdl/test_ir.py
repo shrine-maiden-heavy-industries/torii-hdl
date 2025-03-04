@@ -15,11 +15,9 @@ class ElaboratesToNone(Elaboratable):
 	def elaborate(self, platform):
 		return
 
-
 class ElaboratesToSelf(Elaboratable):
 	def elaborate(self, platform):
 		return self
-
 
 class FragmentGetTestCase(ToriiTestSuiteCase):
 	def test_get_wrong_none(self):
@@ -45,7 +43,6 @@ class FragmentGetTestCase(ToriiTestSuiteCase):
 			r'^Object <.+?ElaboratesToSelf.+?> elaborates to itself$'
 		):
 			Fragment.get(ElaboratesToSelf(), platform = None)
-
 
 class FragmentGeneratedTestCase(ToriiTestSuiteCase):
 	def test_find_subfragment(self):
@@ -83,13 +80,11 @@ class FragmentGeneratedTestCase(ToriiTestSuiteCase):
 			SignalKey(sig)
 		)
 
-
 class FragmentDriversTestCase(ToriiTestSuiteCase):
 	def test_empty(self):
 		f = Fragment()
 		self.assertEqual(list(f.iter_comb()), [])
 		self.assertEqual(list(f.iter_sync()), [])
-
 
 class FragmentPortsTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -591,7 +586,6 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 		):
 			f1._propagate_domains(missing_domain = lambda name: f2)
 
-
 class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 	def setUp_self_sub(self):
 		self.s1 = Signal()
@@ -738,7 +732,6 @@ class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 		f3.add_subfragment(f1)
 		f3.add_subfragment(f2)
 		f3.prepare()
-
 
 class InstanceTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
@@ -946,7 +939,6 @@ class InstanceTestCase(ToriiTestSuiteCase):
 			f: ('top',),
 			a_f: ('top', 'a$U$0')
 		})
-
 
 class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):

@@ -23,7 +23,6 @@ class ALU(Elaboratable):
 			m.d.comb += Cat(self.o, self.co).eq(self.a - self.b)
 		return m
 
-
 if __name__ == '__main__':
 	alu = ALU(width = 16)
 

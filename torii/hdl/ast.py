@@ -81,7 +81,6 @@ ReturnType = TypeVar('ReturnType')
 ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
 ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
 
-
 class DUID:
 	''' Deterministic Unique IDentifier. '''
 	__next_uid = 0
@@ -262,11 +261,9 @@ class ShapeLike(metaclass = _ShapeLikeMeta):
 	def __new__(cls, *args, **kwargs):
 		raise TypeError('ShapeLike is an abstract class and cannot be constructed')
 
-
 def unsigned(width: int) -> Shape:
 	''' Shorthand for ``Shape(width, signed = False)``. '''
 	return Shape(width, signed = False)
-
 
 def signed(width: int) -> Shape:
 	''' Shorthand for ``Shape(width, signed = True)``. '''
@@ -397,7 +394,6 @@ class Value(metaclass = ABCMeta):
 
 	def __rfloordiv__(self, other: ValueCastT) -> Operator:
 		return Operator('//', (other, self))
-
 
 	def __check_shamt(self) -> None:
 		if self.shape().signed:
@@ -978,7 +974,6 @@ class Const(Value, metaclass = _ConstMeta):
 		else:
 			raise TypeError(f'Value {obj!r} cannot be converted to an Torii constant')
 
-
 	def __init__(
 		self, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, *,
 		src_loc_at: int = 0
@@ -1011,7 +1006,6 @@ class Const(Value, metaclass = _ConstMeta):
 
 	def __repr__(self) -> str:
 		return f'(const {self.width}\'{"s" if self.signed else ""}d{self.value})'
-
 
 OperatorsT: TypeAlias = Literal[
 	'+', '~', '-', 'b', 'r|', 'r&', 'r^', 'u', 's', '*', '//', '%',
@@ -1097,7 +1091,6 @@ class Operator(Value):
 	def __repr__(self) -> str:
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
-
 def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 	'''
 	Choose between two values.
@@ -1118,7 +1111,6 @@ def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 	'''
 
 	return Operator('m', (sel, val1, val0))
-
 
 @final
 class Slice(Value):
@@ -1160,7 +1152,6 @@ class Slice(Value):
 	def __repr__(self) -> str:
 		return f'(slice {repr(self.value)} {self.start}:{self.stop})'
 
-
 @final
 class Part(Value):
 	def __init__(
@@ -1199,7 +1190,6 @@ class Part(Value):
 
 	def __repr__(self) -> str:
 		return f'(part {repr(self.value)} {repr(self.offset)} {self.width} {self.stride})'
-
 
 @final
 class Cat(Value):
@@ -1263,7 +1253,6 @@ class Cat(Value):
 
 	def __repr__(self) -> str:
 		return f'(cat {" ".join(map(repr, self.parts))})'
-
 
 SignalAttrs: TypeAlias = dict[str, int | str | bool]
 SignalDecoder: TypeAlias = Callable[[int], str] | type[Enum]
@@ -1394,7 +1383,6 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 			if TYPE_CHECKING:
 				assert isinstance(decoder, type) and issubclass(decoder, Enum)
 
-
 		if isinstance(decoder, type) and issubclass(decoder, Enum):
 			def enum_decoder(value: int) -> str:
 				try:
@@ -1458,7 +1446,6 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 	def __repr__(self) -> str:
 		return f'(sig {self.name})'
 
-
 @final
 class ClockSignal(Value):
 	'''
@@ -1494,7 +1481,6 @@ class ClockSignal(Value):
 
 	def __repr__(self) -> str:
 		return f'(clk {self.domain})'
-
 
 @final
 class ResetSignal(Value):
@@ -1535,7 +1521,6 @@ class ResetSignal(Value):
 	def __repr__(self) -> str:
 		return f'(rst {self.domain})'
 
-
 @final
 class AnyValue(Value, DUID):
 	class Kind(Enum):
@@ -1558,7 +1543,6 @@ class AnyValue(Value, DUID):
 
 	def __repr__(self) -> str:
 		return f'({self.kind.value} {self.width}\'{"s" if self.signed else ""})'
-
 
 def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
 	return AnyValue('anyconst', shape, src_loc_at = src_loc_at + 1)
@@ -1796,7 +1780,6 @@ class ValueCastable:
 	def __len__(self) -> int:
 		raise NotImplementedError()
 
-
 class _ValueLikeMeta(type):
 	'''
 	An abstract class representing all objects that can be cast to a :class:`Value`.
@@ -1826,7 +1809,6 @@ class _ValueLikeMeta(type):
 
 	def __instancecheck__(cls, instance):
 		return issubclass(type(instance), cls)
-
 
 @final
 class ValueLike(metaclass = _ValueLikeMeta):
@@ -1865,10 +1847,8 @@ class Sample(Value):
 	def __repr__(self) -> str:
 		return f'(sample {self.value!r} @ {"<default>" if self.domain is None else self.domain}[{self.clocks}])'
 
-
 def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 	return Sample(expr, clocks, domain)
-
 
 # NOTE(aki): For Stable, Rose, and Fell, mypy can't see through the operators
 def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
@@ -1879,7 +1859,6 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 
 	return op
 
-
 def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
 	op = ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain)
 
@@ -1888,7 +1867,6 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	return op
 
-
 def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
 	op = Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
 
@@ -1896,7 +1874,6 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 		assert isinstance(op, Operator)
 
 	return op
-
 
 @final
 class Initial(Value):
@@ -1919,11 +1896,9 @@ class Initial(Value):
 	def __repr__(self) -> str:
 		return '(initial)'
 
-
 class _StatementList(list['Statement']):
 	def __repr__(self) -> str:
 		return f'({" ".join(map(repr, self))})'
-
 
 class Statement:
 	def __init__(self, *, src_loc_at: int = 0) -> None:
@@ -1938,7 +1913,6 @@ class Statement:
 				return _StatementList([obj])
 			else:
 				raise TypeError(f'Object {obj!r} is not an Torii statement')
-
 
 @final
 class Assign(Statement):
@@ -1961,10 +1935,8 @@ class Assign(Statement):
 	def __repr__(self) -> str:
 		return f'(eq {self.lhs!r} {self.rhs!r})'
 
-
 class UnusedProperty(UnusedMustUse):
 	pass
-
 
 @final
 class Property(Statement, MustUse):
@@ -1974,7 +1946,6 @@ class Property(Statement, MustUse):
 		Assert = 'assert'
 		Assume = 'assume'
 		Cover  = 'cover'
-
 
 	def __init__(
 		self, kind: str, test: ValueCastT, *, _check: Signal | None = None, _en: Signal | None = None,
@@ -2011,7 +1982,6 @@ class Property(Statement, MustUse):
 		if self.name is not None:
 			return f'({self.name}: {self.kind.value} {self.test!r})'
 		return f'({self.kind.value} {self.test!r})'
-
 
 def Assert(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	return Property('assert', test, name = name, src_loc_at = src_loc_at + 1)
@@ -2120,7 +2090,6 @@ class _MappedKeyCollection(Generic[IntKey, Key], metaclass = ABCMeta):
 		''' Extract the `Signal` or `Value` from the key object '''
 		pass # :nocov:
 
-
 class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKey, Key]):
 	def __init__(self, pairs: tuple[tuple[Key, Val], ...] = ()):
 		self._storage = OrderedDict[IntKey | None, Val]()
@@ -2141,7 +2110,6 @@ class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKe
 			internal_key = None
 
 		self._storage[internal_key] = value
-
 
 	def __delitem__(self, key: Key | None) -> None:
 		if key is not None:
@@ -2178,7 +2146,6 @@ class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKe
 		pairs = [ f'({k!r}, {v!r})' for k, v in self.items() ]
 		return f'{type(self).__module__}.{type(self).__name__}([{", ".join(pairs)}])'
 
-
 class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
 	def __init__(self, elements: Iterable[Key] = ()) -> None:
 		self._storage = OrderedDict[IntKey, None]()
@@ -2212,7 +2179,6 @@ class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
 
 	def __repr__(self) -> str:
 		return f'{type(self).__module__}.{type(self).__name__}({", ".join(repr(x) for x in self)})'
-
 
 class ValueKey:
 	def __init__(self, value: ValueCastT) -> None:
@@ -2361,7 +2327,6 @@ class ValueKey:
 	def __repr__(self) -> str:
 		return f'<{__name__}.ValueKey {self.value!r}>'
 
-
 class ValueDict(_MappedKeyDict[Value, Val, ValueKey]):
 	''' Mapping of `Value` objects to arbitrary value types '''
 
@@ -2385,7 +2350,6 @@ SignalLikeT: TypeAlias = Signal | ClockSignal | ResetSignal
 class SignalKey:
 	'''
 	Allow aliasing of the same internal signal in a design from multiple object instances.
-
 
 	This allows you to map them as the same key in the resolution collections.
 
@@ -2427,7 +2391,6 @@ class SignalKey:
 	def __repr__(self) -> str:
 		return f'<{__name__}.SignalKey {self.signal!r}>'
 
-
 class SignalDict(_MappedKeyDict[SignalLikeT, Val, SignalKey]):
 	''' Mapping of `Signal` objects to arbitrary value types '''
 
@@ -2439,7 +2402,6 @@ class SignalDict(_MappedKeyDict[SignalLikeT, Val, SignalKey]):
 
 	def _unmap_key(self, key: SignalKey) -> SignalLikeT:
 		return key.signal
-
 
 class SignalSet(_MappedKeySet[SignalLikeT | None, SignalKey]):
 	''' Collection of unique `Signal` objects '''

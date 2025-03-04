@@ -156,7 +156,6 @@ class _VCDWriter:
 		if self._close_gtkw:
 			self.gtkw_file.close()
 
-
 class _Timeline:
 	def __init__(self):
 		self.now = 0
@@ -207,7 +206,6 @@ class _Timeline:
 
 		return True
 
-
 class _PySignalState(BaseSignalState):
 	__slots__ = ('signal', 'curr', 'next', 'waiters', 'pending')
 
@@ -233,7 +231,6 @@ class _PySignalState(BaseSignalState):
 			if trigger is None or trigger == self.curr:
 				process.runnable = awoken_any = True
 		return awoken_any
-
 
 class _PySimulation(BaseSimulation):
 	def __init__(self):
@@ -281,7 +278,6 @@ class _PySimulation(BaseSimulation):
 			changed.update(self.pending)
 		self.pending.clear()
 		return converged
-
 
 class PySimEngine(BaseEngine):
 	def __init__(self, fragment):

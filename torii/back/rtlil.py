@@ -25,7 +25,6 @@ _escape_map = str.maketrans({
 	'\n': '\\n',
 })
 
-
 def _signed(value: str | int | ast.Const) -> bool:
 	if isinstance(value, str):
 		return False
@@ -35,7 +34,6 @@ def _signed(value: str | int | ast.Const) -> bool:
 		return value.signed
 	else:
 		raise TypeError(f'Expected one of \'str\', \'int\', \'Const\', not {value!r}')
-
 
 def _const(value: str | int | ast.Const) -> str:
 	if isinstance(value, str):
@@ -53,7 +51,6 @@ def _const(value: str | int | ast.Const) -> str:
 		return f'{value.width}\'{value_twos_compl:0{value.width}b}'
 	else:
 		raise TypeError(f'Expected one of \'str\', \'int\', \'Const\', not {value!r}')
-
 
 class _Namer:
 	def __init__(self) -> None:
@@ -83,7 +80,6 @@ class _Namer:
 		self._names.add(name)
 		return name
 
-
 class _BufferedBuilder:
 	def __init__(self) -> None:
 		super().__init__()
@@ -95,11 +91,9 @@ class _BufferedBuilder:
 	def _append(self, fmt: str, *args, **kwargs) -> None:
 		self._buffer.write(fmt.format(*args, **kwargs))
 
-
 class _ProxiedBuilder:
 	def _append(self, *args, **kwargs) -> None:
 		self.rtlil._append(*args, **kwargs)
-
 
 class _AttrBuilder:
 	def __init__(self, emit_src: bool, *args, **kwargs) -> None:
@@ -238,7 +232,6 @@ class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
 	def case(self) -> _CaseBuilder:
 		return _CaseBuilder(self, indent = 2)
 
-
 class _CaseBuilder(_ProxiedBuilder):
 	def __init__(self, rtlil, indent: int):
 		self.rtlil  = rtlil
@@ -257,7 +250,6 @@ class _CaseBuilder(_ProxiedBuilder):
 		self, cond, attrs: dict[str, str | int | ast.Const] = {}, src: str = ''
 	) -> _SwitchBuilder:
 		return _SwitchBuilder(self.rtlil, cond, attrs, src, self.indent)
-
 
 class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 	def __init__(
@@ -290,20 +282,17 @@ class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 			)
 		return _CaseBuilder(self.rtlil, self.indent + 2)
 
-
 def _src(src_loc: tuple[str, int] | None) -> str | None:
 	if src_loc is None:
 		return None
 	file, line = src_loc
 	return f'{file}:{line}'
 
-
 class _LegalizeValue(Exception):
 	def __init__(self, value, branches, src_loc: tuple[str, int] | None) -> None:
 		self.value    = value
 		self.branches = list(branches)
 		self.src_loc  = src_loc
-
 
 class _ValueCompilerState:
 	def __init__(self, rtlil) -> None:
@@ -390,7 +379,6 @@ class _ValueCompilerState:
 		finally:
 			del self.expansions[value]
 
-
 class _ValueCompiler(xfrm.ValueVisitor):
 	def __init__(self, state):
 		self.s = state
@@ -444,7 +432,6 @@ class _ValueCompiler(xfrm.ValueVisitor):
 			max_index = 1 << len(value.index)
 			max_elem  = len(value.elems)
 			raise _LegalizeValue(value.index, range(min(max_index, max_elem)), value.src_loc)
-
 
 class _RHSValueCompiler(_ValueCompiler):
 	operator_map = {
@@ -639,7 +626,6 @@ class _RHSValueCompiler(_ValueCompiler):
 		}, src = _src(value.src_loc))
 		return res
 
-
 class _LHSValueCompiler(_ValueCompiler):
 	def on_Const(self, value):
 		raise TypeError # :nocov:
@@ -811,7 +797,6 @@ class _StatementCompiler(xfrm.StatementVisitor):
 	def on_statements(self, stmts):
 		for stmt in stmts:
 			self.on_statement(stmt)
-
 
 def _convert_fragment(builder, fragment, name_map, hierarchy):
 	if isinstance(fragment, ir.Instance):
@@ -1089,7 +1074,6 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 	return module.name, port_map, {}
 
-
 def convert_fragment(
 	fragment: ir.Fragment, name: str = 'top', *, emit_src: bool = True
 ) -> tuple[str, ast.SignalDict]:
@@ -1099,7 +1083,6 @@ def convert_fragment(
 	name_map = ast.SignalDict()
 	_convert_fragment(builder, fragment, name_map, hierarchy = (name,))
 	return (str(builder), name_map)
-
 
 def convert(
 	elaboratable, name: str = 'top', platform = None, *, ports,  emit_src = True, **kwargs

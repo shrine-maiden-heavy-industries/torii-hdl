@@ -34,7 +34,6 @@ class UnusedElaboratable(UnusedMustUse):
 	# Once elaboration starts, the warning is enabled.
 	_MustUse__silence = True
 
-
 class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
 
@@ -47,10 +46,8 @@ class Elaboratable(MustUse, metaclass = ABCMeta):
 		''' '''
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
 
-
 class DriverConflict(UserWarning):
 	pass
-
 
 class Fragment:
 	@staticmethod
@@ -652,7 +649,6 @@ class Fragment:
 			)
 
 		return _names
-
 
 InstanceArgsT: TypeAlias = tuple[Literal['a', 'p'] | IODirectionIO, str, ValueCastT]
 

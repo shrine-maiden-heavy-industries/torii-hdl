@@ -117,7 +117,6 @@ class LayoutTestCase(ToriiTestSuiteCase):
 		):
 			Layout.cast([('a', 'x')])
 
-
 class RecordTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		r = Record([

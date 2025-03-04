@@ -25,10 +25,8 @@ class YosysVersion(NamedTuple):
 class YosysError(Exception):
 	pass
 
-
 class YosysWarning(Warning):
 	pass
-
 
 class YosysBinary:
 	YOSYS_BINARY = 'yosys'
@@ -193,7 +191,6 @@ def find_yosys(
 		Raised if required Yosys version is not found.
 
 	'''
-
 
 	if YosysBinary.available():
 		version = YosysBinary.version()

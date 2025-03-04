@@ -20,7 +20,6 @@ class ConstantBoolTestCase(ToriiTestSuiteCase):
 	def test_repr(self):
 		self.assertEqual(repr(ConstantBool(True)), 'ConstantBool(True)')
 
-
 class ConstantIntTestCase(ToriiTestSuiteCase):
 	def test_init(self):
 		c = ConstantInt(5, width = 8, signed = True)
@@ -58,7 +57,6 @@ class ConstantIntTestCase(ToriiTestSuiteCase):
 			repr(ConstantInt(-5, width = 8, signed = True)),
 			'ConstantInt(-5, width=8, signed=True)'
 		)
-
 
 class ConstantMapTestCase(ToriiTestSuiteCase):
 	def test_init(self):
@@ -98,7 +96,6 @@ class ConstantMapTestCase(ToriiTestSuiteCase):
 		b = ConstantBool(False)
 		constant_map = ConstantMap(B = b, A = a)
 		self.assertEqual(len(constant_map), 2)
-
 
 class PeripheralInfoTestCase(ToriiTestSuiteCase):
 	def test_memory_map(self):

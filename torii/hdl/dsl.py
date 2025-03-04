@@ -32,10 +32,8 @@ __all__ = (
 class SyntaxError(Exception):
 	pass
 
-
 class SyntaxWarning(Warning):
 	pass
-
 
 class _ModuleBuilderProxy:
 	_builder: Module
@@ -45,7 +43,6 @@ class _ModuleBuilderProxy:
 		object.__setattr__(self, '_builder', builder)
 		object.__setattr__(self, '_depth', depth)
 
-
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
 	def __init__(self, builder: Module, depth: int, domain: str | None):
 		super().__init__(builder, depth)
@@ -54,7 +51,6 @@ class _ModuleBuilderDomain(_ModuleBuilderProxy):
 	def __iadd__(self, assigns):
 		self._builder._add_statement(assigns, domain = self._domain, depth = self._depth)
 		return self
-
 
 class _ModuleBuilderDomains(_ModuleBuilderProxy):
 	def __getattr__(self, name: str):
@@ -82,7 +78,6 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 	def __setitem__(self, name, value):
 		return self.__setattr__(name, value)
 
-
 class _ModuleBuilderRoot:
 	def __init__(self, builder: Module, depth: int):
 		self._builder = builder
@@ -92,7 +87,6 @@ class _ModuleBuilderRoot:
 		if name in ('comb', 'sync'):
 			raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?')
 		raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'')
-
 
 class _ModuleBuilderSubmodules:
 	_builder: Module
@@ -116,7 +110,6 @@ class _ModuleBuilderSubmodules:
 
 	def __getitem__(self, name):
 		return self.__getattr__(name)
-
 
 class _ModuleBuilderDomainSet:
 	_builder: Module

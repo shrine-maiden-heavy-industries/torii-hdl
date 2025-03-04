@@ -14,7 +14,6 @@ class MockPlatform(Platform):
 	def toolchain_prepare(self, fragment, name, **kwargs):
 		raise NotImplementedError
 
-
 class PlatformTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.platform = MockPlatform()

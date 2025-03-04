@@ -26,14 +26,12 @@ class CycleType(Enum):
 	INCR_BURST   = 0b010
 	END_OF_BURST = 0b111
 
-
 class BurstTypeExt(Enum):
 	''' Wishbone Registered Feedback burst type extension. '''
 	LINEAR  = 0b00
 	WRAP_4  = 0b01
 	WRAP_8  = 0b10
 	WRAP_16 = 0b11
-
 
 def _check_interface(
 	addr_width: int, data_width: int, granularity: int,
@@ -182,7 +180,6 @@ class Interface(Record):
 
 		memory_map.freeze()
 		self._map = memory_map
-
 
 class Decoder(Elaboratable):
 	'''
@@ -356,7 +353,6 @@ class Decoder(Elaboratable):
 			m.d.comb += self.bus.stall.eq(stall_fanin)
 
 		return m
-
 
 class Arbiter(Elaboratable):
 	'''

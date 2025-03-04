@@ -104,7 +104,6 @@ class Element(Record):
 		if self.name is None:
 			AssertionError('CSR name could not be computed and must be specified')
 
-
 class Interface(Record):
 	'''
 	CPU-side CSR interface.
@@ -202,7 +201,6 @@ class Interface(Record):
 			)
 		memory_map.freeze()
 		self._map = memory_map
-
 
 class Multiplexer(Elaboratable):
 	class _Shadow:
@@ -312,7 +310,6 @@ class Multiplexer(Elaboratable):
 						 │  │
 						 │  └──── log2_ceil(elem_range.stop - elem_range.start)
 						 └─────── log2(self.size)
-
 
 				The decoded offset would therefore be ``8`` (i.e. ``0b1000``).
 			''' # noqa: E101
@@ -440,7 +437,6 @@ class Multiplexer(Elaboratable):
 		Maximum number of CSR registers that can share a chunk of a shadow register.
 		Optional. If ``None``, any number of CSR registers can share a shadow chunk.
 		See :class:`Multiplexer._Shadow` for details.
-
 
 	Attributes
 	----------
@@ -581,7 +577,6 @@ class Multiplexer(Elaboratable):
 				m.d.sync += w_chunk.data.eq(self.bus.w_data)
 
 		return m
-
 
 class Decoder(Elaboratable):
 	'''

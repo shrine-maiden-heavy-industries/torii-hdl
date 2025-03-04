@@ -22,7 +22,6 @@ class System(Elaboratable):
 		)
 		return m
 
-
 if __name__ == "__main__":
 	sys = System()
 

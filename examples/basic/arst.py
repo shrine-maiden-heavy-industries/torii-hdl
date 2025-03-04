@@ -14,7 +14,6 @@ class ClockDivisor(Elaboratable):
 		m.d.comb += self.o.eq(self.v[-1])
 		return m
 
-
 if __name__ == '__main__':
 	m = Module()
 	m.domains.sync = sync = ClockDomain('sync', async_reset = True)

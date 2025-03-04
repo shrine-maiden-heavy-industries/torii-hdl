@@ -125,7 +125,6 @@ class ValueVisitor(metaclass = ABCMeta):
 	def __call__(self, value):
 		return self.on_value(value)
 
-
 class ValueTransformer(ValueVisitor):
 	def on_Const(self, value):
 		return value
@@ -166,7 +165,6 @@ class ValueTransformer(ValueVisitor):
 
 	def on_Initial(self, value):
 		return value
-
 
 class StatementVisitor(metaclass = ABCMeta):
 	@abstractmethod
@@ -214,14 +212,12 @@ class StatementVisitor(metaclass = ABCMeta):
 	def __call__(self, stmt):
 		return self.on_statement(stmt)
 
-
 class StatementTransformer(StatementVisitor):
 	def on_value(self, value):
 		return value
 
 	def on_Assign(self, stmt):
 		return Assign(self.on_value(stmt.lhs), self.on_value(stmt.rhs))
-
 
 	def on_Property(self, stmt):
 		return Property(
@@ -235,7 +231,6 @@ class StatementTransformer(StatementVisitor):
 
 	def on_statements(self, stmts):
 		return _StatementList(flatten(self.on_statement(stmt) for stmt in stmts))
-
 
 class FragmentTransformer:
 	def map_subfragments(self, fragment, new_fragment):
@@ -319,7 +314,6 @@ class FragmentTransformer:
 		else:
 			raise AttributeError(f'Object {value!r} cannot be elaborated')
 
-
 class TransformedElaboratable(Elaboratable):
 	def __init__(self, elaboratable, *, src_loc_at = 0):
 		if not hasattr(elaboratable, 'elaborate'):
@@ -338,7 +332,6 @@ class TransformedElaboratable(Elaboratable):
 		for transform in self._transforms_:
 			fragment = transform(fragment)
 		return fragment
-
 
 class DomainCollector(ValueVisitor, StatementVisitor):
 	def __init__(self):
@@ -445,7 +438,6 @@ class DomainCollector(ValueVisitor, StatementVisitor):
 	def __call__(self, fragment):
 		self.on_fragment(fragment)
 
-
 class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer):
 	def __init__(self, domain_map: dict[str, str] | str | None = None, **kwargs: str) -> None:
 		if domain_map is not None:
@@ -514,7 +506,6 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 			if port.domain in self.domain_map:
 				port.domain = self.domain_map[port.domain]
 
-
 class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
 	def __init__(self, domains = None):
 		self.domains = domains
@@ -563,7 +554,6 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		self._insert_resets(new_fragment)
 		return new_fragment
 
-
 class SampleDomainInjector(ValueTransformer, StatementTransformer):
 	def __init__(self, domain):
 		self.domain = domain
@@ -575,7 +565,6 @@ class SampleDomainInjector(ValueTransformer, StatementTransformer):
 
 	def __call__(self, stmts):
 		return self.on_statement(stmts)
-
 
 class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
 	def __init__(self):
@@ -638,7 +627,6 @@ class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		if self.initial is not None:
 			new_fragment.add_subfragment(Instance('$initstate', o_Y = self.initial))
 
-
 class SwitchCleaner(StatementVisitor):
 	def on_ignore(self, stmt):
 		return stmt
@@ -654,7 +642,6 @@ class SwitchCleaner(StatementVisitor):
 	def on_statements(self, stmts):
 		stmts = flatten(self.on_statement(stmt) for stmt in stmts)
 		return _StatementList(stmt for stmt in stmts if stmt is not None)
-
 
 class LHSGroupAnalyzer(StatementVisitor):
 	def __init__(self):
@@ -709,7 +696,6 @@ class LHSGroupAnalyzer(StatementVisitor):
 		self.on_statements(stmts)
 		return self.groups()
 
-
 class LHSGroupFilter(SwitchCleaner):
 	def __init__(self, signals):
 		self.signals = signals
@@ -727,7 +713,6 @@ class LHSGroupFilter(SwitchCleaner):
 		any_lhs_signal = next(iter(stmt._lhs_signals()))
 		if any_lhs_signal in self.signals:
 			return stmt
-
 
 class _ControlInserter(FragmentTransformer):
 	def __init__(self, controls):
@@ -751,12 +736,10 @@ class _ControlInserter(FragmentTransformer):
 		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 		return super().__call__(value, src_loc_at = 1 + src_loc_at)
 
-
 class ResetInserter(_ControlInserter):
 	def _insert_control(self, fragment, domain, signals):
 		stmts = [ s.eq(Const(s.reset, s.width)) for s in signals if not s.reset_less ]
 		fragment.add_statements(Switch(self.controls[domain], { 1: stmts }, src_loc = self.src_loc))
-
 
 class EnableInserter(_ControlInserter):
 	def _insert_control(self, fragment, domain, signals):

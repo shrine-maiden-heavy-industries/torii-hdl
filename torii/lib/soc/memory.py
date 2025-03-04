@@ -60,7 +60,6 @@ class _RangeMap:
 		for key in self._keys:
 			yield (key, self._values[key])
 
-
 class ResourceInfo:
 	'''
 	Resource metadata.
@@ -125,7 +124,6 @@ class ResourceInfo:
 	@property
 	def width(self) -> int:
 		return self._width
-
 
 class MemoryMap:
 	'''

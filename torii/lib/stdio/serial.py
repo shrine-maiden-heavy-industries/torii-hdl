@@ -20,12 +20,10 @@ def _check_divisor(divisor: int, bound: int):
 	if divisor < bound:
 		raise ValueError(f'Invalid divisor {divisor!r}; must be greater than or equal to {bound}')
 
-
 def _check_parity(parity: Literal['none', 'mark', 'space', 'even', 'odd']):
 	choices = ( 'none', 'mark', 'space', 'even', 'odd' )
 	if parity not in choices:
 		raise ValueError(f'Invalid parity {parity!r}; must be one of {", ".join(choices)}')
-
 
 def _compute_parity_bit(
 	data: Record , parity: Literal['none', 'mark', 'space', 'even', 'odd']
@@ -44,7 +42,6 @@ def _compute_parity_bit(
 	if parity == 'odd':
 		return ~data.xor()
 
-
 def _wire_layout(
 	data_bits: int, parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none'
 ) -> list[tuple[str, int]]:
@@ -54,7 +51,6 @@ def _wire_layout(
 		('parity', 0 if parity == 'none' else 1),
 		('stop',   1),
 	]
-
 
 class AsyncSerialRX(Elaboratable):
 	'''
@@ -168,7 +164,6 @@ class AsyncSerialRX(Elaboratable):
 
 		return m
 
-
 class AsyncSerialTX(Elaboratable):
 	'''
 	Asynchronous serial transmitter.
@@ -257,7 +252,6 @@ class AsyncSerialTX(Elaboratable):
 						m.next = 'IDLE'
 
 		return m
-
 
 class AsyncSerial(Elaboratable):
 	'''

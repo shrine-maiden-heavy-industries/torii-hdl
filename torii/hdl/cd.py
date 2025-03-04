@@ -13,7 +13,6 @@ __all__ = (
 class DomainError(Exception):
 	pass
 
-
 class ClockDomain:
 	'''
 	Synchronous domain.
@@ -73,7 +72,6 @@ class ClockDomain:
 
 		if clk_edge not in ('pos', 'neg'):
 			raise ValueError(f'Domain clock edge must be one of \'pos\' or \'neg\', not {clk_edge!r}')
-
 
 		self.name = name
 

@@ -16,7 +16,6 @@ class Blinky(Elaboratable):
 		m.d.comb += led.o.eq(timer[-1])
 		return m
 
-
 if __name__ == '__main__':
 	platform = ICE40HX1KBlinkEVNPlatform()
 	platform.build(Blinky(), do_program = True)

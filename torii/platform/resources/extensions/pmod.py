@@ -17,7 +17,6 @@ __all__ = (
 def PmodGPIOType1Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(name, number, Pins('1 2 3 4', dir = 'io', conn = ('pmod', pmod)), *args)
 
-
 def PmodSPIType2Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
@@ -27,7 +26,6 @@ def PmodSPIType2Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -
 		Subsignal('cipo',  Pins('4', dir = 'i', conn = ('pmod', pmod))),
 		*args
 	)
-
 
 def PmodSPIType2AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
@@ -41,7 +39,6 @@ def PmodSPIType2AResource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 		*args
 	)
 
-
 def PmodUARTType3Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
@@ -52,7 +49,6 @@ def PmodUARTType3Resource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 		*args
 	)
 
-
 def PmodUARTType4Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
@@ -62,7 +58,6 @@ def PmodUARTType4Resource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 		Subsignal('rts',   Pins('4', dir = 'o', conn = ('pmod', pmod))),
 		*args
 	)
-
 
 def PmodUARTType4AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
@@ -76,7 +71,6 @@ def PmodUARTType4AResource(name: str, number: int, *args: SubsigArgT, pmod: int)
 		*args
 	)
 
-
 def PmodHBridgeType5Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(
 		name, number,
@@ -86,7 +80,6 @@ def PmodHBridgeType5Resource(name: str, number: int, *args: SubsigArgT, pmod: in
 		Subsignal('sb',    Pins('4', dir = 'i', conn = ('pmod', pmod))),
 		*args
 	)
-
 
 def PmodDualHBridgeType6Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
 	return Resource(

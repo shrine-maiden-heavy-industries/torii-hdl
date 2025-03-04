@@ -36,7 +36,6 @@ PICO:  Final = 1e-12
 FEMTO: Final = 1e-15
 ATTO:  Final = 1e-18
 
-
 def ps_to_sec(val: float) -> float:
 	''' Convert the given number of picoseconds into fractional seconds '''
 	return val * PICO
@@ -121,7 +120,6 @@ def log2_ceil(value: SupportsIndex) -> int:
 	if n == 0:
 		return 0
 	return (n - 1).bit_length()
-
 
 def log2_exact(value: SupportsIndex) -> int:
 	'''

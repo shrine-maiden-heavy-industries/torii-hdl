@@ -16,7 +16,6 @@ class Counter(Elaboratable):
 		m.d.comb += self.o.eq(self.v[-1])
 		return EnableInserter(self.en)(m)
 
-
 ctr = Counter(width = 16)
 
 print(verilog.convert(ctr, ports = [ctr.o, ctr.en]))

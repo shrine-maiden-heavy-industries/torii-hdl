@@ -19,7 +19,6 @@ def scm_version():
 		'local_scheme'  : local_scheme
 	}
 
-
 def doc_version():
 	try:
 		from setuptools_scm.git import parse as parse_git
@@ -33,7 +32,6 @@ def doc_version():
 		return git.format_with('v{tag}')
 	else:
 		return 'latest'
-
 
 setup(
 	name             = 'torii',

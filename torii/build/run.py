@@ -225,7 +225,6 @@ class BuildPlan:
 
 		return LocalBuildProducts(build_dir)
 
-
 class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
 	def get_str(self, filename: str) -> str:
@@ -271,7 +270,6 @@ class BuildProducts(metaclass = ABCMeta):
 		'''
 		raise NotImplementedError()
 
-
 	@contextmanager
 	def extract(self, *filenames: str) -> Generator[str | list[str] | None]:
 		'''
@@ -306,7 +304,6 @@ class BuildProducts(metaclass = ABCMeta):
 			for file in files:
 				os.unlink(file.name)
 
-
 class LocalBuildProducts(BuildProducts):
 	def __init__(self, root: str | Path) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
@@ -320,7 +317,6 @@ class LocalBuildProducts(BuildProducts):
 	def get_str(self, filename: str) -> str:
 		with (self.__root / filename).resolve().open('rt') as f:
 			return f.read()
-
 
 	def get_bin(self, filename: str) -> bytes:
 		with (self.__root / filename).resolve().open('rb') as f:

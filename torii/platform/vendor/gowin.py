@@ -11,7 +11,6 @@ from ...lib.cdc import ResetSynchronizer
 # Acknowledgments:
 #   Parts of this file originate from https://github.com/tcjie/Gowin
 
-
 __all__ = (
 	'GowinPlatform',
 )
@@ -468,7 +467,6 @@ class GowinPlatform(TemplatedPlatform):
 					o_Q0 = q[bit]
 				)
 
-
 		def get_oeddr(clk, d0, d1, tx, q0, q1):
 			for bit in range(len(q0)):
 				m.submodules += Instance(
@@ -497,7 +495,6 @@ class GowinPlatform(TemplatedPlatform):
 				return y
 			else:
 				return a
-
 
 		if 'i' in pin.dir:
 			if pin.xdr < 2:

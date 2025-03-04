@@ -60,7 +60,6 @@ class FFSynchronizerTestCase(ToriiTestSuiteCase):
 		sim.add_process(process)
 		sim.run()
 
-
 class AsyncFFSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
@@ -189,7 +188,6 @@ class AsyncFFSynchronizerTestCase(ToriiTestSuiteCase):
 		with sim.write_vcd('test.vcd'):
 			sim.run()
 
-
 class ResetSynchronizerTestCase(ToriiTestSuiteCase):
 	def test_stages_wrong(self):
 		with self.assertRaisesRegex(
@@ -250,7 +248,6 @@ class ResetSynchronizerTestCase(ToriiTestSuiteCase):
 		sim.add_process(process)
 		with sim.write_vcd('test.vcd'):
 			sim.run()
-
 
 # TODO: test with distinct clocks
 class PulseSynchronizerTestCase(ToriiTestSuiteCase):

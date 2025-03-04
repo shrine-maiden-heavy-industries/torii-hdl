@@ -624,7 +624,6 @@ class XilinxPlatform(TemplatedPlatform):
 			else:
 				self.family = 'virtex'
 
-
 		ISE_FAMILIES = {
 				'virtex', 'virtexe',
 				'virtex2', 'virtex2p',
@@ -676,7 +675,6 @@ class XilinxPlatform(TemplatedPlatform):
 			return self._symbiflow_required_tools
 		if self.toolchain == 'yosys_nextpnr':
 			return self._yosys_nextpnr_required_tools
-
 
 	@property
 	def file_templates(self) -> dict[str, str]:
@@ -1299,7 +1297,6 @@ class XilinxPlatform(TemplatedPlatform):
 			m.d[ff_sync._o_domain] += o.eq(i)
 		m.d.comb += ff_sync.o.eq(flops[-1])
 		return m
-
 
 	def get_async_ff_sync(self, async_ff_sync) -> Module:
 		m = Module()

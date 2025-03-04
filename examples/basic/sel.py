@@ -17,7 +17,6 @@ class FlatGPIO(Elaboratable):
 			m.d.sync += self.pins.word_select(bus.addr, len(bus.w_data)).eq(bus.w_data)
 		return m
 
-
 if __name__ == '__main__':
 	bus = Record([
 		('addr',   3),

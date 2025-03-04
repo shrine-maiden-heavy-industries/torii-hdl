@@ -5,7 +5,6 @@ try:
 except ImportError: # :nocov:
 	__version__ = 'unknown'
 
-
 from .hdl import (
 	Array, Cat, ClockDomain, ClockSignal, Const, DomainRenamer,
 	Elaboratable, EnableInserter, Fragment, Instance, Memory,

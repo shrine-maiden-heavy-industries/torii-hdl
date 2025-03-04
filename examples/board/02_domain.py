@@ -23,7 +23,6 @@ class BlinkyWithDomain(Elaboratable):
 		m.d.comb += led.o.eq(timer[-1])
 		return m
 
-
 if __name__ == '__main__':
 	platform = ICE40HX1KBlinkEVNPlatform()
 	platform.build(BlinkyWithDomain(), do_program = True)

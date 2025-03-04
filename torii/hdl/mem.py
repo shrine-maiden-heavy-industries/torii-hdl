@@ -176,7 +176,6 @@ class Memory(Elaboratable):
 				f.add_driver(signal, port.domain)
 		return f
 
-
 class ReadPort(Elaboratable):
 	'''
 	A memory read port.
@@ -241,7 +240,6 @@ class ReadPort(Elaboratable):
 			return self.memory
 		else:
 			return Fragment()
-
 
 class WritePort(Elaboratable):
 	'''
@@ -311,7 +309,6 @@ class WritePort(Elaboratable):
 			return self.memory
 		else:
 			return Fragment()
-
 
 class DummyPort:
 	'''

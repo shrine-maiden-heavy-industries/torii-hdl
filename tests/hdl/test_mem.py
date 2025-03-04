@@ -136,7 +136,6 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		):
 			mem.write_port(granularity = 3)
 
-
 class DummyPortTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		p1 = DummyPort(data_width = 8, addr_width = 2)

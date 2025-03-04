@@ -70,12 +70,10 @@ class Pins:
 	def __repr__(self) -> str:
 		return f'(pins{"-n" if self.invert else ""} {self.dir} {" ".join(self.names)})'
 
-
 def PinsN(
 	names: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
 ) -> Pins:
 	return Pins(names, dir = dir, invert = True, conn = conn, assert_width = assert_width)
-
 
 class DiffPairs:
 	def __init__(
@@ -101,12 +99,10 @@ class DiffPairs:
 	def __repr__(self) -> str:
 		return f'(diffpairs{"-n" if self.invert else ""} {self.dir} (p {" ".join(self.p.names)}) (n {" ".join(self.n.names)}))'
 
-
 def DiffPairsN(
 	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
 ) -> DiffPairs:
 	return DiffPairs(p = p, n = n, dir = dir, invert = True, conn = conn, assert_width = assert_width)
-
 
 class Attrs(OrderedDict[str, int | str | Callable]):
 	def __init__(self, **attrs: int | str | Callable) -> None:
@@ -125,7 +121,6 @@ class Attrs(OrderedDict[str, int | str | Callable]):
 				items.append(key + '=' + repr(value))
 		return f'(attrs {" ".join(items)})'
 
-
 class Clock:
 	def __init__(self, frequency: float | int) -> None:
 		if not isinstance(frequency, (float, int)):
@@ -139,7 +134,6 @@ class Clock:
 
 	def __repr__(self) -> str:
 		return f'(clock {self.frequency})'
-
 
 SubsigArgT: TypeAlias = 'Pins | DiffPairs | Subsignal | Attrs | Clock'
 

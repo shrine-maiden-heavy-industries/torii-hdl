@@ -16,7 +16,6 @@ def simulation_test(dut, process):
 		sim.add_sync_process(process)
 		sim.run()
 
-
 class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 	def tx_period(self):
 		for _ in range((yield self.dut.divisor)):
@@ -140,7 +139,6 @@ class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 
 		simulation_test(m, process)
 
-
 class AsyncSerialTXTestCase(ToriiTestSuiteCase):
 	def tx_period(self):
 		for _ in range((yield self.dut.divisor)):
@@ -234,7 +232,6 @@ class AsyncSerialTXTestCase(ToriiTestSuiteCase):
 				self.assertEqual((yield self.dut.o), bit)
 
 		simulation_test(m, process)
-
 
 class AsyncSerialTestCase(ToriiTestSuiteCase):
 	def test_loopback(self):

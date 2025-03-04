@@ -33,7 +33,6 @@ def Display7SegResource(
 		ios.append(attrs)
 	return Resource.family(name_or_number, number, default_name = 'display_7seg', ios = ios)
 
-
 def VGAResource(
 	name_or_number: str | int, number: int | None = None, *,
 	r: str, g: str, b: str, vs: str, hs: str,
@@ -56,7 +55,6 @@ def VGAResource(
 		ios.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'vga', ios = ios)
-
 
 def VGADACResource(
 	name_or_number: str | int, number: int | None = None, *,

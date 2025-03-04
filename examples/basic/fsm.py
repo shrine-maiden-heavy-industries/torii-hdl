@@ -59,7 +59,6 @@ class UARTReceiver(Elaboratable):
 
 		return m
 
-
 if __name__ == '__main__':
 	rx = UARTReceiver(20)
 

@@ -50,7 +50,6 @@ def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
 		fields.append(('oe', 1))
 	return Layout(fields)
 
-
 class Pin(Record):
 	'''
 	An interface to an I/O buffer or a group of them that provides uniform access to input, output,

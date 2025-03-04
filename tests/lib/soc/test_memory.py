@@ -43,7 +43,6 @@ class RangeMapTestCase(ToriiTestSuiteCase):
 		self.assertEqual(range_map.get(14), 'a')
 		self.assertEqual(range_map.get(15), None)
 
-
 class ResourceInfoTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
 		info = ResourceInfo('a', name = ('foo', 'bar'), start = 0, end = 1, width = 8)
@@ -108,7 +107,6 @@ class ResourceInfoTestCase(ToriiTestSuiteCase):
 			r'Width must be a non-negative integer, not -1'
 		):
 			ResourceInfo('a', name = 'b', start = 0, end = 1, width = -1)
-
 
 class MemoryMapTestCase(ToriiTestSuiteCase):
 	def test_name(self):
@@ -490,7 +488,6 @@ class MemoryMapTestCase(ToriiTestSuiteCase):
 			r'Alignment must be a non-negative integer, not -1'
 		):
 			memory_map.align_to(alignment = -1)
-
 
 class MemoryMapDiscoveryTestCase(ToriiTestSuiteCase):
 	def setUp(self):

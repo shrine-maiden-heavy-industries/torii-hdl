@@ -816,7 +816,6 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.State('FOO'):
 				pass
 
-
 	def test_FSM_State_wrong_nested(self):
 		m = Module()
 		with m.FSM():

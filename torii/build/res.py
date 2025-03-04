@@ -4,7 +4,6 @@ from collections     import OrderedDict
 from collections.abc import Generator, Iterable, Callable
 from typing          import Literal
 
-
 from .._typing       import IODirectionEmpty
 from ..hdl.ast       import Signal, SignalDict, Value, ValueCastable
 from ..hdl.rec       import Record
@@ -18,7 +17,6 @@ __all__ = (
 
 class ResourceError(Exception):
 	pass
-
 
 class ResourceManager:
 	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:

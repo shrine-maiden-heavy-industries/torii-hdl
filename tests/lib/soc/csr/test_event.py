@@ -15,7 +15,6 @@ def simulation_test(dut, process):
 	with sim.write_vcd('test.vcd'):
 		sim.run()
 
-
 class EventMonitorTestCase(ToriiTestSuiteCase):
 	def test_params(self):
 		monitor = EventMonitor(data_width = 16, alignment = 4, trigger = 'rise')
@@ -93,7 +92,6 @@ class EventMonitorTestCase(ToriiTestSuiteCase):
 		monitor.freeze()
 		self.assertIs(src, monitor.src)
 		self.assertIs(bus, monitor.bus)
-
 
 class EventMonitorSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):

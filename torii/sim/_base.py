@@ -27,7 +27,6 @@ class BaseProcess:
 	def run(self) -> None:
 		raise NotImplementedError
 
-
 class BaseSignalState:
 	__slots__ = ()
 
@@ -38,7 +37,6 @@ class BaseSignalState:
 
 	def set(self, value) -> None:
 		raise NotImplementedError
-
 
 class BaseSimulation:
 	def reset(self) -> None:
@@ -57,7 +55,6 @@ class BaseSimulation:
 
 	def wait_interval(self, process, interval):
 		raise NotImplementedError
-
 
 class BaseEngine:
 	def __init__(self, fragment: Fragment):

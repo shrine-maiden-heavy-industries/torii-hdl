@@ -18,7 +18,6 @@ __all__ = (
 class ConstantValue:
 	pass
 
-
 class ConstantBool(ConstantValue):
 	'''
 	Boolean constant.
@@ -41,7 +40,6 @@ class ConstantBool(ConstantValue):
 
 	def __repr__(self) -> str:
 		return f'ConstantBool({self.value})'
-
 
 class ConstantInt(ConstantValue):
 	'''
@@ -94,7 +92,6 @@ class ConstantInt(ConstantValue):
 	def __repr__(self) -> str:
 		return f'ConstantInt({self.value}, width={self.width}, signed={self.signed})'
 
-
 class ConstantMap(Mapping):
 	'''
 	Named constant map.
@@ -135,7 +132,6 @@ class ConstantMap(Mapping):
 
 	def __repr__(self) -> str:
 		return f'ConstantMap({list(self._storage.items())})'
-
 
 class PeripheralInfo:
 	'''

@@ -14,7 +14,6 @@ def simulation_test(dut, process):
 	with sim.write_vcd('test.vcd'):
 		sim.run()
 
-
 class SourceTestCase(ToriiTestSuiteCase):
 	def test_level(self):
 		src = Source(trigger = 'level')
@@ -59,7 +58,6 @@ class SourceTestCase(ToriiTestSuiteCase):
 			r'Event map must be an instance of EventMap, not \'foo\''
 		):
 			src.event_map = 'foo'
-
 
 class EventMapTestCase(ToriiTestSuiteCase):
 	def test_add(self):
@@ -135,7 +133,6 @@ class EventMapTestCase(ToriiTestSuiteCase):
 			(src_0, 0),
 			(src_1, 1),
 		])
-
 
 class MonitorTestCase(ToriiTestSuiteCase):
 	def test_simple(self):

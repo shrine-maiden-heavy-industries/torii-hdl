@@ -308,7 +308,6 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			[Const(0b1010, 4) & Const(-2, 2).as_unsigned()], Const(0b0010, 4)
 		)
 
-
 	def test_or(self):
 		self.assertStatement(
 			lambda y, a, b: y.eq(a | b),
@@ -442,7 +441,6 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			lambda y, a: y.eq(a),
 			[Mux(0, Const(0b1010, 4), Const(-2, 2).as_unsigned())], Const(0b0010, 4)
 		)
-
 
 	def test_mux_invert(self):
 		self.assertStatement(
@@ -838,7 +836,6 @@ class SimulatorUnitTestCase(ToriiTestSuiteCase):
 			lambda y, a: y.eq(a.rotate_right(-9)),
 			[Const(0b1000001)], Const(0b0000110)
 		)
-
 
 class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 	@contextmanager

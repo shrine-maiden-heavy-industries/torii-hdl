@@ -57,7 +57,6 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def required_tools(self):
 		raise NotImplementedError('Platform must implement this property')
 
-
 	def __init__(self) -> None:
 		super().__init__(self.resources, self.connectors)
 
@@ -302,7 +301,6 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
 	) -> None:
 		self._check_feature('differential input/output', pin, attrs, valid_xdrs = (), valid_attrs = None)
-
 
 class TemplatedPlatform(Platform):
 	@property

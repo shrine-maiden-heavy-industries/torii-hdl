@@ -27,7 +27,6 @@ class PyRTLProcess(BaseProcess):
 		self.runnable = self.is_comb
 		self.passive  = True
 
-
 class _PythonEmitter:
 	def __init__(self):
 		self._buffer = []
@@ -60,12 +59,10 @@ class _PythonEmitter:
 		self.append(f'{name} = {value}')
 		return name
 
-
 class _Compiler:
 	def __init__(self, state, emitter):
 		self.state = state
 		self.emitter = emitter
-
 
 class _ValueCompiler(ValueVisitor, _Compiler):
 	helpers = {
@@ -106,7 +103,6 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 
 	def on_Initial(self, value):
 		raise NotImplementedError # :nocov:
-
 
 class _RHSValueCompiler(_ValueCompiler):
 	def __init__(self, state, emitter, *, mode, inputs = None):
@@ -255,7 +251,6 @@ class _RHSValueCompiler(_ValueCompiler):
 		emitter.append(f'result = {compiler(value)}')
 		return emitter.flush()
 
-
 class _LHSValueCompiler(_ValueCompiler):
 	def __init__(self, state, emitter, *, rhs, outputs = None):
 		super().__init__(state, emitter)
@@ -351,7 +346,6 @@ class _LHSValueCompiler(_ValueCompiler):
 				self.emitter.append('pass')
 		return gen
 
-
 class _StatementCompiler(StatementVisitor, _Compiler):
 	def __init__(self, state, emitter, *, inputs = None, outputs = None):
 		super().__init__(state, emitter)
@@ -408,7 +402,6 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 		for signal_index in output_indexes:
 			emitter.append(f'slots[{signal_index}].set(next_{signal_index})')
 		return emitter.flush()
-
 
 class _FragmentCompiler:
 	def __init__(self, state):

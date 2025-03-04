@@ -144,7 +144,6 @@ class InterfaceTestCase(ToriiTestSuiteCase):
 		):
 			iface.memory_map = MemoryMap(addr_width = 30, data_width = 8)
 
-
 class DecoderTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Decoder(addr_width = 31, data_width = 32, granularity = 16)
@@ -222,7 +221,6 @@ class DecoderTestCase(ToriiTestSuiteCase):
 			r'range 0x0\.\.0x100000000 \(32 address bits\)'
 		):
 			self.dut.add(sub, addr = 1)
-
 
 class DecoderSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
@@ -431,7 +429,6 @@ class DecoderSimulationTestCase(ToriiTestSuiteCase):
 		with sim.write_vcd('test.vcd'):
 			sim.run()
 
-
 class ArbiterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Arbiter(
@@ -477,7 +474,6 @@ class ArbiterTestCase(ToriiTestSuiteCase):
 			r'not have a corresponding input'
 		):
 			self.dut.add(Interface(addr_width = 31, data_width = 32, granularity = 16))
-
 
 class ArbiterSimulationTestCase(ToriiTestSuiteCase):
 	def test_simple(self):

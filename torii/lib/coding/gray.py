@@ -38,7 +38,6 @@ class Encoder(Elaboratable):
 		m.d.comb += self.o.eq(self.i ^ self.i[1:])
 		return m
 
-
 class Decoder(Elaboratable):
 	'''
 	Decode Gray code to binary.

@@ -164,7 +164,6 @@ class ToriiTestCase(TestCase):
 		if post_step:
 			yield
 
-
 	@staticmethod
 	def pulse_pos(sig: Signal, *, post_step: bool = True):
 		'''
@@ -351,7 +350,6 @@ class ToriiTestCase(TestCase):
 						'The following domains are defined:\n',
 						f'{self.domains}'
 					)
-
 
 				def proc():
 					yield from func(self)

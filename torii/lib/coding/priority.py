@@ -49,7 +49,6 @@ class Encoder(Elaboratable):
 		m.d.comb += self.n.eq(self.i == 0)
 		return m
 
-
 class Decoder(OneHotDecoder):
 	'''
 	Decode binary to priority request.

@@ -90,7 +90,6 @@ class PinsTestCase(ToriiTestSuiteCase):
 		):
 			Pins('0 1 2', assert_width = 4)
 
-
 class DiffPairsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		dp = DiffPairs(p = 'A0 A1', n = 'B0 B1')
@@ -141,7 +140,6 @@ class DiffPairsTestCase(ToriiTestSuiteCase):
 		):
 			DiffPairs('0 1 2', '3 4 5', assert_width = 4)
 
-
 class AttrsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		a = Attrs(IO_STANDARD = 'LVCMOS33', PULLUP = 1)
@@ -168,14 +166,12 @@ class AttrsTestCase(ToriiTestSuiteCase):
 		):
 			Attrs(FOO = 1.0)
 
-
 class ClockTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		c = Clock(1_000_000)
 		self.assertEqual(c.frequency, 1e6)
 		self.assertEqual(c.period, 1e-6)
 		self.assertEqual(repr(c), '(clock 1000000.0)')
-
 
 class SubsignalTestCase(ToriiTestSuiteCase):
 	def test_basic_pins(self):
@@ -277,7 +273,6 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		):
 			Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
 
-
 class ResourceTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		r = Resource('serial', 0,
@@ -315,7 +310,6 @@ class ResourceTestCase(ToriiTestSuiteCase):
 		self.assertEqual(r3.ios, ios)
 		self.assertEqual(r4.name, 'spi_2x')
 		self.assertEqual(r4.ios, ios)
-
 
 class ConnectorTestCase(ToriiTestSuiteCase):
 	def test_string(self):

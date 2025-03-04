@@ -38,7 +38,6 @@ class AlteraPlatform(TemplatedPlatform):
 		* ``{{name}}.sof``: bitstream as SRAM object file.
 		* ``{{name}}.rbf``: bitstream as raw binary file.
 
-
 	.. rubric:: Mistral toolchain
 
 	Required tools:
@@ -187,7 +186,6 @@ class AlteraPlatform(TemplatedPlatform):
 			--rev={{name}} {{name}}
 		''',
 	]
-
 
 	# Mistral templates
 
@@ -371,7 +369,6 @@ class AlteraPlatform(TemplatedPlatform):
 			return i_ddr
 		raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
 
-
 	@staticmethod
 	def _get_oreg(m: Module, pin: Pin, invert: bool) -> Signal:
 		def get_oneg(o: Signal):
@@ -407,7 +404,6 @@ class AlteraPlatform(TemplatedPlatform):
 			)
 			return o_ddr
 		raise ValueError(f'Invalid gearing {pin.xdr} for pin {pin.name}, must be either 0, 1, or 2')
-
 
 	@staticmethod
 	def _get_oereg(m: Module, pin: Pin) -> Signal:

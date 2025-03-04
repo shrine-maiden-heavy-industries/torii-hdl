@@ -53,7 +53,6 @@ class FormalPlatform(TemplatedPlatform):
 	resources = []
 	connectors = []
 
-
 	toolchain = 'sby'
 	_sby_required_tools = (
 		'yosys',
@@ -153,7 +152,6 @@ class FormalPlatform(TemplatedPlatform):
 		super().__init__()
 
 		self.mode = mode
-
 
 	@property
 	def required_tools(self) -> list[str]:

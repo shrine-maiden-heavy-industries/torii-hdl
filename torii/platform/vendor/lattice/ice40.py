@@ -321,7 +321,6 @@ class ICE40Platform(TemplatedPlatform):
 		if self.device.startswith('iCE5'):
 			return 'iCE5'
 
-
 	@property
 	def _toolchain_env_var(self) -> str:
 		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
@@ -375,7 +374,6 @@ class ICE40Platform(TemplatedPlatform):
 			return self._lse_icecube2_command_templates
 		if self.toolchain == 'Synplify-iCECube2':
 			return self._synplify_icecube2_command_templates
-
 
 	@property
 	def default_clk_constraint(self) -> Clock:

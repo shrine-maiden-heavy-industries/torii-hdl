@@ -15,7 +15,6 @@ class GPIO(Elaboratable):
 			m.d.sync += self.pins[self.bus.addr].eq(self.bus.w_data)
 		return m
 
-
 if __name__ == '__main__':
 	bus = Record([
 		('addr',   3),

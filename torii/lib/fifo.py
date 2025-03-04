@@ -99,13 +99,11 @@ class FIFOInterface:
 		self.r_en   = Signal()
 		self.r_level = Signal(range(depth + 1))
 
-
 def _incr(signal, modulo: int) -> Mux | int:
 	if modulo == 2 ** len(signal):
 		return signal + 1
 	else:
 		return Mux(signal == modulo - 1, 0, signal + 1)
-
 
 class SyncFIFO(Elaboratable, FIFOInterface):
 	__doc__ = FIFOInterface._doc_template.format(
@@ -211,7 +209,6 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 
 		return m
 
-
 class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 	__doc__ = FIFOInterface._doc_template.format(
 		description = '''
@@ -280,7 +277,6 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 		]
 
 		return m
-
 
 class AsyncFIFO(Elaboratable, FIFOInterface):
 	__doc__ = FIFOInterface._doc_template.format(
@@ -458,7 +454,6 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 				m.d.comb += Assume(consume_r_gry == (consume_r_bin ^ consume_r_bin[1:]))
 
 		return m
-
 
 class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 	__doc__ = FIFOInterface._doc_template.format(

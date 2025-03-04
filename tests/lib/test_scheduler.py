@@ -24,7 +24,6 @@ class RoundRobinTestCase(ToriiTestSuiteCase):
 		):
 			RoundRobin(count = -1)
 
-
 class RoundRobinSimulationTestCase(ToriiTestSuiteCase):
 	def test_count_one(self):
 		dut = RoundRobin(count = 1)

@@ -14,7 +14,6 @@ class Counter(Elaboratable):
 		m.d.comb += self.o.eq(self.v[-1])
 		return m
 
-
 ctr = Counter(width = 16)
 if __name__ == '__main__':
 	print(verilog.convert(ctr, ports = [ctr.o]))

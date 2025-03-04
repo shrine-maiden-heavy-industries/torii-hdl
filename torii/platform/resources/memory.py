@@ -30,7 +30,6 @@ class QSPIDataMode(Enum):
 	x4 = auto()
 	x8 = auto()
 
-
 def SPIFlashResources(
 	name_or_number: str | int, number: int | None = None, *,
 	cs_n: str, clk: str, copi: str, cipo: str, wp_n: str | None = None,
@@ -130,7 +129,6 @@ def QSPIFlashResource(
 		ios.append(attrs)
 	return Resource.family(name_or_number, number, default_name = 'qspi', ios = ios)
 
-
 def SDCardResources(
 	name_or_number: str | int, number: int | None = None, *,
 	clk: str, cmd: str, dat0: str, dat1: str | None = None, dat2: str | None = None,
@@ -186,7 +184,6 @@ def SDCardResources(
 
 	return resources
 
-
 def SRAMResource(
 	name_or_number: str | int, number: int | None = None, *,
 	cs_n: str, oe_n: str | None = None, we_n: str, a: str, d: str,
@@ -212,7 +209,6 @@ def SRAMResource(
 		io.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'sram', ios = io)
-
 
 def SDRAMResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -244,7 +240,6 @@ def SDRAMResource(
 		io.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'sdram', ios = io)
-
 
 def NORFlashResources(
 	name_or_number: str | int, number: int | None = None, *,
@@ -293,7 +288,6 @@ def NORFlashResources(
 		))
 
 	return resources
-
 
 def DDR3Resource(
 	name_or_number: str | int, number: int | None = None, *,

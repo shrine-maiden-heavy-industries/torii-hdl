@@ -230,7 +230,6 @@ class StreamArbiter(Generic[T], Elaboratable):
 	This uses a very simple priority scheduler and relies on the standard ``valid``/``ready`` handshake
 	that occurs between streams to schedule which stream is connected to the output stream.
 
-
 	Parameters
 	----------
 	domain : str

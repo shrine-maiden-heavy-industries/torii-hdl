@@ -107,7 +107,6 @@ class Layout:
 				field_reprs.append(f'({name!r}, {shape!r}, Direction.{dir.name})')
 		return f'Layout([{", ".join(field_reprs)}])'
 
-
 class Record(ValueCastable):
 	_annotations: dict[str, Any]
 
@@ -297,7 +296,6 @@ class Record(ValueCastable):
 			shape, direction = self.layout[field]
 			if not isinstance(shape, Layout) and direction == DIR_NONE:
 				raise TypeError(f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction')
-
 
 			item = self.fields[field]
 			subord_items = []

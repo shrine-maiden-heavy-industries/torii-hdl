@@ -28,7 +28,6 @@ class ResourcesTestCase(ToriiTestCase):
 			self.assertEqual(res.name, 'led')
 			self.assertEqual(res.number, idx)
 
-
 	def test_button_resources(self):
 		btns = ButtonResources(pins = 'A B C D E F G H', attrs = Attrs(IO_TYPE = 'LVCMOS33'))
 

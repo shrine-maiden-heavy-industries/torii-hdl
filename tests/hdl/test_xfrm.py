@@ -308,7 +308,6 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		):
 			DomainRenamer(comb = 'sync')
 
-
 class DomainLowererTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.s = Signal()
@@ -398,7 +397,6 @@ class DomainLowererTestCase(ToriiTestSuiteCase):
 		):
 			DomainLowerer()(f)
 
-
 class SampleLowererTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.i = Signal()
@@ -444,7 +442,6 @@ class SampleLowererTestCase(ToriiTestSuiteCase):
 		''')
 		self.assertEqual(len(f.drivers['sync']), 2)
 
-
 class SwitchCleanerTestCase(ToriiTestSuiteCase):
 	def test_clean(self):
 		a = Signal()
@@ -471,7 +468,6 @@ class SwitchCleanerTestCase(ToriiTestSuiteCase):
 			)
 		)
 		''')
-
 
 class LHSGroupAnalyzerTestCase(ToriiTestSuiteCase):
 	def test_no_group_unrelated(self):
@@ -540,7 +536,6 @@ class LHSGroupAnalyzerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(list(groups.values()), [
 		])
 
-
 class LHSGroupFilterTestCase(ToriiTestSuiteCase):
 	def test_filter(self):
 		a = Signal()
@@ -571,7 +566,6 @@ class LHSGroupFilterTestCase(ToriiTestSuiteCase):
 		]
 
 		self.assertRepr(LHSGroupFilter(SignalSet())(stmts), '()')
-
 
 class ResetInserterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -651,7 +645,6 @@ class ResetInserterTestCase(ToriiTestSuiteCase):
 			)
 		)
 		''')
-
 
 class EnableInserterTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -750,7 +743,6 @@ class EnableInserterTestCase(ToriiTestSuiteCase):
 		)
 		''')
 
-
 class _MockElaboratable(Elaboratable):
 	def __init__(self):
 		self.s1 = Signal()
@@ -762,7 +754,6 @@ class _MockElaboratable(Elaboratable):
 		)
 		f.add_driver(self.s1, 'sync')
 		return f
-
 
 class TransformedElaboratableTestCase(ToriiTestSuiteCase):
 	def setUp(self):

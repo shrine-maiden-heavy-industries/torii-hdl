@@ -31,8 +31,6 @@ def union(i: Iterable[T], start: T | None = None) -> T:
 			r |= e # type: ignore
 	return r # type: ignore
 
-
-
 def get_linter_options(filename: str) -> dict[str, str]:
 	magic_comment = compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)\n$')
 
@@ -45,7 +43,6 @@ def get_linter_options(filename: str) -> dict[str, str]:
 		if len(matches) > 0:
 			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))
 	return dict()
-
 
 LinterOptionType: TypeAlias = bool | int
 

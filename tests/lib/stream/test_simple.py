@@ -22,7 +22,6 @@ class StreamInterfaceTestCase(ToriiTestSuiteCase):
 		s2 = StreamInterface(name = 'ULPI')
 		self.assertRepr(s2, '(rec ULPI data valid first last ready)')
 
-
 	def test_sizes(self) -> None:
 		s0 = StreamInterface()
 		self.assertEqual(s0.data.width,  8)
@@ -203,7 +202,6 @@ class StreamArbiterTestCase(ToriiTestCase):
 			yield self.dut.s2.valid.eq(0)
 			yield self.dut.s3.valid.eq(0)
 			yield from self.step(10)
-
 
 		s0_feeder(self)
 		s1_feeder(self)

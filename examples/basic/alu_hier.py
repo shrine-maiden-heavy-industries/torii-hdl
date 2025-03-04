@@ -14,7 +14,6 @@ class Adder(Elaboratable):
 		m.d.comb += self.o.eq(self.a + self.b)
 		return m
 
-
 class Subtractor(Elaboratable):
 	def __init__(self, width: int):
 		self.a   = Signal(width)
@@ -25,7 +24,6 @@ class Subtractor(Elaboratable):
 		m = Module()
 		m.d.comb += self.o.eq(self.a - self.b)
 		return m
-
 
 class ALU(Elaboratable):
 	def __init__(self, width: int):
@@ -52,7 +50,6 @@ class ALU(Elaboratable):
 		with m.Else():
 			m.d.comb += self.o.eq(self.add.o)
 		return m
-
 
 if __name__ == '__main__':
 	alu = ALU(width = 16)

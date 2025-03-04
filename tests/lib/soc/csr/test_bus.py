@@ -64,7 +64,6 @@ class ElementTestCase(ToriiTestSuiteCase):
 		):
 			Element(width = 1, access = 'wo')
 
-
 class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_layout(self):
 		iface = Interface(addr_width = 12, data_width = 8)
@@ -136,7 +135,6 @@ class InterfaceTestCase(ToriiTestSuiteCase):
 			r'bus interface data width 8'
 		):
 			iface.memory_map = MemoryMap(addr_width = 16, data_width = 16)
-
 
 class MultiplexerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -294,7 +292,6 @@ class MultiplexerTestCase(ToriiTestSuiteCase):
 				with sim.write_vcd('test.vcd'):
 					sim.run()
 
-
 class MultiplexerAlignedTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.dut = Multiplexer(addr_width = 16, data_width = 8, alignment = 2)
@@ -358,7 +355,6 @@ class MultiplexerAlignedTestCase(ToriiTestSuiteCase):
 				sim.add_sync_process(sim_test)
 				with sim.write_vcd('test.vcd'):
 					sim.run()
-
 
 class DecoderTestCase(ToriiTestSuiteCase):
 	def setUp(self):

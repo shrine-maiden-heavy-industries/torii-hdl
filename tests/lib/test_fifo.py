@@ -125,7 +125,6 @@ class FIFOModel(Elaboratable, FIFOInterface):
 
 		return m
 
-
 class FIFOModelEquivalenceSpec(Elaboratable):
 	'''
 	The first-in first-out queue model equivalence specification: for any inputs and control
@@ -170,7 +169,6 @@ class FIFOModelEquivalenceSpec(Elaboratable):
 			)
 
 		return m
-
 
 class FIFOContractSpec(Elaboratable):
 	'''
@@ -254,7 +252,6 @@ class FIFOContractSpec(Elaboratable):
 
 		return m
 
-
 class FIFOFormalCase(ToriiTestSuiteCase):
 	def check_sync_fifo(self, fifo):
 		self.assertFormal(
@@ -306,7 +303,6 @@ class FIFOFormalCase(ToriiTestSuiteCase):
 
 	def test_async_buffered(self):
 		self.check_async_fifo(AsyncFIFOBuffered(width = 8, depth = 4))
-
 
 # we need this testcase because we cant do model equivalence checking on the async fifos (at the moment)
 class AsyncFIFOSimCase(ToriiTestSuiteCase):

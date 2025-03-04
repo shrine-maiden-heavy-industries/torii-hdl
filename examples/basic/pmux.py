@@ -24,7 +24,6 @@ class ParMux(Elaboratable):
 				m.d.comb += self.o.eq(0)
 		return m
 
-
 if __name__ == '__main__':
 	pmux = ParMux(width = 16)
 

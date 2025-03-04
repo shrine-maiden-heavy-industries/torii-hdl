@@ -32,7 +32,6 @@ class Counter(Elaboratable):
 		m.d.comb += [ Assert(self.counter <= self.max) ]
 		return m
 
-
 if __name__ == '__main__':
 	dut_gold   = Counter(max_count = 8,   buggy = False)
 	dut_buggy  = Counter(max_count = 8,   buggy = True)

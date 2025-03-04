@@ -33,11 +33,9 @@ def _convert_rtlil_text(
 
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
-
 def convert_fragment(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> tuple[str, SignalDict]:
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
-
 
 def convert(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> str:
 	rtlil_text = rtlil.convert(*args, **kwargs)

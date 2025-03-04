@@ -20,7 +20,6 @@ def _check_stages(stages: int):
 	if stages < 2:
 		raise ValueError('Synchronization stage count may not safely be less than 2')
 
-
 class FFSynchronizer(Elaboratable):
 	'''
 	Resynchronize a signal to a different clock domain.
@@ -48,7 +47,6 @@ class FFSynchronizer(Elaboratable):
 	max_input_delay : None or float
 		Maximum delay from the input signal's clock to the first synchronization stage, in seconds.
 		If specified and the platform does not support it, elaboration will fail.
-
 
 	.. note::
 
@@ -108,7 +106,6 @@ class FFSynchronizer(Elaboratable):
 			m.d[self._o_domain] += o.eq(i)
 		m.d.comb += self.o.eq(flops[-1])
 		return m
-
 
 class AsyncFFSynchronizer(Elaboratable):
 	'''
@@ -197,7 +194,6 @@ class AsyncFFSynchronizer(Elaboratable):
 
 		return m
 
-
 class ResetSynchronizer(Elaboratable):
 	'''
 	Synchronize de-assertion of a clock domain reset.
@@ -252,7 +248,6 @@ class ResetSynchronizer(Elaboratable):
 			stages = self._stages,
 			max_input_delay = self._max_input_delay
 		)
-
 
 class PulseSynchronizer(Elaboratable):
 	'''

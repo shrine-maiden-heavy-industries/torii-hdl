@@ -24,7 +24,6 @@ class RegisterFile(Elaboratable):
 		]
 		return m
 
-
 if __name__ == '__main__':
 	rf = RegisterFile()
 

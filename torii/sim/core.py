@@ -22,14 +22,12 @@ __all__ = (
 class Command:
 	pass
 
-
 class Settle(Command):
 	'''
 		micro-steps the simulation until just before the next clock cycle would start
 	'''
 	def __repr__(self) -> str:
 		return '(settle)'
-
 
 class Delay(Command):
 	def __init__(self, interval: int | float | None = None) -> None:
@@ -40,7 +38,6 @@ class Delay(Command):
 			return '(delay ε)'
 		else:
 			return f'(delay {self.interval * 1e6:.3}us)'
-
 
 class Tick(Command):
 	'''
@@ -63,11 +60,9 @@ class Tick(Command):
 	def __repr__(self) -> str:
 		return f'(tick {self.domain})'
 
-
 class Passive(Command):
 	def __repr__(self) -> str:
 		return '(passive)'
-
 
 class Active(Command):
 	def __repr__(self) -> str:

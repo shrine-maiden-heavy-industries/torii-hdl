@@ -24,7 +24,6 @@ class ReversibleSpec(Elaboratable):
 		]
 		return m
 
-
 class HammingDistanceSpec(Elaboratable):
 	def __init__(self, distance, encoder_cls, args):
 		self.distance    = distance
@@ -40,7 +39,6 @@ class HammingDistanceSpec(Elaboratable):
 			Assert(sum(enc1.o ^ enc2.o) == self.distance)
 		]
 		return m
-
 
 class GrayCoderTestCase(ToriiTestSuiteCase):
 	def test_reversible(self):
