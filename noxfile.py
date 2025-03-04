@@ -114,14 +114,10 @@ def typecheck(session: Session) -> None:
 @nox.session
 def lint(session: Session) -> None:
 	session.install('flake8')
+
 	session.run(
-		'flake8', '--config', str((CNTRB_DIR / '.flake8').resolve()), './torii'
-	)
-	session.run(
-		'flake8', '--config', str((CNTRB_DIR / '.flake8').resolve()), './examples'
-	)
-	session.run(
-		'flake8', '--config', str((CNTRB_DIR / '.flake8').resolve()), './tests'
+		'flake8', '--config', str((CNTRB_DIR / '.flake8').resolve()),
+		'./torii', './tests', './examples', './docs'
 	)
 
 @nox.session
