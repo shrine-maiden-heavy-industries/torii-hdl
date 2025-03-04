@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii                  import *
+from torii.hdl.dsl          import Module
+from torii.hdl.rec          import Record
 from torii.lib.fifo         import SyncFIFO
 from torii.lib.io           import pin_layout
-from torii.lib.stdio.serial import *
-from torii.sim              import *
+from torii.lib.stdio.serial import AsyncSerial, AsyncSerialRX, AsyncSerialTX
+from torii.sim              import Simulator
 
 from ...utils               import ToriiTestSuiteCase
+
 
 def simulation_test(dut, process):
 	sim = Simulator(dut)
