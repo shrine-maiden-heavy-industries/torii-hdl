@@ -2,7 +2,9 @@
 
 from collections     import OrderedDict
 
-from torii.build.dsl import *
+from torii.build.dsl import (
+	Attrs, Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Resource, Subsignal,
+)
 
 from ..utils         import ToriiTestSuiteCase
 

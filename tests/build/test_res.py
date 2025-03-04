@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii           import *
-from torii.hdl.rec   import *
-from torii.lib.io    import *
-from torii.build.dsl import *
-from torii.build.res import *
+from torii.build.dsl import Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Subsignal
+from torii.build.res import Resource, ResourceError, ResourceManager
+from torii.hdl.ast   import Signal
+from torii.hdl.rec   import Record
+from torii.lib.io    import Pin
 
 from ..utils         import ToriiTestSuiteCase
 

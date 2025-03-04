@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii            import *
-from torii.build.plat import *
+from torii.build.plat import Platform
 
 from ..utils          import ToriiTestSuiteCase
 
