@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from collections   import OrderedDict
+from collections           import OrderedDict
 
-from torii.hdl.ast import *
-from torii.hdl.cd  import *
-from torii.hdl.ir  import *
-from torii.hdl.mem import *
-from torii.tools   import ToolNotFound
+from torii.hdl.ast         import Cat, ClockSignal, Const, ResetSignal, Signal, SignalDict, SignalKey, SignalSet
+from torii.hdl.cd          import ClockDomain, DomainError
+from torii.hdl.dsl         import Module
+from torii.hdl.ir          import DriverConflict, Elaboratable, Fragment, Instance
+from torii.platform.formal import FormalPlatform
+from torii.tools           import ToolNotFound
 
-from ..utils       import ToriiTestSuiteCase
+from ..utils               import ToriiTestSuiteCase
 
 class ElaboratesToNone(Elaboratable):
 	def elaborate(self, platform):
@@ -942,9 +943,6 @@ class InstanceTestCase(ToriiTestSuiteCase):
 
 class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):
-		from torii                 import Module
-		from torii.platform.formal import FormalPlatform
-
 		class SimpleElaboratable(Elaboratable):
 			def elaborate(self, _):
 				m = Module()

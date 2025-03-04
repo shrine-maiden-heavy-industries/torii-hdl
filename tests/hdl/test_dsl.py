@@ -6,9 +6,9 @@ from collections   import OrderedDict
 from enum          import Enum
 from sys           import version_info
 
-from torii.hdl.ast import *
-from torii.hdl.cd  import *
-from torii.hdl.dsl import *
+from torii.hdl.ast import Cat, ClockSignal, Past, ResetSignal, Signal, SignalSet, Switch
+from torii.hdl.cd  import ClockDomain
+from torii.hdl.dsl import Module, SyntaxError, SyntaxWarning
 
 from ..utils       import ToriiTestSuiteCase
 

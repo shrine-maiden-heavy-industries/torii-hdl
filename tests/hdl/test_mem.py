@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl.ast import *
-from torii.hdl.mem import *
+from torii.hdl.ast import Const, Signal
+from torii.hdl.mem import DummyPort, Memory
 
 from ..utils       import ToriiTestSuiteCase
 

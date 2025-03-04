@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl.cd import *
+from torii.hdl.cd import ClockDomain
 
 from ..utils      import ToriiTestSuiteCase
 

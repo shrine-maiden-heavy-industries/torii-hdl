@@ -2,8 +2,8 @@
 
 from enum          import Enum
 
-from torii.hdl.ast import *
-from torii.hdl.rec import *
+from torii.hdl.ast import Shape, Signal, signed, unsigned
+from torii.hdl.rec import DIR_FANIN, DIR_FANOUT, DIR_NONE, Direction, Layout, Record
 
 from ..utils       import ToriiTestSuiteCase
 

@@ -4,7 +4,10 @@ import warnings
 from enum          import Enum, EnumMeta
 from sys           import version_info
 
-from torii.hdl.ast import *
+from torii.hdl.ast import (
+	Array, Cat, ClockSignal, Const, Initial, Mux, Part, ResetSignal, Sample, Shape, ShapeCastable, ShapeLike,
+	Signal, Slice, Switch, Value, ValueCastable, ValueLike, signed, unsigned,
+)
 
 from ..utils       import ToriiTestSuiteCase
 
