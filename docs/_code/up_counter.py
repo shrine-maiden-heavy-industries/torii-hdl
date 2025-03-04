@@ -1,4 +1,4 @@
-from torii import *
+from torii import Elaboratable, Module, Signal
 
 class UpCounter(Elaboratable):
     '''
@@ -40,7 +40,7 @@ class UpCounter(Elaboratable):
 
         return m
 # --- TEST ---
-from torii.sim import Simulator
+from torii.sim import Simulator # noqa: E402
 
 dut = UpCounter(25)
 def bench():
@@ -68,7 +68,7 @@ sim.add_sync_process(bench)
 with sim.write_vcd('up_counter.vcd'):
     sim.run()
 # --- CONVERT ---
-from torii.back import verilog  # noqa: E402
+from torii.back import verilog # noqa: E402
 
 top = UpCounter(25)
 with open('up_counter.v', 'w') as f:
