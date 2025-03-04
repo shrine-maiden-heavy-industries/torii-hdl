@@ -2,7 +2,7 @@
 
 from torii.lib.soc        import event
 from torii.lib.soc.memory import MemoryMap
-from torii.lib.soc.periph import *
+from torii.lib.soc.periph import ConstantBool, ConstantInt, ConstantMap, PeripheralInfo
 
 from ...utils             import ToriiTestSuiteCase
 

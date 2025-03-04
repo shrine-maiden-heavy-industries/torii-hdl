@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii               import *
-from torii.lib.soc.event import *
-from torii.sim           import *
+from torii.lib.soc.event import EventMap, Monitor, Source
+from torii.sim           import Simulator
 
 from ...utils            import ToriiTestSuiteCase
 
