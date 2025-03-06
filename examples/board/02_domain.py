@@ -4,7 +4,7 @@
 # explicitly, which overrides the default behavior. Any other clock domains could also be
 # independently created in addition to the main "sync" domain.
 
-from torii                                     import (
+from torii.hdl                                 import (
 	ClockDomain, ClockSignal, Elaboratable, Module, Signal
 )
 
