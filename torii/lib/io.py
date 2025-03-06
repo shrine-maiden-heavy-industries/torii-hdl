@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 from .._typing  import IODirectionOE
-from ..hdl.ast  import ShapeCastT
-from ..hdl.rec  import Layout, LayoutFieldT, Record
+from ..hdl.ast  import ShapeCastT # noqa: F401
+from ..hdl.rec  import Layout, LayoutFieldT, Record # noqa: F401
+
+# NOTE(aki):
+# The two `noqa` line above are because flake8 can't see the usage in the type bits
+# below because they are in strings.
 
 __all__ = (
 	'pin_layout',
