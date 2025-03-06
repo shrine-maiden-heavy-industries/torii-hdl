@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii                 import ClockDomain, ClockSignal, Elaboratable, Module, Signal
+from torii.hdl             import ClockDomain, ClockSignal, Elaboratable, Module, Signal
 from torii.lib.formal      import Assert, Assume, Initial
 from torii.platform.formal import FormalPlatform
 

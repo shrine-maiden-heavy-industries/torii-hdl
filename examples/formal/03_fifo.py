@@ -4,7 +4,7 @@
 # the formal verification tests found in the test suite for it, but all
 # in a single Elaboratable.
 
-from torii                 import (
+from torii.hdl             import (
 	ClockDomain, ClockSignal, Elaboratable, Memory, Module, Mux, ResetSignal, Signal
 )
 from torii.lib.formal      import AnyConst, Assert, Assume, Initial, Past, Rose
