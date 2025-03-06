@@ -9,8 +9,8 @@ import traceback
 from pathlib       import Path
 
 from torii.back    import rtlil
-from torii.hdl.ast import *
-from torii.hdl.ir  import *
+from torii.hdl.ast import Statement
+from torii.hdl.ir  import Fragment
 from torii.test    import ToriiTestCase
 from torii.tools   import ToolNotFound, require_tool
 
