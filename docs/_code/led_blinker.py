@@ -1,4 +1,4 @@
-from torii import Elaboratable, Module, Signal
+from torii.hdl import Elaboratable, Module, Signal
 
 class LEDBlinker(Elaboratable):
     def elaborate(self, platform):
