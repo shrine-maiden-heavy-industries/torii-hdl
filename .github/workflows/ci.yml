@@ -34,7 +34,6 @@ jobs:
 
       - name: 'Run Style Lint'
         shell: bash
-        continue-on-error: true
         run: |
           nox -s lint
 
