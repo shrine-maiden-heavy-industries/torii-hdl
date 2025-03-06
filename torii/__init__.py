@@ -39,7 +39,8 @@ def __getattr__(name: str):
 	if name in __all__:
 		warn(
 			'Importing HDL constructs from the root Torii module is deprecated, please import from `torii.hdl` instead',
-			DeprecationWarning
+			DeprecationWarning,
+			stacklevel = 2
 		)
 		return import_module('.hdl', __name__).__dict__[name]
 	if name not in __dir__():
