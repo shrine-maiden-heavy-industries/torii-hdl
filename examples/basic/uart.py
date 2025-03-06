@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii import Cat, Const, Elaboratable, Module, Signal
+from torii.hdl import Cat, Const, Elaboratable, Module, Signal
 
 class UART(Elaboratable):
 	'''

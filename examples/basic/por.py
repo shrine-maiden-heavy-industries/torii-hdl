@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import ClockDomain, ClockSignal, Module, ResetSignal, Signal
+from torii.hdl  import ClockDomain, ClockSignal, Module, ResetSignal, Signal
 from torii.back import verilog
 
 m = Module()

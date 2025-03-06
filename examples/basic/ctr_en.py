@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii      import Elaboratable, EnableInserter, Module, Signal
+from torii.hdl  import Elaboratable, EnableInserter, Module, Signal
 from torii.back import verilog
 from torii.sim  import Simulator
 
