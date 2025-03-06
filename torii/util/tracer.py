@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys       import _getframe, version_info
-from typing    import TYPE_CHECKING
 from opcode    import opname
+from sys       import _getframe, implementation, version_info
+from typing    import TYPE_CHECKING
 
 from .._typing import SrcLoc
 
@@ -11,6 +11,8 @@ __all__ = (
 	'get_var_name',
 	'NameNotFound',
 )
+
+_IS_PYPY = implementation.name == 'pypy'
 
 class NameNotFound(Exception):
 	pass
@@ -52,13 +54,13 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 			return code.co_names[imm]
 		elif opc == 'STORE_FAST':
 			imm |= int(code.co_code[index + 1])
-			if version_info >= (3, 11):
+			if version_info >= (3, 11) and not _IS_PYPY:
 				return code._varname_from_oparg(imm) # type: ignore
 			else:
 				return code.co_varnames[imm]
 		elif opc == 'STORE_DEREF':
 			imm |= int(code.co_code[index + 1])
-			if version_info >= (3, 11):
+			if version_info >= (3, 11) and not _IS_PYPY:
 				return code._varname_from_oparg(imm) # type: ignore
 			else:
 				if imm < len(code.co_cellvars):
