@@ -3,7 +3,7 @@
 from enum          import Enum
 
 from torii.hdl.ast import Shape, Signal, signed, unsigned
-from torii.hdl.rec import DIR_FANIN, DIR_FANOUT, DIR_NONE, Direction, Layout, Record
+from torii.hdl.rec import Direction, Layout, Record
 
 from ..utils       import ToriiTestSuiteCase
 
@@ -22,36 +22,36 @@ class LayoutTestCase(ToriiTestSuiteCase):
 		layout = Layout.cast([
 			('cyc',  1),
 			('data', signed(32)),
-			('stb',  1, DIR_FANOUT),
-			('ack',  1, DIR_FANIN),
+			('stb',  1, Direction.FANOUT),
+			('ack',  1, Direction.FANIN),
 			('info', [
 				('a', 1),
 				('b', 1),
 			])
 		])
 
-		self.assertFieldEqual(layout['cyc'], (unsigned(1), DIR_NONE))
-		self.assertFieldEqual(layout['data'], (signed(32), DIR_NONE))
-		self.assertFieldEqual(layout['stb'], (unsigned(1), DIR_FANOUT))
-		self.assertFieldEqual(layout['ack'], (unsigned(1), DIR_FANIN))
+		self.assertFieldEqual(layout['cyc'], (unsigned(1), Direction.NONE))
+		self.assertFieldEqual(layout['data'], (signed(32), Direction.NONE))
+		self.assertFieldEqual(layout['stb'], (unsigned(1), Direction.FANOUT))
+		self.assertFieldEqual(layout['ack'], (unsigned(1), Direction.FANIN))
 		sublayout = layout['info'][0]
-		self.assertEqual(layout['info'][1], DIR_NONE)
-		self.assertFieldEqual(sublayout['a'], (unsigned(1), DIR_NONE))
-		self.assertFieldEqual(sublayout['b'], (unsigned(1), DIR_NONE))
+		self.assertEqual(layout['info'][1], Direction.NONE)
+		self.assertFieldEqual(sublayout['a'], (unsigned(1), Direction.NONE))
+		self.assertFieldEqual(sublayout['b'], (unsigned(1), Direction.NONE))
 
 	def test_enum_field(self):
 		layout = Layout.cast([
 			('enum', UnsignedEnum),
-			('enum_dir', UnsignedEnum, DIR_FANOUT),
+			('enum_dir', UnsignedEnum, Direction.FANOUT),
 		])
-		self.assertFieldEqual(layout['enum'], (unsigned(2), DIR_NONE))
-		self.assertFieldEqual(layout['enum_dir'], (unsigned(2), DIR_FANOUT))
+		self.assertFieldEqual(layout['enum'], (unsigned(2), Direction.NONE))
+		self.assertFieldEqual(layout['enum_dir'], (unsigned(2), Direction.FANOUT))
 
 	def test_range_field(self):
 		layout = Layout.cast([
 			('range', range(0, 7)),
 		])
-		self.assertFieldEqual(layout['range'], (unsigned(3), DIR_NONE))
+		self.assertFieldEqual(layout['range'], (unsigned(3), Direction.NONE))
 
 	def test_slice_tuple(self):
 		layout = Layout.cast([
@@ -103,7 +103,7 @@ class LayoutTestCase(ToriiTestSuiteCase):
 		with self.assertRaisesRegex(
 			TypeError, (
 				r'^Field \(\'a\', 1, 0\) has invalid direction: should be a Direction '
-				r'instance like DIR_FANIN$'
+				r'instance like Direction.FANIN$'
 			)
 		):
 			Layout.cast([('a', 1, 0)])
@@ -394,29 +394,29 @@ class RecordTestCase(ToriiTestSuiteCase):
 class ConnectTestCase(ToriiTestSuiteCase):
 	def setUp_flat(self):
 		self.core_layout = [
-			('addr',   32, DIR_FANOUT),
-			('data_r', 32, DIR_FANIN),
-			('data_w', 32, DIR_FANIN),
+			('addr',   32, Direction.FANOUT),
+			('data_r', 32, Direction.FANIN),
+			('data_w', 32, Direction.FANIN),
 		]
 		self.periph_layout = [
-			('addr',   32, DIR_FANOUT),
-			('data_r', 32, DIR_FANIN),
-			('data_w', 32, DIR_FANIN),
+			('addr',   32, Direction.FANOUT),
+			('data_r', 32, Direction.FANIN),
+			('data_w', 32, Direction.FANIN),
 		]
 
 	def setUp_nested(self):
 		self.core_layout = [
-			('addr',   32, DIR_FANOUT),
+			('addr',   32, Direction.FANOUT),
 			('data', [
-				('r',  32, DIR_FANIN),
-				('w',  32, DIR_FANIN),
+				('r',  32, Direction.FANIN),
+				('w',  32, Direction.FANIN),
 			]),
 		]
 		self.periph_layout = [
-			('addr',   32, DIR_FANOUT),
+			('addr',   32, Direction.FANOUT),
 			('data', [
-				('r',  32, DIR_FANIN),
-				('w',  32, DIR_FANIN),
+				('r',  32, Direction.FANIN),
+				('w',  32, Direction.FANIN),
 			]),
 		]
 
@@ -507,7 +507,7 @@ class ConnectTestCase(ToriiTestSuiteCase):
 			recs[0].connect(recs[1])
 
 	def test_wrong_missing_field(self):
-		core   = Record([('addr', 32, DIR_FANOUT)])
+		core   = Record([('addr', 32, Direction.FANOUT)])
 		periph = Record([])
 
 		with self.assertRaisesRegex(

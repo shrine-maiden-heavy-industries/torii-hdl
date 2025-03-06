@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ..hdl.rec import DIR_FANIN, DIR_FANOUT, Record
+from ..hdl.rec import Direction, Record
 
 __all__ = (
 	'MockPlatform',
@@ -46,8 +46,8 @@ class MockRecord(Record):
 		'''
 
 		self.fields[item] = Record((
-			('o', 1, DIR_FANOUT),
-			('i', 1, DIR_FANIN )
+			('o', 1, Direction.FANOUT),
+			('i', 1, Direction.FANIN )
 		), name = f'{item}')
 
 	def __init__(self, *args, **kwargs) -> None:

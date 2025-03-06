@@ -3,7 +3,7 @@
 
 from torii.hdl.dsl              import Module
 from torii.hdl.ir               import Elaboratable
-from torii.hdl.rec              import DIR_FANIN, DIR_FANOUT, Layout
+from torii.hdl.rec              import Direction, Layout
 from torii.lib.soc.memory       import MemoryMap
 from torii.lib.soc.wishbone.bus import Arbiter, BurstTypeExt, CycleType, Decoder, Interface
 from torii.sim                  import Delay, Simulator, Tick
@@ -17,14 +17,14 @@ class InterfaceTestCase(ToriiTestSuiteCase):
 		self.assertEqual(iface.data_width, 8)
 		self.assertEqual(iface.granularity, 8)
 		self.assertEqual(iface.layout, Layout.cast([
-			('adr',   32, DIR_FANOUT),
-			('dat_w', 8,  DIR_FANOUT),
-			('dat_r', 8,  DIR_FANIN),
-			('sel',   1,  DIR_FANOUT),
-			('cyc',   1,  DIR_FANOUT),
-			('stb',   1,  DIR_FANOUT),
-			('we',    1,  DIR_FANOUT),
-			('ack',   1,  DIR_FANIN),
+			('adr',   32, Direction.FANOUT),
+			('dat_w', 8,  Direction.FANOUT),
+			('dat_r', 8,  Direction.FANIN),
+			('sel',   1,  Direction.FANOUT),
+			('cyc',   1,  Direction.FANOUT),
+			('stb',   1,  Direction.FANOUT),
+			('we',    1,  Direction.FANOUT),
+			('ack',   1,  Direction.FANIN),
 		]))
 
 	def test_granularity(self):
@@ -33,14 +33,14 @@ class InterfaceTestCase(ToriiTestSuiteCase):
 		self.assertEqual(iface.data_width, 32)
 		self.assertEqual(iface.granularity, 8)
 		self.assertEqual(iface.layout, Layout.cast([
-			('adr',   30, DIR_FANOUT),
-			('dat_w', 32, DIR_FANOUT),
-			('dat_r', 32, DIR_FANIN),
-			('sel',   4,  DIR_FANOUT),
-			('cyc',   1,  DIR_FANOUT),
-			('stb',   1,  DIR_FANOUT),
-			('we',    1,  DIR_FANOUT),
-			('ack',   1,  DIR_FANIN),
+			('adr',   30, Direction.FANOUT),
+			('dat_w', 32, Direction.FANOUT),
+			('dat_r', 32, Direction.FANIN),
+			('sel',   4,  Direction.FANOUT),
+			('cyc',   1,  Direction.FANOUT),
+			('stb',   1,  Direction.FANOUT),
+			('we',    1,  Direction.FANOUT),
+			('ack',   1,  Direction.FANIN),
 		]))
 
 	def test_features(self):
@@ -49,20 +49,20 @@ class InterfaceTestCase(ToriiTestSuiteCase):
 			features = {'rty', 'err', 'stall', 'lock', 'cti', 'bte'}
 		)
 		self.assertEqual(iface.layout, Layout.cast([
-			('adr',   32, DIR_FANOUT),
-			('dat_w', 32, DIR_FANOUT),
-			('dat_r', 32, DIR_FANIN),
-			('sel',   1,  DIR_FANOUT),
-			('cyc',   1,  DIR_FANOUT),
-			('stb',   1,  DIR_FANOUT),
-			('we',    1,  DIR_FANOUT),
-			('ack',   1,  DIR_FANIN),
-			('err',   1,  DIR_FANIN),
-			('rty',   1,  DIR_FANIN),
-			('stall', 1,  DIR_FANIN),
-			('lock',  1,  DIR_FANOUT),
-			('cti',   CycleType,    DIR_FANOUT),
-			('bte',   BurstTypeExt, DIR_FANOUT),
+			('adr',   32, Direction.FANOUT),
+			('dat_w', 32, Direction.FANOUT),
+			('dat_r', 32, Direction.FANIN),
+			('sel',   1,  Direction.FANOUT),
+			('cyc',   1,  Direction.FANOUT),
+			('stb',   1,  Direction.FANOUT),
+			('we',    1,  Direction.FANOUT),
+			('ack',   1,  Direction.FANIN),
+			('err',   1,  Direction.FANIN),
+			('rty',   1,  Direction.FANIN),
+			('stall', 1,  Direction.FANIN),
+			('lock',  1,  Direction.FANOUT),
+			('cti',   CycleType,    Direction.FANOUT),
+			('bte',   BurstTypeExt, Direction.FANOUT),
 		]))
 
 	def test_wrong_addr_width(self):
