@@ -13,7 +13,9 @@ from ..util            import flatten
 from ..util.decorators import memoize
 from ..util.tracer     import get_src_loc
 from ._unused          import MustUse, UnusedMustUse
-from .ast              import ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT
+from .ast              import (
+	ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT
+)
 from .cd               import ClockDomain, DomainError
 
 if TYPE_CHECKING:

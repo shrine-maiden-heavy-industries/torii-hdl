@@ -280,7 +280,7 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		):
 			with self.assertWarnsRegex(
 				DeprecationWarning,
-				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$' # noqa: E501
 			):
 				DomainRenamer('comb')
 
@@ -299,7 +299,7 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 		):
 			with self.assertWarnsRegex(
 				DeprecationWarning,
-				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'
+				r'^DomainRenamer constructed with a string literal or dictionary is deprecated, please use the kwargs construction.$'  # noqa: E501
 			):
 				DomainRenamer({'comb': 'sync'})
 

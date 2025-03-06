@@ -905,7 +905,10 @@ class Value(metaclass = ABCMeta):
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
-	def __call__(cls, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, src_loc_at: int = 0, **kwargs):
+	def __call__(
+			cls, value: int, shape: Shape | int | range | type | ShapeCastable | None = None,
+			src_loc_at: int = 0, **kwargs
+		):
 		if isinstance(shape, ShapeCastable):
 			return shape.const(value)
 		return super().__call__(value, shape, **kwargs, src_loc_at = src_loc_at + 1)
@@ -1306,8 +1309,8 @@ class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
 
 	def __init__(
 		self, shape: ShapeCastT | None = None, *,
-		name: str | None = None, reset: int | EnumMeta | None = None, reset_less: bool = False, attrs: SignalAttrs | None = None,
-		decoder: SignalDecoder | None = None, src_loc_at: int = 0
+		name: str | None = None, reset: int | EnumMeta | None = None, reset_less: bool = False,
+		attrs: SignalAttrs | None = None, decoder: SignalDecoder | None = None, src_loc_at: int = 0
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 

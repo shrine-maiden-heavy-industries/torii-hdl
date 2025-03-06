@@ -37,7 +37,7 @@ DIR_FANOUT = Direction.FANOUT
 DIR_FANIN  = Direction.FANIN
 ''' An alias for ``Direction.FANIN`` '''
 
-LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout'
+LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout' # noqa: E501
 
 class Layout:
 	@staticmethod
