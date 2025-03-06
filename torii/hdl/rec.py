@@ -13,7 +13,7 @@ from warnings        import warn
 from ..util          import tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
-__all__ = (
+__all__ = ( # noqa: F822
 	'DIR_FANIN',
 	'DIR_FANOUT',
 	'DIR_NONE',
