@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started &mdash; Torii-HDL 0.7.2.dev158 documentation</title>
+  <title>Getting Started &mdash; Torii-HDL 0.7.2.dev163 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/getting_started.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=caab64f8"></script>
+      <script src="_static/documentation_options.js?v=6518447d"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/platformpicker.js"></script>
@@ -488,7 +488,7 @@
 <section id="implementing-a-counter">
 <h3>Implementing a counter<a class="headerlink" href="#implementing-a-counter" title="Link to this heading"></a></h3>
 <p>A 16-bit up counter with enable input, overflow output, and a limit fixed at design time can be implemented in Torii as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">UpCounter</span><span class="p">(</span><span class="n">Elaboratable</span><span class="p">):</span>
 <span class="linenos"> 4</span><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
@@ -646,7 +646,7 @@
 <section id="a-blinking-led">
 <h2>A blinking LED<a class="headerlink" href="#a-blinking-led" title="Link to this heading"></a></h2>
 <p>Although Torii works well as a standalone HDL, it also includes a build system that integrates with FPGA toolchains, and many board definition files for common developer boards that include pinouts and programming adapter invocations. The following code will blink a LED with a frequency of 1 Hz on any board that has a LED and an oscillator:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Signal</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">LEDBlinker</span><span class="p">(</span><span class="n">Elaboratable</span><span class="p">):</span>
 <span class="linenos"> 4</span>    <span class="k">def</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">):</span>
