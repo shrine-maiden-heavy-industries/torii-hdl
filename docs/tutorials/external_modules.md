@@ -43,7 +43,7 @@ An example Torii elaboratable for a [Verilog]  module would look like this:
 
 from pathlib import Path
 
-from torii import Elaboratable, Module, Signal, Instance
+from torii.hdl import Elaboratable, Module, Signal, Instance
 
 class MyInverter(Elaboratable):
 	def __init__(self) -> None:
