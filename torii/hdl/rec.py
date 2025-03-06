@@ -8,6 +8,7 @@ from enum            import Enum, EnumMeta, auto, unique
 from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
+from warnings        import warn
 
 from ..util          import tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
@@ -30,12 +31,26 @@ class Direction(Enum):
 	FANOUT = auto()
 	FANIN  = auto()
 
-DIR_NONE   = Direction.NONE
-''' An alias for ``Direction.NONE`` '''
-DIR_FANOUT = Direction.FANOUT
-''' An alias for ``Direction.FANOUT`` '''
-DIR_FANIN  = Direction.FANIN
-''' An alias for ``Direction.FANIN`` '''
+def __dir__() -> list[str]:
+	return list({*globals(), *__all__})
+
+def __getattr__(name: str):
+	if name in ('DIR_NONE', 'DIR_FANOUT', 'DIR_FANIN'):
+		warn(
+			f'Use of the \'{name}\' alias is deprecated, please use \'Direction.{name.split("_")[1]}\' instead',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+		match name:
+			case 'DIR_NONE':
+				return Direction.NONE
+			case 'DIR_FANOUT':
+				return Direction.FANOUT
+			case 'DIR_FANIN':
+				return Direction.FANIN
+	if name not in __dir__():
+		raise AttributeError(f'Module {__name__!r} has not attribute {name!r}')
+
 
 LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout' # noqa: E501
 
@@ -53,7 +68,7 @@ class Layout:
 				raise TypeError(f'Field {field!r} has invalid layout: should be either (name, shape) or (name, shape, direction)')
 			if len(field) == 2:
 				name, layout = field
-				direction = DIR_NONE
+				direction = Direction.NONE
 				if isinstance(layout, Iterable) and not isinstance(layout, (Layout, EnumMeta, range, str)):
 					shape: Layout | ShapeCastT = Layout.cast(layout)
 				else:
@@ -61,7 +76,7 @@ class Layout:
 			else:
 				name, shape, direction = field
 				if not isinstance(direction, Direction):
-					raise TypeError(f'Field {field!r} has invalid direction: should be a Direction instance like DIR_FANIN')
+					raise TypeError(f'Field {field!r} has invalid direction: should be a Direction instance like Direction.FANIN')
 			if not isinstance(name, str):
 				raise TypeError(f'Field {field!r} has invalid name: should be a string')
 			if not isinstance(shape, Layout):
@@ -101,7 +116,7 @@ class Layout:
 	def __repr__(self) -> str:
 		field_reprs = []
 		for name, shape, dir in self:
-			if dir == DIR_NONE:
+			if dir == Direction.NONE:
 				field_reprs.append(f'({name!r}, {shape!r})')
 			else:
 				field_reprs.append(f'({name!r}, {shape!r}, Direction.{dir.name})')
@@ -157,7 +172,7 @@ class Record(ValueCastable):
 				params = get_args(typ)
 				if len(params) == 1:
 					layout.append(
-						(name, params[0], DIR_NONE)
+						(name, params[0], Direction.NONE)
 					)
 				elif len(params) == 2:
 					layout.append(
@@ -294,7 +309,7 @@ class Record(ValueCastable):
 				continue
 
 			shape, direction = self.layout[field]
-			if not isinstance(shape, Layout) and direction == DIR_NONE:
+			if not isinstance(shape, Layout) and direction == Direction.NONE:
 				raise TypeError(f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction')
 
 			item = self.fields[field]
@@ -312,9 +327,9 @@ class Record(ValueCastable):
 				sub_exclude = exclude[field] if exclude and field in exclude else None
 				stmts += item.connect(*subord_items, include = sub_include, exclude = sub_exclude)
 			else:
-				if direction == DIR_FANOUT:
+				if direction == Direction.FANOUT:
 					stmts += [ sub_item.eq(item) for sub_item in subord_items ]
-				if direction == DIR_FANIN:
+				if direction == Direction.FANIN:
 					stmts += [ item.eq(reduce(lambda a, b: a | b, subord_items)) ]
 
 		return stmts
