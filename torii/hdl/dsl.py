@@ -355,7 +355,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
 			raise SyntaxError('Case outside of Switch block')
-		new_patterns: _PatternTuple = ()
+		new_patterns: SwitchCaseT = ()
 		if () in switch_data['cases']:
 			warnings.warn(
 				'Case statements are order-dependant, any Case after a Default will be ignored',
