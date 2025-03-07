@@ -21,6 +21,18 @@ Unreleased template stuff
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [0.7.5]
+
+### Added
+
 - Added kwargs-based constructor to `DomainRenamer` to allow for more ergonomic usage (`DomainRenamer(sync = 'pipe')`)
 - Added new library components `torii.lib.stream`
   - `torii.lib.stream.simple.StreamInterface` - A unidirectional stream interface.
@@ -28,15 +40,25 @@ Unreleased template stuff
 
 ### Changed
 
+- `torii.hdl.cd.ClockDomain` now has a proper `__repr__`
+- Updated minimum/maximum `pyvcd` version
+- The `typing_extensions` dependency is now gated behind the active python version, meaning only 3.11 and older need it.
+- `Rose`/`Fell`/`Stable` now importable from the `torii.hdl` root module.
+
 ### Deprecated
 
 - Deprecated constructing the `DomainRenamer` with a single domain as a string (`DomainRenamer('sync')`), or a literal dictionary (`DomainRenamer({'sync': 'pipe'})`) in favor of kwargs-based construction
+- Deprecated root-level HDL imports (`from torii import *`), all imports for torii HDL constructs should now be done via `torii.hdl` exclusively.
+- The `DIR_NONE`/`DIR_FANIN`/`DIR_FANOUT` constants have been deprecated in favor of using the enum values from `Direction`
 
 ### Removed
 
 - Removed deprecated `torii.asserts` module, it's now only in `torii.lib.formal`
 
 ### Fixed
+
+- More typing fixes
+- Fixed `torii.util.tracer` on pypy3.11
 
 ## [0.7.1]
 
@@ -377,7 +399,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...main
+[0.7.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...v0.7.5
 [0.7.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.1...v0.6.2
