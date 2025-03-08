@@ -29,6 +29,12 @@ Unreleased template stuff
 
 ### Fixed
 
+## [0.7.6]
+
+### Fixed
+
+- Fixed the omission of the extra stream fields in the `torii.lib.stream.simple.StreamInterface`'s `attach`
+
 ## [0.7.5]
 
 ### Added
@@ -399,7 +405,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...main
+[0.7.6]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...v0.7.6
 [0.7.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...v0.7.5
 [0.7.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...v0.7.0
