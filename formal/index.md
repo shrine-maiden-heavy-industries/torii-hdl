@@ -1,5 +1,0 @@
-# Formal Framework
-
-```{todo}
-this
-```
