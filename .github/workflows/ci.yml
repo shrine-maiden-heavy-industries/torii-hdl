@@ -223,13 +223,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: docs
-          path: docs/
+          path: built_docs/
 
       - name: 'Deploy Docs'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: docs/
+          folder: built_docs/
           clean: true
 
   publish-pypi:
