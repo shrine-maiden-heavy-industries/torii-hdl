@@ -94,6 +94,30 @@ class StreamInterface(Record):
 			*extra
 		], name = name, src_loc_at = 1)
 
+	def connect(self, stream: StreamInterface, omit: set = set()):
+		'''
+		Connect to the target stream.
+
+		This method is an alias for :py:meth:`StreamInterface.attach`.
+
+		Parameters
+		----------
+		stream : torii.lib.stream.StreamInterface
+			The stream we are attaching to.
+
+		omit : set[str]
+			A set of additional stream fields to exclude from the tap connection.
+			(default: {})
+		'''
+
+		warn(
+			'`StreamInterface.connect` has been deprecated, please use `StreamInterface.attach` instead.',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+
+		return self.attach(stream, omit)
+
 	def attach(self, stream: StreamInterface, omit: set = set()):
 		'''
 		Attach to a target stream.

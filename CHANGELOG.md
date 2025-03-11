@@ -29,6 +29,16 @@ Unreleased template stuff
 
 ### Fixed
 
+## [0.7.7]
+
+### Deprecated
+
+- `torii.lib.streams.simple.StreamInterface.connect` has been deprecated as it shadows the superclass method in an incompatible way.
+
+### Fixed
+
+- Added missing `connect` method on the `torii.lib.streams.simple.StreamInterface`.
+
 ## [0.7.6]
 
 ### Fixed
@@ -405,7 +415,8 @@ Unreleased template stuff
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...main
+[0.7.7]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...v0.7.7
 [0.7.6]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...v0.7.6
 [0.7.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...v0.7.5
 [0.7.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.0...v0.7.1
