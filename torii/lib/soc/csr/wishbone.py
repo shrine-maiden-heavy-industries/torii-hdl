@@ -4,7 +4,7 @@ from ....hdl.ast    import Cat, Signal
 from ....hdl.dsl    import Module
 from ....hdl.ir     import Elaboratable
 from ....util.units import log2_exact
-from ..memory       import MemoryMap
+from ...mem.map     import MemoryMap
 from ..wishbone     import Interface as WishboneInterface
 from .              import Interface as CSRInterface
 

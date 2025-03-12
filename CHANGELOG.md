@@ -21,6 +21,8 @@ Unreleased template stuff
 
 ### Added
 
+- New library module `torii.lib.mem` for more generic-ish not SoC specific memory constructs, such as maps for busses.
+
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
   - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
 
@@ -33,6 +35,8 @@ Unreleased template stuff
 ### Deprecated
 
 - The `torii.tools.yosys.YosysError` being exported from `torii.back.cxxrtl` and `torii.back.verilog` has been deprecated and will be removed in a future release.
+- The `torii.lib.soc.memory` module has been deprecated and contents moved to `torii.lib.mem`
+  - `torii.lib.soc.memory.MemoryMap` and `torii.lib.soc.memory.ResourceInfo` are now in `torii.lib.mem.map`
 
 ### Removed
 

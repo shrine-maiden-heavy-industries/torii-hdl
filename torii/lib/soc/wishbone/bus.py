@@ -9,7 +9,7 @@ from ....hdl.dsl     import Module
 from ....hdl.ir      import Elaboratable
 from ....hdl.rec     import Direction, Record
 from ....util.units  import log2_exact
-from ..memory        import MemoryMap
+from ...mem.map      import MemoryMap
 
 __all__ = (
 	'Arbiter',
