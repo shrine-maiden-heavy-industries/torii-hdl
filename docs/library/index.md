@@ -10,6 +10,7 @@ Torii provides a standard library with various useful components for implementin
 ```{toctree}
 :maxdepth: 2
 
+bus/index
 coding/index
 mem/index
 cdc

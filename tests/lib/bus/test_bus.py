@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl.dsl              import Module
-from torii.hdl.ir               import Elaboratable
-from torii.hdl.rec              import Direction, Layout
-from torii.lib.mem.map          import MemoryMap
-from torii.lib.soc.wishbone.bus import Arbiter, BurstTypeExt, CycleType, Decoder, Interface
-from torii.sim                  import Delay, Simulator, Tick
+from torii.hdl.dsl          import Module
+from torii.hdl.ir           import Elaboratable
+from torii.hdl.rec          import Direction, Layout
+from torii.lib.bus.wishbone import Arbiter, BurstTypeExt, CycleType, Decoder, Interface
+from torii.lib.mem.map      import MemoryMap
+from torii.sim              import Delay, Simulator, Tick
 
-from ....utils                  import ToriiTestSuiteCase
+from ...utils               import ToriiTestSuiteCase
 
 class InterfaceTestCase(ToriiTestSuiteCase):
 	def test_simple(self):
