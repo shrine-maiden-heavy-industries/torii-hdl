@@ -4,7 +4,7 @@
 from torii.hdl.dsl              import Module
 from torii.hdl.ir               import Elaboratable
 from torii.hdl.rec              import Direction, Layout
-from torii.lib.soc.memory       import MemoryMap
+from torii.lib.mem.map          import MemoryMap
 from torii.lib.soc.wishbone.bus import Arbiter, BurstTypeExt, CycleType, Decoder, Interface
 from torii.sim                  import Delay, Simulator, Tick
 
