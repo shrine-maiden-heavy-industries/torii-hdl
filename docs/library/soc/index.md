@@ -9,6 +9,5 @@ event
 periph
 
 csr/index
-wishbone/index
 
 ```

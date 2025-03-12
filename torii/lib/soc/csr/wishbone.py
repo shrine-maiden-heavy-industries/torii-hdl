@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ....hdl.ast    import Cat, Signal
-from ....hdl.dsl    import Module
-from ....hdl.ir     import Elaboratable
-from ....util.units import log2_exact
-from ...mem.map     import MemoryMap
-from ..wishbone     import Interface as WishboneInterface
-from .              import Interface as CSRInterface
+from ....hdl.ast     import Cat, Signal
+from ....hdl.dsl     import Module
+from ....hdl.ir      import Elaboratable
+from ....util.units  import log2_exact
+from ...bus.wishbone import Interface as WishboneInterface
+from ...mem.map      import MemoryMap
+from .               import Interface as CSRInterface
 
 __all__ = (
 	'WishboneCSRBridge',
@@ -36,7 +36,7 @@ class WishboneCSRBridge(Elaboratable):
 
 	Attributes
 	----------
-	wb_bus : :class:`..wishbone.Interface`
+	wb_bus : :class:`...bus.wishbone.Interface`
 		Wishbone bus provided by the bridge.
 
 	'''
