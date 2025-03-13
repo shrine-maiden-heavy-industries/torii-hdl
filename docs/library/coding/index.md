@@ -26,3 +26,11 @@ The {py:mod}`torii.lib.coding` module provides building blocks for conversion be
 .. autoclass:: torii.lib.coding.GrayDecoder
 
 ```
+
+## Consistent Overhead Byte Stuffing
+
+```{eval-rst}
+.. automodule:: torii.lib.coding.cobs
+   :members:
+
+```

@@ -21,6 +21,9 @@ Unreleased template stuff
 
 ### Added
 
+- Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
+  - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
+
 ### Changed
 
 ### Deprecated
