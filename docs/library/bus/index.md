@@ -8,5 +8,6 @@
 ```{toctree}
 :maxdepth: 4
 
+amba/index
 wishbone
 ```

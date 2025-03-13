@@ -3,7 +3,7 @@
 Torii provides a standard library with various useful components for implementing designs ranging from simple to complex.
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 4
 
 bus/index
 coding/index
