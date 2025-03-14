@@ -168,6 +168,5 @@ def decode_rcobs(data: bytes | bytearray) -> bytes:
 		res_idx -= byte - 1
 		dat_idx -= byte
 
-
 	res = res[:len(data) - 1]
 	return bytes(res[res_idx:])
