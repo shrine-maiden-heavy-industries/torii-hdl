@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Torii-HDL 0.7.7 documentation</title>
+  <title>Index &mdash; Torii-HDL 0.7.8.dev2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
@@ -15,7 +15,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/genindex.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=a7202276"></script>
+      <script src="_static/documentation_options.js?v=3032387d"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/platformpicker.js"></script>
@@ -235,6 +235,11 @@
 <li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#gray-coding">Gray coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -584,6 +589,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="library/coding/index.html#torii.lib.coding.cobs.decode_rcobs">decode_rcobs() (in module torii.lib.coding.cobs)</a>
+</li>
       <li><a href="library/coding/index.html#torii.lib.coding.Decoder">Decoder (class in torii.lib.coding)</a>
 
       <ul>
@@ -728,6 +735,8 @@
 </li>
         <li><a href="api/hdl/xfrm.html#module-torii.hdl.xfrm">torii.hdl.xfrm</a>
 </li>
+        <li><a href="library/coding/index.html#module-torii.lib.coding.cobs">torii.lib.coding.cobs</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -767,16 +776,18 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="library/coding/index.html#torii.lib.coding.cobs.RCOBSEncoder">RCOBSEncoder (class in torii.lib.coding.cobs)</a>
+</li>
       <li><a href="api/hdl/mem.html#torii.hdl.mem.Memory.read_port">read_port() (torii.hdl.mem.Memory method)</a>
 </li>
       <li><a href="api/hdl/mem.html#torii.hdl.mem.ReadPort">ReadPort (class in torii.hdl.mem)</a>
 </li>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record">Record (class in torii.hdl.rec)</a>
 </li>
-      <li><a href="api/hdl/ast.html#torii.hdl.ast.ResetSignal">ResetSignal (class in torii.hdl.ast)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/hdl/ast.html#torii.hdl.ast.ResetSignal">ResetSignal (class in torii.hdl.ast)</a>
+</li>
       <li><a href="library/cdc.html#torii.lib.cdc.ResetSynchronizer">ResetSynchronizer (class in torii.lib.cdc)</a>
 </li>
       <li><a href="library/soc/memory.html#torii.lib.soc.memory.ResourceInfo">ResourceInfo (class in torii.lib.soc.memory)</a>
@@ -882,8 +893,6 @@
         <li><a href="api/hdl/cd.html#module-torii.hdl.cd">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torii.hdl.dsl
 
@@ -891,6 +900,8 @@
         <li><a href="api/hdl/dsl.html#module-torii.hdl.dsl">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torii.hdl.ir
 
@@ -917,6 +928,13 @@
 
       <ul>
         <li><a href="api/hdl/xfrm.html#module-torii.hdl.xfrm">module</a>
+</li>
+      </ul></li>
+      <li>
+    torii.lib.coding.cobs
+
+      <ul>
+        <li><a href="library/coding/index.html#module-torii.lib.coding.cobs">module</a>
 </li>
       </ul></li>
   </ul></td>

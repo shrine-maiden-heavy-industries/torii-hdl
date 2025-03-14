@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code Conversion &mdash; Torii-HDL 0.7.7 documentation</title>
+  <title>Code Conversion &mdash; Torii-HDL 0.7.8.dev2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/platformpicker.css" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/library/coding/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=a7202276"></script>
+      <script src="../../_static/documentation_options.js?v=3032387d"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/platformpicker.js"></script>
@@ -238,6 +238,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#gray-coding">Gray coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -556,6 +561,74 @@ If <code class="docutils literal notranslate"><span class="pre">n</span></code> 
 <dt class="sig sig-object py" id="torii.lib.coding.GrayDecoder">
 <span class="sig-prename descclassname"><span class="pre">torii.lib.coding.</span></span><span class="sig-name descname"><span class="pre">GrayDecoder</span></span><a class="headerlink" href="#torii.lib.coding.GrayDecoder" title="Link to this definition"></a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Decoder</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-torii.lib.coding.cobs">
+<span id="consistent-overhead-byte-stuffing"></span><h2>Consistent Overhead Byte Stuffing<a class="headerlink" href="#module-torii.lib.coding.cobs" title="Link to this heading"></a></h2>
+<p>This module implements some Consistent Overhead Byte Stuffing (<a href="#id1"><span class="problematic" id="id2">`COBS`_</span></a>) encoders, primarily the
+<a class="reference internal" href="#torii.lib.coding.cobs.RCOBSEncoder" title="torii.lib.coding.cobs.RCOBSEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a> which is well adept at streaming.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.coding.cobs.RCOBSEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.coding.cobs.</span></span><span class="sig-name descname"><span class="pre">RCOBSEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.coding.cobs.RCOBSEncoder" title="Link to this definition"></a></dt>
+<dd><p>Reverse Consistent Overhead Byte Stuffing (rCOBS) encoder.</p>
+<p>This is an implementation of the rCOBS algorithm. The source of the encoding
+algorithm was originally a Rust crate and can be found at: <a class="reference external" href="https://github.com/Dirbaio/rcobs">https://github.com/Dirbaio/rcobs</a></p>
+<p>The algorithm is fairly simple, for each byte in a message, do the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Increment running total byte counter</p></li>
+</ol>
+<p>2. Check if byte is <code class="docutils literal notranslate"><span class="pre">0x00</span></code>
+3a. If it is, then write out the value of the byte counter and reset it
+3b. If it is not, check to see if the running byte counter is about to overflow
+4a. If it is, write out <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> and reset the byte counter
+4b. If it is not, write out the byte itself.</p>
+</div></blockquote>
+<p>This encoder is just a pure implementation of the encoding logic for a single byte, and as such
+has a collection of status and control signals to indicate to the outside world its status.</p>
+<p>For decoding rCOBS encoded messages the <a class="reference internal" href="#torii.lib.coding.cobs.decode_rcobs" title="torii.lib.coding.cobs.decode_rcobs"><code class="xref py py-func docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a> method implements that functionality
+for any host-side applications.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>8</em><em>)</em><em>, </em><em>in</em>) – The raw byte to encode.</p></li>
+<li><p><strong>enc</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>8</em><em>)</em><em>, </em><em>out</em>) – The rCOBS encoded byte. Not valid unless <code class="docutils literal notranslate"><span class="pre">vld</span></code> signal is high.</p></li>
+<li><p><strong>strobe</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Strobe to signal to encode the byte in <code class="docutils literal notranslate"><span class="pre">raw</span></code>.</p></li>
+<li><p><strong>finish</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Flush the state of the encoder in preparation for next stream.</p></li>
+<li><p><strong>ready</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Encoder ready signal, indicates when the encoder is ready for the next byte.</p></li>
+<li><p><strong>valid</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Value in <code class="docutils literal notranslate"><span class="pre">enc</span></code> is valid and can be latched.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.lib.coding.cobs.decode_rcobs">
+<span class="sig-prename descclassname"><span class="pre">torii.lib.coding.cobs.</span></span><span class="sig-name descname"><span class="pre">decode_rcobs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.13)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></span></span><a class="headerlink" href="#torii.lib.coding.cobs.decode_rcobs" title="Link to this definition"></a></dt>
+<dd><p>Decode an rCOBS encoded message.</p>
+<p>The input data is expected to not contain any <code class="docutils literal notranslate"><span class="pre">0x00</span></code> framing information, it should be a single
+complete rCOBS message.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This is not a synthesize construct, it is simply a helper function to decode messages produced with
+the <a class="reference internal" href="#torii.lib.coding.cobs.RCOBSEncoder" title="torii.lib.coding.cobs.RCOBSEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a> on the host side. Or as a reference for implementation in other
+languages.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.13)"><em>bytearray</em></a>) – The rCOBS encoded message.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rCOBS decoded message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)">bytes</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the input dat contains a <code class="docutils literal notranslate"><span class="pre">0x00</span></code> byte -OR- the message is improperly encoded.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

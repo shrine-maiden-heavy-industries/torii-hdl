@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; Torii-HDL 0.7.7 documentation</title>
+  <title>Changelog &mdash; Torii-HDL 0.7.8.dev2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/changelog.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=a7202276"></script>
+      <script src="_static/documentation_options.js?v=3032387d"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/platformpicker.js"></script>
@@ -238,6 +238,11 @@
 <li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#gray-coding">Gray coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -502,6 +507,13 @@ Unreleased template stuff
 <h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Link to this heading"></a></h2>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs</span></code> module for Consistent Overhead Byte Stuffing encoders.</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs.RCOBSEncoder</span></code> for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn’t need a full message buffer.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Link to this heading"></a></h3>
