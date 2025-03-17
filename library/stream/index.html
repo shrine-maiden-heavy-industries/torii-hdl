@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CXXRTL Backend &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
+  <title>Stream Library &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/platformpicker.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/api/backend/cxxrtl.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/library/stream/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=d52c0fe0"></script>
@@ -27,8 +27,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="RTLIL Backend" href="rtlil.html" />
-    <link rel="prev" title="Torii Backends" href="index.html" /> 
+    <link rel="next" title="Simple Streams" href="simple.html" />
+    <link rel="prev" title="Industry Standard I/O" href="../stdio/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -153,174 +153,174 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Torii Backends</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/backend/index.html">Torii Backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/backend/cxxrtl.html">CXXRTL Backend</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Array"><code class="docutils literal notranslate"><span class="pre">Array</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ClockSignal"><code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Const"><code class="docutils literal notranslate"><span class="pre">Const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Initial"><code class="docutils literal notranslate"><span class="pre">Initial</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Mux"><code class="docutils literal notranslate"><span class="pre">Mux()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ResetSignal"><code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalKey"><code class="docutils literal notranslate"><span class="pre">SignalKey</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.signed"><code class="docutils literal notranslate"><span class="pre">signed()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.unsigned"><code class="docutils literal notranslate"><span class="pre">unsigned()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ValueCastable"><code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ValueDict"><code class="docutils literal notranslate"><span class="pre">ValueDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.ValueSet"><code class="docutils literal notranslate"><span class="pre">ValueSet</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/cd.html#torii.hdl.cd.ClockDomain"><code class="docutils literal notranslate"><span class="pre">ClockDomain</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/cd.html#torii.hdl.cd.DomainError"><code class="docutils literal notranslate"><span class="pre">DomainError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/dsl.html">DSL</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/dsl.html#torii.hdl.dsl.SyntaxError"><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/dsl.html#torii.hdl.dsl.SyntaxWarning"><code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/ir.html">IR</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/mem.html">Memory</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/mem.html#torii.hdl.mem.DummyPort"><code class="docutils literal notranslate"><span class="pre">DummyPort</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/mem.html#torii.hdl.mem.Memory"><code class="docutils literal notranslate"><span class="pre">Memory</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/mem.html#torii.hdl.mem.ReadPort"><code class="docutils literal notranslate"><span class="pre">ReadPort</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/mem.html#torii.hdl.mem.WritePort"><code class="docutils literal notranslate"><span class="pre">WritePort</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/rec.html">Records</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/rec.html#torii.hdl.rec.Direction"><code class="docutils literal notranslate"><span class="pre">Direction</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hdl/rec.html#torii.hdl.rec.Record"><code class="docutils literal notranslate"><span class="pre">Record</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../hdl/xfrm.html">XFRM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/backend/rtlil.html">RTLIL Backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/backend/verilog.html">Verilog Backend</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Standard Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Code Conversion</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hdl/index.html">Torii HDL Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/ast.html">Abstract Syntax Tree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Array"><code class="docutils literal notranslate"><span class="pre">Array</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ClockSignal"><code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Const"><code class="docutils literal notranslate"><span class="pre">Const</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Initial"><code class="docutils literal notranslate"><span class="pre">Initial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Mux"><code class="docutils literal notranslate"><span class="pre">Mux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ResetSignal"><code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.SignalKey"><code class="docutils literal notranslate"><span class="pre">SignalKey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.signed"><code class="docutils literal notranslate"><span class="pre">signed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.unsigned"><code class="docutils literal notranslate"><span class="pre">unsigned()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ValueCastable"><code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ValueDict"><code class="docutils literal notranslate"><span class="pre">ValueDict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.ValueSet"><code class="docutils literal notranslate"><span class="pre">ValueSet</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/coding/index.html#priority-coding">Priority coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.PriorityEncoder"><code class="docutils literal notranslate"><span class="pre">PriorityEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.PriorityDecoder"><code class="docutils literal notranslate"><span class="pre">PriorityDecoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/cd.html">Clock Domain</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/cd.html#torii.hdl.cd.ClockDomain"><code class="docutils literal notranslate"><span class="pre">ClockDomain</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/cd.html#torii.hdl.cd.DomainError"><code class="docutils literal notranslate"><span class="pre">DomainError</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/coding/index.html#gray-coding">Gray coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/dsl.html">DSL</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.SyntaxError"><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.SyntaxWarning"><code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/coding/index.html#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/ir.html">IR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ir.html#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ir.html#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/mem.html">Memory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/mem.html#torii.hdl.mem.DummyPort"><code class="docutils literal notranslate"><span class="pre">DummyPort</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/mem.html#torii.hdl.mem.Memory"><code class="docutils literal notranslate"><span class="pre">Memory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/mem.html#torii.hdl.mem.ReadPort"><code class="docutils literal notranslate"><span class="pre">ReadPort</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/mem.html#torii.hdl.mem.WritePort"><code class="docutils literal notranslate"><span class="pre">WritePort</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/cdc.html">Clock Domain Crossing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/cdc.html#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/cdc.html#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/cdc.html#torii.lib.cdc.ResetSynchronizer"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/cdc.html#torii.lib.cdc.PulseSynchronizer"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/rec.html">Records</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/rec.html#torii.hdl.rec.Direction"><code class="docutils literal notranslate"><span class="pre">Direction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/hdl/rec.html#torii.hdl.rec.Record"><code class="docutils literal notranslate"><span class="pre">Record</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/fifo.html">First-in First-out Queues</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/fifo.html#torii.lib.fifo.FIFOInterface"><code class="docutils literal notranslate"><span class="pre">FIFOInterface</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/fifo.html#torii.lib.fifo.SyncFIFO"><code class="docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/fifo.html#torii.lib.fifo.SyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">SyncFIFOBuffered</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/fifo.html#torii.lib.fifo.AsyncFIFO"><code class="docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/fifo.html#torii.lib.fifo.AsyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">AsyncFIFOBuffered</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/soc/index.html">System on Chip</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/soc/event.html">Events</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/soc/memory.html">Memory Map</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/memory.html#torii.lib.soc.memory.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/memory.html#torii.lib.soc.memory.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/soc/periph.html">Peripherals</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/periph.html#torii.lib.soc.periph.ConstantValue"><code class="docutils literal notranslate"><span class="pre">ConstantValue</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/periph.html#torii.lib.soc.periph.ConstantBool"><code class="docutils literal notranslate"><span class="pre">ConstantBool</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/periph.html#torii.lib.soc.periph.ConstantInt"><code class="docutils literal notranslate"><span class="pre">ConstantInt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/periph.html#torii.lib.soc.periph.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/periph.html#torii.lib.soc.periph.PeripheralInfo"><code class="docutils literal notranslate"><span class="pre">PeripheralInfo</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/soc/csr/index.html">CSRs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/csr/index.html#bus">Bus</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/csr/index.html#events">Events</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/soc/wishbone/index.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/xfrm.html">XFRM</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/stdio/index.html">Industry Standard I/O</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/stdio/index.html#serial-i-o">Serial I/O</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialTX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialTX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerial"><code class="docutils literal notranslate"><span class="pre">AsyncSerial</span></code></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../coding/index.html">Code Conversion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../coding/index.html#one-hot-coding">One-hot coding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../coding/index.html#priority-coding">Priority coding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.PriorityEncoder"><code class="docutils literal notranslate"><span class="pre">PriorityEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.PriorityDecoder"><code class="docutils literal notranslate"><span class="pre">PriorityDecoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../coding/index.html#gray-coding">Gray coding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../coding/index.html#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../coding/index.html#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/stream/index.html">Stream Library</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/stream/simple.html">Simple Streams</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/stream/simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../library/stream/simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cdc.html">Clock Domain Crossing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.ResetSynchronizer"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.PulseSynchronizer"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fifo.html">First-in First-out Queues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.FIFOInterface"><code class="docutils literal notranslate"><span class="pre">FIFOInterface</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.SyncFIFO"><code class="docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.SyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">SyncFIFOBuffered</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.AsyncFIFO"><code class="docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.AsyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">AsyncFIFOBuffered</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../soc/index.html">System on Chip</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../soc/event.html">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/memory.html">Memory Map</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/memory.html#torii.lib.soc.memory.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/memory.html#torii.lib.soc.memory.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/periph.html">Peripherals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantValue"><code class="docutils literal notranslate"><span class="pre">ConstantValue</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantBool"><code class="docutils literal notranslate"><span class="pre">ConstantBool</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantInt"><code class="docutils literal notranslate"><span class="pre">ConstantInt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.PeripheralInfo"><code class="docutils literal notranslate"><span class="pre">PeripheralInfo</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/csr/index.html">CSRs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#bus">Bus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#events">Events</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#wishbone">Wishbone</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/wishbone/index.html">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/vendor/index.html">FPGA Vendor Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/lattice/index.html">Lattice FPGA Modules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../library/vendor/lattice/index.html#ice40-blocks">iCE40 Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stdio/index.html">Industry Standard I/O</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../stdio/index.html#serial-i-o">Serial I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stdio/index.html#torii.lib.stdio.serial.AsyncSerialTX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialTX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stdio/index.html#torii.lib.stdio.serial.AsyncSerial"><code class="docutils literal notranslate"><span class="pre">AsyncSerial</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stream Library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="simple.html">Simple Streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../vendor/index.html">FPGA Vendor Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../vendor/lattice/index.html">Lattice FPGA Modules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../vendor/lattice/index.html#ice40-blocks">iCE40 Blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
 </ul>
 </li>
 </ul>
@@ -485,11 +485,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
-          <li class="breadcrumb-item"><a href="index.html">Torii Backends</a></li>
-      <li class="breadcrumb-item active">CXXRTL Backend</li>
+          <li class="breadcrumb-item"><a href="../index.html">Standard Library</a></li>
+      <li class="breadcrumb-item active">Stream Library</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/api/backend/cxxrtl.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/stream/index.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -497,18 +496,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cxxrtl-backend">
-<h1>CXXRTL Backend<a class="headerlink" href="#cxxrtl-backend" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The Torii API reference is a work in progress and we are actively working on improving it,
-however it may be deficient or missing in places.</p>
+  <section id="module-torii.lib.stream">
+<span id="stream-library"></span><h1>Stream Library<a class="headerlink" href="#module-torii.lib.stream" title="Link to this heading"></a></h1>
+<p>The <a class="reference internal" href="#module-torii.lib.stream" title="torii.lib.stream"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.stream</span></code></a> module provides unidirectional stream interfaces, as well as blocks
+to interact with said streams, such as multiplexers, arbiters, and generators.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Simple Streams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
+</ul>
+</li>
+</ul>
 </div>
-<dl class="py exception" id="module-torii.back.cxxrtl">
-<dt class="sig sig-object py" id="torii.back.cxxrtl.YosysError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.back.cxxrtl.</span></span><span class="sig-name descname"><span class="pre">YosysError</span></span><a class="headerlink" href="#torii.back.cxxrtl.YosysError" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 </section>
 
     <script type="text/javascript">
@@ -521,8 +521,8 @@ however it may be deficient or missing in places.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Torii Backends" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rtlil.html" class="btn btn-neutral float-right" title="RTLIL Backend" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../stdio/index.html" class="btn btn-neutral float-left" title="Industry Standard I/O" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simple.html" class="btn btn-neutral float-right" title="Simple Streams" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

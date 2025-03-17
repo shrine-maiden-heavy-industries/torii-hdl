@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Torii-HDL 0.7.8.dev3 documentation</title>
+  <title>Index &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
@@ -15,7 +15,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/genindex.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=54fde839"></script>
+      <script src="_static/documentation_options.js?v=d52c0fe0"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/platformpicker.js"></script>
@@ -304,6 +304,14 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="library/stream/index.html">Stream Library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/stream/simple.html">Simple Streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/stream/simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="library/vendor/index.html">FPGA Vendor Modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="library/vendor/lattice/index.html">Lattice FPGA Modules</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/vendor/lattice/index.html#ice40-blocks">iCE40 Blocks</a></li>
@@ -525,10 +533,10 @@
 </li>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.as_signed">as_signed() (torii.hdl.rec.Record method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.as_unsigned">as_unsigned() (torii.hdl.rec.Record method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="library/cdc.html#torii.lib.cdc.AsyncFFSynchronizer">AsyncFFSynchronizer (class in torii.lib.cdc)</a>
 </li>
       <li><a href="library/fifo.html#torii.lib.fifo.AsyncFIFO">AsyncFIFO (class in torii.lib.fifo)</a>
@@ -540,6 +548,8 @@
       <li><a href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX">AsyncSerialRX (class in torii.lib.stdio.serial)</a>
 </li>
       <li><a href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialTX">AsyncSerialTX (class in torii.lib.stdio.serial)</a>
+</li>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface.attach">attach() (torii.lib.stream.simple.StreamInterface method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -569,10 +579,16 @@
 </li>
       <li><a href="api/hdl/ast.html#torii.hdl.ast.ClockSignal">ClockSignal (class in torii.hdl.ast)</a>
 </li>
-      <li><a href="api/hdl/ast.html#torii.hdl.ast.Const">Const (class in torii.hdl.ast)</a>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamArbiter.connect">connect() (torii.lib.stream.simple.StreamArbiter method)</a>
+
+      <ul>
+        <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface.connect">(torii.lib.stream.simple.StreamInterface method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/hdl/ast.html#torii.hdl.ast.Const">Const (class in torii.hdl.ast)</a>
+</li>
       <li><a href="library/soc/periph.html#torii.lib.soc.periph.ConstantBool">ConstantBool (class in torii.lib.soc.periph)</a>
 </li>
       <li><a href="library/soc/periph.html#torii.lib.soc.periph.ConstantInt">ConstantInt (class in torii.lib.soc.periph)</a>
@@ -737,6 +753,10 @@
 </li>
         <li><a href="library/coding/index.html#module-torii.lib.coding.cobs">torii.lib.coding.cobs</a>
 </li>
+        <li><a href="library/stream/index.html#module-torii.lib.stream">torii.lib.stream</a>
+</li>
+        <li><a href="library/stream/simple.html#module-torii.lib.stream.simple">torii.lib.stream.simple</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -826,12 +846,12 @@
 </li>
       <li><a href="api/hdl/ast.html#torii.hdl.ast.ShapeLike">ShapeLike (class in torii.hdl.ast)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.shift_left">shift_left() (torii.hdl.rec.Record method)</a>
 </li>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.shift_right">shift_right() (torii.hdl.rec.Record method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/hdl/ast.html#torii.hdl.ast.Signal">Signal (class in torii.hdl.ast)</a>
 </li>
       <li><a href="api/hdl/ast.html#torii.hdl.ast.SignalDict">SignalDict (class in torii.hdl.ast)</a>
@@ -843,6 +863,12 @@
       <li><a href="api/hdl/ast.html#torii.hdl.ast.signed">signed() (in module torii.hdl.ast)</a>
 </li>
       <li><a href="library/soc/event.html#torii.lib.soc.event.Source">Source (class in torii.lib.soc.event)</a>
+</li>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface.stream_eq">stream_eq() (torii.lib.stream.simple.StreamInterface method)</a>
+</li>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamArbiter">StreamArbiter (class in torii.lib.stream.simple)</a>
+</li>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface">StreamInterface (class in torii.lib.stream.simple)</a>
 </li>
       <li><a href="library/fifo.html#torii.lib.fifo.SyncFIFO">SyncFIFO (class in torii.lib.fifo)</a>
 </li>
@@ -858,6 +884,8 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface.tap">tap() (torii.lib.stream.simple.StreamInterface method)</a>
+</li>
       <li>
     torii.back.cxxrtl
 
@@ -935,6 +963,20 @@
 
       <ul>
         <li><a href="library/coding/index.html#module-torii.lib.coding.cobs">module</a>
+</li>
+      </ul></li>
+      <li>
+    torii.lib.stream
+
+      <ul>
+        <li><a href="library/stream/index.html#module-torii.lib.stream">module</a>
+</li>
+      </ul></li>
+      <li>
+    torii.lib.stream.simple
+
+      <ul>
+        <li><a href="library/stream/simple.html#module-torii.lib.stream.simple">module</a>
 </li>
       </ul></li>
   </ul></td>
