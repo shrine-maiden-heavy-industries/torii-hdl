@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+'''
+The :py:mod:`torii.lib.streams.simple` module provides a simple and extensible unidirectional stream
+interface :py:class:`.StreamInterface` as well as an :py:class:`Arbiter <.StreamArbiter>` to join multiple
+streams into a single output stream.
+
+'''
+
 from __future__      import annotations
 
 from collections.abc import Iterable

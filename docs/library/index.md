@@ -16,5 +16,6 @@ fifo
 
 soc/index
 stdio/index
+stream/index
 vendor/index
 ```
