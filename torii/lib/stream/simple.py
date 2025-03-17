@@ -285,7 +285,7 @@ class StreamArbiter(Generic[T], Elaboratable):
 	def __init__(self, *, domain: str = 'sync', stream_type: type[T] = StreamInterface) -> None:
 		self._domain = domain
 
-		self._sinks: list[T] = list()
+		self._sources: list[T] = list()
 
 		self.out  = stream_type()
 		self.idle = Signal()
@@ -304,18 +304,18 @@ class StreamArbiter(Generic[T], Elaboratable):
 			(default: -1)
 		'''
 		if priority > 0:
-			self._sinks.append(stream)
+			self._sources.append(stream)
 		else:
-			self._sinks.insert(priority, stream)
+			self._sources.insert(priority, stream)
 
 	def elaborate(self, _) -> Module:
 		m = Module()
 
-		count = len(self._sinks)
+		count = len(self._sources)
 		index = Signal(range(count))
 
 		with m.Switch(index):
-			for idx, stream in enumerate(self._sinks):
+			for idx, stream in enumerate(self._sources):
 				with m.Case(idx):
 					m.d.comb += [ self.out.stream_eq(stream), ]
 
@@ -323,7 +323,7 @@ class StreamArbiter(Generic[T], Elaboratable):
 			m.d.comb += [ self.idle.eq(1), ]
 
 			for idx in reversed(range(count)):
-				with m.If(self._sinks[idx].valid):
+				with m.If(self._sources[idx].valid):
 					m.d.comb += [ self.idle.eq(0), ]
 					m.d.sync += [ index.eq(idx),   ]
 
