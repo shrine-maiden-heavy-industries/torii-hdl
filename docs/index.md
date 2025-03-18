@@ -11,6 +11,7 @@ library/index
 platforms/index
 sim/index
 changelog
+external_libraries
 migration_guide
 projects
 
