@@ -91,7 +91,7 @@ class DUID:
 
 class ShapeCastable(metaclass = ABCMeta):
 	'''
-	Interface of user-defined objects that can be cast to :class:`Shape`s.
+	Interface of user-defined objects that can be cast to a :class:`Shape`.
 
 	An object deriving from :class:`ShapeCastable` is automatically converted to a :class:`Shape`
 	when it is used in a context where a :class:`Shape` is expected. Such objects can contain
@@ -950,7 +950,7 @@ class Const(Value, metaclass = _ConstMeta):
 
 		First, ``obj`` is converted to a value using :meth:`Value.cast`. If it is a constant, it
 		is returned. If it is a constant-castable expression, it is evaluated and returned.
-		Otherwise, :exn:`TypeError` is raised.
+		Otherwise, :py:exc:`TypeError` is raised.
 		'''
 
 		obj = Value.cast(obj)
