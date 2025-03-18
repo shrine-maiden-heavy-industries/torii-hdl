@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Torii v0.X to v1.0 Migration Guide &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
+  <title>Torii v0.X to v1.0 Migration Guide &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
-      <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/migration_guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d52c0fe0"></script>
+      <script src="_static/documentation_options.js?v=fe5a96dd"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="_static/platformpicker.js"></script>
+      <script src="_static/tabs.js?v=3ee01567"></script>
       <script src="_static/wavedrom.skin.js"></script>
       <script src="_static/wavedrom.min.js"></script>
       <script src="_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Projects Using Torii" href="projects.html" />
-    <link rel="prev" title="Changelog" href="changelog.html" /> 
+    <link rel="prev" title="External Libraries" href="external_libraries.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -63,22 +63,15 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#system-requirements">System requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install.html#installing-prerequisites">Installing Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="install.html#installing-python">Installing Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#installing-yosys-and-gtkwave">Installing Yosys and GTKWave</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#python-and-pip">Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#yosys">Yosys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#waveform-viewer-optional">Waveform Viewer (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#formal-tools-optional">Formal Tools (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#installing-torii">Installing Torii</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="install.html#latest-release">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#development-snapshot">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#editable-development-snapshot">Editable development snapshot</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#installing-board-definitions">Installing board definitions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="install.html#id1">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#id2">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install.html#id3">Editable development snapshot</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installing-torii">Installing Torii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installing-board-definitions">Installing Board Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
@@ -116,9 +109,7 @@
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="language/index.html#constant-casting">Constant casting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="language/index.html#constant-casting">Constant casting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-names">Signal names</a></li>
@@ -462,6 +453,11 @@
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
 </ul>
@@ -505,8 +501,7 @@
 <h2><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code><a class="headerlink" href="#domainrenamer" title="Link to this heading"></a></h2>
 <p>In past versions of Torii, you could use the <code class="xref py py-class docutils literal notranslate"><span class="pre">DomainRenamer</span></code> in two ways, the first was to pass a single string into it, which would be used to re-map the <code class="docutils literal notranslate"><span class="pre">sync</span></code> domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.</p>
 <p>These have been replaced with using <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">DomainRenamer</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
 
 <span class="n">DomainRenamer</span><span class="p">({</span><span class="s1">&#39;sync&#39;</span><span class="p">:</span> <span class="s1">&#39;meow&#39;</span><span class="p">})(</span><span class="n">elab</span><span class="p">)</span>
 </pre></div>
@@ -532,7 +527,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="external_libraries.html" class="btn btn-neutral float-left" title="External Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="projects.html" class="btn btn-neutral float-right" title="Projects Using Torii" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Guide &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
+  <title>Language Guide &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
-      <link rel="stylesheet" type="text/css" href="../_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/language/index.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=d52c0fe0"></script>
+      <script src="../_static/documentation_options.js?v=fe5a96dd"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/platformpicker.js"></script>
+      <script src="../_static/tabs.js?v=3ee01567"></script>
       <script src="../_static/wavedrom.skin.js"></script>
       <script src="../_static/wavedrom.min.js"></script>
       <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -63,22 +63,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../install.html#system-requirements">System requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../install.html#installing-prerequisites">Installing Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#installing-python">Installing Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#installing-yosys-and-gtkwave">Installing Yosys and GTKWave</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#python-and-pip">Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#yosys">Yosys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#waveform-viewer-optional">Waveform Viewer (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#formal-tools-optional">Formal Tools (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-torii">Installing Torii</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#latest-release">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#development-snapshot">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#editable-development-snapshot">Editable development snapshot</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-board-definitions">Installing board definitions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id1">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id2">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id3">Editable development snapshot</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-torii">Installing Torii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-board-definitions">Installing Board Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
@@ -116,9 +109,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#constant-casting">Constant casting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#constant-casting">Constant casting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#signal-names">Signal names</a></li>
@@ -462,6 +453,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
 </ul>
@@ -505,29 +501,33 @@
 <!-- TODO: link to a good synchronous logic tutorial and a Python tutorial? -->
 <section id="the-prelude">
 <h2>The prelude<a class="headerlink" href="#the-prelude" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Glob imports are no longer considered good practice, as they make finding where things come from much more difficult, avoid if at all possible.</p>
+</div>
 <p>Because Torii is a regular Python library, it needs to be imported before use. The root <code class="docutils literal notranslate"><span class="pre">torii</span></code> module, called <em>the prelude</em>, is carefully curated to export a small amount of the most essential names, useful in nearly every design. In source files dedicated to Torii code, it is a good practice to use a <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#tut-pkg-import-star" title="(in Python v3.13)"><span class="xref std std-ref">glob import</span></a> for readability:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>   <span class="kn">from</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>   <span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 <p>However, if a source file uses Torii together with other libraries, or if glob imports are frowned upon, it is conventional to use a short alias instead:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>   <span class="kn">import</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tr</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>   <span class="kn">import</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tr</span>
 </pre></div>
 </div>
 <p>All of the examples below assume that a glob import is used.</p>
 </section>
 <section id="shapes">
 <h2>Shapes<a class="headerlink" href="#shapes" title="Link to this heading"></a></h2>
-<p>A <code class="docutils literal notranslate"><span class="pre">Shape</span></code> is an object with two attributes, <code class="docutils literal notranslate"><span class="pre">.width</span></code> and <code class="docutils literal notranslate"><span class="pre">.signed</span></code>. It can be constructed directly:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>A <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is an object with two attributes, <code class="docutils literal notranslate"><span class="pre">.width</span></code> and <code class="docutils literal notranslate"><span class="pre">.signed</span></code>. It can be constructed directly:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">signed</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="go">unsigned(5)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">signed</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="go">signed(12)</span>
 </pre></div>
 </div>
-<p>However, in most cases, the shape is always constructed with the same signedness, and the aliases <code class="docutils literal notranslate"><span class="pre">signed</span></code> and <code class="docutils literal notranslate"><span class="pre">unsigned</span></code> are more convenient:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unsigned</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">Shape</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>However, in most cases, the shape is always constructed with the same signedness, and the aliases <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.signed" title="torii.hdl.ast.signed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">signed</span></code></a> and <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.unsigned" title="torii.hdl.ast.unsigned"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unsigned</span></code></a> are more convenient:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unsigned</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">Shape</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">signed</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">signed</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">==</span> <span class="n">Shape</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signed</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">==</span> <span class="n">Shape</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">signed</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -548,7 +548,7 @@
 </section>
 <section id="constants">
 <h2>Constants<a class="headerlink" href="#constants" title="Link to this heading"></a></h2>
-<p>The simplest Torii value is a <em>constant</em>, representing a fixed number, and introduced using <code class="docutils literal notranslate"><span class="pre">Const(...)</span></code>:</p>
+<p>The simplest Torii value is a <em>constant</em>, representing a fixed number, and introduced using <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Const" title="torii.hdl.ast.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const(...)</span></code></a>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ten</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">minus_two</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
@@ -574,7 +574,7 @@
 </section>
 <section id="shape-casting">
 <h2>Shape casting<a class="headerlink" href="#shape-casting" title="Link to this heading"></a></h2>
-<p>Shapes can be <em>cast</em> from other objects, which are called <em>shape-castable</em>. Casting is a convenient way to specify a shape indirectly, for example, by a range of numbers representable by values with that shape.</p>
+<p><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>s can be <em>cast</em> from other objects, which are called <em>shape-castable</em>. Casting is a convenient way to specify a shape indirectly, for example, by a range of numbers representable by values with that shape.</p>
 <p>Casting to a shape can be done explicitly with <code class="docutils literal notranslate"><span class="pre">Shape.cast</span></code>, but is usually implicit, since shape-castable objects are accepted anywhere shapes are.</p>
 <section id="shapes-from-integers">
 <h3>Shapes from integers<a class="headerlink" href="#shapes-from-integers" title="Link to this heading"></a></h3>
@@ -654,7 +654,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If a value subclasses :class:<code class="docutils literal notranslate"><span class="pre">enum.IntEnum</span></code> or its class otherwise inherits from both :class:<code class="docutils literal notranslate"><span class="pre">int</span></code> and :class:<code class="docutils literal notranslate"><span class="pre">Enum</span></code>, it is treated as an enumeration.</p>
+<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
 </div>
 </section>
 <section id="values-from-enumeration-members">
@@ -666,18 +666,14 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If a value subclasses :class:<code class="docutils literal notranslate"><span class="pre">enum.IntEnum</span></code> or its class otherwise inherits from both :class:<code class="docutils literal notranslate"><span class="pre">int</span></code> and :class:<code class="docutils literal notranslate"><span class="pre">Enum</span></code>, it is treated as an enumeration.</p>
+<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
 </div>
-</section>
 </section>
 </section>
 <section id="constant-casting">
-<h1>Constant casting<a class="headerlink" href="#constant-casting" title="Link to this heading"></a></h1>
+<h2>Constant casting<a class="headerlink" href="#constant-casting" title="Link to this heading"></a></h2>
 <p>A subset of <a class="reference internal" href="#values">values</a> are <em>constant-castable</em>. If a value is constant-castable and all of its operands are also constant-castable, it can be converted to a <code class="docutils literal notranslate"><span class="pre">Const</span></code>, the numeric value of which can then be read by Python code. This provides a way to perform computation on Torii values while constructing the design.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>link to m.Case and v.matches() below</p>
-</div>
+<!-- link to m.Case and v.matches() below -->
 <p>Constant-castable objects are accepted anywhere a constant integer is accepted. Casting to a constant can also be done explicitly with <code class="docutils literal notranslate"><span class="pre">Const.cast</span></code>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">Cat</span><span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">))</span>
 <span class="go">(const 4&#39;d4)</span>
@@ -687,14 +683,15 @@
 <p class="admonition-title">Note</p>
 <p>At the moment, only the following expressions are constant-castable:</p>
 <ul class="simple">
-<li><p>:class:<code class="docutils literal notranslate"><span class="pre">Const</span></code></p></li>
-<li><p>:class:<code class="docutils literal notranslate"><span class="pre">Cat</span></code></p></li>
+<li><p><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Const" title="torii.hdl.ast.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Cat" title="torii.hdl.ast.Cat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cat</span></code></a></p></li>
 </ul>
 <p>This list will be expanded in the future.</p>
 </div>
+</section>
 <section id="signals">
 <h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
-<p>A <em>signal</em> is a value representing a (potentially) varying number. Signals can be <a class="reference internal" href="#assigning-to-signals"><em>assigned</em></a> in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> or <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.</p>
+<p>A <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> is a value representing a (potentially) varying number. Signals can be <a class="reference internal" href="#assigning-to-signals"><em>assigned</em></a> in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> or <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.</p>
 <section id="signal-shapes">
 <h3>Signal shapes<a class="headerlink" href="#signal-shapes" title="Link to this heading"></a></h3>
 <p>A signal can be created with an explicitly specified shape (any <a class="reference internal" href="#shape-casting">shape-castable</a> object); if omitted, the shape defaults to <code class="docutils literal notranslate"><span class="pre">unsigned(1)</span></code>. Although rarely useful, 0-bit signals are permitted.</p>
@@ -746,12 +743,12 @@
 </section>
 <section id="reset-less-signals">
 <h3>Reset-less signals<a class="headerlink" href="#reset-less-signals" title="Link to this heading"></a></h3>
-<p>Signals assigned in a <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain can be <em>resettable</em> or <em>reset-less</em>, specified with the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their <a class="reference internal" href="#initial-signal-values">initial value</a> on explicit reset, which can be asserted via the clock domain or by using <code class="docutils literal notranslate"><span class="pre">ResetInserter</span></code>. Reset-less signals are not affected by explicit reset.</p>
+<p>Signals assigned in a <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain can be <em>resettable</em> or <em>reset-less</em>, specified with the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their <a class="reference internal" href="#initial-signal-values">initial value</a> on explicit reset, which can be asserted via the clock domain or by using <code class="xref py py-class docutils literal notranslate"><span class="pre">ResetInserter</span></code>. Reset-less signals are not affected by explicit reset.</p>
 <!-- TODO: link to clock domain and ResetInserter docs -->
 <p>Signals assigned in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> domain are not affected by the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">()</span><span class="o">.</span><span class="n">reset_less</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">reset_less</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_less</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">reset_less</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_less</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -899,22 +896,22 @@
 <td><p>bitwise <a class="reference external" href="https://en.wikipedia.org/wiki/IMPLY_gate">IMPLY</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;&gt;</span> <span class="pre">b</span></code></p></td>
-<td><p>arithmetic right shift by variable amount <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>arithmetic right shift by variable amount <a class="footnote-reference brackets" href="#id8" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;&lt;</span> <span class="pre">b</span></code></p></td>
-<td><p>left shift by variable amount <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>left shift by variable amount <a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_left(i)</span></code></p></td>
-<td><p>left rotate by constant amount <a class="footnote-reference brackets" href="#id11" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>left rotate by constant amount <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_right(i)</span></code></p></td>
-<td><p>right rotate by constant amount <a class="footnote-reference brackets" href="#id11" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>right rotate by constant amount <a class="footnote-reference brackets" href="#id10" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_left(i)</span></code></p></td>
-<td><p>left shift by constant amount <a class="footnote-reference brackets" href="#id11" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>left shift by constant amount <a class="footnote-reference brackets" href="#id10" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_right(i)</span></code></p></td>
-<td><p>right shift by constant amount <a class="footnote-reference brackets" href="#id11" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>right shift by constant amount <a class="footnote-reference brackets" href="#id10" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -941,16 +938,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.all()</span></code></p></td>
-<td><p>reduction AND; are all bits set? <a class="footnote-reference brackets" href="#id15" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+<td><p>reduction AND; are all bits set? <a class="footnote-reference brackets" href="#id14" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.any()</span></code></p></td>
-<td><p>reduction OR; is any bit set? <a class="footnote-reference brackets" href="#id15" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+<td><p>reduction OR; is any bit set? <a class="footnote-reference brackets" href="#id14" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.xor()</span></code></p></td>
 <td><p>reduction XOR; is an odd number of bits set?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.bool()</span></code></p></td>
-<td><p>conversion to boolean; is non-zero? <a class="footnote-reference brackets" href="#id16" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
+<td><p>conversion to boolean; is non-zero? <a class="footnote-reference brackets" href="#id15" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1044,10 +1041,10 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">len(a)</span></code></p></td>
-<td><p>bit length; value width <a class="footnote-reference brackets" href="#id20" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
+<td><p>bit length; value width <a class="footnote-reference brackets" href="#id19" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[i:j:k]</span></code></p></td>
-<td><p>bit slicing by constant subscripts <a class="footnote-reference brackets" href="#id21" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
+<td><p>bit slicing by constant subscripts <a class="footnote-reference brackets" href="#id20" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">iter(a)</span></code></p></td>
 <td><p>bit iteration</p></td>
@@ -1059,7 +1056,7 @@
 <td><p>non-overlapping part select with variable offset</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Cat(a,</span> <span class="pre">b,</span> <span class="pre">...)</span></code></p></td>
-<td><p>concatenation <a class="footnote-reference brackets" href="#id22" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
+<td><p>concatenation <a class="footnote-reference brackets" href="#id21" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.replicate(n)</span></code></p></td>
 <td><p>replication</p></td>
@@ -1104,7 +1101,7 @@
 </section>
 <section id="choice-operator">
 <h3>Choice operator<a class="headerlink" href="#choice-operator" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">Mux(sel,</span> <span class="pre">val1,</span> <span class="pre">val0)</span></code> choice expression (similar to the <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#if-expr" title="(in Python v3.13)"><span class="xref std std-ref">conditional expression</span></a> in Python) is equal to the operand <code class="docutils literal notranslate"><span class="pre">val1</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is non-zero, and to the other operand <code class="docutils literal notranslate"><span class="pre">val0</span></code> otherwise. If any of <code class="docutils literal notranslate"><span class="pre">val1</span></code> or <code class="docutils literal notranslate"><span class="pre">val0</span></code> are signed, the expression itself is signed as well.</p>
+<p>The <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Mux" title="torii.hdl.ast.Mux"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mux(sel,</span> <span class="pre">val1,</span> <span class="pre">val0)</span></code></a> choice expression (similar to the <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#if-expr" title="(in Python v3.13)"><span class="xref std std-ref">conditional expression</span></a> in Python) is equal to the operand <code class="docutils literal notranslate"><span class="pre">val1</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is non-zero, and to the other operand <code class="docutils literal notranslate"><span class="pre">val0</span></code> otherwise. If any of <code class="docutils literal notranslate"><span class="pre">val1</span></code> or <code class="docutils literal notranslate"><span class="pre">val0</span></code> are signed, the expression itself is signed as well.</p>
 </section>
 </section>
 <section id="modules">
@@ -1310,39 +1307,39 @@ inside `Else`
 </section>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id9" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Logical and arithmetic right shift of an unsigned value are equivalent. Logical right shift of a signed value can be expressed by <a class="reference internal" href="#conversion-operators">converting it to unsigned</a> first.</p>
 </aside>
-<aside class="footnote brackets" id="id10" role="doc-footnote">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id3">2</a>)</span>
 <p>Shift amount must be unsigned; integer shifts in Python require the amount to be positive.</p>
 </aside>
-<aside class="footnote brackets" id="id11" role="doc-footnote">
+<aside class="footnote brackets" id="id10" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id6">2</a>,<a role="doc-backlink" href="#id7">3</a>,<a role="doc-backlink" href="#id8">4</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id4">1</a>,<a role="doc-backlink" href="#id5">2</a>,<a role="doc-backlink" href="#id6">3</a>,<a role="doc-backlink" href="#id7">4</a>)</span>
 <p>Shift and rotate amounts can be negative, in which case the direction is reversed.</p>
 </aside>
-<aside class="footnote brackets" id="id15" role="doc-footnote">
+<aside class="footnote brackets" id="id14" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id12">1</a>,<a role="doc-backlink" href="#id13">2</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id11">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
 <p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#all" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">all()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">any()</span></code></a> function to the value viewed as a collection of bits.</p>
 </aside>
-<aside class="footnote brackets" id="id16" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">5</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">5</a><span class="fn-bracket">]</span></span>
 <p>Conceptually the same as applying the Python <code class="xref py py-func docutils literal notranslate"><span class="pre">bool()</span></code> function to the value viewed as an integer.</p>
 </aside>
-<aside class="footnote brackets" id="id20" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">6</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id19" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">6</a><span class="fn-bracket">]</span></span>
 <p>Words “length” and “width” have the same meaning when talking about Torii values. Conventionally, “width” is used.</p>
 </aside>
-<aside class="footnote brackets" id="id21" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">7</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id20" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">7</a><span class="fn-bracket">]</span></span>
 <p>All variations of the Python slice notation are supported, including “extended slicing”. E.g. all of <code class="docutils literal notranslate"><span class="pre">a[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[1:9]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[2:]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[:-2]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[::-1]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[0:8:2]</span></code> select bits in the same way as other Python sequence types select their elements.</p>
 </aside>
-<aside class="footnote brackets" id="id22" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">8</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id21" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">8</a><span class="fn-bracket">]</span></span>
 <p>In the concatenated value, <code class="docutils literal notranslate"><span class="pre">a</span></code> occupies the least significant bits, and <code class="docutils literal notranslate"><span class="pre">b</span></code> the most significant bits. An arbitrary number of arguments for <code class="docutils literal notranslate"><span class="pre">Cat</span></code> is supported.</p>
 </aside>
 </aside>

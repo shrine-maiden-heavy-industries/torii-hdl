@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
+  <title>Installation &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
-      <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/install.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d52c0fe0"></script>
+      <script src="_static/documentation_options.js?v=fe5a96dd"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="_static/platformpicker.js"></script>
+      <script src="_static/tabs.js?v=3ee01567"></script>
       <script src="_static/wavedrom.skin.js"></script>
       <script src="_static/wavedrom.min.js"></script>
       <script src="_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -63,22 +63,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-prerequisites">Installing Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installing-python">Installing Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-yosys-and-gtkwave">Installing Yosys and GTKWave</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-and-pip">Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yosys">Yosys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#waveform-viewer-optional">Waveform Viewer (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formal-tools-optional">Formal Tools (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-torii">Installing Torii</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#latest-release">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#development-snapshot">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#editable-development-snapshot">Editable development snapshot</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-board-definitions">Installing board definitions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Editable development snapshot</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-torii">Installing Torii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-board-definitions">Installing Board Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
@@ -116,9 +109,7 @@
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="language/index.html#constant-casting">Constant casting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="language/index.html#constant-casting">Constant casting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="language/index.html#signal-names">Signal names</a></li>
@@ -462,6 +453,11 @@
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
 </ul>
@@ -499,114 +495,280 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The following instructions are a work-in-progress and may not be entirely up to date.</p>
+<p>The following instructions are a work-in-progress and may not be entirely up to date, or work for the target system, if you run into anything, please <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues">report an issue</a>!</p>
 </div>
 <section id="system-requirements">
 <h2>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
-<p>Torii requires Python &gt;= 3.10, and <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> &gt;= 0.30 except Yosys version 0.37 due to a Verilog backend bug. Torii has been tested with <a class="reference external" href="https://www.python.org/">CPython</a>, but might possibly run under <a class="reference external" href="https://www.pypy.org/">PyPy</a>.</p>
-<p>Simulating Torii code requires no additional software. However, a waveform viewer like <a class="reference external" href="http://gtkwave.sourceforge.net/">GTKWave</a> is invaluable for debugging.</p>
-<p>Synthesizing, placing and routing an Torii design for an FPGA requires the FPGA family specific toolchain. See the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform</span></a> specific documentation for more information regarding vendor toolchains.</p>
+<p>Torii requires Python 3.10 or newer, and has been tested with <a class="reference external" href="https://www.python.org/">CPython</a> and <a class="reference external" href="https://pypy.org/">PyPy</a>, but only CPython is officially supported.</p>
+<p>In addition, Torii also requires a copy of <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> version 0.30 or newer, excluding version 0.37 due to a bug in the Verilog backend.</p>
+<p>These are the only two “hard” requirements for Torii, you can do things like simulation without any additional software, however to view simulation results, a waveform viewer such as <a class="reference external" href="https://surfer-project.org/">surfer</a> or <a class="reference external" href="https://github.com/gtkwave/gtkwave">GTKWave</a> is invaluable for debugging. Formal verification support, additionally needs <a class="reference external" href="https://github.com/YosysHQ/sby">sby</a> and an SMT solver such as <a class="reference external" href="https://yices.csl.sri.com/">Yices</a> or <a class="reference external" href="https://bitwuzla.github.io/">Bitwuzla</a>.</p>
+<p>To synthesize, place-and-route, and pack a Torii design for an FPGA, you need the toolchain specific to the family of FPGA you are targeting, see the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform</span></a> specific documentation for more information regarding vendor toolchains.</p>
 </section>
 <section id="installing-prerequisites">
 <h2>Installing Prerequisites<a class="headerlink" href="#installing-prerequisites" title="Link to this heading"></a></h2>
-<p>Prior to installing Torii, you must install all of its prerequisites and requirements.</p>
-<section id="installing-python">
-<h3>Installing Python<a class="headerlink" href="#installing-python" title="Link to this heading"></a></h3>
-<p>First off, install <code class="docutils literal notranslate"><span class="pre">python</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> onto your system if the’re not there already.</p>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--arch platform-noaltname docutils container">
-<p class="platform-title">Arch Linux</p>
+<p>Prior to installing Torii, install the required system prerequisites, and optionally the prerequisites for <a class="reference internal" href="#waveform-viewer-optional">simulation</a> and <a class="reference internal" href="#formal-tools-optional">formal</a> support.</p>
+<section id="python-and-pip">
+<h3>Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#python-and-pip" title="Link to this heading"></a></h3>
+<p>First off, install <code class="docutils literal notranslate"><span class="pre">python</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> as appropriate on your system if it’s not done so already.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Linux</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Arch-Like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>python<span class="w"> </span>python-pip
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Other Linux</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>These instructions may be incorrect or incomplete!</p>
-</div>
-<p>For <a class="reference external" href="https://www.debian.org/">Debian</a> based systems, use <code class="docutils literal notranslate"><span class="pre">apt</span></code> to install <code class="docutils literal notranslate"><span class="pre">python3</span></code> and <code class="docutils literal notranslate"><span class="pre">python3-pip</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
-</pre></div>
-</div>
-<p>For <a class="reference external" href="https://getfedora.org/">Fedora</a> and other <code class="docutils literal notranslate"><span class="pre">dnf</span></code> based systems,</p>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Fedora-Like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Debian-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">SUSE-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>zypper<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">macOS</label><div class="tab-content docutils">
 <p>Install <a class="reference external" href="https://brew.sh/">Homebrew</a> if not done already, then install the requirements.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew<span class="w"> </span>install<span class="w"> </span>python
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>These instructions may be incorrect or incomplete!</p>
-</div>
+<input class="tab-input" id="tab-set--1-input--3" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--3">Windows</label><div class="tab-content docutils">
 <p>Download the latest Python installer from the <a class="reference external" href="https://www.python.org/downloads/">python downloads</a> page.</p>
 <p>Follow the instructions and ensure that the installer installs <code class="docutils literal notranslate"><span class="pre">pip</span></code> and puts the python executable in your <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code></p>
 </div>
 </div>
 </section>
-<section id="installing-yosys-and-gtkwave">
-<h3>Installing Yosys and GTKWave<a class="headerlink" href="#installing-yosys-and-gtkwave" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--arch platform-noaltname docutils container">
-<p class="platform-title">Arch Linux</p>
+<section id="yosys">
+<h3>Yosys<a class="headerlink" href="#yosys" title="Link to this heading"></a></h3>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--1">Linux</label><div class="tab-content docutils">
+<p>There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main">OSS CAD Suite</a>.</p>
+<p>The OSS CAD Suite is very large and has lots of extra things, such as it’s own version of python, and a suite of other tools, it’s very convenient, but can cause some problems if you’re using it for your primary environment for Torii.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--4-input--1" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--1">Native</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Arch-Like</label><div class="tab-content docutils">
 <p>On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the <a class="reference external" href="https://aur.archlinux.org/">AUR</a> with an AUR helper or using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
-<p>Via an AUR helper like <code class="docutils literal notranslate"><span class="pre">yay</span></code></p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">AUR</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>yay<span class="w"> </span>-S<span class="w"> </span>yosys-nightly
 </pre></div>
 </div>
-<p>Via <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly</p>
+</div>
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">makepkg</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/yosys-nightly.git
 <span class="gp">$ </span><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>yosys-nightly<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>makepkg<span class="w"> </span>-sic<span class="o">)</span>
 </pre></div>
 </div>
-<p>And to install GTKWave you can just install it like any normal package</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pacman<span class="w"> </span>-S<span class="w"> </span>gtkwave
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Fedora-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>yosys
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Other Linux</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>These instructions may be incorrect or incomplete!</p>
+<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Debian-Like</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Find a source for deb packages</p>
 </div>
-<p>With other Linux distributions, it is recommended to use the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build">OSS Cad Suite</a> nightly build. It provides a full environment of all the tools needed built on a nightly basis. This includes Yosys and GTKWave</p>
+</div>
+<input class="tab-input" id="tab-set--3-input--4" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--4">SUSE-Like</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Find a source for suse packages</p>
+</div>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--4-input--2" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
 <p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-linux-x64-20240504.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-linux-x64-20240504.tgz
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;`pwd`/oss-cad-suite/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-linux-x64-20250317.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-linux-x64-20250317.tgz
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:`pwd`/oss-cad-suite/bin&quot;</span>
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<p>For macOS systems, it is recommended to use the YoWASP distribution of the toolchain. However if you want to use the native tools, and you are using an Intel based Mac, then the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build">OSS Cad Suite</a> has nightly builds for x86_64 versions of Darwin. This includes Yosys and GTKWave</p>
+<input class="tab-input" id="tab-set--4-input--3" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--3">YoWASP</label><div class="tab-content docutils">
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">macOS</label><div class="tab-content docutils">
+<p>For macOS systems it is recommended to use the <cite>OSS CAD Suite &lt;https://github.com/YosysHQ/oss-cad-suite-build/tree/main&gt;_</cite> provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a>.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--5-input--1" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
 <p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-darwin-x64-20240504.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xfv<span class="w"> </span>oss-cad-suite-darwin-x64-20240504.tgz
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;`pwd`/oss-cad-suite/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-darwin-x64-20250317.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-darwin-x64-20250317.tgz
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:`pwd`/oss-cad-suite/bin&quot;</span>
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>These instructions may be incorrect or incomplete!</p>
+<input class="tab-input" id="tab-set--5-input--2" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--2">YoWASP</label><div class="tab-content docutils">
 </div>
-<p>The <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build">OSS Cad Suite</a> has nightly builds for x86_64 versions of Windows. This includes Yosys and GTKWave</p>
-<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code></p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--7-input--3" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--3">Windows</label><div class="tab-content docutils">
+<p>For Windows systems it is recommended to use the <cite>OSS CAD Suite &lt;https://github.com/YosysHQ/oss-cad-suite-build/tree/main&gt;_</cite> provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a>.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>call<span class="w"> </span>%cd%<span class="se">\o</span>ss-cad-suite<span class="se">\e</span>nvironment.bat
 </pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--2">YoWASP</label><div class="tab-content docutils">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="waveform-viewer-optional">
+<h3>Waveform Viewer (Optional)<a class="headerlink" href="#waveform-viewer-optional" title="Link to this heading"></a></h3>
+<p>An EDA Waveform Viewer is optional, but highly recommended. <a class="reference external" href="https://github.com/gtkwave/gtkwave">GTKWave</a> is the standard of the Open Source EDA world, and has been around for a long time, and is what you will find most tutorials using. On the other hand, <a class="reference external" href="https://surfer-project.org/">surfer</a> is an up-and-coming waveform viewer that’s written in Rust and is able to run in your web browser via WASM.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--15-input--1" name="tab-set--15" type="radio"><label class="tab-label" for="tab-set--15-input--1">Linux</label><div class="tab-content docutils">
+<p>There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main">OSS CAD Suite</a>.</p>
+<p>The OSS CAD Suite only provides GTKWave, so if you wish to use surfer instead see the Native install options.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--10-input--1" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--1">Native</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--9-input--1" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--1">GTKWave</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--8-input--1" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--1">Arch-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>gtkwave
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--8-input--2" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--2">Fedora-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>gtkwave
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--8-input--3" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--3">Debian-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gtkwave
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--8-input--4" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--4">SUSE-Like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>zypper<span class="w"> </span>install<span class="w"> </span>gtkwave
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--9-input--2" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--2">Surfer</label><div class="tab-content docutils">
+<p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--10-input--2" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--15-input--2" name="tab-set--15" type="radio"><label class="tab-label" for="tab-set--15-input--2">macOS</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--12-input--1" name="tab-set--12" type="radio"><label class="tab-label" for="tab-set--12-input--1">GTKWave</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--11-input--1" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
+</div>
+<input class="tab-input" id="tab-set--11-input--2" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--2">Native</label><div class="tab-content docutils">
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--12-input--2" name="tab-set--12" type="radio"><label class="tab-label" for="tab-set--12-input--2">Surfer</label><div class="tab-content docutils">
+<p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--15-input--3" name="tab-set--15" type="radio"><label class="tab-label" for="tab-set--15-input--3">Windows</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--14-input--1" name="tab-set--14" type="radio"><label class="tab-label" for="tab-set--14-input--1">GTKWave</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--13-input--1" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
+</div>
+<input class="tab-input" id="tab-set--13-input--2" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--2">Native</label><div class="tab-content docutils">
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--14-input--2" name="tab-set--14" type="radio"><label class="tab-label" for="tab-set--14-input--2">Surfer</label><div class="tab-content docutils">
+<p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="formal-tools-optional">
+<h3>Formal Tools (Optional)<a class="headerlink" href="#formal-tools-optional" title="Link to this heading"></a></h3>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--21-input--1" name="tab-set--21" type="radio"><label class="tab-label" for="tab-set--21-input--1">Linux</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--18-input--1" name="tab-set--18" type="radio"><label class="tab-label" for="tab-set--18-input--1">Native</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--17-input--1" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--1">Arch-Like</label><div class="tab-content docutils">
+<p>On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the <a class="reference external" href="https://aur.archlinux.org/">AUR</a> with an AUR helper or using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--16-input--1" name="tab-set--16" type="radio"><label class="tab-label" for="tab-set--16-input--1">AUR</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>yay<span class="w"> </span>-S<span class="w"> </span>sby-nightly
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--16-input--2" name="tab-set--16" type="radio"><label class="tab-label" for="tab-set--16-input--2">makepkg</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/sby-nightly.git
+<span class="gp">$ </span><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>yosys-nightly<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>makepkg<span class="w"> </span>-sic<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--17-input--2" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--2">Fedora-Like</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--17-input--3" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--3">Debian-Like</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--17-input--4" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--4">SUSE-Like</label><div class="tab-content docutils">
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--18-input--2" name="tab-set--18" type="radio"><label class="tab-label" for="tab-set--18-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds already include <code class="docutils literal notranslate"><span class="pre">sby</span></code> as well as a suite of SMT solvers.</p>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--21-input--2" name="tab-set--21" type="radio"><label class="tab-label" for="tab-set--21-input--2">macOS</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--19-input--1" name="tab-set--19" type="radio"><label class="tab-label" for="tab-set--19-input--1">Native</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--19-input--2" name="tab-set--19" type="radio"><label class="tab-label" for="tab-set--19-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds already include <code class="docutils literal notranslate"><span class="pre">sby</span></code> as well as a suite of SMT solvers.</p>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--21-input--3" name="tab-set--21" type="radio"><label class="tab-label" for="tab-set--21-input--3">Windows</label><div class="tab-content docutils">
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--20-input--1" name="tab-set--20" type="radio"><label class="tab-label" for="tab-set--20-input--1">Native</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--20-input--2" name="tab-set--20" type="radio"><label class="tab-label" for="tab-set--20-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds already include <code class="docutils literal notranslate"><span class="pre">sby</span></code> as well as a suite of SMT solvers.</p>
+</div>
 </div>
 </div>
 </div>
@@ -614,59 +776,24 @@
 </section>
 <section id="installing-torii">
 <h2>Installing Torii<a class="headerlink" href="#installing-torii" title="Link to this heading"></a></h2>
-<p>The <a class="reference internal" href="#latest-release"><span class="std std-ref">latest release</span></a> of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a <a class="reference internal" href="#development-snapshot"><span class="std std-ref">development snapshot</span></a> to get access to the bleeding-edge, however the API may be unstable.</p>
-<section id="latest-release">
-<h3>Latest release<a class="headerlink" href="#latest-release" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
+<p>The latest stable release of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a development snapshot to get access to the bleeding-edge, however things might break.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--23-input--1" name="tab-set--23" type="radio"><label class="tab-label" for="tab-set--23-input--1">Stable Release</label><div class="tab-content docutils">
+<p>The stable release of Torii can be installed directly from <a class="reference external" href="https://pypi.org/project/torii/">PyPI</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii
-</pre></div>
-</div>
-</div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> pip install --upgrade torii
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="development-snapshot">
-<h3>Development snapshot<a class="headerlink" href="#development-snapshot" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
+<input class="tab-input" id="tab-set--23-input--2" name="tab-set--23" type="radio"><label class="tab-label" for="tab-set--23-input--2">Development Snapshot</label><div class="tab-content docutils">
+<p>There are two possible ways to install a development snapshot for Torii, the first is using <code class="docutils literal notranslate"><span class="pre">pip</span></code> and to get it directly from GitHub.</p>
+<p>The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on Torii itself.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--22-input--1" name="tab-set--22" type="radio"><label class="tab-label" for="tab-set--22-input--1">Standard</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git&#39;</span>
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> pip install <span class="s2">&quot;torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="editable-development-snapshot">
-<h3>Editable development snapshot<a class="headerlink" href="#editable-development-snapshot" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
-<p>To install an editable development snapshot of Torii for the first time, run:</p>
+<input class="tab-input" id="tab-set--22-input--2" name="tab-set--22" type="radio"><label class="tab-label" for="tab-set--22-input--2">Editable</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/shrine-maiden-heavy-industries/torii-hdl
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-hdl
 <span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
@@ -680,103 +807,38 @@
 </div>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<p>To install an editable development snapshot of Torii for the first time, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/shrine-maiden-heavy-industries/torii-hdl
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-hdl
-<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
-</pre></div>
-</div>
-<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-hdl</span></code> directory will immediately affect any code that uses Torii. To update the snapshot, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-hdl
-<span class="gp">$ </span>git<span class="w"> </span>pull<span class="w"> </span>--ff-only<span class="w"> </span>origin<span class="w"> </span>main
-<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
-</pre></div>
-</div>
-<p>Run the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
-</div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<p>To install an editable development snapshot of Torii for the first time, run:</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> git clone https://github.com/shrine-maiden-heavy-industries/torii-hdl
-<span class="gp">&gt;</span> <span class="k">cd</span> torii-hdl
-<span class="gp">&gt;</span> pip install --editable .
-</pre></div>
-</div>
-<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-hdl</span></code> directory will immediately affect any code that uses Torii. To update the snapshot, run:</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> <span class="k">cd</span> torii-hdl
-<span class="gp">&gt;</span> git pull --ff-only origin main
-<span class="gp">&gt;</span> pip install --editable .
-</pre></div>
-</div>
-<p>Run the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
 </div>
 </div>
-</section>
+</div>
 </section>
 <section id="installing-board-definitions">
-<h2>Installing board definitions<a class="headerlink" href="#installing-board-definitions" title="Link to this heading"></a></h2>
-<p>This section assumes you have already <a class="reference internal" href="#installation">installed Torii</a> to your system.</p>
-<p>Installing the <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards">Torii Development Board</a> definitions is much the same as installing Torii.</p>
-<section id="id1">
-<h3>Latest release<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
+<h2>Installing Board Definitions<a class="headerlink" href="#installing-board-definitions" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards">torii-boards</a> package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.</p>
+<p>Just like with Torii proper, there are two versions you can install, the latest stable, or the development version.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--25-input--1" name="tab-set--25" type="radio"><label class="tab-label" for="tab-set--25-input--1">Stable Release</label><div class="tab-content docutils">
+<p>The stable release of Torii-boards can be installed directly from <a class="reference external" href="https://pypi.org/project/torii-boards/">PyPI</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii-boards
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii-boards
+<input class="tab-input" id="tab-set--25-input--2" name="tab-set--25" type="radio"><label class="tab-label" for="tab-set--25-input--2">Development Snapshot</label><div class="tab-content docutils">
+<p>There are two possible ways to install a development snapshot for the board support package, the first is using <code class="docutils literal notranslate"><span class="pre">pip</span></code> and to get it directly from GitHub.</p>
+<p>The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on the board files themselves.s</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--24-input--1" name="tab-set--24" type="radio"><label class="tab-label" for="tab-set--24-input--1">Standard</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;torii-boards @ git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git&#39;</span>
 </pre></div>
 </div>
 </div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> pip install --upgrade torii-boards
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id2">
-<h3>Development snapshot<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> pip install git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id3">
-<h3>Editable development snapshot<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
-<div class="platform-picker docutils container">
-<div class="platform-choice platform--linux platform-noaltname docutils container">
-<p class="platform-title">Linux</p>
-<p>To install an editable development snapshot of　<code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> for the first time, run:</p>
+<input class="tab-input" id="tab-set--24-input--2" name="tab-set--24" type="radio"><label class="tab-label" for="tab-set--24-input--2">Editable</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/shrine-maiden-heavy-industries/torii-boards
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-boards
 <span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
 </pre></div>
 </div>
-<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> directory will immediately affect any code that uses Torii. To update the snapshot, run:</p>
+<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> directory will immediately affect any code that uses the board definitions.</p>
+<p>To update the snapshot, run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-boards
 <span class="gp">$ </span>git<span class="w"> </span>pull<span class="w"> </span>--ff-only<span class="w"> </span>origin<span class="w"> </span>main
 <span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
@@ -784,40 +846,13 @@
 </div>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
 </div>
-<div class="platform-choice platform--macos platform-noaltname docutils container">
-<p class="platform-title">macOS</p>
-<p>To install an editable development snapshot of <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> for the first time, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/shrine-maiden-heavy-industries/torii-boards
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-boards
-<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
-</pre></div>
 </div>
-<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> directory will immediately affect any code that uses Torii. To update the snapshot, run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>torii-boards
-<span class="gp">$ </span>git<span class="w"> </span>pull<span class="w"> </span>--ff-only<span class="w"> </span>origin<span class="w"> </span>main
-<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--editable<span class="w"> </span><span class="s1">&#39;.&#39;</span>
-</pre></div>
-</div>
-<p>Run the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
-</div>
-<div class="platform-choice platform--windows platform-noaltname docutils container">
-<p class="platform-title">Windows</p>
-<p>To install an editable development snapshot of <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> for the first time, run:</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> git clone https://github.com/shrine-maiden-heavy-industries/torii-boards
-<span class="gp">&gt;</span> <span class="k">cd</span> torii-boards
-<span class="gp">&gt;</span> pip install --editable .
-</pre></div>
-</div>
-<p>Any changes made to the <code class="docutils literal notranslate"><span class="pre">torii-boards</span></code> directory will immediately affect any code that uses Torii. To update the snapshot, run:</p>
-<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> <span class="k">cd</span> torii-boards
-<span class="gp">&gt;</span> git pull --ff-only origin main
-<span class="gp">&gt;</span> pip install --editable .
-</pre></div>
-</div>
-<p>Run the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span></code> command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code>.</p>
 </div>
 </div>
 </section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>Now that you’ve installed Torii, see the <a class="reference internal" href="getting_started.html"><span class="std std-doc">getting started</span></a> guide for a quick introduction, and the <a class="reference internal" href="language/index.html"><span class="std std-doc">language guide</span></a> for more in-depth documentation on the language.</p>
 </section>
 </section>
 

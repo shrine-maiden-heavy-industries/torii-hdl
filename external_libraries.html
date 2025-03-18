@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Torii-HDL &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>External Libraries &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/index.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/external_libraries.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=fe5a96dd"></script>
@@ -27,7 +27,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="Torii v0.X to v1.0 Migration Guide" href="migration_guide.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,7 +39,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             Torii-HDL
           </a>
 <div role="search">
@@ -49,7 +50,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intro.html#the-torii-language">The Torii language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intro.html#the-torii-standard-library">The Torii standard library</a></li>
@@ -452,9 +453,9 @@
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="external_libraries.html#debugging">Debugging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging">Debugging</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
@@ -472,17 +473,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Torii-HDL</a>
+          <a href="index.html">Torii-HDL</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Torii-HDL</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">External Libraries</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/index.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/external_libraries.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -490,17 +491,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="toctree-wrapper compound">
-</div>
-<section id="torii-hdl">
-<h1>Torii-HDL<a class="headerlink" href="#torii-hdl" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This manual is a work in progress and is seriously incomplete!</p>
-</div>
-<p>Torii is a toolkit for developing hardware based on digital logic, it consists of the　<a class="reference internal" href="language/index.html"><span class="std std-doc">Torii <abbr title="Hardware Definition Language">HDL</abbr></span></a>, the <a class="reference internal" href="library/index.html"><span class="std std-doc">standard library</span></a>, the simulator, and the build system. It covers all steps of the typical <abbr title="Field Programmable Gate Array">FPGA</abbr> development workflow while not restricting the choice of tools, allowing existing <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a>, <a class="reference external" href="https://ieeexplore.ieee.org/document/8299595">SystemVerilog</a>, and <a class="reference external" href="https://ieeexplore.ieee.org/document/8938196">VHDL</a> code to be integrated into the design, while also allow for Torii to be seamlessly integrated into the flow for other <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a> design flows.</p>
-<p>For more information on Torii, see the <a class="reference internal" href="intro.html"><span class="std std-doc">Introduction</span></a> and check out the <a class="reference internal" href="getting_started.html"><span class="std std-doc">Getting Started</span></a> guide for how to get up and running with Torii.</p>
-<p>There is also a <a class="reference external" href="https://torii-boards.shmdn.link/">collection of board definition files</a> for popular FPGA development boards from various vendors, to help you get up to speed with your designs faster.</p>
+  <section id="external-libraries">
+<h1>External Libraries<a class="headerlink" href="#external-libraries" title="Link to this heading"></a></h1>
+<p>There is a family of external libraries that fall under the Torii banner, they provide things such as additional simulation backend support, to things like USB or Integrated Logic Analyzers that can be used in Torii based designs.</p>
+<section id="protocol-peripherals">
+<h2>Protocol &amp; Peripherals<a class="headerlink" href="#protocol-peripherals" title="Link to this heading"></a></h2>
+<p>The following packages add protocol and peripheral support to Torii.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-usb">torii-usb</a>: A USB2 and USB3 library for Torii allowing you to make USB devices.</p></li>
+</ul>
+</section>
+<section id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Link to this heading"></a></h2>
+<p>The following packages provide additional debugging capabilities.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-ila">torii-ila</a>: A simple Integrated Logic Analyzer (ILA) that lets you view signals in your design on a host machine over UART or USB.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/javascript">
@@ -513,7 +520,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="migration_guide.html" class="btn btn-neutral float-right" title="Torii v0.X to v1.0 Migration Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev5 documentation</title>
+  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
-      <link rel="stylesheet" type="text/css" href="../_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/library/fifo.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=d52c0fe0"></script>
+      <script src="../_static/documentation_options.js?v=fe5a96dd"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/platformpicker.js"></script>
+      <script src="../_static/tabs.js?v=3ee01567"></script>
       <script src="../_static/wavedrom.skin.js"></script>
       <script src="../_static/wavedrom.min.js"></script>
       <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -63,22 +63,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../install.html#system-requirements">System requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../install.html#installing-prerequisites">Installing Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#installing-python">Installing Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#installing-yosys-and-gtkwave">Installing Yosys and GTKWave</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#python-and-pip">Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#yosys">Yosys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#waveform-viewer-optional">Waveform Viewer (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#formal-tools-optional">Formal Tools (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-torii">Installing Torii</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#latest-release">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#development-snapshot">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#editable-development-snapshot">Editable development snapshot</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-board-definitions">Installing board definitions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id1">Latest release</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id2">Development snapshot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#id3">Editable development snapshot</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-torii">Installing Torii</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-board-definitions">Installing Board Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
@@ -116,9 +109,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#values-from-enumeration-members">Values from enumeration members</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../language/index.html#constant-casting">Constant casting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../language/index.html#constant-casting">Constant casting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../language/index.html#signals">Signals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#signal-shapes">Signal shapes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../language/index.html#signal-names">Signal names</a></li>
@@ -460,6 +451,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#id59">0.1.0 - 0.3.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
