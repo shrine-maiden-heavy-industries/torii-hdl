@@ -28,6 +28,8 @@ Unreleased template stuff
 
 ### Deprecated
 
+- The `torii.tools.yosys.YosysError` being exported from `torii.back.cxxrtl` and `torii.back.verilog` has been deprecated and will be removed in a future release.
+
 ### Removed
 
 ### Fixed

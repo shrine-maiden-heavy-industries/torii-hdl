@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from warnings      import warn
+
 from ..hdl         import ast, ir
 from ..tools.yosys import YosysError, find_yosys
 from .             import rtlil
@@ -7,8 +9,22 @@ from .             import rtlil
 __all__ = (
 	'convert_fragment',
 	'convert',
-	'YosysError',
 )
+
+def __dir__() -> list[str]:
+	return list({*globals(), *__all__, 'YosysError'})
+
+def __getattr__(name: str):
+	if name == 'YosysError':
+		warn(
+			'Importing \'YosysError\' from this module has been deprecated, '
+			'please import it from \'torii.tools.yosys\' instead.',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+		return YosysError
+	if name not in __dir__():
+		raise AttributeError(f'Module {__name__!r} has not attribute {name!r}')
 
 def _convert_rtlil_text(
 	rtlil_text: str, *, strip_internal_attrs: bool = False, write_verilog_opts: tuple[str, ...] = ()
