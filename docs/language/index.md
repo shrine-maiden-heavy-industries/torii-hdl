@@ -207,6 +207,7 @@ Specifying a shape with an enumeration is convenient for finite state machines, 
 The enumeration does not have to subclass {py:class}`enum.IntEnum`; it only needs to have integers as values of every member. Using enumerations based on {py:class}`enum.Enum` rather than {py:class}`enum.IntEnum` prevents unwanted implicit conversion of enum members to integers.
 ```
 
+(lang-valuelike)=
 ## Value casting
 
 Like shapes, values may be *cast* from other objects, which are called *value-castable*. Casting to values allows objects that are not provided by Torii, such as integers or enumeration members, to be used in Torii expressions directly.
