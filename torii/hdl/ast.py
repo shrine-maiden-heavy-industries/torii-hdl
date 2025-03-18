@@ -41,6 +41,7 @@ __all__ = (
 	'ClockSignal',
 	'Const',
 	'Cover',
+	'Edge',
 	'Fell',
 	'Initial',
 	'Mux',
@@ -1934,7 +1935,7 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 
 	return Sample(expr, clocks, domain)
 
-# NOTE(aki): For Stable, Rose, and Fell, mypy can't see through the operators
+# NOTE(aki): For Stable, Rose, Fell, and Edge, mypy can't see through the operators
 def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
 	'''
 	Check if a Signal is stable over the given ``clocks + 1`` cycles in the past.
@@ -2043,6 +2044,44 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 	'''
 
 	op = Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
+
+	if TYPE_CHECKING:
+		assert isinstance(op, Operator)
+
+	return op
+
+def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	'''
+	Check if the given Signal rose or fell in the past ``clocks + 1`` clock cycles.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",    "wave": "p........"},
+			{"name": "value",  "wave": "0.1...0.."},
+			{"name": "sample", "wave": "0..10..10"},
+		]}
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+		(default: 0)
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Returns
+	-------
+	Operator
+		If the sample rose or fell between ``clocks`` and ``clocks + 1``
+	'''
+
+	op = Sample(expr, clocks + 1, domain) != Sample(expr, clocks, domain)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
