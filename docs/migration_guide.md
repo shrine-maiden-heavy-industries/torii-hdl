@@ -4,6 +4,8 @@
 This document is a work in progress and should be updated as the progression v1.0 progresses
 ```
 
+## Module Changes
+
 ### `DomainRenamer`
 
 In past versions of Torii, you could use the {py:class}`DomainRenamer <torii.hdl.xfrm.DomainRenamer>` in two ways, the first was to pass a single string into it, which would be used to re-map the `sync` domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.
