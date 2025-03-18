@@ -1827,6 +1827,45 @@ class Sample(Value):
 	of the ``domain`` clock back. If that moment is before the beginning of time, it is equal
 	to the value of the expression calculated as if each signal had its reset value.
 
+	Important
+	---------
+	The sample value is likely one extra clock cycle in the past that you would expect, meaning
+	when sampling with ``1`` clock,  *2* clock cycles will have passed, the diagram below shows an
+	example with different ``clocks`` values on the sample.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",        "wave": "p........"},
+			{"name": "value",      "wave": "01.0....."},
+			{"name": "clocks = 0", "wave": "0.1.0...."},
+			{"name": "clocks = 1", "wave": "0..1.0..."},
+			{"name": "clocks = 2", "wave": "0...1.0.."},
+			{"name": "clocks = 3", "wave": "0....1.0."},
+		]}
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Attributes
+	----------
+	value : Value
+		The Value of the input expression.
+
+	clocks : int
+		The number of clock cycles in the past to sample from.
+
+	domain : str
+		The domain the sample is taken on.
 	'''
 
 	def __init__(self, expr: ValueCastT, clocks: int, domain: str | None, *, src_loc_at: int = 0) -> None:
@@ -1851,10 +1890,82 @@ class Sample(Value):
 		return f'(sample {self.value!r} @ {"<default>" if self.domain is None else self.domain}[{self.clocks}])'
 
 def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
+	'''
+	Get a value from the past.
+
+	This function is effectively just an alias for constructing a :py:class:`Sample` object.
+
+	Important
+	---------
+	The sample value is likely one extra clock cycle in the past that you would expect, meaning
+	when sampling with ``1`` clock,  *2* clock cycles will have passed, the diagram below shows an
+	example with different ``clocks`` values on the sample.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",        "wave": "p........"},
+			{"name": "value",      "wave": "01.0....."},
+			{"name": "clocks = 0", "wave": "0.1.0...."},
+			{"name": "clocks = 1", "wave": "0..1.0..."},
+			{"name": "clocks = 2", "wave": "0...1.0.."},
+			{"name": "clocks = 3", "wave": "0....1.0."},
+		]}
+
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+		(default: 1)
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Returns
+	-------
+	Sample
+		The sample value.
+	'''
+
 	return Sample(expr, clocks, domain)
 
 # NOTE(aki): For Stable, Rose, and Fell, mypy can't see through the operators
 def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	'''
+	Check if a Signal is stable over the given ``clocks + 1`` cycles in the past.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",    "wave": "p........"},
+			{"name": "value",  "wave": "0.10101.."},
+			{"name": "sample", "wave": "1..0....1"},
+		]}
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+		(default: 0)
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Returns
+	-------
+	Operator
+		If the sample is stable over ``clocks + 1`` samples.
+	'''
+
 	op = Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain)
 
 	if TYPE_CHECKING:
@@ -1863,6 +1974,36 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 	return op
 
 def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	'''
+	Check if the given Signal rose in the past ``clocks + 1`` clock cycles.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",    "wave": "p........"},
+			{"name": "value",  "wave": "0.1...0.."},
+			{"name": "sample", "wave": "0..10...."},
+		]}
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+		(default: 0)
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Returns
+	-------
+	Operator
+		If the sample rose between ``clocks`` and ``clocks + 1``
+	'''
+
 	op = ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain)
 
 	if TYPE_CHECKING:
@@ -1871,6 +2012,36 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 	return op
 
 def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+	'''
+	Check if the given Signal fell in the past ``clocks + 1`` clock cycles.
+
+	.. wavedrom::
+
+		{"signal": [
+			{"name": "clk",    "wave": "p........"},
+			{"name": "value",  "wave": "0.1...0.."},
+			{"name": "sample", "wave": "0......10"},
+		]}
+
+	Parameters
+	----------
+	expr : ValueCastT
+		The Signal or Const expression to sample.
+
+	clocks : int
+		The number of clock cycles in the past this sample should represent.
+		(default: 0)
+
+	domain : str | None
+		The domain this sample should be taken on. If ``None`` the default domain is used.
+		(default: None)
+
+	Returns
+	-------
+	Operator
+		If the sample fell between ``clocks`` and ``clocks + 1``
+	'''
+
 	op = Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
 
 	if TYPE_CHECKING:
