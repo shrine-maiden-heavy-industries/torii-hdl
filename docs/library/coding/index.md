@@ -2,7 +2,6 @@
 
 The {py:mod}`torii.lib.coding` module provides building blocks for conversion between different encodings of binary numbers.
 
-
 ## One-hot coding
 
 ```{eval-rst}

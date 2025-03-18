@@ -1,25 +1,24 @@
 # Getting Started
 
-This section demonstrates the basic Torii workflow to provide a cursory overview of the language and the toolchain. See the [Tutorials](./tutorials/index.md) section for a step-by-step introduction to the language, and the [Language Guide](./language/index.md) for a detailed explanation of every language construct.
+This section demonstrates the basic Torii workflow to provide a cursory overview of the language and the toolchain. See the [Tutorials] section for a step-by-step introduction to the language, and the [Language Guide] for a detailed explanation of every language construct.
 
 ```{todo}
 add link to build system doc
 ```
+
 ```{todo}
 add link to more complex examples?
 ```
 
 ## A counter
 
-
-As a first example, consider a counter with a fixed limit, enable, and overflow. The code for this example is shown below. [Download](_code/up_counter.py) and run it:
+As a first example, consider a counter with a fixed limit, enable, and overflow. The code for this example is shown below. [Download] and run it:
 
 ```sh
    $ python3 up_counter.py
 ```
 
 ### Implementing a counter
-
 
 A 16-bit up counter with enable input, overflow output, and a limit fixed at design time can be implemented in Torii as follows:
 
@@ -38,9 +37,7 @@ Most `elaborate` implementations use a `Module` helper to describe combinatorial
 
 <!-- TODO: link to DSL reference -->
 
-
 ### Testing a counter
-
 
 To verify its functionality, the counter can be simulated for a small amount of time, with a test bench driving it and checking a few simple conditions:
 
@@ -60,10 +57,7 @@ When run, the test bench finishes successfully, since all of the assertions hold
 
 ![A screenshot of GTKWave displaying waveforms near the clock cycle where the counter overflows.](_images/up_counter_gtkwave.png)
 
-
-
 ### Converting a counter
-
 
 Although some Torii workflows do not include Verilog at all, it is still the de facto standard for HDL interoperability. Any Torii design can be converted to synthesizable Verilog using the corresponding backend:
 
@@ -92,7 +86,6 @@ Unfortunately, at the moment none of the supported toolchains will use the sourc
 
 ## A blinking LED
 
-
 Although Torii works well as a standalone HDL, it also includes a build system that integrates with FPGA toolchains, and many board definition files for common developer boards that include pinouts and programming adapter invocations. The following code will blink a LED with a frequency of 1 Hz on any board that has a LED and an oscillator:
 
 ```{eval-rst}
@@ -102,11 +95,12 @@ Although Torii works well as a standalone HDL, it also includes a build system t
    :end-before: # --- BUILD ---
 ```
 
-The `LEDBlinker` module will use the first LED available on the board, and derive the clock divisor from the oscillator frequency specified in the clock constraint. It can be used, for example, with the [Lattice iCEStick evaluation board](https://www.latticesemi.com/icestick), one of the many boards already supported by Torii:
+The `LEDBlinker` module will use the first LED available on the board, and derive the clock divisor from the oscillator frequency specified in the clock constraint. It can be used, for example, with the [Lattice iCEStick evaluation board], one of the many boards already supported by Torii:
 
 ```{todo}
 link to list of supported boards
 ```
+
 ```{todo}
 Link to the installation instructions for the FOSS iCE40 toolchain, probably as a part of board documentation.
 ```
@@ -132,4 +126,9 @@ The ability to check with minimal effort whether the entire toolchain functions 
    $ python3 -m torii_boards.lattice.icestick
 ```
 
-   This command will build and program a test bitstream similar to the example above.
+This command will build and program a test bitstream similar to the example above.
+
+[Tutorials]: ./tutorials/index.md
+[Language Guide]: ./language/index.md
+[Download]: _code/up_counter.py
+[Lattice iCEStick evaluation board]: https://www.latticesemi.com/icestick

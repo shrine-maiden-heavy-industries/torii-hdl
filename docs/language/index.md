@@ -1,27 +1,29 @@
 # Language Guide
 
-
 ```{warning}
    This guide is a work in progress and is seriously incomplete!
 ```
 
-This guide introduces the Torii language in depth. It assumes familiarity with synchronous digital logic and the Python programming language, but does not require prior experience with any hardware description language. See the [Tutorials](../tutorials/index.md) section for a step-by-step introduction to the language.
+This guide introduces the Torii language in depth. It assumes familiarity with synchronous digital logic and the Python programming language, but does not require prior experience with any hardware description language. See the [Tutorials] section for a step-by-step introduction to the language.
 
 <!-- TODO: link to a good synchronous logic tutorial and a Python tutorial? -->
 
-
 ## The prelude
+
+```{warning}
+Glob imports are no longer considered good practice, as they make finding where things come from much more difficult, avoid if at all possible.
+```
 
 Because Torii is a regular Python library, it needs to be imported before use. The root `torii` module, called *the prelude*, is carefully curated to export a small amount of the most essential names, useful in nearly every design. In source files dedicated to Torii code, it is a good practice to use a {ref}`glob import <python:tut-pkg-import-star>` for readability:
 
 ```py
-   from torii import *
+   from torii.hdl import *
 ```
 
 However, if a source file uses Torii together with other libraries, or if glob imports are frowned upon, it is conventional to use a short alias instead:
 
 ```py
-   import torii as tr
+   import torii.hdl as tr
 ```
 
 All of the examples below assume that a glob import is used.
@@ -29,31 +31,31 @@ All of the examples below assume that a glob import is used.
 ```{eval-rst}
 .. testsetup::
 
-   from torii import *
+   from torii.hdl import *
 
 ```
 
 ## Shapes
 
-A `Shape` is an object with two attributes, `.width` and `.signed`. It can be constructed directly:
+A {py:class}`Shape <torii.hdl.ast.Shape>` is an object with two attributes, `.width` and `.signed`. It can be constructed directly:
 
 ```{eval-rst}
 .. doctest::
 
-   >>> Shape(width=5, signed=False)
+   >>> Shape(width = 5, signed = False)
    unsigned(5)
-   >>> Shape(width=12, signed=True)
+   >>> Shape(width = 12, signed = True)
    signed(12)
 ```
 
-However, in most cases, the shape is always constructed with the same signedness, and the aliases `signed` and `unsigned` are more convenient:
+However, in most cases, the shape is always constructed with the same signedness, and the aliases {py:meth}`signed <torii.hdl.ast.signed>` and {py:meth}`unsigned <torii.hdl.ast.unsigned>` are more convenient:
 
 ```{eval-rst}
 .. doctest::
 
-   >>> unsigned(5) == Shape(width=5, signed=False)
+   >>> unsigned(5) == Shape(width = 5, signed = False)
    True
-   >>> signed(12) == Shape(width=12, signed=True)
+   >>> signed(12) == Shape(width = 12, signed = True)
    True
 ```
 
@@ -74,11 +76,9 @@ All values have a `.shape()` method that computes their shape. The width of a va
 
 The basic building block of the Torii language is a *value*, which is a term for a binary number that is computed or stored anywhere in the design. Each value has a *width*---the amount of bits used to represent the value---and a *signedness*---the interpretation of the value by arithmetic operations---collectively called its *shape*. Signed values always use [two's complement] representation.
 
-
 ## Constants
 
-
-The simplest Torii value is a *constant*, representing a fixed number, and introduced using `Const(...)`:
+The simplest Torii value is a *constant*, representing a fixed number, and introduced using {py:class}`Const(...) <torii.hdl.ast.Const>`:
 
 ```{eval-rst}
 .. doctest::
@@ -118,10 +118,9 @@ The shape of the constant can be specified explicitly, in which case the number'
 
 ## Shape casting
 
-Shapes can be *cast* from other objects, which are called *shape-castable*. Casting is a convenient way to specify a shape indirectly, for example, by a range of numbers representable by values with that shape.
+{py:class}`Shape <torii.hdl.ast.Shape>`s can be *cast* from other objects, which are called *shape-castable*. Casting is a convenient way to specify a shape indirectly, for example, by a range of numbers representable by values with that shape.
 
 Casting to a shape can be done explicitly with `Shape.cast`, but is usually implicit, since shape-castable objects are accepted anywhere shapes are.
-
 
 ### Shapes from integers
 
@@ -139,10 +138,10 @@ Casting a shape from an integer `i` is a shorthand for constructing a shape with
 
 ### Shapes from ranges
 
-Casting a shape from a {class}`range` `r` produces a shape that:
+Casting a shape from a {py:class}`range` `r` produces a shape that:
 
- * has a width large enough to represent both `min(r)` and `max(r)`, but not larger, and
- * is signed if `r` contains any negative values, unsigned otherwise.
+* has a width large enough to represent both `min(r)` and `max(r)`, but not larger, and
+* is signed if `r` contains any negative values, unsigned otherwise.
 
 Specifying a shape with a range is convenient for counters, indexes, and all other values whose width is derived from a set of numbers they must be able to fit:
 
@@ -156,6 +155,7 @@ Specifying a shape with a range is convenient for counters, indexes, and all oth
    unsigned(2)
 
 ```
+
 ```{eval-rst}
 .. note::
 
@@ -175,11 +175,11 @@ Specifying a shape with a range is convenient for counters, indexes, and all oth
 
 ### Shapes from enumerations
 
-Casting a shape from an {class}`enum.Enum` subclass `E`:
+Casting a shape from an {py:class}`enum.Enum` subclass `E`:
 
- * fails if any of the enumeration members have non-integer values,
- * has a width large enough to represent both `min(m.value for m in E)` and `max(m.value for m in E)`, and
- * is signed if either `min(m.value for m in E)` or `max(m.value for m in E)` are negative, unsigned otherwise.
+* fails if any of the enumeration members have non-integer values,
+* has a width large enough to represent both `min(m.value for m in E)` and `max(m.value for m in E)`, and
+* is signed if either `min(m.value for m in E)` or `max(m.value for m in E)` are negative, unsigned otherwise.
 
 Specifying a shape with an enumeration is convenient for finite state machines, multiplexers, complex control signals, and all other values whose width is derived from a few distinct choices they must be able to fit:
 
@@ -204,7 +204,7 @@ Specifying a shape with an enumeration is convenient for finite state machines, 
 ```
 
 ```{note}
-The enumeration does not have to subclass {class}`enum.IntEnum`; it only needs to have integers as values of every member. Using enumerations based on {class}`enum.Enum` rather than {class}`enum.IntEnum` prevents unwanted implicit conversion of enum members to integers.
+The enumeration does not have to subclass {py:class}`enum.IntEnum`; it only needs to have integers as values of every member. Using enumerations based on {py:class}`enum.Enum` rather than {py:class}`enum.IntEnum` prevents unwanted implicit conversion of enum members to integers.
 ```
 
 ## Value casting
@@ -215,9 +215,7 @@ Like shapes, values may be *cast* from other objects, which are called *value-ca
 
 Casting to a value can be done explicitly with `Value.cast`, but is usually implicit, since value-castable objects are accepted anywhere values are.
 
-
 ### Values from integers
-
 
 Casting a value from an integer `i` is equivalent to `Const(i)`:
 
@@ -230,7 +228,7 @@ Casting a value from an integer `i` is equivalent to `Const(i)`:
 ```
 
 ```{note}
-If a value subclasses :class:`enum.IntEnum` or its class otherwise inherits from both :class:`int` and :class:`Enum`, it is treated as an enumeration.
+If a value subclasses {py:class}`enum.IntEnum` or its class otherwise inherits from both {py:class}`int` and {py:class}`enum.Enum`, it is treated as an enumeration.
 ```
 
 ### Values from enumeration members
@@ -246,16 +244,14 @@ Casting a value from an enumeration member `m` is equivalent to `Const(m.value, 
 ```
 
 ```{note}
-If a value subclasses :class:`enum.IntEnum` or its class otherwise inherits from both :class:`int` and :class:`Enum`, it is treated as an enumeration.
+If a value subclasses {py:class}`enum.IntEnum` or its class otherwise inherits from both {py:class}`int` and {py:class}`enum.Enum`, it is treated as an enumeration.
 ```
 
 ## Constant casting
 
 A subset of [values](#values) are *constant-castable*. If a value is constant-castable and all of its operands are also constant-castable, it can be converted to a `Const`, the numeric value of which can then be read by Python code. This provides a way to perform computation on Torii values while constructing the design.
 
-```{todo}
-link to m.Case and v.matches() below
-```
+<!-- link to m.Case and v.matches() below -->
 
 Constant-castable objects are accepted anywhere a constant integer is accepted. Casting to a constant can also be done explicitly with `Const.cast`:
 
@@ -270,16 +266,15 @@ Constant-castable objects are accepted anywhere a constant integer is accepted. 
 ```{note}
    At the moment, only the following expressions are constant-castable:
 
-   * :class:`Const`
-   * :class:`Cat`
+   * {py:class}`Const <torii.hdl.ast.Const>`
+   * {py:class}`Cat <torii.hdl.ast.Cat>`
 
    This list will be expanded in the future.
 ```
 
 ## Signals
 
-
-A *signal* is a value representing a (potentially) varying number. Signals can be [*assigned*](#assigning-to-signals) in a [combinatorial](#combinatorial-evaluation) or [synchronous](#synchronous-evaluation) domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.
+A {py:class}`Signal <torii.hdl.ast.Signal>` is a value representing a (potentially) varying number. Signals can be [*assigned*](#assigning-to-signals) in a [combinatorial](#combinatorial-evaluation) or [synchronous](#synchronous-evaluation) domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.
 
 ### Signal shapes
 
@@ -300,6 +295,7 @@ A signal can be created with an explicitly specified shape (any [shape-castable]
    unsigned(0)
 
 ```
+
 ### Signal names
 
 Each signal has a *name*, which is used in the waveform viewer, diagnostic messages, Verilog output, and so on. In most cases, the name is omitted and inferred from the name of the variable or attribute the signal is placed into:
@@ -355,7 +351,7 @@ Signals [assigned](#assigning-to-signals) in a [combinatorial](#combinatorial-ev
 
 ### Reset-less signals
 
-Signals assigned in a [synchronous](#synchronous-evaluation) domain can be *resettable* or *reset-less*, specified with the `reset_less` parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their [initial value](#initial-signal-values) on explicit reset, which can be asserted via the clock domain or by using `ResetInserter`. Reset-less signals are not affected by explicit reset.
+Signals assigned in a [synchronous](#synchronous-evaluation) domain can be *resettable* or *reset-less*, specified with the `reset_less` parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their [initial value](#initial-signal-values) on explicit reset, which can be asserted via the clock domain or by using {py:class}`ResetInserter <torii.hdl.xfrm.ResetInserter>`. Reset-less signals are not affected by explicit reset.
 
 <!-- TODO: link to clock domain and ResetInserter docs -->
 
@@ -366,7 +362,7 @@ Signals assigned in a [combinatorial](#combinatorial-evaluation) domain are not 
 
    >>> Signal().reset_less
    False
-   >>> Signal(reset_less=True).reset_less
+   >>> Signal(reset_less = True).reset_less
    True
 
 ```
@@ -376,7 +372,6 @@ Signals assigned in a [combinatorial](#combinatorial-evaluation) domain are not 
 To describe computations, Torii values can be combined with each other or with [value-castable](#value-casting) objects using a rich array of arithmetic, bitwise, logical, bit sequence, and other *operators* to form *expressions*, which are themselves values.
 
 ### Performing or describing computations?
-
 
 Code written in the Python language *performs* computations on concrete objects, like integers, with the goal of calculating a concrete result:
 
@@ -414,7 +409,6 @@ Although the syntax is similar, it is important to remember that Torii values ex
 
 Because the value of `a`, and therefore `a == 0`, is not known at the time when the `if` statement is executed, there is no way to decide whether the body of the statement should be executed---in fact, if the design is synthesized, by the time `a` has any concrete value, the Python program has long finished! To solve this problem, Torii provides its own [control structures](#control-structures) that, also, manipulate circuits.
 
-
 ### Width extension
 
 Many of the operations described below (for example, addition, equality, bitwise OR, and part select) extend the width of one or both operands to match the width of the expression. When this happens, unsigned values are always zero-extended and signed values are always sign-extended regardless of the operation or signedness of the result.
@@ -449,7 +443,6 @@ While arithmetic computations never result in an overflow, [assigning](#assignin
 
 The following table lists the arithmetic operations provided by Torii:
 
-
 | Operation | Description    |
 |-----------|----------------|
 | `a + b`   | addition       |
@@ -459,7 +452,6 @@ The following table lists the arithmetic operations provided by Torii:
 | `a // b`  | floor division |
 | `a % b`   | modulo         |
 | `abs(a)`  | absolute value |
-
 
 ### Comparison operators
 
@@ -478,14 +470,13 @@ The following table lists the comparison operations provided by Torii:
 | `a > b`   | greater than          |
 | `a >= b`  | greater than or equal |
 
-
 ### Bitwise, shift, and rotate operators
 
 All bitwise and shift operations on integers provided by Python can be used on Torii values as well.
 
 Similar to arithmetic operations, if any operand of a bitwise expression is signed, the expression itself is signed as well. A shift expression is signed if the shifted value is signed. A rotate expression is always unsigned.
 
-Rotate operations with variable rotate amounts cannot be efficiently synthesized for non-power-of-2 widths of the rotated value. Because of that, the rotate operations are only provided for constant rotate amounts, specified as Python {class}`int`s.
+Rotate operations with variable rotate amounts cannot be efficiently synthesized for non-power-of-2 widths of the rotated value. Because of that, the rotate operations are only provided for constant rotate amounts, specified as Python {py:class}`int`s.
 
 The following table lists the bitwise and shift operations provided by Torii:
 
@@ -503,12 +494,10 @@ The following table lists the bitwise and shift operations provided by Torii:
 | `a.shift_left(i)`  | left shift by constant amount [^3]                 |
 | `a.shift_right(i)` | right shift by constant amount [^3]                |
 
-
 [IMPLY]: https://en.wikipedia.org/wiki/IMPLY_gate
 [^1]: Logical and arithmetic right shift of an unsigned value are equivalent. Logical right shift of a signed value can be expressed by [converting it to unsigned](#conversion-operators) first.
 [^2]: Shift amount must be unsigned; integer shifts in Python require the amount to be positive.
 [^3]: Shift and rotate amounts can be negative, in which case the direction is reversed.
-
 
 ```{eval-rst}
 .. note::
@@ -539,9 +528,8 @@ The following table lists the reduction operations provided by Torii:
 | `a.xor()`  | reduction XOR; is an odd number of bits set? |
 | `a.bool()` | conversion to boolean; is non-zero? [^5]     |
 
-[^4]: Conceptually the same as applying the Python {func}`all` or {func}`any` function to the value viewed as a collection of bits.
-[^5]: Conceptually the same as applying the Python {func}`bool` function to the value viewed as an integer.
-
+[^4]: Conceptually the same as applying the Python {py:func}`all` or {py:func}`any` function to the value viewed as a collection of bits.
+[^5]: Conceptually the same as applying the Python {py:func}`bool` function to the value viewed as an integer.
 
 ### Logical operators
 
@@ -555,16 +543,13 @@ The following table lists the Python logical expressions and their Torii equival
 | `a and b`         | `(a).bool() & (b).bool()`       |
 | `a or b`          | `(a).bool() \| (b).bool()`      |
 
-
 When the operands are known to be boolean values, such as comparisons, reductions, or boolean signals, the `.bool()` conversion may be omitted for clarity:
-
 
 | Python expression | Torii expression (boolean operands) |
 |-------------------|-------------------------------------|
 | `not p`           | `~(p)`                              |
 | `p and q`         | `(p) & (q)`                         |
 | `p or q`          | `(p) \| (q)`                        |
-
 
 ```{eval-rst}
 .. warning::
@@ -616,12 +601,11 @@ When the operands are known to be boolean values, such as comparisons, reduction
 
 Apart from acting as numbers, Torii values can also be treated as bit {ref}`sequences <python:typesseq>`, supporting slicing, concatenation, replication, and other sequence operations. Since some of the operators Python defines for sequences clash with the operators it defines for numbers, Torii gives these operators a different name. Except for the names, Torii values follow Python sequence semantics, with the least significant bit at index 0.
 
-Because every Torii value has a single fixed width, bit slicing and replication operations require the subscripts and count to be constant, specified as Python {class}`int`s. It is often useful to slice a value with a constant width and variable offset, but this cannot be expressed with the Python slice notation. To solve this problem, Torii provides additional *part select* operations with the necessary semantics.
+Because every Torii value has a single fixed width, bit slicing and replication operations require the subscripts and count to be constant, specified as Python {py:class}`int`s. It is often useful to slice a value with a constant width and variable offset, but this cannot be expressed with the Python slice notation. To solve this problem, Torii provides additional *part select* operations with the necessary semantics.
 
 The result of any bit sequence operation is an unsigned value.
 
 The following table lists the bit sequence operations provided by Torii:
-
 
 | Operation             | Description                                      |
 |-----------------------|--------------------------------------------------|
@@ -633,13 +617,11 @@ The following table lists the bit sequence operations provided by Torii:
 | `Cat(a, b, ...)`      | concatenation [^8]                               |
 | `a.replicate(n)`      | replication                                      |
 
-
 [^6]: Words "length" and "width" have the same meaning when talking about Torii values. Conventionally, "width" is used.
 [^7]: All variations of the Python slice notation are supported, including "extended slicing". E.g. all of `a[0]`, `a[1:9]`, `a[2:]`, `a[:-2]`, `a[::-1]`, `a[0:8:2]` select bits in the same way as other Python sequence types select their elements.
 [^8]: In the concatenated value, `a` occupies the least significant bits, and `b` the most significant bits. An arbitrary number of arguments for `Cat` is supported.
 
 For the operators introduced by Torii, the following table explains them in terms of Python code operating on tuples of bits rather than Torii values:
-
 
 | Torii operation       | Equivalent Python code |
 |-----------------------|------------------------|
@@ -647,7 +629,6 @@ For the operators introduced by Torii, the following table explains them in term
 | `a.replicate(n)`      | `a * n`                |
 | `a.bit_select(b, w)`  | `a[b:b+w]`             |
 | `a.word_select(b, w)` | `a[b*w:b*w+w]`         |
-
 
 ```{warning}
 In Python, the digits of a number are written right-to-left (0th exponent at the right), and the elements of a sequence are written left-to-right (0th element at the left). This mismatch can cause confusion when numeric operations (like shifts) are mixed with bit sequence operations (like concatenations). For example, ``Cat(C(0b1001), C(0b1010))`` has the same value as ``C(0b1010_1001)``, ``val[4:]`` is equivalent to ``val >> 4``, and ``val[-1]`` refers to the most significant bit.
@@ -663,11 +644,9 @@ Could Torii have used a different indexing or iteration order for values? Yes, b
 
 The `.as_signed()` and `.as_unsigned()` conversion operators reinterpret the bits of a value with the requested signedness. This is useful when the same value is sometimes treated as signed and sometimes as unsigned, or when a signed value is constructed using slices or concatenations. For example, `(pc + imm[:7].as_signed()).as_unsigned()` sign-extends the 7 least significant bits of `imm` to the width of `pc`, performs the addition, and produces an unsigned result.
 
-
 ### Choice operator
 
-The `Mux(sel, val1, val0)` choice expression (similar to the {ref}`conditional expression <python:if_expr>` in Python) is equal to the operand `val1` if `sel` is non-zero, and to the other operand `val0` otherwise. If any of `val1` or `val0` are signed, the expression itself is signed as well.
-
+The {py:class}`Mux(sel, val1, val0) <torii.hdl.ast.Mux>` choice expression (similar to the {ref}`conditional expression <python:if_expr>` in Python) is equal to the operand `val1` if `sel` is non-zero, and to the other operand `val0` otherwise. If any of `val1` or `val0` are signed, the expression itself is signed as well.
 
 ## Modules
 
@@ -684,6 +663,7 @@ Every Torii design starts with a fresh module:
    >>> m = Module()
 
 ```
+
 ### Control domains
 
 A *control domain* is a named group of [signals](#signals) that change their value in identical conditions.
@@ -830,7 +810,6 @@ If multiple assignments change the value of the same signal bits, the assignment
 
 Multiple assignments to the same signal bits are more useful when combined with control structures, which can make some of the assignments [active or inactive](#active-and-inactive-assignments). If all assignments to some signal bits are [inactive](#active-and-inactive-assignments), their final values are determined by the signal's domain, [combinatorial](#combinatorial-evaluation) or [synchronous](#synchronous-evaluation).
 
-
 ### Control structures
 
 Although it is possible to write any decision tree as a combination of [assignments](#assigning-to-signals) and [choice expressions](#choice-operator), Torii provides *control structures* tailored for this task: If, Switch, and FSM. The syntax of all control structures is based on {ref}`context managers <python:context-managers>` and uses `with` blocks, for example:
@@ -858,7 +837,7 @@ While some Torii control structures are superficially similar to imperative cont
 
 ```
 
-Because all branches of a decision tree affect the generated circuit, all of the Python code inside Torii control structures is always evaluated in the order in which it appears in the program. This can be observed through Python code with side effects, such as {func}`print`:
+Because all branches of a decision tree affect the generated circuit, all of the Python code inside Torii control structures is always evaluated in the order in which it appears in the program. This can be observed through Python code with side effects, such as {py:func}`print`:
 
 ```{eval-rst}
 .. testcode::
@@ -879,7 +858,6 @@ Because all branches of a decision tree affect the generated circuit, all of the
 ```
 
 ### Active and inactive assignments
-
 
 An assignment added inside an Torii control structure, i.e. `with m.<...>:` block, is *active* if the condition of the control structure is satisfied, and *inactive* otherwise. For any given set of conditions, the final value of every signal assigned in a module is the same as if the inactive assignments were removed and the active assignments were performed unconditionally, taking into account the [assignment order](#assignment-order).
 
@@ -926,7 +904,6 @@ Combining these cases together, the code above is equivalent to:
 
 ### Combinatorial evaluation
 
-
 Signals in the combinatorial [control domain](#control-domains) change whenever any value used to compute them changes. The final value of a combinatorial signal is equal to its [initial value](#initial-signal-values) updated by the [active assignments](#active-and-inactive-assignments) in the [assignment order](#assignment-order). Combinatorial signals cannot hold any state.
 
 Consider the following code:
@@ -968,5 +945,5 @@ Signals in synchronous [control domains](#control-domains) change whenever a spe
 
 <!-- TODO: link to clock domains -->
 
-
+[Tutorials]: ../tutorials/index.md
 [two's complement]: https://en.wikipedia.org/wiki/Two's_complement

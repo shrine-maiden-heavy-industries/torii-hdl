@@ -11,7 +11,6 @@ In past versions of Torii, you could use the {py:class}`DomainRenamer <torii.hdl
 These have been replaced with using `kwargs` to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.
 
 ```python
-
 DomainRenamer('meow')(elab)
 
 DomainRenamer({'sync': 'meow'})(elab)

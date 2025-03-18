@@ -31,7 +31,6 @@ The prefix on the front of the port name is important, as it tells Torii what th
 | `o_`   | Output Port/Signal         |
 | `io_`  | Bi-directional Port/Signal |
 
-
 ## Including External Sources
 
 When you are using a generated or a raw [Verilog] module, then you need to tell torii to include it so it can properly synthesize, you do this with the {py:meth}`torii.build.plat.Platform.add_file` method, it takes the name and contents of a file to add to the sources collection which is then used in the synthesis step.
@@ -71,9 +70,6 @@ class MyInverter(Elaboratable):
 ```
 
 It's not necessary to pass the file in within the elaborate of the module itself, however keeping the wrapper elaboratable coupled to the dependant HDL source file is recommended.
-
-
-
 
 
 [Verilog]: https://ieeexplore.ieee.org/document/1620780
