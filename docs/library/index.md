@@ -11,6 +11,7 @@ Torii provides a standard library with various useful components for implementin
 :maxdepth: 2
 
 coding/index
+mem/index
 cdc
 fifo
 

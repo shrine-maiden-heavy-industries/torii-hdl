@@ -4,8 +4,8 @@ from collections     import OrderedDict
 from collections.abc import Generator, Mapping
 
 from ...util.units   import bits_for
+from ..mem.map       import MemoryMap
 from .               import event
-from .memory         import MemoryMap
 
 __all__ = (
 	'ConstantBool',

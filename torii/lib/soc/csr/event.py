@@ -31,7 +31,7 @@ class EventMonitor(Elaboratable):
 	data_width : int
 		CSR bus data width. See :class:`..csr.Interface`.
 	alignment : int
-		CSR address alignment. See :class:`..memory.MemoryMap`.
+		CSR address alignment. See :class:`...mem.map.MemoryMap`.
 	trigger : :class:`..event.Source.Trigger`
 		Trigger mode. See :class:`..event.Source`.
 
