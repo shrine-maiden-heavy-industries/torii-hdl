@@ -21,21 +21,14 @@ __all__ = (
 	'SyncFIFOBuffered',
 )
 
-class FIFOInterface:
-	_doc_template = '''
-	{description}
-
-	Parameters
-	----------
+_DOC_TEMPLATE = {
+	'parameters': '''
 	width : int
 		Bit width of data entries.
 	depth : int
 		Depth of the queue. If zero, the FIFO cannot be read from or written to.
-	{parameters}
-
-	Attributes
-	----------
-	{attributes}
+	''',
+	'w_attributes': '''
 	w_data : Signal(width), in
 		Input data.
 	w_rdy : Signal(1), out
@@ -45,7 +38,8 @@ class FIFOInterface:
 		Write strobe. Latches ``w_data`` into the queue. Does nothing if ``w_rdy`` is not asserted.
 	w_level : Signal(range(depth + 1)), out
 		Number of unread entries.
-	{w_attributes}
+	''',
+	'r_attributes': '''
 	r_data : Signal(width), out
 		Output data. {r_data_valid}
 	r_rdy : Signal(1), out
@@ -56,26 +50,34 @@ class FIFOInterface:
 		Does nothing if ``r_rdy`` is not asserted.
 	r_level : Signal(range(depth + 1)), out
 		Number of unread entries.
+	''',
+}
+
+
+class FIFOInterface:
+	__doc__ = '''
+	Data written to the input interface (``w_data``, ``w_rdy``, ``w_en``) is buffered and can be
+	read at the output interface (``r_data``, ``r_rdy``, ``r_en``). The data entry written first
+	to the input also appears first on the output.
+
+	Parameters
+	----------
+	{parameters}
+	fwft : bool
+		First-word fallthrough. If set, when ``r_rdy`` rises, the first entry is already
+		available, i.e. ``r_data`` is valid. Otherwise, after ``r_rdy`` rises, it is necessary
+		to strobe ``r_en`` for ``r_data`` to become valid.
+
+	Attributes
+	----------
+	{w_attributes}
 	{r_attributes}
-
-	'''
-
-	__doc__ = _doc_template.format(
-		description = '''
-		Data written to the input interface (``w_data``, ``w_rdy``, ``w_en``) is buffered and can be
-		read at the output interface (``r_data``, ``r_rdy``, ``r_en``). The data entry written first
-		to the input also appears first on the output.
-		''',
-		parameters = '''
-		fwft : bool
-			First-word fallthrough. If set, when ``r_rdy`` rises, the first entry is already
-			available, i.e. ``r_data`` is valid. Otherwise, after ``r_rdy`` rises, it is necessary
-			to strobe ``r_en`` for ``r_data`` to become valid.
-		'''.strip(),
-		r_data_valid = 'The conditions in which ``r_data`` is valid depends on the type of the queue.',
-		attributes   = '',
-		w_attributes = '',
-		r_attributes = ''
+	'''.format(
+		parameters = _DOC_TEMPLATE['parameters'].strip().strip(),
+		w_attributes = _DOC_TEMPLATE['w_attributes'].strip().strip(),
+		r_attributes = _DOC_TEMPLATE['r_attributes'].strip().strip().format(
+			r_data_valid = 'The conditions in which ``r_data`` is valid depends on the type of the queue.'
+		),
 	)
 
 	def __init__(self, *, width: int, depth: int, fwft: bool = True) -> None:
@@ -106,27 +108,33 @@ def _incr(signal, modulo: int) -> Mux | int:
 		return Mux(signal == modulo - 1, 0, signal + 1)
 
 class SyncFIFO(Elaboratable, FIFOInterface):
-	__doc__ = FIFOInterface._doc_template.format(
-		description = '''
-		Synchronous first in, first out queue.
+	__doc__ = '''
+	Synchronous first in, first out queue.
 
-		Read and write interfaces are accessed from the same clock domain. If different clock domains
-		are needed, use :class:`AsyncFIFO`.
-		'''.strip(),
-		parameters = '''
-		fwft : bool
-			First-word fallthrough. If set, when the queue is empty and an entry is written into it,
-			that entry becomes available on the output on the same clock cycle. Otherwise, it is
-			necessary to assert ``r_en`` for ``r_data`` to become valid.
-		'''.strip(),
-		r_data_valid = "For FWFT queues, valid if ``r_rdy`` is asserted. "
-					"For non-FWFT queues, valid on the next cycle after ``r_rdy`` and ``r_en`` have been asserted.",
-		attributes = '''
-		level : Signal(range(depth + 1)), out
-			Number of unread entries. This level is the same between read and write for synchronous FIFOs.
-		'''.strip(),
-		r_attributes = '',
-		w_attributes = ''
+	Read and write interfaces are accessed from the same clock domain. If different clock domains
+	are needed, use :class:`AsyncFIFO`.
+
+	Parameters
+	----------
+	{parameters}
+	fwft : bool
+		First-word fallthrough. If set, when the queue is empty and an entry is written into it,
+		that entry becomes available on the output on the same clock cycle. Otherwise, it is
+		necessary to assert ``r_en`` for ``r_data`` to become valid.
+
+	Attributes
+	----------
+	level : Signal(range(depth + 1)), out
+		Number of unread entries. This level is the same between read and write for synchronous FIFOs.
+	{w_attributes}
+	{r_attributes}
+	'''.format(
+		parameters = _DOC_TEMPLATE['parameters'].strip(),
+		w_attributes = _DOC_TEMPLATE['w_attributes'].strip(),
+		r_attributes = _DOC_TEMPLATE['r_attributes'].strip().format(
+			r_data_valid = 'For FWFT queues, valid if ``r_rdy`` is asserted. '
+			'For non-FWFT queues, valid on the next cycle after ``r_rdy`` and ``r_en`` have been asserted.'
+		),
 	)
 
 	def __init__(self, *, width: int, depth: int, fwft: bool = True) -> None:
@@ -210,27 +218,33 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		return m
 
 class SyncFIFOBuffered(Elaboratable, FIFOInterface):
-	__doc__ = FIFOInterface._doc_template.format(
-		description = '''
-		Buffered synchronous first in, first out queue.
+	__doc__ = '''
+	Buffered synchronous first in, first out queue.
 
-		This queue's interface is identical to :class:`SyncFIFO` configured as ``fwft = True``, but it
-		does not use asynchronous memory reads, which are incompatible with FPGA block RAMs.
+	This queue's interface is identical to :class:`SyncFIFO` configured as ``fwft = True``, but it
+	does not use asynchronous memory reads, which are incompatible with FPGA block RAMs.
 
-		In exchange, the latency between an entry being written to an empty queue and that entry
-		becoming available on the output is increased by one cycle compared to :class:`SyncFIFO`.
-		'''.strip(),
-		parameters = '''
-		fwft : bool
-			Always set.
-		'''.strip(),
-		attributes = '''
-		level : Signal(range(depth + 1)), out
-			Number of unread entries. This level is the same between read and write for synchronous FIFOs.
-		'''.strip(),
-		r_data_valid = 'Valid if ``r_rdy`` is asserted.',
-		r_attributes = '',
-		w_attributes = ''
+	In exchange, the latency between an entry being written to an empty queue and that entry
+	becoming available on the output is increased by one cycle compared to :class:`SyncFIFO`.
+
+	Parameters
+	----------
+	{parameters}
+	fwft : bool
+		Always set.
+
+	Attributes
+	----------
+	level : Signal(range(depth + 1)), out
+		Number of unread entries. This level is the same between read and write for synchronous FIFOs.
+	{w_attributes}
+	{r_attributes}
+	'''.format(
+		parameters = _DOC_TEMPLATE['parameters'].strip(),
+		w_attributes = _DOC_TEMPLATE['w_attributes'].strip(),
+		r_attributes = _DOC_TEMPLATE['r_attributes'].strip().format(
+			r_data_valid = 'Valid if ``r_rdy`` is asserted.'
+		),
 	)
 
 	def __init__(self, *, width: int, depth: int):
@@ -279,36 +293,42 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 		return m
 
 class AsyncFIFO(Elaboratable, FIFOInterface):
-	__doc__ = FIFOInterface._doc_template.format(
-		description = '''
-		Asynchronous first in, first out queue.
+	__doc__ = '''
+	Asynchronous first in, first out queue.
 
-		Read and write interfaces are accessed from different clock domains, which can be set when
-		constructing the FIFO.
+	Read and write interfaces are accessed from different clock domains, which can be set when
+	constructing the FIFO.
 
-		:class:`AsyncFIFO` can be reset from the write clock domain. When the write domain reset is
-		asserted, the FIFO becomes empty. When the read domain is reset, data remains in the FIFO - the
-		read domain logic should correctly handle this case.
+	:class:`AsyncFIFO` can be reset from the write clock domain. When the write domain reset is
+	asserted, the FIFO becomes empty. When the read domain is reset, data remains in the FIFO - the
+	read domain logic should correctly handle this case.
 
-		:class:`AsyncFIFO` only supports power of 2 depths. Unless ``exact_depth`` is specified,
-		the ``depth`` parameter is rounded up to the next power of 2.
-		'''.strip(),
-		parameters = '''
-		r_domain : str
-			Read clock domain.
-		w_domain : str
-			Write clock domain.
-		fwft : bool
-			Always set.
-		'''.strip(),
-		attributes = '',
-		r_data_valid = 'Valid if ``r_rdy`` is asserted.',
-		r_attributes = '''
-		r_rst : Signal(1), out
-			Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
-			the write-domain reset.
-		'''.strip(),
-		w_attributes = ''
+	:class:`AsyncFIFO` only supports power of 2 depths. Unless ``exact_depth`` is specified,
+	the ``depth`` parameter is rounded up to the next power of 2.
+
+	Parameters
+	----------
+	{parameters}
+	r_domain : str
+		Read clock domain.
+	w_domain : str
+		Write clock domain.
+	fwft : bool
+		Always set.
+
+	Attributes
+	----------
+	{w_attributes}
+	{r_attributes}
+	r_rst : Signal(1), out
+		Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
+		the write-domain reset.
+	'''.format(
+		parameters = _DOC_TEMPLATE['parameters'].strip(),
+		w_attributes = _DOC_TEMPLATE['w_attributes'].strip(),
+		r_attributes = _DOC_TEMPLATE['r_attributes'].strip().format(
+			r_data_valid = 'Valid if ``r_rdy`` is asserted.'
+		),
 	)
 
 	def __init__(
@@ -456,39 +476,45 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		return m
 
 class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
-	__doc__ = FIFOInterface._doc_template.format(
-		description = '''
-		Buffered asynchronous first in, first out queue.
+	__doc__ = '''
+	Buffered asynchronous first in, first out queue.
 
-		Read and write interfaces are accessed from different clock domains, which can be set when
-		constructing the FIFO.
+	Read and write interfaces are accessed from different clock domains, which can be set when
+	constructing the FIFO.
 
-		:class:`AsyncFIFOBuffered` only supports power of 2 plus one depths. Unless ``exact_depth``
-		is specified, the ``depth`` parameter is rounded up to the next power of 2 plus one.
-		(The output buffer acts as an additional queue element.)
+	:class:`AsyncFIFOBuffered` only supports power of 2 plus one depths. Unless ``exact_depth``
+	is specified, the ``depth`` parameter is rounded up to the next power of 2 plus one.
+	(The output buffer acts as an additional queue element.)
 
-		This queue's interface is identical to :class:`AsyncFIFO`, but it has an additional register
-		on the output, improving timing in case of block RAM that has large clock-to-output delay.
+	This queue's interface is identical to :class:`AsyncFIFO`, but it has an additional register
+	on the output, improving timing in case of block RAM that has large clock-to-output delay.
 
-		In exchange, the latency between an entry being written to an empty queue and that entry
-		becoming available on the output is increased by one cycle compared to :class:`AsyncFIFO`.
-		'''.strip(),
-		parameters = '''
-		r_domain : str
-			Read clock domain.
-		w_domain : str
-			Write clock domain.
-		fwft : bool
-			Always set.
-		'''.strip(),
-		attributes = '',
-		r_data_valid = 'Valid if ``r_rdy`` is asserted.',
-		r_attributes = '''
-		r_rst : Signal(1), out
-			Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
-			the write-domain reset.
-		'''.strip(),
-		w_attributes = ''
+	In exchange, the latency between an entry being written to an empty queue and that entry
+	becoming available on the output is increased by one cycle compared to :class:`AsyncFIFO`.
+
+	Parameters
+	----------
+	{parameters}
+	r_domain : str
+		Read clock domain.
+	w_domain : str
+		Write clock domain.
+	fwft : bool
+		Always set.
+
+	Attributes
+	----------
+	{w_attributes}
+	{r_attributes}
+	r_rst : Signal(1), out
+		Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
+		the write-domain reset.
+	'''.format(
+		parameters = _DOC_TEMPLATE['parameters'].strip(),
+		w_attributes = _DOC_TEMPLATE['w_attributes'].strip(),
+		r_attributes = _DOC_TEMPLATE['r_attributes'].strip().format(
+			r_data_valid = 'Valid if ``r_rdy`` is asserted.'
+		),
 	)
 
 	def __init__(
