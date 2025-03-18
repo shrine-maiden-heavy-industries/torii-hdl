@@ -5,9 +5,15 @@ from enum          import Enum, EnumMeta
 from sys           import version_info
 
 from torii.hdl.ast import (
-	Array, Cat, ClockSignal, Const, Initial, Mux, Part, ResetSignal, Sample, Shape, ShapeCastable, ShapeLike,
-	Signal, Slice, Switch, Value, ValueCastable, ValueLike, signed, unsigned,
+	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, ResetSignal, Rose, Sample,
+	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
+	signed, unsigned,
 )
+from torii.hdl.cd  import ClockDomain
+from torii.hdl.dsl import Module
+from torii.hdl.ir  import Elaboratable
+from torii.sim     import Delay, Simulator, Tick
+
 
 from ..utils       import ToriiTestSuiteCase
 
@@ -1661,6 +1667,34 @@ class ValueLikeTestCase(ToriiTestSuiteCase):
 		self.assertTrue(isinstance(EnumC.A, ValueLike))
 		self.assertFalse(isinstance(EnumD.A, ValueLike))
 
+class SampleDUT(Elaboratable):
+	def __init__(self, v: Signal, s: Signal, clocks: int, mode: str | None = None):
+		self.v = v
+		self.s = s
+
+		self.clocks = clocks
+		self.mode   = mode
+
+	def elaborate(self, platform) -> Module:
+		m = Module()
+
+		m.domains += ClockDomain('sync')
+
+		match self.mode:
+			case 'edge':
+				m.d.sync += [ self.s.eq(Edge(self.v, self.clocks)), ]
+			case 'rose':
+				m.d.sync += [ self.s.eq(Rose(self.v, self.clocks)), ]
+			case 'fell':
+				m.d.sync += [ self.s.eq(Fell(self.v, self.clocks)), ]
+			case 'past':
+				m.d.sync += [ self.s.eq(Past(self.v, self.clocks)), ]
+			case 'stable':
+				m.d.sync += [ self.s.eq(Stable(self.v, self.clocks)), ]
+			case _:
+				m.d.sync += [ self.s.eq(Sample(self.v, self.clocks, None)), ]
+		return m
+
 class SampleTestCase(ToriiTestSuiteCase):
 	def test_const(self):
 		s = Sample(1, 1, 'sync')
@@ -1695,6 +1729,250 @@ class SampleTestCase(ToriiTestSuiteCase):
 			r'^Domain name must be a string or None, not 0$'
 		):
 			Sample(Signal(), 1, 0)
+
+	def test_sample_delay0(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 0))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_delay1(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 1))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_edge(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 0, 'edge'))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_fell(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 0, 'fell'))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_past(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 1, 'past'))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_rose(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 0, 'rose'))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
+
+	def test_sample_stable(self):
+		v = Signal()
+		s = Signal()
+
+		sim = Simulator(SampleDUT(v, s, 0, 'stable'))
+		sim.add_clock(1e-6)
+
+		def proc():
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield v.eq(0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield v.eq(1)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 1)
+			self.assertEqual((yield s), 0)
+			yield v.eq(0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 0)
+			yield Tick()
+			yield Delay(1e-8)
+			self.assertEqual((yield v), 0)
+			self.assertEqual((yield s), 1)
+			yield Tick()
+			yield Delay(1e-8)
+
+		sim.add_process(proc)
+		with sim.write_vcd('test.vcd'):
+			sim.run()
 
 class InitialTestCase(ToriiTestSuiteCase):
 	def test_initial(self):
