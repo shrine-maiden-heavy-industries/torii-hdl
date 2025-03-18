@@ -20,7 +20,7 @@ extensions = [
 	'sphinx.ext.intersphinx',
 	'sphinx.ext.napoleon',
 	'sphinx.ext.todo',
-	'sphinxcontrib.platformpicker',
+	'sphinx_inline_tabs',
 	'sphinxcontrib.wavedrom',
 	'myst_parser',
 	'sphinx_rtd_theme',

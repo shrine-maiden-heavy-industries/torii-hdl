@@ -1,221 +1,344 @@
 # Installation
 
 ```{warning}
-The following instructions are a work-in-progress and may not be entirely up to date.
+The following instructions are a work-in-progress and may not be entirely up to date, or work for the target system, if you run into anything, please [report an issue]!
 ```
-
 
 ## System requirements
 
-Torii requires Python >= 3.10, and [Yosys](https://github.com/YosysHQ/yosys) >= 0.30 except Yosys version 0.37 due to a Verilog backend bug. Torii has been tested with [CPython](https://www.python.org/), but might possibly run under [PyPy](https://www.pypy.org/).
+Torii requires Python 3.10 or newer, and has been tested with [CPython] and [PyPy], but only CPython is officially supported.
 
+In addition, Torii also requires a copy of [Yosys] version 0.30 or newer, excluding version 0.37 due to a bug in the Verilog backend.
 
-Simulating Torii code requires no additional software. However, a waveform viewer like [GTKWave](http://gtkwave.sourceforge.net/) is invaluable for debugging.
+These are the only two "hard" requirements for Torii, you can do things like simulation without any additional software, however to view simulation results, a waveform viewer such as [surfer] or [GTKWave] is invaluable for debugging. Formal verification support, additionally needs [sby] and an SMT solver such as [Yices] or [Bitwuzla].
 
-Synthesizing, placing and routing an Torii design for an FPGA requires the FPGA family specific toolchain. See the [platform](./platforms/index.md) specific documentation for more information regarding vendor toolchains.
-
+To synthesize, place-and-route, and pack a Torii design for an FPGA, you need the toolchain specific to the family of FPGA you are targeting, see the [platform] specific documentation for more information regarding vendor toolchains.
 
 ## Installing Prerequisites
 
-Prior to installing Torii, you must install all of its prerequisites and requirements.
+Prior to installing Torii, install the required system prerequisites, and optionally the prerequisites for [simulation] and [formal] support.
 
-### Installing Python
+### Python and `pip`
 
-First off, install `python` and `pip` onto your system if the're not there already.
+First off, install `python` and `pip` as appropriate on your system if it's not done so already.
 
 ```{eval-rst}
-.. platform-picker::
-	.. platform-choice:: arch
-		:title: Arch Linux
+.. tab:: Linux
+
+	.. tab:: Arch-Like
 
 		.. code-block:: console
 
-		  $ sudo pacman -S python python-pip
+			$ sudo pacman -S python python-pip
 
-	.. platform-choice:: linux
-		:title: Other Linux
-
-		.. warning:: These instructions may be incorrect or incomplete!
-
-		For `Debian <https://www.debian.org/>`_ based systems, use ``apt`` to install ``python3`` and ``python3-pip``
-
-		.. code-block:: console
-
-			$ sudo apt install python3 python3-pip
-
-		For `Fedora <https://getfedora.org/>`_ and other ``dnf`` based systems,
+	.. tab:: Fedora-Like
 
 		.. code-block:: console
 
 			$ sudo dnf install python3 python3-pip
 
-	.. platform-choice:: macos
-		:title: macOS
-
-		Install `Homebrew <https://brew.sh/>`_ if not done already, then install the requirements.
+	.. tab:: Debian-Like
 
 		.. code-block:: console
 
-		  $ brew install python
+			$ sudo apt install python3 python3-pip
 
-	.. platform-choice:: windows
-		:title: Windows
+	.. tab:: SUSE-Like
 
-		.. warning:: These instructions may be incorrect or incomplete!
+		.. code-block:: console
 
-		Download the latest Python installer from the `python downloads <https://www.python.org/downloads/>`_ page.
+			$ sudo zypper install python3 python3-pip
 
-		Follow the instructions and ensure that the installer installs ``pip`` and puts the python executable in your ``%PATH%``
+.. tab:: macOS
+
+	Install `Homebrew <https://brew.sh/>`_ if not done already, then install the requirements.
+
+	.. code-block:: console
+
+		$ brew install python
+
+.. tab:: Windows
+
+	Download the latest Python installer from the `python downloads <https://www.python.org/downloads/>`_ page.
+
+	Follow the instructions and ensure that the installer installs ``pip`` and puts the python executable in your ``%PATH%``
 
 ```
-### Installing Yosys and GTKWave
+
+### Yosys
 
 ```{eval-rst}
-.. platform-picker::
+.. tab:: Linux
 
-	.. platform-choice:: arch
-		:title: Arch Linux
+	There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by `YosysHQ <https://github.com/YosysHQ>`_ known as the `OSS CAD Suite <https://github.com/YosysHQ/oss-cad-suite-build/tree/main>`_.
 
-		On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the `AUR <https://aur.archlinux.org/>`_ with an AUR helper or using ``makepkg`` directly.
+	The OSS CAD Suite is very large and has lots of extra things, such as it's own version of python, and a suite of other tools, it's very convenient, but can cause some problems if you're using it for your primary environment for Torii.
 
-		Via an AUR helper like ``yay``
+	There is also a distribution of the Yosys toolchain built to target WASM and installable from `pypi <https://pypi.org/>`_ called `YoWASP <https://yowasp.org/>`_, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
 
-		.. code-block:: console
+	.. tab:: Native
 
-		  $ yay -S yosys-nightly
+		.. tab:: Arch-Like
 
-		Via ``makepkg`` directly
+			On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the `AUR <https://aur.archlinux.org/>`_ with an AUR helper or using ``makepkg`` directly.
 
-		.. code-block:: console
+			.. tab:: AUR
 
-		  $ git clone https://aur.archlinux.org/yosys-nightly.git
-		  $ (cd yosys-nightly && makepkg -sic)
+				.. code-block:: console
 
-		And to install GTKWave you can just install it like any normal package
+					$ yay -S yosys-nightly
 
-		.. code-block:: console
+			.. tab:: makepkg
 
-			$ pacman -S gtkwave
+				.. code-block:: console
 
-	.. platform-choice:: linux
-		:title: Other Linux
+					$ git clone https://aur.archlinux.org/yosys-nightly.git
+					$ (cd yosys-nightly && makepkg -sic)
 
-		.. warning:: These instructions may be incorrect or incomplete!
+		.. tab:: Fedora-Like
 
-		With other Linux distributions, it is recommended to use the `OSS Cad Suite <https://github.com/YosysHQ/oss-cad-suite-build>`_ nightly build. It provides a full environment of all the tools needed built on a nightly basis. This includes Yosys and GTKWave
+			.. code-block:: console
 
-		Simply download the latest `release <https://github.com/YosysHQ/oss-cad-suite-build/releases>`_ for your architecture, extract it to a good home, and then add it to your ``$PATH``
+				$ sudo dnf install yosys
 
-		.. code-block:: console
+		.. tab:: Debian-Like
 
-		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-linux-x64-20240504.tgz
-		  $ tar xfv oss-cad-suite-linux-x64-20240504.tgz
-		  $ export PATH="`pwd`/oss-cad-suite/bin:$PATH"
+			.. todo:: Find a source for deb packages
 
+		.. tab:: SUSE-Like
 
-	.. platform-choice:: macos
-		:title: macOS
+			.. todo:: Find a source for suse packages
 
-		For macOS systems, it is recommended to use the YoWASP distribution of the toolchain. However if you want to use the native tools, and you are using an Intel based Mac, then the `OSS Cad Suite <https://github.com/YosysHQ/oss-cad-suite-build>`_ has nightly builds for x86_64 versions of Darwin. This includes Yosys and GTKWave
+	.. tab:: OSS-CAD-Suite
 
 		Simply download the latest `release <https://github.com/YosysHQ/oss-cad-suite-build/releases>`_ for your architecture, extract it to a good home, and then add it to your ``$PATH``
 
 		.. code-block:: console
 
-		  $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-05-04/oss-cad-suite-darwin-x64-20240504.tgz
-		  $ tar xfv oss-cad-suite-darwin-x64-20240504.tgz
-		  $ export PATH="`pwd`/oss-cad-suite/bin:$PATH"
+			$ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-linux-x64-20250317.tgz
+			$ tar xf oss-cad-suite-linux-x64-20250317.tgz
+			$ export PATH="$PATH:`pwd`/oss-cad-suite/bin"
 
-	.. platform-choice:: windows
-		:title: Windows
+	.. tab:: YoWASP
 
-		.. warning:: These instructions may be incorrect or incomplete!
+		.. todo: YoWASP Support
 
-		The `OSS Cad Suite <https://github.com/YosysHQ/oss-cad-suite-build>`_ has nightly builds for x86_64 versions of Windows. This includes Yosys and GTKWave
 
-		Simply download the latest `release <https://github.com/YosysHQ/oss-cad-suite-build/releases>`_ for your architecture, extract it to a good home, and then add it to your ``%PATH%``
+.. tab:: macOS
+
+	For macOS systems it is recommended to use the `OSS CAD Suite <https://github.com/YosysHQ/oss-cad-suite-build/tree/main>_` provided by `YosysHQ <https://github.com/YosysHQ>`_.
+
+	There is also a distribution of the Yosys toolchain built to target WASM and installable from `pypi <https://pypi.org/>`_ called `YoWASP <https://yowasp.org/>`_, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
+
+	.. tab:: OSS-CAD-Suite
+
+		Simply download the latest `release <https://github.com/YosysHQ/oss-cad-suite-build/releases>`_ for your architecture, extract it to a good home, and then add it to your ``$PATH``
+
+		.. code-block:: console
+
+			$ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-darwin-x64-20250317.tgz
+			$ tar xf oss-cad-suite-darwin-x64-20250317.tgz
+			$ export PATH="$PATH:`pwd`/oss-cad-suite/bin"
+
+	.. tab:: YoWASP
+
+		.. todo: YoWASP Support
+
+.. tab:: Windows
+
+	For Windows systems it is recommended to use the `OSS CAD Suite <https://github.com/YosysHQ/oss-cad-suite-build/tree/main>_` provided by `YosysHQ <https://github.com/YosysHQ>`_.
+
+	There is also a distribution of the Yosys toolchain built to target WASM and installable from `pypi <https://pypi.org/>`_ called `YoWASP <https://yowasp.org/>`_, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
+
+	.. tab:: OSS-CAD-Suite
+
+		Simply download the latest `release <https://github.com/YosysHQ/oss-cad-suite-build/releases>`_ for your architecture, extract it to a good home, and then add it to your ``$PATH``
 
 		.. code-block:: console
 
 			$ call %cd%\oss-cad-suite\environment.bat
 
+	.. tab:: YoWASP
+
+		.. todo: YoWASP Support
+
 ```
 
+### Waveform Viewer (Optional)
+
+An EDA Waveform Viewer is optional, but highly recommended. [GTKWave] is the standard of the Open Source EDA world, and has been around for a long time, and is what you will find most tutorials using. On the other hand, [surfer] is an up-and-coming waveform viewer that's written in Rust and is able to run in your web browser via WASM.
+
+```{eval-rst}
+.. tab:: Linux
+
+	There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by `YosysHQ <https://github.com/YosysHQ>`_ known as the `OSS CAD Suite <https://github.com/YosysHQ/oss-cad-suite-build/tree/main>`_.
+
+	The OSS CAD Suite only provides GTKWave, so if you wish to use surfer instead see the Native install options.
+
+	.. tab:: Native
+
+		.. tab:: GTKWave
+
+			.. tab:: Arch-Like
+
+				.. code-block:: console
+
+					$ sudo pacman -S gtkwave
+
+			.. tab:: Fedora-Like
+
+				.. code-block:: console
+
+					$ sudo dnf install gtkwave
+
+			.. tab:: Debian-Like
+
+				.. code-block:: console
+
+					$ sudo apt install gtkwave
+
+			.. tab:: SUSE-Like
+
+				.. code-block:: console
+
+					$ sudo zypper install gtkwave
+
+		.. tab:: Surfer
+
+			There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
+
+			Please see the `surfer install instructions <https://gitlab.com/surfer-project/surfer#installation>`_ for up-to-date installation instructions for your platform.
+
+	.. tab:: OSS-CAD-Suite
+
+		The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.
+
+.. tab:: macOS
+
+	.. tab:: GTKWave
+
+		.. tab:: OSS-CAD-Suite
+
+			The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.
+
+		.. tab:: Native
+
+			.. todo: Instructions
+
+	.. tab:: Surfer
+
+		There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
+
+		Please see the `surfer install instructions <https://gitlab.com/surfer-project/surfer#installation>`_ for up-to-date installation instructions for your platform.
+
+.. tab:: Windows
+
+	.. tab:: GTKWave
+
+		.. tab:: OSS-CAD-Suite
+
+			The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.
+
+		.. tab:: Native
+
+			.. todo: Instructions
+
+	.. tab:: Surfer
+
+		There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
+
+		Please see the `surfer install instructions <https://gitlab.com/surfer-project/surfer#installation>`_ for up-to-date installation instructions for your platform.
+
+```
+
+### Formal Tools (Optional)
+
+```{eval-rst}
+.. tab:: Linux
+
+	.. tab:: Native
+
+		.. tab:: Arch-Like
+
+			On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the `AUR <https://aur.archlinux.org/>`_ with an AUR helper or using ``makepkg`` directly.
+
+			.. tab:: AUR
+
+				.. code-block:: console
+
+					$ yay -S sby-nightly
+
+			.. tab:: makepkg
+
+				.. code-block:: console
+
+					$ git clone https://aur.archlinux.org/sby-nightly.git
+					$ (cd yosys-nightly && makepkg -sic)
+
+		.. tab:: Fedora-Like
+
+			.. todo: Instructions
+
+		.. tab:: Debian-Like
+
+			.. todo: Instructions
+
+		.. tab:: SUSE-Like
+
+			.. todo: Instructions
+
+	.. tab:: OSS-CAD-Suite
+
+		The OSS-CAD-Suite builds already include ``sby`` as well as a suite of SMT solvers.
+
+.. tab:: macOS
+
+	.. tab:: Native
+
+		.. todo: Instructions
+
+	.. tab:: OSS-CAD-Suite
+
+		The OSS-CAD-Suite builds already include ``sby`` as well as a suite of SMT solvers.
+
+.. tab:: Windows
+
+	.. tab:: Native
+
+		.. todo: Instructions
+
+	.. tab:: OSS-CAD-Suite
+
+		The OSS-CAD-Suite builds already include ``sby`` as well as a suite of SMT solvers.
+
+```
 
 ## Installing Torii
 
-
-The [latest release](install.md#latest-release) of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a [development snapshot](install.md#development-snapshot) to get access to the bleeding-edge, however the API may be unstable.
-
-
-### Latest release
+The latest stable release of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a development snapshot to get access to the bleeding-edge, however things might break.
 
 ```{eval-rst}
-.. platform-picker::
+.. tab:: Stable Release
 
-	.. platform-choice:: linux
-		:title: Linux
+	The stable release of Torii can be installed directly from `PyPI <https://pypi.org/project/torii/>`_.
 
-		.. code-block:: console
+	.. code-block:: console
 
-			$ pip3 install --user --upgrade torii
+		$ pip3 install --user --upgrade torii
 
-	.. platform-choice:: macos
-		:title: macOS
+.. tab:: Development Snapshot
 
-		.. code-block:: console
+	There are two possible ways to install a development snapshot for Torii, the first is using ``pip`` and to get it directly from GitHub.
 
-			$ pip install --user --upgrade torii
+	The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on Torii itself.
 
-	.. platform-choice:: windows
-		:title: Windows
-
-		.. code-block:: doscon
-
-			> pip install --upgrade torii
-
-```
-
-
-### Development snapshot
-
-
-```{eval-rst}
-.. platform-picker::
-
-	.. platform-choice:: linux
-		:title: Linux
+	.. tab:: Standard
 
 		.. code-block:: console
 
 			$ pip3 install --user 'torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git'
 
-	.. platform-choice:: macos
-		:title: macOS
-
-		.. code-block:: console
-
-			$ pip install --user 'torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git'
-
-	.. platform-choice:: windows
-		:title: Windows
-
-		.. code-block:: doscon
-
-			> pip install "torii @ git+https://github.com/shrine-maiden-heavy-industries/torii-hdl.git"
-
-```
-
-### Editable development snapshot
-
-
-```{eval-rst}
-.. platform-picker::
-
-	.. platform-choice:: linux
-		:title: Linux
-
-		To install an editable development snapshot of Torii for the first time, run:
+	.. tab:: Editable
 
 		.. code-block:: console
 
@@ -233,125 +356,36 @@ The [latest release](install.md#latest-release) of Torii is recommended for any 
 
 		Run the ``pip3 install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
 
-	.. platform-choice:: macos
-		:title: macOS
-
-		To install an editable development snapshot of Torii for the first time, run:
-
-		.. code-block:: console
-
-			$ git clone https://github.com/shrine-maiden-heavy-industries/torii-hdl
-			$ cd torii-hdl
-			$ pip install --user --editable '.'
-
-		Any changes made to the ``torii-hdl`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
-
-		.. code-block:: console
-
-			$ cd torii-hdl
-			$ git pull --ff-only origin main
-			$ pip install --user --editable '.'
-
-		Run the ``pip install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
-
-	.. platform-choice:: windows
-		:title: Windows
-
-		To install an editable development snapshot of Torii for the first time, run:
-
-		.. code-block:: doscon
-
-			> git clone https://github.com/shrine-maiden-heavy-industries/torii-hdl
-			> cd torii-hdl
-			> pip install --editable .
-
-		Any changes made to the ``torii-hdl`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
-
-		.. code-block:: doscon
-
-			> cd torii-hdl
-			> git pull --ff-only origin main
-			> pip install --editable .
-
-		Run the ``pip install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
-
-
 ```
 
-## Installing board definitions
+## Installing Board Definitions
 
-This section assumes you have already [installed Torii](#installation) to your system.
+The [torii-boards] package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.
 
-Installing the [Torii Development Board](https://github.com/shrine-maiden-heavy-industries/torii-boards) definitions is much the same as installing Torii.
-
-### Latest release
+Just like with Torii proper, there are two versions you can install, the latest stable, or the development version.
 
 ```{eval-rst}
-.. platform-picker::
+.. tab:: Stable Release
 
-	.. platform-choice:: linux
-		:title: Linux
+	The stable release of Torii-boards can be installed directly from `PyPI <https://pypi.org/project/torii-boards/>`_.
 
-		.. code-block:: console
+	.. code-block:: console
 
-			$ pip3 install --user --upgrade torii-boards
+		$ pip3 install --user --upgrade torii-boards
 
-	.. platform-choice:: macos
-		:title: macOS
+.. tab:: Development Snapshot
 
-		.. code-block:: console
+	There are two possible ways to install a development snapshot for the board support package, the first is using ``pip`` and to get it directly from GitHub.
 
-			$ pip install --user --upgrade torii-boards
+	The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on the board files themselves.s
 
-	.. platform-choice:: windows
-		:title: Windows
-
-		.. code-block:: doscon
-
-			> pip install --upgrade torii-boards
-
-```
-
-
-### Development snapshot
-
-
-```{eval-rst}
-.. platform-picker::
-
-	.. platform-choice:: linux
-		:title: Linux
+	.. tab:: Standard
 
 		.. code-block:: console
 
-			$ pip3 install --user 'git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards'
+			$ pip3 install --user 'torii-boards @ git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git'
 
-	.. platform-choice:: macos
-		:title: macOS
-
-		.. code-block:: console
-
-			$ pip install --user 'git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards'
-
-	.. platform-choice:: windows
-		:title: Windows
-
-		.. code-block:: doscon
-
-			> pip install git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git#egg=torii-boards
-
-```
-
-### Editable development snapshot
-
-
-```{eval-rst}
-.. platform-picker::
-
-	.. platform-choice:: linux
-		:title: Linux
-
-		To install an editable development snapshot of　``torii-boards`` for the first time, run:
+	.. tab:: Editable
 
 		.. code-block:: console
 
@@ -359,7 +393,9 @@ Installing the [Torii Development Board](https://github.com/shrine-maiden-heavy-
 			$ cd torii-boards
 			$ pip3 install --user --editable '.'
 
-		Any changes made to the ``torii-boards`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
+		Any changes made to the ``torii-boards`` directory will immediately affect any code that uses the board definitions.
+
+		To update the snapshot, run:
 
 		.. code-block:: console
 
@@ -369,47 +405,24 @@ Installing the [Torii Development Board](https://github.com/shrine-maiden-heavy-
 
 		Run the ``pip3 install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
 
-	.. platform-choice:: macos
-		:title: macOS
-
-		To install an editable development snapshot of ``torii-boards`` for the first time, run:
-
-		.. code-block:: console
-
-			$ git clone https://github.com/shrine-maiden-heavy-industries/torii-boards
-			$ cd torii-boards
-			$ pip install --user --editable '.'
-
-		Any changes made to the ``torii-boards`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
-
-		.. code-block:: console
-
-			$ cd torii-boards
-			$ git pull --ff-only origin main
-			$ pip install --user --editable '.'
-
-		Run the ``pip install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
-
-	.. platform-choice:: windows
-		:title: Windows
-
-		To install an editable development snapshot of ``torii-boards`` for the first time, run:
-
-		.. code-block:: doscon
-
-			> git clone https://github.com/shrine-maiden-heavy-industries/torii-boards
-			> cd torii-boards
-			> pip install --editable .
-
-		Any changes made to the ``torii-boards`` directory will immediately affect any code that uses Torii. To update the snapshot, run:
-
-		.. code-block:: doscon
-
-			> cd torii-boards
-			> git pull --ff-only origin main
-			> pip install --editable .
-
-		Run the ``pip install --editable .`` command each time the editable development snapshot is updated in case package dependencies have been added or changed. Otherwise, code using Torii may misbehave or crash with an ``ImportError``.
-
-
 ```
+
+## Next Steps
+
+Now that you've installed Torii, see the [getting started] guide for a quick introduction, and the [language guide] for more in-depth documentation on the language.
+
+[report an issue]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
+[CPython]: https://www.python.org/
+[PyPy]: https://www.pypy.org/
+[Yosys]: https://github.com/YosysHQ/yosys
+[GTKWave]: https://github.com/gtkwave/gtkwave
+[surfer]: https://surfer-project.org/
+[platform]: ./platforms/index.md
+[sby]: https://github.com/YosysHQ/sby
+[yices]: https://yices.csl.sri.com/
+[bitwuzla]: https://bitwuzla.github.io/
+[simulation]: #waveform-viewer-optional
+[formal]: #formal-tools-optional
+[torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
+[getting started]: ./getting_started.md
+[language guide]: ./language/index.md

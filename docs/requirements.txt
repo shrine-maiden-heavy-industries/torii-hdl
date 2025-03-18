@@ -1,7 +1,7 @@
 setuptools_scm
 sphinx
+sphinx-inline-tabs
 sphinx-rtd-theme
-sphinxcontrib-platformpicker
-wavedrom
 sphinxcontrib-wavedrom
+wavedrom
 myst-parser
