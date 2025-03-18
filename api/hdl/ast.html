@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>Abstract Syntax Tree &mdash; Torii-HDL 0.7.8.dev20 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/api/hdl/ast.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=fe5a96dd"></script>
+      <script src="../../_static/documentation_options.js?v=a5bae8be"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
@@ -146,15 +146,9 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../backend/cxxrtl.html">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../backend/rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../backend/verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Torii HDL Reference</a><ul class="current">
@@ -215,7 +209,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Standard Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Code Conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../library/coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
@@ -352,7 +346,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../sim/index.html">Simulation Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../changelog.html#added">Added</a></li>
@@ -459,7 +476,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
@@ -664,7 +684,7 @@ in this constant and whether it is signed (can represent negative values).
 <dd><p>Converts <code class="docutils literal notranslate"><span class="pre">obj</span></code> to an Torii constant.</p>
 <p>First, <code class="docutils literal notranslate"><span class="pre">obj</span></code> is converted to a value using <code class="xref py py-meth docutils literal notranslate"><span class="pre">Value.cast()</span></code>. If it is a constant, it
 is returned. If it is a constant-castable expression, it is evaluated and returned.
-Otherwise, <a href="#id1"><span class="problematic" id="id2">:exn:`TypeError`</span></a> is raised.</p>
+Otherwise, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> is raised.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -849,7 +869,7 @@ the enumeration is signed.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ast.ShapeCastable">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ast.</span></span><span class="sig-name descname"><span class="pre">ShapeCastable</span></span><a class="headerlink" href="#torii.hdl.ast.ShapeCastable" title="Link to this definition"></a></dt>
-<dd><p>Interface of user-defined objects that can be cast to :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>Shape`s.</p>
+<dd><p>Interface of user-defined objects that can be cast to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 <p>An object deriving from <a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> is automatically converted to a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>
 when it is used in a context where a <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is expected. Such objects can contain
 a richer description of the shape than what is supported by the core Torii language, yet
@@ -875,7 +895,7 @@ still be transparently used with it.</p>
 <li><p><a class="reference internal" href="#torii.hdl.ast.ShapeCastable" title="torii.hdl.ast.ShapeCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a> instances</p></li>
 <li><p>non-negative <code class="docutils literal notranslate"><span class="pre">int</span></code> values</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">range</span></code> instances</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclasses where all values are <span class="xref std std-ref">value-like</span></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclasses where all values are <a class="reference internal" href="../../language/index.html#lang-valuelike"><span class="std std-ref">value-like</span></a></p></li>
 </ul>
 <p>This class is only usable for the above checks — no instances and no (non-virtual)
 subclasses can be created.</p>

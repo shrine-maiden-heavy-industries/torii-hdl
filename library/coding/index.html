@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code Conversion &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>Encoding and Decoding &mdash; Torii-HDL 0.7.8.dev20 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/library/coding/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=fe5a96dd"></script>
+      <script src="../../_static/documentation_options.js?v=a5bae8be"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
@@ -146,15 +146,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/backend/index.html">Torii Backends</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../api/backend/cxxrtl.html">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../api/backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/backend/rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/backend/verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../api/backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/hdl/index.html">Torii HDL Reference</a><ul>
@@ -215,7 +209,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Standard Library</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Code Conversion</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
@@ -352,7 +346,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../sim/index.html">Simulation Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing/index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../changelog.html#added">Added</a></li>
@@ -459,7 +476,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
@@ -482,7 +502,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Standard Library</a></li>
-      <li class="breadcrumb-item active">Code Conversion</li>
+      <li class="breadcrumb-item active">Encoding and Decoding</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/coding/index.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -492,8 +512,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="code-conversion">
-<h1>Code Conversion<a class="headerlink" href="#code-conversion" title="Link to this heading"></a></h1>
+  <section id="encoding-and-decoding">
+<h1>Encoding and Decoding<a class="headerlink" href="#encoding-and-decoding" title="Link to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.coding</span></code> module provides building blocks for conversion between different encodings of binary numbers.</p>
 <section id="one-hot-coding">
 <h2>One-hot coding<a class="headerlink" href="#one-hot-coding" title="Link to this heading"></a></h2>
@@ -570,7 +590,8 @@ If <code class="docutils literal notranslate"><span class="pre">n</span></code> 
 </section>
 <section id="module-torii.lib.coding.cobs">
 <span id="consistent-overhead-byte-stuffing"></span><h2>Consistent Overhead Byte Stuffing<a class="headerlink" href="#module-torii.lib.coding.cobs" title="Link to this heading"></a></h2>
-<p>This module implements some Consistent Overhead Byte Stuffing (<a href="#id1"><span class="problematic" id="id2">`COBS`_</span></a>) encoders, primarily the
+<p>This module implements some Consistent Overhead Byte Stuffing
+(<a class="reference external" href="https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing">COBS</a>) encoders, primarily the
 <a class="reference internal" href="#torii.lib.coding.cobs.RCOBSEncoder" title="torii.lib.coding.cobs.RCOBSEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a> which is well adept at streaming.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.coding.cobs.RCOBSEncoder">
@@ -578,16 +599,15 @@ If <code class="docutils literal notranslate"><span class="pre">n</span></code> 
 <dd><p>Reverse Consistent Overhead Byte Stuffing (rCOBS) encoder.</p>
 <p>This is an implementation of the rCOBS algorithm. The source of the encoding
 algorithm was originally a Rust crate and can be found at: <a class="reference external" href="https://github.com/Dirbaio/rcobs">https://github.com/Dirbaio/rcobs</a></p>
-<p>The algorithm is fairly simple, for each byte in a message, do the following:</p>
+<p>The algorithm is fairly simple, for each byte in a message, do the following for each byte:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>Increment running total byte counter</p></li>
+<li><p>Increment the running total byte counter</p></li>
+<li><p>If the byte is <code class="docutils literal notranslate"><span class="pre">0x00</span></code> then write the value of the byte counter out and reset it to <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+<li><p>If it is not, then check to see if the running total counter is about to overflow</p></li>
+<li><p>If we are about to overflow, write out <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> and reset the counter</p></li>
+<li><p>Otherwise, write out the byte</p></li>
 </ol>
-<p>2. Check if byte is <code class="docutils literal notranslate"><span class="pre">0x00</span></code>
-3a. If it is, then write out the value of the byte counter and reset it
-3b. If it is not, check to see if the running byte counter is about to overflow
-4a. If it is, write out <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> and reset the byte counter
-4b. If it is not, write out the byte itself.</p>
 </div></blockquote>
 <p>This encoder is just a pure implementation of the encoding logic for a single byte, and as such
 has a collection of status and control signals to indicate to the outside world its status.</p>

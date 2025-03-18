@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Torii v0.X to v1.0 Migration Guide &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>Torii v0.X to v1.0 Migration Guide &mdash; Torii-HDL 0.7.8.dev20 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/migration_guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=fe5a96dd"></script>
+      <script src="_static/documentation_options.js?v=a5bae8be"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/tabs.js?v=3ee01567"></script>
@@ -146,15 +146,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/backend/index.html">Torii Backends</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/backend/cxxrtl.html">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/backend/rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/backend/verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="api/hdl/index.html">Torii HDL Reference</a><ul>
@@ -215,7 +209,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="library/index.html">Standard Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="library/coding/index.html">Code Conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library/coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
@@ -352,7 +346,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sim/index.html">Simulation Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing/index.html">Testing and Verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/formal.html">Formal Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing/index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="changelog.html#added">Added</a></li>
@@ -459,7 +476,10 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">Projects Using Torii</a></li>
@@ -497,8 +517,10 @@
 <p class="admonition-title">Todo</p>
 <p>This document is a work in progress and should be updated as the progression v1.0 progresses</p>
 </div>
+<section id="module-changes">
+<h2>Module Changes<a class="headerlink" href="#module-changes" title="Link to this heading"></a></h2>
 <section id="domainrenamer">
-<h2><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code><a class="headerlink" href="#domainrenamer" title="Link to this heading"></a></h2>
+<h3><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code><a class="headerlink" href="#domainrenamer" title="Link to this heading"></a></h3>
 <p>In past versions of Torii, you could use the <code class="xref py py-class docutils literal notranslate"><span class="pre">DomainRenamer</span></code> in two ways, the first was to pass a single string into it, which would be used to re-map the <code class="docutils literal notranslate"><span class="pre">sync</span></code> domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.</p>
 <p>These have been replaced with using <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
@@ -514,6 +536,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="o">**</span><span class="n">domain_map</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 

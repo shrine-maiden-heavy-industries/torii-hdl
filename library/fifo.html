@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev20 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/library/fifo.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=fe5a96dd"></script>
+      <script src="../_static/documentation_options.js?v=a5bae8be"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/tabs.js?v=3ee01567"></script>
@@ -146,15 +146,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/backend/cxxrtl.html">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/backend/verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><ul>
@@ -215,7 +209,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Standard Library</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="coding/index.html">Code Conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
@@ -352,7 +346,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sim/index.html">Simulation Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/formal.html">Formal Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
@@ -459,7 +476,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
@@ -498,11 +518,9 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.fifo.FIFOInterface">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">FIFOInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.FIFOInterface" title="Link to this definition"></a></dt>
-<dd><blockquote>
-<div><p>Data written to the input interface (<code class="docutils literal notranslate"><span class="pre">w_data</span></code>, <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code>, <code class="docutils literal notranslate"><span class="pre">w_en</span></code>) is buffered and can be
+<dd><p>Data written to the input interface (<code class="docutils literal notranslate"><span class="pre">w_data</span></code>, <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code>, <code class="docutils literal notranslate"><span class="pre">w_en</span></code>) is buffered and can be
 read at the output interface (<code class="docutils literal notranslate"><span class="pre">r_data</span></code>, <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code>, <code class="docutils literal notranslate"><span class="pre">r_en</span></code>). The data entry written first
 to the input also appears first on the output.</p>
-</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -539,10 +557,8 @@ Does nothing if <code class="docutils literal notranslate"><span class="pre">r_r
 <dt class="sig sig-object py" id="torii.lib.fifo.SyncFIFO">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">SyncFIFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.SyncFIFO" title="Link to this definition"></a></dt>
 <dd><p>Synchronous first in, first out queue.</p>
-<blockquote>
-<div><p>Read and write interfaces are accessed from the same clock domain. If different clock domains
+<p>Read and write interfaces are accessed from the same clock domain. If different clock domains
 are needed, use <a class="reference internal" href="#torii.lib.fifo.AsyncFIFO" title="torii.lib.fifo.AsyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a>.</p>
-</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -576,12 +592,10 @@ Does nothing if <code class="docutils literal notranslate"><span class="pre">r_r
 <dt class="sig sig-object py" id="torii.lib.fifo.SyncFIFOBuffered">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">SyncFIFOBuffered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.SyncFIFOBuffered" title="Link to this definition"></a></dt>
 <dd><p>Buffered synchronous first in, first out queue.</p>
-<blockquote>
-<div><p>This queue’s interface is identical to <a class="reference internal" href="#torii.lib.fifo.SyncFIFO" title="torii.lib.fifo.SyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a> configured as <code class="docutils literal notranslate"><span class="pre">fwft</span> <span class="pre">=</span> <span class="pre">True</span></code>, but it
+<p>This queue’s interface is identical to <a class="reference internal" href="#torii.lib.fifo.SyncFIFO" title="torii.lib.fifo.SyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a> configured as <code class="docutils literal notranslate"><span class="pre">fwft</span> <span class="pre">=</span> <span class="pre">True</span></code>, but it
 does not use asynchronous memory reads, which are incompatible with FPGA block RAMs.</p>
 <p>In exchange, the latency between an entry being written to an empty queue and that entry
 becoming available on the output is increased by one cycle compared to <a class="reference internal" href="#torii.lib.fifo.SyncFIFO" title="torii.lib.fifo.SyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a>.</p>
-</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -613,30 +627,21 @@ Does nothing if <code class="docutils literal notranslate"><span class="pre">r_r
 <dt class="sig sig-object py" id="torii.lib.fifo.AsyncFIFO">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">AsyncFIFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.AsyncFIFO" title="Link to this definition"></a></dt>
 <dd><p>Asynchronous first in, first out queue.</p>
-<blockquote>
-<div><p>Read and write interfaces are accessed from different clock domains, which can be set when
+<p>Read and write interfaces are accessed from different clock domains, which can be set when
 constructing the FIFO.</p>
 <p><a class="reference internal" href="#torii.lib.fifo.AsyncFIFO" title="torii.lib.fifo.AsyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a> can be reset from the write clock domain. When the write domain reset is
 asserted, the FIFO becomes empty. When the read domain is reset, data remains in the FIFO - the
 read domain logic should correctly handle this case.</p>
 <p><a class="reference internal" href="#torii.lib.fifo.AsyncFIFO" title="torii.lib.fifo.AsyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a> only supports power of 2 depths. Unless <code class="docutils literal notranslate"><span class="pre">exact_depth</span></code> is specified,
 the <code class="docutils literal notranslate"><span class="pre">depth</span></code> parameter is rounded up to the next power of 2.</p>
-</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Bit width of data entries.</p></li>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
-<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>Read clock domain.
-w_domain : str</p>
-<blockquote>
-<div><p>Write clock domain.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>fwft<span class="classifier">bool</span></dt><dd><p>Always set.</p>
-</dd>
-</dl>
-</p></li>
+<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain.</p></li>
+<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain.</p></li>
+<li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -663,8 +668,7 @@ the write-domain reset.</p></li>
 <dt class="sig sig-object py" id="torii.lib.fifo.AsyncFIFOBuffered">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.fifo.</span></span><span class="sig-name descname"><span class="pre">AsyncFIFOBuffered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.fifo.AsyncFIFOBuffered" title="Link to this definition"></a></dt>
 <dd><p>Buffered asynchronous first in, first out queue.</p>
-<blockquote>
-<div><p>Read and write interfaces are accessed from different clock domains, which can be set when
+<p>Read and write interfaces are accessed from different clock domains, which can be set when
 constructing the FIFO.</p>
 <p><a class="reference internal" href="#torii.lib.fifo.AsyncFIFOBuffered" title="torii.lib.fifo.AsyncFIFOBuffered"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFIFOBuffered</span></code></a> only supports power of 2 plus one depths. Unless <code class="docutils literal notranslate"><span class="pre">exact_depth</span></code>
 is specified, the <code class="docutils literal notranslate"><span class="pre">depth</span></code> parameter is rounded up to the next power of 2 plus one.
@@ -673,22 +677,14 @@ is specified, the <code class="docutils literal notranslate"><span class="pre">d
 on the output, improving timing in case of block RAM that has large clock-to-output delay.</p>
 <p>In exchange, the latency between an entry being written to an empty queue and that entry
 becoming available on the output is increased by one cycle compared to <a class="reference internal" href="#torii.lib.fifo.AsyncFIFO" title="torii.lib.fifo.AsyncFIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a>.</p>
-</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Bit width of data entries.</p></li>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
-<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>Read clock domain.
-w_domain : str</p>
-<blockquote>
-<div><p>Write clock domain.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>fwft<span class="classifier">bool</span></dt><dd><p>Always set.</p>
-</dd>
-</dl>
-</p></li>
+<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain.</p></li>
+<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain.</p></li>
+<li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>

@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formal Framework &mdash; Torii-HDL 0.7.8.dev12 documentation</title>
+  <title>Simulation &mdash; Torii-HDL 0.7.8.dev20 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/formal/index.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/testing/simulation.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=fe5a96dd"></script>
+      <script src="../_static/documentation_options.js?v=a5bae8be"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/tabs.js?v=3ee01567"></script>
@@ -26,7 +26,9 @@
       <script src="../_static/js/wavedrom.skin.js?v=986d6b75"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Formal Verification" href="formal.html" />
+    <link rel="prev" title="Testing and Verification" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +50,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-language">The Torii language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-standard-library">The Torii standard library</a></li>
@@ -144,15 +146,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/backend/cxxrtl.html">CXXRTL Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/backend/cxxrtl.html#torii.back.cxxrtl.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/rtlil.html">RTLIL Backend</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/backend/verilog.html">Verilog Backend</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/backend/verilog.html#torii.back.verilog.YosysError"><code class="docutils literal notranslate"><span class="pre">YosysError</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><ul>
@@ -213,7 +209,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../library/index.html">Standard Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../library/coding/index.html">Code Conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../library/coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
@@ -350,7 +346,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sim/index.html">Simulation Framework</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing and Verification</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="formal.html">Formal Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
@@ -457,7 +476,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
@@ -479,9 +501,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Formal Framework</li>
+          <li class="breadcrumb-item"><a href="index.html">Testing and Verification</a></li>
+      <li class="breadcrumb-item active">Simulation</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/formal/index.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/testing/simulation.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -489,11 +512,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="formal-framework">
-<h1>Formal Framework<a class="headerlink" href="#formal-framework" title="Link to this heading"></a></h1>
+  <section id="simulation">
+<h1>Simulation<a class="headerlink" href="#simulation" title="Link to this heading"></a></h1>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>this</p>
+<p>document this</p>
 </div>
 </section>
 
@@ -506,7 +529,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Testing and Verification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="formal.html" class="btn btn-neutral float-right" title="Formal Verification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
