@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 '''
-
-.. _COBS:https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing
-
-This module implements some Consistent Overhead Byte Stuffing (`COBS`_) encoders, primarily the
+This module implements some Consistent Overhead Byte Stuffing
+(`COBS <https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing>`_) encoders, primarily the
 :py:class:`RCOBSEncoder` which is well adept at streaming.
 
 '''
@@ -25,14 +23,13 @@ class RCOBSEncoder(Elaboratable):
 	This is an implementation of the rCOBS algorithm. The source of the encoding
 	algorithm was originally a Rust crate and can be found at: https://github.com/Dirbaio/rcobs
 
-	The algorithm is fairly simple, for each byte in a message, do the following:
+	The algorithm is fairly simple, for each byte in a message, do the following for each byte:
 
-		1. Increment running total byte counter
-		2. Check if byte is ``0x00``
-		3a. If it is, then write out the value of the byte counter and reset it
-		3b. If it is not, check to see if the running byte counter is about to overflow
-		4a. If it is, write out ``0xFF`` and reset the byte counter
-		4b. If it is not, write out the byte itself.
+		1. Increment the running total byte counter
+		2. If the byte is ``0x00`` then write the value of the byte counter out and reset it to ``0``
+		3. If it is not, then check to see if the running total counter is about to overflow
+		4. If we are about to overflow, write out ``0xFF`` and reset the counter
+		5. Otherwise, write out the byte
 
 	This encoder is just a pure implementation of the encoding logic for a single byte, and as such
 	has a collection of status and control signals to indicate to the outside world its status.

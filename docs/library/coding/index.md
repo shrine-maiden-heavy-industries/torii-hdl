@@ -1,4 +1,4 @@
-# Code Conversion
+# Encoding and Decoding
 
 The {py:mod}`torii.lib.coding` module provides building blocks for conversion between different encodings of binary numbers.
 
