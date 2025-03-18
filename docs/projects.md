@@ -7,5 +7,5 @@ The following is an incomplete list of projects that use Torii, we'd love to add
 
 [submit pull request]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/pulls
 [issue]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
-[Squishy]: https://github.com/lethalbit/squishy
+[Squishy]: https://github.com/squishy-scsi/squishy
 [SOL]: https://github.com/shrine-maiden-heavy-industries/sol

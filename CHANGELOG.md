@@ -365,7 +365,7 @@ Unreleased template stuff
 - Folded in `soc` library components.
 - Folded in resources from [torii-boards](https://github.com/shrine-maiden-heavy-industries/torii-boards) into the `torii.platform.resources` module.
 - Added [flake8](https://flake8.pycqa.org/en/latest/) configuration file.
-- Added [mypy](http://mypy-lang.org/) configuration file.
+- Added [mypy](https://mypy-lang.org/) configuration file.
 - Added [Code Of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md).
 - Added a `noxfile.py` for use with [nox](https://nox.thea.codes/en/stable/).
 - Added an updated python unittest wrapper for use with Torii.
@@ -384,7 +384,7 @@ Unreleased template stuff
 
 ### Changed
 
-- Refactored the [documentation](https://shrine-maiden-heavy-industries.github.io/torii-hdl/).
+- Refactored the [documentation](https://torii.shmdn.link/).
 - Migrated string escape functions from the `TemplatedPlatform` into the new strings utility module.
 - Moved `log2_int` and `bits_for` into the new units utility module.
 - Moved vendor modules into `torii.platform.vendor`.

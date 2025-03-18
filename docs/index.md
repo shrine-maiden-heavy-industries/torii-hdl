@@ -39,4 +39,4 @@ There is also a [collection of board definition files] for popular FPGA developm
 [standard library]: ./library/index.md
 [Introduction]: ./intro.md
 [Getting Started]: ./getting_started.md
-[collection of board definition files]: https://shrine-maiden-heavy-industries.github.io/torii-boards/
+[collection of board definition files]: https://torii-boards.shmdn.link/

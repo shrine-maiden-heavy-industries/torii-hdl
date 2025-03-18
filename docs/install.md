@@ -413,7 +413,7 @@ Now that you've installed Torii, see the [getting started] guide for a quick int
 
 [report an issue]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
 [CPython]: https://www.python.org/
-[PyPy]: https://www.pypy.org/
+[PyPy]: https://pypy.org/
 [Yosys]: https://github.com/YosysHQ/yosys
 [GTKWave]: https://github.com/gtkwave/gtkwave
 [surfer]: https://surfer-project.org/

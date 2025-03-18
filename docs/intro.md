@@ -67,7 +67,7 @@ These board definitions are available in the [torii boards] package
 [reportable bugs]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
 [standard library documentation]: ./library/index.md
 [Icarus Verilog]: https://steveicarus.github.io/iverilog/
-[Verilator]: https://www.veripool.org/wiki/verilator
-[PyPy]: https://www.pypy.org/
+[Verilator]: https://www.veripool.org/verilator/
+[PyPy]: https://pypy.org/
 [platform documentation]: ./platforms/index.md
 [torii boards]: https://torii-boards.shmdn.link/
