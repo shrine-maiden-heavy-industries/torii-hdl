@@ -9,7 +9,7 @@ language/index
 api/index
 library/index
 platforms/index
-sim/index
+testing/index
 changelog
 external_libraries
 migration_guide
