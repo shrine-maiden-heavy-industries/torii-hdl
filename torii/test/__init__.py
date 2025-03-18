@@ -305,9 +305,10 @@ class ToriiTestCase(TestCase):
 		'''
 		Simulation test case decorator
 
-		..note::
-			This must always be the top-most decorator due to how
-			python decorator precedence works.
+		Important
+		---------
+		This must always be the top-most decorator due to how
+		python decorator precedence works.
 
 		Parameters
 		----------
