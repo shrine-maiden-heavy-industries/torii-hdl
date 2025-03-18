@@ -6,10 +6,8 @@ The {py:mod}`torii.lib.soc` module provides various modules for use in SoCs and 
 :maxdepth: 2
 
 event
-memory
 periph
 
 csr/index
-wishbone/index
 
 ```
