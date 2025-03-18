@@ -101,4 +101,6 @@ linkcheck_ignore = [
 	'https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime.html',
 	'https://www.xilinx.com/products/design-tools/ise-design-suite.html',
 	'https://www.xilinx.com/products/design-tools/vivado.html',
+	# Sphinx linkc-check and GitLab readme anchors don't get along
+	'https://gitlab.com/surfer-project/surfer#installation',
 ]

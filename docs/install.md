@@ -207,7 +207,7 @@ An EDA Waveform Viewer is optional, but highly recommended. [GTKWave] is the sta
 
 			There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
 
-			Please see the `surfer install instructions <https://gitlab.com/surfer-project/surfer#user-content-installation>`_ for up-to-date installation instructions for your platform.
+			Please see the `surfer install instructions <https://gitlab.com/surfer-project/surfer#installation>`_ for up-to-date installation instructions for your platform.
 
 	.. tab:: OSS-CAD-Suite
 
