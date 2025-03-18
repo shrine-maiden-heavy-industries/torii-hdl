@@ -26,6 +26,8 @@ Unreleased template stuff
 
 ### Changed
 
+- `torii.hdl.ast.Past` is now exported in the root `torii.hdl` module.
+
 ### Deprecated
 
 - The `torii.tools.yosys.YosysError` being exported from `torii.back.cxxrtl` and `torii.back.verilog` has been deprecated and will be removed in a future release.
