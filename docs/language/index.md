@@ -249,7 +249,7 @@ Casting a value from an enumeration member `m` is equivalent to `Const(m.value, 
 If a value subclasses :class:`enum.IntEnum` or its class otherwise inherits from both :class:`int` and :class:`Enum`, it is treated as an enumeration.
 ```
 
-# Constant casting
+## Constant casting
 
 A subset of [values](#values) are *constant-castable*. If a value is constant-castable and all of its operands are also constant-castable, it can be converted to a `Const`, the numeric value of which can then be read by Python code. This provides a way to perform computation on Torii values while constructing the design.
 
