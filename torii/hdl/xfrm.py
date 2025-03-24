@@ -439,6 +439,33 @@ class DomainCollector(ValueVisitor, StatementVisitor):
 		self.on_fragment(fragment)
 
 class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer):
+	'''
+	Rename domains on given Elaboratable or Module.
+
+	The mapping is provided as a key-value pair to the constructor, where the key is the domain to remap
+	and the value is the new domain.
+
+	Parameters
+	----------
+	**kwargs : str
+		Domain translation mapping
+
+	Attention
+	---------
+	You are not allowed to rename any domain to/from the combinatorial (``comb``) domain.
+
+	Example
+	-------
+	.. code-block:: py
+
+		m.submodules.timer = timer = DomainRenamer(sync = 'pci')(Timer())
+
+	Raises
+	------
+	ValueError
+		When trying to rename a domain to/from ``comb`` to any other domain.
+	'''
+
 	def __init__(self, domain_map: dict[str, str] | str | None = None, **kwargs: str) -> None:
 		if domain_map is not None:
 			warn(
