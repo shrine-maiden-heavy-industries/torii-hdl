@@ -764,11 +764,19 @@ class _ControlInserter(FragmentTransformer):
 		return super().__call__(value, src_loc_at = 1 + src_loc_at)
 
 class ResetInserter(_ControlInserter):
+	'''
+	Inject a synchronous reset signal into the given Elaboratable.
+	'''
+
 	def _insert_control(self, fragment, domain, signals):
 		stmts = [ s.eq(Const(s.reset, s.width)) for s in signals if not s.reset_less ]
 		fragment.add_statements(Switch(self.controls[domain], { 1: stmts }, src_loc = self.src_loc))
 
 class EnableInserter(_ControlInserter):
+	'''
+	Inject a synchronous enable signal into the given Elaboratable.
+	'''
+
 	def _insert_control(self, fragment, domain, signals):
 		stmts = [s.eq(s) for s in signals]
 		fragment.add_statements(Switch(self.controls[domain], { 0: stmts }, src_loc = self.src_loc))
