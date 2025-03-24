@@ -25,6 +25,7 @@ extensions = [
 	'sphinxcontrib.wavedrom',
 	'myst_parser',
 	'sphinx_rtd_theme',
+	'sphinx_copybutton',
 ]
 
 source_suffix = {

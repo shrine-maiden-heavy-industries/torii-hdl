@@ -5,3 +5,4 @@ sphinx-rtd-theme
 sphinxcontrib-wavedrom
 wavedrom
 myst-parser
+sphinx-copybutton
