@@ -17,13 +17,13 @@ Glob imports are no longer considered good practice, as they make finding where 
 Because Torii is a regular Python library, it needs to be imported before use. The root `torii` module, called *the prelude*, is carefully curated to export a small amount of the most essential names, useful in nearly every design. In source files dedicated to Torii code, it is a good practice to use a {ref}`glob import <python:tut-pkg-import-star>` for readability:
 
 ```py
-   from torii.hdl import *
+from torii.hdl import *
 ```
 
 However, if a source file uses Torii together with other libraries, or if glob imports are frowned upon, it is conventional to use a short alias instead:
 
 ```py
-   import torii.hdl as tr
+import torii.hdl as tr
 ```
 
 All of the examples below assume that a glob import is used.
@@ -877,20 +877,20 @@ For example, there are two possible cases in the circuit generated from the foll
 When `timer == 0` is true, the code reduces to:
 
 ```py
-   m.d.sync += timer.eq(timer - 1)
-   m.d.sync += timer.eq(10)
+m.d.sync += timer.eq(timer - 1)
+m.d.sync += timer.eq(10)
 ```
 
 Due to the [assignment order](#assignment-order), it further reduces to:
 
 ```py
-   m.d.sync += timer.eq(10)
+m.d.sync += timer.eq(10)
 ```
 
 When `timer == 0` is false, the code reduces to:
 
 ```py
-   m.d.sync += timer.eq(timer - 1)
+m.d.sync += timer.eq(timer - 1)
 ```
 
 Combining these cases together, the code above is equivalent to:
