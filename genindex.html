@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Torii-HDL 0.7.8.dev25 documentation</title>
+  <title>Index &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -15,7 +15,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/genindex.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=893b7fab"></script>
+      <script src="_static/documentation_options.js?v=246b0f67"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/tabs.js?v=3ee01567"></script>
@@ -211,6 +211,17 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="library/index.html">Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library/bus/index.html">Busses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/bus/wishbone.html">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="library/coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
@@ -276,14 +287,6 @@
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#bus">Bus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#events">Events</a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="library/soc/wishbone/index.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -550,7 +553,7 @@
 </li>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.any">any() (torii.hdl.rec.Record method)</a>
 </li>
-      <li><a href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter">Arbiter (class in torii.lib.soc.wishbone.bus)</a>
+      <li><a href="library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter">Arbiter (class in torii.lib.bus.wishbone)</a>
 </li>
       <li><a href="api/hdl/ast.html#torii.hdl.ast.Array">Array (class in torii.hdl.ast)</a>
 </li>
@@ -586,7 +589,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/hdl/rec.html#torii.hdl.rec.Record.bool">bool() (torii.hdl.rec.Record method)</a>
 </li>
-      <li><a href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt">BurstTypeExt (class in torii.lib.soc.wishbone.bus)</a>
+      <li><a href="library/bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt">BurstTypeExt (class in torii.lib.bus.wishbone)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -624,7 +627,7 @@
 </li>
       <li><a href="library/soc/periph.html#torii.lib.soc.periph.ConstantValue">ConstantValue (class in torii.lib.soc.periph)</a>
 </li>
-      <li><a href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType">CycleType (class in torii.lib.soc.wishbone.bus)</a>
+      <li><a href="library/bus/wishbone.html#torii.lib.bus.wishbone.CycleType">CycleType (class in torii.lib.bus.wishbone)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -634,12 +637,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="library/coding/index.html#torii.lib.coding.cobs.decode_rcobs">decode_rcobs() (in module torii.lib.coding.cobs)</a>
 </li>
-      <li><a href="library/coding/index.html#torii.lib.coding.Decoder">Decoder (class in torii.lib.coding)</a>
+      <li><a href="library/bus/wishbone.html#torii.lib.bus.wishbone.Decoder">Decoder (class in torii.lib.bus.wishbone)</a>
 
       <ul>
-        <li><a href="library/soc/csr/index.html#torii.lib.soc.csr.bus.Decoder">(class in torii.lib.soc.csr.bus)</a>
+        <li><a href="library/coding/index.html#torii.lib.coding.Decoder">(class in torii.lib.coding)</a>
 </li>
-        <li><a href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder">(class in torii.lib.soc.wishbone.bus)</a>
+        <li><a href="library/soc/csr/index.html#torii.lib.soc.csr.bus.Decoder">(class in torii.lib.soc.csr.bus)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -724,10 +727,10 @@
 </li>
       <li><a href="api/hdl/ir.html#torii.hdl.ir.Instance">Instance (class in torii.hdl.ir)</a>
 </li>
-      <li><a href="library/soc/csr/index.html#torii.lib.soc.csr.bus.Interface">Interface (class in torii.lib.soc.csr.bus)</a>
+      <li><a href="library/bus/wishbone.html#torii.lib.bus.wishbone.Interface">Interface (class in torii.lib.bus.wishbone)</a>
 
       <ul>
-        <li><a href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface">(class in torii.lib.soc.wishbone.bus)</a>
+        <li><a href="library/soc/csr/index.html#torii.lib.soc.csr.bus.Interface">(class in torii.lib.soc.csr.bus)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -783,6 +786,8 @@
         <li><a href="api/hdl/rec.html#module-torii.hdl.rec">torii.hdl.rec</a>
 </li>
         <li><a href="api/hdl/xfrm.html#module-torii.hdl.xfrm">torii.hdl.xfrm</a>
+</li>
+        <li><a href="library/bus/index.html#module-torii.lib.bus">torii.lib.bus</a>
 </li>
         <li><a href="library/coding/index.html#module-torii.lib.coding.cobs">torii.lib.coding.cobs</a>
 </li>
@@ -994,8 +999,6 @@
         <li><a href="api/hdl/ir.html#module-torii.hdl.ir">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torii.hdl.mem
 
@@ -1003,6 +1006,8 @@
         <li><a href="api/hdl/mem.html#module-torii.hdl.mem">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     torii.hdl.rec
 
@@ -1015,6 +1020,13 @@
 
       <ul>
         <li><a href="api/hdl/xfrm.html#module-torii.hdl.xfrm">module</a>
+</li>
+      </ul></li>
+      <li>
+    torii.lib.bus
+
+      <ul>
+        <li><a href="library/bus/index.html#module-torii.lib.bus">module</a>
 </li>
       </ul></li>
       <li>

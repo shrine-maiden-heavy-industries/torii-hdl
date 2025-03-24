@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Streams &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
+  <title>Wishbone Bus &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/library/stream/simple.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/library/bus/wishbone.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=246b0f67"></script>
@@ -27,8 +27,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="FPGA Vendor Modules" href="../vendor/index.html" />
-    <link rel="prev" title="Stream Library" href="index.html" /> 
+    <link rel="next" title="Encoding and Decoding" href="../coding/index.html" />
+    <link rel="prev" title="Busses" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -214,13 +214,13 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Standard Library</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../bus/index.html">Busses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../bus/wishbone.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../bus/wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../bus/wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../bus/wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../bus/wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Busses</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -303,10 +303,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Stream Library</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Simple Streams</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stream/index.html">Stream Library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../stream/simple.html">Simple Streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../stream/simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stream/simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -513,10 +513,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Standard Library</a></li>
-          <li class="breadcrumb-item"><a href="index.html">Stream Library</a></li>
-      <li class="breadcrumb-item active">Simple Streams</li>
+          <li class="breadcrumb-item"><a href="index.html">Busses</a></li>
+      <li class="breadcrumb-item active">Wishbone Bus</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/stream/simple.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/bus/wishbone.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -524,186 +524,108 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-torii.lib.stream.simple">
-<span id="simple-streams"></span><h1>Simple Streams<a class="headerlink" href="#module-torii.lib.stream.simple" title="Link to this heading"></a></h1>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.streams.simple</span></code> module provides a simple and extensible unidirectional stream
-interface <a class="reference internal" href="#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInterface</span></code></a> as well as an <a class="reference internal" href="#torii.lib.stream.simple.StreamArbiter" title="torii.lib.stream.simple.StreamArbiter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Arbiter</span></code></a> to join multiple
-streams into a single output stream.</p>
+  <section id="wishbone-bus">
+<h1>Wishbone Bus<a class="headerlink" href="#wishbone-bus" title="Link to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamArbiter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.stream.simple.</span></span><span class="sig-name descname"><span class="pre">StreamArbiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamArbiter" title="Link to this definition"></a></dt>
-<dd><p>A simple multi-input-single-output stream arbiter.</p>
-<p>This uses a very simple priority scheduler and relies on the standard <code class="docutils literal notranslate"><span class="pre">valid</span></code>/<code class="docutils literal notranslate"><span class="pre">ready</span></code> handshake
-that occurs between streams to schedule which stream is connected to the output stream.</p>
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">CycleType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType" title="Link to this definition"></a></dt>
+<dd><p>Wishbone Registered Feedback cycle type.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">BurstTypeExt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt" title="Link to this definition"></a></dt>
+<dd><p>Wishbone Registered Feedback burst type extension.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Interface">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'rty'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'err'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'stall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cti'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bte'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.Interface" title="Link to this definition"></a></dt>
+<dd><p>Wishbone interface.</p>
+<p>See the <a class="reference external" href="https://opencores.org/howto/wishbone">Wishbone specification</a> for description
+of the Wishbone signals. The <code class="docutils literal notranslate"><span class="pre">RST_I</span></code> and <code class="docutils literal notranslate"><span class="pre">CLK_I</span></code> signals are provided as a part of
+the clock domain that drives the interface.</p>
+<p>Note that the data width of the underlying memory map of the interface is equal to port
+granularity, not port size. If port granularity is less than port size, then the address width
+of the underlying memory map is extended to reflect that.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain in which the arbiter should operate.
-(default: sync)</p></li>
-<li><p><strong>stream_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><em>type</em></a>) – The type of stream to create, must be either <code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInterface</span></code>
-or a subtype there of.
-(default: torii.lib.stream.StreamInterface)</p></li>
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Width of the address signal.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Width of the data signals (“port size” in Wishbone terminology).
+One of 8, 16, 32, 64.</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity of select signals (“port granularity” in Wishbone terminology).
+One of 8, 16, 32, 64.</p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Selects the optional signals that will be a part of this interface.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>out</strong> (<em>stream_type</em><em>, </em><em>out</em>) – The output stream.</p></li>
-<li><p><strong>idle</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Indicates the arbiter is idle, this occurs when the input source stream is not active.</p></li>
+<li><p><strong>depending</strong> (<em>The correspondence between the Torii-SoC signals and the Wishbone signals changes</em>)</p></li>
+<li><p><strong>target.</strong> (<em>on whether the interface acts as an initiator</em><em> or </em><em>a</em>)</p></li>
+<li><p><strong>adr</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>addr_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ADR_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ADR_I</span></code> (target).</p></li>
+<li><p><strong>dat_w</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (target).</p></li>
+<li><p><strong>dat_r</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (target).</p></li>
+<li><p><strong>sel</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width // granularity</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">SEL_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">SEL_I</span></code> (target).</p></li>
+<li><p><strong>cyc</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CYC_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CYC_I</span></code> (target).</p></li>
+<li><p><strong>stb</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STB_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STB_I</span></code> (target).</p></li>
+<li><p><strong>we</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">WE_O</span></code>  (initiator) or <code class="docutils literal notranslate"><span class="pre">WE_I</span></code>  (target).</p></li>
+<li><p><strong>ack</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ACK_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ACK_O</span></code> (target).</p></li>
+<li><p><strong>err</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ERR_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ERR_O</span></code> (target).</p></li>
+<li><p><strong>rty</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">RTY_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">RTY_O</span></code> (target).</p></li>
+<li><p><strong>stall</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STALL_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STALL_O</span></code> (target).</p></li>
+<li><p><strong>lock</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">LOCK_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">LOCK_I</span></code> (target).
+torii-soc Wishbone support assumes that initiators that don’t want bus arbitration to happen in
+between two transactions need to use <code class="docutils literal notranslate"><span class="pre">lock</span></code> feature to guarantee this. An initiator without
+the <code class="docutils literal notranslate"><span class="pre">lock</span></code> feature may be arbitrated in between two transactions even if <code class="docutils literal notranslate"><span class="pre">cyc</span></code> is kept high.</p></li>
+<li><p><strong>cti</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CTI_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CTI_I</span></code> (target).</p></li>
+<li><p><strong>bte</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">BTE_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">BTE_I</span></code> (target).</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamArbiter.connect">
-<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.stream.simple.StreamArbiter.connect" title="Link to this definition"></a></dt>
-<dd><p>Connect an output stream to the arbiter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to connect to the arbiter.</p></li>
-<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The stream priority.
-(default: -1)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamInterface">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.stream.simple.</span></span><span class="sig-name descname"><span class="pre">StreamInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamInterface" title="Link to this definition"></a></dt>
-<dd><p>A simple interface representing a unidirectional stream.</p>
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder" title="Link to this definition"></a></dt>
+<dd><p>Wishbone bus decoder.</p>
+<p>An address decoder for subordinate Wishbone buses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the stream data in bits.
-(default: 8)</p></li>
-<li><p><strong>valid_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The width of the valid field. If <code class="docutils literal notranslate"><span class="pre">None</span></code> it will default to <code class="docutils literal notranslate"><span class="pre">data_width</span> <span class="pre">//</span> <span class="pre">8</span></code>.
-(default: 1)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The name of this stream.
-(default: None)</p></li>
-<li><p><strong>extra</strong> (<em>Iterable</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>) – Any extra or ancillary fields to graft on to the stream.
-(default: [])</p></li>
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <code class="xref py py-class docutils literal notranslate"><span class="pre">memory.MemoryMap</span></code></p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Window name. Optional.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em><em>, </em><em>send</em>) – The data in the stream to be transmitted.</p></li>
-<li><p><strong>valid</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>valid_width</em><em>)</em><em>, </em><em>send</em>) – <p>This can be two things, by default, when <code class="docutils literal notranslate"><span class="pre">valid_width</span></code> is <code class="docutils literal notranslate"><span class="pre">data_width</span> <span class="pre">//</span> <span class="pre">8</span></code>, it represents
-a set of bit flags for each byte in <code class="docutils literal notranslate"><span class="pre">data</span></code> determining if that byte of <code class="docutils literal notranslate"><span class="pre">data</span></code> is valid.</p>
-<p>For example, with <code class="docutils literal notranslate"><span class="pre">data_width</span></code> of <code class="docutils literal notranslate"><span class="pre">16</span></code>, <code class="docutils literal notranslate"><span class="pre">valid_width</span></code> will be <code class="docutils literal notranslate"><span class="pre">2</span></code>, where <code class="docutils literal notranslate"><span class="pre">valid[0]</span></code> is
-the valid flag for <code class="docutils literal notranslate"><span class="pre">data[0:8]</span></code> and <code class="docutils literal notranslate"><span class="pre">valid[1]</span></code> is the valid flag for <code class="docutils literal notranslate"><span class="pre">data[8:16]</span></code>.</p>
-<p>When set to <code class="docutils literal notranslate"><span class="pre">1</span></code> it can simply mean that the whole of <code class="docutils literal notranslate"><span class="pre">data</span></code> is valid for this transaction. It
-can be as granular or corse as you wish, as long as both sides of the stream agree.</p>
-</p></li>
-<li><p><strong>first</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>send</em>) – Indicates that the data is the first of the current packet.</p></li>
-<li><p><strong>last</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>send</em>) – Indicates that the data is the last of the current packet.</p></li>
-<li><p><strong>ready</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>recv</em>) – Indicates that the receiver will accept the data at the next active
-clock edge.</p></li>
-<li><p><strong>payload</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em><em>, </em><em>send</em><em> (</em><em>alias</em><em>)</em>) – This is a dynamic alias to the <code class="docutils literal notranslate"><span class="pre">data</span></code> member of the record.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamInterface.connect">
-<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="pre">StreamInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><span class="pre">set</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamInterface.connect" title="Link to this definition"></a></dt>
-<dd><p>Connect to the target stream.</p>
-<p>This method is an alias for <a class="reference internal" href="#torii.lib.stream.simple.StreamInterface.attach" title="torii.lib.stream.simple.StreamInterface.attach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamInterface.attach()</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream we are attaching to.</p></li>
-<li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {})</p></li>
-</ul>
+<dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Wishbone bus providing access to subordinate buses.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamInterface.attach">
-<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="pre">StreamInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><span class="pre">set</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamInterface.attach" title="Link to this definition"></a></dt>
-<dd><p>Attach to a target stream.</p>
-<p>This method connects our <code class="docutils literal notranslate"><span class="pre">valid</span></code>, <code class="docutils literal notranslate"><span class="pre">first</span></code>, <code class="docutils literal notranslate"><span class="pre">last</span></code>, and <code class="docutils literal notranslate"><span class="pre">data</span></code> fields to
-the downstream facing <code class="docutils literal notranslate"><span class="pre">stream</span></code>, and their <code class="docutils literal notranslate"><span class="pre">ready</span></code> field to ours.</p>
-<p>This establishes a connection to where we are the originating stream, and <code class="docutils literal notranslate"><span class="pre">stream</span></code>
-is the receiving stream.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">data</span>  <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">valid</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">first</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">last</span>  <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">last</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">&lt;-</span> <span class="n">stream</span><span class="o">.</span><span class="n">ready</span>
-</pre></div>
-</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Arbiter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Arbiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.Arbiter" title="Link to this definition"></a></dt>
+<dd><p>Wishbone bus arbiter.</p>
+<p>A round-robin arbiter for initiators accessing a shared Wishbone bus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream we are attaching to.</p></li>
-<li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {})</p></li>
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 </ul>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamInterface.stream_eq">
-<span class="sig-name descname"><span class="pre">stream_eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="pre">StreamInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><span class="pre">set</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamInterface.stream_eq" title="Link to this definition"></a></dt>
-<dd><p>Receive from target stream.</p>
-<p>This method connects the <code class="docutils literal notranslate"><span class="pre">valid</span></code>, <code class="docutils literal notranslate"><span class="pre">first</span></code>, <code class="docutils literal notranslate"><span class="pre">last</span></code>, and <code class="docutils literal notranslate"><span class="pre">data</span></code> from <code class="docutils literal notranslate"><span class="pre">stream</span></code> to ours,
-and our <code class="docutils literal notranslate"><span class="pre">ready</span></code> field to theirs.</p>
-<p>This establishes a connection to where <code class="docutils literal notranslate"><span class="pre">stream</span></code> is the originating stream, and we are the receiving
-stream.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">data</span>  <span class="o">&lt;-</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">&lt;-</span> <span class="n">stream</span><span class="o">.</span><span class="n">valid</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">&lt;-</span> <span class="n">stream</span><span class="o">.</span><span class="n">first</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">last</span>  <span class="o">&lt;-</span> <span class="n">stream</span><span class="o">.</span><span class="n">last</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">ready</span>
-</pre></div>
-</div>
-<p>This function is effectively the inverse of <a class="reference internal" href="#torii.lib.stream.simple.StreamInterface.attach" title="torii.lib.stream.simple.StreamInterface.attach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">attach()</span></code></a>, in fact, it’s implementation
-is just:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>It is provided as a more logical way to connect streams.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to attach to this stream.</p></li>
-<li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {})</p></li>
-</ul>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Shared Wishbone bus.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="torii.lib.stream.simple.StreamInterface.tap">
-<span class="sig-name descname"><span class="pre">tap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="pre">StreamInterface</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tap_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><span class="pre">set</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.stream.simple.StreamInterface.tap" title="Link to this definition"></a></dt>
-<dd><p>Attach a StreamInterface in read-only unidirectional tap mode.</p>
-<p>This joints all signals from <code class="docutils literal notranslate"><span class="pre">stream</span></code> to their matching signals in this stream.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">data</span>  <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">valid</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">first</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">last</span>  <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">last</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">-&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">ready</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to use as the interface to this tap.</p></li>
-<li><p><strong>tap_ready</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – By default the <code class="docutils literal notranslate"><span class="pre">ready</span></code> signal is excluded from the tap, passing <code class="docutils literal notranslate"><span class="pre">True</span></code> here will also
-connect that signal.
-(default: False)</p></li>
-<li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {})</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -718,8 +640,8 @@ connect that signal.
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Stream Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../vendor/index.html" class="btn btn-neutral float-right" title="FPGA Vendor Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Busses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../coding/index.html" class="btn btn-neutral float-right" title="Encoding and Decoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

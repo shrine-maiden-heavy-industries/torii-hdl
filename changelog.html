@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; Torii-HDL 0.7.8.dev25 documentation</title>
+  <title>Changelog &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/changelog.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=893b7fab"></script>
+      <script src="_static/documentation_options.js?v=246b0f67"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/tabs.js?v=3ee01567"></script>
@@ -214,6 +214,17 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="library/index.html">Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library/bus/index.html">Busses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/bus/wishbone.html">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="library/coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
@@ -279,14 +290,6 @@
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#bus">Bus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#events">Events</a></li>
 <li class="toctree-l4"><a class="reference internal" href="library/soc/csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="library/soc/wishbone/index.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="library/soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -541,6 +544,7 @@ Unreleased template stuff
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>New library module <code class="docutils literal notranslate"><span class="pre">torii.lib.mem</span></code> for more generic-ish not SoC specific memory constructs, such as maps for busses.</p></li>
+<li><p>New library module <code class="docutils literal notranslate"><span class="pre">torii.lib.bus</span></code></p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs</span></code> module for Consistent Overhead Byte Stuffing encoders.</p>
 <ul>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs.RCOBSEncoder</span></code> for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn’t need a full message buffer.</p></li>
@@ -564,6 +568,7 @@ Unreleased template stuff
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory.MemoryMap</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory.ResourceInfo</span></code> are now in <code class="docutils literal notranslate"><span class="pre">torii.lib.mem.map</span></code></p></li>
 </ul>
 </li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module has been deprecated and contents moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
 </ul>
 </section>
 <section id="removed">

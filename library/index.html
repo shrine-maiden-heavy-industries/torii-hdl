@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Standard Library &mdash; Torii-HDL 0.7.8.dev25 documentation</title>
+  <title>Standard Library &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/library/index.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=893b7fab"></script>
+      <script src="../_static/documentation_options.js?v=246b0f67"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/tabs.js?v=3ee01567"></script>
@@ -27,7 +27,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Encoding and Decoding" href="coding/index.html" />
+    <link rel="next" title="Busses" href="bus/index.html" />
     <link rel="prev" title="XFRM" href="../api/hdl/xfrm.html" /> 
 </head>
 
@@ -214,6 +214,17 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bus/index.html">Busses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bus/wishbone.html">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bus/wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bus/wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bus/wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bus/wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="coding/index.html#one-hot-coding">One-hot coding</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
@@ -279,14 +290,6 @@
 <li class="toctree-l4"><a class="reference internal" href="soc/csr/index.html#bus">Bus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="soc/csr/index.html#events">Events</a></li>
 <li class="toctree-l4"><a class="reference internal" href="soc/csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="soc/wishbone/index.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -529,6 +532,10 @@ incomplete or outright missing in areas.</p>
 <p>Torii provides a standard library with various useful components for implementing designs ranging from simple to complex.</p>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="bus/index.html">Busses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bus/wishbone.html">Wishbone Bus</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="coding/index.html">Encoding and Decoding</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="coding/index.html#one-hot-coding">One-hot coding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coding/index.html#priority-coding">Priority coding</a></li>
@@ -559,7 +566,6 @@ incomplete or outright missing in areas.</p>
 <li class="toctree-l2"><a class="reference internal" href="soc/event.html">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="soc/periph.html">Peripherals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="soc/csr/index.html">CSRs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="soc/wishbone/index.html">Wishbone Bus</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="stdio/index.html">Industry Standard I/O</a><ul>
@@ -590,7 +596,7 @@ incomplete or outright missing in areas.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../api/hdl/xfrm.html" class="btn btn-neutral float-left" title="XFRM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="coding/index.html" class="btn btn-neutral float-right" title="Encoding and Decoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bus/index.html" class="btn btn-neutral float-right" title="Busses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
