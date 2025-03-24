@@ -16,6 +16,7 @@ language  = 'en'
 extensions = [
 	'sphinx.ext.autodoc',
 	'sphinx.ext.doctest',
+	'sphinx.ext.extlinks',
 	'sphinx.ext.githubpages',
 	'sphinx.ext.intersphinx',
 	'sphinx.ext.napoleon',
@@ -29,6 +30,11 @@ extensions = [
 source_suffix = {
 	'.rst': 'restructuredtext',
 	'.md': 'markdown',
+}
+
+extlinks = {
+	'issue': ('https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/%s', 'torii/%s'),
+	'pypi':  ('https://pypi.org/project/%s/', '%s'),
 }
 
 pygments_style         = 'monokai'
