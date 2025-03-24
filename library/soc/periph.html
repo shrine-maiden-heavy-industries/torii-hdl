@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Peripherals &mdash; Torii-HDL 0.7.8.dev24 documentation</title>
+  <title>Peripherals &mdash; Torii-HDL 0.7.8.dev25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://torii.shmdn.link/library/soc/periph.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=edf4afef"></script>
+      <script src="../../_static/documentation_options.js?v=893b7fab"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="CSRs" href="csr/index.html" />
-    <link rel="prev" title="Memory Map" href="memory.html" /> 
+    <link rel="prev" title="Events" href="event.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -237,6 +237,14 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../mem/index.html">Memory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mem/map.html">Memory Map</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mem/map.html#torii.lib.mem.map.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mem/map.html#torii.lib.mem.map.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../cdc.html">Clock Domain Crossing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
@@ -257,11 +265,6 @@
 <li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="memory.html">Memory Map</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="memory.html#torii.lib.soc.memory.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="memory.html#torii.lib.soc.memory.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Peripherals</a><ul>
@@ -570,7 +573,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.soc.periph.PeripheralInfo">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.periph.</span></span><span class="sig-name descname"><span class="pre">PeripheralInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="memory.html#torii.lib.soc.memory.MemoryMap" title="torii.lib.soc.memory.MemoryMap"><span class="pre">MemoryMap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">irq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><span class="pre">Source</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.soc.periph.ConstantMap" title="torii.lib.soc.periph.ConstantMap"><span class="pre">ConstantMap</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.periph.PeripheralInfo" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.periph.</span></span><span class="sig-name descname"><span class="pre">PeripheralInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><span class="pre">MemoryMap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">irq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><span class="pre">Source</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.soc.periph.ConstantMap" title="torii.lib.soc.periph.ConstantMap"><span class="pre">ConstantMap</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.periph.PeripheralInfo" title="Link to this definition"></a></dt>
 <dd><p>Peripheral metadata.</p>
 <p>A unified description of the local resources of a peripheral. It may be queried in order to
 recover its memory windows, CSR registers, event sources and configuration constants.</p>
@@ -597,7 +600,7 @@ recover its memory windows, CSR registers, event sources and configuration const
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="memory.html" class="btn btn-neutral float-left" title="Memory Map" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="event.html" class="btn btn-neutral float-left" title="Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="csr/index.html" class="btn btn-neutral float-right" title="CSRs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

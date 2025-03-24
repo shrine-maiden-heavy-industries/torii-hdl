@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory Map &mdash; Torii-HDL 0.7.8.dev24 documentation</title>
+  <title>Memory &mdash; Torii-HDL 0.7.8.dev25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
-    <link rel="canonical" href="https://torii.shmdn.link/library/soc/memory.html" />
+    <link rel="canonical" href="https://torii.shmdn.link/library/mem/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=edf4afef"></script>
+      <script src="../../_static/documentation_options.js?v=893b7fab"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
@@ -27,8 +27,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Peripherals" href="periph.html" />
-    <link rel="prev" title="Events" href="event.html" /> 
+    <link rel="next" title="Memory Map" href="map.html" />
+    <link rel="prev" title="Encoding and Decoding" href="../coding/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -237,6 +237,14 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Memory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map.html">Memory Map</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="map.html#torii.lib.mem.map.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="map.html#torii.lib.mem.map.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../cdc.html">Clock Domain Crossing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cdc.html#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
@@ -252,38 +260,33 @@
 <li class="toctree-l3"><a class="reference internal" href="../fifo.html#torii.lib.fifo.AsyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">AsyncFIFOBuffered</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">System on Chip</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="event.html">Events</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../soc/index.html">System on Chip</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../soc/event.html">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Memory Map</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#torii.lib.soc.memory.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#torii.lib.soc.memory.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/periph.html">Peripherals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantValue"><code class="docutils literal notranslate"><span class="pre">ConstantValue</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantBool"><code class="docutils literal notranslate"><span class="pre">ConstantBool</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantInt"><code class="docutils literal notranslate"><span class="pre">ConstantInt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/periph.html#torii.lib.soc.periph.PeripheralInfo"><code class="docutils literal notranslate"><span class="pre">PeripheralInfo</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="periph.html">Peripherals</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="periph.html#torii.lib.soc.periph.ConstantValue"><code class="docutils literal notranslate"><span class="pre">ConstantValue</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="periph.html#torii.lib.soc.periph.ConstantBool"><code class="docutils literal notranslate"><span class="pre">ConstantBool</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="periph.html#torii.lib.soc.periph.ConstantInt"><code class="docutils literal notranslate"><span class="pre">ConstantInt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="periph.html#torii.lib.soc.periph.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="periph.html#torii.lib.soc.periph.PeripheralInfo"><code class="docutils literal notranslate"><span class="pre">PeripheralInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/csr/index.html">CSRs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#bus">Bus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#events">Events</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/csr/index.html#wishbone">Wishbone</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="csr/index.html">CSRs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="csr/index.html#bus">Bus</a></li>
-<li class="toctree-l4"><a class="reference internal" href="csr/index.html#events">Events</a></li>
-<li class="toctree-l4"><a class="reference internal" href="csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="wishbone/index.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soc/wishbone/index.html">Wishbone Bus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../soc/wishbone/index.html#torii.lib.soc.wishbone.bus.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -507,10 +510,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Standard Library</a></li>
-          <li class="breadcrumb-item"><a href="index.html">System on Chip</a></li>
-      <li class="breadcrumb-item active">Memory Map</li>
+      <li class="breadcrumb-item active">Memory</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/soc/memory.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/library/mem/index.md" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -518,76 +520,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="memory-map">
-<h1>Memory Map<a class="headerlink" href="#memory-map" title="Link to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.soc.memory.ResourceInfo">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.memory.</span></span><span class="sig-name descname"><span class="pre">ResourceInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><span class="pre">object</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.memory.ResourceInfo" title="Link to this definition"></a></dt>
-<dd><p>Resource metadata.</p>
-<p>A wrapper class for resource objects, with their assigned name and address range.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>resource</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><em>object</em></a>) – Arbitrary object representing a resource. See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MemoryMap.add_resource()</span></code> for details.</p></li>
-<li><p><strong>name</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Name assigned to the resource. It is prefixed by the name of each window sitting between
-the resource and the memory map from which this <a class="reference internal" href="#torii.lib.soc.memory.ResourceInfo" title="torii.lib.soc.memory.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> was obtained.
-See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MemoryMap.add_window()</span></code> for details.</p></li>
-<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Start of the address range assigned to the resource.</p></li>
-<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – End of the address range assigned to the resource.</p></li>
-<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Amount of data bits accessed at each address. It may be equal to the data width of the
-memory map from which this <a class="reference internal" href="#torii.lib.soc.memory.ResourceInfo" title="torii.lib.soc.memory.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> was obtained, or less if the resource
-is located behind a window that uses sparse addressing.</p></li>
+  <section id="memory">
+<h1>Memory<a class="headerlink" href="#memory" title="Link to this heading"></a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem</span></code> module provides various modules for dealing with things like memory maps.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="map.html">Memory Map</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="map.html#torii.lib.mem.map.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="map.html#torii.lib.mem.map.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.soc.memory.MemoryMap">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.soc.memory.</span></span><span class="sig-name descname"><span class="pre">MemoryMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.soc.memory.MemoryMap" title="Link to this definition"></a></dt>
-<dd><p>Memory map.</p>
-<p>A memory map is a hierarchical description of an address space, describing the structure of
-address decoders of peripherals as well as bus bridges. It is built by adding resources
-(range allocations for registers, memory, etc) and windows (range allocations for bus bridges),
-and can be queried later to determine the address of any given resource from a specific
-vantage point in the design.</p>
-<section id="address-assignment">
-<h2>Address assignment<a class="headerlink" href="#address-assignment" title="Link to this heading"></a></h2>
-<p>To simplify address assignment, each memory map has an implicit next address, starting at 0.
-If a resource or a window is added without specifying an address explicitly, the implicit next
-address is used. In any case, the implicit next address is set to the address immediately
-following the newly added resource or window.</p>
-<dl class="field-list simple">
-<dt class="field-odd">param addr_width<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Address width.</p>
-</dd>
-<dt class="field-even">type addr_width<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param data_width<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Data width.</p>
-</dd>
-<dt class="field-even">type data_width<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param alignment<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Range alignment. Each added resource and window will be placed at an address that is
-a multiple of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>, and its size will be rounded up to be a multiple of
-<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>.</p>
-</dd>
-<dt class="field-even">type alignment<span class="colon">:</span></dt>
-<dd class="field-even"><p>log2 of int</p>
-</dd>
-<dt class="field-odd">param name<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Name of the address range. Optional.</p>
-</dd>
-<dt class="field-even">type name<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
+</li>
+</ul>
+</div>
 </section>
 
     <script type="text/javascript">
@@ -600,8 +544,8 @@ a multiple of <code class="docutils literal notranslate"><span class="pre">2</sp
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="event.html" class="btn btn-neutral float-left" title="Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="periph.html" class="btn btn-neutral float-right" title="Peripherals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../coding/index.html" class="btn btn-neutral float-left" title="Encoding and Decoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="map.html" class="btn btn-neutral float-right" title="Memory Map" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
