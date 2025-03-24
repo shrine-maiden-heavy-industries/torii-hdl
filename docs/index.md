@@ -10,14 +10,23 @@ api/index
 library/index
 platforms/index
 testing/index
-changelog
+
 external_libraries
 migration_guide
 projects
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
+```
+
+```{toctree}
+:caption: Development
+:hidden:
 
 Source Code <https://github.com/shrine-maiden-heavy-industries/torii-hdl/>
+Contributing <https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md>
+changelog
+license
+
 ```
 
 # Torii-HDL
