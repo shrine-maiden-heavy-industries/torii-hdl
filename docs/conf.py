@@ -26,9 +26,6 @@ extensions = [
 	'sphinx_rtd_theme',
 ]
 
-with open('.gitignore') as f:
-	exclude_patterns = [line.strip() for line in f.readlines()]
-
 source_suffix = {
 	'.rst': 'restructuredtext',
 	'.md': 'markdown',
