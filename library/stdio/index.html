@@ -6,20 +6,23 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Industry Standard I/O &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
+  <title>Industry Standard I/O &mdash; Torii-HDL 0.7.8.dev32 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/library/stdio/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=246b0f67"></script>
+      <script src="../../_static/documentation_options.js?v=1df0026f"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
       <script src="../../_static/wavedrom.skin.js"></script>
       <script src="../../_static/wavedrom.min.js"></script>
       <script src="../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -381,6 +384,25 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../changelog.html#added">Added</a></li>
@@ -481,21 +503,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#debugging">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#bsd-2-clause">BSD-2-Clause</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
 </ul>
 
         </div>
@@ -542,16 +553,16 @@
 <li><p><strong>pins</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.io.Pin</span></code>) – Optional. UART pins. See <code class="xref py py-class docutils literal notranslate"><span class="pre">torii_boards.resources.UARTResource</span></code> for layout.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>divisor</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Clock divisor.</p></li>
-<li><p><strong>data</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Read data. Valid only when <code class="docutils literal notranslate"><span class="pre">rdy</span></code> is asserted.</p></li>
-<li><p><strong>err.overflow</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Error flag. A new frame has been received, but the previous one was not acknowledged.</p></li>
-<li><p><strong>err.frame</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Error flag. The received bits do not fit in a frame.</p></li>
-<li><p><strong>err.parity</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Error flag. The parity check has failed.</p></li>
-<li><p><strong>rdy</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Read strobe.</p></li>
-<li><p><strong>ack</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Read acknowledge. Must be held asserted while data can be read out of the receiver.</p></li>
-<li><p><strong>i</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Serial input. If <code class="docutils literal notranslate"><span class="pre">pins</span></code> has been specified, <code class="docutils literal notranslate"><span class="pre">pins.rx.i</span></code> drives it.</p></li>
+<li><p><strong>divisor</strong> (<em>Signal, in</em>) – Clock divisor.</p></li>
+<li><p><strong>data</strong> (<em>Signal, out</em>) – Read data. Valid only when <code class="docutils literal notranslate"><span class="pre">rdy</span></code> is asserted.</p></li>
+<li><p><strong>err.overflow</strong> (<em>Signal, out</em>) – Error flag. A new frame has been received, but the previous one was not acknowledged.</p></li>
+<li><p><strong>err.frame</strong> (<em>Signal, out</em>) – Error flag. The received bits do not fit in a frame.</p></li>
+<li><p><strong>err.parity</strong> (<em>Signal, out</em>) – Error flag. The parity check has failed.</p></li>
+<li><p><strong>rdy</strong> (<em>Signal, out</em>) – Read strobe.</p></li>
+<li><p><strong>ack</strong> (<em>Signal, in</em>) – Read acknowledge. Must be held asserted while data can be read out of the receiver.</p></li>
+<li><p><strong>i</strong> (<em>Signal, in</em>) – Serial input. If <code class="docutils literal notranslate"><span class="pre">pins</span></code> has been specified, <code class="docutils literal notranslate"><span class="pre">pins.rx.i</span></code> drives it.</p></li>
 </ul>
 </dd>
 </dl>
@@ -571,13 +582,13 @@
 <li><p><strong>pins</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.io.Pin</span></code>) – Optional. UART pins. See <code class="xref py py-class docutils literal notranslate"><span class="pre">torii_boards.resources.UARTResource</span></code> for layout.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>divisor</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Clock divisor.</p></li>
-<li><p><strong>data</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Write data. Valid only when <code class="docutils literal notranslate"><span class="pre">ack</span></code> is asserted.</p></li>
-<li><p><strong>rdy</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Write ready. Asserted when the transmitter is ready to transmit data.</p></li>
-<li><p><strong>ack</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Write strobe. Data gets transmitted when both <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> are asserted.</p></li>
-<li><p><strong>o</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>out</em>) – Serial output. If <code class="docutils literal notranslate"><span class="pre">pins</span></code> has been specified, it drives <code class="docutils literal notranslate"><span class="pre">pins.tx.o</span></code>.</p></li>
+<li><p><strong>divisor</strong> (<em>Signal, in</em>) – Clock divisor.</p></li>
+<li><p><strong>data</strong> (<em>Signal, in</em>) – Write data. Valid only when <code class="docutils literal notranslate"><span class="pre">ack</span></code> is asserted.</p></li>
+<li><p><strong>rdy</strong> (<em>Signal, out</em>) – Write ready. Asserted when the transmitter is ready to transmit data.</p></li>
+<li><p><strong>ack</strong> (<em>Signal, in</em>) – Write strobe. Data gets transmitted when both <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> are asserted.</p></li>
+<li><p><strong>o</strong> (<em>Signal, out</em>) – Serial output. If <code class="docutils literal notranslate"><span class="pre">pins</span></code> has been specified, it drives <code class="docutils literal notranslate"><span class="pre">pins.tx.o</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -597,9 +608,9 @@
 <li><p><strong>pins</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.io.Pin</span></code>) – Optional. UART pins. See <code class="xref py py-class docutils literal notranslate"><span class="pre">torii_boards.resources.UARTResource</span></code> for layout.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>divisor</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>, </em><em>in</em>) – Clock divisor.</p></li>
+<li><p><strong>divisor</strong> (<em>Signal, in</em>) – Clock divisor.</p></li>
 <li><p><strong>rx</strong> (<a class="reference internal" href="#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a>) – See <a class="reference internal" href="#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a>.</p></li>
 <li><p><strong>tx</strong> (<a class="reference internal" href="#torii.lib.stdio.serial.AsyncSerialTX" title="torii.lib.stdio.serial.AsyncSerialTX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialTX</span></code></a>) – See <a class="reference internal" href="#torii.lib.stdio.serial.AsyncSerialTX" title="torii.lib.stdio.serial.AsyncSerialTX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialTX</span></code></a>.</p></li>
 </ul>

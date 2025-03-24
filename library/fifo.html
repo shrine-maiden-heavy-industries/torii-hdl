@@ -6,20 +6,23 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
+  <title>First-in First-out Queues &mdash; Torii-HDL 0.7.8.dev32 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/library/fifo.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=246b0f67"></script>
+      <script src="../_static/documentation_options.js?v=1df0026f"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/tabs.js?v=3ee01567"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
       <script src="../_static/wavedrom.skin.js"></script>
       <script src="../_static/wavedrom.min.js"></script>
       <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -381,6 +384,25 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
@@ -481,21 +503,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#bsd-2-clause">BSD-2-Clause</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
 </ul>
 
         </div>
@@ -542,19 +553,19 @@ available, i.e. <code class="docutils literal notranslate"><span class="pre">r_d
 to strobe <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>w_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>in</em>) – Input data.</p></li>
-<li><p><strong>w_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
+<li><p><strong>w_data</strong> (<em>Signal(width), in</em>) – Input data.</p></li>
+<li><p><strong>w_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
 a new entry.</p></li>
-<li><p><strong>w_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>w_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>out</em>) – Output data. The conditions in which <code class="docutils literal notranslate"><span class="pre">r_data</span></code> is valid depends on the type of the queue.</p></li>
-<li><p><strong>r_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
+<li><p><strong>w_en</strong> (<em>Signal(1), in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
+<li><p><strong>w_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_data</strong> (<em>Signal(width), out</em>) – Output data. The conditions in which <code class="docutils literal notranslate"><span class="pre">r_data</span></code> is valid depends on the type of the queue.</p></li>
+<li><p><strong>r_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
 an existing entry.</p></li>
-<li><p><strong>r_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
+<li><p><strong>r_en</strong> (<em>Signal(1), in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
 Does nothing if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>r_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
 </ul>
 </dd>
 </dl>
@@ -580,20 +591,20 @@ that entry becomes available on the output on the same clock cycle. Otherwise, i
 necessary to assert <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries. This level is the same between read and write for synchronous FIFOs.</p></li>
-<li><p><strong>w_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>in</em>) – Input data.</p></li>
-<li><p><strong>w_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
+<li><p><strong>level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries. This level is the same between read and write for synchronous FIFOs.</p></li>
+<li><p><strong>w_data</strong> (<em>Signal(width), in</em>) – Input data.</p></li>
+<li><p><strong>w_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
 a new entry.</p></li>
-<li><p><strong>w_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>w_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>out</em>) – Output data. For FWFT queues, valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted. For non-FWFT queues, valid on the next cycle after <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">r_en</span></code> have been asserted.</p></li>
-<li><p><strong>r_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
+<li><p><strong>w_en</strong> (<em>Signal(1), in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
+<li><p><strong>w_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_data</strong> (<em>Signal(width), out</em>) – Output data. For FWFT queues, valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted. For non-FWFT queues, valid on the next cycle after <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">r_en</span></code> have been asserted.</p></li>
+<li><p><strong>r_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
 an existing entry.</p></li>
-<li><p><strong>r_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
+<li><p><strong>r_en</strong> (<em>Signal(1), in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
 Does nothing if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>r_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
 </ul>
 </dd>
 </dl>
@@ -615,20 +626,20 @@ becoming available on the output is increased by one cycle compared to <a class=
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries. This level is the same between read and write for synchronous FIFOs.</p></li>
-<li><p><strong>w_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>in</em>) – Input data.</p></li>
-<li><p><strong>w_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
+<li><p><strong>level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries. This level is the same between read and write for synchronous FIFOs.</p></li>
+<li><p><strong>w_data</strong> (<em>Signal(width), in</em>) – Input data.</p></li>
+<li><p><strong>w_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
 a new entry.</p></li>
-<li><p><strong>w_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>w_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
-<li><p><strong>r_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
+<li><p><strong>w_en</strong> (<em>Signal(1), in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
+<li><p><strong>w_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_data</strong> (<em>Signal(width), out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
+<li><p><strong>r_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
 an existing entry.</p></li>
-<li><p><strong>r_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
+<li><p><strong>r_en</strong> (<em>Signal(1), in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
 Does nothing if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>r_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
 </ul>
 </dd>
 </dl>
@@ -655,20 +666,20 @@ the <code class="docutils literal notranslate"><span class="pre">depth</span></c
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>w_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>in</em>) – Input data.</p></li>
-<li><p><strong>w_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
+<li><p><strong>w_data</strong> (<em>Signal(width), in</em>) – Input data.</p></li>
+<li><p><strong>w_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
 a new entry.</p></li>
-<li><p><strong>w_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>w_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
-<li><p><strong>r_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
+<li><p><strong>w_en</strong> (<em>Signal(1), in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
+<li><p><strong>w_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_data</strong> (<em>Signal(width), out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
+<li><p><strong>r_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
 an existing entry.</p></li>
-<li><p><strong>r_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
+<li><p><strong>r_en</strong> (<em>Signal(1), in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
 Does nothing if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>r_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_rst</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
+<li><p><strong>r_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_rst</strong> (<em>Signal(1), out</em>) – Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
 the write-domain reset.</p></li>
 </ul>
 </dd>
@@ -698,20 +709,20 @@ becoming available on the output is increased by one cycle compared to <a class=
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>w_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>in</em>) – Input data.</p></li>
-<li><p><strong>w_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
+<li><p><strong>w_data</strong> (<em>Signal(width), in</em>) – Input data.</p></li>
+<li><p><strong>w_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is space in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">w_en</span></code> can be asserted to write
 a new entry.</p></li>
-<li><p><strong>w_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>w_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_data</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>width</em><em>)</em><em>, </em><em>out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
-<li><p><strong>r_rdy</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
+<li><p><strong>w_en</strong> (<em>Signal(1), in</em>) – Write strobe. Latches <code class="docutils literal notranslate"><span class="pre">w_data</span></code> into the queue. Does nothing if <code class="docutils literal notranslate"><span class="pre">w_rdy</span></code> is not asserted.</p></li>
+<li><p><strong>w_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_data</strong> (<em>Signal(width), out</em>) – Output data. Valid if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is asserted.</p></li>
+<li><p><strong>r_rdy</strong> (<em>Signal(1), out</em>) – Asserted if there is an entry in the queue, i.e. <code class="docutils literal notranslate"><span class="pre">r_en</span></code> can be asserted to read
 an existing entry.</p></li>
-<li><p><strong>r_en</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
+<li><p><strong>r_en</strong> (<em>Signal(1), in</em>) – Read strobe. Makes the next entry (if any) available on <code class="docutils literal notranslate"><span class="pre">r_data</span></code> at the next cycle.
 Does nothing if <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> is not asserted.</p></li>
-<li><p><strong>r_level</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><em>range</em></a><em>(</em><em>depth + 1</em><em>)</em><em>)</em><em>, </em><em>out</em>) – Number of unread entries.</p></li>
-<li><p><strong>r_rst</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
+<li><p><strong>r_level</strong> (<em>Signal(range(depth + 1)), out</em>) – Number of unread entries.</p></li>
+<li><p><strong>r_rst</strong> (<em>Signal(1), out</em>) – Asserted, for at least one read-domain clock cycle, after the FIFO has been reset by
 the write-domain reset.</p></li>
 </ul>
 </dd>

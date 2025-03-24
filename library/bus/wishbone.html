@@ -6,20 +6,23 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wishbone Bus &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
+  <title>Wishbone Bus &mdash; Torii-HDL 0.7.8.dev32 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/library/bus/wishbone.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=246b0f67"></script>
+      <script src="../../_static/documentation_options.js?v=1df0026f"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
       <script src="../../_static/wavedrom.skin.js"></script>
       <script src="../../_static/wavedrom.min.js"></script>
       <script src="../../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -381,6 +384,25 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../changelog.html#added">Added</a></li>
@@ -481,21 +503,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../external_libraries.html#debugging">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#bsd-2-clause">BSD-2-Clause</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../migration_guide.html#module-changes">Module Changes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
 </ul>
 
         </div>
@@ -560,27 +571,27 @@ One of 8, 16, 32, 64.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>depending</strong> (<em>The correspondence between the Torii-SoC signals and the Wishbone signals changes</em>)</p></li>
-<li><p><strong>target.</strong> (<em>on whether the interface acts as an initiator</em><em> or </em><em>a</em>)</p></li>
-<li><p><strong>adr</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>addr_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ADR_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ADR_I</span></code> (target).</p></li>
-<li><p><strong>dat_w</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (target).</p></li>
-<li><p><strong>dat_r</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (target).</p></li>
-<li><p><strong>sel</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>data_width // granularity</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">SEL_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">SEL_I</span></code> (target).</p></li>
-<li><p><strong>cyc</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CYC_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CYC_I</span></code> (target).</p></li>
-<li><p><strong>stb</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STB_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STB_I</span></code> (target).</p></li>
-<li><p><strong>we</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">WE_O</span></code>  (initiator) or <code class="docutils literal notranslate"><span class="pre">WE_I</span></code>  (target).</p></li>
-<li><p><strong>ack</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ACK_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ACK_O</span></code> (target).</p></li>
-<li><p><strong>err</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ERR_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ERR_O</span></code> (target).</p></li>
-<li><p><strong>rty</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">RTY_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">RTY_O</span></code> (target).</p></li>
-<li><p><strong>stall</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STALL_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STALL_O</span></code> (target).</p></li>
-<li><p><strong>lock</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">LOCK_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">LOCK_I</span></code> (target).
+<li><p><strong>The correspondence between the Torii-SoC signals and the Wishbone signals changes depending</strong></p></li>
+<li><p><strong>on whether the interface acts as an initiator or a target.</strong></p></li>
+<li><p><strong>adr</strong> (<em>Signal(addr_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ADR_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ADR_I</span></code> (target).</p></li>
+<li><p><strong>dat_w</strong> (<em>Signal(data_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (target).</p></li>
+<li><p><strong>dat_r</strong> (<em>Signal(data_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (target).</p></li>
+<li><p><strong>sel</strong> (<em>Signal(data_width // granularity)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">SEL_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">SEL_I</span></code> (target).</p></li>
+<li><p><strong>cyc</strong> (<em>Signal()</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CYC_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CYC_I</span></code> (target).</p></li>
+<li><p><strong>stb</strong> (<em>Signal()</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STB_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STB_I</span></code> (target).</p></li>
+<li><p><strong>we</strong> (<em>Signal()</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">WE_O</span></code>  (initiator) or <code class="docutils literal notranslate"><span class="pre">WE_I</span></code>  (target).</p></li>
+<li><p><strong>ack</strong> (<em>Signal()</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ACK_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ACK_O</span></code> (target).</p></li>
+<li><p><strong>err</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ERR_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ERR_O</span></code> (target).</p></li>
+<li><p><strong>rty</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">RTY_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">RTY_O</span></code> (target).</p></li>
+<li><p><strong>stall</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">STALL_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">STALL_O</span></code> (target).</p></li>
+<li><p><strong>lock</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">LOCK_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">LOCK_I</span></code> (target).
 torii-soc Wishbone support assumes that initiators that don’t want bus arbitration to happen in
 between two transactions need to use <code class="docutils literal notranslate"><span class="pre">lock</span></code> feature to guarantee this. An initiator without
 the <code class="docutils literal notranslate"><span class="pre">lock</span></code> feature may be arbitrated in between two transactions even if <code class="docutils literal notranslate"><span class="pre">cyc</span></code> is kept high.</p></li>
-<li><p><strong>cti</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CTI_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CTI_I</span></code> (target).</p></li>
-<li><p><strong>bte</strong> (<a class="reference internal" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>)</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">BTE_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">BTE_I</span></code> (target).</p></li>
+<li><p><strong>cti</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">CTI_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">CTI_I</span></code> (target).</p></li>
+<li><p><strong>bte</strong> (<em>Signal()</em>) – Optional. Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">BTE_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">BTE_I</span></code> (target).</p></li>
 </ul>
 </dd>
 </dl>
@@ -602,7 +613,7 @@ the <code class="docutils literal notranslate"><span class="pre">lock</span></co
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Window name. Optional.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Wishbone bus providing access to subordinate buses.</p>
 </dd>
 </dl>
@@ -622,7 +633,7 @@ the <code class="docutils literal notranslate"><span class="pre">lock</span></co
 <li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Shared Wishbone bus.</p>
 </dd>
 </dl>

@@ -6,20 +6,23 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing and Verification &mdash; Torii-HDL 0.7.8.dev26 documentation</title>
+  <title>Testing and Verification &mdash; Torii-HDL 0.7.8.dev32 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
 
   
     <link rel="canonical" href="https://torii.shmdn.link/testing/index.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=246b0f67"></script>
+      <script src="../_static/documentation_options.js?v=1df0026f"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/tabs.js?v=3ee01567"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
       <script src="../_static/wavedrom.skin.js"></script>
       <script src="../_static/wavedrom.min.js"></script>
       <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
@@ -381,6 +384,25 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#unreleased">Unreleased</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
@@ -481,21 +503,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#id59">0.1.0 - 0.3.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#bsd-2-clause">BSD-2-Clause</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
 </ul>
 
         </div>
@@ -539,13 +550,13 @@
 from the python standard lib. It has useful methods for testing and simulating
 Torii based gateware.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>domains</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em><em>, </em><em>...</em><em>]</em>) – The collection of clock domains and frequencies</p></li>
-<li><p><strong>out_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The test output directory.</p></li>
+<li><p><strong>domains</strong> (<em>tuple[tuple[str, float], …]</em>) – The collection of clock domains and frequencies</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em>) – The test output directory.</p></li>
 <li><p><strong>dut</strong> (<em>Elaboratable</em>) – The elaboratable to test.</p></li>
-<li><p><strong>dut_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – The initialization arguments for the elaboratable.</p></li>
-<li><p><strong>platform</strong> (<em>MockPlatform</em><em>, </em><em>Any</em>) – The platform passed to the Elaboratable DUT</p></li>
+<li><p><strong>dut_args</strong> (<em>dict[str, Any]</em>) – The initialization arguments for the elaboratable.</p></li>
+<li><p><strong>platform</strong> (<em>MockPlatform, Any</em>) – The platform passed to the Elaboratable DUT</p></li>
 </ul>
 </dd>
 </dl>
