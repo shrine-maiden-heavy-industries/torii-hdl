@@ -10,7 +10,26 @@ __all__ = (
 )
 
 def ascii_escape(string: str) -> str:
-	''' Apply escaping to turn any character that is not ``A-Za-z0-9_`` into hex '''
+	'''
+	Apply escaping to turn any character that is not ``A-Za-z0-9_`` into hex.
+
+	Parameters
+	----------
+	string : str
+		The string to escape.
+
+	Example
+	-------
+	.. code-block:: pycon
+
+		>>> ascii_escape('Hello ニャ~!')
+		'Hello_20__30cb__30e3__7e__21_'
+
+	Returns
+	-------
+	str
+		The string with any applicable characters escaped appropriately.
+	'''
 
 	def esc_match(m: Match) -> str:
 		if m.group(1) is not None:
@@ -22,12 +41,52 @@ def ascii_escape(string: str) -> str:
 	)
 
 def tcl_escape(string: str) -> str:
-	''' Apply appropriate escaping for use in TCL scripts '''
+	'''
+	Apply appropriate escaping for use in TCL scripts.
+
+	Parameters
+	----------
+	string : str
+		The string to escape.
+
+	Example
+	-------
+	.. code-block:: pycon
+
+		>>> tcl_escape('meow {meow} [meow] \\meow')
+		'{meow \\{meow\\} [meow] \\\\meow}'
+
+	Returns
+	-------
+	str
+		The string with any applicable characters escaped appropriately.
+	'''
 
 	return '{' + sub(r'([{}\\])', r'\\\1', string) + '}'
 
 def tcl_quote(string: str) -> str:
-	''' Apply appropriate quoting for use in TCL scripts '''
+	'''
+	Apply appropriate quoting for use in TCL scripts.
+
+	Parameters
+	----------
+	string : str
+		The string to escape.
+
+	Example
+	-------
+	.. code-block:: pycon
+
+		>>> tcl_quote('Meow "meow"')
+		'"Meow \\"meow\\""'
+		>>> tcl_quote("Meow 'meow'")
+		'"Meow \'meow\'"'
+
+	Returns
+	-------
+	str
+		The string with any applicable characters escaped appropriately.
+	'''
 
 	return '"' + sub(r'([$[\\"])', r'\\\1', string) + '"'
 
@@ -43,6 +102,15 @@ def tool_env_var(name: str) -> str:
 	----------
 	name : str
 		The tool/executable name.
+
+	Example
+	-------
+	.. code-block:: pycon
+
+		>>> tool_env_var('cat')
+		'CAT'
+		>>> tool_env_var('cat-girl')
+		'CAT_GIRL'
 
 	Returns
 	-------
