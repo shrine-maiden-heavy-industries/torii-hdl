@@ -20,6 +20,30 @@ class NameNotFound(Exception):
 _raise_exception = object()
 
 def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> str:
+	'''
+	Get the variable name from an assignment up the call stack.
+
+	Parameters
+	----------
+	depth : int
+		The number of stack frames above us to look.
+		(default: 2)
+
+	default : str | object
+		The default name of the variable if it's not found.
+		(default: _raise_exception)
+
+	Important
+	---------
+	The default value of ``depth`` is set so that the assignment of the result of the current call frame
+	will be used.
+
+	Raises
+	------
+	NameNotFound
+		When ``default`` is set to the default value of ``_raise_exception`` and the name is not found.
+	'''
+
 	frame = _getframe(depth)
 	code = frame.f_code
 	call_index = frame.f_lasti
@@ -82,6 +106,26 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 				return default
 
 def get_src_loc(src_loc_at: int = 0) -> SrcLoc:
+	'''
+	Get the file and line number from the given frame on the call stack.
+
+	Parameters
+	----------
+	src_loc_at : int
+		The frame above this call in which to get the file and line number from.
+		(default: 0)
+
+	Important
+	---------
+	When passing ``0``, the resulting frame is the one *directly above* the call site, i.e. the line
+	that the function this was called in was invoked on.
+
+	Returns
+	-------
+	SrcLoc
+		The file name and line number of the given stack frame.
+	'''
+
 	# n-th  frame: get_src_loc()
 	# n-1th frame: caller of get_src_loc() (usually constructor)
 	# n-2th frame: caller of caller (usually user code)
