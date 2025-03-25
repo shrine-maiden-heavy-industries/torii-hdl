@@ -1,406 +1,285 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="API Reference" href="../api/index.html" /><link rel="prev" title="Including External non-Torii Modules" href="../tutorials/external_modules.html" />
+        <link rel="canonical" href="https://torii.shmdn.link/language/index.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>Language Guide - Torii-HDL 0.7.8.dev40 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=08dd5d74" />
+    
+    
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Guide &mdash; Torii-HDL 0.7.8.dev34 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5349f25f" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
-      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
-      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=e585626c" />
-
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
   
-    <link rel="canonical" href="https://torii.shmdn.link/language/index.html" />
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=9c21e5b6"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/tabs.js?v=3ee01567"></script>
-      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
-      <script src="../_static/wavedrom.skin.js"></script>
-      <script src="../_static/wavedrom.min.js"></script>
-      <script src="../_static/js/wavedrom.min.js?v=db79c4d1"></script>
-      <script src="../_static/js/wavedrom.skin.js?v=986d6b75"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API Reference" href="../api/index.html" />
-    <link rel="prev" title="Including External non-Torii Modules" href="../tutorials/external_modules.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #282a36;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #282a36;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Torii-HDL
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-language">The Torii language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-standard-library">The Torii standard library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-simulator">The Torii simulator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#the-torii-build-system">The Torii build system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#fpga-toolchain-integration">FPGA toolchain integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../intro.html#development-board-definitions">Development board definitions</a></li>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Torii-HDL 0.7.8.dev40 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev40 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/external_modules.html">Including External non-Torii Modules</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#system-requirements">System requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-prerequisites">Installing Prerequisites</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#python-and-pip">Python and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#yosys">Yosys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#waveform-viewer-optional">Waveform Viewer (Optional)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../install.html#formal-tools-optional">Formal Tools (Optional)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-torii">Installing Torii</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#installing-board-definitions">Installing Board Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../install.html#next-steps">Next Steps</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#a-counter">A counter</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#implementing-a-counter">Implementing a counter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#testing-a-counter">Testing a counter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#converting-a-counter">Converting a counter</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#a-blinking-led">A blinking LED</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/external_modules.html">Including External non-Torii Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../tutorials/external_modules.html#torii-instance">Torii <code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../tutorials/external_modules.html#including-external-sources">Including External Sources</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Language Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-prelude">The prelude</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shapes">Shapes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shapes-of-values">Shapes of values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#values">Values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#constants">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shape-casting">Shape casting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#shapes-from-integers">Shapes from integers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#shapes-from-ranges">Shapes from ranges</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#shapes-from-enumerations">Shapes from enumerations</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#value-casting">Value casting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#values-from-integers">Values from integers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#values-from-enumeration-members">Values from enumeration members</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#constant-casting">Constant casting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#signal-shapes">Signal shapes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#signal-names">Signal names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#initial-signal-values">Initial signal values</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reset-less-signals">Reset-less signals</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#operators">Operators</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#performing-or-describing-computations">Performing or describing computations?</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#width-extension">Width extension</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#arithmetic-operators">Arithmetic operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#comparison-operators">Comparison operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bitwise-shift-and-rotate-operators">Bitwise, shift, and rotate operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reduction-operators">Reduction operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#logical-operators">Logical operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bit-sequence-operators">Bit sequence operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#conversion-operators">Conversion operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#choice-operator">Choice operator</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#control-domains">Control domains</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assigning-to-signals">Assigning to signals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assignment-targets">Assignment targets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assignment-domains">Assignment domains</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assignment-order">Assignment order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#control-structures">Control structures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#active-and-inactive-assignments">Active and inactive assignments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#combinatorial-evaluation">Combinatorial evaluation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#synchronous-evaluation">Synchronous evaluation</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a><ul>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Language Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Torii Backends</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/cxxrtl.html">CXXRTL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/rtlil.html">RTLIL Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/verilog.html">Verilog Backend</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/ast.html">Abstract Syntax Tree</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Array"><code class="docutils literal notranslate"><span class="pre">Array</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Cat"><code class="docutils literal notranslate"><span class="pre">Cat</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ClockSignal"><code class="docutils literal notranslate"><span class="pre">ClockSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Const"><code class="docutils literal notranslate"><span class="pre">Const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Edge"><code class="docutils literal notranslate"><span class="pre">Edge()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Fell"><code class="docutils literal notranslate"><span class="pre">Fell()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Initial"><code class="docutils literal notranslate"><span class="pre">Initial</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Mux"><code class="docutils literal notranslate"><span class="pre">Mux()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Past"><code class="docutils literal notranslate"><span class="pre">Past()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ResetSignal"><code class="docutils literal notranslate"><span class="pre">ResetSignal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Rose"><code class="docutils literal notranslate"><span class="pre">Rose()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ShapeCastable"><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ShapeLike"><code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.SignalDict"><code class="docutils literal notranslate"><span class="pre">SignalDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.SignalKey"><code class="docutils literal notranslate"><span class="pre">SignalKey</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.SignalSet"><code class="docutils literal notranslate"><span class="pre">SignalSet</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.signed"><code class="docutils literal notranslate"><span class="pre">signed()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Stable"><code class="docutils literal notranslate"><span class="pre">Stable()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.unsigned"><code class="docutils literal notranslate"><span class="pre">unsigned()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ValueCastable"><code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ValueDict"><code class="docutils literal notranslate"><span class="pre">ValueDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.ValueSet"><code class="docutils literal notranslate"><span class="pre">ValueSet</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/cd.html">Clock Domain</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/cd.html#torii.hdl.cd.ClockDomain"><code class="docutils literal notranslate"><span class="pre">ClockDomain</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/cd.html#torii.hdl.cd.DomainError"><code class="docutils literal notranslate"><span class="pre">DomainError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/dsl.html">DSL</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.SyntaxError"><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.SyntaxWarning"><code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/ir.html">IR</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/mem.html">Memory</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/mem.html#torii.hdl.mem.DummyPort"><code class="docutils literal notranslate"><span class="pre">DummyPort</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/mem.html#torii.hdl.mem.Memory"><code class="docutils literal notranslate"><span class="pre">Memory</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/mem.html#torii.hdl.mem.ReadPort"><code class="docutils literal notranslate"><span class="pre">ReadPort</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/mem.html#torii.hdl.mem.WritePort"><code class="docutils literal notranslate"><span class="pre">WritePort</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/rec.html">Records</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/rec.html#torii.hdl.rec.Direction"><code class="docutils literal notranslate"><span class="pre">Direction</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/rec.html#torii.hdl.rec.Record"><code class="docutils literal notranslate"><span class="pre">Record</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api/hdl/xfrm.html">XFRM</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/xfrm.html#torii.hdl.xfrm.EnableInserter"><code class="docutils literal notranslate"><span class="pre">EnableInserter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/hdl/xfrm.html#torii.hdl.xfrm.ResetInserter"><code class="docutils literal notranslate"><span class="pre">ResetInserter</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/dsl.html">DSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/ir.html">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/hdl/xfrm.html">XFRM</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library/bus/index.html">Busses</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Busses</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/bus/wishbone.html">Wishbone Bus</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Standard Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../library/bus/index.html">Busses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/bus/wishbone.html">Wishbone Bus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/coding/index.html">Encoding and Decoding</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library/mem/index.html">Memory</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Memory</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/mem/map.html">Memory Map</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../library/cdc.html">Clock Domain Crossing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/fifo.html">First-in First-out Queues</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library/soc/index.html">System on Chip</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of System on Chip</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/soc/event.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/soc/periph.html">Peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/soc/csr/index.html">CSRs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../library/coding/index.html">Encoding and Decoding</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/coding/index.html#one-hot-coding">One-hot coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/stdio/index.html">Industry Standard I/O</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library/stream/index.html">Stream Library</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Stream Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/stream/simple.html">Simple Streams</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../library/coding/index.html#priority-coding">Priority coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.PriorityEncoder"><code class="docutils literal notranslate"><span class="pre">PriorityEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.PriorityDecoder"><code class="docutils literal notranslate"><span class="pre">PriorityDecoder</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../library/coding/index.html#gray-coding">Gray coding</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.GrayEncoder"><code class="docutils literal notranslate"><span class="pre">GrayEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.GrayDecoder"><code class="docutils literal notranslate"><span class="pre">GrayDecoder</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../library/coding/index.html#module-torii.lib.coding.cobs">Consistent Overhead Byte Stuffing</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.cobs.RCOBSEncoder"><code class="docutils literal notranslate"><span class="pre">RCOBSEncoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/coding/index.html#torii.lib.coding.cobs.decode_rcobs"><code class="docutils literal notranslate"><span class="pre">decode_rcobs()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/mem/index.html">Memory</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/mem/map.html">Memory Map</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.ResourceInfo"><code class="docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.MemoryMap"><code class="docutils literal notranslate"><span class="pre">MemoryMap</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/cdc.html">Clock Domain Crossing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/cdc.html#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/cdc.html#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/cdc.html#torii.lib.cdc.ResetSynchronizer"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/cdc.html#torii.lib.cdc.PulseSynchronizer"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/fifo.html">First-in First-out Queues</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/fifo.html#torii.lib.fifo.FIFOInterface"><code class="docutils literal notranslate"><span class="pre">FIFOInterface</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/fifo.html#torii.lib.fifo.SyncFIFO"><code class="docutils literal notranslate"><span class="pre">SyncFIFO</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/fifo.html#torii.lib.fifo.SyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">SyncFIFOBuffered</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/fifo.html#torii.lib.fifo.AsyncFIFO"><code class="docutils literal notranslate"><span class="pre">AsyncFIFO</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/fifo.html#torii.lib.fifo.AsyncFIFOBuffered"><code class="docutils literal notranslate"><span class="pre">AsyncFIFOBuffered</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/soc/index.html">System on Chip</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/soc/event.html">Events</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/event.html#torii.lib.soc.event.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/event.html#torii.lib.soc.event.EventMap"><code class="docutils literal notranslate"><span class="pre">EventMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/event.html#torii.lib.soc.event.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../library/soc/periph.html">Peripherals</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/periph.html#torii.lib.soc.periph.ConstantValue"><code class="docutils literal notranslate"><span class="pre">ConstantValue</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/periph.html#torii.lib.soc.periph.ConstantBool"><code class="docutils literal notranslate"><span class="pre">ConstantBool</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/periph.html#torii.lib.soc.periph.ConstantInt"><code class="docutils literal notranslate"><span class="pre">ConstantInt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/periph.html#torii.lib.soc.periph.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/periph.html#torii.lib.soc.periph.PeripheralInfo"><code class="docutils literal notranslate"><span class="pre">PeripheralInfo</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../library/soc/csr/index.html">CSRs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/csr/index.html#bus">Bus</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/csr/index.html#events">Events</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/soc/csr/index.html#wishbone">Wishbone</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/stdio/index.html">Industry Standard I/O</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/stdio/index.html#serial-i-o">Serial I/O</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialTX"><code class="docutils literal notranslate"><span class="pre">AsyncSerialTX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerial"><code class="docutils literal notranslate"><span class="pre">AsyncSerial</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/stream/index.html">Stream Library</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/stream/simple.html">Simple Streams</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/stream/simple.html#torii.lib.stream.simple.StreamArbiter"><code class="docutils literal notranslate"><span class="pre">StreamArbiter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../library/stream/simple.html#torii.lib.stream.simple.StreamInterface"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../library/vendor/index.html">FPGA Vendor Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../library/vendor/lattice/index.html">Lattice FPGA Modules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../library/vendor/lattice/index.html#ice40-blocks">iCE40 Blocks</a></li>
-</ul>
-</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library/vendor/index.html">FPGA Vendor Modules</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of FPGA Vendor Modules</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/vendor/lattice/index.html">Lattice FPGA Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../platforms/index.html">Platform Integration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../platforms/fpga/index.html">Torii FPGA Platforms</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/gowin.html">Intel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/gowin.html#torii.platform.vendor.gowin.GowinPlatform"><code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/altera.html">Intel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/altera.html#torii.platform.vendor.altera.AlteraPlatform"><code class="docutils literal notranslate"><span class="pre">AlteraPlatform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-ecp5.html">Lattice ECP5</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/lattice-ecp5.html#torii.platform.vendor.lattice.ecp5.ECP5Platform"><code class="docutils literal notranslate"><span class="pre">ECP5Platform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-ice40.html">Lattice iCE40</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/lattice-ice40.html#torii.platform.vendor.lattice.ice40.ICE40Platform"><code class="docutils literal notranslate"><span class="pre">ICE40Platform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-machxo-2-3l.html">Lattice MachXO2 and MachXO3L</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/lattice-machxo-2-3l.html#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Platform"><code class="docutils literal notranslate"><span class="pre">MachXO2Platform</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/lattice-machxo-2-3l.html#torii.platform.vendor.lattice.machxo_2_3l.MachXO3LPlatform"><code class="docutils literal notranslate"><span class="pre">MachXO3LPlatform</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/lattice-machxo-2-3l.html#torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform"><code class="docutils literal notranslate"><span class="pre">MachXO2Or3LPlatform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/quicklogic.html">Quicklogic</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/quicklogic.html#torii.platform.vendor.quicklogic.QuicklogicPlatform"><code class="docutils literal notranslate"><span class="pre">QuicklogicPlatform</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/xilinx.html">Xilinx</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../platforms/fpga/xilinx.html#torii.platform.vendor.xilinx.XilinxPlatform"><code class="docutils literal notranslate"><span class="pre">XilinxPlatform</span></code></a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../platforms/index.html">Platform Integration</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Platform Integration</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../platforms/fpga/index.html">Torii FPGA Platforms</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Torii FPGA Platforms</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/gowin.html">Intel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/altera.html">Intel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-ecp5.html">Lattice ECP5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-ice40.html">Lattice iCE40</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/lattice-machxo-2-3l.html">Lattice MachXO2 and MachXO3L</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/quicklogic.html">Quicklogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/formal.html">Formal Verification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.vcd_name"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.vcd_name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.clk_period"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.clk_period()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.run_sim"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.run_sim()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.setUp"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.setUp()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.init_dut"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.init_dut()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_for"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_for()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse_pos"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_pos()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.pulse_neg"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.pulse_neg()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.step"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.step()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.settle"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_until_high"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_high()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.wait_until_low"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.wait_until_low()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.simulation"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.sync_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../testing/index.html#torii.test.ToriiTestCase.comb_domain"><code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#protocol-peripherals">Protocol &amp; Peripherals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../external_libraries.html#debugging">Debugging</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../migration_guide.html#module-changes">Module Changes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../migration_guide.html#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../external_libraries.html">External Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration_guide.html">Torii v0.X to v1.0 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../projects.html">Projects Using Torii</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://shrine-maiden-heavy-industries.github.io/torii-boards/">Torii Boards</a></li>
 </ul>
@@ -408,138 +287,46 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#unreleased">Unreleased</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#changed">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#deprecated">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#removed">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#fixed">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id1">0.7.7</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id2">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id3">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id4">0.7.6</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id5">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id6">0.7.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id7">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id8">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id9">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id10">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id11">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id12">0.7.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id13">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id14">0.7.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id15">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id16">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id17">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id18">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id19">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id20">0.6.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id21">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id22">0.6.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id23">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id24">0.6.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id25">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id26">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id27">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id28">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id29">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id30">0.5.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id31">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id32">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id33">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id34">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id35">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id36">0.4.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id37">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id38">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id39">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id40">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id41">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id42">0.4.4</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id43">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id44">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id45">Deprecated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id46">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id47">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id48">0.4.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id49">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id50">0.4.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id51">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id52">0.4.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id53">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id54">0.4.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id55">Added</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id56">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id57">Removed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id58">Fixed</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#id59">0.1.0 - 0.3.0</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#bsd-2-clause">BSD-2-Clause</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Torii-HDL</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content style-external-links">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Language Guide</li>
-      <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/language/index.md" class="fa fa-github"> Edit on GitHub</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="language-guide">
-<h1>Language Guide<a class="headerlink" href="#language-guide" title="Link to this heading"></a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="language-guide">
+<h1>Language Guide<a class="headerlink" href="#language-guide" title="Link to this heading">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This guide is a work in progress and is seriously incomplete!</p>
@@ -547,7 +334,7 @@
 <p>This guide introduces the Torii language in depth. It assumes familiarity with synchronous digital logic and the Python programming language, but does not require prior experience with any hardware description language. See the <a class="reference internal" href="../tutorials/index.html"><span class="std std-doc">Tutorials</span></a> section for a step-by-step introduction to the language.</p>
 <!-- TODO: link to a good synchronous logic tutorial and a Python tutorial? -->
 <section id="the-prelude">
-<h2>The prelude<a class="headerlink" href="#the-prelude" title="Link to this heading"></a></h2>
+<h2>The prelude<a class="headerlink" href="#the-prelude" title="Link to this heading">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Glob imports are no longer considered good practice, as they make finding where things come from much more difficult, avoid if at all possible.</p>
@@ -563,7 +350,7 @@
 <p>All of the examples below assume that a glob import is used.</p>
 </section>
 <section id="shapes">
-<h2>Shapes<a class="headerlink" href="#shapes" title="Link to this heading"></a></h2>
+<h2>Shapes<a class="headerlink" href="#shapes" title="Link to this heading">¶</a></h2>
 <p>A <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> is an object with two attributes, <code class="docutils literal notranslate"><span class="pre">.width</span></code> and <code class="docutils literal notranslate"><span class="pre">.signed</span></code>. It can be constructed directly:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">signed</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="go">unsigned(5)</span>
@@ -580,7 +367,7 @@
 </div>
 </section>
 <section id="shapes-of-values">
-<h2>Shapes of values<a class="headerlink" href="#shapes-of-values" title="Link to this heading"></a></h2>
+<h2>Shapes of values<a class="headerlink" href="#shapes-of-values" title="Link to this heading">¶</a></h2>
 <p>All values have a <code class="docutils literal notranslate"><span class="pre">.shape()</span></code> method that computes their shape. The width of a value <code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">v.shape().width</span></code>, can also be retrieved with <code class="docutils literal notranslate"><span class="pre">len(v)</span></code>.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Const</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
 <span class="go">unsigned(3)</span>
@@ -590,11 +377,11 @@
 </div>
 </section>
 <section id="values">
-<h2>Values<a class="headerlink" href="#values" title="Link to this heading"></a></h2>
+<h2>Values<a class="headerlink" href="#values" title="Link to this heading">¶</a></h2>
 <p>The basic building block of the Torii language is a <em>value</em>, which is a term for a binary number that is computed or stored anywhere in the design. Each value has a <em>width</em>—the amount of bits used to represent the value—and a <em>signedness</em>—the interpretation of the value by arithmetic operations—collectively called its <em>shape</em>. Signed values always use <a class="reference external" href="https://en.wikipedia.org/wiki/Two's_complement">two’s complement</a> representation.</p>
 </section>
 <section id="constants">
-<h2>Constants<a class="headerlink" href="#constants" title="Link to this heading"></a></h2>
+<h2>Constants<a class="headerlink" href="#constants" title="Link to this heading">¶</a></h2>
 <p>The simplest Torii value is a <em>constant</em>, representing a fixed number, and introduced using <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Const" title="torii.hdl.ast.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const(...)</span></code></a>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ten</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">minus_two</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
@@ -620,11 +407,11 @@
 </div>
 </section>
 <section id="shape-casting">
-<h2>Shape casting<a class="headerlink" href="#shape-casting" title="Link to this heading"></a></h2>
+<h2>Shape casting<a class="headerlink" href="#shape-casting" title="Link to this heading">¶</a></h2>
 <p><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>s can be <em>cast</em> from other objects, which are called <em>shape-castable</em>. Casting is a convenient way to specify a shape indirectly, for example, by a range of numbers representable by values with that shape.</p>
 <p>Casting to a shape can be done explicitly with <code class="docutils literal notranslate"><span class="pre">Shape.cast</span></code>, but is usually implicit, since shape-castable objects are accepted anywhere shapes are.</p>
 <section id="shapes-from-integers">
-<h3>Shapes from integers<a class="headerlink" href="#shapes-from-integers" title="Link to this heading"></a></h3>
+<h3>Shapes from integers<a class="headerlink" href="#shapes-from-integers" title="Link to this heading">¶</a></h3>
 <p>Casting a shape from an integer <code class="docutils literal notranslate"><span class="pre">i</span></code> is a shorthand for constructing a shape with <code class="docutils literal notranslate"><span class="pre">unsigned(i)</span></code>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Shape</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">unsigned(5)</span>
@@ -634,7 +421,7 @@
 </div>
 </section>
 <section id="shapes-from-ranges">
-<h3>Shapes from ranges<a class="headerlink" href="#shapes-from-ranges" title="Link to this heading"></a></h3>
+<h3>Shapes from ranges<a class="headerlink" href="#shapes-from-ranges" title="Link to this heading">¶</a></h3>
 <p>Casting a shape from a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">range</span></code></a> <code class="docutils literal notranslate"><span class="pre">r</span></code> produces a shape that:</p>
 <ul class="simple">
 <li><p>has a width large enough to represent both <code class="docutils literal notranslate"><span class="pre">min(r)</span></code> and <code class="docutils literal notranslate"><span class="pre">max(r)</span></code>, but not larger, and</p></li>
@@ -662,7 +449,7 @@
 </div>
 </section>
 <section id="shapes-from-enumerations">
-<h3>Shapes from enumerations<a class="headerlink" href="#shapes-from-enumerations" title="Link to this heading"></a></h3>
+<h3>Shapes from enumerations<a class="headerlink" href="#shapes-from-enumerations" title="Link to this heading">¶</a></h3>
 <p>Casting a shape from an <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclass <code class="docutils literal notranslate"><span class="pre">E</span></code>:</p>
 <ul class="simple">
 <li><p>fails if any of the enumeration members have non-integer values,</p></li>
@@ -688,12 +475,12 @@
 </section>
 </section>
 <section id="value-casting">
-<span id="lang-valuelike"></span><h2>Value casting<a class="headerlink" href="#value-casting" title="Link to this heading"></a></h2>
+<span id="lang-valuelike"></span><h2>Value casting<a class="headerlink" href="#value-casting" title="Link to this heading">¶</a></h2>
 <p>Like shapes, values may be <em>cast</em> from other objects, which are called <em>value-castable</em>. Casting to values allows objects that are not provided by Torii, such as integers or enumeration members, to be used in Torii expressions directly.</p>
 <!-- TODO: link to ValueCastable -->
 <p>Casting to a value can be done explicitly with <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code>, but is usually implicit, since value-castable objects are accepted anywhere values are.</p>
 <section id="values-from-integers">
-<h3>Values from integers<a class="headerlink" href="#values-from-integers" title="Link to this heading"></a></h3>
+<h3>Values from integers<a class="headerlink" href="#values-from-integers" title="Link to this heading">¶</a></h3>
 <p>Casting a value from an integer <code class="docutils literal notranslate"><span class="pre">i</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">Const(i)</span></code>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">(const 3&#39;d5)</span>
@@ -705,7 +492,7 @@
 </div>
 </section>
 <section id="values-from-enumeration-members">
-<h3>Values from enumeration members<a class="headerlink" href="#values-from-enumeration-members" title="Link to this heading"></a></h3>
+<h3>Values from enumeration members<a class="headerlink" href="#values-from-enumeration-members" title="Link to this heading">¶</a></h3>
 <p>Casting a value from an enumeration member <code class="docutils literal notranslate"><span class="pre">m</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">Const(m.value,</span> <span class="pre">type(m))</span></code>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span>
 <span class="go">(const 2&#39;d1)</span>
@@ -718,7 +505,7 @@
 </section>
 </section>
 <section id="constant-casting">
-<h2>Constant casting<a class="headerlink" href="#constant-casting" title="Link to this heading"></a></h2>
+<h2>Constant casting<a class="headerlink" href="#constant-casting" title="Link to this heading">¶</a></h2>
 <p>A subset of <a class="reference internal" href="#values">values</a> are <em>constant-castable</em>. If a value is constant-castable and all of its operands are also constant-castable, it can be converted to a <code class="docutils literal notranslate"><span class="pre">Const</span></code>, the numeric value of which can then be read by Python code. This provides a way to perform computation on Torii values while constructing the design.</p>
 <!-- link to m.Case and v.matches() below -->
 <p>Constant-castable objects are accepted anywhere a constant integer is accepted. Casting to a constant can also be done explicitly with <code class="docutils literal notranslate"><span class="pre">Const.cast</span></code>:</p>
@@ -737,10 +524,10 @@
 </div>
 </section>
 <section id="signals">
-<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
+<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading">¶</a></h2>
 <p>A <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> is a value representing a (potentially) varying number. Signals can be <a class="reference internal" href="#assigning-to-signals"><em>assigned</em></a> in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> or <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.</p>
 <section id="signal-shapes">
-<h3>Signal shapes<a class="headerlink" href="#signal-shapes" title="Link to this heading"></a></h3>
+<h3>Signal shapes<a class="headerlink" href="#signal-shapes" title="Link to this heading">¶</a></h3>
 <p>A signal can be created with an explicitly specified shape (any <a class="reference internal" href="#shape-casting">shape-castable</a> object); if omitted, the shape defaults to <code class="docutils literal notranslate"><span class="pre">unsigned(1)</span></code>. Although rarely useful, 0-bit signals are permitted.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
 <span class="go">unsigned(1)</span>
@@ -756,7 +543,7 @@
 </div>
 </section>
 <section id="signal-names">
-<h3>Signal names<a class="headerlink" href="#signal-names" title="Link to this heading"></a></h3>
+<h3>Signal names<a class="headerlink" href="#signal-names" title="Link to this heading">¶</a></h3>
 <p>Each signal has a <em>name</em>, which is used in the waveform viewer, diagnostic messages, Verilog output, and so on. In most cases, the name is omitted and inferred from the name of the variable or attribute the signal is placed into:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="n">name</span>
@@ -775,7 +562,7 @@
 <p>The names do not need to be unique; if two signals with the same name end up in the same namespace while preparing for simulation or synthesis, one of them will be renamed to remove the ambiguity.</p>
 </section>
 <section id="initial-signal-values">
-<h3>Initial signal values<a class="headerlink" href="#initial-signal-values" title="Link to this heading"></a></h3>
+<h3>Initial signal values<a class="headerlink" href="#initial-signal-values" title="Link to this heading">¶</a></h3>
 <p>Each signal has an <em>initial value</em>, specified with the <code class="docutils literal notranslate"><span class="pre">reset</span></code> parameter. If the initial value is not specified explicitly, zero is used by default. An initial value can be specified with an integer or an enumeration member.</p>
 <p>Signals <a class="reference internal" href="#assigning-to-signals">assigned</a> in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> domain assume their initial value when none of the assignments are <a class="reference internal" href="#active-and-inactive-assignments">active</a>. Signals assigned in a <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain assume their initial value after <em>power-on reset</em> and, unless the signal is <a class="reference internal" href="#reset-less-signals">reset-less</a>, <em>explicit reset</em>. Signals that are used but never assigned are equivalent to constants of their initial value.</p>
 <!-- TODO: using "reset" for "initial value" is awful, let's rename it to "init" -->
@@ -789,7 +576,7 @@
 </div>
 </section>
 <section id="reset-less-signals">
-<h3>Reset-less signals<a class="headerlink" href="#reset-less-signals" title="Link to this heading"></a></h3>
+<h3>Reset-less signals<a class="headerlink" href="#reset-less-signals" title="Link to this heading">¶</a></h3>
 <p>Signals assigned in a <a class="reference internal" href="#synchronous-evaluation">synchronous</a> domain can be <em>resettable</em> or <em>reset-less</em>, specified with the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their <a class="reference internal" href="#initial-signal-values">initial value</a> on explicit reset, which can be asserted via the clock domain or by using <a class="reference internal" href="../api/hdl/xfrm.html#torii.hdl.xfrm.ResetInserter" title="torii.hdl.xfrm.ResetInserter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetInserter</span></code></a>. Reset-less signals are not affected by explicit reset.</p>
 <!-- TODO: link to clock domain and ResetInserter docs -->
 <p>Signals assigned in a <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> domain are not affected by the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter.</p>
@@ -802,10 +589,10 @@
 </section>
 </section>
 <section id="operators">
-<h2>Operators<a class="headerlink" href="#operators" title="Link to this heading"></a></h2>
+<h2>Operators<a class="headerlink" href="#operators" title="Link to this heading">¶</a></h2>
 <p>To describe computations, Torii values can be combined with each other or with <a class="reference internal" href="#value-casting">value-castable</a> objects using a rich array of arithmetic, bitwise, logical, bit sequence, and other <em>operators</em> to form <em>expressions</em>, which are themselves values.</p>
 <section id="performing-or-describing-computations">
-<h3>Performing or describing computations?<a class="headerlink" href="#performing-or-describing-computations" title="Link to this heading"></a></h3>
+<h3>Performing or describing computations?<a class="headerlink" href="#performing-or-describing-computations" title="Link to this heading">¶</a></h3>
 <p>Code written in the Python language <em>performs</em> computations on concrete objects, like integers, with the goal of calculating a concrete result:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
@@ -829,11 +616,11 @@
 <p>Because the value of <code class="docutils literal notranslate"><span class="pre">a</span></code>, and therefore <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">0</span></code>, is not known at the time when the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement is executed, there is no way to decide whether the body of the statement should be executed—in fact, if the design is synthesized, by the time <code class="docutils literal notranslate"><span class="pre">a</span></code> has any concrete value, the Python program has long finished! To solve this problem, Torii provides its own <a class="reference internal" href="#control-structures">control structures</a> that, also, manipulate circuits.</p>
 </section>
 <section id="width-extension">
-<h3>Width extension<a class="headerlink" href="#width-extension" title="Link to this heading"></a></h3>
+<h3>Width extension<a class="headerlink" href="#width-extension" title="Link to this heading">¶</a></h3>
 <p>Many of the operations described below (for example, addition, equality, bitwise OR, and part select) extend the width of one or both operands to match the width of the expression. When this happens, unsigned values are always zero-extended and signed values are always sign-extended regardless of the operation or signedness of the result.</p>
 </section>
 <section id="arithmetic-operators">
-<h3>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Link to this heading"></a></h3>
+<h3>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Link to this heading">¶</a></h3>
 <p>Most arithmetic operations on integers provided by Python can be used on Torii values, too.</p>
 <p>Although Python integers have unlimited precision and Torii values are represented with a <a class="reference internal" href="#values">finite amount of bits</a>, arithmetics on Torii values never overflows because the width of the arithmetic expression is always sufficient to represent all possible results.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -850,6 +637,7 @@
 </div>
 <p>While arithmetic computations never result in an overflow, <a class="reference internal" href="#assigning-to-signals">assigning</a>  their results to signals may truncate the most significant bits.</p>
 <p>The following table lists the arithmetic operations provided by Torii:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -880,12 +668,14 @@
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="comparison-operators">
-<h3>Comparison operators<a class="headerlink" href="#comparison-operators" title="Link to this heading"></a></h3>
+<h3>Comparison operators<a class="headerlink" href="#comparison-operators" title="Link to this heading">¶</a></h3>
 <p>All comparison operations on integers provided by Python can be used on Torii values. However, due to a limitation of Python, chained comparisons (e.g. <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code>) cannot be used.</p>
 <p>Similar to arithmetic operations, if any operand of a comparison expression is signed, a signed comparison is performed. The result of a comparison is a 1-bit unsigned value.</p>
 <p>The following table lists the comparison operations provided by Torii:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -913,13 +703,15 @@
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="bitwise-shift-and-rotate-operators">
-<h3>Bitwise, shift, and rotate operators<a class="headerlink" href="#bitwise-shift-and-rotate-operators" title="Link to this heading"></a></h3>
+<h3>Bitwise, shift, and rotate operators<a class="headerlink" href="#bitwise-shift-and-rotate-operators" title="Link to this heading">¶</a></h3>
 <p>All bitwise and shift operations on integers provided by Python can be used on Torii values as well.</p>
 <p>Similar to arithmetic operations, if any operand of a bitwise expression is signed, the expression itself is signed as well. A shift expression is signed if the shifted value is signed. A rotate expression is always unsigned.</p>
 <p>Rotate operations with variable rotate amounts cannot be efficiently synthesized for non-power-of-2 widths of the rotated value. Because of that, the rotate operations are only provided for constant rotate amounts, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s.</p>
 <p>The following table lists the bitwise and shift operations provided by Torii:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -962,6 +754,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Because Torii ensures that the width of a variable left shift expression is wide enough to represent any possible result, variable left shift by a wide amount produces exponentially wider intermediate values, stressing the synthesis tools:</p>
@@ -973,10 +766,11 @@
 </div>
 </section>
 <section id="reduction-operators">
-<h3>Reduction operators<a class="headerlink" href="#reduction-operators" title="Link to this heading"></a></h3>
+<h3>Reduction operators<a class="headerlink" href="#reduction-operators" title="Link to this heading">¶</a></h3>
 <p>Bitwise reduction operations on integers are not provided by Python, but are very useful for hardware. They are similar to bitwise operations applied “sideways”; for example, if bitwise AND is a binary operator that applies AND to each pair of bits between its two operands, then reduction AND is an unary operator that applies AND to all of the bits in its sole operand.</p>
 <p>The result of a reduction is a 1-bit unsigned value.</p>
 <p>The following table lists the reduction operations provided by Torii:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -998,11 +792,13 @@
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="logical-operators">
-<h3>Logical operators<a class="headerlink" href="#logical-operators" title="Link to this heading"></a></h3>
+<h3>Logical operators<a class="headerlink" href="#logical-operators" title="Link to this heading">¶</a></h3>
 <p>Unlike the arithmetic or bitwise operators, it is not possible to change the behavior of the Python logical operators <code class="docutils literal notranslate"><span class="pre">not</span></code>, <code class="docutils literal notranslate"><span class="pre">and</span></code>, and <code class="docutils literal notranslate"><span class="pre">or</span></code>. Due to that, logical expressions in Torii are written using bitwise operations on boolean (1-bit unsigned) values, with explicit boolean conversions added where necessary.</p>
 <p>The following table lists the Python logical expressions and their Torii equivalents:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Python expression</p></th>
@@ -1021,7 +817,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>When the operands are known to be boolean values, such as comparisons, reductions, or boolean signals, the <code class="docutils literal notranslate"><span class="pre">.bool()</span></code> conversion may be omitted for clarity:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Python expression</p></th>
@@ -1040,6 +838,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Because of Python <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#operator-summary" title="(in Python v3.13)"><span class="xref std std-ref">operator precedence</span></a>, logical operators bind less tightly than comparison operators whereas bitwise operators bind more tightly than comparison operators. As a result, all logical expressions in Torii <strong>must</strong> have parenthesized operands.</p>
@@ -1075,11 +874,12 @@
 </div>
 </section>
 <section id="bit-sequence-operators">
-<h3>Bit sequence operators<a class="headerlink" href="#bit-sequence-operators" title="Link to this heading"></a></h3>
+<h3>Bit sequence operators<a class="headerlink" href="#bit-sequence-operators" title="Link to this heading">¶</a></h3>
 <p>Apart from acting as numbers, Torii values can also be treated as bit <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#typesseq" title="(in Python v3.13)"><span class="xref std std-ref">sequences</span></a>, supporting slicing, concatenation, replication, and other sequence operations. Since some of the operators Python defines for sequences clash with the operators it defines for numbers, Torii gives these operators a different name. Except for the names, Torii values follow Python sequence semantics, with the least significant bit at index 0.</p>
 <p>Because every Torii value has a single fixed width, bit slicing and replication operations require the subscripts and count to be constant, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s. It is often useful to slice a value with a constant width and variable offset, but this cannot be expressed with the Python slice notation. To solve this problem, Torii provides additional <em>part select</em> operations with the necessary semantics.</p>
 <p>The result of any bit sequence operation is an unsigned value.</p>
 <p>The following table lists the bit sequence operations provided by Torii:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -1110,7 +910,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>For the operators introduced by Torii, the following table explains them in terms of Python code operating on tuples of bits rather than Torii values:</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Torii operation</p></th>
@@ -1132,6 +934,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In Python, the digits of a number are written right-to-left (0th exponent at the right), and the elements of a sequence are written left-to-right (0th element at the left). This mismatch can cause confusion when numeric operations (like shifts) are mixed with bit sequence operations (like concatenations). For example, <code class="docutils literal notranslate"><span class="pre">Cat(C(0b1001),</span> <span class="pre">C(0b1010))</span></code> has the same value as <code class="docutils literal notranslate"><span class="pre">C(0b1010_1001)</span></code>, <code class="docutils literal notranslate"><span class="pre">val[4:]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">&gt;&gt;</span> <span class="pre">4</span></code>, and <code class="docutils literal notranslate"><span class="pre">val[-1]</span></code> refers to the most significant bit.</p>
@@ -1143,16 +946,16 @@
 </div>
 </section>
 <section id="conversion-operators">
-<h3>Conversion operators<a class="headerlink" href="#conversion-operators" title="Link to this heading"></a></h3>
+<h3>Conversion operators<a class="headerlink" href="#conversion-operators" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">.as_signed()</span></code> and <code class="docutils literal notranslate"><span class="pre">.as_unsigned()</span></code> conversion operators reinterpret the bits of a value with the requested signedness. This is useful when the same value is sometimes treated as signed and sometimes as unsigned, or when a signed value is constructed using slices or concatenations. For example, <code class="docutils literal notranslate"><span class="pre">(pc</span> <span class="pre">+</span> <span class="pre">imm[:7].as_signed()).as_unsigned()</span></code> sign-extends the 7 least significant bits of <code class="docutils literal notranslate"><span class="pre">imm</span></code> to the width of <code class="docutils literal notranslate"><span class="pre">pc</span></code>, performs the addition, and produces an unsigned result.</p>
 </section>
 <section id="choice-operator">
-<h3>Choice operator<a class="headerlink" href="#choice-operator" title="Link to this heading"></a></h3>
+<h3>Choice operator<a class="headerlink" href="#choice-operator" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Mux" title="torii.hdl.ast.Mux"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mux(sel,</span> <span class="pre">val1,</span> <span class="pre">val0)</span></code></a> choice expression (similar to the <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#if-expr" title="(in Python v3.13)"><span class="xref std std-ref">conditional expression</span></a> in Python) is equal to the operand <code class="docutils literal notranslate"><span class="pre">val1</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is non-zero, and to the other operand <code class="docutils literal notranslate"><span class="pre">val0</span></code> otherwise. If any of <code class="docutils literal notranslate"><span class="pre">val1</span></code> or <code class="docutils literal notranslate"><span class="pre">val0</span></code> are signed, the expression itself is signed as well.</p>
 </section>
 </section>
 <section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading"></a></h2>
+<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading">¶</a></h2>
 <p>A <em>module</em> is a unit of the Torii design hierarchy: the smallest collection of logic that can be independently simulated, synthesized, or otherwise processed. Modules associate signals with <a class="reference internal" href="#control-domains">control domains</a>, provide <a class="reference internal" href="#control-structures">control structures</a>, manage clock domains, and aggregate submodules.</p>
 <!-- TODO: link to clock domains -->
 <!-- TODO: link to submodules -->
@@ -1161,7 +964,7 @@
 </pre></div>
 </div>
 <section id="control-domains">
-<h3>Control domains<a class="headerlink" href="#control-domains" title="Link to this heading"></a></h3>
+<h3>Control domains<a class="headerlink" href="#control-domains" title="Link to this heading">¶</a></h3>
 <p>A <em>control domain</em> is a named group of <a class="reference internal" href="#signals">signals</a> that change their value in identical conditions.</p>
 <p>All designs have a single predefined <em>combinatorial domain</em>, containing all signals that change immediately when any value used to compute them changes. The name <code class="docutils literal notranslate"><span class="pre">comb</span></code> is reserved for the combinatorial domain.</p>
 <p>A design can also have any amount of user-defined <em>synchronous domains</em>, also called <em>clock domains</em>, containing signals that change when a specific edge occurs on the domain’s clock signal or, for domains with asynchronous reset, on the domain’s reset signal. Most modules only use a single synchronous domain, conventionally called <code class="docutils literal notranslate"><span class="pre">sync</span></code>, but the name <code class="docutils literal notranslate"><span class="pre">sync</span></code> does not have to be used, and lacks any special meaning beyond being the default.</p>
@@ -1169,7 +972,7 @@
 <!-- TODO: link to clock domains -->
 </section>
 <section id="assigning-to-signals">
-<h3>Assigning to signals<a class="headerlink" href="#assigning-to-signals" title="Link to this heading"></a></h3>
+<h3>Assigning to signals<a class="headerlink" href="#assigning-to-signals" title="Link to this heading">¶</a></h3>
 <p><em>Assignments</em> are used to change the values of signals. An assignment statement can be introduced with the <code class="docutils literal notranslate"><span class="pre">.eq(...)</span></code> syntax:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1179,7 +982,7 @@
 <p>Similar to <a class="reference internal" href="#performing-or-describing-computations">how Torii operators work</a>, an Torii assignment is an ordinary Python object used to describe a part of a circuit. An assignment does not have any effect on the signal it changes until it is added to a control domain in a module. Once added, it introduces logic into the circuit generated from that module.</p>
 </section>
 <section id="assignment-targets">
-<h3>Assignment targets<a class="headerlink" href="#assignment-targets" title="Link to this heading"></a></h3>
+<h3>Assignment targets<a class="headerlink" href="#assignment-targets" title="Link to this heading">¶</a></h3>
 <p>The target of an assignment can be more complex than a single signal. It is possible to assign to any combination of <a class="reference internal" href="#signals">signals</a>, <a class="reference internal" href="#bit-sequence-operators">bit slices</a>, <a class="reference internal" href="#bit-sequence-operators">concatenations</a>, and <a class="reference internal" href="#bit-sequence-operators">part selects</a> as long as it includes no other values:</p>
 <!-- TODO: mention arrays, records, user values -->
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -1194,7 +997,7 @@
 </div>
 </section>
 <section id="assignment-domains">
-<h3>Assignment domains<a class="headerlink" href="#assignment-domains" title="Link to this heading"></a></h3>
+<h3>Assignment domains<a class="headerlink" href="#assignment-domains" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">m.d.&lt;domain&gt;</span> <span class="pre">+=</span> <span class="pre">...</span></code> syntax is used to add assignments to a specific control domain in a module. It can add just a single assignment, or an entire sequence of them:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
@@ -1234,7 +1037,7 @@
 </div>
 </section>
 <section id="assignment-order">
-<h3>Assignment order<a class="headerlink" href="#assignment-order" title="Link to this heading"></a></h3>
+<h3>Assignment order<a class="headerlink" href="#assignment-order" title="Link to this heading">¶</a></h3>
 <p>Unlike with two different domains, adding multiple assignments to the same signal to the same domain is well-defined.</p>
 <p>Assignments to different signal bits apply independently. For example, the following two snippets are equivalent:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -1264,7 +1067,7 @@
 <p>Multiple assignments to the same signal bits are more useful when combined with control structures, which can make some of the assignments <a class="reference internal" href="#active-and-inactive-assignments">active or inactive</a>. If all assignments to some signal bits are <a class="reference internal" href="#active-and-inactive-assignments">inactive</a>, their final values are determined by the signal’s domain, <a class="reference internal" href="#combinatorial-evaluation">combinatorial</a> or <a class="reference internal" href="#synchronous-evaluation">synchronous</a>.</p>
 </section>
 <section id="control-structures">
-<h3>Control structures<a class="headerlink" href="#control-structures" title="Link to this heading"></a></h3>
+<h3>Control structures<a class="headerlink" href="#control-structures" title="Link to this heading">¶</a></h3>
 <p>Although it is possible to write any decision tree as a combination of <a class="reference internal" href="#assigning-to-signals">assignments</a> and <a class="reference internal" href="#choice-operator">choice expressions</a>, Torii provides <em>control structures</em> tailored for this task: If, Switch, and FSM. The syntax of all control structures is based on <a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#context-managers" title="(in Python v3.13)"><span class="xref std std-ref">context managers</span></a> and uses <code class="docutils literal notranslate"><span class="pre">with</span></code> blocks, for example:</p>
 <!-- TODO: link to relevant subsections -->
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -1295,7 +1098,7 @@ inside `Else`
 </div>
 </section>
 <section id="active-and-inactive-assignments">
-<h3>Active and inactive assignments<a class="headerlink" href="#active-and-inactive-assignments" title="Link to this heading"></a></h3>
+<h3>Active and inactive assignments<a class="headerlink" href="#active-and-inactive-assignments" title="Link to this heading">¶</a></h3>
 <p>An assignment added inside an Torii control structure, i.e. <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">m.&lt;...&gt;:</span></code> block, is <em>active</em> if the condition of the control structure is satisfied, and <em>inactive</em> otherwise. For any given set of conditions, the final value of every signal assigned in a module is the same as if the inactive assignments were removed and the active assignments were performed unconditionally, taking into account the <a class="reference internal" href="#assignment-order">assignment order</a>.</p>
 <p>For example, there are two possible cases in the circuit generated from the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -1324,7 +1127,7 @@ inside `Else`
 </div>
 </section>
 <section id="combinatorial-evaluation">
-<h3>Combinatorial evaluation<a class="headerlink" href="#combinatorial-evaluation" title="Link to this heading"></a></h3>
+<h3>Combinatorial evaluation<a class="headerlink" href="#combinatorial-evaluation" title="Link to this heading">¶</a></h3>
 <p>Signals in the combinatorial <a class="reference internal" href="#control-domains">control domain</a> change whenever any value used to compute them changes. The final value of a combinatorial signal is equal to its <a class="reference internal" href="#initial-signal-values">initial value</a> updated by the <a class="reference internal" href="#active-and-inactive-assignments">active assignments</a> in the <a class="reference internal" href="#assignment-order">assignment order</a>. Combinatorial signals cannot hold any state.</p>
 <p>Consider the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1346,7 +1149,7 @@ inside `Else`
 </div>
 </section>
 <section id="synchronous-evaluation">
-<h3>Synchronous evaluation<a class="headerlink" href="#synchronous-evaluation" title="Link to this heading"></a></h3>
+<h3>Synchronous evaluation<a class="headerlink" href="#synchronous-evaluation" title="Link to this heading">¶</a></h3>
 <p>Signals in synchronous <a class="reference internal" href="#control-domains">control domains</a> change whenever a specific transition (positive or negative edge) occurs on the clock of the synchronous domain. In addition, the signals in clock domains with an asynchronous reset change when such a reset is asserted. The final value of a synchronous signal is equal to its <a class="reference internal" href="#initial-signal-values">initial value</a> if the reset (of any type) is asserted, or to its current value updated by the <a class="reference internal" href="#active-and-inactive-assignments">active assignments</a> in the <a class="reference internal" href="#assignment-order">assignment order</a> otherwise. Synchronous signals always hold state.</p>
 <!-- TODO: link to clock domains -->
 </section>
@@ -1397,35 +1200,132 @@ inside `Else`
         }
         window.onload = init;
     </script>
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../api/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../tutorials/external_modules.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Including External non-Torii Modules</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Shrine Maiden Heavy Industries
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../tutorials/external_modules.html" class="btn btn-neutral float-left" title="Including External non-Torii Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../api/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Language Guide</a><ul>
+<li><a class="reference internal" href="#the-prelude">The prelude</a></li>
+<li><a class="reference internal" href="#shapes">Shapes</a></li>
+<li><a class="reference internal" href="#shapes-of-values">Shapes of values</a></li>
+<li><a class="reference internal" href="#values">Values</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#shape-casting">Shape casting</a><ul>
+<li><a class="reference internal" href="#shapes-from-integers">Shapes from integers</a></li>
+<li><a class="reference internal" href="#shapes-from-ranges">Shapes from ranges</a></li>
+<li><a class="reference internal" href="#shapes-from-enumerations">Shapes from enumerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#value-casting">Value casting</a><ul>
+<li><a class="reference internal" href="#values-from-integers">Values from integers</a></li>
+<li><a class="reference internal" href="#values-from-enumeration-members">Values from enumeration members</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#constant-casting">Constant casting</a></li>
+<li><a class="reference internal" href="#signals">Signals</a><ul>
+<li><a class="reference internal" href="#signal-shapes">Signal shapes</a></li>
+<li><a class="reference internal" href="#signal-names">Signal names</a></li>
+<li><a class="reference internal" href="#initial-signal-values">Initial signal values</a></li>
+<li><a class="reference internal" href="#reset-less-signals">Reset-less signals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operators">Operators</a><ul>
+<li><a class="reference internal" href="#performing-or-describing-computations">Performing or describing computations?</a></li>
+<li><a class="reference internal" href="#width-extension">Width extension</a></li>
+<li><a class="reference internal" href="#arithmetic-operators">Arithmetic operators</a></li>
+<li><a class="reference internal" href="#comparison-operators">Comparison operators</a></li>
+<li><a class="reference internal" href="#bitwise-shift-and-rotate-operators">Bitwise, shift, and rotate operators</a></li>
+<li><a class="reference internal" href="#reduction-operators">Reduction operators</a></li>
+<li><a class="reference internal" href="#logical-operators">Logical operators</a></li>
+<li><a class="reference internal" href="#bit-sequence-operators">Bit sequence operators</a></li>
+<li><a class="reference internal" href="#conversion-operators">Conversion operators</a></li>
+<li><a class="reference internal" href="#choice-operator">Choice operator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modules">Modules</a><ul>
+<li><a class="reference internal" href="#control-domains">Control domains</a></li>
+<li><a class="reference internal" href="#assigning-to-signals">Assigning to signals</a></li>
+<li><a class="reference internal" href="#assignment-targets">Assignment targets</a></li>
+<li><a class="reference internal" href="#assignment-domains">Assignment domains</a></li>
+<li><a class="reference internal" href="#assignment-order">Assignment order</a></li>
+<li><a class="reference internal" href="#control-structures">Control structures</a></li>
+<li><a class="reference internal" href="#active-and-inactive-assignments">Active and inactive assignments</a></li>
+<li><a class="reference internal" href="#combinatorial-evaluation">Combinatorial evaluation</a></li>
+<li><a class="reference internal" href="#synchronous-evaluation">Synchronous evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2025, Shrine Maiden Heavy Industries.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="../_static/documentation_options.js?v=5a345329"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../_static/tabs.js?v=3ee01567"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/wavedrom.skin.js"></script>
+    <script src="../_static/wavedrom.min.js"></script>
+    <script src="../_static/js/wavedrom.min.js?v=912bf3a3"></script>
+    <script src="../_static/js/wavedrom.skin.js?v=be5c2381"></script>
+    </body>
 </html>
