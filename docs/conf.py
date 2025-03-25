@@ -37,7 +37,8 @@ extlinks = {
 	'pypi':  ('https://pypi.org/project/%s/', '%s'),
 }
 
-pygments_style         = 'monokai'
+pygments_style         = 'default'
+pygments_dark_style    = 'dracula'
 autodoc_member_order   = 'bysource'
 graphviz_output_format = 'svg'
 todo_include_todos     = True
