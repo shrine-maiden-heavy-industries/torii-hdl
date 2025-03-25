@@ -38,7 +38,7 @@ extlinks = {
 }
 
 pygments_style         = 'default'
-pygments_dark_style    = 'dracula'
+pygments_dark_style    = 'monokai'
 autodoc_member_order   = 'bysource'
 graphviz_output_format = 'svg'
 todo_include_todos     = True
