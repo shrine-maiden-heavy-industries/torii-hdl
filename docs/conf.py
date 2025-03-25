@@ -45,7 +45,8 @@ graphviz_output_format = 'svg'
 todo_include_todos     = True
 
 intersphinx_mapping = {
-	'python': ('https://docs.python.org/3', None)
+	'python':       ('https://docs.python.org/3',       None),
+	'torii_boards': ('https://torii-boards.shmdn.link', None),
 }
 
 napoleon_google_docstring              = False
