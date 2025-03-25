@@ -1077,6 +1077,27 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 def convert_fragment(
 	fragment: ir.Fragment, name: str = 'top', *, emit_src: bool = True
 ) -> tuple[str, ast.SignalDict]:
+	'''
+	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into RTLIL text and
+	a signal map.
+
+	Parameters
+	----------
+	fragment : torii.hdl.ir.Fragment
+		The Torii fragment hierarchy to lower.
+	name : str
+		The name of the root fragment module.
+		(default: 'top')
+	emit_src : bool
+		Emit source line attributes in the resulting RTLIL text.
+		(default: True)
+
+	Returns
+	-------
+	tuple[str, torii.hdl.ast.SignalDict]
+		The RTLIL text and signal dictionary of the lowered fragment.
+	'''
+
 	if not isinstance(fragment, ir.Fragment):
 		raise ValueError(f'Expected an ir.Fragment not a {fragment!r}')
 	builder = _Builder(emit_src = emit_src)
@@ -1087,6 +1108,30 @@ def convert_fragment(
 def convert(
 	elaboratable, name: str = 'top', platform = None, *, ports,  emit_src = True, **kwargs
 ) -> str:
+	'''
+	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into RTLIL text.
+
+	Parameters
+	----------
+	elaboratable : torii.hdl.ir.Elaboratable
+		The Elaboratable to lower into RTLIL.
+	name : str
+		The name of the resulting RTLIL module.
+		(default: 'top')
+	platform : torii.build.plat.Platform
+		The platform to use for Elaboratable evaluation.
+	ports : list[]
+		The list of ports on the top-level module.
+	emit_src : bool
+		Emit source line attributes in the final RTLIL text.
+		(default: True)
+
+	Returns
+	-------
+	str
+		The resulting RTLIL.
+	'''
+
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
 	il_text, _ = convert_fragment(fragment, name, emit_src = emit_src)
 	return il_text

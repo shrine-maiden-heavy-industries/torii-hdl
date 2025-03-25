@@ -58,6 +58,29 @@ def _convert_rtlil_text(
 	)
 
 def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tuple[str, ast.SignalDict]:
+	'''
+	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into Verilog text and
+	a signal map.
+
+	Parameters
+	----------
+	fragment : torii.hdl.ir.Fragment
+		The Torii fragment hierarchy to lower.
+	name : str
+		The name of the root fragment module.
+		(default: 'top')
+	emit_src : bool
+		Emit source line attributes in the resulting Verilog text.
+		(default: True)
+	strip_internal_attrs : bool
+		Remove Torii-specific attributes that were emitted into the resulting Verilog text.
+
+	Returns
+	-------
+	tuple[str, torii.hdl.ast.SignalDict]
+		The Verilog text and signal dictionary of the lowered fragment.
+	'''
+
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs = strip_internal_attrs), name_map)
 
@@ -65,6 +88,31 @@ def convert(
 	elaboratable: ir.Fragment | ir.Elaboratable, name: str = 'top', platform = None, *, ports,
 	emit_src: bool = True, strip_internal_attrs: bool = False, **kwargs
 ) -> str:
+	'''
+	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into Verilog text.
+
+	Parameters
+	----------
+	elaboratable : torii.hdl.ir.Elaboratable
+		The Elaboratable to lower into Verilog.
+	name : str
+		The name of the resulting Verilog module.
+		(default: 'top')
+	platform : torii.build.plat.Platform
+		The platform to use for Elaboratable evaluation.
+	ports : list[]
+		The list of ports on the top-level module.
+	emit_src : bool
+		Emit source line attributes in the final Verilog text.
+		(default: True)
+	strip_internal_attrs : bool
+		Remove Torii-specific attributes that were emitted into the resulting Verilog text.
+
+	Returns
+	-------
+	str
+		The resulting Verilog.
+	'''
 
 	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
 	verilog_text, _ = convert_fragment(fragment, name, emit_src = emit_src, strip_internal_attrs = strip_internal_attrs)

@@ -50,9 +50,58 @@ def _convert_rtlil_text(
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
 def convert_fragment(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> tuple[str, SignalDict]:
+	'''
+	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into CXXRTL text and
+	a signal map.
+
+	Parameters
+	----------
+	fragment : torii.hdl.ir.Fragment
+		The Torii fragment hierarchy to lower.
+	name : str
+		The name of the root fragment module.
+		(default: 'top')
+	emit_src : bool
+		Emit source line attributes in the resulting CXXRTL text.
+		(default: True)
+	black_boxes : dict[str, str]
+		A map of CXXRTL blackboxes to use in the resulting design.
+
+	Returns
+	-------
+	tuple[str, torii.hdl.ast.SignalDict]
+		The CXXRTL text and signal dictionary of the lowered fragment.
+	'''
+
 	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
 	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
 
 def convert(*args, black_boxes: dict[str, str] | None = None, **kwargs) -> str:
+	'''
+	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into CXXRTL text.
+
+	Parameters
+	----------
+	elaboratable : torii.hdl.ir.Elaboratable
+		The Elaboratable to lower into Verilog.
+	name : str
+		The name of the resulting Verilog module.
+		(default: 'top')
+	platform : torii.build.plat.Platform
+		The platform to use for Elaboratable evaluation.
+	ports : list[]
+		The list of ports on the top-level module.
+	emit_src : bool
+		Emit source line attributes in the final CXXRTL text.
+		(default: True)
+	black_boxes : dict[str, str]
+		A map of CXXRTL blackboxes to use in the resulting design.
+
+	Returns
+	-------
+	str
+		The resulting CXXRTL.
+	'''
+
 	rtlil_text = rtlil.convert(*args, **kwargs)
 	return _convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1)
