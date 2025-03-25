@@ -2,5 +2,8 @@
 
 ## BSD-2-Clause
 
-```{include} ../LICENSE
+```{literalinclude} ../LICENSE
+---
+language: text
+---
 ```
