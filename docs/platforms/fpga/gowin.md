@@ -1,4 +1,4 @@
-# Intel
+# Gowin
 
 The {py:mod}`torii.platform.vendor.gowin` module provides a base platform to support Gowin FPGAs with the [Gowin] and [Apicula] toolchains.
 

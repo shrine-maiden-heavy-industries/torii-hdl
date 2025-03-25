@@ -1,4 +1,4 @@
-# Intel
+# Altera
 
 The {py:mod}`torii.platform.vendor.altera` module provides a base platform to support Altera toolchains with the [Quartus] and [Mistral] toolchains.
 
