@@ -6,3 +6,4 @@ sphinxcontrib-wavedrom
 wavedrom
 myst-parser
 sphinx-copybutton
+sphinx-codeautolink
