@@ -128,7 +128,7 @@ def log2_exact(value: SupportsIndex) -> int:
 	Parameters
 	----------
 	value: SupportsIndex
-		The value to calculate the ``log₂(value)` for.
+		The value to calculate the ``log₂(value)`` for.
 
 	Returns
 	-------

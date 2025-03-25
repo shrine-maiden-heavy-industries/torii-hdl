@@ -10,7 +10,7 @@ __all__ = (
 )
 
 def ascii_escape(string: str) -> str:
-	''' Apply escaping to turn any character that is not A-Za-z0-9_ into hex '''
+	''' Apply escaping to turn any character that is not ``A-Za-z0-9_`` into hex '''
 
 	def esc_match(m: Match) -> str:
 		if m.group(1) is not None:
