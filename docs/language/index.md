@@ -81,6 +81,7 @@ The basic building block of the Torii language is a *value*, which is a term for
 The simplest Torii value is a *constant*, representing a fixed number, and introduced using {py:class}`Const(...) <torii.hdl.ast.Const>`:
 
 ```{eval-rst}
+.. autolink-concat:: section
 .. doctest::
 
    >>> ten = Const(10)
@@ -187,6 +188,7 @@ Specifying a shape with an enumeration is convenient for finite state machines, 
 .. testsetup::
 
    import enum
+   from torii.hdl import *
 
 .. testcode::
 
@@ -196,6 +198,7 @@ Specifying a shape with an enumeration is convenient for finite state machines, 
        BOTTOM = 2
        RIGHT  = 3
 
+.. autolink-preface:: from torii.hdl import *
 .. doctest::
 
    >>> Shape.cast(Direction)
@@ -303,6 +306,8 @@ Each signal has a *name*, which is used in the waveform viewer, diagnostic messa
 
 ```{eval-rst}
 .. testsetup::
+
+   from torii.hdl import *
 
    class dummy(object): pass
    self = dummy()
@@ -507,7 +512,7 @@ The following table lists the bitwise and shift operations provided by Torii:
 
    .. doctest::
 
-      >>> (1 << C(0, 32)).shape()
+      >>> (1 << Const(0, 32)).shape()
       unsigned(4294967296)
 
    Although Torii will detect and reject expressions wide enough to break other tools, it is a good practice to explicitly limit the width of a shift amount in a variable left shift.
@@ -632,7 +637,7 @@ For the operators introduced by Torii, the following table explains them in term
 | `a.word_select(b, w)` | `a[b*w:b*w+w]`         |
 
 ```{warning}
-In Python, the digits of a number are written right-to-left (0th exponent at the right), and the elements of a sequence are written left-to-right (0th element at the left). This mismatch can cause confusion when numeric operations (like shifts) are mixed with bit sequence operations (like concatenations). For example, ``Cat(C(0b1001), C(0b1010))`` has the same value as ``C(0b1010_1001)``, ``val[4:]`` is equivalent to ``val >> 4``, and ``val[-1]`` refers to the most significant bit.
+In Python, the digits of a number are written right-to-left (0th exponent at the right), and the elements of a sequence are written left-to-right (0th element at the left). This mismatch can cause confusion when numeric operations (like shifts) are mixed with bit sequence operations (like concatenations). For example, ``Cat(Const(0b1001), Const(0b1010))`` has the same value as ``Const(0b1010_1001)``, ``val[4:]`` is equivalent to ``val >> 4``, and ``val[-1]`` refers to the most significant bit.
 
 Such confusion can often be avoided by not using numeric and bit sequence operations in the same expression. For example, although it may seem natural to describe a shift register with a numeric shift and a sequence slice operations, using sequence operations alone would make it easier to understand.
 ```
@@ -659,6 +664,10 @@ A *module* is a unit of the Torii design hierarchy: the smallest collection of l
 Every Torii design starts with a fresh module:
 
 ```{eval-rst}
+.. testsetup::
+
+   from torii.hdl import *
+
 .. doctest::
 
    >>> m = Module()
@@ -717,7 +726,8 @@ The target of an assignment can be more complex than a single signal. It is poss
 The `m.d.<domain> += ...` syntax is used to add assignments to a specific control domain in a module. It can add just a single assignment, or an entire sequence of them:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    a = Signal()
    b = Signal()
@@ -733,7 +743,8 @@ The `m.d.<domain> += ...` syntax is used to add assignments to a specific contro
 If the name of a domain is not known upfront, the `m.d['<domain>'] += ...` syntax can be used instead:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    def add_toggle(num):
        t = Signal()
@@ -758,7 +769,8 @@ Every signal included in the target of an assignment becomes a part of the domai
 
    Clearly, Torii code that drives a single bit of a signal from two different domains does not describe a meaningful circuit. However, driving two different bits of a signal from two different domains does not inherently cause such a conflict. Would Torii accept the following code?
 
-   .. testcode::
+   .. autolink-preface:: from torii.hdl import *
+   .. code-block:: python
 
       e = Signal(2)
       m.d.comb += e[0].eq(0)
@@ -775,37 +787,41 @@ Unlike with two different domains, adding multiple assignments to the same signa
 Assignments to different signal bits apply independently. For example, the following two snippets are equivalent:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    a = Signal(8)
    m.d.comb += [
-       a[0:4].eq(C(1, 4)),
-       a[4:8].eq(C(2, 4)),
+       a[0:4].eq(Const(1, 4)),
+       a[4:8].eq(Const(2, 4)),
    ]
 
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    a = Signal(8)
-   m.d.comb += a.eq(Cat(C(1, 4), C(2, 4)))
+   m.d.comb += a.eq(Cat(Const(1, 4), Const(2, 4)))
 
 ```
 
 If multiple assignments change the value of the same signal bits, the assignment that is added last determines the final value. For example, the following two snippets are equivalent:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    b = Signal(9)
    m.d.comb += [
-       b[0:9].eq(Cat(C(1, 3), C(2, 3), C(3, 3))),
-       b[0:6].eq(Cat(C(4, 3), C(5, 3))),
-       b[3:6].eq(C(6, 3)),
+       b[0:9].eq(Cat(Const(1, 3), Const(2, 3), Const(3, 3))),
+       b[0:6].eq(Cat(Const(4, 3), Const(5, 3))),
+       b[3:6].eq(Const(6, 3)),
    ]
 
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    b = Signal(9)
-   m.d.comb += b.eq(Cat(C(4, 3), C(6, 3), C(3, 3)))
+   m.d.comb += b.eq(Cat(Const(4, 3), Const(6, 3), Const(3, 3)))
 
 ```
 
@@ -818,7 +834,8 @@ Although it is possible to write any decision tree as a combination of [assignme
 <!-- TODO: link to relevant subsections -->
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    timer = Signal(8)
    with m.If(timer == 0):
@@ -831,7 +848,8 @@ Although it is possible to write any decision tree as a combination of [assignme
 While some Torii control structures are superficially similar to imperative control flow statements (such as Python's `if`), their function---together with [expressions](#performing-or-describing-computations) and [assignments](#assigning-to-signals)---is to describe circuits. The code above is equivalent to:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    timer = Signal(8)
    m.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))
@@ -841,7 +859,8 @@ While some Torii control structures are superficially similar to imperative cont
 Because all branches of a decision tree affect the generated circuit, all of the Python code inside Torii control structures is always evaluated in the order in which it appears in the program. This can be observed through Python code with side effects, such as {py:func}`print`:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    timer = Signal(8)
    with m.If(timer == 0):
@@ -851,7 +870,7 @@ Because all branches of a decision tree affect the generated circuit, all of the
        print('inside `Else`')
        m.d.sync += timer.eq(timer - 1)
 
-.. testoutput::
+.. code-block:: console
 
    inside `If`
    inside `Else`
@@ -865,7 +884,8 @@ An assignment added inside an Torii control structure, i.e. `with m.<...>:` bloc
 For example, there are two possible cases in the circuit generated from the following code:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    timer = Signal(8)
    m.d.sync += timer.eq(timer - 1)
@@ -896,7 +916,8 @@ m.d.sync += timer.eq(timer - 1)
 Combining these cases together, the code above is equivalent to:
 
 ```{eval-rst}
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    timer = Signal(8)
    m.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))
@@ -910,11 +931,8 @@ Signals in the combinatorial [control domain](#control-domains) change whenever 
 Consider the following code:
 
 ```{eval-rst}
-.. testsetup::
-   en = Signal()
-   b = Signal(8)
-
-.. testcode::
+.. autolink-preface:: from torii.hdl import *
+.. code-block:: python
 
    a = Signal(8, reset=1)
    with m.If(en):

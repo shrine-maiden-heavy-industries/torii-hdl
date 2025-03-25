@@ -14,7 +14,7 @@ add link to more complex examples?
 
 As a first example, consider a counter with a fixed limit, enable, and overflow. The code for this example is shown below. [Download] and run it:
 
-```sh
+```console
    $ python3 up_counter.py
 ```
 
@@ -24,6 +24,7 @@ A 16-bit up counter with enable input, overflow output, and a limit fixed at des
 
 ```{eval-rst}
 .. literalinclude:: _code/up_counter.py
+   :language: python
    :linenos:
    :lineno-match:
    :end-before: # --- TEST ---
@@ -43,6 +44,7 @@ To verify its functionality, the counter can be simulated for a small amount of 
 
 ```{eval-rst}
 .. literalinclude:: _code/up_counter.py
+   :language: python
    :linenos:
    :lineno-match:
    :start-after: # --- TEST ---
@@ -63,6 +65,7 @@ Although some Torii workflows do not include Verilog at all, it is still the de 
 
 ```{eval-rst}
 .. literalinclude:: _code/up_counter.py
+   :language: python
    :linenos:
    :lineno-match:
    :start-after: # --- CONVERT ---
@@ -74,8 +77,8 @@ The signals that will be connected to the ports of the top-level Verilog module 
 
 ```{eval-rst}
 .. literalinclude:: _code/up_counter.v
-	 :language: verilog
-	 :linenos:
+   :language: verilog
+   :linenos:
 ```
 
 To aid debugging, the generated Verilog code has the same general structure as the Torii source code (although more verbose), and contains extensive source location information.
@@ -90,6 +93,7 @@ Although Torii works well as a standalone HDL, it also includes a build system t
 
 ```{eval-rst}
 .. literalinclude:: _code/led_blinker.py
+   :language: python
    :linenos:
    :lineno-match:
    :end-before: # --- BUILD ---
@@ -107,6 +111,7 @@ Link to the installation instructions for the FOSS iCE40 toolchain, probably as 
 
 ```{eval-rst}
 .. literalinclude:: _code/led_blinker.py
+   :language: python
    :linenos:
    :lineno-match:
    :start-after: # --- BUILD ---
@@ -122,7 +127,7 @@ link to build system reference
 The ability to check with minimal effort whether the entire toolchain functions correctly is so important that it is built into every board definition file. To use it with the iCEStick board, run:
 ```
 
-```sh
+```console
    $ python3 -m torii_boards.lattice.icestick
 ```
 
