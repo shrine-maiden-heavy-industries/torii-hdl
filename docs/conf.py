@@ -24,7 +24,6 @@ extensions = [
 	'sphinx_inline_tabs',
 	'sphinxcontrib.wavedrom',
 	'myst_parser',
-	'sphinx_rtd_theme',
 	'sphinx_copybutton',
 ]
 
@@ -64,27 +63,12 @@ templates_path = [
 	'_templates',
 ]
 
-html_context = {
-	'display_lower_left': False,
-	'current_language'  : language,
-	'current_version'   : version,
-	'version'           : version,
-	'display_github'    : True,
-	'github_user'       : 'shrine-maiden-heavy-industries',
-	'github_repo'       : 'torii-hdl',
-	'github_version'    : 'main/docs/',
-	'versions'          : [
-		('latest', '/latest')
-	]
-}
-
 html_baseurl     = 'https://torii.shmdn.link/'
-html_theme       = 'sphinx_rtd_theme'
+html_theme       = 'furo'
 html_copy_source = False
 
 html_theme_options = {
-	'collapse_navigation' : False,
-	'style_external_links': True,
+
 }
 
 html_static_path = [
@@ -99,8 +83,6 @@ html_js_files = [
 	'js/wavedrom.min.js',
 	'js/wavedrom.skin.js',
 ]
-
-html_style = 'css/styles.css'
 
 offline_skin_js_path     = '_static/js/wavedrom.skin.js'
 offline_wavedrom_js_path = '_static/js/wavedrom.min.js'
