@@ -348,6 +348,292 @@
     }
   ],
   "api/index": [],
+  "api/utility/index": [],
+  "api/utility/string": [
+    {
+      "source": ">>> ascii_escape('Hello \u30cb\u30e3~!')\n'Hello_20__30cb__30e3__7e__21_'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "string-helpers",
+        "headings": [
+          "String Helpers",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> tcl_escape('meow {meow} [meow] \\meow')\n'{meow \\{meow\\} [meow] \\\\meow}'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "string-helpers",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> tcl_quote('Meow \"meow\"')\n'\"Meow \\\"meow\\\"\"'\n>>> tcl_quote(\"Meow 'meow'\")\n'\"Meow 'meow'\"'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "string-helpers",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> tool_env_var('cat')\n'CAT'\n>>> tool_env_var('cat-girl')\n'CAT_GIRL'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "string-helpers",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 12
+    }
+  ],
+  "api/utility/tracer": [],
+  "api/utility/units": [
+    {
+      "source": ">>> bits_for(127)\n7\n>>> bits_for(127, True)\n8\n>>> bits_for(-128)\n8\n>>> bits_for(65355)\n16",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example"
+        ]
+      },
+      "doc_lineno": 11
+    },
+    {
+      "source": ">>> iec_size(92873402)\n'88.57MiB'\n>>> iec_size(4294967296, 0)\n'4GiB'",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 10
+    },
+    {
+      "source": ">>> log2_ceil(16)\n4\n>>> log2_ceil(35)\n6",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> log2_exact(8)\n3\n>>> log2_exact(19)\nTraceback (most recent call last):\nFile \"<python-input-19>\", line 1, in <module>\n        log2_exact(19)\n        ~~~~~~~~~~^^^^\nFile \"units.py\", line 168, in log2_exact\nValueError: 19 is not a power of 2",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> ms_to_sec(4000)\n4.0\n>>> ms_to_sec(500)\n0.5",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> ns_to_sec(3000000000)\n3.0\n>>> ns_to_sec(5000000)\n0.005",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> ps_to_sec(1000000000000)\n1.0\n>>> ps_to_sec(60000000)\n6e-05",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> sec_to_ms(4)\n4000.0\n>>> sec_to_ms(0.5)\n500.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> sec_to_ns(3)\n3000000000.0\n>>> sec_to_ns(0.005)\n5000000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> sec_to_ps(1)\n1000000000000.0\n>>> sec_to_ps(0.00006)\n60000000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> sec_to_us(1)\n1000000.0\n>>> sec_to_us(0.06)\n60000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> us_to_sec(1000000)\n1.0\n>>> us_to_sec(60000)\n0.06",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "unit-helpers",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    }
+  ],
   "changelog": [],
   "external_libraries": [],
   "getting_started": [

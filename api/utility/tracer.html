@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Wishbone Bus" href="wishbone.html" /><link rel="prev" title="Standard Library" href="../index.html" />
-        <link rel="canonical" href="https://torii.shmdn.link/library/bus/index.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Unit Helpers" href="units.html" /><link rel="prev" title="String Helpers" href="string.html" />
+        <link rel="canonical" href="https://torii.shmdn.link/api/utility/tracer.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Busses - Torii-HDL 0.7.8.dev55 documentation</title>
+        <title>Tracer - Torii-HDL 0.7.8.dev55 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -183,7 +183,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -212,52 +212,52 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/backend/index.html">Torii Backends</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/ast.html">Abstract Syntax Tree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/cd.html">Clock Domain</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/dsl.html">DSL</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/ir.html">IR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/mem.html">Memory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/rec.html">Records</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/hdl/xfrm.html">XFRM</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/dsl.html">DSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ir.html">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/xfrm.html">XFRM</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../api/utility/string.html">String Helpers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/utility/tracer.html">Tracer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/utility/units.html">Unit Helpers</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii Utility Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="string.html">String Helpers</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="units.html">Unit Helpers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Standard Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">Busses</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Busses</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="wishbone.html">Wishbone Bus</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/bus/index.html">Busses</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Busses</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/bus/wishbone.html">Wishbone Bus</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../coding/index.html">Encoding and Decoding</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../mem/index.html">Memory</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Memory</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mem/map.html">Memory Map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Encoding and Decoding</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/mem/index.html">Memory</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Memory</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/mem/map.html">Memory Map</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../cdc.html">Clock Domain Crossing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../fifo.html">First-in First-out Queues</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../soc/index.html">System on Chip</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of System on Chip</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../soc/event.html">Events</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../soc/periph.html">Peripherals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../soc/csr/index.html">CSRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/cdc.html">Clock Domain Crossing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/fifo.html">First-in First-out Queues</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/soc/index.html">System on Chip</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of System on Chip</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/event.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/periph.html">Peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/csr/index.html">CSRs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../stdio/index.html">Industry Standard I/O</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../stream/index.html">Stream Library</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Stream Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../stream/simple.html">Simple Streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/stdio/index.html">Industry Standard I/O</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/stream/index.html">Stream Library</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Stream Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/stream/simple.html">Simple Streams</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../vendor/index.html">FPGA Vendor Modules</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of FPGA Vendor Modules</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../vendor/lattice/index.html">Lattice FPGA Modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/vendor/index.html">FPGA Vendor Modules</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of FPGA Vendor Modules</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/lattice/index.html">Lattice FPGA Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
 </ul>
 </li>
 </ul>
@@ -321,28 +321,75 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-torii.lib.bus">
-<span id="busses"></span><h1>Busses<a class="headerlink" href="#module-torii.lib.bus" title="Link to this heading">¶</a></h1>
-<p>The <a class="reference internal" href="#module-torii.lib.bus" title="torii.lib.bus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.bus</span></code></a> module provides industry standard bus interfaces, crossbars, and other
-utilities for busses such as <a class="reference internal" href="#wishbone">Wishbone</a>.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="wishbone.html">Wishbone Bus</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="wishbone.html#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="wishbone.html#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="wishbone.html#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="wishbone.html#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="wishbone.html#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
-</ul>
-</li>
-</ul>
+          <section id="tracer">
+<h1>Tracer<a class="headerlink" href="#tracer" title="Link to this heading">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The Torii API reference is a work in progress and we are actively working on improving it,
+however it may be deficient or missing in places.</p>
 </div>
+<dl class="py function" id="module-torii.util.tracer">
+<dt class="sig sig-object py" id="torii.util.tracer.get_src_loc">
+<span class="sig-prename descclassname"><span class="pre">torii.util.tracer.</span></span><span class="sig-name descname"><span class="pre">get_src_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.util.tracer.get_src_loc" title="Link to this definition">¶</a></dt>
+<dd><p>Get the file and line number from the given frame on the call stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>src_loc_at</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The frame above this call in which to get the file and line number from.
+(default: 0)</p>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When passing <code class="docutils literal notranslate"><span class="pre">0</span></code>, the resulting frame is the one <em>directly above</em> the call site, i.e. the line
+that the function this was called in was invoked on.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The file name and line number of the given stack frame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>SrcLoc</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.util.tracer.get_var_name">
+<span class="sig-prename descclassname"><span class="pre">torii.util.tracer.</span></span><span class="sig-name descname"><span class="pre">get_var_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">object</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.util.tracer.get_var_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get the variable name from an assignment up the call stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of stack frames above us to look.
+(default: 2)</p></li>
+<li><p><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><em>object</em></a>) – The default name of the variable if it’s not found.
+(default: _raise_exception)</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The default value of <code class="docutils literal notranslate"><span class="pre">depth</span></code> is set so that the assignment of the result of the current call frame
+will be used.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#torii.util.tracer.NameNotFound" title="torii.util.tracer.NameNotFound"><strong>NameNotFound</strong></a> – When <code class="docutils literal notranslate"><span class="pre">default</span></code> is set to the default value of <code class="docutils literal notranslate"><span class="pre">_raise_exception</span></code> and the name is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="torii.util.tracer.NameNotFound">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.util.tracer.</span></span><span class="sig-name descname"><span class="pre">NameNotFound</span></span><a class="headerlink" href="#torii.util.tracer.NameNotFound" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 
     <script type="text/javascript">
@@ -356,23 +403,23 @@ utilities for busses such as <a class="reference internal" href="#wishbone">Wish
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="wishbone.html">
+          <a class="next-page" href="units.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Wishbone Bus</div>
+                <div class="title">Unit Helpers</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../index.html">
+          <a class="prev-page" href="string.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Standard Library</div>
+                <div class="title">String Helpers</div>
                 
               </div>
             </a>
@@ -394,8 +441,29 @@ utilities for busses such as <a class="reference internal" href="#wishbone">Wish
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Tracer</a><ul>
+<li><a class="reference internal" href="#torii.util.tracer.get_src_loc"><code class="docutils literal notranslate"><span class="pre">get_src_loc()</span></code></a></li>
+<li><a class="reference internal" href="#torii.util.tracer.get_var_name"><code class="docutils literal notranslate"><span class="pre">get_var_name()</span></code></a></li>
+<li><a class="reference internal" href="#torii.util.tracer.NameNotFound"><code class="docutils literal notranslate"><span class="pre">NameNotFound</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

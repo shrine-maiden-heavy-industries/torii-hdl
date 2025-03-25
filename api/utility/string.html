@@ -4,10 +4,10 @@
 <head><meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport">
-<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="mem.html" rel="next" title="Memory"/><link href="dsl.html" rel="prev" title="DSL"/>
-<link href="https://torii.shmdn.link/api/hdl/ir.html" rel="canonical"/>
+<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="tracer.html" rel="next" title="Tracer"/><link href="index.html" rel="prev" title="Torii Utility Library"/>
+<link href="https://torii.shmdn.link/api/utility/string.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-<title>IR - Torii-HDL 0.7.8.dev55 documentation</title>
+<title>String Helpers - Torii-HDL 0.7.8.dev55 documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=354aac6f" rel="stylesheet" type="text/css"/>
 <link href="../../_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css"/>
@@ -187,20 +187,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii HDL Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="ast.html">Abstract Syntax Tree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cd.html">Clock Domain</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dsl.html">DSL</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">IR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mem.html">Memory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rec.html">Records</a></li>
-<li class="toctree-l3"><a class="reference internal" href="xfrm.html">XFRM</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/dsl.html">DSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ir.html">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/xfrm.html">XFRM</a></li>
 </ul>
 </input></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../utility/string.html">String Helpers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utility/tracer.html">Tracer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utility/units.html">Unit Helpers</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii Utility Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">String Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracer.html">Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="units.html">Unit Helpers</a></li>
 </ul>
 </input></li>
 </ul>
@@ -295,71 +295,121 @@
 </label>
 </div>
 <article id="furo-main-content" role="main">
-<section id="ir">
-<h1>IR<a class="headerlink" href="#ir" title="Link to this heading">¶</a></h1>
+<section id="string-helpers">
+<h1>String Helpers<a class="headerlink" href="#string-helpers" title="Link to this heading">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The Torii API reference is a work in progress and we are actively working on improving it,
 however it may be deficient or missing in places.</p>
 </div>
-<dl class="py exception" id="module-torii.hdl.ir">
-<dt class="sig sig-object py" id="torii.hdl.ir.DriverConflict">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">DriverConflict</span></span><a class="headerlink" href="#torii.hdl.ir.DriverConflict" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.hdl.ir.Instance">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InstanceArgsT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SrcLoc</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ValueCastT</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Instance" title="Link to this definition">¶</a></dt>
-<dd><p>Allows for the direct instantiation of external modules, cells, or primitives.</p>
-<p>It accepts the name of the object to instantiate and a collection of keyword arguments
-that define the ports, attributes, and parameters to it.</p>
-<p>It is defined by a prefix followed by the canonical name of the element the value is setting.
-For instance, if you have a cell called <code class="docutils literal notranslate"><span class="pre">dff</span></code> with ports named <code class="docutils literal notranslate"><span class="pre">CLK</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>, and <code class="docutils literal notranslate"><span class="pre">Q</span></code> you
-are able to instantiate it as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dff</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
-        <span class="s1">'dff'</span><span class="p">,</span>
-        <span class="n">i_D</span>   <span class="o">=</span> <span class="n">sig_in</span><span class="p">,</span>
-        <span class="n">i_CLK</span> <span class="o">=</span> <span class="n">clk</span><span class="p">,</span>
-        <span class="n">o_Q</span>   <span class="o">=</span> <span class="n">sig_out</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>The meaning of the prefix for the arguments are as follows:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Prefix</p></th>
-<th class="head"><p>Corresponding Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a_</span></code></p></td>
-<td><p>Attribute</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">p_</span></code></p></td>
-<td><p>Parameter</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">i_</span></code></p></td>
-<td><p>Input Port/Signal</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">o_</span></code></p></td>
-<td><p>Output Port/Signal</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">io_</span></code></p></td>
-<td><p>Bi-directional Port/Signal</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<dl class="py function" id="module-torii.util.string">
+<dt class="sig sig-object py" id="torii.util.string.ascii_escape">
+<span class="sig-prename descclassname"><span class="pre">torii.util.string.</span></span><span class="sig-name descname"><span class="pre">ascii_escape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.util.string.ascii_escape" title="Link to this definition">¶</a></dt>
+<dd><p>Apply escaping to turn any character that is not <code class="docutils literal notranslate"><span class="pre">A-Za-z0-9_</span></code> into hex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name/type of object to instantiate</p>
+<dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string to escape.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ascii_escape</span><span class="p">(</span><span class="s1">'Hello ニャ~!'</span><span class="p">)</span>
+<span class="go">'Hello_20__30cb__30e3__7e__21_'</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The string with any applicable characters escaped appropriately.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="torii.hdl.ir.UnusedElaboratable">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">UnusedElaboratable</span></span><a class="headerlink" href="#torii.hdl.ir.UnusedElaboratable" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.util.string.tcl_escape">
+<span class="sig-prename descclassname"><span class="pre">torii.util.string.</span></span><span class="sig-name descname"><span class="pre">tcl_escape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.util.string.tcl_escape" title="Link to this definition">¶</a></dt>
+<dd><p>Apply appropriate escaping for use in TCL scripts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string to escape.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tcl_escape</span><span class="p">(</span><span class="s1">'meow </span><span class="si">{meow}</span><span class="s1"> [meow] \meow'</span><span class="p">)</span>
+<span class="go">'{meow \{meow\} [meow] \\meow}'</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The string with any applicable characters escaped appropriately.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.util.string.tcl_quote">
+<span class="sig-prename descclassname"><span class="pre">torii.util.string.</span></span><span class="sig-name descname"><span class="pre">tcl_quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.util.string.tcl_quote" title="Link to this definition">¶</a></dt>
+<dd><p>Apply appropriate quoting for use in TCL scripts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string to escape.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tcl_quote</span><span class="p">(</span><span class="s1">'Meow "meow"'</span><span class="p">)</span>
+<span class="go">'"Meow \"meow\""'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tcl_quote</span><span class="p">(</span><span class="s2">"Meow 'meow'"</span><span class="p">)</span>
+<span class="go">'"Meow 'meow'"'</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The string with any applicable characters escaped appropriately.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.util.string.tool_env_var">
+<span class="sig-prename descclassname"><span class="pre">torii.util.string.</span></span><span class="sig-name descname"><span class="pre">tool_env_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.util.string.tool_env_var" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given tool name into a normalized version for
+environment variables.</p>
+<p>This generally means replacing any <cite>-</cite>‘s with <cite>_</cite>’s and any
+<cite>+</cite>’s with <cite>X</cite>’s and converting the entire name to uppercase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The tool/executable name.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tool_env_var</span><span class="p">(</span><span class="s1">'cat'</span><span class="p">)</span>
+<span class="go">'CAT'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tool_env_var</span><span class="p">(</span><span class="s1">'cat-girl'</span><span class="p">)</span>
+<span class="go">'CAT_GIRL'</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the environment variable used to look for
+for tool overrides.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
 </section>
 <script type="text/javascript">
         function init() {
@@ -371,22 +421,22 @@ are able to instantiate it as follows:</p>
 </div>
 <footer>
 <div class="related-pages">
-<a class="next-page" href="mem.html">
+<a class="next-page" href="tracer.html">
 <div class="page-info">
 <div class="context">
 <span>Next</span>
 </div>
-<div class="title">Memory</div>
+<div class="title">Tracer</div>
 </div>
 <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
 </a>
-<a class="prev-page" href="dsl.html">
+<a class="prev-page" href="index.html">
 <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
 <div class="page-info">
 <div class="context">
 <span>Previous</span>
 </div>
-<div class="title">DSL</div>
+<div class="title">Torii Utility Library</div>
 </div>
 </a>
 </div>
@@ -414,10 +464,11 @@ are able to instantiate it as follows:</p>
 <div class="toc-tree-container">
 <div class="toc-tree">
 <ul>
-<li><a class="reference internal" href="#">IR</a><ul>
-<li><a class="reference internal" href="#torii.hdl.ir.DriverConflict"><code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code></a></li>
-<li><a class="reference internal" href="#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
-<li><a class="reference internal" href="#torii.hdl.ir.UnusedElaboratable"><code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code></a></li>
+<li><a class="reference internal" href="#">String Helpers</a><ul>
+<li><a class="reference internal" href="#torii.util.string.ascii_escape"><code class="docutils literal notranslate"><span class="pre">ascii_escape()</span></code></a></li>
+<li><a class="reference internal" href="#torii.util.string.tcl_escape"><code class="docutils literal notranslate"><span class="pre">tcl_escape()</span></code></a></li>
+<li><a class="reference internal" href="#torii.util.string.tcl_quote"><code class="docutils literal notranslate"><span class="pre">tcl_quote()</span></code></a></li>
+<li><a class="reference internal" href="#torii.util.string.tool_env_var"><code class="docutils literal notranslate"><span class="pre">tool_env_var()</span></code></a></li>
 </ul>
 </li>
 </ul>
