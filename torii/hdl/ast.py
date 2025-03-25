@@ -1558,7 +1558,7 @@ class Array(MutableSequence[Value]):
 	'''
 	Addressable multiplexer.
 
-	An array is similar to a ``list`` that can also be indexed by ``Value``s;
+	An array is similar to a ``list`` that can also be indexed by a ``Value``;
 	indexing by an integer or a slice works the same as for Python lists,
 	but indexing by a ``Value`` results in a proxy.
 
