@@ -943,6 +943,11 @@ class InstanceTestCase(ToriiTestSuiteCase):
 
 class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):
+		try:
+			import click # noqa: F401
+		except ImportError:
+			self.skipTest('click not installed, unable to run sby if it is installed')
+
 		class SimpleElaboratable(Elaboratable):
 			def elaborate(self, _):
 				m = Module()
