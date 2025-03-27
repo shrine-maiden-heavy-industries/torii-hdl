@@ -2,7 +2,9 @@
 
 from warnings      import warn
 
-from ..hdl         import ast, cd, ir
+from ..hdl.ast     import SignalDict
+from ..hdl.cd      import ClockDomain
+from ..hdl.ir      import Elaboratable, Fragment
 from ..tools.yosys import YosysError, find_yosys
 from .             import rtlil
 
@@ -50,8 +52,8 @@ def _convert_rtlil_text(
 	return yosys.run(['-q', '-'], '\n'.join(script), src_loc_at = 1 + src_loc_at)
 
 def convert_fragment(
-	fragment: ir.Fragment, name: str = 'top', emit_src: bool = True, black_boxes: dict[str, str] | None = None,
-) -> tuple[str, ast.SignalDict]:
+	fragment: Fragment, name: str = 'top', emit_src: bool = True, black_boxes: dict[str, str] | None = None,
+) -> tuple[str, SignalDict]:
 	'''
 	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into CXXRTL text and
 	a signal map.
@@ -79,8 +81,8 @@ def convert_fragment(
 	return (_convert_rtlil_text(rtlil_text, black_boxes, src_loc_at = 1), name_map)
 
 def convert(
-	elaboratable: ir.Elaboratable, name: str = 'top', platform = None, black_boxes: dict[str, str] | None = None, *,
-	ports, emit_src: bool = True, missing_domain = lambda name: cd.ClockDomain(name)
+	elaboratable: Elaboratable, name: str = 'top', platform = None, black_boxes: dict[str, str] | None = None, *,
+	ports, emit_src: bool = True, missing_domain = lambda name: ClockDomain(name)
 ) -> str:
 	'''
 	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into CXXRTL text.
