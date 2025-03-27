@@ -8,7 +8,7 @@ from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import Literal
 
-from ..hdl        import ast, ir, mem, xfrm
+from ..hdl        import ast, cd, ir, mem, xfrm
 from ..util       import flatten
 from ..util.units import bits_for
 
@@ -1106,7 +1106,8 @@ def convert_fragment(
 	return (str(builder), name_map)
 
 def convert(
-	elaboratable, name: str = 'top', platform = None, *, ports,  emit_src = True, **kwargs
+	elaboratable, name: str = 'top', platform = None, *, ports,  emit_src = True,
+	missing_domain = lambda name: cd.ClockDomain(name)
 ) -> str:
 	'''
 	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into RTLIL text.
@@ -1132,6 +1133,6 @@ def convert(
 		The resulting RTLIL.
 	'''
 
-	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
+	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, missing_domain = missing_domain)
 	il_text, _ = convert_fragment(fragment, name, emit_src = emit_src)
 	return il_text

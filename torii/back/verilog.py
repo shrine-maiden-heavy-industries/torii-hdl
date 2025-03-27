@@ -2,7 +2,7 @@
 
 from warnings      import warn
 
-from ..hdl         import ast, ir
+from ..hdl         import ast, cd, ir
 from ..tools.yosys import YosysError, find_yosys
 from .             import rtlil
 
@@ -57,7 +57,9 @@ def _convert_rtlil_text(
 		ignore_warnings = True
 	)
 
-def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tuple[str, ast.SignalDict]:
+def convert_fragment(
+	fragment: ir.Fragment, name: str = 'top', emit_src: bool = True, strip_internal_attrs: bool = False
+) -> tuple[str, ast.SignalDict]:
 	'''
 	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into Verilog text and
 	a signal map.
@@ -81,12 +83,12 @@ def convert_fragment(*args, strip_internal_attrs: bool = False, **kwargs) -> tup
 		The Verilog text and signal dictionary of the lowered fragment.
 	'''
 
-	rtlil_text, name_map = rtlil.convert_fragment(*args, **kwargs)
+	rtlil_text, name_map = rtlil.convert_fragment(fragment, name, emit_src = emit_src)
 	return (_convert_rtlil_text(rtlil_text, strip_internal_attrs = strip_internal_attrs), name_map)
 
 def convert(
 	elaboratable: ir.Fragment | ir.Elaboratable, name: str = 'top', platform = None, *, ports,
-	emit_src: bool = True, strip_internal_attrs: bool = False, **kwargs
+	emit_src: bool = True, strip_internal_attrs: bool = False, missing_domain = lambda name: cd.ClockDomain(name)
 ) -> str:
 	'''
 	Convert the given Torii :py:class:`Elaboratable <torii.hdl.ir.Elaboratable>` into Verilog text.
@@ -114,6 +116,6 @@ def convert(
 		The resulting Verilog.
 	'''
 
-	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, **kwargs)
+	fragment = ir.Fragment.get(elaboratable, platform).prepare(ports = ports, missing_domain = missing_domain)
 	verilog_text, _ = convert_fragment(fragment, name, emit_src = emit_src, strip_internal_attrs = strip_internal_attrs)
 	return verilog_text
