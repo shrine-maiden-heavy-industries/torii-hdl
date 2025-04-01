@@ -44,6 +44,8 @@ Unreleased template stuff
 
 ### Fixed
 
+- Lots of documentation fixes.
+
 ## [0.7.7]
 
 ### Deprecated
