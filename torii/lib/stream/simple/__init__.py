@@ -13,11 +13,11 @@ from collections.abc import Iterable
 from typing          import Generic, TypeVar
 from warnings        import warn
 
-from ...hdl.ast      import Signal
-from ...hdl.dsl      import Module
-from ...hdl.ir       import Elaboratable
-from ...hdl.rec      import Record
-from ...hdl.xfrm     import DomainRenamer
+from ....hdl.ast     import Signal
+from ....hdl.dsl     import Module
+from ....hdl.ir      import Elaboratable
+from ....hdl.rec     import Record
+from ....hdl.xfrm    import DomainRenamer
 
 __all__ = (
 	'StreamArbiter',
