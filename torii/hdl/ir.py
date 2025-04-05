@@ -20,6 +20,7 @@ from .cd               import ClockDomain, DomainError
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
+	from .dsl         import Module
 
 __all__ = (
 	'DriverConflict',
@@ -39,12 +40,12 @@ class UnusedElaboratable(UnusedMustUse):
 class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
 
-	def formal(self, module):
+	def formal(self, module: Module) -> Module:
 		''' Entry point for elaboration under formal verification '''
 		return module
 
 	@abstractmethod
-	def elaborate(self, platform):
+	def elaborate(self, platform: Platform | None) -> Module:
 		''' '''
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
 
