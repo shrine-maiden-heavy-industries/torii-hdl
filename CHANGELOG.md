@@ -23,10 +23,8 @@ Unreleased template stuff
 
 - New library module `torii.lib.mem` for more generic-ish not SoC specific memory constructs, such as maps for busses.
 - New library module `torii.lib.bus`
-
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
   - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
-
 - Added `torii.hdl.ast.Edge` for `torii.hdl.ast.Sample` based edge detection on either rising or falling edges.
 
 ### Changed
