@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
+from ....hdl.ast import Signal
+from ....hdl.dsl import Module
+from ....hdl.ir  import Elaboratable
+
+__all__ = (
+	'BitwiseCRC32',
+)
+
+class BitwiseCRC32(Elaboratable):
+	def __init__(self, *, polynomial: int) -> None:
+		# Reset the computed CRC32
+		self.reset = Signal()
+		# Input for the next byte of data to hash
+		self.data = Signal(8)
+		# Asserted for a cycle to indicate the data is valid
+		self.valid = Signal()
+		# The current computed CRC32
+		self.crc = Signal(32)
+		# Asserted when computation of the CRC32 is complete
+		self.done = Signal()
+
+		self._poly = polynomial
+
+	def elaborate(self, _) -> Module:
+		m = Module()
+
+		data = Signal(32)
+		bit = Signal(range(8))
+		crc = Signal(32, reset = 0xffffffff)
+
+		m.d.comb += [
+			self.done.eq(0),
+			self.crc.eq(crc ^ 0xffffffff),
+		]
+
+		with m.FSM(name = 'crc32'):
+			# When the state machine starts, reset the output CRC
+			with m.State('RESET'):
+				m.d.sync += crc.eq(0)
+				m.next = 'IDLE'
+
+			with m.State('IDLE'):
+				# While idle, the output CRC is valid
+				m.d.comb += self.done.eq(1)
+				# If the user asks us to reset state
+				with m.If(self.reset):
+					m.next = 'RESET'
+				# If the user wants us to process another byte
+				with m.Elif(self.valid):
+					m.d.sync += data.eq(crc[0:8] ^ self.data)
+					m.next = 'COMPUTE-CRC'
+
+			with m.State('COMPUTE-CRC'):
+				# For each bit in the value to process
+				m.d.sync += bit.inc()
+				# If we got to the last bit, we're done
+				with m.If(bit == 7):
+					m.next = 'DONE'
+
+				# Compute the CRC for this bit
+				with m.If(data & 1):
+					m.d.sync += data.eq(self._poly ^ (data >> 1))
+				with m.Else():
+					m.d.sync += data.eq(data >> 1)
+
+			with m.State('DONE'):
+				# Copy the resulting CRC32 to our output
+				m.d.sync += crc.eq(data ^ crc[8:32])
+				m.next = 'IDLE'
+
+		return m
