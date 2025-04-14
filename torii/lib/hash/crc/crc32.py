@@ -29,25 +29,21 @@ class BitwiseCRC32(Elaboratable):
 
 		data = Signal(32)
 		bit = Signal(range(8))
-		crc = Signal(32, reset = 0xffffffff)
+		crc = Signal.like(self.crc)
 
 		m.d.comb += [
 			self.done.eq(0),
-			self.crc.eq(crc ^ 0xffffffff),
+			self.crc.eq(~crc),
 		]
 
 		with m.FSM(name = 'crc32'):
-			# When the state machine starts, reset the output CRC
-			with m.State('RESET'):
-				m.d.sync += crc.eq(0)
-				m.next = 'IDLE'
-
 			with m.State('IDLE'):
 				# While idle, the output CRC is valid
 				m.d.comb += self.done.eq(1)
 				# If the user asks us to reset state
 				with m.If(self.reset):
-					m.next = 'RESET'
+					# Put the CRC internal state back to the initial state
+					m.d.sync += crc.eq(crc.reset)
 				# If the user wants us to process another byte
 				with m.Elif(self.valid):
 					m.d.sync += data.eq(crc[0:8] ^ self.data)

@@ -20,8 +20,6 @@ class BitwiseCRC32TestCase(ToriiTestSuiteCase):
 	@ToriiTestCase.sync_domain(domain = 'sync')
 	def test_crc32(self):
 		# Check that the controller comes up into the proper state
-		self.assertEqual((yield self.dut.done), 0)
-		yield
 		self.assertEqual((yield self.dut.done), 1)
 		self.assertEqual((yield self.dut.crc), 0xffffffff)
 		yield
@@ -49,8 +47,6 @@ class BitwiseCRC32TestCase(ToriiTestSuiteCase):
 		yield self.dut.reset.eq(1)
 		yield
 		yield self.dut.reset.eq(0)
-		yield
-		self.assertEqual((yield self.dut.done), 0)
 		yield
 		self.assertEqual((yield self.dut.done), 1)
 		self.assertEqual((yield self.dut.crc), 0xffffffff)
