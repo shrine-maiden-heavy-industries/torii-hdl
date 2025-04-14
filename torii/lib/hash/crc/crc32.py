@@ -3,6 +3,7 @@
 from ....hdl.ast import Signal
 from ....hdl.dsl import Module
 from ....hdl.ir  import Elaboratable
+from ....hdl.mem import Memory
 
 __all__ = (
 	'BitwiseCRC32',
@@ -71,3 +72,72 @@ class BitwiseCRC32(Elaboratable):
 				m.next = 'IDLE'
 
 		return m
+
+class LUTBytewiseCRC32(Elaboratable):
+	def __init__(self, *, polynomial: int) -> None:
+		# Reset the computed CRC32
+		self.reset = Signal()
+		# Input for the next byte of data to hash
+		self.data = Signal(8)
+		# Asserted for a cycle to indicate the data is valid
+		self.valid = Signal()
+		# The current computed CRC32
+		self.crc = Signal(32)
+		# Asserted when computation of the CRC32 is complete
+		self.done = Signal()
+
+		self._poly = polynomial
+
+	def elaborate(self, _) -> Module:
+		m = Module()
+
+		crc = Signal(32, reset = 0xffffffff)
+
+		m.submodules.lut = lut = self.generate_rom()
+		crcTable = lut.read_port()
+
+		m.d.comb += [
+			self.done.eq(0),
+			self.crc.eq(crc ^ 0xffffffff),
+		]
+
+		with m.FSM(name = 'crc32'):
+			# When the state machine starts, reset the output CRC
+			with m.State('RESET'):
+				m.d.sync += crc.eq(0)
+				m.next = 'IDLE'
+
+			with m.State('IDLE'):
+				# While idle, the output CRC is valid
+				m.d.comb += self.done.eq(1)
+				# If the user asks us to reset state
+				with m.If(self.reset):
+					m.next = 'RESET'
+				# If the user wants us to process another byte
+				with m.Elif(self.valid):
+					# Set up the access to the CRC fragment table
+					m.d.comb += crcTable.addr.eq(crc[0:8] ^ self.data)
+					m.next = 'COMPUTE-CRC'
+
+			with m.State('COMPUTE-CRC'):
+				# Take the resulting value from the fragment table, and combine it with
+				# the previous CRC to generate the next one
+				m.d.sync += crc.eq(crcTable.data ^ crc[8:32])
+				m.next = 'IDLE'
+
+		return m
+
+	def compute_crc32(self, c: int, k: int) -> int:
+		# If we've recursed through all bits in the byte, return the resulting CRC fragment
+		if k == 0:
+			return c
+		# Otherwise, compute the next bit of the CRC fragment and recurse
+		return self.compute_crc32((self._poly if (c & 1) == 1 else 0) ^ (c >> 1), k - 1)
+
+	def generate_rom(self) -> Memory:
+		crc32Table = []
+		# For each of the possible 256 byte values, compute the CRC32 fragment for that value
+		for byte in range(256):
+			crc32Table.append(self.compute_crc32(byte, 8))
+		# Build a Memory from those values to be used in the FSM
+		return Memory(width = 32, depth = 256, init = crc32Table)
