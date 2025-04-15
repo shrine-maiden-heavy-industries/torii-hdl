@@ -127,9 +127,7 @@ class LUTBytewiseCRC32(Elaboratable):
 		return self.compute_crc32((self._poly if (c & 1) == 1 else 0) ^ (c >> 1), k - 1)
 
 	def generate_rom(self) -> Memory:
-		crc32Table = []
 		# For each of the possible 256 byte values, compute the CRC32 fragment for that value
-		for byte in range(256):
-			crc32Table.append(self.compute_crc32(byte, 8))
+		crc32Table = tuple(self.compute_crc32(byte, 8) for byte in range(256))
 		# Build a Memory from those values to be used in the FSM
 		return Memory(width = 32, depth = 256, init = crc32Table)
