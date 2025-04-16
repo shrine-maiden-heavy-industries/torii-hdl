@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ....hdl.ast import Signal, Const, Slice, Cat, ValueDict
-from ....hdl.dsl import Module
-from ....hdl.ir  import Elaboratable
-from ....hdl.mem import Memory
-from ....util import flatten
+from ...hdl.ast import Signal, Const, Slice, Cat, ValueDict
+from ...hdl.dsl import Module
+from ...hdl.ir  import Elaboratable
+from ...hdl.mem import Memory
+from ...util import flatten
 
 __all__ = (
 	'BitwiseCRC32',
