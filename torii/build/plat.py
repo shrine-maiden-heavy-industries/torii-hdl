@@ -284,17 +284,17 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	def get_diff_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
-	) -> None:
+	) -> Module | None:
 		self._check_feature('differential input', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
-	) -> None:
+	) -> Module | None:
 		self._check_feature('differential output', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
-	) -> None:
+	) -> Module | None:
 		self._check_feature('differential tristate', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_input_output(
