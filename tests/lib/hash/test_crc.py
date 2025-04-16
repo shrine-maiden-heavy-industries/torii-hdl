@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from zlib import crc32
+from zlib               import crc32
 
-from torii.lib.hash.crc.crc32 import BitwiseCRC32, LUTBytewiseCRC32, CombBytewiseCRC32
-from torii.test               import ToriiTestCase
+from torii.lib.hash.crc import BitwiseCRC32, LUTBytewiseCRC32, CombBytewiseCRC32
+from torii.test         import ToriiTestCase
 
-from ....utils                import ToriiTestSuiteCase
+from ...utils          import ToriiTestSuiteCase
 
 CRC_DATA = b"Hello binary world"
 
