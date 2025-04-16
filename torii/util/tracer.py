@@ -92,7 +92,7 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 				else:
 					return code.co_freevars[imm - len(code.co_cellvars)]
 		elif opc in (
-			'LOAD_GLOBAL', 'LOAD_NAME', 'LOAD_ATTR', 'LOAD_FAST',
+			'LOAD_GLOBAL', 'LOAD_NAME', 'LOAD_ATTR', 'LOAD_FAST', 'LOAD_FAST_BORROW',
 			'LOAD_DEREF', 'DUP_TOP', 'BUILD_LIST', 'CACHE', 'COPY'
 		):
 			imm = 0
