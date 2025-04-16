@@ -313,52 +313,48 @@ class ICE40Platform(TemplatedPlatform):
 
 	@property
 	def family(self) -> str:
-		if not (self.device.startswith('iCE40') or self.device.startswith('iCE5')):
-			raise ValueError(f'Unknown iCE40 device \'{self.device}\'')
-
 		if self.device.startswith('iCE40'):
 			return 'iCE40'
 		if self.device.startswith('iCE5'):
 			return 'iCE5'
 
+		raise ValueError(f'Unknown iCE40 device \'{self.device}\'')
+
 	@property
 	def _toolchain_env_var(self) -> str:
-		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
-			raise ValueError(
-				f'Unknown toolchain \'{self.toolchain}\', must be either'
-				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
-			)
-
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return 'TORII_ENV_iCECube2'
 		elif self.toolchain == 'IceStorm':
 			return super()._toolchain_env_var
 
+		raise ValueError(
+			f'Unknown toolchain \'{self.toolchain}\', must be either'
+			' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+		)
+
 	@property
 	def required_tools(self) -> list[str]:
-		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
-			raise ValueError(
-				f'Unknown toolchain \'{self.toolchain}\', must be either'
-				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
-			)
-
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_required_tools
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return self._icecube2_required_tools
 
+		raise ValueError(
+			f'Unknown toolchain \'{self.toolchain}\', must be either'
+			' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+		)
+
 	@property
 	def file_templates(self) -> dict[str, str]:
-		if self.toolchain not in ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2'):
-			raise ValueError(
-				f'Unknown toolchain \'{self.toolchain}\', must be either'
-				' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
-			)
-
 		if self.toolchain == 'IceStorm':
 			return self._icestorm_file_templates
 		if self.toolchain in ('LSE-iCECube2', 'Synplify-iCECube2'):
 			return self._icecube2_file_templates
+
+		raise ValueError(
+			f'Unknown toolchain \'{self.toolchain}\', must be either'
+			' \'IceStorm\', \'LSE-iCECube2\', or \'Synplify-iCECube2\''
+		)
 
 	@property
 	def command_templates(self) -> list[str]:
@@ -386,7 +382,7 @@ class ICE40Platform(TemplatedPlatform):
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name: str) -> Module:
+	def create_missing_domain(self, name: str) -> Module | None:
 		# For unknown reasons (no errata was ever published, and no documentation mentions this
 		# issue), iCE40 BRAMs read as zeroes for ~3 us after configuration and release of internal
 		# global reset. Note that this is a *time-based* delay, generated purely by the internal
@@ -463,6 +459,7 @@ class ICE40Platform(TemplatedPlatform):
 				m.d.comb += ResetSignal('sync').eq(~ready)
 
 			return m
+		return None
 
 	def should_skip_port_component(
 		self, port: Subsignal, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
