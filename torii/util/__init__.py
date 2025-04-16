@@ -14,12 +14,12 @@ __all__ = (
 
 T = TypeVar('T')
 
-def flatten(i: Iterable[str | T | Iterable]) -> Generator[str | T]:
-	for e in i:
-		if isinstance(e, str) or not isinstance(e, Iterable):
-			yield e
+def flatten(iter: Iterable[str | T | Iterable]) -> Generator[str | T]:
+	for element in iter:
+		if isinstance(element, str) or not isinstance(element, Iterable):
+			yield element
 		else:
-			yield from flatten(e)
+			yield from flatten(element)
 
 def union(i: Iterable[T], start: T | None = None) -> T:
 	# NOTE(aki): The two ignores below are due to mypy having a hard time seeing through the loop/if-else
