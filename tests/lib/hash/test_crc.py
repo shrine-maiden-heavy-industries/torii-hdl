@@ -10,6 +10,61 @@ from ...utils           import ToriiTestSuiteCase
 
 CRC_DATA = b"Hello binary world"
 
+def crc16_byte(data: int, bit_len: int, crc_in: int = 0) -> int:
+	'''
+	Computes the CRC16 of the given byte for the USB traffic.
+
+	Parameters
+	----------
+	data : int
+		The current byte to compute the CRC16 on.
+
+	bit_len : int
+		The number of bits of `data` to compute the CRC16 over.
+
+	crc_in : int
+		The result of a previous call to `crc16` if iterating over a buffer of data.
+
+	Returns
+	-------
+	int
+		The output CRC16 value.
+	'''
+
+	crc = int(f'{crc_in ^ 0xFFFF:016b}'[::-1], base = 2)
+
+	for bit_idx in range(bit_len):
+		bit = (data >> bit_idx) & 1
+		crc <<= 1
+
+		if bit != (crc >> 16):
+			crc ^= 0x18005
+		crc &= 0xFFFF
+
+	crc ^= 0xFFFF
+	return int(f'{crc:016b}'[::-1], base = 2)
+
+@staticmethod
+def crc16(data: Iterable[int]) -> int:
+	'''
+	Compute the CRC16 value of a buffer of bytes.
+
+	Parameters
+	----------
+	data : Iterable[int]
+		The buffer of bytes to compute the CRC16 for
+
+	Returns
+	-------
+	int
+		The CRC16 value of the data buffer.
+	'''
+
+	crc = 0
+	for byte in data:
+		crc = crc16_byte(byte, 8, crc)
+	return crc
+
 class BitwiseCRC32TestCase(ToriiTestSuiteCase):
 	dut: BitwiseCRC32 = BitwiseCRC32
 	dut_args = {
@@ -152,62 +207,6 @@ class CombBytewiseCRC16TestCase(ToriiTestSuiteCase):
 		'reset_value': 0xffff,
 	}
 
-	@staticmethod
-	def crc16(data: int, bit_len: int, crc_in: int = 0) -> int:
-		'''
-		Computes the CRC16 of the given byte for the USB traffic.
-
-		Parameters
-		----------
-		data : int
-			The current byte to compute the CRC16 on.
-
-		bit_len : int
-			The number of bits of `data` to compute the CRC16 over.
-
-		crc_in : int
-			The result of a previous call to `crc16` if iterating over a buffer of data.
-
-		Returns
-		-------
-		int
-			The output CRC16 value.
-		'''
-
-		crc = int(f'{crc_in ^ 0xFFFF:016b}'[::-1], base = 2)
-
-		for bit_idx in range(bit_len):
-			bit = (data >> bit_idx) & 1
-			crc <<= 1
-
-			if bit != (crc >> 16):
-				crc ^= 0x18005
-			crc &= 0xFFFF
-
-		crc ^= 0xFFFF
-		return int(f'{crc:016b}'[::-1], base = 2)
-
-	@staticmethod
-	def crc16_buff(data: Iterable[int]) -> int:
-		'''
-		Compute the CRC16 value of a buffer of bytes.
-
-		Parameters
-		----------
-		data : Iterable[int]
-			The buffer of bytes to compute the CRC16 for
-
-		Returns
-		-------
-		int
-			The CRC16 value of the data buffer.
-		'''
-
-		crc = 0
-		for byte in data:
-			crc = CombBytewiseCRC16TestCase.crc16(byte, 8, crc)
-		return crc
-
 	@ToriiTestCase.simulation
 	@ToriiTestCase.sync_domain(domain = 'sync')
 	def test_crc16(self):
@@ -230,7 +229,7 @@ class CombBytewiseCRC16TestCase(ToriiTestSuiteCase):
 		yield
 		self.assertEqual((yield self.dut.done), 1)
 		# Use the above CRC-16 implementation to compute a reference value
-		checkCRC16 = CombBytewiseCRC16TestCase.crc16_buff(CRC_DATA)
+		checkCRC16 = crc16(CRC_DATA)
 		# And check if the one computed matches
 		self.assertEqual((yield self.dut.crc), checkCRC16)
 		yield
