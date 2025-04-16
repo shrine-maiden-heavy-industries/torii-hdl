@@ -8,6 +8,8 @@ from ...util import flatten
 
 __all__ = (
 	'BitwiseCRC32',
+	'LUTBytewiseCRC32',
+	'CombBytewiseCRC',
 )
 
 class BitwiseCRC32(Elaboratable):
@@ -133,31 +135,37 @@ class LUTBytewiseCRC32(Elaboratable):
 		# Build a Memory from those values to be used in the FSM
 		return Memory(width = 32, depth = 256, init = crc32Table)
 
-class CombBytewiseCRC32(Elaboratable):
-	def __init__(self, *, polynomial: int) -> None:
+class CombBytewiseCRC(Elaboratable):
+	def __init__(
+		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
+	) -> None:
 		# Reset the computed CRC32
 		self.reset = Signal()
 		# Input for the next byte of data to hash
-		self.data = Signal(8)
+		self.data = Signal(data_width)
 		# Asserted for a cycle to indicate the data is valid
 		self.valid = Signal()
 		# The current computed CRC32
-		self.crc = Signal(32)
+		self.crc = Signal(crc_width)
 		# Asserted when computation of the CRC32 is complete
 		self.done = Signal()
 
 		self._poly = polynomial
+		self._crc_reset_value = reset_value
+		self._crc_inverted = inverted_output
 
 	def elaborate(self, _) -> Module:
 		m = Module()
 
-		crc = Signal.like(self.crc)
+		crc = Signal(self.crc.width, reset = self._crc_reset_value)
 
-		m.d.comb += [
-			# We're always done, because of how things work.
-			self.done.eq(1),
-			self.crc.eq(~crc),
-		]
+		# We're always done, because of how things work.
+		m.d.comb += self.done.eq(1)
+
+		if self._crc_inverted:
+			m.d.comb += self.crc.eq(~crc)
+		else:
+			m.d.comb += self.crc.eq(crc)
 
 		# If the user asks us to reset state
 		with m.If(self.reset):
