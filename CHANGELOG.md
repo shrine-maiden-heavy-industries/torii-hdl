@@ -57,6 +57,7 @@ Unreleased template stuff
 - Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
 - Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
 - Added a new way to build C++-based native modules with `torii.tools.cxx.compile_cxx`.
+- Added `torii.lib.hash.crc` module for Cyclic Redundency Check calculation.
 
 ### Changed
 
