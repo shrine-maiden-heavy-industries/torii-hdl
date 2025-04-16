@@ -43,6 +43,7 @@ Unreleased template stuff
 ### Fixed
 
 - Lots of documentation fixes.
+- Made sure that pullup attribute annotations on iCE40 devices are respected and conveyed through the PCF
 
 ## [0.7.7]
 
