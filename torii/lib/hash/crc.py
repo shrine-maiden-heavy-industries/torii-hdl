@@ -7,39 +7,47 @@ from ...hdl.mem import Memory
 from ...util import flatten
 
 __all__ = (
-	'BitwiseCRC32',
+	'BitwiseCRC',
 	'LUTBytewiseCRC',
 	'CombBytewiseCRC',
 )
 
-class BitwiseCRC32(Elaboratable):
-	def __init__(self, *, polynomial: int) -> None:
-		# Reset the computed CRC32
+class BitwiseCRC(Elaboratable):
+	def __init__(
+		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
+	) -> None:
+		# Reset the computed CRC
 		self.reset = Signal()
 		# Input for the next byte of data to hash
-		self.data = Signal(8)
+		self.data = Signal(data_width)
 		# Asserted for a cycle to indicate the data is valid
 		self.valid = Signal()
-		# The current computed CRC32
-		self.crc = Signal(32)
-		# Asserted when computation of the CRC32 is complete
+		# The current computed CRC
+		self.crc = Signal(crc_width)
+		# Asserted when computation of the CRC is complete
 		self.done = Signal()
 
 		self._poly = polynomial
+		self._crc_reset_value = reset_value
+		self._crc_inverted = inverted_output
 
 	def elaborate(self, _) -> Module:
 		m = Module()
 
-		data = Signal(32)
-		bit = Signal(range(8))
-		crc = Signal.like(self.crc)
+		data_width = self.data.width
+		crc_width = self.crc.width
+		data = Signal(crc_width)
+		bit = Signal(range(data_width))
+		crc = Signal(crc_width, reset = self._crc_reset_value)
 
-		m.d.comb += [
-			self.done.eq(0),
-			self.crc.eq(~crc),
-		]
+		m.d.comb += self.done.eq(0)
 
-		with m.FSM(name = 'crc32'):
+		if self._crc_inverted:
+			m.d.comb += self.crc.eq(~crc)
+		else:
+			m.d.comb += self.crc.eq(crc)
+
+		with m.FSM(name = 'crc'):
 			with m.State('IDLE'):
 				# While idle, the output CRC is valid
 				m.d.comb += self.done.eq(1)
@@ -49,14 +57,14 @@ class BitwiseCRC32(Elaboratable):
 					m.d.sync += crc.eq(crc.reset)
 				# If the user wants us to process another byte
 				with m.Elif(self.valid):
-					m.d.sync += data.eq(crc[0:8] ^ self.data)
+					m.d.sync += data.eq(crc[0:data_width] ^ self.data)
 					m.next = 'COMPUTE-CRC'
 
 			with m.State('COMPUTE-CRC'):
 				# For each bit in the value to process
 				m.d.sync += bit.inc()
 				# If we got to the last bit, we're done
-				with m.If(bit == 7):
+				with m.If(bit == data_width - 1):
 					m.next = 'DONE'
 
 				# Compute the CRC for this bit
@@ -66,8 +74,11 @@ class BitwiseCRC32(Elaboratable):
 					m.d.sync += data.eq(data >> 1)
 
 			with m.State('DONE'):
-				# Copy the resulting CRC32 to our output
-				m.d.sync += crc.eq(data ^ crc[8:32])
+				# Copy the resulting CRC to our output
+				m.d.sync += [
+					crc.eq(data ^ crc[data_width:]),
+					bit.eq(0),
+				]
 				m.next = 'IDLE'
 
 		return m
@@ -76,15 +87,15 @@ class LUTBytewiseCRC(Elaboratable):
 	def __init__(
 		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
 	) -> None:
-		# Reset the computed CRC32
+		# Reset the computed CRC
 		self.reset = Signal()
 		# Input for the next byte of data to hash
 		self.data = Signal(data_width)
 		# Asserted for a cycle to indicate the data is valid
 		self.valid = Signal()
-		# The current computed CRC32
+		# The current computed CRC
 		self.crc = Signal(crc_width)
-		# Asserted when computation of the CRC32 is complete
+		# Asserted when computation of the CRC is complete
 		self.done = Signal()
 
 		self._poly = polynomial
@@ -147,15 +158,15 @@ class CombBytewiseCRC(Elaboratable):
 	def __init__(
 		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
 	) -> None:
-		# Reset the computed CRC32
+		# Reset the computed CRC
 		self.reset = Signal()
 		# Input for the next byte of data to hash
 		self.data = Signal(data_width)
 		# Asserted for a cycle to indicate the data is valid
 		self.valid = Signal()
-		# The current computed CRC32
+		# The current computed CRC
 		self.crc = Signal(crc_width)
-		# Asserted when computation of the CRC32 is complete
+		# Asserted when computation of the CRC is complete
 		self.done = Signal()
 
 		self._poly = polynomial
