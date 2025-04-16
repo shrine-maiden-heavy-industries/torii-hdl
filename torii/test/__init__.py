@@ -6,6 +6,7 @@ from math      import ceil
 from os        import getenv
 from pathlib   import Path
 from unittest  import TestCase
+from typing    import Any
 
 from ..hdl.ast import Signal
 from ..hdl.ir  import Fragment
@@ -38,10 +39,10 @@ class ToriiTestCase(TestCase):
 
 	'''
 
-	domains   = (('sync', 1e8),)
+	domains: tuple[tuple[str, float], ...] = (('sync', 1e8),)
 	out_dir   = None
 	dut       = None
-	dut_args  = {}
+	dut_args  = dict[str, Any]()
 	platform  = None
 
 	def __init__(self, *args, **kwargs) -> None:
