@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ....hdl.ast import Signal
+from ....hdl.ast import Signal, Const, Slice, Cat, ValueDict
 from ....hdl.dsl import Module
 from ....hdl.ir  import Elaboratable
 from ....hdl.mem import Memory
+from ....util import flatten
 
 __all__ = (
 	'BitwiseCRC32',
@@ -131,3 +132,96 @@ class LUTBytewiseCRC32(Elaboratable):
 		crc32Table = tuple(self.compute_crc32(byte, 8) for byte in range(256))
 		# Build a Memory from those values to be used in the FSM
 		return Memory(width = 32, depth = 256, init = crc32Table)
+
+class CombBytewiseCRC32(Elaboratable):
+	def __init__(self, *, polynomial: int) -> None:
+		# Reset the computed CRC32
+		self.reset = Signal()
+		# Input for the next byte of data to hash
+		self.data = Signal(8)
+		# Asserted for a cycle to indicate the data is valid
+		self.valid = Signal()
+		# The current computed CRC32
+		self.crc = Signal(32)
+		# Asserted when computation of the CRC32 is complete
+		self.done = Signal()
+
+		self._poly = polynomial
+
+	def elaborate(self, _) -> Module:
+		m = Module()
+
+		crc = Signal.like(self.crc)
+
+		m.d.comb += [
+			# We're always done, because of how things work.
+			self.done.eq(1),
+			self.crc.eq(~crc),
+		]
+
+		# If the user asks us to reset state
+		with m.If(self.reset):
+			# Put the CRC internal state back to the initial state
+			m.d.sync += crc.eq(crc.reset)
+		# If the user wants us to process another byte
+		with m.If(self.valid):
+			# Consume that byte and compute the new CRC
+			self.generateCRC(m, crc)
+
+		return m
+
+	def generateCRC(self, m: Module, crcSignal: Signal):
+		polynomial = self._poly
+		# Extract each individual bit into lists for both the input data and CRC
+		data = [self.data[i] for i in range(self.data.width)]
+		crc: list[Slice | list[Const | Slice]] = [crcSignal[i] for i in range(crcSignal.width)]
+
+		# For each bit in the input data
+		for dataBit in range(self.data.width):
+			# Build a dictionary of state bits for every bit in the CRC signal
+			stateBits = {i: [] for i in range(crcSignal.width)}
+			# For each bit in the CRC
+			for crcBit in range(crcSignal.width):
+				# If the bit is not the last bit, grab the state for the next bit along, otherwise
+				# use a constant 0 as a fill/default
+				if crcBit != crcSignal.width - 1:
+					stateBit = crc[crcBit + 1]
+				else:
+					stateBit = Const(0)
+				# If the polynomial specifies a bit set at this position
+				if polynomial & (1 << crcBit):
+					# The state for this bit is the XOR between the state bit, the first bit of the CRC, and the data
+					stateBits[crcBit] = [stateBit, crc[0], data[dataBit]]
+				else:
+					# Otherwise, it's just the selected state bit
+					stateBits[crcBit] = [stateBit]
+
+			# Having loops through all the bits in the CRC, optimise the resulting state vector
+			for bit in range(crcSignal.width):
+				# Start by flattening all the bit lists
+				stateBit: list[Slice | Const] = list(flatten(stateBits[bit]))
+				# With the flattening complted for this bit list, eliminate needless bits
+				oneBits = 0
+				signalBits = ValueDict[int]()
+				# For each entry int he stateBit list
+				for item in stateBit:
+					# Test if that entry represents one of the input signal bits
+					if isinstance(item, Slice):
+						# Count how many times that bit has appeared
+						signalBits[item] = signalBits.get(item, 0) + 1
+					# Else if the entry represents a 1 bit, count that
+					elif item.value == 1:
+						oneBits += 1
+
+				# Build the optimised signal bit vector for this bit ready for Cat
+				result: list[Slice | Const] = []
+				for signalBit, count in signalBits.items():
+					if (count & 1) == 1:
+						result.append(signalBit)
+				if (oneBits & 1) == 1:
+					result.append(Const(1))
+				crc[bit] = result
+
+		# We now have the equations, so build the CRC state update on sync:
+		for bit in range(crcSignal.width):
+			m.d.sync += crcSignal[bit].eq(Cat(crc[bit]).xor())
