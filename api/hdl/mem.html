@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://torii.shmdn.link/api/hdl/mem.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Memory - Torii-HDL 0.7.8.dev69 documentation</title>
+        <title>Memory - Torii-HDL 0.7.8.dev70 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii-HDL 0.7.8.dev69 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii-HDL 0.7.8.dev70 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev69 documentation</span>
+  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev70 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -336,11 +336,33 @@ however it may be deficient or missing in places.</p>
 </div>
 <dl class="py class" id="module-torii.hdl.mem">
 <dt class="sig sig-object py" id="torii.hdl.mem.DummyPort">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.mem.</span></span><span class="sig-name descname"><span class="pre">DummyPort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.mem.DummyPort" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.mem.</span></span><span class="sig-name descname"><span class="pre">DummyPort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.mem.DummyPort" title="Link to this definition">¶</a></dt>
 <dd><p>Dummy memory port.</p>
 <p>This port can be used in place of either a read or a write port for testing and verification.
 It does not include any read/write port specific attributes, i.e. none besides <code class="docutils literal notranslate"><span class="pre">'domain'</span></code>;
 any such attributes may be set manually.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the <code class="docutils literal notranslate"><span class="pre">data</span></code> signal on this port.</p></li>
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the <code class="docutils literal notranslate"><span class="pre">addr</span></code> signal on this port.</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this port is to operate on.
+(default: ‘sync’)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The name of this port.
+(default: None)</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Port granularity if set. If <code class="docutils literal notranslate"><span class="pre">None</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">data_width</span></code>.
+(default: None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>domain</strong> (<em>str</em>) – Port domain.</p></li>
+<li><p><strong>addr</strong> (<em>Signal(addr_width)</em>) – Port address.</p></li>
+<li><p><strong>data</strong> (<em>Signal(data_width)</em>) – Port data.</p></li>
+<li><p><strong>en</strong> (<em>Signal(data_width // granularity)</em>) – Port enable bitmask.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
@@ -352,33 +374,37 @@ any such attributes may be set manually.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Access granularity. Each storage element of this memory is <code class="docutils literal notranslate"><span class="pre">width</span></code> bits in size.</p></li>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Word count. This memory contains <code class="docutils literal notranslate"><span class="pre">depth</span></code> storage elements.</p></li>
-<li><p><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Initial values. At power on, each storage element in this memory is initialized to
+<li><p><strong>init</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Initial values. At power on, each storage element in this memory is initialized to
 the corresponding element of <code class="docutils literal notranslate"><span class="pre">init</span></code>, if any, or to zero otherwise.
 Uninitialized memories are not currently supported.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name hint for this memory. If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default) the name is inferred from the variable
-name this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> is assigned to.</p></li>
-<li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of synthesis attributes.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Name hint for this memory. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the name is inferred from the variable
+name this <code class="docutils literal notranslate"><span class="pre">Memory</span></code> is assigned to.
+(default: None)</p></li>
+<li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em> | </em><em>None</em>) – Dictionary of synthesis attributes.
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>width</strong> (<em>int</em>)</p></li>
-<li><p><strong>depth</strong> (<em>int</em>)</p></li>
-<li><p><strong>init</strong> (<em>list of int</em>)</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>)</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – Width of each element in this memory.</p></li>
+<li><p><strong>depth</strong> (<em>int</em>) – Number of elements in this memory.</p></li>
+<li><p><strong>init</strong> (<em>list of int</em>) – Initial values for this memory.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Synthesis attributes.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.mem.Memory.read_port">
-<span class="sig-name descname"><span class="pre">read_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><span class="pre">ReadPort</span></a></span></span><a class="headerlink" href="#torii.hdl.mem.Memory.read_port" title="Link to this definition">¶</a></dt>
-<dd><p>Get a read port.</p>
+<span class="sig-name descname"><span class="pre">read_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><span class="pre">ReadPort</span></a></span></span><a class="headerlink" href="#torii.hdl.mem.Memory.read_port" title="Link to this definition">¶</a></dt>
+<dd><p>Get an instance of <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> that is associated with this memory.</p>
 <p>See <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> for details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> operates on.
+(default: ‘sync’)</p></li>
+<li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Port transparency.
+(default: True)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -389,14 +415,16 @@ name this <code class="docutils literal notranslate"><span class="pre">Signal</s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.hdl.mem.Memory.write_port">
-<span class="sig-name descname"><span class="pre">write_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><span class="pre">WritePort</span></a></span></span><a class="headerlink" href="#torii.hdl.mem.Memory.write_port" title="Link to this definition">¶</a></dt>
-<dd><p>Get a write port.</p>
+<span class="sig-name descname"><span class="pre">write_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><span class="pre">WritePort</span></a></span></span><a class="headerlink" href="#torii.hdl.mem.Memory.write_port" title="Link to this definition">¶</a></dt>
+<dd><p>Get an instance of <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> that is associated with this memory.</p>
 <p>See <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> for details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> operates on.
+(default: ‘sync’)</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Port granularity
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -414,19 +442,21 @@ name this <code class="docutils literal notranslate"><span class="pre">Signal</s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a>) – Memory associated with the port.</p></li>
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>. If set to <code class="docutils literal notranslate"><span class="pre">'comb'</span></code>, the port is asynchronous.
-Otherwise, the read data becomes available on the next clock cycle.</p></li>
-<li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Port transparency. If set (default), a read at an address that is also being written to in
+<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><em>Memory</em></a>) – Memory associated with the port.</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The clock domain this port operates on. If set to the <code class="docutils literal notranslate"><span class="pre">'comb'</span></code> domain, the port is
+asynchronous, otherwise reads have a latency of 1 clock cycle.
+(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+<li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Port transparency. If set a read at an address that is also being written to in
 the same clock cycle will output the new value. Otherwise, the old value will be output
-first. This behavior only applies to ports in the same domain.</p></li>
+first. This behavior only applies to ports in the same domain.
+(default: True)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a>)</p></li>
-<li><p><strong>domain</strong> (<em>str</em>)</p></li>
-<li><p><strong>transparent</strong> (<em>bool</em>)</p></li>
+<li><p><strong>memory</strong> (<em>Memory</em>) – The memory associated to this port.</p></li>
+<li><p><strong>domain</strong> (<em>str</em>) – The clock domain this port operates on.</p></li>
+<li><p><strong>transparent</strong> (<em>bool</em>) – If port transparency is enabled.</p></li>
 <li><p><strong>addr</strong> (<em>Signal(range(memory.depth)), in</em>) – Read address.</p></li>
 <li><p><strong>data</strong> (<em>Signal(memory.width), out</em>) – Read data.</p></li>
 <li><p><strong>en</strong> (<em>Signal or Const, in</em>) – Read enable. If asserted, <code class="docutils literal notranslate"><span class="pre">data</span></code> is updated with the word stored at <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p></li>
@@ -445,17 +475,19 @@ first. This behavior only applies to ports in the same domain.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a>) – Memory associated with the port.</p></li>
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;sync&quot;</span></code>. Writes have a latency of 1 clock cycle.</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Port granularity. Defaults to <code class="docutils literal notranslate"><span class="pre">memory.width</span></code>. Write data is split evenly in
-<code class="docutils literal notranslate"><span class="pre">memory.width</span> <span class="pre">//</span> <span class="pre">granularity</span></code> chunks, which can be updated independently.</p></li>
+<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><em>Memory</em></a>) – Memory associated with the port.</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The clock domain this port operates on. Writes have a latency of 1 clock cycle.
+(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Port granularity. Write data is split evenly in <code class="docutils literal notranslate"><span class="pre">memory.width</span> <span class="pre">//</span> <span class="pre">granularity</span></code> chunks,
+which can be updated independently. If <code class="docutils literal notranslate"><span class="pre">None</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">memory.width</span></code>.
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a>)</p></li>
-<li><p><strong>domain</strong> (<em>str</em>)</p></li>
-<li><p><strong>granularity</strong> (<em>int</em>)</p></li>
+<li><p><strong>memory</strong> (<em>Memory</em>) – The memory associated to this port.</p></li>
+<li><p><strong>domain</strong> (<em>str</em>) – The clock domain this port operates on.</p></li>
+<li><p><strong>granularity</strong> (<em>int</em>) – The port granularity.</p></li>
 <li><p><strong>addr</strong> (<em>Signal(range(memory.depth)), in</em>) – Write address.</p></li>
 <li><p><strong>data</strong> (<em>Signal(memory.width), in</em>) – Write data.</p></li>
 <li><p><strong>en</strong> (<em>Signal(memory.width // granularity), in</em>) – Write enable. Each bit selects a non-overlapping chunk of <code class="docutils literal notranslate"><span class="pre">granularity</span></code> bits on the
@@ -554,7 +586,7 @@ first. This behavior only applies to ports in the same domain.</p></li>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4dcd997d"></script>
+</div><script src="../../_static/documentation_options.js?v=c84b8dc2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
