@@ -4,6 +4,7 @@ from __future__  import annotations
 
 import operator
 from collections import OrderedDict
+from typing      import Sequence
 
 from ..util      import tracer
 from .ast        import Array, Cat, Const, Mux, Signal, Switch
@@ -24,29 +25,42 @@ class Memory(Elaboratable):
 	----------
 	width : int
 		Access granularity. Each storage element of this memory is ``width`` bits in size.
+
 	depth : int
 		Word count. This memory contains ``depth`` storage elements.
-	init : list of int
+
+	init : Sequence[int]
 		Initial values. At power on, each storage element in this memory is initialized to
 		the corresponding element of ``init``, if any, or to zero otherwise.
 		Uninitialized memories are not currently supported.
-	name : str
-		Name hint for this memory. If ``None`` (default) the name is inferred from the variable
-		name this ``Signal`` is assigned to.
-	attrs : dict
+
+	name : str | None
+		Name hint for this memory. If ``None`` the name is inferred from the variable
+		name this ``Memory`` is assigned to.
+		(default: None)
+
+	attrs : dict | None
 		Dictionary of synthesis attributes.
+		(default: None)
 
 	Attributes
 	----------
 	width : int
+		Width of each element in this memory.
+
 	depth : int
+		Number of elements in this memory.
+
 	init : list of int
+		Initial values for this memory.
+
 	attrs : dict
+		Synthesis attributes.
 
 	'''
 
 	def __init__(
-		self, *, width: int, depth: int, init = None, name: str | None = None,
+		self, *, width: int, depth: int, init: Sequence[int] | None = None, name: str | None = None,
 		attrs: OrderedDict | None = None, simulate: bool = True
 	) -> None:
 		if not isinstance(width, int) or width < 0:
@@ -90,43 +104,53 @@ class Memory(Elaboratable):
 		except TypeError as e:
 			raise TypeError(f'Memory initialization value at address {addr:x}: {e}') from None
 
-	def read_port(self, *, src_loc_at = 0, **kwargs) -> ReadPort:
+	def read_port(self, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0) -> ReadPort:
 		'''
-		Get a read port.
+		Get an instance of :py:class:`ReadPort` that is associated with this memory.
 
-		See :class:`ReadPort` for details.
+		See :py:class:`ReadPort` for details.
 
 		Arguments
 		---------
 		domain : str
+			The domain this :py:class:`ReadPort` operates on.
+			(default: 'sync')
+
 		transparent : bool
+			Port transparency.
+			(default: True)
 
 		Returns
 		-------
-		An instance of :class:`ReadPort` associated with this memory.
+		An instance of :py:class:`ReadPort` associated with this memory.
 
 		'''
 
-		return ReadPort(self, src_loc_at = 1 + src_loc_at, **kwargs)
+		return ReadPort(self, domain = domain, transparent = transparent, src_loc_at = 1 + src_loc_at)
 
-	def write_port(self, *, src_loc_at = 0, **kwargs) -> WritePort:
+	def write_port(self, *, domain: str = 'sync', granularity: int | None = None, src_loc_at: int = 0) -> WritePort:
 		'''
-		Get a write port.
+		Get an instance of :py:class:`WritePort` that is associated with this memory.
 
-		See :class:`WritePort` for details.
+		See :py:class:`WritePort` for details.
 
 		Arguments
 		---------
 		domain : str
-		granularity : int
+			The domain this :py:class:`WritePort` operates on.
+			(default: 'sync')
+
+		granularity : int | None
+			Port granularity
+			(default: None)
 
 		Returns
 		-------
-		An instance of :class:`WritePort` associated with this memory.
+		An instance of :py:class:`WritePort` associated with this memory.
 
 		'''
 
-		return WritePort(self, src_loc_at = 1 + src_loc_at, **kwargs)
+		return WritePort(self, domain = domain, granularity = granularity, src_loc_at = 1 + src_loc_at)
 
 	def __getitem__(self, index):
 		''' Simulation only. '''
@@ -182,34 +206,47 @@ class ReadPort(Elaboratable):
 
 	Parameters
 	----------
-	memory : :class:`Memory`
+	memory : Memory
 		Memory associated with the port.
+
 	domain : str
-		Clock domain. Defaults to ``'sync'``. If set to ``'comb'``, the port is asynchronous.
-		Otherwise, the read data becomes available on the next clock cycle.
+		The clock domain this port operates on. If set to the ``'comb'`` domain, the port is
+		asynchronous, otherwise reads have a latency of 1 clock cycle.
+		(default: ``'sync'``)
+
 	transparent : bool
-		Port transparency. If set (default), a read at an address that is also being written to in
+		Port transparency. If set a read at an address that is also being written to in
 		the same clock cycle will output the new value. Otherwise, the old value will be output
 		first. This behavior only applies to ports in the same domain.
+		(default: True)
 
 	Attributes
 	----------
-	memory : :class:`Memory`
+	memory : Memory
+		The memory associated to this port.
+
 	domain : str
+		The clock domain this port operates on.
+
 	transparent : bool
+		If port transparency is enabled.
+
 	addr : Signal(range(memory.depth)), in
 		Read address.
+
 	data : Signal(memory.width), out
 		Read data.
+
 	en : Signal or Const, in
 		Read enable. If asserted, ``data`` is updated with the word stored at ``addr``.
+
 	Raises
 	------
 	:class:`ValueError` if the read port is simultaneously asynchronous and non-transparent.
 
 	'''
 
-	def __init__(self, memory, *, domain = 'sync', transparent = True, src_loc_at = 0):
+	def __init__(self, memory: Memory, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0):
 		if domain == 'comb' and not transparent:
 			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
 
@@ -247,23 +284,35 @@ class WritePort(Elaboratable):
 
 	Parameters
 	----------
-	memory : :class:`Memory`
+	memory : Memory
 		Memory associated with the port.
+
 	domain : str
-		Clock domain. Defaults to ``"sync"``. Writes have a latency of 1 clock cycle.
-	granularity : int
-		Port granularity. Defaults to ``memory.width``. Write data is split evenly in
-		``memory.width // granularity`` chunks, which can be updated independently.
+		The clock domain this port operates on. Writes have a latency of 1 clock cycle.
+		(default: ``'sync'``)
+
+	granularity : int | None
+		Port granularity. Write data is split evenly in ``memory.width // granularity`` chunks,
+		which can be updated independently. If ``None`` defaults to ``memory.width``.
+		(default: None)
 
 	Attributes
 	----------
-	memory : :class:`Memory`
+	memory : Memory
+		The memory associated to this port.
+
 	domain : str
+		The clock domain this port operates on.
+
 	granularity : int
+		The port granularity.
+
 	addr : Signal(range(memory.depth)), in
 		Write address.
+
 	data : Signal(memory.width), in
 		Write data.
+
 	en : Signal(memory.width // granularity), in
 		Write enable. Each bit selects a non-overlapping chunk of ``granularity`` bits on the
 		``data`` signal, which is written to memory at ``addr``. Unselected chunks are ignored.
@@ -275,7 +324,7 @@ class WritePort(Elaboratable):
 
 	'''
 
-	def __init__(self, memory, *, domain = 'sync', granularity = None, src_loc_at = 0):
+	def __init__(self, memory: Memory, *, domain: str = 'sync', granularity: int | None = None, src_loc_at: int = 0):
 		if granularity is None:
 			granularity = memory.width
 		if not isinstance(granularity, int) or granularity < 0:
@@ -318,9 +367,45 @@ class DummyPort:
 	It does not include any read/write port specific attributes, i.e. none besides ``'domain'``;
 	any such attributes may be set manually.
 
+	Parameters
+	----------
+	data_width : int
+		The width of the ``data`` signal on this port.
+
+	addr_width : int
+		The width of the ``addr`` signal on this port.
+
+	domain : str
+		The domain this port is to operate on.
+		(default: 'sync')
+
+	name : str | None
+		The name of this port.
+		(default: None)
+
+	granularity : str | None
+		Port granularity if set. If ``None`` defaults to ``data_width``.
+		(default: None)
+
+	Attributes
+	----------
+	domain : str
+		Port domain.
+
+	addr : Signal(addr_width)
+		Port address.
+
+	data : Signal(data_width)
+		Port data.
+
+	en : Signal(data_width // granularity)
+		Port enable bitmask.
 	'''
 
-	def __init__(self, *, data_width, addr_width, domain = 'sync', name = None, granularity = None):
+	def __init__(
+		self, *, data_width: int, addr_width: int, domain: str = 'sync', name: str | None = None,
+		granularity: int | None = None
+	):
 		self.domain = domain
 
 		if granularity is None:
