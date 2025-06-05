@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from typing        import Literal
+from warnings      import warn
 
 from ...hdl.ast    import Signal
 from ...hdl.dsl    import Cat, Const, Module
@@ -82,8 +83,12 @@ class AsyncSerialRX(Elaboratable):
 	err.parity : Signal, out
 		Error flag. The parity check has failed.
 	rdy : Signal, out
-		Read strobe.
+		Read strobe. (deprecated, use `done`)
 	ack : Signal, in
+		Read acknowledge. Must be held asserted while data can be read out of the receiver. (deprecated use `start`)
+	done : Signal, out
+		Read strobe.
+	start : Signal, in
 		Read acknowledge. Must be held asserted while data can be read out of the receiver.
 	i : Signal, in
 		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
@@ -109,12 +114,32 @@ class AsyncSerialRX(Elaboratable):
 			('frame',    1),
 			('parity',   1),
 		])
-		self.rdy  = Signal()
-		self.ack  = Signal()
+		self.done  = Signal()
+		self.start = Signal()
 
 		self.i    = Signal(reset = 1)
 
 		self._pins = pins
+
+	def __getattr__(self, name: str):
+
+		# Re-map the `rdy` alias to `done`
+		if name == 'rdy':
+			warn(
+				'AsyncSerialRX `rdy` signal is deprecated, please use `done` instead\n',
+				DeprecationWarning,
+				stacklevel = 2
+			)
+			name = 'done'
+		elif name == 'ack':
+			warn(
+				'AsyncSerialRX `ack` signal is deprecated, please use `start` instead\n',
+				DeprecationWarning,
+				stacklevel = 2
+			)
+			name = 'start'
+
+		return super().__getattr__(name)
 
 	def elaborate(self, platform) -> Module:
 		m = Module()
@@ -148,7 +173,7 @@ class AsyncSerialRX(Elaboratable):
 						m.next = 'DONE'
 
 			with m.State('DONE'):
-				with m.If(self.ack):
+				with m.If(self.start):
 					m.d.sync += [
 						self.data.eq(shreg.data),
 						self.err.frame .eq(~((shreg.start == 0) & (shreg.stop == 1))),
@@ -156,11 +181,11 @@ class AsyncSerialRX(Elaboratable):
 							shreg.parity == _compute_parity_bit(shreg.data, self._parity)
 						)),
 					]
-				m.d.sync += self.err.overflow.eq(~self.ack)
+				m.d.sync += self.err.overflow.eq(~self.start)
 				m.next = 'IDLE'
 
-		with m.If(self.ack):
-			m.d.sync += self.rdy.eq(fsm.ongoing('DONE'))
+		with m.If(self.start):
+			m.d.sync += self.done.eq(fsm.ongoing('DONE'))
 
 		return m
 
