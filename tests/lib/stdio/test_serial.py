@@ -29,10 +29,10 @@ class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 
 	def rx_test(self, bits, *, data = None, errors = None):
 		def process():
-			self.assertFalse((yield self.dut.rdy))
-			yield self.dut.ack.eq(1)
+			self.assertFalse((yield self.dut.done))
+			yield self.dut.start.eq(1)
 			yield from self.tx_bits(bits)
-			while not (yield self.dut.rdy):
+			while not (yield self.dut.done):
 				yield
 			if data is not None:
 				self.assertFalse((yield self.dut.err.overflow))
@@ -101,11 +101,11 @@ class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 		self.dut = AsyncSerialRX(divisor = 5)
 
 		def process():
-			self.assertFalse((yield self.dut.rdy))
+			self.assertFalse((yield self.dut.done))
 			yield from self.tx_bits([0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
 			yield from self.tx_period()
 			yield
-			self.assertFalse((yield self.dut.rdy))
+			self.assertFalse((yield self.dut.done))
 			self.assertTrue((yield self.dut.err.overflow))
 
 		simulation_test(self.dut, process)
@@ -117,8 +117,8 @@ class AsyncSerialRXTestCase(ToriiTestSuiteCase):
 		m.submodules.rx   = self.dut
 		m.submodules.fifo = self.fifo
 		m.d.comb += [
-			self.dut.ack.eq(self.fifo.w_rdy),
-			self.fifo.w_en.eq(self.dut.rdy),
+			self.dut.start.eq(self.fifo.w_rdy),
+			self.fifo.w_en.eq(self.dut.done),
 			self.fifo.w_data.eq(self.dut.data),
 		]
 
@@ -251,9 +251,9 @@ class AsyncSerialTestCase(ToriiTestSuiteCase):
 			yield self.dut.tx.ack.eq(1)
 			yield
 			yield self.dut.tx.ack.eq(0)
-			yield self.dut.rx.ack.eq(1)
+			yield self.dut.rx.start.eq(1)
 			yield
-			while not (yield self.dut.rx.rdy):
+			while not (yield self.dut.rx.done):
 				yield
 			self.assertEqual((yield self.dut.rx.data), 0xAA)
 
