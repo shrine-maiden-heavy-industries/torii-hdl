@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from __future__  import annotations
+from __future__      import annotations
 
 import operator
-from collections import OrderedDict
-from typing      import Sequence
+from collections     import OrderedDict
+from collections.abc import Sequence
 
-from ..util      import tracer
-from .ast        import Array, Cat, Const, Mux, Signal, Switch
-from .ir         import Elaboratable, Fragment
+from ..util          import tracer
+from .ast            import Array, Cat, Const, Mux, Signal, Switch
+from .ir             import Elaboratable, Fragment
 
 __all__ = (
 	'DummyPort',
