@@ -26,6 +26,7 @@ Unreleased template stuff
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
   - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
 - Added `torii.hdl.ast.Edge` for `torii.hdl.ast.Sample` based edge detection on either rising or falling edges.
+- Added `torii.lib.hash.crc` module for Cyclic Redundency Check calculation.
 
 ### Changed
 
