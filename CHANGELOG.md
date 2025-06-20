@@ -46,7 +46,7 @@ Unreleased template stuff
 - Lots of documentation fixes.
 - Made sure that pullup attribute annotations on iCE40 devices are respected and conveyed through the PCF
 
-## [0.7.7]
+## [0.7.7] - 2025-03-11
 
 ### Deprecated
 
@@ -56,13 +56,13 @@ Unreleased template stuff
 
 - Added missing `connect` method on the `torii.lib.streams.simple.StreamInterface`.
 
-## [0.7.6]
+## [0.7.6] - 2025-03-7
 
 ### Fixed
 
 - Fixed the omission of the extra stream fields in the `torii.lib.stream.simple.StreamInterface`'s `attach`
 
-## [0.7.5]
+## [0.7.5] - 2025-03-7
 
 ### Added
 
@@ -93,13 +93,13 @@ Unreleased template stuff
 - More typing fixes
 - Fixed `torii.util.tracer` on pypy3.11
 
-## [0.7.1]
+## [0.7.1] - 2024-11-20
 
 ### Fixed
 
 - Fixed a bug with typing asserts that caused resource unwinding to fail on differential pairs.
 
-## [0.7.0]
+## [0.7.0] - 2024-11-20 \[YANKED\]
 
 ### Added
 
@@ -131,19 +131,19 @@ Unreleased template stuff
 - Fixed huge chunk of typing, lots to do but should improve useability and ergonomics.
 - Fixed a resource layout issue within the `torii.platform.resources.interface.HyperBusResource`
 
-## [0.6.2]
+## [0.6.2] - 2024-10-12
 
 ### Fixed
 
 - Fixed a bug in the definition of the `QSPIResource` in `torii.platform.resources.memory`, again...
 
-## [0.6.1]
+## [0.6.1] - 2024-10-12 \[YANKED\]
 
 ### Fixed
 
 - Fixed a bug in the definition of the `QSPIResource` in `torii.platform.resources.memory`
 
-## [0.6.0]
+## [0.6.0] - 2024-05-06
 
 ### Added
 
@@ -211,7 +211,7 @@ Unreleased template stuff
 - When indexing or slicing a Value with another Value, it now raises an error and suggests to use `Value.bit_select` or `Value.word_select` instead.
 - Fixed simulation look when process catches an injected exception.
 
-## [0.5.0]
+## [0.5.0] - 2023-10-11
 
 ### Added
 
@@ -262,7 +262,7 @@ Unreleased template stuff
 - Fixed  test case that was having issues on Windows paths.
 - Removed translation of empty subfragments as that would cause unintentional blackboxing on Vivado and Yosys.
 
-## [0.4.5]
+## [0.4.5] - 2023-03-26
 
 ### Added
 
@@ -299,7 +299,7 @@ Unreleased template stuff
 - Clarified the usage of `Cat` in the language documentation, noting that it can take more than two arguments for concatenation.
 - Added a warning on potential off-by-one errors when invoking `Signal` with a `range` and having the reset value be the same as the end of the range.
 
-## [0.4.4]
+## [0.4.4] - 2023-02-25
 
 ### Added
 
@@ -348,14 +348,14 @@ Unreleased template stuff
 - Fixed the `tcl_quote` string method that would leave un-escaped `"`'s causing the TCL script to fail due to invalid syntax.
 - Fixed an issue in the `LatticeICE40` platform where the `IceStorm` toolchain environment variable was not being normalized properly.
 
-## [0.4.3]
+## [0.4.3] - 2022-12-28
 
 ### Fixed
 
 - Fixed a small issue with the newline changes that caused synthesis to fail
 - Fixed up the ULPI instance to properly handle the `clk` signal and constrain it
 
-## [0.4.2]
+## [0.4.2] - 2022-12-18
 
 ### Fixed
 
@@ -364,13 +364,13 @@ Unreleased template stuff
 - Fixed the line endings on generated *nix build scripts.
 - Fixed an issue where the built-in test harness was broken with writing VCDs.
 
-## [0.4.1]
+## [0.4.1] - 2022-12-04
 
 ### Fixed
 
 - Fixed issue with `invoke_tool` not emitting the environment variable properly
 
-## [0.4.0]
+## [0.4.0] - 2022-12-02 \[YANKED\]
 
 ### Added
 
