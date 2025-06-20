@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -129,7 +130,6 @@ Unreleased template stuff
 
 - Fixed huge chunk of typing, lots to do but should improve useability and ergonomics.
 - Fixed a resource layout issue within the `torii.platform.resources.interface.HyperBusResource`
-
 
 ## [0.6.2]
 
@@ -429,7 +429,6 @@ Unreleased template stuff
 ## [0.1.0] - [0.3.0]
 
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
-
 
 [unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...main
 [0.7.7]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...v0.7.7
