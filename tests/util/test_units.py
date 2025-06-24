@@ -6,6 +6,8 @@ from torii.test import ToriiTestCase
 class UnitUtilTestCase(ToriiTestCase):
 
 	def test_time_conversion(self):
+		self.assertEqual(util_units.ps_to_sec(4568), 0.000000004568)
+		self.assertEqual(util_units.sec_to_ps(0.000000004568), 4568)
 		self.assertEqual(util_units.ns_to_sec(183.0), 0.000000183)
 		self.assertEqual(util_units.sec_to_ns(0.000000183), 183)
 		self.assertEqual(util_units.us_to_sec(24), 0.000024)
@@ -14,6 +16,9 @@ class UnitUtilTestCase(ToriiTestCase):
 		self.assertEqual(util_units.sec_to_ms(0.0325), 32.5)
 
 	def test_iec_size(self):
+
+		self.assertEqual(util_units.iec_size(0), '0B')
+
 		self.assertEqual(util_units.iec_size(1032), '1.01KiB')
 
 		self.assertEqual(util_units.iec_size(256, dec = 0), '256B')
