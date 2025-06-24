@@ -10,7 +10,7 @@ from typing    import Any
 
 from ..hdl.ast import Signal
 from ..hdl.ir  import Fragment
-from ..sim     import Settle, Simulator
+from ..sim     import Settle, SimulationEngine, Simulator
 
 __all__ = (
 	'ToriiTestCase',
@@ -44,6 +44,7 @@ class ToriiTestCase(TestCase):
 	dut       = None
 	dut_args  = dict[str, Any]()
 	platform  = None
+	engine: SimulationEngine = 'pysim'
 
 	def __init__(self, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
@@ -95,7 +96,7 @@ class ToriiTestCase(TestCase):
 		if self.dut is not None:
 			self.dut   = self.init_dut()
 			self._frag = Fragment.get(self.dut, self.platform)
-			self.sim   = Simulator(self._frag)
+			self.sim   = Simulator(self._frag, engine = self.engine)
 
 			if self.out_dir is None:
 				if (Path.cwd() / 'build').exists():
