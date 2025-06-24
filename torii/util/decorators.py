@@ -16,6 +16,7 @@ __all__ = (
 Params     = ParamSpec('Params')
 ReturnType = TypeVar('ReturnType')
 
+# TODO(aki): This might be replaceable with `functools.cache`?
 def memoize(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
 	memo = OrderedDict[Any, ReturnType]()
 
@@ -44,6 +45,7 @@ def deprecated(message: str, stacklevel: int = 2):
 		return wrapper
 	return decorator
 
+# TODO(aki): Should we deprecate/remove this? It seems very *very* hokey and makes types not happy.
 def extend(cls: type[T]):
 	def decorator(f: Callable[Params, ReturnType]):
 		if isinstance(f, property):
