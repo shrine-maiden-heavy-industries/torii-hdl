@@ -155,7 +155,7 @@ class AttrsTestCase(ToriiTestSuiteCase):
 
 	def test_callable(self):
 		def fn(self):
-			return 'FOO'
+			return 'FOO' # :nocov:
 
 		a = Attrs(FOO = fn)
 		self.assertEqual(a['FOO'], fn)

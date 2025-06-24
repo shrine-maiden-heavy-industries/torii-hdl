@@ -1443,7 +1443,7 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 		):
 			with open(os.path.devnull, 'w') as f:
 				with sim.write_vcd(f):
-					pass
+					pass # :nocov:
 
 	def test_no_negated_boolean_warning(self):
 		m = Module()
@@ -1506,7 +1506,7 @@ class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 		):
 			with open(os.path.devnull, 'w') as f:
 				with sim.write_vcd(f):
-					sim.run()
+					sim.run() # :nocov:
 
 	def test_bug_588(self):
 		dut = Module()

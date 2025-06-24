@@ -206,7 +206,7 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 		with self.assertRaisesRegex(TypeError, err_msg_regex):
 			class MockShapeCastableNoOverride(ShapeCastable):
 				def __init__(self):
-					pass
+					pass # :nocov:
 
 			_ = MockShapeCastableNoOverride()
 
@@ -1563,13 +1563,13 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 		):
 			class MockValueCastableNotDecorated(ValueCastable):
 				def __init__(self):
-					pass
+					pass # :nocov:
 
 				def shape(self):
-					pass
+					pass # :nocov:
 
 				def as_value(self):
-					return Signal()
+					return Signal() # :nocov:
 
 	def test_no_override(self):
 		with self.assertRaisesRegex(
@@ -1579,7 +1579,7 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 		):
 			class MockValueCastableNoOverrideAsValue(ValueCastable):
 				def __init__(self):
-					pass
+					pass # :nocov:
 
 		with self.assertRaisesRegex(
 			TypeError,
@@ -1588,10 +1588,10 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 		):
 			class MockValueCastableNoOverrideShape(ValueCastable):
 				def __init__(self):
-					pass
+					pass # :nocov:
 
 				def as_value(self):
-					return Signal()
+					return Signal() # :nocov:
 
 	def test_memoized(self):
 		vc = MockValueCastableChanges(1)

@@ -55,7 +55,7 @@ class TracerTestCase(ToriiTestCase):
 		self.assertEqual(s2.name, 's2')
 
 		def dummy():
-			return s1, s2
+			return s1, s2 # :nocov:
 
 	def test_deref_free(self):
 		def inner():
@@ -93,6 +93,6 @@ class TracerTestCase(ToriiTestCase):
 			self.assertEqual(s2.name, 's2')
 
 			def dummy():
-				return s1, s2
+				return s1, s2 # :nocov:
 
 		inner(None)

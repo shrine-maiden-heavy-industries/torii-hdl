@@ -284,27 +284,27 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
 			with m.Elif(self.s2):
-				pass
+				pass # :nocov:
 
 	def test_Elif_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
 			with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
 				with m.Elif(self.s2):
-					pass
+					pass # :nocov:
 
 	def test_Else_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If\/Elif$'):
 			with m.Else():
-				pass
+				pass # :nocov:
 
 	def test_Else_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
 			with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If/Elif$'):
 				with m.Else():
-					pass
+					pass # :nocov:
 
 	def test_Elif_Elif_wrong_nested(self):
 		m = Module()
@@ -313,7 +313,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Elif(self.s2):
 			with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
 				with m.Elif(self.s3):
-					pass
+					pass # :nocov:
 
 	def test_Else_Else_wrong_nested(self):
 		m = Module()
@@ -322,7 +322,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Else():
 			with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If/Elif$'):
 				with m.Else():
-					pass
+					pass # :nocov:
 
 	def test_If_wide(self):
 		m = Module()
@@ -373,7 +373,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			r'^`if m\.If\(\.\.\.\):` does not work; use `with m\.If\(\.\.\.\)`$'
 		):
 			if m.If(0):
-				pass
+				pass # :nocov:
 		with m.If(0):
 			pass
 		with self.assertRaisesRegex(
@@ -381,13 +381,13 @@ class DSLTestCase(ToriiTestSuiteCase):
 			r'^`if m\.Elif\(\.\.\.\):` does not work; use `with m\.Elif\(\.\.\.\)`$'
 		):
 			if m.Elif(0):
-				pass
+				pass # :nocov:
 		with self.assertRaisesRegex(
 			SyntaxError,
 			r'^`if m\.Else\(\.\.\.\):` does not work; use `with m\.Else\(\.\.\.\)`$'
 		):
 			if m.Else():
-				pass
+				pass # :nocov:
 
 	def test_Switch(self):
 		m = Module()
@@ -421,7 +421,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				with m.Default():
 					m.d.comb += self.c2.eq(1)
 				with m.Case():
-					m.d.comb += self.c2.eq(1)
+					m.d.comb += self.c2.eq(1) # :nocov:
 		m._flush()
 		self.assertRepr(m._statements, '''
 		(
@@ -510,7 +510,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				r'^Case pattern \'--\' must have the same width as switch value \(which is 4\)$'
 			):
 				with m.Case('--'):
-					pass
+					pass # :nocov:
 			with self.assertWarnsRegex(
 				SyntaxWarning, (
 					r'^Case pattern \'22\' \(5\'10110\) is wider than switch value \(which has width 4\); '
@@ -558,7 +558,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				)
 			):
 				with m.Case('abc'):
-					pass
+					pass # :nocov:
 
 	def test_Case_pattern_wrong(self):
 		m = Module()
@@ -568,7 +568,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				r'^Case pattern must be a string or a const-castable expression, not 1\.0$'
 			):
 				with m.Case(1.0):
-					pass
+					pass # :nocov:
 
 	def test_Case_outside_Switch_wrong(self):
 		m = Module()
@@ -577,7 +577,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			r'^Case is not permitted outside of Switch$'
 		):
 			with m.Case(1):
-				pass
+				pass # :nocov:
 
 	def test_Default_outside_Switch_wrong(self):
 		m = Module()
@@ -586,7 +586,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			r'^Default is not permitted outside of Switch$'
 		):
 			with m.Default():
-				pass
+				pass # :nocov:
 
 	def test_Case_after_Default_wrong(self):
 		m = Module()
@@ -611,7 +611,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 					'as only the first Default will ever be considered.'
 			):
 				with m.Default():
-					pass
+					pass # :nocov:
 
 	def test_If_inside_Switch_wrong(self):
 		m = Module()
@@ -623,7 +623,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				)
 			):
 				with m.If(self.s2):
-					pass
+					pass # :nocov:
 
 	def test_Case_wrong_nested(self):
 		m = Module()
@@ -634,7 +634,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 					r'^Case is not permitted outside of Switch$'
 				):
 					with m.Case(1):
-						pass
+						pass # :nocov:
 
 	def test_FSM_basic(self):
 		a = Signal()
@@ -751,7 +751,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				r'^FSM may not be driven by the \'comb\' domain$'
 		):
 			with m.FSM(domain = 'comb'):
-				pass
+				pass # :nocov:
 
 	def test_FSM_wrong_undefined(self):
 		m = Module()
@@ -772,7 +772,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				r'^FSM state \'FOO\' is already defined$'
 			):
 				with m.State('FOO'):
-					pass
+					pass # :nocov:
 
 	def test_FSM_wrong_next(self):
 		m = Module()
@@ -805,7 +805,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				)
 			):
 				with m.If(self.s2):
-					pass
+					pass # :nocov:
 
 	def test_State_outside_FSM_wrong(self):
 		m = Module()
@@ -814,7 +814,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			r'^FSM State is not permitted outside of FSM'
 		):
 			with m.State('FOO'):
-				pass
+				pass # :nocov:
 
 	def test_FSM_State_wrong_nested(self):
 		m = Module()
@@ -825,7 +825,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 					r'^FSM State is not permitted outside of FSM'
 				):
 					with m.State('BAR'):
-						pass
+						pass # :nocov:
 
 	def test_auto_pop_ctrl(self):
 		m = Module()
