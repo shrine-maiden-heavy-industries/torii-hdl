@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from contextlib import contextmanager
-from os         import getenv
-from sys        import version_info
-from tempfile   import NamedTemporaryFile
+from contextlib  import contextmanager
+from os          import getenv
+from sys         import version_info
+from tempfile    import NamedTemporaryFile
 
-from ..hdl.ast  import SignalSet
-from ..hdl.xfrm import LHSGroupFilter, StatementVisitor, ValueVisitor
-from ._base     import BaseProcess
+from ...hdl.ast  import SignalSet
+from ...hdl.xfrm import LHSGroupFilter, StatementVisitor, ValueVisitor
+from .._base     import BaseProcess
 
 __all__ = (
 	'PyRTLProcess',

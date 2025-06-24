@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ._base import BaseProcess
+from .._base import BaseProcess
 
 __all__ = (
 	'PyClockProcess',

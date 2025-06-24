@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from inspect   import getfile, getlineno, iscoroutine, isgenerator
+from inspect    import getfile, getlineno, iscoroutine, isgenerator
 
-from ..hdl     import ClockDomain, Const, Value
-from ..hdl.ast import SignalSet, Statement, ValueCastable
-from ._base    import BaseProcess
-from ._pyrtl   import _RHSValueCompiler, _StatementCompiler, _ValueCompiler
-from .core     import Active, Delay, Passive, Settle, Tick
+from ...hdl     import ClockDomain, Const, Value
+from ...hdl.ast import SignalSet, Statement, ValueCastable
+from .._base    import BaseProcess
+from ._pyrtl    import _RHSValueCompiler, _StatementCompiler, _ValueCompiler
+from ..core     import Active, Delay, Passive, Settle, Tick
 
 __all__ = (
 	'PyCoroProcess',

@@ -10,9 +10,9 @@ from vcd             import VCDWriter
 from vcd.gtkw        import GTKWSave
 from vcd.writer      import Variable
 
-from ..hdl.ast       import Signal, SignalDict, Value
-from ..hdl.ir        import Fragment
-from ._base          import BaseEngine, BaseSignalState, BaseSimulation
+from ...hdl.ast      import Signal, SignalDict, Value
+from ...hdl.ir       import Fragment
+from .._base         import BaseEngine, BaseSignalState, BaseSimulation
 from ._pyclock       import PyClockProcess
 from ._pycoro        import PyCoroProcess
 from ._pyrtl         import _FragmentCompiler
