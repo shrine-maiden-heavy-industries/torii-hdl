@@ -2,7 +2,7 @@
 
 from collections.abc import Callable, Coroutine, Generator, Iterable
 from inspect         import iscoroutinefunction, isgeneratorfunction
-from typing          import IO, ContextManager, Literal
+from typing          import IO, ContextManager, Literal, TypeAlias
 from warnings        import warn
 
 from ..hdl           import Elaboratable, Signal
@@ -18,6 +18,8 @@ __all__ = (
 	'Simulator',
 	'Tick',
 )
+
+SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim']
 
 class Command:
 	pass
@@ -70,7 +72,7 @@ class Active(Command):
 
 class Simulator:
 	def __init__(
-		self, fragment: Fragment | Elaboratable, *, engine: type[BaseEngine] | Literal['pysim'] = 'pysim'
+		self, fragment: Fragment | Elaboratable, *, engine: SimulationEngine = 'pysim'
 	) -> None:
 		if engine == 'pysim':
 			from .pysim import PySimEngine
