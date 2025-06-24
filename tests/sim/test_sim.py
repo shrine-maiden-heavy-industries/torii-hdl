@@ -1542,3 +1542,27 @@ class SimulatorRegressionTestCase(ToriiTestSuiteCase):
 
 		sim.add_process(process)
 		sim.run()
+
+# TODO(aki): Figure out a better name
+class SimulatorEngineTestCase(ToriiTestSuiteCase):
+	def test_external_sim_engine(self):
+		from torii.sim._base import BaseEngine
+
+		class DummyEngine(BaseEngine):
+			def __init__(self, fragment):
+				pass
+
+		_ = Simulator(Module(), engine = DummyEngine)
+
+	def test_invalid_simulator_engine(self):
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^The specified engine \'NotAValidEngineName\' is not a known simulation engine name, or simulation engine class$'
+		):
+			_ = Simulator(Module(), engine = 'NotAValidEngineName') # type: ignore
+
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^The specified engine <class \'object\'> is not a known simulation engine name, or simulation engine class$'
+		):
+			_ = Simulator(Module(), engine = object) # type: ignore

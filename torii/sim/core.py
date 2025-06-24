@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections.abc import Callable, Coroutine, Generator, Iterable
-from inspect         import iscoroutinefunction, isgeneratorfunction
+from inspect         import isclass, iscoroutinefunction, isgeneratorfunction
 from typing          import IO, ContextManager, Literal, TypeAlias
 from warnings        import warn
 
@@ -74,11 +74,16 @@ class Simulator:
 	def __init__(
 		self, fragment: Fragment | Elaboratable, *, engine: SimulationEngine = 'pysim'
 	) -> None:
-		if engine == 'pysim':
-			from .pysim import PySimEngine
-			engine = PySimEngine
-		elif not issubclass(engine, BaseEngine):
-			raise TypeError(f'Value \'{engine!r}\' is not a simulation engine class or a simulation engine name')
+		match engine:
+			case 'pysim':
+				from .pysim import PySimEngine
+				engine = PySimEngine
+			case e if isclass(e) and issubclass(e, BaseEngine):
+				engine = e
+			case _:
+				raise TypeError(
+					f'The specified engine {engine!r} is not a known simulation engine name, or simulation engine class'
+				)
 
 		self._fragment = Fragment.get(fragment, platform = None).prepare()
 		self._engine   = engine(self._fragment)
