@@ -20,6 +20,11 @@ ReturnType = TypeVar('ReturnType')
 def memoize(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
 	memo = OrderedDict[Any, ReturnType]()
 
+	warn(
+		'torii.util.decorators.memoize has been deprecated in favor of functools.cache',
+		DeprecationWarning, stacklevel = 2
+	)
+
 	@wraps(f)
 	def g(*args: Params.args, **kwargs: Params.kwargs) -> ReturnType:
 		if args not in memo:
@@ -45,8 +50,12 @@ def deprecated(message: str, stacklevel: int = 2):
 		return wrapper
 	return decorator
 
-# TODO(aki): Should we deprecate/remove this? It seems very *very* hokey and makes types not happy.
 def extend(cls: type[T]):
+	warn(
+		'torii.util.decorators.extend has been deprecated and is slated for removal',
+		DeprecationWarning, stacklevel = 2
+	)
+
 	def decorator(f: Callable[Params, ReturnType]):
 		if isinstance(f, property):
 			name = f.fget.__name__

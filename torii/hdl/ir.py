@@ -5,12 +5,11 @@ from __future__        import annotations
 import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict, defaultdict
-from functools         import reduce
+from functools         import cache, reduce
 from typing            import TYPE_CHECKING, Literal, TypeAlias
 
 from .._typing         import IODirectionIO, SrcLoc
 from ..util            import flatten
-from ..util.decorators import memoize
 from ..util.tracer     import get_src_loc
 from ._unused          import MustUse, UnusedMustUse
 from .ast              import (
@@ -488,7 +487,7 @@ class Fragment:
 				uses[sig] = set()
 			uses[sig].add(self)
 
-		@memoize
+		@cache
 		def lca_of(fragu, fragv):
 			# Normalize fragu to be deeper than fragv.
 			if level[fragu] < level[fragv]:

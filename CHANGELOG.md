@@ -42,6 +42,8 @@ Unreleased template stuff
 - The `torii.lib.soc.memory` module has been deprecated and contents moved to `torii.lib.mem`
   - `torii.lib.soc.memory.MemoryMap` and `torii.lib.soc.memory.ResourceInfo` are now in `torii.lib.mem.map`
 - The `torii.lib.soc.wishbone` module has been deprecated and contents moved to `torii.lib.bus.wishbone`.
+- The `torii.util.decorators.memoize` decorator has been deprecated in favor of `functools.cache`.
+- The `torii.util.decorators.extend` decorator has been deprecated and is slated for removal.
 
 ### Removed
 
