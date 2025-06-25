@@ -29,6 +29,7 @@ Unreleased template stuff
 - Added `torii.hdl.ast.Edge` for `torii.hdl.ast.Sample` based edge detection on either rising or falling edges.
 - The `torii.test.TestCase` now has an `engine` property that lets you specify the simulation backend, It's only `pysim` for now.
 - Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
+- Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
 
 ### Changed
 
