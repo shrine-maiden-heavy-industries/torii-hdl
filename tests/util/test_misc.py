@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
-# torii: foo0=1, bar0=yes, baz0=enable
-# torii: foo1=0, bar1=no, baz1=disable
+# torii: foo0=1, bar0=yes, baz0=enable, qux0=on, xyzzy0=enabled
+# torii: foo1=0, bar1=no, baz1=disable, qux1=off, xyzzy1=disabled
 # torii: foo2=0b1, bar2=0o2, baz2=0x3
 
 from torii.test import ToriiTestCase
@@ -38,10 +38,14 @@ class MiscUtilsTestCase(ToriiTestCase):
 		self.assertEqual(get_linter_option(__file__, 'foo0', bool, False), True)
 		self.assertEqual(get_linter_option(__file__, 'bar0', bool, False), True)
 		self.assertEqual(get_linter_option(__file__, 'baz0', bool, False), True)
+		self.assertEqual(get_linter_option(__file__, 'qux0', bool, False), True)
+		self.assertEqual(get_linter_option(__file__, 'xyzzy0', bool, False), True)
 
 		self.assertEqual(get_linter_option(__file__, 'foo1', bool, True), False)
 		self.assertEqual(get_linter_option(__file__, 'bar1', bool, True), False)
 		self.assertEqual(get_linter_option(__file__, 'baz1', bool, True), False)
+		self.assertEqual(get_linter_option(__file__, 'qux1', bool, True), False)
+		self.assertEqual(get_linter_option(__file__, 'xyzzy1', bool, True), False)
 
 		self.assertEqual(get_linter_option(__file__, 'foo2', int, 0), 1)
 		self.assertEqual(get_linter_option(__file__, 'bar2', int, 0), 2)
@@ -58,9 +62,13 @@ class MiscUtilsTestCase(ToriiTestCase):
 			'foo0': '1',
 			'bar0': 'yes',
 			'baz0': 'enable',
+			'qux0': 'on',
+			'xyzzy0': 'enabled',
 			'foo1': '0',
 			'bar1': 'no',
 			'baz1': 'disable',
+			'qux1': 'off',
+			'xyzzy1': 'disabled',
 			'foo2': '0b1',
 			'bar2': '0o2',
 			'baz2': '0x3',

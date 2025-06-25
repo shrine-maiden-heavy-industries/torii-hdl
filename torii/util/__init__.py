@@ -139,7 +139,7 @@ def get_linter_option(
 
 	Currently the following option types are supported:
 
-	* :py:class:`bool` - The values of ``0``, ``no``, and ``disable`` are ``False`` while ``1``, ``yes``, and ``enable`` are ``True``
+	* :py:class:`bool` - The values of ``0``, ``off``, ``no``, ``disable``, and ``disabled`` are ``False`` while ``1``, ``on``, ``yes``, ``enable``, and ``enabled`` are ``True``
 	* :py:class:`int` - Any valid number that can be parsed from ``int(value, 0)``.
 
 	Parameters
@@ -177,9 +177,9 @@ def get_linter_option(
 
 	option = options[name]
 	if type is bool:
-		if option in ('1', 'yes', 'enable'):
+		if option in ('1', 'on', 'yes', 'enable', 'enabled'):
 			return True
-		if option in ('0', 'no', 'disable'):
+		if option in ('0', 'off', 'no', 'disable', 'disabled'):
 			return False
 		return default
 	if type is int:
