@@ -95,7 +95,7 @@ def get_linter_options(filename: str) -> dict[str, str]:
 	-------
 	dict[str, str]
 		All of the found settings from the given file.
-	'''
+	''' # noqa: E501
 
 	magic_comment = compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)$')
 
@@ -153,7 +153,7 @@ def get_linter_option(
 	TypeError
 		If ``type`` is not a valid option type.
 
-	'''
+	''' # noqa: E501
 
 	if type not in (bool, int):
 		raise TypeError(f'Expected type to be either \'bool\' or \'int\', not {type!r}')
