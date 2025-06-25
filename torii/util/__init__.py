@@ -99,14 +99,27 @@ def get_linter_options(filename: str) -> dict[str, str]:
 
 	magic_comment = compile(r'^#\s*torii:\s*((?:\w+=\w+\s*)(?:,\s*\w+=\w+\s*)*)$')
 
-	# Check the first five lines of the file, because it might not be first
-	lines = getlines(filename)[0:5]
+	lines = getlines(filename)
 	if len(lines) > 0:
-		# NOTE(aki): using the lambda in `filter` is a mypy blind-spot, ignore this
-		matches: list[Match] = list(filter(lambda m: m is not None, map(magic_comment.match, lines))) # type: ignore
+		matches: list[Match] = [
+			match for match in (
+				magic_comment.match(line)
+				for line in lines
+				if line.startswith('#')
+			) if match is not None
+		]
 
 		if len(matches) > 0:
-			return dict(map(lambda s: s.strip().split('=', 2), matches[0].group(1).split(',')))
+			opts: dict[str, str] = {
+				key: value for (key, value) in (
+					opt.strip().split('=', 2) for opt in flatten(
+						match.group(1).split(',') for match in matches
+					)
+				)
+			}
+
+			return opts
+
 	return dict()
 
 LinterOptionType: TypeAlias = bool | int
