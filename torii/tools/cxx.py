@@ -270,7 +270,7 @@ def compile_cxx(
 		match output_type:
 			case ObjectType.EXEC | ObjectType.SHLIB:
 				cxx.link(
-					CCompiler.EXECUTABLE if output_type == ObjectType.EXEC else CCompiler.SHARED_LIBRARY,
+					CCompiler.EXECUTABLE if output_type == ObjectType.EXEC else CCompiler.SHARED_OBJECT,
 					list(_resolve_paths(obj_files)),
 					output_filename = str(output_name),
 					output_dir = str(cwd),
