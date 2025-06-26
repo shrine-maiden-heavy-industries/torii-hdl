@@ -3,9 +3,9 @@
 from collections.abc import Generator, Iterable
 from functools       import cache
 from linecache       import getlines
+from operator        import ior
 from re              import Match, compile
 from typing          import TypeAlias, TypeVar
-from operator        import ior
 
 __all__ = (
 	'flatten',
