@@ -30,12 +30,14 @@ Unreleased template stuff
 - The `torii.test.TestCase` now has an `engine` property that lets you specify the simulation backend, It's only `pysim` for now.
 - Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
 - Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
+- Added a new way to build C++-based native modules with `torii.tools.cxx.compile_cxx`.
 
 ### Changed
 
 - `torii.hdl.ast.Past` is now exported in the root `torii.hdl` module.
 - `torii.util.get_linter_options` now inspects the whole file for "Magic Comments"
 - `torii.util.get_linter_option` and `torii.util.get_linter_options` have been memoized to prevent expensive re-parsing of large files.
+- `torii.tools.cxx.build_cxx` is now based on the new `torii.tools.cxx.compile_cxx`.
 
 ### Deprecated
 
@@ -45,6 +47,7 @@ Unreleased template stuff
 - The `torii.lib.soc.wishbone` module has been deprecated and contents moved to `torii.lib.bus.wishbone`.
 - The `torii.util.decorators.memoize` decorator has been deprecated in favor of `functools.cache`.
 - The `torii.util.decorators.extend` decorator has been deprecated and is slated for removal.
+- The `torii.tools.cxx.build_cxx` function is deprecated in favor of the `torii.tools.cxx.compile_cxx` function replacement.
 
 ### Removed
 
