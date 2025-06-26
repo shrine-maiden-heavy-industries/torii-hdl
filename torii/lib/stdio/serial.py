@@ -151,6 +151,11 @@ class AsyncSerialRX(Elaboratable):
 		if self._pins is not None:
 			m.submodules += FFSynchronizer(self._pins.rx.i, self.i, reset = 1)
 
+		# TODO: This has some really messed up behaviour with how the start/done bits work - this FSM
+		# needs a internals rewrite, but this can't be done till we are able to make breaking changes
+		# (prep for v1.0.0). `self.start` should be latched at the start of the frame or while busy
+		# so it can be a pulse from the driving block, rather than having to remain asserted all the way
+		# through to 'DONE'.
 		with m.FSM() as fsm:
 			with m.State('IDLE'):
 				with m.If(~self.i):
