@@ -48,6 +48,7 @@ Unreleased template stuff
 - The `torii.util.decorators.memoize` decorator has been deprecated in favor of `functools.cache`.
 - The `torii.util.decorators.extend` decorator has been deprecated and is slated for removal.
 - The `torii.tools.cxx.build_cxx` function is deprecated in favor of the `torii.tools.cxx.compile_cxx` function replacement.
+- The `rdy` and `ack` signals inside `torii.lib.stdio.AsyncSerialRx` have been renamed to `done` and `start` to better align with their function.
 
 ### Removed
 
