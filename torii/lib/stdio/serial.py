@@ -87,9 +87,10 @@ class AsyncSerialRX(Elaboratable):
 	ack : Signal, in
 		Read acknowledge. Must be held asserted while data can be read out of the receiver. (deprecated use `start`)
 	done : Signal, out
-		Read strobe.
+		Strobe that indicates we successfully completed receiving a frame of data.
 	start : Signal, in
-		Read acknowledge. Must be held asserted while data can be read out of the receiver.
+		Indication from the driving gateware that it is interested in new data from the receiver.
+		Must be held asserted to indicate reception is okay.
 	i : Signal, in
 		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
 
