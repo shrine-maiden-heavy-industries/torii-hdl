@@ -41,6 +41,7 @@ def final(cls: type[T]) -> type[T]:
 	cls.__init_subclass__ = init_subclass # type: ignore
 	return cls
 
+# TODO(aki): deprecate once our min python version hits 3.13
 def deprecated(message: str, stacklevel: int = 2):
 	def decorator(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
 		@wraps(f)
