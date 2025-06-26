@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://torii.shmdn.link/library/stdio/index.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Industry Standard I/O - Torii-HDL 0.7.8.dev95 documentation</title>
+        <title>Industry Standard I/O - Torii-HDL 0.7.8.dev99 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii-HDL 0.7.8.dev95 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii-HDL 0.7.8.dev99 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev95 documentation</span>
+  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev99 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -353,8 +353,11 @@
 <li><p><strong>err.overflow</strong> (<em>Signal, out</em>) – Error flag. A new frame has been received, but the previous one was not acknowledged.</p></li>
 <li><p><strong>err.frame</strong> (<em>Signal, out</em>) – Error flag. The received bits do not fit in a frame.</p></li>
 <li><p><strong>err.parity</strong> (<em>Signal, out</em>) – Error flag. The parity check has failed.</p></li>
-<li><p><strong>rdy</strong> (<em>Signal, out</em>) – Read strobe.</p></li>
-<li><p><strong>ack</strong> (<em>Signal, in</em>) – Read acknowledge. Must be held asserted while data can be read out of the receiver.</p></li>
+<li><p><strong>rdy</strong> (<em>Signal, out</em>) – Read strobe. (deprecated, use <cite>done</cite>)</p></li>
+<li><p><strong>ack</strong> (<em>Signal, in</em>) – Read acknowledge. Must be held asserted while data can be read out of the receiver. (deprecated use <cite>start</cite>)</p></li>
+<li><p><strong>done</strong> (<em>Signal, out</em>) – Strobe that indicates we successfully completed receiving a frame of data.</p></li>
+<li><p><strong>start</strong> (<em>Signal, in</em>) – Indication from the driving gateware that it is interested in new data from the receiver.
+Must be held asserted to indicate reception is okay.</p></li>
 <li><p><strong>i</strong> (<em>Signal, in</em>) – Serial input. If <code class="docutils literal notranslate"><span class="pre">pins</span></code> has been specified, <code class="docutils literal notranslate"><span class="pre">pins.rx.i</span></code> drives it.</p></li>
 </ul>
 </dd>
@@ -493,7 +496,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=230cff0a"></script>
+</div><script src="../../_static/documentation_options.js?v=fbde36f9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
