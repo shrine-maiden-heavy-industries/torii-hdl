@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://torii.shmdn.link/changelog.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Changelog - Torii-HDL 0.7.8.dev91 documentation</title>
+        <title>Changelog - Torii-HDL 0.7.8.dev95 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii-HDL 0.7.8.dev91 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii-HDL 0.7.8.dev95 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev91 documentation</span>
+  <span class="sidebar-brand-text">Torii-HDL 0.7.8.dev95 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -359,6 +359,8 @@ Unreleased template stuff
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Edge</span></code> for <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Sample</span></code> based edge detection on either rising or falling edges.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.test.TestCase</span></code> now has an <code class="docutils literal notranslate"><span class="pre">engine</span></code> property that lets you specify the simulation backend, It’s only <code class="docutils literal notranslate"><span class="pre">pysim</span></code> for now.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">on</span></code> and <code class="docutils literal notranslate"><span class="pre">enabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">off</span></code> and <code class="docutils literal notranslate"><span class="pre">disabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">False</span></code> when the <code class="docutils literal notranslate"><span class="pre">type</span></code> param of <code class="docutils literal notranslate"><span class="pre">get_linter_option</span></code> is <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">torii.util.fs</span></code> module for Filesystem related utilities and abstractions, currently only has <code class="docutils literal notranslate"><span class="pre">working_dir</span></code>, which is a context manager for switching working directories for an operation.</p></li>
+<li><p>Added a new way to build C++-based native modules with <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
 </ul>
 </section>
 <section id="changed">
@@ -367,6 +369,7 @@ Unreleased template stuff
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Past</span></code> is now exported in the root <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code> module.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_options</span></code> now inspects the whole file for “Magic Comments”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_option</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_options</span></code> have been memoized to prevent expensive re-parsing of large files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> is now based on the new <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
 </ul>
 </section>
 <section id="deprecated">
@@ -381,6 +384,7 @@ Unreleased template stuff
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module has been deprecated and contents moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.memoize</span></code> decorator has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">functools.cache</span></code>.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.extend</span></code> decorator has been deprecated and is slated for removal.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> function is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code> function replacement.</p></li>
 </ul>
 </section>
 <section id="removed">
@@ -1054,7 +1058,7 @@ Unreleased template stuff
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=6b42b85b"></script>
+</div><script src="_static/documentation_options.js?v=230cff0a"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
