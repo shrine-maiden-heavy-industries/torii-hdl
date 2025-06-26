@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import ctypes
-import os
 import warnings
+from ctypes          import cdll
 from pathlib         import Path
 from subprocess      import check_call
 from tempfile        import TemporaryDirectory
@@ -18,6 +17,7 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 	def tearDown(self):
 		if self.include_dir:
 			self.include_dir.cleanup()
+
 		if self.build_dir:
 			self.build_dir.cleanup()
 
@@ -31,6 +31,7 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 				include_dirs = [],
 				macros = [],
 			)
+
 			self.assertTrue(filename.startswith('answer'))
 
 	def test_simple(self):
@@ -47,7 +48,8 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 				include_dirs = [],
 				macros = [],
 			)
-			library = ctypes.cdll.LoadLibrary(os.path.join(self.build_dir.name, filename))
+
+			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
 			self.assertEqual(library.answer(), 42)
 
 	def test_macro(self):
@@ -64,12 +66,14 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 				include_dirs = [],
 				macros = ['ANSWER = 42'],
 			)
-			library = ctypes.cdll.LoadLibrary(os.path.join(self.build_dir.name, filename))
+
+			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
 			self.assertEqual(library.answer(), 42)
 
 	def test_include(self):
 		self.include_dir = TemporaryDirectory(prefix = 'torii_hxx_')
-		with open(os.path.join(self.include_dir.name, 'answer.h'), 'w') as f:
+
+		with (Path(self.include_dir.name) / 'answer.h').open('w') as f:
 			f.write('#define ANSWER 42')
 
 		with warnings.catch_warnings():
@@ -86,7 +90,8 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 				include_dirs = [self.include_dir.name],
 				macros = [],
 			)
-			library = ctypes.cdll.LoadLibrary(os.path.join(self.build_dir.name, filename))
+
+			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
 			self.assertEqual(library.answer(), 42)
 
 class ToolchainCxxTestCase(ToriiTestCase):
@@ -198,7 +203,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		self.assertEqual(res_file.stem, 'dummy')
 		self.assertEqual(res_file.parent, out_dir)
 
-		lib = ctypes.cdll.LoadLibrary(str(res_file))
+		lib = cdll.LoadLibrary(str(res_file))
 		self.assertEqual(lib.value(), 0xCA75)
 
 		temp.cleanup()
@@ -221,7 +226,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		self.assertEqual(res_file.stem, 'dummy')
 		self.assertEqual(res_file.parent, out_dir)
 
-		lib = ctypes.cdll.LoadLibrary(str(res_file))
+		lib = cdll.LoadLibrary(str(res_file))
 		self.assertEqual(lib.value(), 0xCA75)
 
 		temp.cleanup()
@@ -244,7 +249,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		self.assertEqual(res_file.stem, 'dummy')
 		self.assertEqual(res_file.parent, out_dir)
 
-		lib = ctypes.cdll.LoadLibrary(str(res_file))
+		lib = cdll.LoadLibrary(str(res_file))
 		self.assertEqual(lib.value(), 0xCA75)
 
 		temp.cleanup()
@@ -272,7 +277,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		self.assertEqual(res_file.stem, 'dummy')
 		self.assertEqual(res_file.parent, out_dir)
 
-		lib = ctypes.cdll.LoadLibrary(str(res_file))
+		lib = cdll.LoadLibrary(str(res_file))
 		self.assertEqual(lib.value(), 0xCA75)
 
 		temp.cleanup()
@@ -293,7 +298,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		self.assertEqual(res_file.stem, 'dummy')
 		self.assertEqual(res_file.parent, out_dir)
 
-		lib = ctypes.cdll.LoadLibrary(str(res_file))
+		lib = cdll.LoadLibrary(str(res_file))
 		self.assertEqual(lib.value(), 0xCA75)
 
 		temp.cleanup()
