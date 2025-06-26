@@ -82,7 +82,7 @@ class ToolchainCxxOldTestCase(ToriiTestCase):
 			self.build_dir, filename = build_cxx(
 				cxx_sources = {
 					'test.cc': '''
-						#include <answer.h>
+						#include "answer.h"
 						extern "C" int answer() { return ANSWER; }
 					'''
 				},
@@ -266,7 +266,7 @@ class ToolchainCxxTestCase(ToriiTestCase):
 		res_file = compile_cxx(
 			'dummy', out_dir, None,
 			source_listings = {
-				'test0.cc': '#include <value.hh>\nextern "C" int value() { return VALUE; }\n',
+				'test0.cc': '#include "value.hh"\nextern "C" int value() { return VALUE; }\n',
 			},
 			include_paths = [
 				inc_dir.name

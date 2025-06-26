@@ -202,7 +202,8 @@ def compile_cxx(
 
 		# Populate include directories
 		for inc_dir in py_inc_dir:
-			cxx.add_include_dir(inc_dir)
+			if inc_dir.strip() != '':
+				cxx.add_include_dir(inc_dir)
 
 		if include_paths is not None:
 			for inc_dir in include_paths:
@@ -210,7 +211,8 @@ def compile_cxx(
 
 		# Populate library search directories
 		for lib_dir in py_lib_dir:
-			cxx.add_library_dir(lib_dir)
+			if lib_dir.strip() != '':
+				cxx.add_library_dir(lib_dir)
 
 		if library_paths is not None:
 			for lib_dir in library_paths:
@@ -270,7 +272,7 @@ def compile_cxx(
 		match output_type:
 			case ObjectType.EXEC | ObjectType.SHLIB:
 				cxx.link(
-					CCompiler.EXECUTABLE if output_type == ObjectType.EXEC else CCompiler.SHARED_OBJECT,
+					CCompiler.EXECUTABLE if output_type == ObjectType.EXEC else CCompiler.SHARED_LIBRARY,
 					list(_resolve_paths(obj_files)),
 					output_filename = str(output_name),
 					output_dir = str(cwd),
