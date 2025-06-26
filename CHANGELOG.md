@@ -22,6 +22,18 @@ Unreleased template stuff
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [0.8.0] - 2025-06-26
+
+### Added
+
 - New library module `torii.lib.mem` for more generic-ish not SoC specific memory constructs, such as maps for busses.
 - New library module `torii.lib.bus`
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
@@ -49,8 +61,6 @@ Unreleased template stuff
 - The `torii.util.decorators.extend` decorator has been deprecated and is slated for removal.
 - The `torii.tools.cxx.build_cxx` function is deprecated in favor of the `torii.tools.cxx.compile_cxx` function replacement.
 - The `rdy` and `ack` signals inside `torii.lib.stdio.AsyncSerialRx` have been renamed to `done` and `start` to better align with their function.
-
-### Removed
 
 ### Fixed
 
@@ -441,7 +451,8 @@ Unreleased template stuff
 
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.0...main
+[0.8.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...v0.8.0
 [0.7.7]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...v0.7.7
 [0.7.6]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...v0.7.6
 [0.7.5]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...v0.7.5
