@@ -948,6 +948,8 @@ class ElaboratableTestCase(ToriiTestSuiteCase):
 		except ImportError:
 			self.skipTest('click not installed, unable to run sby if it is installed')
 
+		del click
+
 		class SimpleElaboratable(Elaboratable):
 			def elaborate(self, _):
 				m = Module()

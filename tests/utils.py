@@ -83,6 +83,14 @@ class ToriiTestSuiteCase(ToriiTestCase):
 		except ToolNotFound:
 			self.skipTest('SBY not installed')
 
+		# We don't actually use click, but SBY does so if it's missing it'll blow up
+		try:
+			import click
+		except ImportError:
+			self.skipTest('SBY is installed but click is not, SBY won\'t run')
+
+		del click
+
 		with subprocess.Popen([
 				sby, '-f', '-d', spec_name
 			],
