@@ -207,3 +207,34 @@ a = DomainRenamer(domain_map)(elab)
 # NEW (>=1.0.0)
 a = DomainRenamer(**domain_map)(elab)
 ```
+
+### `StreamInterface` from `torii.lib.stream.simple`
+
+The {py:class}`StreamInterface <torii.lib.stream.simple.StreamInterface>` from {py:mod}`torii.lib.stream.simple` has had the `connect` method removed in favor of the `attach` method. In addition the `payload` signal has been removed in favor of the `data` signal.
+
+```python
+from torii.lib.stream.simple import StreamInterface
+
+foo      = Signal(8)
+
+stream_a = StreamInterface()
+stream_b = StreamInterface()
+
+# OLD (<1.0.0)
+stream_a.connect(stream_b)
+
+# ...
+
+m.d.comb += [
+	foo.eq(stream_a.payload),
+]
+
+# NEW (>=1.0.0)
+stream_a.attach(stream_a)
+
+# ...
+
+m.d.comb += [
+	foo.eq(stream_a.data),
+]
+```

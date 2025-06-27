@@ -37,6 +37,7 @@ Unreleased template stuff
 - Removed the `torii.util.decorators.extend` decorator, it was never used internally and was a bad idea in the first place.
 - Removed the `torii.util.decorators.memoize` decorator in favor of `functools.cache` as the accomplish the same thing
 - Removed the `torii.lib.soc.wishbone` module, it has been moved to `torii.lib.bus.wishbone`.
+- Removed the `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
 
 ### Fixed
 

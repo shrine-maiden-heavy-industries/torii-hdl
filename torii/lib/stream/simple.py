@@ -11,7 +11,6 @@ from __future__      import annotations
 
 from collections.abc import Iterable
 from typing          import Generic, TypeVar
-from warnings        import warn
 
 from ...hdl.ast      import Signal
 from ...hdl.dsl      import Module
@@ -100,30 +99,6 @@ class StreamInterface(Record):
 			('ready', 1),
 			*extra
 		], name = name, src_loc_at = 1)
-
-	def connect(self, stream: StreamInterface, omit: set = set()):
-		'''
-		Connect to the target stream.
-
-		This method is an alias for :py:meth:`StreamInterface.attach`.
-
-		Parameters
-		----------
-		stream : torii.lib.stream.StreamInterface
-			The stream we are attaching to.
-
-		omit : set[str]
-			A set of additional stream fields to exclude from the tap connection.
-			(default: {})
-		'''
-
-		warn(
-			'`StreamInterface.connect` has been deprecated, please use `StreamInterface.attach` instead.',
-			DeprecationWarning,
-			stacklevel = 2
-		)
-
-		return self.attach(stream, omit)
 
 	def attach(self, stream: StreamInterface, omit: set = set()):
 		'''
@@ -239,19 +214,6 @@ class StreamInterface(Record):
 
 		# Return the tap
 		return tap
-
-	def __getattr__(self, name: str):
-
-		# Re-map the `payload` alias to `data`
-		if name == 'payload':
-			warn(
-				'StreamInterface alias \'payload\' is deprecated, use \'data\' instead',
-				DeprecationWarning,
-				stacklevel = 2
-			)
-			name = 'data'
-
-		return super().__getattr__(name)
 
 T = TypeVar('T', bound = StreamInterface)
 class StreamArbiter(Generic[T], Elaboratable):
