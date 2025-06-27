@@ -4,6 +4,23 @@
 This document is a work in progress and should be updated as the progression v1.0 progresses
 ```
 
+## General
+
+### HDL Constructs Imported From Root {py:mod}`torii` Namespace
+
+The Previous versions of Torii let you do a general glob import of all of the core HDL constructs ({py:class}`Signal <torii.hdl.ast.Signal>` et. al.) from the root {py:mod}`torii` module namespace.
+
+These must now be imported from the {py:mod}`torii.hdl` module namespace, and while glob imports are discouraged, they will still work as intended previously.
+
+```python
+# OLD (<1.0.0)
+from torii import *
+
+# NEW (>=1.0.0)
+from torii.hdl import *
+```
+
+
 ## Module Changes
 
 ### `DomainRenamer`

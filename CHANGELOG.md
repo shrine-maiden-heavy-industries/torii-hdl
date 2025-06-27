@@ -28,6 +28,8 @@ Unreleased template stuff
 
 ### Removed
 
+- Removed HDL construct imports from the root `torii` module, as they were deprecated, they must be imported from `torii.hdl` now.
+
 ### Fixed
 
 ## [0.8.0] - 2025-06-26
