@@ -62,6 +62,22 @@ rec = Record([
 
 While it is a touch more wordy, we feel it give more context and is generally more descriptive.
 
+## Library Changes
+
+### `torii.lib.soc.memory`
+
+The contents of the `torii.lib.soc.memory` module have been moved to {py:mod}`torii.lib.mem`, as they are generally useful for non-SoC designs as well as SoC designs.
+
+More specifically the {py:class}`MemoryMap <torii.lib.mem.map.MemoryMap>`, {py:class}`ResourceInfo <torii.lib.mem.map.ResourceInfo>`, and {py:class}`_RangeMap <torii.lib.mem.map._RangeMap>` have been moved to {py:mod}`torii.lib.mem.map`.
+
+```python
+# OLD (<1.0.0)
+from torii.lib.soc.memory import MemoryMap, ResourceInfo
+
+# NEW (>=1.0.0)
+from torii.lib.mem.map import MemoryMap, ResourceInfo
+```
+
 ## Module Changes
 
 ### `DomainRenamer` from `torii.hdl.xfrm`
