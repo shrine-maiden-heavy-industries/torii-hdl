@@ -28,17 +28,17 @@ Unreleased template stuff
 
 ### Removed
 
-- Removed HDL construct imports from the root `torii` module, as they were deprecated, they must be imported from `torii.hdl` now.
-- Removed the export of `YosysError` from `torii.back.cxxrtl` and `torii.back.verilog`, it must now be imported from `torii.tools.yosys` directly.
-- Removed the `DIR_FANIN`, `DIR_FANOUT`, and `DIR_NONE` constants from `torii.hdl.rec` in favor of the `Direction` enum.
-- Removed the `str`/`dict` constructor argument in `DomainRenamer` in favor of the new `kwargs`-based construction.
-- Removed the `torii.lib.soc.memory` module, it has been moved to `torii.lib.mem`.
-- Removed the `torii.tools.cxx.build_cxx` function in favor of the new and more powerful `torii.tools.cxx.compile_cxx`.
-- Removed the `torii.util.decorators.extend` decorator, it was never used internally and was a bad idea in the first place.
-- Removed the `torii.util.decorators.memoize` decorator in favor of `functools.cache` as the accomplish the same thing
-- Removed the `torii.lib.soc.wishbone` module, it has been moved to `torii.lib.bus.wishbone`.
-- Removed the `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
-- Removed the `rdy` and `ack` signals in `torii.lib.stdio.serial.AsyncSerialRX` in favor of `done` andd `start` respectively.
+- Removed the deprecated HDL construct imports from the root `torii` module, they must now be imported from `torii.hdl`.
+- Removed the deprecated `DIR_FANIN`, `DIR_FANOUT`, and `DIR_NONE` constants from `torii.hdl.rec` in favor of the `Direction` enum.
+- Removed the deprecated `str`/`dict` constructor argument in `DomainRenamer` in favor of the new `kwargs`-based construction.
+- Removed the deprecated `torii.util.decorators.extend` decorator, it was never used internally and was a bad idea in the first place.
+- Removed the deprecated `torii.util.decorators.memoize` decorator in favor of `functools.cache` as the accomplish the same thing.
+- Removed the deprecated export of `YosysError` from `torii.back.cxxrtl` and `torii.back.verilog`, it must now be imported from `torii.tools.yosys` directly.
+- Removed the deprecated `torii.tools.cxx.build_cxx` function in favor of the new and more powerful `torii.tools.cxx.compile_cxx`.
+- Removed the deprecated `torii.lib.soc.memory` module, it has been moved to `torii.lib.mem`.
+- Removed the deprecated `torii.lib.soc.wishbone` module, it has been moved to `torii.lib.bus.wishbone`.
+- Removed the deprecated `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
+- Removed the deprecated `rdy` and `ack` signals in `torii.lib.stdio.serial.AsyncSerialRX` in favor of `done` andd `start` respectively.
 
 ### Fixed
 
