@@ -64,26 +64,38 @@ While it is a touch more wordy, we feel it give more context and is generally mo
 
 ## Module Changes
 
-### `DomainRenamer`
+### `DomainRenamer` from `torii.hdl.xfrm`
 
 In past versions of Torii, you could use the {py:class}`DomainRenamer <torii.hdl.xfrm.DomainRenamer>` in two ways, the first was to pass a single string into it, which would be used to re-map the `sync` domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.
 
 These have been replaced with using `kwargs` to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.
 
 ```python
-DomainRenamer('meow')(elab)
+from torii.hdl import DomainRenamer
 
-DomainRenamer({'sync': 'meow'})(elab)
-```
+# OLD (<1.0.0)
 
-This should now be written as follows:
+a = DomainRenamer('meow')(elab)
+# -- OR --
+a = DomainRenamer({'sync': 'meow'})(elab)
 
-```python
-DomainRenamer(sync = 'meow')(elab)
+# NEW (>=1.0.0)
+a = DomainRenamer(sync = 'meow')(elab)
 ```
 
 If you need to pass a dictionary that is built at runtime to the domain renamer, then you can simply un-pack the dictionary into the constructor like so:
 
 ```python
-DomainRenamer(**domain_map)(elab)
+from torii.hdl import DomainRenamer
+
+domain_map = {
+	'sync': 'meow',
+	# ...
+}
+
+# OLD (<1.0.0)
+a = DomainRenamer(domain_map)(elab)
+
+# NEW (>=1.0.0)
+a = DomainRenamer(**domain_map)(elab)
 ```

@@ -4,7 +4,6 @@ from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Iterable
 from copy            import copy
-from warnings        import warn
 
 from ..util          import flatten, tracer
 from .ast            import (
@@ -466,29 +465,13 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		When trying to rename a domain to/from ``comb`` to any other domain.
 	'''
 
-	def __init__(self, domain_map: dict[str, str] | str | None = None, **kwargs: str) -> None:
-		if domain_map is not None:
-			warn(
-				'DomainRenamer constructed with a string literal or dictionary is deprecated, '
-				'please use the kwargs construction.',
-				DeprecationWarning,
-				stacklevel = 2
-			)
-			if isinstance(domain_map, str):
-				domain_map = { 'sync': domain_map }
-			for src, dst in domain_map.items():
-				if src == 'comb':
-					raise ValueError(f'Domain \'{src}\' may not be renamed')
-				if dst == 'comb':
-					raise ValueError(f'Domain \'{src}\' may not be renamed to \'{dst}\'')
-			self.domain_map = OrderedDict(domain_map)
-		else:
-			if 'comb' in kwargs.keys():
-				raise ValueError(f'The combinatorial domain \'comb\' may not be renamed to \'{kwargs["comb"]}\'')
-			if 'comb' in kwargs.values():
-				raise ValueError('Domains may not be renamed to the combinatorial domain \'comb\'')
+	def __init__(self, **kwargs: str) -> None:
+		if 'comb' in kwargs.keys():
+			raise ValueError(f'The combinatorial domain \'comb\' may not be renamed to \'{kwargs["comb"]}\'')
+		if 'comb' in kwargs.values():
+			raise ValueError('Domains may not be renamed to the combinatorial domain \'comb\'')
 
-			self.domain_map = OrderedDict(**kwargs)
+		self.domain_map = OrderedDict(**kwargs)
 
 	def on_ClockSignal(self, value):
 		if value.domain in self.domain_map:

@@ -31,6 +31,7 @@ Unreleased template stuff
 - Removed HDL construct imports from the root `torii` module, as they were deprecated, they must be imported from `torii.hdl` now.
 - Removed the export of `YosysError` from `torii.back.cxxrtl` and `torii.back.verilog`, it must now be imported from `torii.tools.yosys` directly.
 - Removed the `DIR_FANIN`, `DIR_FANOUT`, and `DIR_NONE` constants from `torii.hdl.rec` in favor of the `Direction` enum.
+- Removed the `str`/`dict` constructor argument in `DomainRenamer` in favor of the new `kwargs`-based construction.
 
 ### Fixed
 
