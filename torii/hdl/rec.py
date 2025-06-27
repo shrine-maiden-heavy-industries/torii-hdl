@@ -8,16 +8,11 @@ from enum            import Enum, EnumMeta, auto, unique
 from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
-from warnings        import warn
 
 from ..util          import tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
-__all__ = ( # noqa: F822
-	'DIR_FANIN',
-	'DIR_FANOUT',
-	'DIR_NONE',
-
+__all__ = (
 	'Direction',
 	'Layout',
 	'Record',
@@ -30,26 +25,6 @@ class Direction(Enum):
 	NONE   = auto()
 	FANOUT = auto()
 	FANIN  = auto()
-
-def __dir__() -> list[str]:
-	return list({*globals(), *__all__})
-
-def __getattr__(name: str):
-	if name in ('DIR_NONE', 'DIR_FANOUT', 'DIR_FANIN'):
-		warn(
-			f'Use of the \'{name}\' alias is deprecated, please use \'Direction.{name.split("_")[1]}\' instead',
-			DeprecationWarning,
-			stacklevel = 2
-		)
-		match name:
-			case 'DIR_NONE':
-				return Direction.NONE
-			case 'DIR_FANOUT':
-				return Direction.FANOUT
-			case 'DIR_FANIN':
-				return Direction.FANIN
-	if name not in __dir__():
-		raise AttributeError(f'Module {__name__!r} has not attribute {name!r}')
 
 
 LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout' # noqa: E501
