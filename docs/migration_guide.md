@@ -62,6 +62,59 @@ rec = Record([
 
 While it is a touch more wordy, we feel it give more context and is generally more descriptive.
 
+### `build_cxx` from `torii.tools.cxx`
+
+The `build_cxx` function from {py:mod}`torii.tools.cxx` has been removed in favor of the {py:func}`compile_cxx <torii.tools.cxx.compile_cxx>`, which offers more control and capabilities.
+
+```python
+# OLD (<1.0.0)
+from torii.tools.cxx import build_cxx
+
+build_dir, output_file = build_cxx(
+	cxx_sources = {
+		'foo.cc': '/* Source Code for foo */'
+	},
+	output_name  = 'foo',
+	include_dirs = [],
+	macros       = []
+)
+
+# NEW (>=1.0.0)
+from torii.tools.cxx import compile_cxx
+
+output_file = compile_cxx(
+	'foo',
+	build_dir,
+	None,
+	source_listings = {
+		'foo.cc': '/* Source for foo */'
+	}
+)
+
+```
+
+For more information see the full documentation on {py:func}`compile_cxx <torii.tools.cxx.compile_cxx>` for all of it's capabilities and examples of more advanced usage.
+
+The equivalent functionality can be maintained with a little bit of scaffolding:
+
+```python
+def build_cxx(
+	cxx_sources: dict[str, str], output_name: str, include_dirs: list[str], macros: list[str]
+)  -> tuple[TemporaryDirectory[str], str]:
+
+	build_dir  = TemporaryDirectory(prefix = 'torii_cxx_')
+	output_dir = Path(build_dir.name)
+
+	output_file = compile_cxx(
+		output_name, output_dir, None, include_paths = include_dirs, defines = {
+			k: v for (k, v) in (macro.strip().split('=', 2) for macro in macros)
+		},
+		source_listings = cxx_sources
+	)
+
+	return (build_dir, output_file.name)
+```
+
 ## Library Changes
 
 ### `torii.lib.soc.memory`

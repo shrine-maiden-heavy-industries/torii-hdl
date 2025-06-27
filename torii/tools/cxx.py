@@ -5,8 +5,6 @@ from enum                            import Enum, auto, unique
 from pathlib                         import Path
 from shlex                           import split
 from sysconfig                       import get_config_vars
-from tempfile                        import TemporaryDirectory
-from warnings                        import warn
 
 # NOTE(aki): So this looks a little hokey, but should be "fine":tm:
 from setuptools._distutils.ccompiler import CCompiler, new_compiler
@@ -15,7 +13,6 @@ from ..util.fs                       import working_dir
 
 __all__ = (
 	'compile_cxx',
-	'build_cxx',
 )
 
 @unique
@@ -291,23 +288,3 @@ def compile_cxx(
 				)
 
 	return output_name
-
-def build_cxx(
-	cxx_sources: dict[str, str], output_name: str, include_dirs: list[str], macros: list[str]
-)  -> tuple[TemporaryDirectory[str], str]:
-	warn(
-		'torii.tools.cxx.build_cxx has been deprecated in favor of torii.tools.cxx.compile_cxx',
-		DeprecationWarning, stacklevel = 2
-	)
-
-	build_dir  = TemporaryDirectory(prefix = 'torii_cxx_')
-	output_dir = Path(build_dir.name)
-
-	output_file = compile_cxx(
-		output_name, output_dir, None, include_paths = include_dirs, defines = {
-			k: v for (k, v) in (macro.strip().split('=', 2) for macro in macros)
-		},
-		source_listings = cxx_sources
-	)
-
-	return (build_dir, output_file.name)

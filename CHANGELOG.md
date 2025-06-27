@@ -33,6 +33,7 @@ Unreleased template stuff
 - Removed the `DIR_FANIN`, `DIR_FANOUT`, and `DIR_NONE` constants from `torii.hdl.rec` in favor of the `Direction` enum.
 - Removed the `str`/`dict` constructor argument in `DomainRenamer` in favor of the new `kwargs`-based construction.
 - Removed the `torii.lib.soc.memory` module, it has been moved to `torii.lib.mem`.
+- Removed the `torii.tools.cxx.build_cxx` function in favor of the new and more powerful `torii.tools.cxx.compile_cxx`.
 
 ### Fixed
 

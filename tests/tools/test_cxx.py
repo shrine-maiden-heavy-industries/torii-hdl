@@ -1,98 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import warnings
 from ctypes          import cdll
 from pathlib         import Path
 from subprocess      import check_call
 from tempfile        import TemporaryDirectory
 
 from torii.test      import ToriiTestCase
-from torii.tools.cxx import ObjectType, build_cxx, compile_cxx
-
-class ToolchainCxxOldTestCase(ToriiTestCase):
-	def setUp(self):
-		self.include_dir = None
-		self.build_dir = None
-
-	def tearDown(self):
-		if self.include_dir:
-			self.include_dir.cleanup()
-
-		if self.build_dir:
-			self.build_dir.cleanup()
-
-	def test_filename(self):
-		with warnings.catch_warnings():
-			warnings.simplefilter('ignore')
-
-			self.build_dir, filename = build_cxx(
-				cxx_sources = {'test.cc': ''},
-				output_name = 'answer',
-				include_dirs = [],
-				macros = [],
-			)
-
-			self.assertTrue(filename.startswith('answer'))
-
-	def test_simple(self):
-		with warnings.catch_warnings():
-			warnings.simplefilter('ignore')
-
-			self.build_dir, filename = build_cxx(
-				cxx_sources = {
-					'test.cc': '''
-						extern "C" int answer() { return 42; }
-					'''
-				},
-				output_name = 'answer',
-				include_dirs = [],
-				macros = [],
-			)
-
-			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
-			self.assertEqual(library.answer(), 42)
-
-	def test_macro(self):
-		with warnings.catch_warnings():
-			warnings.simplefilter('ignore')
-
-			self.build_dir, filename = build_cxx(
-				cxx_sources = {
-					'test.cc': '''
-						extern "C" int answer() { return ANSWER; }
-					'''
-				},
-				output_name = 'answer',
-				include_dirs = [],
-				macros = ['ANSWER = 42'],
-			)
-
-			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
-			self.assertEqual(library.answer(), 42)
-
-	def test_include(self):
-		self.include_dir = TemporaryDirectory(prefix = 'torii_hxx_')
-
-		with (Path(self.include_dir.name) / 'answer.h').open('w') as f:
-			f.write('#define ANSWER 42')
-
-		with warnings.catch_warnings():
-			warnings.simplefilter('ignore')
-
-			self.build_dir, filename = build_cxx(
-				cxx_sources = {
-					'test.cc': '''
-						#include "answer.h"
-						extern "C" int answer() { return ANSWER; }
-					'''
-				},
-				output_name = 'answer',
-				include_dirs = [self.include_dir.name],
-				macros = [],
-			)
-
-			library = cdll.LoadLibrary(str(Path(self.build_dir.name) / filename))
-			self.assertEqual(library.answer(), 42)
+from torii.tools.cxx import ObjectType, compile_cxx
 
 class ToolchainCxxTestCase(ToriiTestCase):
 
