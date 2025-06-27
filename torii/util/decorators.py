@@ -50,17 +50,3 @@ def deprecated(message: str, stacklevel: int = 2):
 			return f(*args, **kwargs)
 		return wrapper
 	return decorator
-
-def extend(cls: type[T]):
-	warn(
-		'torii.util.decorators.extend has been deprecated and is slated for removal',
-		DeprecationWarning, stacklevel = 2
-	)
-
-	def decorator(f: Callable[Params, ReturnType]):
-		if isinstance(f, property):
-			name = f.fget.__name__
-		else:
-			name = f.__name__
-		setattr(cls, name, f)
-	return decorator

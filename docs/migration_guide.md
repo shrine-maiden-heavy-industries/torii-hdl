@@ -115,6 +115,10 @@ def build_cxx(
 	return (build_dir, output_file.name)
 ```
 
+### `@extend` from `torii.util.decorators`
+
+The `@extend` decorator from the {py:mod}`torii.util.decorators` module has been removed outright. There is no replacement for this as it involved injecting things into other classes which breaks the type system and in general was a bad idea.
+
 ## Library Changes
 
 ### `torii.lib.soc.memory`

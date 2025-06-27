@@ -34,6 +34,7 @@ Unreleased template stuff
 - Removed the `str`/`dict` constructor argument in `DomainRenamer` in favor of the new `kwargs`-based construction.
 - Removed the `torii.lib.soc.memory` module, it has been moved to `torii.lib.mem`.
 - Removed the `torii.tools.cxx.build_cxx` function in favor of the new and more powerful `torii.tools.cxx.compile_cxx`.
+- Removed the `torii.util.decorators.extend` decorator, it was never used internally and was a bad idea in the first place.
 
 ### Fixed
 
