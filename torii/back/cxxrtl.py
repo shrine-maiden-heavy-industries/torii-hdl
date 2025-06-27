@@ -1,32 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from warnings      import warn
-
 from ..hdl.ast     import SignalDict
 from ..hdl.cd      import ClockDomain
 from ..hdl.ir      import Elaboratable, Fragment
-from ..tools.yosys import YosysError, find_yosys
+from ..tools.yosys import find_yosys
 from .             import rtlil
 
 __all__ = (
 	'convert_fragment',
 	'convert',
 )
-
-def __dir__() -> list[str]:
-	return list({*globals(), *__all__, 'YosysError'})
-
-def __getattr__(name: str):
-	if name == 'YosysError':
-		warn(
-			'Importing \'YosysError\' from this module has been deprecated, '
-			'please import it from \'torii.tools.yosys\' instead.',
-			DeprecationWarning,
-			stacklevel = 2
-		)
-		return YosysError
-	if name not in __dir__():
-		raise AttributeError(f'Module {__name__!r} has not attribute {name!r}')
 
 def _convert_rtlil_text(
 	rtlil_text: str, black_boxes: dict[str, str] | None, *, src_loc_at: int = 0

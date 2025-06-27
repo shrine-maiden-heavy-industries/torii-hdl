@@ -6,7 +6,7 @@ This document is a work in progress and should be updated as the progression v1.
 
 ## General
 
-### HDL Constructs Imported From Root {py:mod}`torii` Namespace
+### HDL Constructs Imported From Root `torii` Namespace
 
 The Previous versions of Torii let you do a general glob import of all of the core HDL constructs ({py:class}`Signal <torii.hdl.ast.Signal>` et. al.) from the root {py:mod}`torii` module namespace.
 
@@ -20,6 +20,21 @@ from torii import *
 from torii.hdl import *
 ```
 
+### Importing `YosysError` from `torii.back.cxxrtl` and `torii.back.verilog`
+
+The ability to directly import {py:class}`YosysError <torii.tools.yosys.YosysError>` from the {py:mod}`torii.back.cxxrtl` and {py:mod}`torii.back.verilog` modules has been removed, as it made little sense logically.
+
+It must now be directly imported from {py:mod}`torii.tools.yosys` itself.
+
+```python
+# OLD (<1.0.0)
+from torii.back.cxxrtl import YosysError
+# -- OR --
+from torii.back.verilog import YosysError
+
+# NEW (>=1.0.0)
+from torii.tools.yosys import YosysError
+```
 
 ## Module Changes
 

@@ -29,6 +29,7 @@ Unreleased template stuff
 ### Removed
 
 - Removed HDL construct imports from the root `torii` module, as they were deprecated, they must be imported from `torii.hdl` now.
+- Removed the export of `YosysError` from `torii.back.cxxrtl` and `torii.back.verilog`, it must now be imported from `torii.tools.yosys` directly.
 
 ### Fixed
 
