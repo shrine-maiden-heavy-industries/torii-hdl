@@ -1,36 +1,17 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-from collections     import OrderedDict
 from collections.abc import Callable
 from functools       import wraps
-from typing          import Any, ParamSpec, TypeVar
+from typing          import ParamSpec, TypeVar
 from warnings        import warn
 
 __all__ = (
 	'deprecated',
-	'extend',
 	'final',
-	'memoize',
 )
 
 Params     = ParamSpec('Params')
 ReturnType = TypeVar('ReturnType')
-
-# TODO(aki): This might be replaceable with `functools.cache`?
-def memoize(f: Callable[Params, ReturnType]) -> Callable[Params, ReturnType]:
-	memo = OrderedDict[Any, ReturnType]()
-
-	warn(
-		'torii.util.decorators.memoize has been deprecated in favor of functools.cache',
-		DeprecationWarning, stacklevel = 2
-	)
-
-	@wraps(f)
-	def g(*args: Params.args, **kwargs: Params.kwargs) -> ReturnType:
-		if args not in memo:
-			memo[args] = f(*args, **kwargs)
-		return memo[args]
-	return g
 
 T = TypeVar('T')
 

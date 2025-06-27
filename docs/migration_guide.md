@@ -119,6 +119,26 @@ def build_cxx(
 
 The `@extend` decorator from the {py:mod}`torii.util.decorators` module has been removed outright. There is no replacement for this as it involved injecting things into other classes which breaks the type system and in general was a bad idea.
 
+### `@memoize` from `torii.util.decorators`
+
+The `@memoize` decorator from {py:mod}`torii.util.decorators` has been removed and should be replaced with {py:class}`functools.cache`.
+
+```python
+# OLD (<1.0.0)
+from torii.util.decorators import memoize
+
+@memoize
+def foo(bar: int, baz: int) -> int:
+	...
+
+# NEW (>=1.0.0)
+from functools import cache
+
+@cache
+def foo(bar: int, baz: int) -> int:
+	...
+```
+
 ## Library Changes
 
 ### `torii.lib.soc.memory`
