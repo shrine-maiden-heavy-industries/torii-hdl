@@ -155,6 +155,21 @@ from torii.lib.soc.memory import MemoryMap, ResourceInfo
 from torii.lib.mem.map import MemoryMap, ResourceInfo
 ```
 
+### `torii.lib.soc.wishbone`
+
+The `wishbone` module has been removed from {py:mod}`torii.lib.soc` and moved to {py:mod}`torii.lib.bus.wishbone`, as it is generally useful for non-SoC designs as well as SoC designs, and is not the only bus type supported.
+
+```python
+# OLD (<1.0.0)
+from torii.lib.soc.wishbone import Arbiter, Interface, ...
+
+# -- OR --
+from torii.lib.soc.wishbone.bus import Arbiter, Interface, ...
+
+# NEW (>=1.0.0)
+from torii.lib.bus.wishbone import Arbiter, Interface, ...
+```
+
 ## Module Changes
 
 ### `DomainRenamer` from `torii.hdl.xfrm`
