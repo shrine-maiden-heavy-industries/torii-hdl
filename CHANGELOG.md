@@ -38,6 +38,7 @@ Unreleased template stuff
 - Removed the `torii.util.decorators.memoize` decorator in favor of `functools.cache` as the accomplish the same thing
 - Removed the `torii.lib.soc.wishbone` module, it has been moved to `torii.lib.bus.wishbone`.
 - Removed the `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
+- Removed the `rdy` and `ack` signals in `torii.lib.stdio.serial.AsyncSerialRX` in favor of `done` andd `start` respectively.
 
 ### Fixed
 

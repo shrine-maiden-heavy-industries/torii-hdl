@@ -238,3 +238,36 @@ m.d.comb += [
 	foo.eq(stream_a.data),
 ]
 ```
+
+### `AsyncSerialRX` from `torii.lib.stdio.serial`
+
+The {py:class}`AsyncSerialRX <torii.lib.stdio.serial.AsyncSerialRX>` from {py:mod}`torii.lib.stdio.serial` has had the `rdy` and `ack` signals removed in favor of the `done` and `start` signals respectively.
+
+This was done to match them more logically to what they actually do in order to avoid common pitfalls and confusion when using the module.
+
+```python
+from torii.lib.stdio.serial import AsyncSerialRX
+
+uart_rx = AsyncSerialRX(...)
+
+# OLD (<1.0.0)
+
+with m.FSM(name = 'rx') as fsm:
+	m.d.comb += [ uart_rx.ack.eq(fsm.ongoing('IDLE')), ]
+
+	with m.State('IDLE'):
+		with m.If(uart_rx.rdy):
+			m.d.sync += [ data_rx.eq(uart_rx.data), ]
+			m.next = 'CMD'
+
+# NEW (>=1.0.0)
+
+with m.FSM(name = 'rx') as fsm:
+	m.d.comb += [ uart_rx.start.eq(fsm.ongoing('IDLE')), ]
+
+	with m.State('IDLE'):
+		with m.If(uart_rx.done):
+			m.d.sync += [ data_rx.eq(uart_rx.data), ]
+			m.next = 'CMD'
+
+```

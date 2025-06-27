@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from typing        import Literal
-from warnings      import warn
 
 from ...hdl.ast    import Signal
 from ...hdl.dsl    import Cat, Const, Module
@@ -82,10 +81,6 @@ class AsyncSerialRX(Elaboratable):
 		Error flag. The received bits do not fit in a frame.
 	err.parity : Signal, out
 		Error flag. The parity check has failed.
-	rdy : Signal, out
-		Read strobe. (deprecated, use `done`)
-	ack : Signal, in
-		Read acknowledge. Must be held asserted while data can be read out of the receiver. (deprecated use `start`)
 	done : Signal, out
 		Strobe that indicates we successfully completed receiving a frame of data.
 	start : Signal, in
@@ -121,26 +116,6 @@ class AsyncSerialRX(Elaboratable):
 		self.i    = Signal(reset = 1)
 
 		self._pins = pins
-
-	def __getattr__(self, name: str):
-
-		# Re-map the `rdy` alias to `done`
-		if name == 'rdy':
-			warn(
-				'AsyncSerialRX `rdy` signal is deprecated, please use `done` instead\n',
-				DeprecationWarning,
-				stacklevel = 2
-			)
-			name = 'done'
-		elif name == 'ack':
-			warn(
-				'AsyncSerialRX `ack` signal is deprecated, please use `start` instead\n',
-				DeprecationWarning,
-				stacklevel = 2
-			)
-			name = 'start'
-
-		return super().__getattr__(name)
 
 	def elaborate(self, platform) -> Module:
 		m = Module()
