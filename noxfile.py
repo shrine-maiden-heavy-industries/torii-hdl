@@ -47,14 +47,9 @@ def test(session: Session) -> None:
 
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
-	# NOTE(aki):
-	# Our tests rely on SBY, which depends on click, so we need to ensure that's installed,
-	# on CI we use the oss-cad-suite-build and that has a bundled SBY with all its deps, so
-	# we don't need to worry about it there, but if ran locally we do.
-	if not IN_CI:
-		session.install('click')
-
+	session.install('click') # For SBY
 	session.install('.')
+
 	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
 		session.install('coverage')
