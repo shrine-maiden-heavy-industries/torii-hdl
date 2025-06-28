@@ -945,7 +945,7 @@ class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):
 		try:
 			import click # noqa: F401
-		except ImportError:
+		except ImportError: # :nocov:
 			self.skipTest('click not installed, unable to run sby if it is installed')
 
 		del click
@@ -959,5 +959,5 @@ class ElaboratableTestCase(ToriiTestSuiteCase):
 		try:
 			# The `mode` here is meaningless for this test, but we need to specify one
 			FormalPlatform(mode = "bmc").build(SimpleElaboratable())
-		except ToolNotFound:
+		except ToolNotFound: # :nocov:
 			self.skipTest('SBY not found')

@@ -80,13 +80,13 @@ class ToriiTestSuiteCase(ToriiTestCase):
 
 		try:
 			sby = require_tool('sby')
-		except ToolNotFound:
+		except ToolNotFound: # :nocov:
 			self.skipTest('SBY not installed')
 
 		# We don't actually use click, but SBY does so if it's missing it'll blow up
 		try:
 			import click
-		except ImportError:
+		except ImportError: # :nocov:
 			self.skipTest('SBY is installed but click is not, SBY won\'t run')
 
 		del click
