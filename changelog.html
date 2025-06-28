@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://torii.shmdn.link/changelog.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Changelog - Torii-HDL 0.8.1.dev4 documentation</title>
+        <title>Changelog - Torii-HDL 0.8.1.dev16 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii-HDL 0.8.1.dev4 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii-HDL 0.8.1.dev16 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">Torii-HDL 0.8.1.dev4 documentation</span>
+  <span class="sidebar-brand-text">Torii-HDL 0.8.1.dev16 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -357,6 +357,19 @@ Unreleased template stuff
 </section>
 <section id="removed">
 <h3>Removed<a class="headerlink" href="#removed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed the deprecated HDL construct imports from the root <code class="docutils literal notranslate"><span class="pre">torii</span></code> module, they must now be imported from <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>, <code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code>, and <code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code> constants from <code class="docutils literal notranslate"><span class="pre">torii.hdl.rec</span></code> in favor of the <code class="docutils literal notranslate"><span class="pre">Direction</span></code> enum.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">str</span></code>/<code class="docutils literal notranslate"><span class="pre">dict</span></code> constructor argument in <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> in favor of the new <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>-based construction.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.extend</span></code> decorator, it was never used internally and was a bad idea in the first place.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.memoize</span></code> decorator in favor of <code class="docutils literal notranslate"><span class="pre">functools.cache</span></code> as the accomplish the same thing.</p></li>
+<li><p>Removed the deprecated export of <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code>, it must now be imported from <code class="docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code> directly.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> function in favor of the new and more powerful <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code> module, it has been moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.mem</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module, it has been moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">connect</span></code> method in favor of <code class="docutils literal notranslate"><span class="pre">attach</span></code> and the <code class="docutils literal notranslate"><span class="pre">payload</span></code> signal in favor of <code class="docutils literal notranslate"><span class="pre">data</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals in <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial.AsyncSerialRX</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">done</span></code> andd <code class="docutils literal notranslate"><span class="pre">start</span></code> respectively.</p></li>
+</ul>
 </section>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h3>
@@ -1081,7 +1094,7 @@ Unreleased template stuff
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=d7a60540"></script>
+</div><script src="_static/documentation_options.js?v=1115b237"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

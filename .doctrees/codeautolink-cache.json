@@ -3963,49 +3963,757 @@
   "license": [],
   "migration_guide": [
     {
-      "source": "DomainRenamer('meow')(elab)\n\nDomainRenamer({'sync': 'meow'})(elab)\n",
+      "source": "# OLD (<1.0.0)\nfrom torii import *\n\n# NEW (>=1.0.0)\nfrom torii.hdl import *\n",
       "names": [],
       "example": {
         "document": "migration_guide",
-        "ref_id": "domainrenamer",
+        "ref_id": "hdl-constructs-imported-from-root-torii-namespace",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
           "Todo",
-          "Module Changes",
-          "DomainRenamer"
+          "General",
+          "HDL Constructs Imported From Root torii Namespace"
         ]
       },
       "doc_lineno": 15
     },
     {
-      "source": "DomainRenamer(sync = 'meow')(elab)\n",
-      "names": [],
+      "source": "# OLD (<1.0.0)\nfrom torii.back.cxxrtl import YosysError\n# -- OR --\nfrom torii.back.verilog import YosysError\n\n# NEW (>=1.0.0)\nfrom torii.tools.yosys import YosysError\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "cxxrtl"
+          ],
+          "code_str": "torii.back.cxxrtl",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_from",
+          "resolved_location": "torii.back.cxxrtl"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog"
+          ],
+          "code_str": "torii.back.verilog",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "torii.back.verilog"
+        }
+      ],
       "example": {
         "document": "migration_guide",
-        "ref_id": "domainrenamer",
+        "ref_id": "importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
           "Todo",
-          "Module Changes",
-          "DomainRenamer"
-        ]
-      },
-      "doc_lineno": 23
-    },
-    {
-      "source": "DomainRenamer(**domain_map)(elab)\n",
-      "names": [],
-      "example": {
-        "document": "migration_guide",
-        "ref_id": "domainrenamer",
-        "headings": [
-          "Torii v0.X to v1.0 Migration Guide",
-          "Todo",
-          "Module Changes",
-          "DomainRenamer"
+          "General",
+          "Importing YosysError from torii.back.cxxrtl and torii.back.verilog"
         ]
       },
       "doc_lineno": 29
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.hdl.rec import DIR_FANIN, DIR_FANOUT, DIR_NONE\n\nrec = Record([\n\t('a', 1, DIR_FANIN),\n\t('b', 1, DIR_FANOUT),\n\t('c', 1, DIR_NONE),\n])\n\n# NEW (>=1.0.0)\nfrom torii.hdl.rec import Direction\n\nrec = Record([\n\t('a', 1, Direction.FANIN),\n\t('b', 1, Direction.FANOUT),\n\t('c', 1, Direction.NONE),\n])\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec"
+          ],
+          "code_str": "torii.hdl.rec",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_from",
+          "resolved_location": "torii.hdl.rec"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec"
+          ],
+          "code_str": "torii.hdl.rec",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "import_from",
+          "resolved_location": "torii.hdl.rec"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec",
+            "Direction"
+          ],
+          "code_str": "Direction",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.rec.Direction"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "DIR_FANIN/DIR_FANOUT/DIR_NONE from torii.hdl.rec"
+        ]
+      },
+      "doc_lineno": 43
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.tools.cxx import build_cxx\n\nbuild_dir, output_file = build_cxx(\n\tcxx_sources = {\n\t\t'foo.cc': '/* Source Code for foo */'\n\t},\n\toutput_name  = 'foo',\n\tinclude_dirs = [],\n\tmacros       = []\n)\n\n# NEW (>=1.0.0)\nfrom torii.tools.cxx import compile_cxx\n\noutput_file = compile_cxx(\n\t'foo',\n\tbuild_dir,\n\tNone,\n\tsource_listings = {\n\t\t'foo.cc': '/* Source for foo */'\n\t}\n)\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx",
+            "compile_cxx",
+            "()"
+          ],
+          "code_str": "output_file",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "build-cxx-from-torii-tools-cxx",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "build_cxx from torii.tools.cxx"
+        ]
+      },
+      "doc_lineno": 69
+    },
+    {
+      "source": "def build_cxx(\n\tcxx_sources: dict[str, str], output_name: str, include_dirs: list[str], macros: list[str]\n)  -> tuple[TemporaryDirectory[str], str]:\n\n\tbuild_dir  = TemporaryDirectory(prefix = 'torii_cxx_')\n\toutput_dir = Path(build_dir.name)\n\n\toutput_file = compile_cxx(\n\t\toutput_name, output_dir, None, include_paths = include_dirs, defines = {\n\t\t\tk: v for (k, v) in (macro.strip().split('=', 2) for macro in macros)\n\t\t},\n\t\tsource_listings = cxx_sources\n\t)\n\n\treturn (build_dir, output_file.name)\n",
+      "names": [
+        {
+          "import_components": [
+            "tuple"
+          ],
+          "code_str": "tuple",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "tuple"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "dict"
+          ],
+          "code_str": "dict",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "dict"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "build-cxx-from-torii-tools-cxx",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "build_cxx from torii.tools.cxx"
+        ]
+      },
+      "doc_lineno": 100
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.util.decorators import memoize\n\n@memoize\ndef foo(bar: int, baz: int) -> int:\n\t...\n\n# NEW (>=1.0.0)\nfrom functools import cache\n\n@cache\ndef foo(bar: int, baz: int) -> int:\n\t...\n",
+      "names": [
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "functools"
+          ],
+          "code_str": "functools",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "import_from",
+          "resolved_location": "functools"
+        },
+        {
+          "import_components": [
+            "functools",
+            "cache"
+          ],
+          "code_str": "cache",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "import_target",
+          "resolved_location": "functools.cache"
+        },
+        {
+          "import_components": [
+            "functools",
+            "cache"
+          ],
+          "code_str": "cache",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "none",
+          "resolved_location": "functools.cache"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "memoize-from-torii-util-decorators",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "@memoize from torii.util.decorators"
+        ]
+      },
+      "doc_lineno": 126
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.memory import MemoryMap, ResourceInfo\n\n# NEW (>=1.0.0)\nfrom torii.lib.mem.map import MemoryMap, ResourceInfo\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "mem",
+            "map",
+            "MemoryMap"
+          ],
+          "code_str": "MemoryMap",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_target",
+          "resolved_location": "torii.lib.mem.map.MemoryMap"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "mem",
+            "map",
+            "ResourceInfo"
+          ],
+          "code_str": "ResourceInfo",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_target",
+          "resolved_location": "torii.lib.mem.map.ResourceInfo"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "torii-lib-soc-memory",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Library Changes",
+          "torii.lib.soc.memory"
+        ]
+      },
+      "doc_lineno": 150
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.wishbone import Arbiter, Interface, ...\n\n# -- OR --\nfrom torii.lib.soc.wishbone.bus import Arbiter, Interface, ...\n\n# NEW (>=1.0.0)\nfrom torii.lib.bus.wishbone import Arbiter, Interface, ...\n",
+      "names": [],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "torii-lib-soc-wishbone",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Library Changes",
+          "torii.lib.soc.wishbone"
+        ]
+      },
+      "doc_lineno": 162
+    },
+    {
+      "source": "from torii.hdl import DomainRenamer\n\n# OLD (<1.0.0)\n\na = DomainRenamer('meow')(elab)\n# -- OR --\na = DomainRenamer({'sync': 'meow'})(elab)\n\n# NEW (>=1.0.0)\na = DomainRenamer(sync = 'meow')(elab)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "domainrenamer-from-torii-hdl-xfrm",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "DomainRenamer from torii.hdl.xfrm"
+        ]
+      },
+      "doc_lineno": 181
+    },
+    {
+      "source": "from torii.hdl import DomainRenamer\n\ndomain_map = {\n\t'sync': 'meow',\n\t# ...\n}\n\n# OLD (<1.0.0)\na = DomainRenamer(domain_map)(elab)\n\n# NEW (>=1.0.0)\na = DomainRenamer(**domain_map)(elab)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "domainrenamer-from-torii-hdl-xfrm",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "DomainRenamer from torii.hdl.xfrm"
+        ]
+      },
+      "doc_lineno": 196
+    },
+    {
+      "source": "from torii.lib.stream.simple import StreamInterface\n\nfoo      = Signal(8)\n\nstream_a = StreamInterface()\nstream_b = StreamInterface()\n\n# OLD (<1.0.0)\nstream_a.connect(stream_b)\n\n# ...\n\nm.d.comb += [\n\tfoo.eq(stream_a.payload),\n]\n\n# NEW (>=1.0.0)\nstream_a.attach(stream_a)\n\n# ...\n\nm.d.comb += [\n\tfoo.eq(stream_a.data),\n]\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple"
+          ],
+          "code_str": "torii.lib.stream.simple",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.lib.stream.simple"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_a",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_b",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_b",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()",
+            "attach"
+          ],
+          "code_str": "stream_a.attach",
+          "lineno": 18,
+          "end_lineno": 18,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface.attach"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_a",
+          "lineno": 18,
+          "end_lineno": 18,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "streaminterface-from-torii-lib-stream-simple",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "StreamInterface from torii.lib.stream.simple"
+        ]
+      },
+      "doc_lineno": 215
+    },
+    {
+      "source": "from torii.lib.stdio.serial import AsyncSerialRX\n\nuart_rx = AsyncSerialRX(...)\n\n# OLD (<1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.ack.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.rdy):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n# NEW (>=1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.start.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.done):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX"
+          ],
+          "code_str": "AsyncSerialRX",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX"
+          ],
+          "code_str": "AsyncSerialRX",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX",
+            "()"
+          ],
+          "code_str": "uart_rx",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        }
+      ],
+      "example": {
+        "document": "migration_guide",
+        "ref_id": "asyncserialrx-from-torii-lib-stdio-serial",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "AsyncSerialRX from torii.lib.stdio.serial"
+        ]
+      },
+      "doc_lineno": 248
     }
   ],
   "platforms/fpga/altera": [],

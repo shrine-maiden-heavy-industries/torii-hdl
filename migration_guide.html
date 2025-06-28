@@ -7,7 +7,7 @@
 <link href="genindex.html" rel="index" title="Index"/><link href="search.html" rel="search" title="Search"/><link href="projects.html" rel="next" title="Projects Using Torii"/><link href="external_libraries.html" rel="prev" title="External Libraries"/>
 <link href="https://torii.shmdn.link/migration_guide.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-<title>Torii v0.X to v1.0 Migration Guide - Torii-HDL 0.8.1.dev4 documentation</title>
+<title>Torii v0.X to v1.0 Migration Guide - Torii-HDL 0.8.1.dev16 documentation</title>
 <link href="_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="_static/styles/furo.css?v=354aac6f" rel="stylesheet" type="text/css"/>
 <link href="_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css"/>
@@ -148,7 +148,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="index.html"><div class="brand">Torii-HDL 0.8.1.dev4 documentation</div></a>
+<a href="index.html"><div class="brand">Torii-HDL 0.8.1.dev16 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -169,7 +169,7 @@
 <aside class="sidebar-drawer">
 <div class="sidebar-container">
 <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
-<span class="sidebar-brand-text">Torii-HDL 0.8.1.dev4 documentation</span>
+<span class="sidebar-brand-text">Torii-HDL 0.8.1.dev16 documentation</span>
 </a><form action="search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -301,23 +301,252 @@
 <p class="admonition-title">Todo</p>
 <p>This document is a work in progress and should be updated as the progression v1.0 progresses</p>
 </div>
-<section id="module-changes">
-<h2>Module Changes<a class="headerlink" href="#module-changes" title="Link to this heading">¶</a></h2>
-<section id="domainrenamer">
-<h3><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code><a class="headerlink" href="#domainrenamer" title="Link to this heading">¶</a></h3>
-<p>In past versions of Torii, you could use the <a class="reference internal" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a> in two ways, the first was to pass a single string into it, which would be used to re-map the <code class="docutils literal notranslate"><span class="pre">sync</span></code> domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.</p>
-<p>These have been replaced with using <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="s1">'meow'</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+<section id="general">
+<h2>General<a class="headerlink" href="#general" title="Link to this heading">¶</a></h2>
+<section id="hdl-constructs-imported-from-root-torii-namespace">
+<h3>HDL Constructs Imported From Root <code class="docutils literal notranslate"><span class="pre">torii</span></code> Namespace<a class="headerlink" href="#hdl-constructs-imported-from-root-torii-namespace" title="Link to this heading">¶</a></h3>
+<p>The Previous versions of Torii let you do a general glob import of all of the core HDL constructs (<a class="reference internal" href="api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> et. al.) from the root <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii</span></code> module namespace.</p>
+<p>These must now be imported from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.hdl</span></code> module namespace, and while glob imports are discouraged, they will still work as intended previously.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">DomainRenamer</span><span class="p">({</span><span class="s1">'sync'</span><span class="p">:</span> <span class="s1">'meow'</span><span class="p">})(</span><span class="n">elab</span><span class="p">)</span>
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
-<p>This should now be written as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="n">sync</span> <span class="o">=</span> <span class="s1">'meow'</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+</section>
+<section id="importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog">
+<h3>Importing <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code><a class="headerlink" href="#importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog" title="Link to this heading">¶</a></h3>
+<p>The ability to directly import <code class="xref py py-class docutils literal notranslate"><span class="pre">YosysError</span></code> from the <a class="reference internal" href="api/backend/index.html#module-torii.back.cxxrtl" title="torii.back.cxxrtl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code></a> and <a class="reference internal" href="api/backend/index.html#module-torii.back.verilog" title="torii.back.verilog"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.back.verilog</span></code></a> modules has been removed, as it made little sense logically.</p>
+<p>It must now be directly imported from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code> itself.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="api/backend/index.html#module-torii.back.cxxrtl" title="torii.back.cxxrtl"><span class="nn">torii.back.cxxrtl</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
+<span class="c1"># -- OR --</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="api/backend/index.html#module-torii.back.verilog" title="torii.back.verilog"><span class="nn">torii.back.verilog</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.yosys</span><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
+</pre></div>
+</div>
+</section>
+<section id="dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec">
+<h3><code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.hdl.rec</span></code><a class="headerlink" href="#dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>, <code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code>, and <code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code> constant aliases have been removed in favor of using the <a class="reference internal" href="api/hdl/rec.html#torii.hdl.rec.Direction" title="torii.hdl.rec.Direction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Direction</span></code></a> enumeration directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="api/hdl/rec.html#module-torii.hdl.rec" title="torii.hdl.rec"><span class="nn">torii.hdl.rec</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">DIR_FANIN</span><span class="p">,</span> <span class="n">DIR_FANOUT</span><span class="p">,</span> <span class="n">DIR_NONE</span>
+
+<span class="n">rec</span> <span class="o">=</span> <span class="n">Record</span><span class="p">([</span>
+	<span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DIR_FANIN</span><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DIR_FANOUT</span><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">DIR_NONE</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="api/hdl/rec.html#module-torii.hdl.rec" title="torii.hdl.rec"><span class="nn">torii.hdl.rec</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="api/hdl/rec.html#torii.hdl.rec.Direction" title="torii.hdl.rec.Direction"><span class="n">Direction</span></a>
+
+<span class="n">rec</span> <span class="o">=</span> <span class="n">Record</span><span class="p">([</span>
+	<span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">FANIN</span><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">FANOUT</span><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NONE</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>While it is a touch more wordy, we feel it give more context and is generally more descriptive.</p>
+</section>
+<section id="build-cxx-from-torii-tools-cxx">
+<h3><code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code><a class="headerlink" href="#build-cxx-from-torii-tools-cxx" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> function from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code> has been removed in favor of the <code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code>, which offers more control and capabilities.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.cxx</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_cxx</span>
+
+<span class="n">build_dir</span><span class="p">,</span> <span class="n">output_file</span> <span class="o">=</span> <span class="n">build_cxx</span><span class="p">(</span>
+	<span class="n">cxx_sources</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s1">'foo.cc'</span><span class="p">:</span> <span class="s1">'/* Source Code for foo */'</span>
+	<span class="p">},</span>
+	<span class="n">output_name</span>  <span class="o">=</span> <span class="s1">'foo'</span><span class="p">,</span>
+	<span class="n">include_dirs</span> <span class="o">=</span> <span class="p">[],</span>
+	<span class="n">macros</span>       <span class="o">=</span> <span class="p">[]</span>
+<span class="p">)</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.cxx</span><span class="w"> </span><span class="kn">import</span> <span class="n">compile_cxx</span>
+
+<a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="pathlib.Path"><span class="n">output_file</span></a> <span class="o">=</span> <span class="n">compile_cxx</span><span class="p">(</span>
+	<span class="s1">'foo'</span><span class="p">,</span>
+	<span class="n">build_dir</span><span class="p">,</span>
+	<span class="kc">None</span><span class="p">,</span>
+	<span class="n">source_listings</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s1">'foo.cc'</span><span class="p">:</span> <span class="s1">'/* Source for foo */'</span>
+	<span class="p">}</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>For more information see the full documentation on <code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code> for all of it’s capabilities and examples of more advanced usage.</p>
+<p>The equivalent functionality can be maintained with a little bit of scaffolding:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_cxx</span><span class="p">(</span>
+	<span class="n">cxx_sources</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#dict" title="dict"><span class="nb">dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">],</span> <span class="n">output_name</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <span class="n">include_dirs</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#list" title="list"><span class="nb">list</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">],</span> <span class="n">macros</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#list" title="list"><span class="nb">list</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">]</span>
+<span class="p">)</span>  <span class="o">-&gt;</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="tuple"><span class="nb">tuple</span></a><span class="p">[</span><span class="n">TemporaryDirectory</span><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">],</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">]:</span>
+
+	<span class="n">build_dir</span>  <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s1">'torii_cxx_'</span><span class="p">)</span>
+	<span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">build_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+	<span class="n">output_file</span> <span class="o">=</span> <span class="n">compile_cxx</span><span class="p">(</span>
+		<span class="n">output_name</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">include_paths</span> <span class="o">=</span> <span class="n">include_dirs</span><span class="p">,</span> <span class="n">defines</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="n">macro</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">macro</span> <span class="ow">in</span> <span class="n">macros</span><span class="p">)</span>
+		<span class="p">},</span>
+		<span class="n">source_listings</span> <span class="o">=</span> <span class="n">cxx_sources</span>
+	<span class="p">)</span>
+
+	<span class="k">return</span> <span class="p">(</span><span class="n">build_dir</span><span class="p">,</span> <span class="n">output_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="extend-from-torii-util-decorators">
+<h3><code class="docutils literal notranslate"><span class="pre">@extend</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.util.decorators</span></code><a class="headerlink" href="#extend-from-torii-util-decorators" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">@extend</span></code> decorator from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.util.decorators</span></code> module has been removed outright. There is no replacement for this as it involved injecting things into other classes which breaks the type system and in general was a bad idea.</p>
+</section>
+<section id="memoize-from-torii-util-decorators">
+<h3><code class="docutils literal notranslate"><span class="pre">@memoize</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.util.decorators</span></code><a class="headerlink" href="#memoize-from-torii-util-decorators" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">@memoize</span></code> decorator from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.util.decorators</span></code> has been removed and should be replaced with <code class="xref py py-class docutils literal notranslate"><span class="pre">functools.cache</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.util.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">memoize</span>
+
+<span class="nd">@memoize</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">,</span> <span class="n">baz</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">)</span> <span class="o">-&gt;</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">:</span>
+	<span class="o">...</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functools.html#module-functools" title="functools"><span class="nn">functools</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functools.html#functools.cache" title="functools.cache"><span class="n">cache</span></a>
+
+<a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functools.html#functools.cache" title="functools.cache"><span class="nd">@cache</span></a>
+<span class="k">def</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">,</span> <span class="n">baz</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">)</span> <span class="o">-&gt;</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#int" title="int"><span class="nb">int</span></a><span class="p">:</span>
+	<span class="o">...</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="library-changes">
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Link to this heading">¶</a></h2>
+<section id="torii-lib-soc-memory">
+<h3><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code><a class="headerlink" href="#torii-lib-soc-memory" title="Link to this heading">¶</a></h3>
+<p>The contents of the <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code> module have been moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem</span></code>, as they are generally useful for non-SoC designs as well as SoC designs.</p>
+<p>More specifically the <a class="reference internal" href="library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryMap</span></code></a>, <a class="reference internal" href="library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">_RangeMap</span></code> have been moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem.map</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">MemoryMap</span><span class="p">,</span> <span class="n">ResourceInfo</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.mem.map</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><span class="n">MemoryMap</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><span class="n">ResourceInfo</span></a>
+</pre></div>
+</div>
+</section>
+<section id="torii-lib-soc-wishbone">
+<h3><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code><a class="headerlink" href="#torii-lib-soc-wishbone" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">wishbone</span></code> module has been removed from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.soc</span></code> and moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>, as it is generally useful for non-SoC designs as well as SoC designs, and is not the only bus type supported.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+
+<span class="c1"># -- OR --</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone.bus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.bus.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-changes">
+<h2>Module Changes<a class="headerlink" href="#module-changes" title="Link to this heading">¶</a></h2>
+<section id="domainrenamer-from-torii-hdl-xfrm">
+<h3><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.hdl.xfrm</span></code><a class="headerlink" href="#domainrenamer-from-torii-hdl-xfrm" title="Link to this heading">¶</a></h3>
+<p>In past versions of Torii, you could use the <a class="reference internal" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a> in two ways, the first was to pass a single string into it, which would be used to re-map the <code class="docutils literal notranslate"><span class="pre">sync</span></code> domain in the wrapped elaboratables to that domain, or pass a dictionary literally to map one or more domains.</p>
+<p>These have been replaced with using <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> to more directly display the intent of the renamer over passing a single string, and also to clean up visual noise when passing a dictionary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a>
+
+<span class="c1"># OLD (&lt;1.0.0)</span>
+
+<span class="n">a</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a><span class="p">(</span><span class="s1">'meow'</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+<span class="c1"># -- OR --</span>
+<span class="n">a</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a><span class="p">({</span><span class="s1">'sync'</span><span class="p">:</span> <span class="s1">'meow'</span><span class="p">})(</span><span class="n">elab</span><span class="p">)</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="n">a</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a><span class="p">(</span><span class="n">sync</span> <span class="o">=</span> <span class="s1">'meow'</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If you need to pass a dictionary that is built at runtime to the domain renamer, then you can simply un-pack the dictionary into the constructor like so:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainRenamer</span><span class="p">(</span><span class="o">**</span><span class="n">domain_map</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a>
+
+<span class="n">domain_map</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="s1">'sync'</span><span class="p">:</span> <span class="s1">'meow'</span><span class="p">,</span>
+	<span class="c1"># ...</span>
+<span class="p">}</span>
+
+<span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="n">a</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a><span class="p">(</span><span class="n">domain_map</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<span class="n">a</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/hdl/xfrm.html#torii.hdl.xfrm.DomainRenamer" title="torii.hdl.xfrm.DomainRenamer"><span class="n">DomainRenamer</span></a><span class="p">(</span><span class="o">**</span><span class="n">domain_map</span><span class="p">)(</span><span class="n">elab</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="streaminterface-from-torii-lib-stream-simple">
+<h3><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code><a class="headerlink" href="#streaminterface-from-torii-lib-stream-simple" title="Link to this heading">¶</a></h3>
+<p>The <a class="reference internal" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInterface</span></code></a> from <a class="reference internal" href="library/stream/simple.html#module-torii.lib.stream.simple" title="torii.lib.stream.simple"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code></a> has had the <code class="docutils literal notranslate"><span class="pre">connect</span></code> method removed in favor of the <code class="docutils literal notranslate"><span class="pre">attach</span></code> method. In addition the <code class="docutils literal notranslate"><span class="pre">payload</span></code> signal has been removed in favor of the <code class="docutils literal notranslate"><span class="pre">data</span></code> signal.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="library/stream/simple.html#module-torii.lib.stream.simple" title="torii.lib.stream.simple"><span class="nn">torii.lib.stream.simple</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">StreamInterface</span></a>
+
+<span class="n">foo</span>      <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+<a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_a</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">StreamInterface</span></a><span class="p">()</span>
+<a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_b</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">StreamInterface</span></a><span class="p">()</span>
+
+<span class="c1"># OLD (&lt;1.0.0)</span>
+<span class="n">stream_a</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_b</span></a><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="p">[</span>
+	<span class="n">foo</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">stream_a</span><span class="o">.</span><span class="n">payload</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+<a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface.attach" title="torii.lib.stream.simple.StreamInterface.attach"><span class="n">stream_a</span><span class="o">.</span><span class="n">attach</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_a</span></a><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="p">[</span>
+	<span class="n">foo</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">stream_a</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="asyncserialrx-from-torii-lib-stdio-serial">
+<h3><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code><a class="headerlink" href="#asyncserialrx-from-torii-lib-stdio-serial" title="Link to this heading">¶</a></h3>
+<p>The <a class="reference internal" href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a> from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code> has had the <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals removed in favor of the <code class="docutils literal notranslate"><span class="pre">done</span></code> and <code class="docutils literal notranslate"><span class="pre">start</span></code> signals respectively.</p>
+<p>This was done to match them more logically to what they actually do in order to avoid common pitfalls and confusion when using the module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.stdio.serial</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">AsyncSerialRX</span></a>
+
+<a class="sphinx-codeautolink-a" href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">uart_rx</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">AsyncSerialRX</span></a><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># OLD (&lt;1.0.0)</span>
+
+<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">FSM</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'rx'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fsm</span><span class="p">:</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">uart_rx</span><span class="o">.</span><span class="n">ack</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">fsm</span><span class="o">.</span><span class="n">ongoing</span><span class="p">(</span><span class="s1">'IDLE'</span><span class="p">)),</span> <span class="p">]</span>
+
+	<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="s1">'IDLE'</span><span class="p">):</span>
+		<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">If</span><span class="p">(</span><span class="n">uart_rx</span><span class="o">.</span><span class="n">rdy</span><span class="p">):</span>
+			<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sync</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">data_rx</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">uart_rx</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="p">]</span>
+			<span class="n">m</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="s1">'CMD'</span>
+
+<span class="c1"># NEW (&gt;=1.0.0)</span>
+
+<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">FSM</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'rx'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fsm</span><span class="p">:</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">uart_rx</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">fsm</span><span class="o">.</span><span class="n">ongoing</span><span class="p">(</span><span class="s1">'IDLE'</span><span class="p">)),</span> <span class="p">]</span>
+
+	<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="s1">'IDLE'</span><span class="p">):</span>
+		<span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">If</span><span class="p">(</span><span class="n">uart_rx</span><span class="o">.</span><span class="n">done</span><span class="p">):</span>
+			<span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sync</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">data_rx</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">uart_rx</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="p">]</span>
+			<span class="n">m</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="s1">'CMD'</span>
+
 </pre></div>
 </div>
 </section>
@@ -377,8 +606,24 @@
 <div class="toc-tree">
 <ul>
 <li><a class="reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a><ul>
+<li><a class="reference internal" href="#general">General</a><ul>
+<li><a class="reference internal" href="#hdl-constructs-imported-from-root-torii-namespace">HDL Constructs Imported From Root <code class="docutils literal notranslate"><span class="pre">torii</span></code> Namespace</a></li>
+<li><a class="reference internal" href="#importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog">Importing <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code></a></li>
+<li><a class="reference internal" href="#dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec"><code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.hdl.rec</span></code></a></li>
+<li><a class="reference internal" href="#build-cxx-from-torii-tools-cxx"><code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code></a></li>
+<li><a class="reference internal" href="#extend-from-torii-util-decorators"><code class="docutils literal notranslate"><span class="pre">@extend</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.util.decorators</span></code></a></li>
+<li><a class="reference internal" href="#memoize-from-torii-util-decorators"><code class="docutils literal notranslate"><span class="pre">@memoize</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.util.decorators</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#library-changes">Library Changes</a><ul>
+<li><a class="reference internal" href="#torii-lib-soc-memory"><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code></a></li>
+<li><a class="reference internal" href="#torii-lib-soc-wishbone"><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-changes">Module Changes</a><ul>
-<li><a class="reference internal" href="#domainrenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
+<li><a class="reference internal" href="#domainrenamer-from-torii-hdl-xfrm"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.hdl.xfrm</span></code></a></li>
+<li><a class="reference internal" href="#streaminterface-from-torii-lib-stream-simple"><code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code></a></li>
+<li><a class="reference internal" href="#asyncserialrx-from-torii-lib-stdio-serial"><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -389,7 +634,7 @@
 </div>
 </aside>
 </div>
-</div><script src="_static/documentation_options.js?v=d7a60540"></script>
+</div><script src="_static/documentation_options.js?v=1115b237"></script>
 <script src="_static/doctools.js?v=9bcbadda"></script>
 <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="_static/scripts/furo.js?v=5fa4622c"></script>
