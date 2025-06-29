@@ -22,6 +22,8 @@ Unreleased template stuff
 
 ### Added
 
+- Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
+
 ### Changed
 
 ### Deprecated
