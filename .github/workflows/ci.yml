@@ -198,16 +198,6 @@ jobs:
           path: build/mv-docs
           retention-days: 1
 
-      # XXX(aki): Remove prior to merge into main, for dev/testing this PR *only*
-      - name: 'Upload docs artifact (docs-dev)'
-        if: success() && github.repository == 'shrine-maiden-heavy-industries/torii-hdl' && github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs
-          include-hidden-files: true
-          path: build/mv-docs
-          retention-days: 1
-
   docs:
     name: 'Torii Docs (Meta Job)'
     needs:
@@ -249,32 +239,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: built_docs/
-          clean: true
-
-  # XXX(aki): Remove prior to merge into main, for dev/testing this PR *only*
-  publish-docs-dev:
-    name: 'Publish Torii Docs (docs-dev)'
-    if: github.repository == 'shrine-maiden-heavy-industries/torii-hdl' && github.event_name == 'push'
-    needs:
-      - ci-checkpoint
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: 'Download docs artifact'
-        uses: actions/download-artifact@v4
-        with:
-          name: docs
-          path: built_docs/
-
-      - name: 'Deploy Docs'
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: docs-dev
           folder: built_docs/
           clean: true
 
