@@ -72,7 +72,18 @@ html_theme       = 'furo'
 html_copy_source = False
 
 html_theme_options = {
-
+	'light_css_variables': {
+		'color-brand-primary': '#2672a8',
+		'color-brand-content': '#2672a8',
+		'color-announcement-background': '#ffab87',
+		'color-announcement-text': '#494453',
+	},
+	'dark_css_variables': {
+		'color-brand-primary': '#85C2FE',
+		'color-brand-content': '#85C2FE',
+		'color-announcement-background': '#ffab87',
+		'color-announcement-text': '#494453',
+	},
 }
 
 html_static_path = [
