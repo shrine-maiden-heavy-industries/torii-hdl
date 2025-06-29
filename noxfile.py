@@ -87,6 +87,53 @@ def build_docs(session: Session) -> None:
 	session.install('.')
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(out_dir))
 
+@nox.session(name = 'build-docs-multiversion')
+def build_docs_multiversion(session: Session) -> None:
+	out_dir = (BUILD_DIR / 'mv-docs')
+	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
+	session.install('.')
+
+	# Workaround for sphinx-contrib/multiversion#58
+	# Ask git for the list of tags matching `v*`, and sort them in reverse order by name
+	git_tags: str = session.run(
+		'git', 'tag', '-l', 'v*', '--sort=-v:refname',
+		external=True, silent=True
+	) # type: ignore
+	# Split the tags and get the first, it *should* be the most recent
+	latest = git_tags.splitlines()[0]
+
+	session.run(
+		'sphinx-multiversion', '-D', f'smv_latest_version={latest}', str(DOCS_DIR), str(out_dir)
+	)
+
+	session.log('Copying docs redirect...')
+	# Copy the docs redirect index
+	copy(redirect_index, out_dir / 'index.html')
+
+	with session.chdir(out_dir):
+		latest_link = Path('latest')
+		docs_dev    = Path('main')
+		docs_tag    = Path(latest)
+
+		session.log('Copying needed GitHub pages files...')
+
+		copy(docs_dev / 'CNAME', 'CNAME')
+		copy(docs_dev / '.nojekyll', '.nojekyll')
+
+		session.log('Creating symlink to latest docs...')
+		# If the symlink exists, unlink it
+		if latest_link.exists():
+			latest_link.unlink()
+
+		# Check to make sure the latest tag has some docs
+		if docs_tag.exists():
+			# Create a symlink from `/latest` to the latest tag
+			latest_link.symlink_to(docs_tag)
+		else:
+			session.warn(f'Docs for {latest} did not seem to be built, using development docs instead')
+			# Otherwise, link to `main`
+			latest_link.symlink_to(docs_dev)
+
 @nox.session(name = 'linkcheck-docs')
 def linkcheck_docs(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'docs-linkcheck')
