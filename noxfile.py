@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-import shutil
 from os             import getenv
 from pathlib        import Path
 from setuptools_scm import get_version, ScmVersion
@@ -84,7 +83,6 @@ def test(session: Session) -> None:
 @nox.session(name = 'build-docs')
 def build_docs(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'docs')
-	shutil.rmtree(out_dir, ignore_errors = True)
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('.')
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(out_dir))
@@ -92,7 +90,6 @@ def build_docs(session: Session) -> None:
 @nox.session(name = 'linkcheck-docs')
 def linkcheck_docs(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'docs-linkcheck')
-	shutil.rmtree(out_dir, ignore_errors = True)
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('.')
 	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(out_dir))
