@@ -300,7 +300,7 @@ Unreleased template stuff
 ### Added
 
 - Added `-norom` and `-proc` options to verilog generation if available in Yosys.
-- Added [a small tutorial](https://torii.shmdn.link/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
+- Added [a small tutorial](https://torii.shmdn.link/latest/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
 - Added conversion helpers to/from picoseconds.
 
 ### Changed
