@@ -79,6 +79,17 @@ html_static_path = [
 	'_static'
 ]
 
+html_sidebars = {
+	"**": [
+		"sidebar/brand.html",
+		"sidebar/search.html",
+		"sidebar/scroll-start.html",
+		"sidebar/navigation.html",
+		"sidebar/version_selector.html",
+		"sidebar/scroll-end.html",
+	]
+}
+
 html_css_files = [
 	'css/styles.css'
 ]
