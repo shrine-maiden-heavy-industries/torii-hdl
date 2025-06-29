@@ -124,8 +124,9 @@ linkcheck_ignore  = [
 ]
 
 # Sphinx-Multiversion stuff
-smv_tag_whitelist    = r'^v(?!0)\d+\.\d+\.\d+$' # Ignore all `v0.` versions
-smv_branch_whitelist = r'^main$'                # Only look at `main`
+# TODO(aki): Revert to `^v(?!0)\d+\.\d+\.\d+$` when `v1.0.0` drops, we need to gen the v0.8.0 stable for now
+smv_tag_whitelist    = r'^v\d+\.(?![1-7])\d+\.\d+$' # Ignore all `v0.[1-7].x` versions
+smv_branch_whitelist = r'^main$'                    # Only look at `main`
 smv_remote_whitelist = r'^origin$'
-smv_released_pattern = r'^refs/tags/v.+$'       # Only consider tags to be full releases
+smv_released_pattern = r'^refs/tags/v.+$'           # Only consider tags to be full releases
 smv_outputdir_format = '{ref.name}'
