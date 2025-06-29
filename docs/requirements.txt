@@ -1,9 +1,10 @@
+furo
+myst-parser
 setuptools_scm
 sphinx
+sphinx-codeautolink
+sphinx-copybutton
 sphinx-inline-tabs
-furo
+sphinx-multiversion
 sphinxcontrib-wavedrom
 wavedrom
-myst-parser
-sphinx-copybutton
-sphinx-codeautolink

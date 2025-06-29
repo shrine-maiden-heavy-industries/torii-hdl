@@ -26,6 +26,7 @@ extensions = [
 	'myst_parser',
 	'sphinx_copybutton',
 	'sphinx_codeautolink',
+	'sphinx_multiversion',
 ]
 
 source_suffix = {
@@ -99,3 +100,10 @@ linkcheck_ignore  = [
 	# Sphinx link-check and GitLab readme anchors don't get along
 	'https://gitlab.com/surfer-project/surfer#installation',
 ]
+
+# Sphinx-Multiversion stuff
+smv_tag_whitelist    = r'^v(?!0)\d+\.\d+\.\d+$' # Ignore all `v0.` versions
+smv_branch_whitelist = r'^main$'                # Only look at `main`
+smv_remote_whitelist = r'^origin$'
+smv_released_pattern = r'^refs/tags/v.+$'       # Only consider tags to be full releases
+smv_outputdir_format = '{ref.name}'
