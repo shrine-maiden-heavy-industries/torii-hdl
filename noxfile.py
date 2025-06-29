@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-from os             import getenv
+
+from os             import link, getenv
 from pathlib        import Path
 from setuptools_scm import get_version, ScmVersion
+from shutil         import copy
 
 import nox
 from nox.sessions   import Session
@@ -90,6 +92,9 @@ def build_docs(session: Session) -> None:
 @nox.session(name = 'build-docs-multiversion')
 def build_docs_multiversion(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'mv-docs')
+
+	redirect_index = (CNTRB_DIR / 'docs-redirect.html')
+
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('.')
 
@@ -102,6 +107,7 @@ def build_docs_multiversion(session: Session) -> None:
 	# Split the tags and get the first, it *should* be the most recent
 	latest = git_tags.splitlines()[0]
 
+	# Build the multi-version docs
 	session.run(
 		'sphinx-multiversion', '-D', f'smv_latest_version={latest}', str(DOCS_DIR), str(out_dir)
 	)
