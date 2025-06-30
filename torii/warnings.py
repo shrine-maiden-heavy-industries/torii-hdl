@@ -96,7 +96,8 @@ def _get_console(output_stream: TextIO | None) -> Console:
 	else:
 		return Console(file = output_stream)
 
-def _render_fancy(cons: Console, filename: str, lineno: int) -> None:
+# NOTE(aki): I don't like the nocov here but it's *really* hard to test this
+def _render_fancy(cons: Console, filename: str, lineno: int) -> None: # :nocov:
 	'''
 	Render the fancy syntax-highlighted code context for the warning display.
 
@@ -159,7 +160,8 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> None:
 			cons.print(render_title)
 			cons.print(code_render)
 
-def _warning_handler(
+# NOTE(aki): I don't like the nocov here but it's *really* hard to test this
+def _warning_handler( # :nocov:
 	message: Warning | str, category: type[Warning] | None, filename: str, lineno: int,
 	output_file: TextIO | None = None, line: str | None = None
 ) -> None:

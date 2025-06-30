@@ -4,8 +4,6 @@ omit =
   */setup.py
   */noxfile.py
   */__main__.py
-  # This is not ideal but there is no good way to do tests/coverage for this.
-  */torii/_warnings.py
 
 [report]
 show_missing = True
