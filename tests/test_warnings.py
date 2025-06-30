@@ -5,12 +5,11 @@ import sys
 import warnings
 from copy           import deepcopy
 from io             import StringIO
-from inspect        import getsource
 
 from torii.warnings import (
 	DEFAULT_FANCY_CONTEXT, DEFAULT_FANCY_WIDTH, DEFAULT_STRIP_PATH, DEFAULT_USE_FANCY,
 	_WARN_HANDLER_RESTORE, WarningRenderingOptions, _get_console, _populate_options,
-	_render_fancy, _warning_handler, install_handler, remove_handler,
+	_warning_handler, install_handler, remove_handler,
 )
 
 from .utils         import ToriiTestSuiteCase
