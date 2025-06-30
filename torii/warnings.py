@@ -49,12 +49,18 @@ def _populate_options() -> WarningRenderingOptions:
 	use_fancy = not getenv('TORII_WARNINGS_NOFANCY', False)
 
 	try:
-		fancy_context = int(getenv('TORII_WARNINGS_CONTEXT', ''))
+		if (val := int(getenv('TORII_WARNINGS_CONTEXT', ''))) > 0:
+			fancy_context = val
+		else:
+			fancy_context = DEFAULT_FANCY_CONTEXT
 	except Exception:
 		fancy_context = DEFAULT_FANCY_CONTEXT
 
 	try:
-		fancy_width = int(getenv('TORII_WARNINGS_WIDTH', ''))
+		if (val := int(getenv('TORII_WARNINGS_WIDTH', ''))) > 0:
+			fancy_width = val
+		else:
+			fancy_width = DEFAULT_FANCY_WIDTH
 	except Exception:
 		fancy_width = DEFAULT_FANCY_WIDTH
 
