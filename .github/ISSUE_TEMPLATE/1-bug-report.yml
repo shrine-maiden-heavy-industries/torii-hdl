@@ -13,6 +13,7 @@ body:
       value: >
         Thank you for helping make Torii better for everyone!
 
+
         Please fill out the form below as best you can, and we will
         review it and get back to you as soon as we can
 
@@ -23,8 +24,10 @@ body:
       description: >
         The version of Torii this bug was encountered on.
 
+
         If using the development branch, then you can use the following command to get
         the specific version you're on:
+
 
         `python -c 'import torii;print(torii.__version__)'`
 
@@ -38,6 +41,7 @@ body:
       label: 'Python Version'
       description: >
         Which versions of Python does this occur on?
+
 
         If it happens on more than one version, select all applicable.
       options:
@@ -57,6 +61,7 @@ body:
       label: 'Operating System'
       description: >
         If the problem occurs on one or more specific operating systems select all as appropriate.
+
 
         Please note, we have limited testing on less common systems such as things like Plan9, Haiku,
         illumos-based systems, or most BSDs, so an issue occurring on one of those platforms will take
@@ -78,6 +83,7 @@ body:
       description: >
         The specific release and/or version of the Operating System specified.
 
+
         If more than one operating system and/or version, please list them all separated
         by a comma.
       placeholder: 'e.g. Arch Linux, OpenIndiana Hipster 2025.04, OpenBSD 7.7'
@@ -94,9 +100,11 @@ body:
         is reproducible in the current git main of Torii. Also ensure to
         provide all necessary source files needed if possible.
 
+
         Please see [https://stackoverflow.com/help/mcve](https://stackoverflow.com/help/mcve)
         for information on how to create a Minimal, Complete, and Verifiable Example
         (MCVE).
+
 
         However, we know this is not always possible, and things can be hard to minify, so if you
         cant fully that is fine, it just might take a bit longer to diagnose the issue.
