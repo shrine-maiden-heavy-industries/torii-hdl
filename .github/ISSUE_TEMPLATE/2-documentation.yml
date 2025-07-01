@@ -1,0 +1,62 @@
+name: 'Documentation Issue'
+description: 'Report an issue with the Documentation'
+labels: [
+  'pending-verification',
+  'documentation'
+]
+
+body:
+  - type: markdown
+    attributes:
+      value: '## Report a Torii Documentation Issue'
+  - type: markdown
+    attributes:
+      value: >
+        We are striving to make efforts on improving the Torii documentation so it is easy to
+        understand for everyone and as comprehensive as possible. So thank you for helping
+        us reach that goal and making Torii better for everyone in the process.
+
+        Please fill out the form below as best you can, and we will
+        review it and get back to you as soon as possible.
+
+  - type: input
+    id: docs-version
+    attributes:
+      label: 'Documentation Version'
+      description: >
+        The version of Torii Documentation this issue is about.
+
+        If it is the development documentation you can simply specify `dev` as the version.
+
+      placeholder: 'e.g. v1.0.5'
+    validations:
+      required: true
+
+  - type: textarea
+    id: docs-issue
+    attributes:
+      label: 'What is the issue?'
+      description: >
+        Please provide as much detail as you can.
+
+
+        For instance if something is hard to understand or unclear, rather than just saying
+        "X is incorrect", walk us through what you understood it to mean.
+
+
+        If something **is** outright incorrect, simply describe where/what it was, and how badly
+        incorrect it is. For example, if it's a minor issue such as a typo, or if it describing
+        functionality that just outright doesn't exist or work the way it says.
+
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 'Code of Conduct'
+      description: >
+        By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: 'I agree to follow the Torii Code of Conduct'
+          required: true
