@@ -84,7 +84,9 @@ Torii can be used to target any FPGA or ASIC process that accepts behavioral Ver
 
 ## License
 
-Torii is released under the [BSD-2-Clause], the full text of which can be found in the [`LICENSE`] file in the root of this repository.
+Torii is released under the [BSD-2-Clause], the full text of which can be found in the [`LICENSE`] file in the root of the [git repository].
+
+The Torii documentation is dual licensed under the [BSD-2-Clause] for all past contributions and the [CC-BY-SA 4.0] for all new and future contributions. The full text of the [CC-BY-SA 4.0] can be found in the [`LICENSE.docs`] file in the root of the [git repository].
 
 [Amaranth HDL]: https://github.com/amaranth-lang
 [Shrine Maiden Heavy Industries]: https://shrine-maiden-heavy.industries/
@@ -95,3 +97,6 @@ Torii is released under the [BSD-2-Clause], the full text of which can be found 
 [installation instructions]: https://torii.shmdn.link/install.html
 [BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
 [`LICENSE`]: ./LICENSE
+[CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[`LICENSE.docs`]: ./LICENSE.docs
+[git repository]: https://shrine-maiden-heavy.industries/torii-hdl

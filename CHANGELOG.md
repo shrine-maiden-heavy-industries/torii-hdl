@@ -26,6 +26,8 @@ Unreleased template stuff
 
 ### Changed
 
+- Altered the license for the Torii documentation going forward, all past contributions will remain under the [BSD-2-Clause] until they are re-written/superseded and all new/future contributions to the documentation will be under the [CC-BY-SA 4.0].
+
 ### Deprecated
 
 ### Removed
@@ -485,3 +487,5 @@ No changelog is provided for these versions as they are all older tagged release
 [0.4.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0
 [0.3.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.3...amaranth-fork
 [0.1.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.1...amaranth-fork
+[BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
+[CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
