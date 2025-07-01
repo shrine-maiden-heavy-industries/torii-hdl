@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Documentation
-    url: https://torii.shmdn.link/
-    about: "Torii docs"
-  - name: Discussion
-    url: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions
-    about: Have a question? Ask in our discussion forum, or on IRC below!
-  - name: IRC Channel
-    url: https://web.libera.chat/#torii
-    about: "join #torii on irc.libera.chat!"
+  - name: 'View The Documentation'
+    url: 'https://torii.shmdn.link/'
+    about: 'Read the Torii documentation.'
+  - name: 'Start A Discussion'
+    url: 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions'
+    about: 'Have a question? Got something cool to share? Do it here!'
+  - name: 'Chat with Us'
+    url: 'https://web.libera.chat/#torii'
+    about: 'Join us on IRC for development discussion or just to hang out and ask questions'
