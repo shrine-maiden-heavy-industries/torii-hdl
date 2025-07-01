@@ -68,10 +68,11 @@ body:
         longer to diagnose.
       options:
         - 'Linux'
-        - 'macOS'
         - 'BSD'
         - 'illumos'
+        - 'macOS'
         - 'Windows'
+        - 'Other'
       multiple: true
     validations:
       required: true
