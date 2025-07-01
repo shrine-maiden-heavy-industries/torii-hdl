@@ -1,0 +1,121 @@
+name: 'Bug Report'
+description: 'Report an issue or regression with Torii'
+labels: [
+  'pending-verification'
+]
+
+body:
+  - type: markdown
+    attributes:
+      value: '## Report a bug with Torii'
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping make Torii better for everyone!
+
+        Please fill out the form below as best you can, and we will
+        review it and get back to you as soon as we can
+
+  - type: input
+    id: torii-version
+    attributes:
+      label: 'Torii Version'
+      description: |
+        The version of Torii this bug was encountered on.
+
+        If using the development branch, then you can use the following command to get
+        the specific version you're on:
+
+          `python -c 'import torii;print(torii.__version__)'`
+
+      placeholder: 'e.g. v1.0.5'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: python-version
+    attributes:
+      label: 'Python Version'
+      description: |
+        Which versions of Python does this occur on?
+
+        If it happens on more than one version, select all applicable.
+      options:
+        - 'CPython 3.10'
+        - 'CPython 3.11'
+        - 'CPython 3.12'
+        - 'CPython 3.13'
+        - 'CPython 3.14'
+        - 'PyPy 3.11'
+      multiple: true
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 'Operating System'
+      description: |
+        If the problem occurs on one or more specific operating systems select all as appropriate.
+
+        Please note, we have limited testing on less common systems such as things like Plan9, Haiku,
+        illumos-based systems, or most BSDs, so an issue occurring on one of those platforms will take
+        longer to diagnose.
+      options:
+        - 'Linux'
+        - 'macOS'
+        - 'BSD'
+        - 'illumos'
+        - 'Windows'
+      multiple: true
+    validations:
+      required: true
+
+  - type: input
+    id: platform-version
+    attributes:
+      label: 'Operating System Version'
+      description: |
+        The specific release and/or version of the Operating System
+      placeholder: 'e.g. Arch Linux, OpenIndiana Hipster 2025.04, OpenBSD 7.7'
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: '### A Note on Reproducibility'
+  - type: markdown
+    attributes:
+      value: |
+        When providing steps to reproduce the issue, please ensure that the issue
+        is reproducible in the current git main of Torii. Also ensure to
+        provide all necessary source files needed if possible.
+
+
+        Please see [https://stackoverflow.com/help/mcve](https://stackoverflow.com/help/mcve)
+        for information on how to create a Minimal, Complete, and Verifiable Example
+        (MCVE).
+
+
+        However, we know this is not always possible, and things can be hard to minify, so if you
+        cant fully that is fine, it just might take a bit longer to diagnose the issue.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 'What happened?'
+      description: |
+        Please provide as descriptive of a description as you can, and any additional steps needed to
+        reproduce it if possible.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 'Code of Conduct'
+      description: |
+        By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: 'I agree to follow the Torii Code of Conduct'
+          required: true
