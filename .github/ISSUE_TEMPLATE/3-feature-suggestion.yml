@@ -1,5 +1,6 @@
 name: 'Suggest a Feature'
 description: 'Suggest a Feature or Enhancement for Torii'
+type: 'Feature'
 labels: [
   'enhancement'
 ]
