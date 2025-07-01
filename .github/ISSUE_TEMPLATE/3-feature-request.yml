@@ -1,20 +1,49 @@
-name: Feature Request
-description: "Submit a feature request for Torii"
-labels: ["feature-request"]
+name: 'Suggest a Feature'
+description: 'Suggest a Feature or Enhancement for Torii'
+labels: [
+  'enhancement'
+]
+
 body:
-  - type: textarea
-    id: feature_description
+  - type: markdown
     attributes:
-      label: Feature Description
-      description: "A clear and detailed description of the feature."
+      value: '## Suggest a Feature or Enhancement for Torii'
+  - type: markdown
+    attributes:
+      value: >
+        Thank you for wanting to help make Torii even better and feature packed for everyone!
+
+
+        Before you continue, try to check if what you're suggesting has already been requested
+        before, you can use the filter `is:issue label:enhancement type:Feature` in the Torii
+        [issue tracker](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues)
+        to search, or just [click here](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues?q=is%3Aissue%20label%3Aenhancement%20type%3AFeature)
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 'Feature Description'
+      description: >
+        Please provide as detailed of a suggestion as possible, such as use cases and upsides, as well as
+        any possible downsides or implementation issues can possibly foresee.
+
+
+        For instance, if suggesting a new toolchain to support, please give us a rundown on things such as
+        how easy it is to get a hold of, what platforms it supports, etc.
+
+
+        For example, supporting the Synopsys Design Compiler would be lovely, but for the average maintainer
+        and hobbyist, acquiring the tools to actually implement support for and test against is next to impossible.
+
     validations:
       required: true
 
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
+      label: 'Code of Conduct'
+      description: >
+        By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: 'I agree to follow the Torii Code of Conduct'
           required: true
