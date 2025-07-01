@@ -91,10 +91,10 @@ The Torii documentation is dual licensed under the [BSD-2-Clause] for all past c
 [Amaranth HDL]: https://github.com/amaranth-lang
 [Shrine Maiden Heavy Industries]: https://shrine-maiden-heavy.industries/
 [torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
-[projects using Torii]: https://torii.shmdn.link/projects.html
-[Torii Introduction]: https://torii.shmdn.link/intro.html
+[projects using Torii]: https://torii.shmdn.link/latest/projects.html
+[Torii Introduction]: https://torii.shmdn.link/latest/intro.html
 [online documentation]: https://torii.shmdn.link
-[installation instructions]: https://torii.shmdn.link/install.html
+[installation instructions]: https://torii.shmdn.link/latest/install.html
 [BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
 [`LICENSE`]: ./LICENSE
 [CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
