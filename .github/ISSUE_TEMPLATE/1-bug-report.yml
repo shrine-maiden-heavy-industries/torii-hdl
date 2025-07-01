@@ -115,7 +115,7 @@ body:
     attributes:
       label: 'What happened?'
       description: >
-        Please provide as descriptive of a description as you can, and any additional steps needed to
+        Please provide as detailed of a description as you can, and any additional steps needed to
         reproduce it if possible.
     validations:
       required: true
