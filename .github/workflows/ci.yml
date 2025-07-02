@@ -70,7 +70,7 @@ jobs:
           nox -s typecheck-pyright
           nox -s typecheck-ty
 
-  test-torii:
+  test-torii-core:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -83,7 +83,7 @@ jobs:
           - python-version: 'pypy3.11'
             allow-failure: true
 
-    name: 'Test Torii (Python ${{ matrix.python-version }})'
+    name: 'Test Torii - Core (Python ${{ matrix.python-version }})'
     continue-on-error: ${{ matrix.allow-failure }}
     steps:
       - name: 'Setup Python (${{ matrix.python-version }})'
@@ -124,6 +124,83 @@ jobs:
         shell: bash
         run: |
           nox -s test
+
+      - name: 'Codecov Upload'
+        if: success() && github.repository == 'shrine-maiden-heavy-industries/torii-hdl'
+        uses: codecov/codecov-action@v5
+        with:
+          verbose: true
+          files: ./build/tests/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  test-torii-toolchain:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain-name: [ 'Trellis', 'IceStorm', 'Apicula', ]
+        python-version: [ '3.11', '3.12', '3.13', '3.14', ]
+        allow-failure:
+          - false
+        include:
+          - python-version: '3.15-dev'
+            allow-failure: true
+            toolchain-name: 'Trellis'
+          - python-version: '3.15-dev'
+            allow-failure: true
+            toolchain-name: 'IceStorm'
+          - python-version: '3.15-dev'
+            allow-failure: true
+            toolchain-name: 'Apicula'
+          - python-version: 'pypy3.11'
+            allow-failure: true
+            toolchain-name: 'Trellis'
+          - python-version: 'pypy3.11'
+            allow-failure: true
+            toolchain-name: 'IceStorm'
+          - python-version: 'pypy3.11'
+            allow-failure: true
+            toolchain-name: 'Apicula'
+
+    name: 'Test Torii - Toolchains (Python ${{ matrix.python-version }} toolchain: ${{ matrix.toolchain-name }})'
+    continue-on-error: ${{ matrix.allow-failure }}
+    steps:
+      - name: 'Setup Python (${{ matrix.python-version }})'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 'Initialize Environment'
+        shell: bash
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: |
+          echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
+          echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
+
+      - name: 'Install Dependencies'
+        shell: bash
+        run: |
+          python -m pip install --user --upgrade pip setuptools wheel setuptools_scm nox
+
+      - name: 'Setup OSS CAD Suite'
+        uses: YosysHQ/setup-oss-cad-suite@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: false
+
+      - name: 'Run Tests'
+        shell: bash
+        run: |
+          nox -s "test-toolchain(toolchain='${{ matrix.toolchain-name }}')"
 
       - name: 'Codecov Upload'
         if: success() && github.repository == 'shrine-maiden-heavy-industries/torii-hdl'
@@ -235,7 +312,8 @@ jobs:
     name: 'Torii CI Checkpoint (Meta Job)'
     needs:
       - lint-torii
-      - test-torii
+      - test-torii-core
+      - test-torii-toolchain
       - docs
     runs-on: ubuntu-latest
     steps:
