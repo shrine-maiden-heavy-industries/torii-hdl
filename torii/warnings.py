@@ -88,8 +88,6 @@ def _get_console(output_stream: TextIO | None) -> Console:
 
 		If it is ``None`` or :py:class:`sys.stdout` then the default Rich
 		:py:class:`Console <rich.console.Console>` is used.
-
-		default: None
 	'''
 	if output_stream is None or output_stream == stdout:
 		return get_console()
@@ -205,15 +203,11 @@ def _warning_handler( # :nocov:
 
 		If ``None`` it defaults to :py:class:`sys.stdout`
 
-		default: None
-
 	line : str | None
 		The text of the line the warning was raised on.
 
 		If ``None`` this is collected with the :py:mod:`linecache` module,
 		using the provided ``filename`` and ``lineno``.
-
-		default: None
 	'''
 
 	# Get the output console to write to
@@ -281,8 +275,6 @@ def install_handler(*, catch_all: bool = False) -> None:
 	----------
 	catch_all : bool
 		Flush the Python warnings filters so all warnings are asserted.
-
-		default: False
 	'''
 
 	# If the environment is telling us to not handle the warnings don't,
