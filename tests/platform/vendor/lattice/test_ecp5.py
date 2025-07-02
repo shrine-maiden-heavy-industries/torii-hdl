@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from typing import Literal
 from unittest                           import TestCase
 
 from torii.hdl                          import Instance, Elaboratable, Module
 from torii.build.res                    import Resource, Subsignal, DiffPairs, Pins, Attrs
 from torii.platform.vendor.lattice.ecp5 import ECP5Platform
+
+from ..                                 import ToriiToolchainTestCase, DUTCounter
 
 class TestPlatform(ECP5Platform):
 	toolchain = 'Trellis'
@@ -336,3 +339,17 @@ LOCATE COMP "extref_0__n" SITE "Y12";
 			r'^The ECP5 parts do not support I/O type of differential output for the EXTREF blocks$'
 		):
 			platform.prepare(TestExtrefElaboratable())
+
+
+def trellis_toolchain_test(func):
+	return ToriiToolchainTestCase.toolchain_test('Trellis')(func)
+
+def diamond_toolchain_test(func):
+	return ToriiToolchainTestCase.toolchain_test('Diamond')(func)
+
+class ECP5ToolchainTests(ToriiToolchainTestCase[ECP5Platform]):
+	TOOLCHAINS = ('Trellis', 'Diamond')
+
+	@ToriiToolchainTestCase.toolchain_test()
+	def test_dummy(self) -> None:
+		self.assertTrue(True)
