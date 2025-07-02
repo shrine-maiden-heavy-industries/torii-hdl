@@ -55,10 +55,10 @@ def convert_fragment(
 		The Torii fragment hierarchy to lower.
 	name : str
 		The name of the root fragment module.
-		(default: 'top')
+
 	emit_src : bool
 		Emit source line attributes in the resulting Verilog text.
-		(default: True)
+
 	strip_internal_attrs : bool
 		Remove Torii-specific attributes that were emitted into the resulting Verilog text.
 
@@ -84,14 +84,14 @@ def convert(
 		The Elaboratable to lower into Verilog.
 	name : str
 		The name of the resulting Verilog module.
-		(default: 'top')
+
 	platform : torii.build.plat.Platform
 		The platform to use for Elaboratable evaluation.
 	ports : list[]
 		The list of ports on the top-level module.
 	emit_src : bool
 		Emit source line attributes in the final Verilog text.
-		(default: True)
+
 	strip_internal_attrs : bool
 		Remove Torii-specific attributes that were emitted into the resulting Verilog text.
 
