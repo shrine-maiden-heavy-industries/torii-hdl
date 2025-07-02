@@ -47,10 +47,10 @@ def convert_fragment(
 		The Torii fragment hierarchy to lower.
 	name : str
 		The name of the root fragment module.
-		(default: 'top')
+
 	emit_src : bool
 		Emit source line attributes in the resulting CXXRTL text.
-		(default: True)
+
 	black_boxes : dict[str, str]
 		A map of CXXRTL blackboxes to use in the resulting design.
 
@@ -76,14 +76,14 @@ def convert(
 		The Elaboratable to lower into Verilog.
 	name : str
 		The name of the resulting Verilog module.
-		(default: 'top')
+
 	platform : torii.build.plat.Platform
 		The platform to use for Elaboratable evaluation.
 	ports : list[]
 		The list of ports on the top-level module.
 	emit_src : bool
 		Emit source line attributes in the final CXXRTL text.
-		(default: True)
+
 	black_boxes : dict[str, str]
 		A map of CXXRTL blackboxes to use in the resulting design.
 
