@@ -5,9 +5,9 @@ The Torii API reference is a work in progress and we are actively working on imp
 however it may be deficient or missing in places.
 ```
 
-Torii has 3 primary backends, [RTLIL], [Verilog], and [CXXRTL], each takes a Torii {py:class}`Fragment <torii.hdl.ir.Fragment>` or {py:class}`Elaboratable <torii.hdl.ir.Elaboratable>` and produces an RTL netlist in the given output format.
+Torii has 3 primary backends, [RTLIL], [Verilog], and [CXXRTL], each takes a Torii {py:class}`Fragment <torii.hdl.ir.Fragment>` or {py:class}`Elaboratable <torii.hdl.ir.Elaboratable>` and produces an RTL netlist in the given output format. There is also the [JSON] backend for generic netlist output.
 
-The primary lingua franca of the Torii backends is [RTLIL], the [Verilog] and [CXXRTL] backends first convert the IR into it, and then use [Yosys] to convert the RTLIL netlist into their respective output formats
+The primary lingua franca of the Torii backends is [RTLIL], the [Verilog], [CXXRTL], and [JSON] backends first convert the IR into it, and then use [Yosys] to convert the RTLIL netlist into their respective output formats
 
 ## RTLIL Backend
 
@@ -29,6 +29,14 @@ The primary lingua franca of the Torii backends is [RTLIL], the [Verilog] and [C
 
 ```{eval-rst}
 .. automodule:: torii.back.cxxrtl
+  :members:
+
+```
+
+## JSON Backend
+
+```{eval-rst}
+.. automodule:: torii.back.json
   :members:
 
 ```
@@ -102,4 +110,5 @@ endmodule
 [RTLIL]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html
 [Verilog]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html
 [CXXRTL]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html
+[JSON]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_json.html
 [Yosys]: https://github.com/YosysHQ/yosys

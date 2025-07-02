@@ -26,6 +26,7 @@ Unreleased template stuff
 ### Added
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
+- New `torii.back.json` backend to emit JSON netlists for designs.
 
 ### Changed
 
