@@ -205,7 +205,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 9
     },
     {
       "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
@@ -220,7 +220,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 9
     },
     {
       "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
@@ -236,7 +236,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 9
     },
     {
       "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
@@ -253,7 +253,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 9
     },
     {
       "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
@@ -271,26 +271,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
-    },
-    {
-      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
-      "names": [],
-      "example": {
-        "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
-        "headings": [
-          "Abstract Syntax Tree",
-          "Examples",
-          "Examples",
-          "Examples",
-          "Examples",
-          "Examples",
-          "Examples",
-          "Examples"
-        ]
-      },
-      "doc_lineno": null
+      "doc_lineno": 9
     },
     {
       "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
@@ -306,11 +287,30 @@
           "Examples",
           "Examples",
           "Examples",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "abstract-syntax-tree",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Examples",
+          "Examples",
+          "Examples",
+          "Examples",
+          "Examples",
+          "Examples",
           "Examples",
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 9
     }
   ],
   "api/hdl/cd": [],
@@ -344,7 +344,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 13
+      "doc_lineno": 14
     }
   ],
   "api/index": [],
@@ -361,7 +361,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> tcl_escape('meow {meow} [meow] \\meow')\n'{meow \\{meow\\} [meow] \\\\meow}'",
@@ -375,7 +375,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> tcl_quote('Meow \"meow\"')\n'\"Meow \\\"meow\\\"\"'\n>>> tcl_quote(\"Meow 'meow'\")\n'\"Meow 'meow'\"'",
@@ -390,7 +390,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> tool_env_var('cat')\n'CAT'\n>>> tool_env_var('cat-girl')\n'CAT_GIRL'",
@@ -406,7 +406,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 12
+      "doc_lineno": 13
     }
   ],
   "api/utility/tracer": [],
@@ -422,7 +422,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 11
+      "doc_lineno": 13
     },
     {
       "source": ">>> iec_size(92873402)\n'88.57MiB'\n>>> iec_size(4294967296, 0)\n'4GiB'",
@@ -436,7 +436,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 10
+      "doc_lineno": 12
     },
     {
       "source": ">>> log2_ceil(16)\n4\n>>> log2_ceil(35)\n6",
@@ -451,7 +451,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> log2_exact(8)\n3\n>>> log2_exact(19)\nTraceback (most recent call last):\nFile \"<python-input-19>\", line 1, in <module>\n        log2_exact(19)\n        ~~~~~~~~~~^^^^\nFile \"units.py\", line 168, in log2_exact\nValueError: 19 is not a power of 2",
@@ -467,7 +467,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> ms_to_sec(4000)\n4.0\n>>> ms_to_sec(500)\n0.5",
@@ -484,7 +484,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> ns_to_sec(3000000000)\n3.0\n>>> ns_to_sec(5000000)\n0.005",
@@ -502,7 +502,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> ps_to_sec(1000000000000)\n1.0\n>>> ps_to_sec(60000000)\n6e-05",
@@ -521,7 +521,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> sec_to_ms(4)\n4000.0\n>>> sec_to_ms(0.5)\n500.0",
@@ -541,7 +541,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> sec_to_ns(3)\n3000000000.0\n>>> sec_to_ns(0.005)\n5000000.0",
@@ -562,7 +562,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> sec_to_ps(1)\n1000000000000.0\n>>> sec_to_ps(0.00006)\n60000000.0",
@@ -584,7 +584,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> sec_to_us(1)\n1000000.0\n>>> sec_to_us(0.06)\n60000.0",
@@ -607,7 +607,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     },
     {
       "source": ">>> us_to_sec(1000000)\n1.0\n>>> us_to_sec(60000)\n0.06",
@@ -631,7 +631,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 8
+      "doc_lineno": 9
     }
   ],
   "changelog": [],
@@ -3902,7 +3902,7 @@
           "Examples"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 12
     }
   ],
   "library/stdio/index": [],
