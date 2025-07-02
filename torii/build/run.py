@@ -204,7 +204,7 @@ class BuildPlan:
 			The Torii build root.
 
 		docker_mount : str
-			The internal docker bind mount location for the build root. (default: /build)
+			The internal docker bind mount location for the build root.
 
 		docker_args : list[str]
 			Any additional arguments to pass to the docker engine.
