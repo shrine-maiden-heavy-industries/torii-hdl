@@ -19,6 +19,9 @@ body:
         Please fill out the form below as best you can, and we will
         review it and get back to you as soon as possible.
 
+
+        Also make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
+
   - type: input
     id: docs-version
     attributes:
@@ -57,6 +60,7 @@ body:
       label: 'Code of Conduct'
       description: >
         By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
+        and [AI usage Policy](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#ai-usage-policy).
       options:
-        - label: 'I agree to follow the Torii Code of Conduct'
+        - label: 'I agree to follow the Torii Code of Conduct and AI Usage Policy'
           required: true
