@@ -37,11 +37,9 @@ class Memory(Elaboratable):
 	name : str | None
 		Name hint for this memory. If ``None`` the name is inferred from the variable
 		name this ``Memory`` is assigned to.
-		(default: None)
 
 	attrs : dict | None
 		Dictionary of synthesis attributes.
-		(default: None)
 
 	Attributes
 	----------
@@ -114,11 +112,9 @@ class Memory(Elaboratable):
 		---------
 		domain : str
 			The domain this :py:class:`ReadPort` operates on.
-			(default: 'sync')
 
 		transparent : bool
 			Port transparency.
-			(default: True)
 
 		Returns
 		-------
@@ -138,11 +134,9 @@ class Memory(Elaboratable):
 		---------
 		domain : str
 			The domain this :py:class:`WritePort` operates on.
-			(default: 'sync')
 
 		granularity : int | None
 			Port granularity
-			(default: None)
 
 		Returns
 		-------
@@ -212,13 +206,11 @@ class ReadPort(Elaboratable):
 	domain : str
 		The clock domain this port operates on. If set to the ``'comb'`` domain, the port is
 		asynchronous, otherwise reads have a latency of 1 clock cycle.
-		(default: ``'sync'``)
 
 	transparent : bool
 		Port transparency. If set a read at an address that is also being written to in
 		the same clock cycle will output the new value. Otherwise, the old value will be output
 		first. This behavior only applies to ports in the same domain.
-		(default: True)
 
 	Attributes
 	----------
@@ -289,12 +281,10 @@ class WritePort(Elaboratable):
 
 	domain : str
 		The clock domain this port operates on. Writes have a latency of 1 clock cycle.
-		(default: ``'sync'``)
 
 	granularity : int | None
 		Port granularity. Write data is split evenly in ``memory.width // granularity`` chunks,
 		which can be updated independently. If ``None`` defaults to ``memory.width``.
-		(default: None)
 
 	Attributes
 	----------
@@ -377,15 +367,12 @@ class DummyPort:
 
 	domain : str
 		The domain this port is to operate on.
-		(default: 'sync')
 
 	name : str | None
 		The name of this port.
-		(default: None)
 
 	granularity : str | None
 		Port granularity if set. If ``None`` defaults to ``data_width``.
-		(default: None)
 
 	Attributes
 	----------
