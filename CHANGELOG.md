@@ -23,6 +23,7 @@ Unreleased template stuff
 ### Added
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
+- Added `torii.lib.stream.simple.StreamConstantGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 
 ### Changed
 
@@ -55,11 +56,6 @@ Unreleased template stuff
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
   - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
 - Added `torii.hdl.ast.Edge` for `torii.hdl.ast.Sample` based edge detection on either rising or falling edges.
-- The `torii.test.TestCase` now has an `engine` property that lets you specify the simulation backend, It's only `pysim` for now.
-- Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
-- Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
-- Added a new way to build C++-based native modules with `torii.tools.cxx.compile_cxx`.
-- Added `torii.lib.hash.crc` module for Cyclic Redundency Check calculation.
 
 ### Changed
 
