@@ -846,7 +846,7 @@ class Value(metaclass = ABCMeta):
 		Parameters
 		----------
 		value : Value, in
-			Value to increment by. (default: 1)
+			Value to increment by.
 
 		Returns
 		-------
@@ -866,7 +866,7 @@ class Value(metaclass = ABCMeta):
 		Parameters
 		----------
 		value : Value, in
-			Value to decrement by. (default: 1)
+			Value to decrement by.
 
 		Returns
 		-------
@@ -1855,7 +1855,6 @@ class Sample(Value):
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Attributes
 	----------
@@ -1921,11 +1920,9 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 
 	clocks : int
 		The number of clock cycles in the past this sample should represent.
-		(default: 1)
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Returns
 	-------
@@ -1955,11 +1952,9 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 
 	clocks : int
 		The number of clock cycles in the past this sample should represent.
-		(default: 0)
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Returns
 	-------
@@ -1993,11 +1988,9 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	clocks : int
 		The number of clock cycles in the past this sample should represent.
-		(default: 0)
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Returns
 	-------
@@ -2031,11 +2024,9 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	clocks : int
 		The number of clock cycles in the past this sample should represent.
-		(default: 0)
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Returns
 	-------
@@ -2069,11 +2060,9 @@ def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	clocks : int
 		The number of clock cycles in the past this sample should represent.
-		(default: 0)
 
 	domain : str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
-		(default: None)
 
 	Returns
 	-------
