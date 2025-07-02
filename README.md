@@ -1,4 +1,4 @@
-# Torii-HDL
+# Torii
 
 Torii is a fork of [Amaranth HDL] that has been modified for use at [Shrine Maiden Heavy Industries]. It has merged several of the components that were separate into a single package, and also adds new functionality, as well as some internal changes for better integration into tooling.
 
@@ -6,13 +6,21 @@ The evaluation board definitions have also been migrated and are located in the 
 
 There is also a list of [projects using Torii] that are using Torii, and we'd love to add yours too!
 
-## Introduction
+## Introduction, Installation, and Usage
 
-Please see the [Torii Introduction] on the [online documentation].
+For an [introduction to Torii], [installation instructions], and Usage information, please see the [online documentation].
 
-## Installation
+## Community
 
-Please see the [installation instructions] on the [online documentation].
+The two primary spots for community activity around Torii are the [IRC channel] and the [discussion forum].
+
+Please do join and share your projects using Torii, ask questions, get help with problems, or discuss Torii's development.
+
+## Reporting Issues and Requesting Features
+
+The reporting of bugs and suggestion of features are done GitHub via the [issue tracker], there are pre-defined templates for both of them that will walk you though all the information you need to provide.
+
+Be sure to read the [reporting issues] or the [suggesting features] sections of the [Contribution Guidelines] as appropriate as they go into more important details on the finer points.
 
 ## Supported devices
 
@@ -92,11 +100,17 @@ The Torii documentation is dual licensed under the [BSD-2-Clause] for all past c
 [Shrine Maiden Heavy Industries]: https://shrine-maiden-heavy.industries/
 [torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
 [projects using Torii]: https://torii.shmdn.link/latest/projects.html
-[Torii Introduction]: https://torii.shmdn.link/latest/intro.html
+[issue tracker]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
+[reporting issues]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues
+[suggesting features]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#suggesting-features
+[Contribution Guidelines]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md
+[introduction to Torii]: https://torii.shmdn.link/latest/intro.html
 [online documentation]: https://torii.shmdn.link
 [installation instructions]: https://torii.shmdn.link/latest/install.html
+[discussion forum]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions
+[IRC channel]: https://web.libera.chat/#torii
 [BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
-[`LICENSE`]: ./LICENSE
+[`LICENSE`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE
 [CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[`LICENSE.docs`]: ./LICENSE.docs
+[`LICENSE.docs`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE.docs
 [git repository]: https://shrine-maiden-heavy.industries/torii-hdl
