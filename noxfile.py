@@ -3,6 +3,7 @@
 from os             import devnull, getenv
 from pathlib        import Path
 from shutil         import copy
+from typing         import Literal, TypeAlias
 
 import nox
 from nox.sessions   import Session
@@ -28,6 +29,40 @@ nox.options.sessions = (
 
 # Try to use `uv`, if not fallback to `virtualenv`
 nox.options.default_venv_backend = 'uv|virtualenv'
+
+Toolchain: TypeAlias = Literal['trellis', 'icestorm']
+
+@nox.session(name = 'test-toolchain', reuse_venv = True)
+@nox.parametrize('toolchain', ['icestorm', 'trellis'])
+def test_toolchain(session: Session, toolchain: Toolchain) -> None:
+	OUTPUT_DIR = BUILD_DIR / 'tests' / 'toolchains'
+	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
+
+	session.install('-e', '.')
+	session.install('torii-boards @ git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git')
+
+	unitest_args = (
+		'-m', 'unittest', 'discover', '-v', '-s', str(ROOT_DIR), '-p', f'{toolchain}.py'
+	)
+
+	if ENABLE_COVERAGE:
+		session.log('Coverage support enabled')
+		session.install('coverage')
+		coverage_args = ('-m', 'coverage', 'run', '-p', f'--rcfile={ROOT_DIR / "pyproject.toml"}',)
+		session.env['COVERAGE_CORE'] = 'sysmon'
+	else:
+		coverage_args = tuple[str]()
+
+	with session.chdir(OUTPUT_DIR):
+		session.log('Running toolchain tests')
+		session.run('python', *coverage_args, *unitest_args)
+
+		if ENABLE_COVERAGE:
+			session.log('Combining Coverage data..')
+			session.run('python', '-m', 'coverage', 'combine')
+
+			session.log('Generating XML Coverage report...')
+			session.run('python', '-m', 'coverage', 'xml', f'--rcfile={ROOT_DIR / "pyproject.toml"}')
 
 @nox.session(reuse_venv = True)
 def test(session: Session) -> None:
