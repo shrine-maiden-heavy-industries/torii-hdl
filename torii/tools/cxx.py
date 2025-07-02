@@ -71,22 +71,14 @@ def compile_cxx(
 	include_paths : Iterable[str | Path] | None
 		A list of extra include paths to pass to the compiler.
 
-		default: None
-
 	library_paths : Iterable[str | Path] | None
 		A list of extra library search paths to pass to the compiler.
-
-		default: None
 
 	defines : dict[str, str] | None
 		A collection of preprocessor definitions to pass to the compiler.
 
-		default: None
-
 	output_type : ObjectType
 		The type of object to build.
-
-		default: ObjectType.SHLIB
 
 	source_listings : dict[str, str] | None
 		A collection of ``filename: source listing`` pairs to include in the build.
@@ -96,37 +88,23 @@ def compile_cxx(
 		of the file via the ``source_files`` parameter rather than reading the file into memory
 		to pass here.
 
-		default: None
-
 	extra_libs : Iterable[str | Path] | None
 		A list of extra libraries to link against.
-
-		default: None
 
 	extra_objs : Iterable[str | Path] | None
 		A list of extra object files to link with.
 
-		default: None
-
 	extra_cxx_opts : Iterable[str] | None
 		A list of extra options to pass to the compiler.
-
-		default: None
 
 	extra_ld_opts : Iterable[str] | None
 		A list of extra options to pass to the linker.
 
-		default: None
-
 	verbose : bool
 		Enable verbose compiler output.
 
-		default: False
-
 	debug : bool
 		Build in debug mode.
-
-		default: False
 
 	Returns
 	-------
