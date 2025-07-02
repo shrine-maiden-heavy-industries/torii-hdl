@@ -27,11 +27,9 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 	----------
 	depth : int
 		The number of stack frames above us to look.
-		(default: 2)
 
 	default : str | object
 		The default name of the variable if it's not found.
-		(default: _raise_exception)
 
 	Important
 	---------
@@ -113,7 +111,6 @@ def get_src_loc(src_loc_at: int = 0) -> SrcLoc:
 	----------
 	src_loc_at : int
 		The frame above this call in which to get the file and line number from.
-		(default: 0)
 
 	Important
 	---------
