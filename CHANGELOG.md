@@ -29,6 +29,7 @@ Unreleased template stuff
 - New `torii.back.json` backend to emit JSON netlists for designs.
 - Added `det` pin to `torii.platforms.resources.memory.SDCardResources` for hot-plug SD Card detection.
 - New `.from_khz`, `.from_mhz`, and `from_ghz`, on the `torii.build.dsl.Clock` to create a new clock resource from more than just Hz.
+- Added `torii.lib.stream.simple.StreamConstantGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 
 ### Changed
 
@@ -64,11 +65,6 @@ Unreleased template stuff
 - Added `torii.lib.coding.cobs` module for Consistent Overhead Byte Stuffing encoders.
   - Added `torii.lib.coding.cobs.RCOBSEncoder` for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn't need a full message buffer.
 - Added `torii.hdl.ast.Edge` for `torii.hdl.ast.Sample` based edge detection on either rising or falling edges.
-- The `torii.test.TestCase` now has an `engine` property that lets you specify the simulation backend, It's only `pysim` for now.
-- Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
-- Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
-- Added a new way to build C++-based native modules with `torii.tools.cxx.compile_cxx`.
-- Added `torii.lib.hash.crc` module for Cyclic Redundency Check calculation.
 
 ### Changed
 
