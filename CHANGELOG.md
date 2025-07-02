@@ -37,6 +37,7 @@ Unreleased template stuff
 - Added `torii.lib.cdc.PulseStretcher` so smear one-cycle pulses over to multiple cycles.
 - Added `torii.lib.stream.simple.ConstantStreamGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 - Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
+- New module wrappers for Xilinx Zynq PS7 and PS8 blocks.
 
 ### Changed
 
