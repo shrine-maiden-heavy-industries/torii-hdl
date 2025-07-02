@@ -5,6 +5,7 @@ from os             import link, getenv
 from pathlib        import Path
 from setuptools_scm import get_version, ScmVersion
 from shutil         import copy
+from typing         import Literal, TypeAlias
 
 import nox
 from nox.sessions   import Session
@@ -40,6 +41,43 @@ def torii_version() -> str:
 		local_scheme   = scheme,
 		relative_to    = __file__
 	)
+
+Toolchain: TypeAlias = Literal['trellis', 'icestorm']
+
+@nox.session(name = 'test-toolchain')
+@nox.parametrize('toolchain', ['icestorm', 'trellis'])
+def test_toolchain(session: Session, toolchain: Toolchain) -> None:
+	out_dir = (BUILD_DIR / 'tests' / 'toolchains')
+	out_dir.mkdir(parents = True, exist_ok = True)
+
+	session.install('.')
+	session.install('torii-boards @ git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git')
+	if ENABLE_COVERAGE:
+		session.log('Coverage support enabled')
+		session.install('coverage')
+		coverage_args = (
+			'-m', 'coverage', 'run',
+			f'--rcfile={CNTRB_DIR / "coveragerc"}'
+		)
+	else:
+		coverage_args = ()
+
+	unitest_args = (
+		'-m', 'unittest', 'discover', '-v', '-s', str(ROOT_DIR), '-p', f'{toolchain}.py'
+	)
+
+	session.chdir(str(out_dir))
+
+	session.log('Running standard test suite')
+	session.run(
+		'python', *coverage_args, *unitest_args
+	)
+
+	if ENABLE_COVERAGE:
+		session.run(
+			'python', '-m', 'coverage', 'xml',
+			f'--rcfile={CNTRB_DIR / "coveragerc"}'
+		)
 
 @nox.session(reuse_venv = True)
 def test(session: Session) -> None:
