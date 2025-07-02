@@ -10,7 +10,8 @@ A few important things to note up front:
 * When contributing to Torii and interacting with people in/around the project be sure to keep in mind the [Code Of Conduct].
 * We have a strict [AI usage policy], so be sure to read that.
 
-Now that we've got that out of the way, there are a few ways to contribute, the first two are by either [reporting issues] or [suggesting features], these two will likely be the more common way users wish to contribute. The next two are working on [development and testing] or on the [documentation].
+Now that we've got that out of the way, there are a few ways to contribute. The first two are by either [reporting issues] or [suggesting features], which we actively encourage users and developers alike to do -
+we can't fix what we don't know about and we can't implement what we don't realise users want, making this a fantastic way to contribute. The next two are working on [development and testing] or on the [documentation].
 
 No matter what it is you are looking to contribute, we would love to get you involved! The detailed instructions for each of them are outlined in their own sections below.
 
@@ -101,7 +102,7 @@ See the [`unittest` CLI] documentation for more information on any possible argu
 
 ### Commit Guidelines
 
-It is beneficial for everyone involved in the project for commits to be reasonably small as atomic as possible, along with the messages to be detailed.
+It is beneficial for everyone involved in the project for commits to be reasonably small and atomic as possible, along with the messages being detailed.
 
 The contents of a commit should be as tight in scope as possible, regardless if the overall change set is much broader. This helps with doing the review, as well as things such as aiding in `git bisect`, `git revert`, and `git rebase`.
 
@@ -153,34 +154,34 @@ So, to put it all together, the following are good examples of how your branch s
 > [!IMPORTANT]
 > Torii uses a [git rebase] based workflow to maintain a linear history and avoid merge commits.
 
-Once you're changes are done, tested, and you're happy with them, the now to open a pull request against the Torii repository.
+Once your changes are done, tested, and you're happy with them, then now to open a pull request against the Torii repository.
 
-The first step, is to ensure your changes are based on-top of the latest changes in the `main` branch. This can be done two ways, the first is to pull the changes to your local clone and then rebase on top of that, or directly rebase against `upstream/main`. The former is recommended as that way you can keep your local repo in-sync with upstream.
+The first step is to ensure your changes are based on-top of the latest changes in the `main` branch. This can be done two ways, the first is to pull the changes to your local clone and then rebase on top of that, or directly rebase against `upstream/main`. The former is recommended as that way you can keep your local repo in-sync with upstream.
 
 For example:
 
 1. Switch from your working branch to `main`: `git switch main`
-1. Update the remotes: `git fetch --all --prune`
-1. Pull the changes into your local `main`: `git pull upstream`
-1. Push the changes back up to your fork so it is updated as well: `git push`
-1. Switch back to your working branch: `git switch <branch-name>`
-1. Rebase the changes from `main` onto your feature branch: `git rebase -i main`
-1. Go through the steps of running the rebase and resolving any conflicts that arise.
-1. Once rebased and you've re-tested and are happy with the changes again, push them up to your fork: `git push -f`
+2. Update the remotes: `git fetch --all --prune`
+3. Pull the changes into your local `main`: `git pull upstream`
+4. Push the changes back up to your fork so it is updated as well: `git push`
+5. Switch back to your working branch: `git switch <branch-name>`
+6. Rebase the changes from `main` onto your feature branch: `git rebase -i main`
+7. Go through the steps of running the rebase and resolving any conflicts that arise.
+8. Once rebased and you've re-tested and are happy with the changes again, push them up to your fork: `git push -f`
 
 After this, run `nox -s lint` in the root of the repository, this will run the code linter and alert you if anything is amiss. This is also run in the CI workflow, and will prevent your pull request from getting merged if it's not happy.
 
 Once your changes are all up to date, make sure that all the tests pass (see the [Testing] section for more info), and then you can then open a [new pull request] against the Torii repository.
 
-Once you've filled out the details about the PR, it will then be reviewed to ensure that it's in-line with the various project standards, sometimes you'll nail it the first try, other times there will be feedback and requested changes.
+Once you've filled out the details about the PR, it will then be reviewed to ensure that it's in line with the various project standards, sometimes you'll nail it the first try, other times there will be feedback and requested changes.
 
 If changes are requested, then go back and address them, where possible use `git commit --fixup=<sha>` to attach the updates back to the commit which they were associated with (this is why having smaller atomic commits is important), once all the feedback items have been addressed, then run a `git rebase -i main --autosquash` to apply the fixups to the commits in question and resolve any merge issues.
 
-Once that is done, then re-push to your fork and the pull request will automatically re-trigger CI, you can then re-request review on the pull request.
+Once that is done, then re-push to your fork with a force push and the pull request will automatically re-trigger CI, you can then re-request review on the pull request.
 
 This cycle will continue until all items have been addressed and we're ready to merge it into `main` if it has been approved.
 
-As noted above, we use a `git rebase` based workflow, as such we require that your change branch is always based on the tip of `master`, so we might ask you to rebase it onto `main` prior to merging. This might result in things breaking that were not broken before, and they must be fixed as appropriate.
+As noted above, we use a `git rebase` based workflow, as such we require that your change branch is always based on the tip of `main`, so we might ask you to rebase it onto `main` prior to merging. This might result in things breaking that were not broken before, and they must be fixed as appropriate.
 
 And with that, you're done! You've contributed to Torii!
 
