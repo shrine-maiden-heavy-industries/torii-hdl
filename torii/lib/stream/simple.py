@@ -31,19 +31,15 @@ class StreamInterface(Record):
 	----------
 	data_width : int
 		The width of the stream data in bits.
-		(default: 8)
 
 	valid_width : int | None
 		The width of the valid field. If ``None`` it will default to ``data_width // 8``.
-		(default: 1)
 
 	name : str | None
 		The name of this stream.
-		(default: None)
 
 	extra : Iterable[tuple[str, int]]
 		Any extra or ancillary fields to graft on to the stream.
-		(default: [])
 
 	Attributes
 	----------
@@ -125,7 +121,6 @@ class StreamInterface(Record):
 
 		omit : set[str]
 			A set of additional stream fields to exclude from the tap connection.
-			(default: {})
 		'''
 
 		rhs = ('valid', 'first', 'last', 'data', *self._extra_fields)
@@ -173,7 +168,6 @@ class StreamInterface(Record):
 
 		omit : set[str]
 			A set of additional stream fields to exclude from the tap connection.
-			(default: {})
 		'''
 		return stream.attach(self, omit = omit)
 
@@ -199,11 +193,9 @@ class StreamInterface(Record):
 		tap_ready : bool
 			By default the ``ready`` signal is excluded from the tap, passing ``True`` here will also
 			connect that signal.
-			(default: False)
 
 		omit : set[str]
 			A set of additional stream fields to exclude from the tap connection.
-			(default: {})
 		'''
 
 		tap = self.stream_eq(stream, {'ready', *omit})
@@ -227,12 +219,10 @@ class StreamArbiter(Generic[T], Elaboratable):
 	----------
 	domain : str
 		The domain in which the arbiter should operate.
-		(default: sync)
 
 	stream_type : type
 		The type of stream to create, must be either :py:class:`StreamInterface <torii.lib.stream.StreamInterface>`
 		or a subtype there of.
-		(default: torii.lib.stream.StreamInterface)
 
 	Attributes
 	----------
@@ -263,7 +253,6 @@ class StreamArbiter(Generic[T], Elaboratable):
 
 		priority : int
 			The stream priority.
-			(default: -1)
 		'''
 		if priority > 0:
 			self._sources.append(stream)
