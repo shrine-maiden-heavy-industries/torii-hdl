@@ -1,10 +1,8 @@
 # Torii
 
-Torii is a fork of [Amaranth HDL] that has been modified for use at [Shrine Maiden Heavy Industries]. It has merged several of the components that were separate into a single package, and also adds new functionality, as well as some internal changes for better integration into tooling.
+Torii is a Python-based HDL and framework for implementing hardware designs for everything from FPGAs and CPLDs to ASICs and beyond with batteries included.
 
-The evaluation board definitions have also been migrated and are located in the [torii-boards] repository.
-
-There is also a list of [projects using Torii] that are using Torii, and we'd love to add yours too!
+We are striving to make Torii one of the go-to platforms for the implementation and execution of any silicon-based witchcraft your heart could desire. To meet that end, there is a large collection of pre-defined [board files] for evaluation boards from various vendors, an ever improving [standard library], and a collection of useful external modules.
 
 ## Introduction, Installation, and Usage
 
@@ -15,6 +13,8 @@ For an [introduction to Torii], [installation instructions], and Usage informati
 The two primary spots for community activity around Torii are the [IRC channel] and the [discussion forum].
 
 Please do join and share your projects using Torii, ask questions, get help with problems, or discuss Torii's development.
+
+We also maintain a list of [projects using Torii], so post it in the [show and tell] section of the [discussion forum] and we'll add it!
 
 ## Reporting Issues and Requesting Features
 
@@ -96,9 +96,8 @@ Torii is released under the [BSD-2-Clause], the full text of which can be found 
 
 The Torii documentation is dual licensed under the [BSD-2-Clause] for all past contributions and the [CC-BY-SA 4.0] for all new and future contributions. The full text of the [CC-BY-SA 4.0] can be found in the [`LICENSE.docs`] file in the root of the [git repository].
 
-[Amaranth HDL]: https://github.com/amaranth-lang
-[Shrine Maiden Heavy Industries]: https://shrine-maiden-heavy.industries/
-[torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
+[board files]: https://github.com/shrine-maiden-heavy-industries/torii-boards
+[standard library]: https://torii.shmdn.link/latest/library/index.html
 [projects using Torii]: https://torii.shmdn.link/latest/projects.html
 [issue tracker]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues
 [reporting issues]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues
@@ -108,6 +107,7 @@ The Torii documentation is dual licensed under the [BSD-2-Clause] for all past c
 [online documentation]: https://torii.shmdn.link
 [installation instructions]: https://torii.shmdn.link/latest/install.html
 [discussion forum]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions
+[show and tell]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions/categories/show-and-tell
 [IRC channel]: https://web.libera.chat/#torii
 [BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
 [`LICENSE`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE
