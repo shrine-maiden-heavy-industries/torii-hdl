@@ -1087,10 +1087,10 @@ def convert_fragment(
 		The Torii fragment hierarchy to lower.
 	name : str
 		The name of the root fragment module.
-		(default: 'top')
+
 	emit_src : bool
 		Emit source line attributes in the resulting RTLIL text.
-		(default: True)
+
 
 	Returns
 	-------
@@ -1118,14 +1118,13 @@ def convert(
 		The Elaboratable to lower into RTLIL.
 	name : str
 		The name of the resulting RTLIL module.
-		(default: 'top')
+
 	platform : torii.build.plat.Platform
 		The platform to use for Elaboratable evaluation.
 	ports : list[]
 		The list of ports on the top-level module.
 	emit_src : bool
 		Emit source line attributes in the final RTLIL text.
-		(default: True)
 
 	Returns
 	-------
