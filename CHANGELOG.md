@@ -34,6 +34,7 @@ Unreleased template stuff
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
 - New `platformdirs~=4.0` dependency used for platform correct cache, temp, and config directories.
 - Added a new `torii.util.directories` module for getting appropriate cross-platform directories for things such as cache and configuration directories.
+- New module wrappers for special Lattice ECP5 hard-blocks.
 
 ### Changed
 
