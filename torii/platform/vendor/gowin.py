@@ -320,7 +320,7 @@ class GowinPlatform(TemplatedPlatform):
 		'''
 	]
 
-	def __init__(self, *, toolchain = 'Apicula'):
+	def __init__(self, *, toolchain = 'Apicula') -> None:
 		super().__init__()
 
 		if toolchain not in ('Apicula', 'Gowin'):

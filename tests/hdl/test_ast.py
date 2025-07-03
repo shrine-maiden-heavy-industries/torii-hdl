@@ -184,7 +184,7 @@ class ShapeTestCase(ToriiTestSuiteCase):
 			Shape.cast('foo')
 
 class MockShapeCastable(ShapeCastable):
-	def __init__(self, dest):
+	def __init__(self, dest) -> None:
 		self.dest = dest
 
 	def as_shape(self):
@@ -205,7 +205,7 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaisesRegex(TypeError, err_msg_regex):
 			class MockShapeCastableNoOverride(ShapeCastable):
-				def __init__(self):
+				def __init__(self) -> None:
 					pass # :nocov:
 
 			_ = MockShapeCastableNoOverride()
@@ -634,7 +634,7 @@ class ConstTestCase(ToriiTestSuiteCase):
 
 	def test_shape_castable(self):
 		class MockConstValue:
-			def __init__(self, value):
+			def __init__(self, value) -> None:
 				self.value = value
 
 		class MockConstShape(ShapeCastable):
@@ -1519,7 +1519,7 @@ class ResetSignalTestCase(ToriiTestSuiteCase):
 			ResetSignal('comb')
 
 class MockValueCastable(ValueCastable):
-	def __init__(self, dest):
+	def __init__(self, dest) -> None:
 		self.dest = dest
 
 	def shape(self):
@@ -1530,7 +1530,7 @@ class MockValueCastable(ValueCastable):
 		return self.dest
 
 class MockValueCastableChanges(ValueCastable):
-	def __init__(self, width = 0):
+	def __init__(self, width = 0) -> None:
 		self.width = width
 
 	def shape(self):
@@ -1541,7 +1541,7 @@ class MockValueCastableChanges(ValueCastable):
 		return Signal(self.width)
 
 class MockValueCastableCustomGetattr(ValueCastable):
-	def __init__(self):
+	def __init__(self) -> None:
 		pass
 
 	def shape(self):
@@ -1562,7 +1562,7 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 			r'decorate the `as_value` method with the `ValueCastable.lowermethod` decorator$'
 		):
 			class MockValueCastableNotDecorated(ValueCastable):
-				def __init__(self):
+				def __init__(self) -> None:
 					pass # :nocov:
 
 				def shape(self):
@@ -1578,7 +1578,7 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 			r'override the `as_value` method$'
 		):
 			class MockValueCastableNoOverrideAsValue(ValueCastable):
-				def __init__(self):
+				def __init__(self) -> None:
 					pass # :nocov:
 
 		with self.assertRaisesRegex(
@@ -1587,7 +1587,7 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 			r'override the `shape` method$'
 		):
 			class MockValueCastableNoOverrideShape(ValueCastable):
-				def __init__(self):
+				def __init__(self) -> None:
 					pass # :nocov:
 
 				def as_value(self):
@@ -1668,7 +1668,7 @@ class ValueLikeTestCase(ToriiTestSuiteCase):
 		self.assertFalse(isinstance(EnumD.A, ValueLike))
 
 class SampleDUT(Elaboratable):
-	def __init__(self, v: Signal, s: Signal, clocks: int, mode: str | None = None):
+	def __init__(self, v: Signal, s: Signal, clocks: int, mode: str | None = None) -> None:
 		self.v = v
 		self.s = s
 

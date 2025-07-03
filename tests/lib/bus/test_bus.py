@@ -291,7 +291,7 @@ class DecoderSimulationTestCase(ToriiTestSuiteCase):
 
 	def test_addr_translate(self):
 		class AddressLoopback(Elaboratable):
-			def __init__(self, **kwargs):
+			def __init__(self, **kwargs) -> None:
 				self.bus = Interface(**kwargs)
 
 			def elaborate(self, platform):

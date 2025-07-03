@@ -9,7 +9,7 @@ from torii.lib.formal      import Assert, Assume
 from ...utils              import ToriiTestSuiteCase
 
 class ReversibleSpec(Elaboratable):
-	def __init__(self, encoder_cls, decoder_cls, args):
+	def __init__(self, encoder_cls, decoder_cls, args) -> None:
 		self.encoder_cls = encoder_cls
 		self.decoder_cls = decoder_cls
 		self.coder_args  = args
@@ -25,7 +25,7 @@ class ReversibleSpec(Elaboratable):
 		return m
 
 class HammingDistanceSpec(Elaboratable):
-	def __init__(self, distance, encoder_cls, args):
+	def __init__(self, distance, encoder_cls, args) -> None:
 		self.distance    = distance
 		self.encoder_cls = encoder_cls
 		self.coder_args  = args

@@ -5,7 +5,7 @@ from torii.back import verilog
 from torii.sim  import Simulator
 
 class Counter(Elaboratable):
-	def __init__(self, width: int):
+	def __init__(self, width: int) -> None:
 		self.v = Signal(width, reset = 2**width-1)
 		self.o = Signal()
 		self.en = Signal()

@@ -11,7 +11,7 @@ from torii.sim                  import Simulator
 from ....utils                  import ToriiTestSuiteCase
 
 class MockRegister(Elaboratable):
-	def __init__(self, width, name):
+	def __init__(self, width, name) -> None:
 		self.element = csr.Element(width, 'rw', name = name)
 		self.r_count = Signal(8)
 		self.w_count = Signal(8)

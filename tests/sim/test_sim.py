@@ -1549,7 +1549,7 @@ class SimulatorEngineTestCase(ToriiTestSuiteCase):
 		from torii.sim._base import BaseEngine
 
 		class DummyEngine(BaseEngine):
-			def __init__(self, fragment):
+			def __init__(self, fragment) -> None:
 				pass
 
 		_ = Simulator(Module(), engine = DummyEngine)

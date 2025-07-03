@@ -29,7 +29,7 @@ class _VCDWriter:
 	def __init__(
 		self, fragment: Fragment, *, vcd_file: IO | str | None, gtkw_file: IO | str | None = None,
 		traces: Iterable[Signal] = ()
-	):
+	) -> None:
 
 		self._close_vcd = False
 		self._close_gtkw = False
@@ -157,7 +157,7 @@ class _VCDWriter:
 			self.gtkw_file.close()
 
 class _Timeline:
-	def __init__(self):
+	def __init__(self) -> None:
 		self.now = 0
 		self.deadlines = dict()
 
@@ -209,7 +209,7 @@ class _Timeline:
 class _PySignalState(BaseSignalState):
 	__slots__ = ('signal', 'curr', 'next', 'waiters', 'pending')
 
-	def __init__(self, signal, pending):
+	def __init__(self, signal, pending) -> None:
 		self.signal = signal
 		self.pending = pending
 		self.waiters = dict()
@@ -233,7 +233,7 @@ class _PySignalState(BaseSignalState):
 		return awoken_any
 
 class _PySimulation(BaseSimulation):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.timeline = _Timeline()
 		self.signals  = SignalDict()
 		self.slots    = []
@@ -280,7 +280,7 @@ class _PySimulation(BaseSimulation):
 		return converged
 
 class PySimEngine(BaseEngine):
-	def __init__(self, fragment):
+	def __init__(self, fragment) -> None:
 		self._state = _PySimulation()
 		self._timeline = self._state.timeline
 

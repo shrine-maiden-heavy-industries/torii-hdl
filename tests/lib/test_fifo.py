@@ -77,7 +77,7 @@ class FIFOModel(Elaboratable, FIFOInterface):
 	'''
 	Non-synthesizable first-in first-out queue, implemented naively as a chain of registers.
 	'''
-	def __init__(self, *, width, depth, fwft, r_domain, w_domain):
+	def __init__(self, *, width, depth, fwft, r_domain, w_domain) -> None:
 		super().__init__(width = width, depth = depth, fwft = fwft)
 
 		self.r_domain = r_domain
@@ -134,7 +134,7 @@ class FIFOModelEquivalenceSpec(Elaboratable):
 	signals, the behavior of the implementation under test exactly matches the ideal model,
 	except for behavior not defined by the model.
 	'''
-	def __init__(self, fifo, r_domain, w_domain):
+	def __init__(self, fifo, r_domain, w_domain) -> None:
 		self.fifo = fifo
 
 		self.r_domain = r_domain
@@ -179,7 +179,7 @@ class FIFOContractSpec(Elaboratable):
 	consecutively, they must be read out consecutively at some later point, no matter all other
 	circumstances, with the exception of reset.
 	'''
-	def __init__(self, fifo, *, r_domain, w_domain, bound):
+	def __init__(self, fifo, *, r_domain, w_domain, bound) -> None:
 		self.fifo     = fifo
 		self.r_domain = r_domain
 		self.w_domain = w_domain

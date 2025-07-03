@@ -579,7 +579,7 @@ class EnableInserterTestCase(ToriiTestSuiteCase):
 		''')
 
 class _MockElaboratable(Elaboratable):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.s1 = Signal()
 
 	def elaborate(self, platform):

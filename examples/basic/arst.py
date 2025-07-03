@@ -4,7 +4,7 @@ from torii.hdl  import ClockDomain, Elaboratable, Module, Signal
 from torii.back import verilog
 
 class ClockDivisor(Elaboratable):
-	def __init__(self, factor: int):
+	def __init__(self, factor: int) -> None:
 		self.v = Signal(factor)
 		self.o = Signal()
 

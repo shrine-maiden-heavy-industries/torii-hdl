@@ -238,7 +238,7 @@ class ReadPort(Elaboratable):
 
 	'''
 
-	def __init__(self, memory: Memory, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0):
+	def __init__(self, memory: Memory, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0) -> None:
 		if domain == 'comb' and not transparent:
 			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
 
@@ -314,7 +314,9 @@ class WritePort(Elaboratable):
 
 	'''
 
-	def __init__(self, memory: Memory, *, domain: str = 'sync', granularity: int | None = None, src_loc_at: int = 0):
+	def __init__(
+		self, memory: Memory, *, domain: str = 'sync', granularity: int | None = None, src_loc_at: int = 0
+	) -> None:
 		if granularity is None:
 			granularity = memory.width
 		if not isinstance(granularity, int) or granularity < 0:
@@ -392,7 +394,7 @@ class DummyPort:
 	def __init__(
 		self, *, data_width: int, addr_width: int, domain: str = 'sync', name: str | None = None,
 		granularity: int | None = None
-	):
+	) -> None:
 		self.domain = domain
 
 		if granularity is None:
@@ -405,7 +407,7 @@ class DummyPort:
 		self.en   = Signal(data_width // granularity, name = f'{name}_en', src_loc_at = 1)
 
 class MemoryInstance(Fragment):
-	def __init__(self, memory: Memory, read_ports: list[ReadPort], write_ports: list[WritePort]):
+	def __init__(self, memory: Memory, read_ports: list[ReadPort], write_ports: list[WritePort]) -> None:
 		super().__init__()
 		self.memory      = memory
 		self.read_ports  = read_ports

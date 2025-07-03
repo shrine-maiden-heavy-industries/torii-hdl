@@ -4,7 +4,7 @@ from torii.hdl  import Elaboratable, Module, Signal
 from torii.back import verilog
 
 class Counter(Elaboratable):
-	def __init__(self, width: int):
+	def __init__(self, width: int) -> None:
 		self.v = Signal(width, reset = 2**width-1)
 		self.o = Signal()
 

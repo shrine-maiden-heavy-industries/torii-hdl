@@ -80,7 +80,7 @@ class Fragment:
 					lineno = code.co_firstlineno)
 			obj = new_obj
 
-	def __init__(self):
+	def __init__(self) -> None:
 		self.ports = SignalDict()
 		self.drivers = OrderedDict[str | None, SignalSet]()
 		self.statements: list[Statement] = []
@@ -700,7 +700,7 @@ class Instance(Fragment):
 	def __init__(
 		self, type: str, *args: InstanceArgsT, src_loc: SrcLoc | None = None, src_loc_at: int = 0,
 		**kwargs: ValueCastT | str
-	):
+	) -> None:
 		super().__init__()
 
 		self.type        = type

@@ -4,7 +4,7 @@ from torii.hdl  import Elaboratable, Memory, Module, Signal
 from torii.back import verilog
 
 class RegisterFile(Elaboratable):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.adr   = Signal(4)
 		self.dat_r = Signal(8)
 		self.dat_w = Signal(8)

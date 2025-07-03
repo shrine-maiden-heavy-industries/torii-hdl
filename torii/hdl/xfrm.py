@@ -314,7 +314,7 @@ class FragmentTransformer:
 			raise AttributeError(f'Object {value!r} cannot be elaborated')
 
 class TransformedElaboratable(Elaboratable):
-	def __init__(self, elaboratable, *, src_loc_at = 0):
+	def __init__(self, elaboratable, *, src_loc_at = 0) -> None:
 		if not hasattr(elaboratable, 'elaborate'):
 			raise TypeError(f'Unable to elaborate object of type \'{type(elaboratable)}\' which has no \'elaborate\' method')
 
@@ -333,7 +333,7 @@ class TransformedElaboratable(Elaboratable):
 		return fragment
 
 class DomainCollector(ValueVisitor, StatementVisitor):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.used_domains = set()
 		self.defined_domains = set()
 		self._local_domains = set()
@@ -517,7 +517,7 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 				port.domain = self.domain_map[port.domain]
 
 class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
-	def __init__(self, domains = None):
+	def __init__(self, domains = None) -> None:
 		self.domains = domains
 
 	def _resolve(self, domain, context):
@@ -565,7 +565,7 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		return new_fragment
 
 class SampleDomainInjector(ValueTransformer, StatementTransformer):
-	def __init__(self, domain):
+	def __init__(self, domain) -> None:
 		self.domain = domain
 
 	def on_Sample(self, value):
@@ -577,7 +577,7 @@ class SampleDomainInjector(ValueTransformer, StatementTransformer):
 		return self.on_statement(stmts)
 
 class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.initial = None
 		self.sample_cache = None
 		self.sample_stmts = None
@@ -654,7 +654,7 @@ class SwitchCleaner(StatementVisitor):
 		return _StatementList(stmt for stmt in stmts if stmt is not None)
 
 class LHSGroupAnalyzer(StatementVisitor):
-	def __init__(self):
+	def __init__(self) -> None:
 		self.signals = SignalDict()
 		self.unions  = OrderedDict()
 
@@ -707,7 +707,7 @@ class LHSGroupAnalyzer(StatementVisitor):
 		return self.groups()
 
 class LHSGroupFilter(SwitchCleaner):
-	def __init__(self, signals):
+	def __init__(self, signals) -> None:
 		self.signals = signals
 
 	def on_Assign(self, stmt):
@@ -725,7 +725,7 @@ class LHSGroupFilter(SwitchCleaner):
 			return stmt
 
 class _ControlInserter(FragmentTransformer):
-	def __init__(self, controls):
+	def __init__(self, controls) -> None:
 		self.src_loc = None
 		if isinstance(controls, Value):
 			controls = { 'sync': controls }

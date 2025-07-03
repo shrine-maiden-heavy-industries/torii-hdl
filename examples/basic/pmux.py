@@ -4,7 +4,7 @@ from torii.hdl  import Elaboratable, Module, Signal
 from torii.back import verilog
 
 class ParMux(Elaboratable):
-	def __init__(self, width):
+	def __init__(self, width) -> None:
 		self.s = Signal(3)
 		self.a = Signal(width)
 		self.b = Signal(width)
