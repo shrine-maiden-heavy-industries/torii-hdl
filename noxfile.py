@@ -147,9 +147,9 @@ def linkcheck_docs(session: Session) -> None:
 	session.install('.')
 	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(out_dir))
 
-@nox.session
-def typecheck(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'mypy')
+@nox.session(name = 'typecheck-mypy')
+def typecheck_mypy(session: Session) -> None:
+	out_dir = (BUILD_DIR / 'typing' / 'mypy')
 	out_dir.mkdir(parents = True, exist_ok = True)
 
 	session.install('mypy')
@@ -162,6 +162,20 @@ def typecheck(session: Session) -> None:
 		'--config-file', str((CNTRB_DIR / '.mypy.ini').resolve()),
 		'-p', 'torii', '--html-report', str(out_dir.resolve())
 	)
+
+@nox.session(name = 'typecheck-pyright')
+def typecheck_pyright(session: Session) -> None:
+	out_dir = (BUILD_DIR / 'typing' / 'pyright')
+	out_dir.mkdir(parents = True, exist_ok = True)
+
+	session.install('pyright')
+	session.install('.')
+
+	with (out_dir / 'pyright.log').open('w') as f:
+		session.run(
+			'pyright', '-p', str((CNTRB_DIR / 'pyrightconfig.json').resolve()), *session.posargs,
+			stdout = f
+		)
 
 @nox.session
 def lint(session: Session) -> None:

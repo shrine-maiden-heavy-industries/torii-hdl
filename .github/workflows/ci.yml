@@ -57,7 +57,8 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          nox -s typecheck
+          nox -s typecheck-mypy
+          nox -s typecheck-pyright
 
   test-torii:
     runs-on: ubuntu-latest
