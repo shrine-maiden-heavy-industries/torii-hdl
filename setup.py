@@ -86,6 +86,9 @@ setup(
 		'torii': [
 			'py.typed'
 		],
+		'torii.sim.verilator': [
+			'vpi_driver.cc.jinja',
+		]
 	},
 
 	classifiers       = [

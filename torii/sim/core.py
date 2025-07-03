@@ -79,7 +79,8 @@ class Simulator:
 				from .pysim import PySimEngine
 				engine = PySimEngine
 			case 'verilator':
-				pass
+				from .verilator import VerilatorEngine
+				engine = VerilatorEngine
 			case e if isclass(e) and issubclass(e, BaseEngine):
 				engine = e
 			case _:
