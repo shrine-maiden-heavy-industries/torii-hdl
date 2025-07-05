@@ -7,10 +7,10 @@ from torii import __version__ as torii_version
 
 ROOT_DIR = (Path(__file__).parent).parent
 
-project   = 'Torii-HDL'
+project   = 'Torii'
 version   = torii_version
 release   = version.split('+')[0]
-copyright = f'{datetime.date.today().year}, Shrine Maiden Heavy Industries'
+copyright = f'{datetime.date.today().year} Shrine Maiden Heavy Industries and contributors'
 language  = 'en'
 
 extensions = [
@@ -78,6 +78,7 @@ html_theme       = 'furo'
 html_copy_source = False
 
 html_theme_options = {
+	'announcement': 'This documentation is a work in progress, and you can help us <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">improve it!</a>', # noqa: E501
 	'light_css_variables': {
 		'color-brand-primary': '#2672a8',
 		'color-brand-content': '#2672a8',
@@ -90,6 +91,9 @@ html_theme_options = {
 		'color-announcement-background': '#ffab87',
 		'color-announcement-text': '#494453',
 	},
+	'source_repository': 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/',
+	'source_branch': 'main',
+	'source_directory': 'docs/',
 }
 
 html_static_path = [
@@ -127,6 +131,8 @@ linkcheck_ignore  = [
 	'https://www.xilinx.com/products/design-tools/vivado.html',
 	# Sphinx link-check and GitLab readme anchors don't get along
 	'https://gitlab.com/surfer-project/surfer#installation',
+	# Creative-Commons seems to suddenly always 403 in CI
+	'https://creativecommons.org/licenses/by-sa/4.0/',
 ]
 
 # Sphinx-Multiversion stuff

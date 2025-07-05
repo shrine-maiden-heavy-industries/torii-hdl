@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 MD033 -->
 ```{toctree}
 :hidden:
 
@@ -5,15 +6,21 @@ intro
 install
 getting_started
 tutorials/index
+projects
+```
+
+```{toctree}
+:caption: Language, API, and Library
+:hidden:
+
 language/index
 api/index
 library/index
 platforms/index
 testing/index
+migrations/index
 
-external_libraries
-migration_guide
-projects
+supplementary_libraries
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
 ```
@@ -26,14 +33,9 @@ Source Code <https://github.com/shrine-maiden-heavy-industries/torii-hdl/>
 Contributing <https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md>
 changelog
 license
-
 ```
 
 # Torii-HDL
-
-```{warning}
-   This manual is a work in progress and is seriously incomplete!
-```
 
 Torii is a toolkit for developing hardware based on digital logic, it consists of the　[Torii <abbr title="Hardware Definition Language">HDL</abbr>], the [standard library], the simulator, and the build system. It covers all steps of the typical <abbr title="Field Programmable Gate Array">FPGA</abbr> development workflow while not restricting the choice of tools, allowing existing [Verilog], [SystemVerilog], and [VHDL] code to be integrated into the design, while also allow for Torii to be seamlessly integrated into the flow for other [Verilog] design flows.
 

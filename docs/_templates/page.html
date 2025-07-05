@@ -24,6 +24,19 @@
   {%- endtrans -%}
 </a>
 
+{% if current_version and latest_version and current_version != latest_version -%}
+<div class="announcement multiver">
+  <aside class="announcement-content multiver-content">
+    <strong>
+    {% if current_version.is_released %}
+    This is an old version of the Torii documentation, for the stable <code>{{latest_version.name}}</code> docs <a href="{{ vpathto(latest_version.name) }}">Click Here</a>.
+    {% else %}
+    This is the bleeding-edge development documentation, for the stable <code>{{latest_version.name}}</code> docs <a href="{{ vpathto(latest_version.name) }}">Click Here</a>.
+    {% endif %}
+    </strong>
+  </aside>
+</div>
+{%- endif %}
 {% if theme_announcement -%}
 <div class="announcement">
   <aside class="announcement-content">
@@ -31,20 +44,6 @@
   </aside>
 </div>
 {%- endif %}
-{% if current_version and latest_version and current_version != latest_version -%}
-<div class="announcement">
-  <aside class="announcement-content">
-	<strong>
-	{% if current_version.is_released %}
-	This is an old version of the Torii documentation, for the stable <code>{{latest_version.name}}</code> docs <a href="{{ vpathto(latest_version.name) }}">Click Here</a>.
-	{% else %}
-	This is the bleeding-edge development documentation, for the stable <code>{{latest_version.name}}</code> docs <a href="{{ vpathto(latest_version.name) }}">Click Here</a>.
-	{% endif %}
-	</strong>
-  </aside>
-</div>
-{%- endif %}
-
 
 <div class="page">
   <header class="mobile-header">
