@@ -10,7 +10,7 @@ ROOT_DIR = (Path(__file__).parent).parent
 project   = 'Torii-HDL'
 version   = torii_version
 release   = version.split('+')[0]
-copyright = f'{datetime.date.today().year}, Shrine Maiden Heavy Industries'
+copyright = f'{datetime.date.today().year} Shrine Maiden Heavy Industries and contributors'
 language  = 'en'
 
 extensions = [
