@@ -6,6 +6,13 @@ intro
 install
 getting_started
 tutorials/index
+projects
+```
+
+```{toctree}
+:caption: Language, API, and Library
+:hidden:
+
 language/index
 api/index
 library/index
@@ -14,7 +21,6 @@ testing/index
 migrations/index
 
 supplementary_libraries
-projects
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
 ```
@@ -27,7 +33,6 @@ Source Code <https://github.com/shrine-maiden-heavy-industries/torii-hdl/>
 Contributing <https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md>
 changelog
 license
-
 ```
 
 # Torii-HDL
