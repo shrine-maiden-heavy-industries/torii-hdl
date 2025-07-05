@@ -11,8 +11,7 @@ library/index
 platforms/index
 testing/index
 
-external_libraries
-migration_guide
+supplementary_libraries
 projects
 
 Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>

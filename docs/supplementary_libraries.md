@@ -1,6 +1,6 @@
-# External Libraries
+# Supplementary Libraries
 
-There is a family of external libraries that fall under the Torii banner, they provide things such as additional simulation backend support, to things like USB or Integrated Logic Analyzers that can be used in Torii based designs.
+There is a family of supplementary libraries that fall under the Torii banner, they provide things such as additional simulation backend support, to things like USB or Integrated Logic Analyzers that can be used in Torii based designs.
 
 ## Protocol & Peripherals
 
