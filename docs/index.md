@@ -10,6 +10,7 @@ api/index
 library/index
 platforms/index
 testing/index
+migrations/index
 
 supplementary_libraries
 projects
