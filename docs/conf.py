@@ -90,6 +90,9 @@ html_theme_options = {
 		'color-announcement-background': '#ffab87',
 		'color-announcement-text': '#494453',
 	},
+	'source_repository': 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/',
+	'source_branch': 'main',
+	'source_directory': 'docs/',
 }
 
 html_static_path = [
