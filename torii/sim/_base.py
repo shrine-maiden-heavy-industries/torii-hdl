@@ -57,7 +57,7 @@ class BaseSimulation:
 		raise NotImplementedError
 
 class BaseEngine:
-	def __init__(self, fragment: Fragment):
+	def __init__(self, fragment: Fragment) -> None:
 		pass
 
 	def add_coroutine_process(self, process, *, default_cmd):

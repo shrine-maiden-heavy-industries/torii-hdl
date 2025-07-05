@@ -39,12 +39,12 @@ class _ModuleBuilderProxy:
 	_builder: Module
 	_depth: int
 
-	def __init__(self, builder: Module, depth: int):
+	def __init__(self, builder: Module, depth: int) -> None:
 		object.__setattr__(self, '_builder', builder)
 		object.__setattr__(self, '_depth', depth)
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
-	def __init__(self, builder: Module, depth: int, domain: str | None):
+	def __init__(self, builder: Module, depth: int, domain: str | None) -> None:
 		super().__init__(builder, depth)
 		self._domain = domain
 
@@ -79,7 +79,7 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 		return self.__setattr__(name, value)
 
 class _ModuleBuilderRoot:
-	def __init__(self, builder: Module, depth: int):
+	def __init__(self, builder: Module, depth: int) -> None:
 		self._builder = builder
 		self.domain = self.d = _ModuleBuilderDomains(builder, depth)
 
@@ -91,7 +91,7 @@ class _ModuleBuilderRoot:
 class _ModuleBuilderSubmodules:
 	_builder: Module
 
-	def __init__(self, builder: Module):
+	def __init__(self, builder: Module) -> None:
 		object.__setattr__(self, '_builder', builder)
 
 	def __iadd__(self, modules):
@@ -114,7 +114,7 @@ class _ModuleBuilderSubmodules:
 class _ModuleBuilderDomainSet:
 	_builder: Module
 
-	def __init__(self, builder: Module):
+	def __init__(self, builder: Module) -> None:
 		object.__setattr__(self, '_builder', builder)
 
 	def __iadd__(self, domains: Iterable):
@@ -136,7 +136,7 @@ Params = ParamSpec('Params')
 # It's not particularly clean to depend on an internal interface, but, unfortunately, __bool__
 # must be defined on a class to be called during implicit conversion.
 class _GuardedContextManager(_GeneratorContextManager):
-	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict):
+	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict) -> None:
 		self.keyword = keyword
 		return super().__init__(func, args, kwds)
 
@@ -152,7 +152,7 @@ def _guardedcontextmanager(keyword: str):
 	return decorator
 
 class FSM:
-	def __init__(self, state, encoding, decoding):
+	def __init__(self, state, encoding, decoding) -> None:
 		self.state    = state
 		self.encoding = encoding
 		self.decoding = decoding
@@ -196,7 +196,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'and return a `Module` from the `elaborate(self, platform)` method'
 		)
 
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__(builder = self, depth = 0)
 		self.submodules    = _ModuleBuilderSubmodules(self)
 		self.domains       = _ModuleBuilderDomainSet(self)

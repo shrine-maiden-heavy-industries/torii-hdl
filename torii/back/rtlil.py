@@ -233,7 +233,7 @@ class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
 		return _CaseBuilder(self, indent = 2)
 
 class _CaseBuilder(_ProxiedBuilder):
-	def __init__(self, rtlil, indent: int):
+	def __init__(self, rtlil, indent: int) -> None:
 		self.rtlil  = rtlil
 		self.indent = indent
 
@@ -380,7 +380,7 @@ class _ValueCompilerState:
 			del self.expansions[value]
 
 class _ValueCompiler(xfrm.ValueVisitor):
-	def __init__(self, state):
+	def __init__(self, state) -> None:
 		self.s = state
 
 	def on_unknown(self, value):
@@ -686,7 +686,7 @@ class _LHSValueCompiler(_ValueCompiler):
 			)
 
 class _StatementCompiler(xfrm.StatementVisitor):
-	def __init__(self, state, rhs_compiler, lhs_compiler):
+	def __init__(self, state, rhs_compiler, lhs_compiler) -> None:
 		self.state        = state
 		self.rhs_compiler = rhs_compiler
 		self.lhs_compiler = lhs_compiler

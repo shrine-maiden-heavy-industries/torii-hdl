@@ -13,7 +13,7 @@ __all__ = (
 )
 
 class PyCoroProcess(BaseProcess):
-	def __init__(self, state, domains, constructor, *, default_cmd = None):
+	def __init__(self, state, domains, constructor, *, default_cmd = None) -> None:
 		self.state = state
 		self.domains = domains
 		self.constructor = constructor

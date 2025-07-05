@@ -18,7 +18,7 @@ _USE_PATTERN_MATCHING = (version_info >= (3, 10))
 class PyRTLProcess(BaseProcess):
 	__slots__ = ('is_comb', 'runnable', 'passive', 'run')
 
-	def __init__(self, *, is_comb):
+	def __init__(self, *, is_comb) -> None:
 		self.is_comb  = is_comb
 
 		self.reset()
@@ -28,7 +28,7 @@ class PyRTLProcess(BaseProcess):
 		self.passive  = True
 
 class _PythonEmitter:
-	def __init__(self):
+	def __init__(self) -> None:
 		self._buffer = []
 		self._suffix = 0
 		self._level  = 0
@@ -60,7 +60,7 @@ class _PythonEmitter:
 		return name
 
 class _Compiler:
-	def __init__(self, state, emitter):
+	def __init__(self, state, emitter) -> None:
 		self.state = state
 		self.emitter = emitter
 
@@ -105,7 +105,7 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 		raise NotImplementedError # :nocov:
 
 class _RHSValueCompiler(_ValueCompiler):
-	def __init__(self, state, emitter, *, mode, inputs = None):
+	def __init__(self, state, emitter, *, mode, inputs = None) -> None:
 		super().__init__(state, emitter)
 		if mode not in ('curr', 'next'):
 			raise ValueError(f'Expected mode to be \'curr\', or \'next\', not \'{mode!r}\'')
@@ -252,7 +252,7 @@ class _RHSValueCompiler(_ValueCompiler):
 		return emitter.flush()
 
 class _LHSValueCompiler(_ValueCompiler):
-	def __init__(self, state, emitter, *, rhs, outputs = None):
+	def __init__(self, state, emitter, *, rhs, outputs = None) -> None:
 		super().__init__(state, emitter)
 		# `rrhs` is used to translate rvalues that are syntactically a part of an lvalue, e.g.
 		# the offset of a Part.
@@ -347,7 +347,7 @@ class _LHSValueCompiler(_ValueCompiler):
 		return gen
 
 class _StatementCompiler(StatementVisitor, _Compiler):
-	def __init__(self, state, emitter, *, inputs = None, outputs = None):
+	def __init__(self, state, emitter, *, inputs = None, outputs = None) -> None:
 		super().__init__(state, emitter)
 		self.rhs = _RHSValueCompiler(state, emitter, mode = 'curr', inputs = inputs)
 		self.lhs = _LHSValueCompiler(state, emitter, rhs = self.rhs, outputs = outputs)
@@ -404,7 +404,7 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 		return emitter.flush()
 
 class _FragmentCompiler:
-	def __init__(self, state):
+	def __init__(self, state) -> None:
 		self.state = state
 
 	def __call__(self, fragment):

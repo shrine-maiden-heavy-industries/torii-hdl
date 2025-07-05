@@ -4,7 +4,7 @@ from torii.hdl  import Cat, Elaboratable, Module, Signal
 from torii.back import verilog
 
 class UARTReceiver(Elaboratable):
-	def __init__(self, divisor: int):
+	def __init__(self, divisor: int) -> None:
 		self.divisor = divisor
 
 		self.i    = Signal()

@@ -9,7 +9,7 @@ class DecoratorsTestCase(ToriiTestCase):
 
 		@decorators.final
 		class Foo:
-			def __init__(self):
+			def __init__(self) -> None:
 				pass # :nocov:
 
 		with self.assertRaisesRegex(

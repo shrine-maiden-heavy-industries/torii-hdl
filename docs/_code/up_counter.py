@@ -17,7 +17,7 @@ class UpCounter(Elaboratable):
     ovf : Signal, out
         ``ovf`` is asserted when the counter reaches its limit.
     '''
-    def __init__(self, limit: int):
+    def __init__(self, limit: int) -> None:
         self.limit = limit
 
         # Ports

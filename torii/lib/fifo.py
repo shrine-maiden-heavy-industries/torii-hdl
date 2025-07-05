@@ -247,7 +247,7 @@ class SyncFIFOBuffered(Elaboratable, FIFOInterface):
 		),
 	)
 
-	def __init__(self, *, width: int, depth: int):
+	def __init__(self, *, width: int, depth: int) -> None:
 		super().__init__(width = width, depth = depth)
 
 		self.level = Signal(range(depth + 1))

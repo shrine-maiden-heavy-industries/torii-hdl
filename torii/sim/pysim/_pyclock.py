@@ -7,7 +7,7 @@ __all__ = (
 )
 
 class PyClockProcess(BaseProcess):
-	def __init__(self, state, signal, *, phase, period):
+	def __init__(self, state, signal, *, phase, period) -> None:
 		if len(signal) != 1:
 			raise TypeError(f'Clock signal must be exactly 1-wide, not {len(signal)}')
 

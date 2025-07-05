@@ -10,7 +10,7 @@ class UART(Elaboratable):
 		Set to ``round(clk-rate / baud-rate)``.
 		E.g. ``12e6 / 115200`` = ``104``.
 	'''
-	def __init__(self, divisor, data_bits = 8):
+	def __init__(self, divisor, data_bits = 8) -> None:
 		assert divisor >= 4
 
 		self.data_bits = data_bits

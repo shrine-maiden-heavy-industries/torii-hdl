@@ -2293,7 +2293,7 @@ class _MappedKeyCollection(Generic[IntKey, Key], metaclass = ABCMeta):
 		pass # :nocov:
 
 class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKey, Key]):
-	def __init__(self, pairs: tuple[tuple[Key, Val], ...] = ()):
+	def __init__(self, pairs: tuple[tuple[Key, Val], ...] = ()) -> None:
 		self._storage = OrderedDict[IntKey | None, Val]()
 		for key, value in pairs:
 			self[key] = value

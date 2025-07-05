@@ -4,7 +4,7 @@ from torii.hdl  import Cat, Elaboratable, Module, Signal
 from torii.back import verilog
 
 class ALU(Elaboratable):
-	def __init__(self, width: int):
+	def __init__(self, width: int) -> None:
 		self.sel = Signal(2)
 		self.a   = Signal(width)
 		self.b   = Signal(width)
