@@ -131,6 +131,8 @@ linkcheck_ignore  = [
 	'https://www.xilinx.com/products/design-tools/vivado.html',
 	# Sphinx link-check and GitLab readme anchors don't get along
 	'https://gitlab.com/surfer-project/surfer#installation',
+	# Creative-Commons seems to suddenly always 403 in CI
+	'https://creativecommons.org/licenses/by-sa/4.0/',
 ]
 
 # Sphinx-Multiversion stuff
