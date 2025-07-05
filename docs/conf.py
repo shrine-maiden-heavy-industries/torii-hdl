@@ -78,6 +78,7 @@ html_theme       = 'furo'
 html_copy_source = False
 
 html_theme_options = {
+	'announcement': 'This documentation is a work in progress, and you can help us <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">improve it!</a>', # noqa: E501
 	'light_css_variables': {
 		'color-brand-primary': '#2672a8',
 		'color-brand-content': '#2672a8',
