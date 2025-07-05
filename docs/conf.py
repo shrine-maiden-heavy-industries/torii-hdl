@@ -7,7 +7,7 @@ from torii import __version__ as torii_version
 
 ROOT_DIR = (Path(__file__).parent).parent
 
-project   = 'Torii-HDL'
+project   = 'Torii'
 version   = torii_version
 release   = version.split('+')[0]
 copyright = f'{datetime.date.today().year} Shrine Maiden Heavy Industries and contributors'
