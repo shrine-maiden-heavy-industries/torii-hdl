@@ -635,10 +635,9 @@
     }
   ],
   "changelog": [],
-  "external_libraries": [],
   "getting_started": [
     {
-      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit : int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en : Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n    ovf : Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int):\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n",
+      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit : int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en : Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n    ovf : Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int) -> None:\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n",
       "names": [
         {
           "import_components": [
@@ -3961,12 +3960,13 @@
   "library/vendor/lattice/index": [],
   "library/vendor/xilinx/index": [],
   "license": [],
-  "migration_guide": [
+  "migrations/index": [],
+  "migrations/v0_to_v1": [
     {
       "source": "# OLD (<1.0.0)\nfrom torii import *\n\n# NEW (>=1.0.0)\nfrom torii.hdl import *\n",
       "names": [],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "hdl-constructs-imported-from-root-torii-namespace",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4006,7 +4006,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4059,7 +4059,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4089,7 +4089,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "build-cxx-from-torii-tools-cxx",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4215,7 +4215,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "build-cxx-from-torii-tools-cxx",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4323,7 +4323,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "memoize-from-torii-util-decorators",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4367,7 +4367,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "torii-lib-soc-memory",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4382,7 +4382,7 @@
       "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.wishbone import Arbiter, Interface, ...\n\n# -- OR --\nfrom torii.lib.soc.wishbone.bus import Arbiter, Interface, ...\n\n# NEW (>=1.0.0)\nfrom torii.lib.bus.wishbone import Arbiter, Interface, ...\n",
       "names": [],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "torii-lib-soc-wishbone",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4446,7 +4446,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "domainrenamer-from-torii-hdl-xfrm",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4498,7 +4498,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "domainrenamer-from-torii-hdl-xfrm",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4645,7 +4645,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "streaminterface-from-torii-lib-stream-simple",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4704,7 +4704,7 @@
         }
       ],
       "example": {
-        "document": "migration_guide",
+        "document": "migrations/v0_to_v1",
         "ref_id": "asyncserialrx-from-torii-lib-stdio-serial",
         "headings": [
           "Torii v0.X to v1.0 Migration Guide",
@@ -4752,6 +4752,7 @@
   "platforms/fpga/xilinx": [],
   "platforms/index": [],
   "projects": [],
+  "supplementary_libraries": [],
   "testing/formal": [],
   "testing/index": [],
   "testing/simulation": [],
