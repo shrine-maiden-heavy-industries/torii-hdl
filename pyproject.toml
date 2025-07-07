@@ -1,0 +1,101 @@
+# SPDX-License-Identifier: BSD-2-Clause
+[project]
+name = 'torii'
+description = 'A Python-based HDL and framework for silicon-based witchcraft'
+authors = [
+	{ name = 'Aki Van Ness', email = 'aki@lethalbit.net' },
+	{ name = 'Rachel Mant', email = 'git@dragonmux.network' },
+	{ name = 'Torii Contributors' },
+]
+dynamic = ['version']
+license = 'BSD-3-Clause'
+license-files = ['LICENSE', 'LICENSE.docs']
+readme = 'README.md'
+requires-python = '~=3.10'
+dependencies = [
+	# NOTE(aki):
+	# Having setuptools as a runtime dep feels weird, but we are using the `_distutils`
+	# backend for `cxxrtl` support as we need to be able to build C++ object files for
+	# simulation.
+	#
+	# Version 66 of setuptools is the oldest we can go without an API break that we depend
+	# on. We eventually should only use setuptools to do the package build, but the list of
+	# things needed before we can drop this runtime dep is long.
+	'setuptools>=66',
+	'pyvcd>=0.4.0,<0.5',
+	'Jinja2~=3.0',
+	'rich>=13.6.0',
+	'typing-extensions; python_version<"3.12"',
+]
+keywords = [
+	'HDL',
+	'FPGA',
+	'ASIC',
+	'VLSI',
+	'Digital Logic Design',
+	'Yosys',
+	'nextpnr',
+]
+classifiers = [
+	'Development Status :: 4 - Beta',
+
+	'Intended Audience :: Developers',
+	'Intended Audience :: Education',
+	'Intended Audience :: Information Technology',
+	'Intended Audience :: Science/Research',
+
+	'Operating System :: MacOS :: MacOS X',
+	'Operating System :: Microsoft :: Windows',
+	'Operating System :: POSIX :: Linux',
+
+	'Programming Language :: Python :: 3.10',
+	'Programming Language :: Python :: 3.11',
+	'Programming Language :: Python :: 3.12',
+	'Programming Language :: Python :: 3.13',
+	'Programming Language :: Python :: 3.14',
+
+	'Programming Language :: Python :: Implementation :: CPython',
+	'Programming Language :: Python :: Implementation :: PyPy',
+
+	'Topic :: Scientific/Engineering',
+	'Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)',
+	'Topic :: Software Development',
+	'Topic :: Software Development :: Embedded Systems',
+	'Topic :: Software Development :: Libraries',
+
+	'Typing :: Typed',
+]
+
+[project.optional-dependencies]
+dev = ['nox']
+
+[project.urls]
+source = 'https://github.com/shrine-maiden-heavy-industries/torii-hdl'
+issues = 'https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues'
+documentation = 'https://torii.shmdn.link/latest'
+changelog = 'https://torii.shmdn.link/latest/changelog.html'
+
+[build-system]
+requires = ['setuptools>=66', 'setuptools-scm>=8']
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools.packages.find]
+where = ['.']
+exclude = [
+	'contrib',
+	'contrib.*',
+	'docs',
+	'docs.*',
+	'examples',
+	'examples.*',
+	'tests',
+	'tests.*',
+]
+namespaces = false
+
+[tool.setuptools.package-data]
+torii = ['py.typed']
+
+[tool.setuptools_scm]
+version_scheme = 'guess-next-dev'
+local_scheme = 'node-and-date'

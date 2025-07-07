@@ -27,6 +27,7 @@ Unreleased template stuff
 ### Changed
 
 - Altered the license for the Torii documentation going forward, all past contributions will remain under the [BSD-2-Clause] until they are re-written/superseded and all new/future contributions to the documentation will be under the [CC-BY-SA 4.0].
+- Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
 
 ### Deprecated
 
