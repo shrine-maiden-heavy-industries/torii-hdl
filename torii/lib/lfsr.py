@@ -48,7 +48,8 @@ class LFSR(Elaboratable):
 	'''
 
 	def __init__(
-		self, *, polynomial: int, state_width: int, io_width: int, seed: int, kind: LFSRKind, direction: LFSRDir
+		self, *, polynomial: int, state_width: int, io_width: int, seed: int, kind: LFSRKind, direction: LFSRDir,
+		feed_forward: bool
 	) -> None:
 
 		# Clip the seed so it fits into our LFSR
@@ -64,9 +65,10 @@ class LFSR(Elaboratable):
 		if io_width != 1 and kind == LFSRKind.Fibonacci:
 			raise ValueError('Fibonacci-type LFSRs can not have an IO width of more than one bit')
 
-		self._seed = seed
-		self._kind = kind
-		self._dir  = direction
+		self._seed         = seed
+		self._kind         = kind
+		self._dir          = direction
+		self._feed_forward = feed_forward
 
 		# Adjust the polynomial so it's correct
 		match self._dir:
@@ -189,7 +191,7 @@ class LFSR(Elaboratable):
 			case LFSRKind.Fibonacci:
 				self._generate_fibonacci(m)
 
-		if False:
+		if self._feed_forward:
 			m.d.comb += [
 				self._input.eq(self.output ^ self.input)
 			]
