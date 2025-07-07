@@ -18,7 +18,10 @@ class LFSR_DUT(Elaboratable):
 
 		m.submodules.lfsr = lfsr = LFSR(**self.lfsr_args)
 
-		self.state = lfsr.state
+		self.output = lfsr.output
+		self.input  = lfsr.input
+		self.state  = lfsr.state
+		self.en     = lfsr.en
 
 		if self.loopback:
 			m.d.comb += [
