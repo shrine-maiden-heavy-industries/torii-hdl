@@ -60,6 +60,10 @@ class LFSR(Elaboratable):
 				RuntimeWarning, stacklevel = 2
 			)
 
+		# Enure the I/O width is correct for Fibonacci-type LFSRs
+		if io_width != 1 and kind == LFSRKind.Fibonacci:
+			raise ValueError('Fibonacci-type LFSRs can not have an IO width of more than one bit')
+
 		self._seed = seed
 		self._kind = kind
 		self._dir  = direction
@@ -77,6 +81,7 @@ class LFSR(Elaboratable):
 		self.output = Signal(io_width)
 
 	def _generate_galois(self, m: Module) -> None:
+		''' Generate an "optimized" Galois-type LFSR '''
 
 		input_bits = [ self._input[bit] for bit in range(self._input.width) ]
 		lfsr: list[Slice | list[Const | Slice]] = [ self._state[bit] for bit in range(self._state.width) ]
@@ -133,18 +138,7 @@ class LFSR(Elaboratable):
 				self._state[bit].eq(Cat(lfsr[bit]).xor()),
 			]
 
-	def _generate_fibonacci(self, m: Module) -> None:
-		pass
-
-	def elaborate(self, platform) -> Module:
-		m = Module()
-
-		match self._kind:
-			case LFSRKind.Galois:
-				self._generate_galois(m)
-			case LFSRKind.Fibonacci:
-				self._generate_fibonacci(m)
-
+		# Hook up the output based on our direction
 		match self._dir:
 			case LFSRDir.LSb:
 				m.d.comb += [
@@ -154,6 +148,46 @@ class LFSR(Elaboratable):
 				m.d.comb += [
 					self.output.eq(self._state[-1]),
 				]
+
+	def _generate_fibonacci(self, m: Module) -> None:
+		''' Generate a Fibonacci-style LFSR '''
+
+		match self._dir:
+			case LFSRDir.LSb:
+				fib_in  = self._state[0]
+				m.d.sync += [
+					self._state.eq(self._state.shift_left(1))
+				]
+			case LFSRDir.MSb:
+				fib_in  = self._state[-1]
+				m.d.sync += [
+					self._state.eq(self._state.shift_right(1))
+				]
+
+		taps = list[Slice]()
+
+		# Find the taps
+		for bit in range(self._state.width):
+			if self._polynomial & (1 << bit):
+				taps.append(self._state[bit])
+
+		m.d.comb += [
+			self.output.eq(Cat(taps).xor()),
+		]
+
+		m.d.sync += [
+			fib_in.eq(self.input),
+		]
+
+	def elaborate(self, platform) -> Module:
+		m = Module()
+
+		# Stamp out the kind of LFSR we want to generate
+		match self._kind:
+			case LFSRKind.Galois:
+				self._generate_galois(m)
+			case LFSRKind.Fibonacci:
+				self._generate_fibonacci(m)
 
 		if False:
 			m.d.comb += [
