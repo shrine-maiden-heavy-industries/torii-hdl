@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
+from enum         import Enum, auto, unique
 
-from enum            import Enum, auto, unique
-
-from ..hdl.ir        import Elaboratable
-from ..hdl.dsl       import Module
-from ..hdl.ast       import Cat, Const, Signal, ValueDict, Slice
-from ..util.units    import bits_for
-from ..util          import flatten
+from ..hdl.ast    import Cat, Const, Signal, Slice, ValueDict
+from ..hdl.dsl    import Module
+from ..hdl.ir     import Elaboratable
+from ..util       import flatten
+from ..util.units import bits_for
 
 __all__ = (
 	'LFSR',
@@ -28,23 +27,46 @@ class LFSRDir(Enum):
 
 class LFSR(Elaboratable):
 	'''
-	A simple linear-feedback shift register.
+	A configurable Linear Feedback Shift Register that can be used for implementing
+	things like CRCs, NbMb (de)scramblers, PRBS generators, and more.
 
 	Attributes
 	----------
-	state : Signal[width]
+	state : Signal[state_width]
 		The current state of the LFSR.
+
+	input : Signal[io_width]
+		The input into the LFSR.
+
+	output : Signal[io_width]
+		The output from the LFSR.
+
+	en : Signal
+		Active high enable signal. The LFSR won't shift when this is low.
 
 	Parameters
 	----------
 	polynomial : int
 		The polynomial the LFSR implements.
 
-	width : int
-		How many bits wide the LFSR is.
+	state_width : int
+		How many bits wide the LFSR internal state is.
+
+	io_width : int
+		How many bits wide the ``input`` and ``output`` signals are.
 
 	seed : int
-		The initial starting seed value for the LFSR.
+		The initial/reset value for the LFSR ``state``.
+
+	kind : LFSRKind
+		If the LFSR is a Galois-type or Fibonacci-type.
+
+	direction : LFSRDir
+		The shift direction of the LFSR.
+
+	feed_forward : bool
+		Control how the output is mixed into the input.
+
 	'''
 
 	def __init__(
@@ -77,25 +99,26 @@ class LFSR(Elaboratable):
 			case LFSRDir.MSb:
 				self._polynomial  = (polynomial << 1) & ((1 << poly_width) - 1)
 
-		self._state = Signal(state_width, reset = seed)
 		self._input = Signal(io_width)
+		self.state  = Signal(state_width, reset = seed)
 		self.input  = Signal(io_width)
 		self.output = Signal(io_width)
+		self.en     = Signal()
 
 	def _generate_galois(self, m: Module) -> None:
 		''' Generate an "optimized" Galois-type LFSR '''
 
 		input_bits = [ self._input[bit] for bit in range(self._input.width) ]
-		lfsr: list[Slice | list[Const | Slice]] = [ self._state[bit] for bit in range(self._state.width) ]
+		lfsr: list[Slice | list[Const | Slice]] = [ self.state[bit] for bit in range(self.state.width) ]
 
 		for input_bit in input_bits:
-			taps = { bit: [] for bit in range(self._state.width) }
+			taps = { bit: [] for bit in range(self.state.width) }
 			# Iterate over all the bits within the state vector
-			for lfsr_bit in range(self._state.width):
+			for lfsr_bit in range(self.state.width):
 				# Ensure the correct bit positions are picked depending on our shift-direction
 				match self._dir:
 					case LFSRDir.LSb:
-						if lfsr_bit != self._state.width - 1:
+						if lfsr_bit != self.state.width - 1:
 							tap_bit = lfsr[lfsr_bit + 1]
 						else:
 							tap_bit = Const(0)
@@ -112,7 +135,7 @@ class LFSR(Elaboratable):
 					taps[lfsr_bit] = [ tap_bit ]
 
 			# Optimize the XOR expressions
-			for bit in range(self._state.width):
+			for bit in range(self.state.width):
 				state_bit: list[Slice | Const] = list(flatten(taps[bit]))
 
 				ones = 0
@@ -135,51 +158,54 @@ class LFSR(Elaboratable):
 				lfsr[bit] = result
 
 		# Emit the XORs for all the taps after optimization
-		for bit in range(self._state.width):
-			m.d.sync += [
-				self._state[bit].eq(Cat(lfsr[bit]).xor()),
-			]
+		for bit in range(self.state.width):
+			with m.If(self.en):
+				m.d.sync += [
+					self.state[bit].eq(Cat(lfsr[bit]).xor()),
+				]
 
 		# Hook up the output based on our direction
 		match self._dir:
 			case LFSRDir.LSb:
 				m.d.comb += [
-					self.output.eq(self._state[0]),
+					self.output.eq(self.state[0]),
 				]
 			case LFSRDir.MSb:
 				m.d.comb += [
-					self.output.eq(self._state[-1]),
+					self.output.eq(self.state[-1]),
 				]
 
 	def _generate_fibonacci(self, m: Module) -> None:
 		''' Generate a Fibonacci-style LFSR '''
 
-		match self._dir:
-			case LFSRDir.LSb:
-				fib_in  = self._state[0]
-				m.d.sync += [
-					self._state.eq(self._state.shift_left(1))
-				]
-			case LFSRDir.MSb:
-				fib_in  = self._state[-1]
-				m.d.sync += [
-					self._state.eq(self._state.shift_right(1))
-				]
+		with m.If(self.en):
+			match self._dir:
+				case LFSRDir.LSb:
+					fib_in  = self.state[0]
+					m.d.sync += [
+						self.state.eq(self.state.shift_left(1))
+					]
+				case LFSRDir.MSb:
+					fib_in  = self.state[-1]
+					m.d.sync += [
+						self.state.eq(self.state.shift_right(1))
+					]
 
 		taps = list[Slice]()
 
 		# Find the taps
-		for bit in range(self._state.width):
+		for bit in range(self.state.width):
 			if self._polynomial & (1 << bit):
-				taps.append(self._state[bit])
+				taps.append(self.state[bit])
 
 		m.d.comb += [
 			self.output.eq(Cat(taps).xor()),
 		]
 
-		m.d.sync += [
-			fib_in.eq(self.input),
-		]
+		with m.If(self.en):
+			m.d.sync += [
+				fib_in.eq(self._input[0]),
+			]
 
 	def elaborate(self, platform) -> Module:
 		m = Module()
@@ -193,16 +219,11 @@ class LFSR(Elaboratable):
 
 		if self._feed_forward:
 			m.d.comb += [
-				self._input.eq(self.output ^ self.input)
+				self._input.eq(self.input)
 			]
 		else:
 			m.d.comb += [
-				self._input.eq(self.input)
+				self._input.eq(self.output)
 			]
-
-		# HACK(aki): Delete
-		m.d.comb += [
-			self.input.eq(self.output),
-		]
 
 		return m
