@@ -1,4 +1,55 @@
 coverage:
-  status:
-    project:
-      default: false
+  precision: 3
+  range: 85..100
+  round: down
+
+comment:
+  layout: 'condensed_header, diff, condensed_files, components'
+
+component_management:
+  individual_components:
+    - component_id: backend
+      name: 'RTL Backend'
+      paths:
+        - torii/back/**
+
+    - component_id: build
+      name: 'Platform Building Blocks'
+      paths:
+        - torii/build/**
+
+    - component_id: hdl
+      name: 'HDL'
+      paths:
+        - torii/hdl/**
+
+    - component_id: library
+      name: 'Library'
+      paths:
+        - torii/lib/**
+
+    - component_id: platforms
+      name: 'Platforms'
+      paths:
+        - torii/platform/**
+
+    - component_id: simulation
+      name: 'Simulation'
+      paths:
+        - torii/sim/**
+
+    - component_id: test
+      name: 'Testing'
+      paths:
+        - torii/test/**
+
+    - component_id: utilities
+      name: 'Utilities'
+      paths:
+        - torii/util/**
+
+    # XXX(aki): Catch all for everything else
+    - component_id: core
+      name: 'Core'
+      paths:
+        - torii/*.py
