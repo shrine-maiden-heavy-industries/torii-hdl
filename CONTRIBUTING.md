@@ -202,6 +202,8 @@ The general overall guidelines in [development and testing] also apply to any an
 
 To generate a local version of the documentation, run `nox -s build-docs`, this will set up everything needed to build the documentation, and then produce a rendered output result in `build/docs`.
 
+When working on the documentation, having to re-build after every change can be rough, so that's where the `nox -s watch-docs` comes in. When run, it will build the initial current version of the docs, then start a local web-server up on `http://127.0.0.1:8000` to view the docs. Whenever you then make a change to any of the files in `docs/`, it will automatically re-build the documentation and then re-load the page opened in the browser.
+
 To check to make sure all links are live, the `nox -s linkcheck-docs` command can be used, this will build the documentation and then check each and every hyperlink found within it to make sure it is reachable. This is also done in CI and is a hard-requirement for the documentation to be deployed, so if any of the links are dead, the documentation will not be updated on the live site.
 
 ## AI Usage Policy

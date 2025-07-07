@@ -82,6 +82,14 @@ def test(session: Session) -> None:
 			f'--rcfile={CNTRB_DIR / "coveragerc"}'
 		)
 
+@nox.session(name = 'watch-docs')
+def watch_docs(session: Session) -> None:
+	out_dir = (BUILD_DIR / 'docs')
+	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
+	session.install('sphinx-autobuild')
+	session.install('.')
+	session.run('sphinx-autobuild', str(DOCS_DIR), str(out_dir))
+
 @nox.session(name = 'build-docs')
 def build_docs(session: Session) -> None:
 	out_dir = (BUILD_DIR / 'docs')
