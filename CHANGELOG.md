@@ -26,6 +26,7 @@ Unreleased template stuff
 ### Added
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
+- New `WASM` simulation backend based on [wasmtime](https://github.com/bytecodealliance/wasmtime-py), which is slightly faster than `pysim` but more cross-platform and portable than `Verilator`.
 
 ### Changed
 
