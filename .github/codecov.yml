@@ -11,45 +11,60 @@ component_management:
     - component_id: backend
       name: 'RTL Backend'
       paths:
+        - tests/back/**
         - torii/back/**
 
     - component_id: build
       name: 'Platform Building Blocks'
       paths:
+        - tests/build/**
         - torii/build/**
 
     - component_id: hdl
       name: 'HDL'
       paths:
+        - tests/hdl/**
         - torii/hdl/**
 
     - component_id: library
       name: 'Library'
       paths:
+        - tests/lib/**
         - torii/lib/**
 
     - component_id: platforms
       name: 'Platforms'
       paths:
+        - tests/platform/**
         - torii/platform/**
 
     - component_id: simulation
       name: 'Simulation'
       paths:
+        - tests/sim/**
         - torii/sim/**
 
     - component_id: test
       name: 'Testing'
       paths:
+        - tests/test/**
         - torii/test/**
+
+    - component_id: tools
+      name: 'Tooling'
+      paths:
+        - tests/tools/**
+        - torii/tools/**
 
     - component_id: utilities
       name: 'Utilities'
       paths:
+        - tests/util/**
         - torii/util/**
 
     # XXX(aki): Catch all for everything else
     - component_id: core
       name: 'Core'
       paths:
+        - tests/*.py
         - torii/*.py
