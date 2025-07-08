@@ -14,14 +14,10 @@ from collections.abc   import (
 )
 from enum              import Enum, EnumMeta
 from itertools         import chain
-from sys               import version_info
 from types             import NotImplementedType
-from typing            import TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec,  SupportsIndex, TypeAlias, TypeVar
-
-if version_info < (3, 12):
-	from typing_extensions import TypeVarTuple, Unpack
-else:
-	from typing        import TypeVarTuple, Unpack
+from typing            import (
+	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec,  SupportsIndex, TypeAlias, TypeVar, TypeVarTuple
+)
 
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import flatten, tracer, union
@@ -1262,7 +1258,7 @@ SignalAttrs: TypeAlias = dict[str, int | str | bool]
 SignalDecoder: TypeAlias = Callable[[int], str] | type[Enum]
 _SigParams = TypeVarTuple('_SigParams')
 # @final
-class Signal(Value, DUID, Generic[Unpack[_SigParams]]):
+class Signal(Value, DUID, Generic[*_SigParams]):
 	'''
 	A varying integer value.
 

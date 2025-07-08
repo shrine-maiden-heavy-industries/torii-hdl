@@ -48,6 +48,7 @@ Unreleased template stuff
 - Removed the deprecated `torii.lib.soc.wishbone` module, it has been moved to `torii.lib.bus.wishbone`.
 - Removed the deprecated `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
 - Removed the deprecated `rdy` and `ack` signals in `torii.lib.stdio.serial.AsyncSerialRX` in favor of `done` andd `start` respectively.
+- Removed the dependency on the `typing_extensions` module.
 
 ### Fixed
 
