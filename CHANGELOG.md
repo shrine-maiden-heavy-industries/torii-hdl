@@ -32,6 +32,7 @@ Unreleased template stuff
 - Added new `HDMIResource` for HDMI port resources on board platforms.
 - New `PCIeBusResources` for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
+- New `Verilator` simulation backend. Allows building DUTs into compiled machine code with [Verilator](https://www.veripool.org/verilator/) and then drive it via VPI. This backend needs Verilator as well as a working C++ toolchain on the machine.
 
 ### Changed
 

@@ -19,7 +19,7 @@ __all__ = (
 	'Tick',
 )
 
-SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim']
+SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim', 'verilator']
 
 class Command:
 	pass
@@ -78,6 +78,9 @@ class Simulator:
 			case 'pysim':
 				from .pysim import PySimEngine
 				engine = PySimEngine
+			case 'verilator':
+				from .vpi.verilator import VerilatorSimEngine
+				engine = VerilatorSimEngine
 			case e if isclass(e) and issubclass(e, BaseEngine):
 				engine = e
 			case _:
