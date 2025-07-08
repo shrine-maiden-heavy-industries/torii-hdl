@@ -67,6 +67,7 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = ['nox']
+wasm-sim = [ 'wasmtime>=34' ]
 
 [project.urls]
 source = 'https://github.com/shrine-maiden-heavy-industries/torii-hdl'
