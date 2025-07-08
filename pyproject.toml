@@ -93,6 +93,7 @@ namespaces = false
 
 [tool.setuptools.package-data]
 torii = ['py.typed']
+'torii.sim.verilator' = [ 'vpi_driver.cc.jinja' ]
 
 [tool.setuptools_scm]
 version_scheme = 'guess-next-dev'
