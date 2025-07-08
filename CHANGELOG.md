@@ -42,6 +42,7 @@ Unreleased template stuff
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
+- New `VPI` simulation backend. Allows building DUTs into compiled machine code with [Verilator](https://www.veripool.org/verilator/) or [Icarus Verilog](https://github.com/steveicarus/iverilog) and then drive it via VPI. This backend needs Verilator as well as a working C++ toolchain on the machine.
 
 ### Changed
 
