@@ -8,7 +8,7 @@
         <link rel="canonical" href="https://torii.shmdn.link/changelog.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Changelog - Torii 0.8.1.dev92 documentation</title>
+        <title>Changelog - Torii 0.8.1.dev98 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -197,7 +197,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii 0.8.1.dev92 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii 0.8.1.dev98 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -221,7 +221,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">Torii 0.8.1.dev92 documentation</span>
+  <span class="sidebar-brand-text">Torii 0.8.1.dev98 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -394,6 +394,10 @@ Unreleased template stuff
 -->
 <section id="unreleased">
 <h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.0...main">Unreleased</a><a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p>[!IMPORTANT]
+The minimum Python version for Torii is now 3.11</p>
+</div></blockquote>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -403,6 +407,7 @@ Unreleased template stuff
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h3>
 <ul class="simple">
+<li><p>Minimum Python version has been bumped from <code class="docutils literal notranslate"><span class="pre">3.10</span></code> to <code class="docutils literal notranslate"><span class="pre">3.11</span></code>.</p></li>
 <li><p>Altered the license for the Torii documentation going forward, all past contributions will remain under the <a class="reference external" href="https://spdx.org/licenses/BSD-2-Clause.html">BSD-2-Clause</a> until they are re-written/superseded and all new/future contributions to the documentation will be under the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA 4.0</a>.</p></li>
 <li><p>Switched from using the old setuptools <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> over to setuptools via <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></p></li>
 </ul>
@@ -424,6 +429,7 @@ Unreleased template stuff
 <li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module, it has been moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
 <li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">connect</span></code> method in favor of <code class="docutils literal notranslate"><span class="pre">attach</span></code> and the <code class="docutils literal notranslate"><span class="pre">payload</span></code> signal in favor of <code class="docutils literal notranslate"><span class="pre">data</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code>.</p></li>
 <li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals in <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial.AsyncSerialRX</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">done</span></code> andd <code class="docutils literal notranslate"><span class="pre">start</span></code> respectively.</p></li>
+<li><p>Removed the dependency on the <code class="docutils literal notranslate"><span class="pre">typing_extensions</span></code> module.</p></li>
 </ul>
 </section>
 <section id="fixed">
@@ -1064,7 +1070,7 @@ Unreleased template stuff
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=6113ab2c"></script>
+</div><script src="_static/documentation_options.js?v=38108506"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
