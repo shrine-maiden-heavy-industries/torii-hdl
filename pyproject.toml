@@ -95,6 +95,7 @@ namespaces = false
 
 [tool.setuptools.package-data]
 torii = ['py.typed']
+'torii.sim.vpi' = [ 'driver.cc.jinja' ]
 
 [tool.setuptools_scm]
 version_scheme = 'guess-next-dev'

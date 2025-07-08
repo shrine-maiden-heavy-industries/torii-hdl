@@ -15,4 +15,8 @@
 	],
 	"python.testing.pytestEnabled": false,
 	"python.testing.unittestEnabled": true,
+	"files.associations": {
+		"*.cc.j2": "jinja-cpp",
+		"*.hh.j2": "jinja-cpp",
+	}
 }
