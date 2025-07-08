@@ -27,6 +27,7 @@ Unreleased template stuff
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
 - New `torii.back.json` backend to emit JSON netlists for designs.
+- New `Verilator` simulation backend. Allows building DUTs into compiled machine code with [Verilator](https://www.veripool.org/verilator/) and then drive it via VPI. This backend needs Verilator as well as a working C++ toolchain on the machine.
 
 ### Changed
 
