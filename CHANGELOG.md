@@ -20,12 +20,16 @@ Unreleased template stuff
 
 ## [Unreleased]
 
+> [!IMPORTANT]
+> The minimum Python version for Torii is now 3.11
+
 ### Added
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
 
 ### Changed
 
+- Minimum Python version has been bumped from `3.10` to `3.11`.
 - Altered the license for the Torii documentation going forward, all past contributions will remain under the [BSD-2-Clause] until they are re-written/superseded and all new/future contributions to the documentation will be under the [CC-BY-SA 4.0].
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
 
