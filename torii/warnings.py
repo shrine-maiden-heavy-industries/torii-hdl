@@ -13,7 +13,7 @@ import warnings
 from linecache    import getline, getlines
 from os           import getenv
 from pathlib      import Path
-from sys          import stdout, version_info
+from sys          import stdout
 from typing       import Final, TextIO, TypedDict
 
 from rich         import get_console
@@ -225,8 +225,7 @@ def _warning_handler( # :nocov:
 		category = message.__class__
 
 		# If we are in Python 3.11 or newer, then we can have attached notes
-		if version_info >= (3, 11):
-			notes = getattr(message, '__notes__', None)
+		notes = getattr(message, '__notes__', None)
 		message  = str(message)
 
 	# If the category is `None`, then we need to just say it's a generic warning
