@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from opcode    import opname
-from sys       import _getframe, implementation, version_info
+from sys       import _getframe, implementation
 from typing    import TYPE_CHECKING
 
 from .._typing import SrcLoc
@@ -76,19 +76,17 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 			return code.co_names[imm]
 		elif opc == 'STORE_FAST':
 			imm |= int(code.co_code[index + 1])
-			if version_info >= (3, 11) and not _IS_PYPY:
-				return code._varname_from_oparg(imm) # type: ignore
-			else:
+			if _IS_PYPY:
 				return code.co_varnames[imm]
+			return code._varname_from_oparg(imm) # type: ignore
 		elif opc == 'STORE_DEREF':
 			imm |= int(code.co_code[index + 1])
-			if version_info >= (3, 11) and not _IS_PYPY:
-				return code._varname_from_oparg(imm) # type: ignore
-			else:
+			if _IS_PYPY:
 				if imm < len(code.co_cellvars):
 					return code.co_cellvars[imm]
 				else:
 					return code.co_freevars[imm - len(code.co_cellvars)]
+			return code._varname_from_oparg(imm) # type: ignore
 		elif opc in (
 			'LOAD_GLOBAL', 'LOAD_NAME', 'LOAD_ATTR', 'LOAD_FAST', 'LOAD_FAST_BORROW',
 			'LOAD_DEREF', 'DUP_TOP', 'BUILD_LIST', 'CACHE', 'COPY'
