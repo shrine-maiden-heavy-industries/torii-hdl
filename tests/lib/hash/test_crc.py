@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from collections.abc    import Iterable
+
 from zlib               import crc32
-from typing             import Iterable
 
 from torii.lib.hash.crc import BitwiseCRC, LUTBytewiseCRC, CombBytewiseCRC
 from torii.test         import ToriiTestCase
