@@ -2,7 +2,6 @@
 
 from contextlib  import contextmanager
 from os          import getenv
-from sys         import version_info
 from tempfile    import NamedTemporaryFile
 
 from ...hdl.ast  import SignalSet
@@ -12,8 +11,6 @@ from .._base     import BaseProcess
 __all__ = (
 	'PyRTLProcess',
 )
-
-_USE_PATTERN_MATCHING = (version_info >= (3, 10))
 
 class PyRTLProcess(BaseProcess):
 	__slots__ = ('is_comb', 'runnable', 'passive', 'run')
@@ -218,28 +215,15 @@ class _RHSValueCompiler(_ValueCompiler):
 		gen_index = self.emitter.def_var('rhs_index', f'{index_mask:#x} & {self(value.index)}')
 		gen_value = self.emitter.gen_var('rhs_proxy')
 		if value.elems:
-			if _USE_PATTERN_MATCHING:
-				self.emitter.append(f'match {gen_index}:')
-				with self.emitter.indent():
-					for index, elem in enumerate(value.elems):
-						self.emitter.append(f'case {index}:')
-						with self.emitter.indent():
-							self.emitter.append(f'{gen_value} = {self(elem)}')
-					self.emitter.append('case _:')
-					with self.emitter.indent():
-						self.emitter.append(f'{gen_value} = {self(value.elems[-1])}')
-			else:
+			self.emitter.append(f'match {gen_index}:')
+			with self.emitter.indent():
 				for index, elem in enumerate(value.elems):
-					if index == 0:
-						self.emitter.append(f'if {index} == {gen_index}:')
-					else:
-						self.emitter.append(f'elif {index} == {gen_index}:')
+					self.emitter.append(f'case {index}:')
 					with self.emitter.indent():
 						self.emitter.append(f'{gen_value} = {self(elem)}')
-				self.emitter.append('else:')
+				self.emitter.append('case _:')
 				with self.emitter.indent():
 					self.emitter.append(f'{gen_value} = {self(value.elems[-1])}')
-
 			return gen_value
 		else:
 			return '0'
@@ -321,25 +305,13 @@ class _LHSValueCompiler(_ValueCompiler):
 			index_mask = (1 << len(value.index)) - 1
 			gen_index = self.emitter.def_var('index', f'{self.rrhs(value.index)} & {index_mask:#x}')
 			if value.elems:
-				if _USE_PATTERN_MATCHING:
-					self.emitter.append(f'match {gen_index}:')
-					with self.emitter.indent():
-						for index, elem in enumerate(value.elems):
-							self.emitter.append(f'case {index}:')
-							with self.emitter.indent():
-								self(elem)(arg)
-						self.emitter.append('case _:')
-						with self.emitter.indent():
-							self(value.elems[-1])(arg)
-				else:
+				self.emitter.append(f'match {gen_index}:')
+				with self.emitter.indent():
 					for index, elem in enumerate(value.elems):
-						if index == 0:
-							self.emitter.append(f'if {index} == {gen_index}:')
-						else:
-							self.emitter.append(f'elif {index} == {gen_index}:')
+						self.emitter.append(f'case {index}:')
 						with self.emitter.indent():
 							self(elem)(arg)
-					self.emitter.append('else:')
+					self.emitter.append('case _:')
 					with self.emitter.indent():
 						self(value.elems[-1])(arg)
 			else:
