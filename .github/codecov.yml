@@ -68,3 +68,8 @@ component_management:
       paths:
         - tests/*.py
         - torii/*.py
+
+    - component_id: examples
+      name: 'Examples'
+      paths:
+        - examples/**
