@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-from os             import getenv
+from os             import devnull, getenv
 from pathlib        import Path
 from shutil         import copy
 
@@ -18,7 +18,8 @@ DIST_DIR  = BUILD_DIR / 'dist'
 
 IN_CI           = getenv('GITHUB_WORKSPACE') is not None
 ENABLE_COVERAGE = IN_CI or getenv('TORII_TEST_COVERAGE') is not None
-ENABLE_FORMAL   = getenv('TORII_TEST_FORMAL') is not None
+SKIP_EXAMPLES   = getenv('TORII_TEST_NO_EXAMPLES') is not None
+SKIP_FORMAL     = getenv('TORII_TEST_NO_FORMAL') is not None
 
 # Default sessions to run
 nox.options.sessions = (
@@ -46,6 +47,9 @@ def test(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'tests'
 	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
 
+	BASIC_EXAMPLES  = ROOT_DIR / 'examples' / 'basic'
+	FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
+
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('click') # For SBY
@@ -54,21 +58,34 @@ def test(session: Session) -> None:
 	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
 		session.install('coverage')
-		coverage_args = ('-m', 'coverage', 'run', f'--rcfile={ROOT_DIR / "pyproject.toml"}',)
+		coverage_args = ('-m', 'coverage', 'run', '-p', f'--rcfile={ROOT_DIR / "pyproject.toml"}',)
 	else:
 		coverage_args = tuple[str]()
 
 	with session.chdir(OUTPUT_DIR):
-		if ENABLE_FORMAL:
-			FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
-			session.log('Running formal tests')
+		session.log('Running core test suite...')
+		session.run('python', *coverage_args, *unitest_args, *session.posargs)
+
+		if SKIP_EXAMPLES:
+			session.log('Skipping basic examples...')
+		else:
+			session.log('Testing basic examples...')
+			with open(devnull, 'w') as f:
+				for example in BASIC_EXAMPLES.iterdir():
+					session.run('python', *coverage_args, str(example), 'generate', stdout = f)
+
+		if SKIP_FORMAL:
+			session.log('Skipping formal examples...')
+		else:
+			session.log('Testing formal examples...')
 			for example in FORMAL_EXAMPLES.iterdir():
 				session.run('python', *coverage_args, str(example))
-		else:
-			session.log('Running standard test suite')
-			session.run('python', *coverage_args, *unitest_args, *session.posargs)
 
 		if ENABLE_COVERAGE:
+			session.log('Combining Coverage data..')
+			session.run('python', '-m', 'coverage', 'combine')
+
+			session.log('Generating XML Coverage report...')
 			session.run('python', '-m', 'coverage', 'xml', f'--rcfile={ROOT_DIR / "pyproject.toml"}')
 
 @nox.session(name = 'watch-docs')

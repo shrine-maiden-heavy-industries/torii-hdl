@@ -65,22 +65,15 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.11', '3.12', '3.13', ]
-        torii-formal:
-         - false
         allow-failure:
          - false
         include:
           - python-version: '3.14-dev'
             allow-failure: true
-            torii-formal: false
           - python-version: 'pypy3.11'
             allow-failure: true
-            torii-formal: false
-          - python-version: '3.11'
-            allow-failure: false
-            torii-formal: true
 
-    name: 'Test Torii (Python ${{ matrix.python-version }} formal: ${{ matrix.torii-formal }})'
+    name: 'Test Torii (Python ${{ matrix.python-version }})'
     continue-on-error: ${{ matrix.allow-failure }}
     steps:
       - name: 'Setup Python (${{ matrix.python-version }})'
@@ -95,14 +88,6 @@ jobs:
         run: |
           echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
           echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
-
-      - name: 'Initialize Environment (Formal)'
-        if: matrix.torii-formal
-        shell: bash
-        env:
-          WORKSPACE: ${{ github.workspace }}
-        run: |
-          echo "TORII_TEST_FORMAL=1" >> $GITHUB_ENV
 
       - name: 'Install Dependencies'
         shell: bash
