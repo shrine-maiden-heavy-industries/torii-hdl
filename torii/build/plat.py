@@ -5,7 +5,7 @@ import re
 import textwrap
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
-from collections.abc import Iterable, Generator
+from collections.abc import Generator, Iterable
 from typing          import IO, Literal, TypeVar
 
 import jinja2

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.lib.soc        import event
 from torii.lib.mem.map    import MemoryMap
+from torii.lib.soc        import event
 from torii.lib.soc.periph import ConstantBool, ConstantInt, ConstantMap, PeripheralInfo
 
 from ...utils             import ToriiTestSuiteCase

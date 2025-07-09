@@ -1,21 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from __future__        import annotations
+from __future__    import annotations
 
 import warnings
-from abc               import ABCMeta, abstractmethod
-from collections       import OrderedDict, defaultdict
-from functools         import cache, reduce
-from typing            import TYPE_CHECKING, Literal, TypeAlias
+from abc           import ABCMeta, abstractmethod
+from collections   import OrderedDict, defaultdict
+from functools     import cache, reduce
+from typing        import TYPE_CHECKING, Literal, TypeAlias
 
-from .._typing         import IODirectionIO, SrcLoc
-from ..util            import flatten
-from ..util.tracer     import get_src_loc
-from ._unused          import MustUse, UnusedMustUse
-from .ast              import (
-	ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT
+from .._typing     import IODirectionIO, SrcLoc
+from ..util        import flatten
+from ..util.tracer import get_src_loc
+from ._unused      import MustUse, UnusedMustUse
+from .ast          import (
+	ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT,
 )
-from .cd               import ClockDomain, DomainError
+from .cd           import ClockDomain, DomainError
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform

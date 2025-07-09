@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl  import Array, Elaboratable, Module, Record, Signal
 from torii.back import verilog
+from torii.hdl  import Array, Elaboratable, Module, Record, Signal
 
 class GPIO(Elaboratable):
 	def __init__(self, pins, bus) -> None:

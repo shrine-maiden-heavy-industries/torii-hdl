@@ -5,8 +5,8 @@ from functools import wraps
 from math      import ceil
 from os        import getenv
 from pathlib   import Path
-from unittest  import TestCase
 from typing    import Any
+from unittest  import TestCase
 
 from ..hdl.ast import Signal
 from ..hdl.ir  import Fragment

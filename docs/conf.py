@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
-import os, sys, datetime
+import datetime
+import os
+import sys
 from pathlib import Path
+
 sys.path.insert(0, os.path.abspath('.'))
 
 from torii import __version__ as torii_version

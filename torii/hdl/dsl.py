@@ -14,7 +14,7 @@ from .._typing       import SrcLoc, SwitchCaseT
 from ..util          import flatten, tracer
 from ..util.units    import bits_for
 from .ast            import (
-	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value, ValueCastT, _StatementList
+	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value, ValueCastT, _StatementList,
 )
 from .cd             import ClockDomain
 from .ir             import Elaboratable, Fragment

@@ -3,7 +3,7 @@
 from __future__      import annotations
 
 from collections     import OrderedDict
-from collections.abc import Callable, Iterator, Generator, Sequence
+from collections.abc import Callable, Generator, Iterator, Sequence
 from typing          import TypeAlias
 
 from .._typing       import IODirectionOE

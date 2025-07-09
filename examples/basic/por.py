@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl  import ClockDomain, ClockSignal, Module, ResetSignal, Signal
 from torii.back import verilog
+from torii.hdl  import ClockDomain, ClockSignal, Module, ResetSignal, Signal
 
 m = Module()
 cd_por  = ClockDomain(reset_less = True)

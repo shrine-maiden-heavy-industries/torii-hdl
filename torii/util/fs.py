@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from collections.abc import Generator
 from contextlib      import contextmanager
 from os              import chdir
 from pathlib         import Path
-from collections.abc import Generator
 
 __all__ = (
 	'working_dir',

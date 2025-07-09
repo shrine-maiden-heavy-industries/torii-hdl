@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl  import Elaboratable, Memory, Module, Signal
 from torii.back import verilog
+from torii.hdl  import Elaboratable, Memory, Module, Signal
 
 class RegisterFile(Elaboratable):
 	def __init__(self) -> None:

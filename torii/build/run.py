@@ -6,16 +6,15 @@ import hashlib
 import os
 import subprocess
 import sys
-import zipfile
 import tarfile
-
+import zipfile
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Generator
 from contextlib      import contextmanager
 from pathlib         import Path
-from typing          import Literal
 from tempfile        import NamedTemporaryFile, _TemporaryFileWrapper
+from typing          import Literal
 
 __all__ = (
 	'BuildPlan',

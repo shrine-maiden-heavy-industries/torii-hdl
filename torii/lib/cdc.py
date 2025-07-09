@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Literal
+from typing    import Literal
 
 from ..hdl.ast import ClockSignal, ResetSignal, Signal
 from ..hdl.cd  import ClockDomain

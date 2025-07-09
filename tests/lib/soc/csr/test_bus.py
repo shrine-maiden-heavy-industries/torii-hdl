@@ -2,10 +2,10 @@
 # torii: UnusedElaboratable=no
 
 from torii.hdl.dsl         import Module
-from torii.hdl.rec         import Layout
 from torii.hdl.ir          import Fragment
-from torii.lib.soc.csr.bus import Decoder, Element, Interface, Multiplexer
+from torii.hdl.rec         import Layout
 from torii.lib.mem.map     import MemoryMap
+from torii.lib.soc.csr.bus import Decoder, Element, Interface, Multiplexer
 from torii.sim             import Delay, Simulator
 
 from ....utils             import ToriiTestSuiteCase

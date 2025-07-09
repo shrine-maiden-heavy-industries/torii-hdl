@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl     import Module, Signal
 from torii.back    import verilog
+from torii.hdl     import Module, Signal
 from torii.lib.cdc import FFSynchronizer
 
 i, o = Signal(name = 'i'), Signal(name = 'o')

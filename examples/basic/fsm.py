@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl  import Cat, Elaboratable, Module, Signal
 from torii.back import verilog
+from torii.hdl  import Cat, Elaboratable, Module, Signal
 
 class UARTReceiver(Elaboratable):
 	def __init__(self, divisor: int) -> None:

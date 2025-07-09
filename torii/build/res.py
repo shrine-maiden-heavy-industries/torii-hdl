@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections     import OrderedDict
-from collections.abc import Generator, Iterable, Callable
+from collections.abc import Callable, Generator, Iterable
 from typing          import Literal
 
 from .._typing       import IODirectionEmpty

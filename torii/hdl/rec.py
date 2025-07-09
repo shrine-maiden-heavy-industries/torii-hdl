@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from __future__ import annotations
+from __future__      import annotations
 
 from collections     import OrderedDict
 from collections.abc import Generator, Iterable

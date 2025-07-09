@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl  import Elaboratable, Module, Signal
 from torii.back import verilog
+from torii.hdl  import Elaboratable, Module, Signal
 
 class Counter(Elaboratable):
 	def __init__(self, width: int) -> None:

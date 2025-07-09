@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .ast  import (
-	Array, Cat, ClockSignal, Const, Edge, Fell, Mux, ResetSignal, Past, Rose, Shape, Signal, Stable, Value,
-	signed, unsigned
+	Array, Cat, ClockSignal, Const, Edge, Fell, Mux, Past, ResetSignal, Rose, Shape, Signal, Stable, Value,
+	signed, unsigned,
 )
 from .cd   import ClockDomain
 from .dsl  import Module

@@ -8,15 +8,13 @@ import warnings
 from abc               import ABCMeta, abstractmethod
 from collections       import OrderedDict
 from collections.abc   import (
-	Callable, Generator, Iterable, Iterator, Mapping,
-	MutableMapping, MutableSequence, MutableSet,
-	Sequence
+	Callable, Generator, Iterable, Iterator, Mapping, MutableMapping, MutableSequence, MutableSet, Sequence,
 )
 from enum              import Enum, EnumMeta
 from itertools         import chain
 from types             import NotImplementedType
 from typing            import (
-	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec,  SupportsIndex, TypeAlias, TypeVar, TypeVarTuple
+	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec, SupportsIndex, TypeAlias, TypeVar, TypeVarTuple,
 )
 
 from .._typing         import SrcLoc, SwitchCaseT
