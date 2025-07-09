@@ -1,20 +1,20 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
-
-from os             import link, getenv
+from os             import getenv
 from pathlib        import Path
-from setuptools_scm import get_version, ScmVersion
 from shutil         import copy
 
 import nox
 from nox.sessions   import Session
 
+from setuptools_scm import ScmVersion, get_version
+
 ROOT_DIR  = Path(__file__).parent
 
-BUILD_DIR = (ROOT_DIR  / 'build')
-CNTRB_DIR = (ROOT_DIR  / 'contrib')
-DOCS_DIR  = (ROOT_DIR  / 'docs')
-DIST_DIR  = (BUILD_DIR / 'dist')
+BUILD_DIR = ROOT_DIR  / 'build'
+CNTRB_DIR = ROOT_DIR  / 'contrib'
+DOCS_DIR  = ROOT_DIR  / 'docs'
+DIST_DIR  = BUILD_DIR / 'dist'
 
 IN_CI           = getenv('GITHUB_WORKSPACE') is not None
 ENABLE_COVERAGE = IN_CI or getenv('TORII_TEST_COVERAGE') is not None
@@ -43,8 +43,8 @@ def torii_version() -> str:
 
 @nox.session(reuse_venv = True)
 def test(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'tests')
-	out_dir.mkdir(parents = True, exist_ok = True)
+	OUTPUT_DIR = BUILD_DIR / 'tests'
+	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
 
 	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
@@ -54,52 +54,45 @@ def test(session: Session) -> None:
 	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
 		session.install('coverage')
-		coverage_args = (
-			'-m', 'coverage', 'run',
-			f'--rcfile={CNTRB_DIR / "coveragerc"}'
-		)
+		coverage_args = ('-m', 'coverage', 'run', f'--rcfile={ROOT_DIR / "pyproject.toml"}',)
 	else:
-		coverage_args = ()
+		coverage_args = tuple[str]()
 
-	session.chdir(str(out_dir))
+	with session.chdir(OUTPUT_DIR):
+		if ENABLE_FORMAL:
+			FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
+			session.log('Running formal tests')
+			for example in FORMAL_EXAMPLES.iterdir():
+				session.run('python', *coverage_args, str(example))
+		else:
+			session.log('Running standard test suite')
+			session.run('python', *coverage_args, *unitest_args, *session.posargs)
 
-	if ENABLE_FORMAL:
-		FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
-		session.log('Running formal tests')
-		for example in FORMAL_EXAMPLES.iterdir():
-			session.run(
-				'python', *coverage_args, str(example)
-			)
-	else:
-		session.log('Running standard test suite')
-		session.run(
-			'python', *coverage_args, *unitest_args, *session.posargs
-		)
-
-	if ENABLE_COVERAGE:
-		session.run(
-			'python', '-m', 'coverage', 'xml',
-			f'--rcfile={CNTRB_DIR / "coveragerc"}'
-		)
+		if ENABLE_COVERAGE:
+			session.run('python', '-m', 'coverage', 'xml', f'--rcfile={ROOT_DIR / "pyproject.toml"}')
 
 @nox.session(name = 'watch-docs')
 def watch_docs(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'docs')
+	OUTPUT_DIR = BUILD_DIR / 'docs'
+
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('sphinx-autobuild')
 	session.install('.')
-	session.run('sphinx-autobuild', str(DOCS_DIR), str(out_dir))
+
+	session.run('sphinx-autobuild', str(DOCS_DIR), str(OUTPUT_DIR))
 
 @nox.session(name = 'build-docs')
 def build_docs(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'docs')
+	OUTPUT_DIR = BUILD_DIR / 'docs'
+
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('.')
-	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(out_dir))
+
+	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(OUTPUT_DIR))
 
 @nox.session(name = 'build-docs-multiversion')
 def build_docs_multiversion(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'mv-docs')
+	OUTPUT_DIR = BUILD_DIR / 'mv-docs'
 
 	redirect_index = (CNTRB_DIR / 'docs-redirect.html')
 
@@ -110,21 +103,21 @@ def build_docs_multiversion(session: Session) -> None:
 	# Ask git for the list of tags matching `v*`, and sort them in reverse order by name
 	git_tags: str = session.run(
 		'git', 'tag', '-l', 'v*', '--sort=-v:refname',
-		external=True, silent=True
+		external = True, silent = True
 	) # type: ignore
 	# Split the tags and get the first, it *should* be the most recent
 	latest = git_tags.splitlines()[0]
 
 	# Build the multi-version docs
 	session.run(
-		'sphinx-multiversion', '-D', f'smv_latest_version={latest}', str(DOCS_DIR), str(out_dir)
+		'sphinx-multiversion', '-D', f'smv_latest_version={latest}', str(DOCS_DIR), str(OUTPUT_DIR)
 	)
 
 	session.log('Copying docs redirect...')
 	# Copy the docs redirect index
-	copy(redirect_index, out_dir / 'index.html')
+	copy(redirect_index, OUTPUT_DIR / 'index.html')
 
-	with session.chdir(out_dir):
+	with session.chdir(OUTPUT_DIR):
 		latest_link = Path('latest')
 		docs_dev    = Path('main')
 		docs_tag    = Path(latest)
@@ -150,40 +143,39 @@ def build_docs_multiversion(session: Session) -> None:
 
 @nox.session(name = 'linkcheck-docs')
 def linkcheck_docs(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'docs-linkcheck')
+	OUTPUT_DIR = BUILD_DIR / 'docs-linkcheck'
+
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('.')
-	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(out_dir))
+
+	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(OUTPUT_DIR))
 
 @nox.session(name = 'typecheck-mypy')
 def typecheck_mypy(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'typing' / 'mypy')
-	out_dir.mkdir(parents = True, exist_ok = True)
+	OUTPUT_DIR = BUILD_DIR / 'typing' / 'mypy'
+	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
 
 	session.install('mypy')
 	session.install('lxml')
 	session.install('.')
+
 	session.run(
 		'mypy', '--non-interactive', '--install-types', '--pretty',
 		'--disallow-any-generics',
-		'--cache-dir', str((out_dir / '.mypy-cache').resolve()),
-		'--config-file', str((CNTRB_DIR / '.mypy.ini').resolve()),
-		'-p', 'torii', '--html-report', str(out_dir.resolve())
+		'--cache-dir', str((OUTPUT_DIR / '.mypy-cache').resolve()),
+		'-p', 'torii', '--html-report', str(OUTPUT_DIR.resolve())
 	)
 
 @nox.session(name = 'typecheck-pyright')
 def typecheck_pyright(session: Session) -> None:
-	out_dir = (BUILD_DIR / 'typing' / 'pyright')
-	out_dir.mkdir(parents = True, exist_ok = True)
+	OUTPUT_DIR = BUILD_DIR / 'typing' / 'pyright'
+	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
 
 	session.install('pyright')
 	session.install('.')
 
-	with (out_dir / 'pyright.log').open('w') as f:
-		session.run(
-			'pyright', '-p', str((CNTRB_DIR / 'pyrightconfig.json').resolve()), *session.posargs,
-			stdout = f
-		)
+	with (OUTPUT_DIR / 'pyright.log').open('w') as f:
+		session.run('pyright', *session.posargs, stdout = f)
 
 @nox.session
 def lint(session: Session) -> None:
@@ -197,17 +189,5 @@ def lint(session: Session) -> None:
 @nox.session
 def dist(session: Session) -> None:
 	session.install('build')
-	session.run(
-		'python', '-m', 'build',
-		'-o', str(DIST_DIR)
-	)
 
-@nox.session
-def upload(session: Session) -> None:
-	session.install('twine')
-	dist(session)
-	session.log(f'Uploading torii-{torii_version()} to PyPi')
-	session.run(
-		'python', '-m', 'twine',
-		'upload', f'{DIST_DIR}/torii-{torii_version()}*'
-	)
+	session.run('python', '-m', 'build', '-o', str(DIST_DIR))
