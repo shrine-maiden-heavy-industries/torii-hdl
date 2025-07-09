@@ -97,3 +97,78 @@ torii = ['py.typed']
 [tool.setuptools_scm]
 version_scheme = 'guess-next-dev'
 local_scheme = 'node-and-date'
+
+# Testing Coverage
+[tool.coverage.run]
+branch = true
+omit = [
+	'*/noxfile.py',
+	'*/__main__.py',
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+	':nocov:',
+	# Allow defensive code
+	'^\s*raise AssertionError\b',
+	'^\s*raise NotImplementedError\b',
+	'^\s*raise NotImplemented\b',
+	'^\s*raise$',
+	# Typing-Related
+	'^\s*if (False|TYPE_CHECKING):',
+	': \.\.\.(\s*#.*)?$',
+	'^ +\.\.\.$',
+	'''-> ['"]?NoReturn['"]?:''',
+	# Skipped/Failed tests
+	'^\s*self\.skipTest\b',
+	'^\s*self\.fail\b',
+]
+partial_branches = [
+	':nobr:'
+]
+
+# Typechecking
+[tool.pyright]
+include = [
+	'examples', 'tests', 'torii'
+]
+exclude = [
+	'**/__pycache__', '.nox', 'build', '.github', '.eggs', '*.egg-info'
+]
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+allow_redefinition = true
+check_untyped_defs = true
+
+# Code Formatting
+[tool.ruff]
+cache-dir = 'build/.ruff_cache'
+src = [
+	'examples', 'tests', 'torii'
+]
+indent-width = 4
+line-length = 120
+respect-gitignore = true
+target-version = 'py311'
+
+# NOTE(aki):
+# We can't use the Ruff formatter as is, and they refuse to add support for single quotes
+# on docstring, among some other things, so this is just mostly here for reference.
+[tool.ruff.format]
+docstring-code-format = true
+indent-style = 'tab'
+line-ending = 'lf'
+# Due to Ruff being stupid and not letting us use `'''` we have to use this
+quote-style = 'preserve'
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = 'single'
+inline-quotes  = 'single'
+multiline-quotes = 'single'
+
+[tool.ruff.lint.isort]
+lines-after-imports = 1
