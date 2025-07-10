@@ -59,6 +59,7 @@ def test(session: Session) -> None:
 		session.log('Coverage support enabled')
 		session.install('coverage')
 		coverage_args = ('-m', 'coverage', 'run', '-p', f'--rcfile={ROOT_DIR / "pyproject.toml"}',)
+		session.env['COVERAGE_CORE'] = 'sysmon'
 	else:
 		coverage_args = tuple[str]()
 
