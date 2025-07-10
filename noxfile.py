@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: BSD-3-Clause
+# SPDX-License-Identifier: BSD-2-Clause
 
 from os             import devnull, getenv
 from pathlib        import Path
@@ -6,8 +6,6 @@ from shutil         import copy
 
 import nox
 from nox.sessions   import Session
-
-from setuptools_scm import ScmVersion, get_version
 
 ROOT_DIR  = Path(__file__).parent
 
@@ -25,22 +23,8 @@ SKIP_FORMAL     = getenv('TORII_TEST_NO_FORMAL') is not None
 nox.options.sessions = (
 	'test',
 	'lint',
-	'typecheck'
+	'typecheck-mypy'
 )
-
-def torii_version() -> str:
-	def scheme(version: ScmVersion) -> str:
-		if version.tag and not version.distance:
-			return version.format_with('')
-		else:
-			return version.format_choice('+{node}', '+{node}.dirty')
-
-	return get_version(
-		root           = str(ROOT_DIR),
-		version_scheme = 'guess-next-dev',
-		local_scheme   = scheme,
-		relative_to    = __file__
-	)
 
 @nox.session(reuse_venv = True)
 def test(session: Session) -> None:
