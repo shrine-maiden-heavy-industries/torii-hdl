@@ -8,7 +8,7 @@ authors = [
 	{ name = 'Torii Contributors' },
 ]
 dynamic = ['version']
-license = 'BSD-3-Clause'
+license = 'BSD-2-Clause'
 license-files = ['LICENSE', 'LICENSE.docs']
 readme = 'README.md'
 requires-python = '>=3.11'
