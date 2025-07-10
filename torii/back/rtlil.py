@@ -8,6 +8,7 @@ from collections  import OrderedDict
 from contextlib   import contextmanager
 from typing       import Literal
 
+from ..           import __version__
 from ..hdl        import ast, cd, ir, mem, xfrm
 from ..util       import flatten
 from ..util.units import bits_for
@@ -123,7 +124,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
-		self.attrs = { 'generator': 'Torii' }
+		self.attrs = { 'generator': f'Torii {__version__}' }
 		self.attrs.update(attrs)
 
 	def __enter__(self) -> _ModuleBuilder:
