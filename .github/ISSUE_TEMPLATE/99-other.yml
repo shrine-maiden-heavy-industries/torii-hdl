@@ -1,0 +1,60 @@
+name: 'Other'
+description: "Something that doesn't fit in the above categories"
+labels: [
+  'uncategorized'
+]
+
+body:
+  - type: markdown
+    attributes:
+      value: '## Something Else?'
+
+  - type: markdown
+    attributes:
+      value: >
+        If you are trying to file a [bug report](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/new?template=1-bug-report.yml),
+        [documentation issue](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/new?template=2-documentation.yml),
+        or a [feature request](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/new?template=3-feature-suggestion.yml)
+        then please use the appropriate issue templates.
+
+
+        However if any of the other provided issue templates don't fit what you need to report to us,
+        then this is the correct place to do so.
+  - type: input
+    id: torii-version
+    attributes:
+      label: 'Torii Version'
+      description: >
+        If this is in relation to a specific version of Torii list it below.
+
+
+        If using the development branch, then you can use the following command to get
+        the specific version you're on:
+
+
+        `python -c 'import torii;print(torii.__version__)'`
+
+      placeholder: 'e.g. v1.0.5'
+    validations:
+      required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 'Details'
+      description: >
+        Please provide as much detail as possible so we can help and figure out the correct categorization
+        for this issue.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 'Code of Conduct'
+      description: >
+        By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md)
+        and [AI usage Policy](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#ai-usage-policy).
+      options:
+        - label: 'I agree to follow the Torii Code of Conduct and AI Usage Policy'
+          required: true
