@@ -47,7 +47,6 @@ body:
 
         If it happens on more than one version, select all applicable.
       options:
-        - 'CPython 3.10'
         - 'CPython 3.11'
         - 'CPython 3.12'
         - 'CPython 3.13'
