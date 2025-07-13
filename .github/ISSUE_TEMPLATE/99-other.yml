@@ -20,6 +20,7 @@ body:
 
         However if any of the other provided issue templates don't fit what you need to report to us,
         then this is the correct place to do so.
+
   - type: input
     id: torii-version
     attributes:

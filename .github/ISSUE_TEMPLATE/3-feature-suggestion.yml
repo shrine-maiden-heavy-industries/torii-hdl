@@ -1,5 +1,5 @@
 name: 'Suggest a Feature'
-description: 'Suggest a Feature or Enhancement for Torii'
+description: 'Suggest a feature or enhancement for Torii'
 type: 'Feature'
 labels: [
   'enhancement'
@@ -8,7 +8,7 @@ labels: [
 body:
   - type: markdown
     attributes:
-      value: '## Suggest a Feature or Enhancement for Torii'
+      value: '## Suggest A Feature Or Enhancement For Torii'
   - type: markdown
     attributes:
       value: >

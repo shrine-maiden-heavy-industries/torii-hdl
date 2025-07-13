@@ -1,5 +1,5 @@
 name: 'Documentation Issue'
-description: 'Report an issue with the Documentation'
+description: 'Report an issue with the Torii documentation'
 labels: [
   'pending-verification',
   'documentation'
@@ -8,7 +8,7 @@ labels: [
 body:
   - type: markdown
     attributes:
-      value: '## Report a Torii Documentation Issue'
+      value: '## Report A Torii Documentation Issue'
   - type: markdown
     attributes:
       value: >

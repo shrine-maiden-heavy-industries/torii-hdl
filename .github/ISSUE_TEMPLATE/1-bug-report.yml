@@ -7,7 +7,7 @@ labels: [
 body:
   - type: markdown
     attributes:
-      value: '## Report a bug with Torii'
+      value: '## Report A Bug With Torii'
   - type: markdown
     attributes:
       value: >
