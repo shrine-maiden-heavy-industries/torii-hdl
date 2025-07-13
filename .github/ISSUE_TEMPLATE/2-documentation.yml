@@ -24,7 +24,7 @@ body:
         Also, make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
 
   - type: input
-    id: docs-version
+    id: torii-version
     attributes:
       label: 'Documentation Version'
       description: >
