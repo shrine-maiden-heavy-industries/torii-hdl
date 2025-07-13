@@ -82,6 +82,7 @@ body:
         - 'Linux'
         - 'BSD'
         - 'illumos'
+        - 'Solaris'
         - 'macOS'
         - 'Windows'
         - 'Other'
