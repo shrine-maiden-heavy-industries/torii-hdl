@@ -18,7 +18,7 @@ body:
         Before you continue, try to check if what you're suggesting has already been requested
         before, you can use the filter `is:issue label:enhancement type:Feature` in the Torii
         [issue tracker](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues)
-        to search, or just [click here](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues?q=is%3Aissue%20label%3Aenhancement%20type%3AFeature)
+        to search, or [use this pre-defined filter](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues?q=is%3Aissue%20label%3Aenhancement%20type%3AFeature)
 
 
         Also, make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#suggesting-features).
