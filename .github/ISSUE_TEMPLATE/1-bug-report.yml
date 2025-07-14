@@ -78,7 +78,7 @@ body:
         - 'Other'
       multiple: true
     validations:
-      required: true
+      required: false
 
   - type: input
     id: platform-version
@@ -92,7 +92,7 @@ body:
         by a comma.
       placeholder: 'e.g. Arch Linux, OpenIndiana Hipster 2025.04, OpenBSD 7.7'
     validations:
-      required: true
+      required: false
 
   - type: markdown
     attributes:
