@@ -31,7 +31,6 @@ body:
         The version of the Torii Documentation this issue is about.
 
         If it is the development documentation you can simply specify `dev` as the version.
-
       placeholder: 'e.g. v1.0.5'
     validations:
       required: true
@@ -51,7 +50,6 @@ body:
         If something **is** outright incorrect, simply describe where/what it was, and how badly
         incorrect it is. For example, if it's a minor issue such as a typo, or if it describing
         functionality that just outright doesn't exist or work the way it says.
-
     validations:
       required: true
 

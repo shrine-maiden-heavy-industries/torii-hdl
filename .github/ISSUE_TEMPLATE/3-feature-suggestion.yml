@@ -38,7 +38,6 @@ body:
 
         For example, supporting the Synopsys Design Compiler would be lovely, but for the average maintainer
         and hobbyist, acquiring the tools to actually implement support for and test against is next to impossible.
-
     validations:
       required: true
 
