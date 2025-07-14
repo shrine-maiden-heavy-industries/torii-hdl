@@ -18,7 +18,7 @@ body:
         then please use the appropriate issue templates.
 
 
-        However if any of the other provided issue templates don't fit what you need to report to us,
+        However, if any of the other provided issue templates don't fit what you need to report to us,
         then this is the correct place to do so.
 
   - type: input
@@ -34,7 +34,6 @@ body:
 
 
         `python -c 'import torii;print(torii.__version__)'`
-
       placeholder: 'e.g. v1.0.5'
     validations:
       required: false

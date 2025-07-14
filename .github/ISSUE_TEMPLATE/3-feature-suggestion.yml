@@ -21,7 +21,7 @@ body:
         to search, or just [click here](https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues?q=is%3Aissue%20label%3Aenhancement%20type%3AFeature)
 
 
-        Also make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#suggesting-features).
+        Also, make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#suggesting-features).
 
   - type: textarea
     id: feature-description
@@ -29,7 +29,7 @@ body:
       label: 'Feature Description'
       description: >
         Please provide as detailed of a suggestion as possible, such as use cases and upsides, as well as
-        any possible downsides or implementation issues can possibly foresee.
+        any possible downsides or implementation issues you can possibly foresee.
 
 
         For instance, if suggesting a new toolchain to support, please give us a rundown on things such as

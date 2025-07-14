@@ -16,11 +16,12 @@ body:
         understand for everyone and as comprehensive as possible. So thank you for helping
         us reach that goal and making Torii better for everyone in the process.
 
+
         Please fill out the form below as best you can, and we will
         review it and get back to you as soon as possible.
 
 
-        Also make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
+        Also, make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
 
   - type: input
     id: docs-version

@@ -18,7 +18,7 @@ body:
         review it and get back to you as soon as we can.
 
 
-        Also make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
+        Also, make sure to review the [Contribution Guidelines](https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md#reporting-issues).
 
   - type: input
     id: torii-version
@@ -33,7 +33,6 @@ body:
 
 
         `python -c 'import torii;print(torii.__version__)'`
-
       placeholder: 'e.g. v1.0.5'
     validations:
       required: true
@@ -54,9 +53,20 @@ body:
         - 'CPython 3.13'
         - 'CPython 3.14'
         - 'PyPy 3.11'
+        - 'Other'
       multiple: true
     validations:
       required: true
+
+  - type: input
+    id: python-version-other
+    attributes:
+      label: 'Other Python Version'
+      description: >
+        If you selected `Other` in the dropdown above, specify the Python implementation and version
+        here.
+    validations:
+      required: false
 
   - type: dropdown
     id: platform
@@ -101,7 +111,7 @@ body:
     attributes:
       value: >
         When providing steps to reproduce the issue, please ensure that the issue
-        is reproducible in the current git main of Torii. Also ensure to
+        is reproducible in the latest development revision of Torii. Also, ensure to
         provide all necessary source files needed if possible.
 
 
