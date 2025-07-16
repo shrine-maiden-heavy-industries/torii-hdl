@@ -61,6 +61,9 @@ When working with the Torii code base, we require the following tools:
 * Python (that's a given)
 * [nox] - Our developer automation and testing tooling uses Nox
 * [Yosys] - Yosys is our primary synthesis backend, even if working on a different toolchain
+
+Optionally the following tools would be beneficial:
+
 * [sby], [Yices2], and [Bitwuzla] - Some of our core tests use [formal verification] and so these tools are needed to support that.
 
 Other than that, your code editor and everything else is up to personal taste, so go ham. If you are having a hard time finding things like [Yosys], [sby], [Yices2], and [Bitwuzla], those, along with a whole lot of other tools are in the [OSS CAD Suite] builds. Instructions in that repository should help you get those set up so you can use them with Torii.
