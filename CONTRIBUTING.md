@@ -49,7 +49,7 @@ While it's fairly lax at the moment, eventually we will likely develop a formal 
 > [!NOTE]
 > Just like with [Suggesting Features], it is recommended that before you make a large
 > change or contribution, to discuss it with the maintainers to see if there are any potential
-> snags or foreseen difficulties with it. This will save you and the maintainers a large
+> snags or foreseeable difficulties with it. This will save you and the maintainers a large
 > amount of potential frustration and time.
 
 The guidelines and instructions below are a best-effort attempt at describing the least-friction way of getting started with doing development and testing for Torii. If you notice any problems then please do [report an issue], and if you need any help then feel free to use the [discussion forum] or join the [IRC channel] and ask there.
@@ -196,15 +196,15 @@ The documentation for Torii uses [sphinx] with a few plugins, most notably [MyST
 
 When contributing to the Torii documentation there are 2 key places it can be found, the "free text" documentation is located in the [`docs`] directory in the root of the repository and contains all the main markup for the overall layout and contents of the documentation site, where as the API and most library documentation is done via Python doc comments in the relevant source code itself.
 
-The reason it's done this way is to ensure that the docs for the APIs and modules are as close and consistent to the code as possible, when having detached documentation it's much easier for drift to occur.
+The reason it's done this way is to ensure that the docs for the APIs and modules are as close and consistent to the code as possible. When having detached documentation it's much easier for drift to occur.
 
 The general overall guidelines in [development and testing] also apply to any and all documentation changes as well, with the extra details that the final documentation should build and not be broken with any dead links.
 
-To generate a local version of the documentation, run `nox -s build-docs`, this will set up everything needed to build the documentation, and then produce a rendered output result in `build/docs`.
+To generate a local version of the documentation, run `nox -s build-docs`. This will set up everything needed to build the documentation, and then produce a rendered output result in `build/docs`.
 
-When working on the documentation, having to re-build after every change can be rough, so that's where the `nox -s watch-docs` comes in. When run, it will build the initial current version of the docs, then start a local web-server up on `http://127.0.0.1:8000` to view the docs. Whenever you then make a change to any of the files in `docs/`, it will automatically re-build the documentation and then re-load the page opened in the browser.
+When working on the documentation, having to re-build after every change can be rough. That's where the `nox -s watch-docs` comes in. When run, it will build the initial current version of the docs, then start a local web-server up on `http://127.0.0.1:8000` to view the docs. Whenever you then make a change to any of the files in `docs/`, it will automatically re-build the documentation and then re-load the page opened in the browser.
 
-To check to make sure all links are live, the `nox -s linkcheck-docs` command can be used, this will build the documentation and then check each and every hyperlink found within it to make sure it is reachable. This is also done in CI and is a hard-requirement for the documentation to be deployed, so if any of the links are dead, the documentation will not be updated on the live site.
+To check to make sure all links are live, the `nox -s linkcheck-docs` command can be used. This will build the documentation and then check each and every hyperlink found within it to make sure it is reachable. This is also done in CI and is a hard-requirement for the documentation to be deployed, so if any of the links are dead, the documentation will not be updated on the live site.
 
 ## AI Usage Policy
 
