@@ -10,7 +10,7 @@ For an [introduction to Torii], [installation instructions], and Usage informati
 
 ## Community
 
-The two primary spots for community activity around Torii are the [IRC channel] and the [discussion forum].
+The two primary community spots for Torii are the `#torii` IRC channel on [libera.chat] (`irc.libera.chat:6697`) which you can join via your favorite IRC client or the [web chat], and the [discussion forum] on GitHub.
 
 Please do join and share your projects using Torii, ask questions, get help with problems, or discuss Torii's development.
 
@@ -106,9 +106,10 @@ The Torii documentation is dual licensed under the [BSD-2-Clause] for all past c
 [introduction to Torii]: https://torii.shmdn.link/latest/intro.html
 [online documentation]: https://torii.shmdn.link
 [installation instructions]: https://torii.shmdn.link/latest/install.html
+[libera.chat]: https://libera.chat/
+[web chat]: https://web.libera.chat/#torii
 [discussion forum]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions
 [show and tell]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions/categories/show-and-tell
-[IRC channel]: https://web.libera.chat/#torii
 [BSD-2-Clause]: https://spdx.org/licenses/BSD-2-Clause.html
 [`LICENSE`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE
 [CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/

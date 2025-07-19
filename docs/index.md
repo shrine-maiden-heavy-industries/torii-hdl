@@ -43,6 +43,14 @@ For more information on Torii, see the [Introduction] and check out the [Getting
 
 There is also a [collection of board definition files] for popular FPGA development boards from various vendors, to help you get up to speed with your designs faster.
 
+## Community
+
+The two primary community spots for Torii are the `#torii` IRC channel on [libera.chat] (`irc.libera.chat:6697`) which you can join via your favorite IRC client or the [web chat], and the [discussion forum] on GitHub.
+
+Please do join and share your projects using Torii, ask questions, get help with problems, or discuss Torii's development.
+
+We also maintain a list of [projects using Torii], so post it in the [show and tell] section of the [discussion forum] and we'll add it!
+
 [Verilog]: https://ieeexplore.ieee.org/document/1620780
 [SystemVerilog]: https://ieeexplore.ieee.org/document/8299595
 [VHDL]: https://ieeexplore.ieee.org/document/8938196
@@ -51,3 +59,8 @@ There is also a [collection of board definition files] for popular FPGA developm
 [Introduction]: ./intro.md
 [Getting Started]: ./getting_started.md
 [collection of board definition files]: https://torii-boards.shmdn.link/
+[libera.chat]: https://libera.chat/
+[web chat]: https://web.libera.chat/#torii
+[discussion forum]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions
+[projects using Torii]: ./projects.md
+[show and tell]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/discussions/categories/show-and-tell
