@@ -5,6 +5,16 @@
 #}
 {% extends "base.html" %}
 
+{%- if current_version %}
+{%- block htmltitle -%}
+{% if pagename == master_doc %}
+<title>{{ project|striptags|e }} {{ current_version.name if current_version.is_released else release }} Documentation</title>
+{% else %}
+<title>{{ title|striptags|e }} - {{ project|striptags|e }} {{ current_version.name if current_version.is_released else release }} Documentation</title>
+{% endif %}
+{%- endblock %}
+{%- endif %}
+
 {% block body -%}
 {{ super() }}
 {% include "partials/icons.html" %}
