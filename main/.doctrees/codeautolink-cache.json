@@ -901,46 +901,7 @@
     },
     {
       "source": "from torii_boards.lattice.icestick import ICEStickPlatform # noqa: E402\n\nICEStickPlatform().build(LEDBlinker(), do_program = True)\n",
-      "names": [
-        {
-          "import_components": [
-            "torii_boards",
-            "lattice",
-            "icestick"
-          ],
-          "code_str": "torii_boards.lattice.icestick",
-          "lineno": 1,
-          "end_lineno": 1,
-          "context": "import_from",
-          "resolved_location": "torii_boards.lattice.icestick"
-        },
-        {
-          "import_components": [
-            "torii_boards",
-            "lattice",
-            "icestick",
-            "ICEStickPlatform"
-          ],
-          "code_str": "ICEStickPlatform",
-          "lineno": 1,
-          "end_lineno": 1,
-          "context": "import_target",
-          "resolved_location": "torii_boards.lattice.icestick.ICEStickPlatform"
-        },
-        {
-          "import_components": [
-            "torii_boards",
-            "lattice",
-            "icestick",
-            "ICEStickPlatform"
-          ],
-          "code_str": "ICEStickPlatform",
-          "lineno": 3,
-          "end_lineno": 3,
-          "context": "none",
-          "resolved_location": "torii_boards.lattice.icestick.ICEStickPlatform"
-        }
-      ],
+      "names": [],
       "example": {
         "document": "getting_started",
         "ref_id": "a-blinking-led",
