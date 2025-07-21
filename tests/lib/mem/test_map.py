@@ -123,9 +123,7 @@ class MemoryMapTestCase(ToriiTestSuiteCase):
 			r'Name must be a non-empty string, not 1'
 		):
 			MemoryMap(addr_width = 1, data_width = 8, name = 1)
-		with self.assertRaisesRegex(ValueError,
-				r'Name must be a non-empty string, not \'\''
-		):
+		with self.assertRaisesRegex(ValueError, r'Name must be a non-empty string, not \'\''):
 			MemoryMap(addr_width = 1, data_width = 8, name = '')
 
 	def test_wrong_addr_width(self):
