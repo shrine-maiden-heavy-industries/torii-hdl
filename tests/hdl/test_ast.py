@@ -355,8 +355,7 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaises(
 			SyntaxError,
-			msg = 'Slicing a value with a Value is unsupported, '
-				'use `Value.bit_select()` or `Value.word_select()` instead.'
+			msg = 'Slicing a value with a Value is unsupported, use `Value.bit_select()` or `Value.word_select()` instead.' # noqa: E501
 		):
 			Const(31)[Signal(3)]
 
@@ -365,7 +364,7 @@ class ValueTestCase(ToriiTestSuiteCase):
 			SyntaxError,
 			msg = 'Indexing a value with another value is not supported, use `Value.bit_select()` instead.'
 		):
-			Const(31)[s:s+3]
+			Const(31)[s:s + 3]
 
 	def test_shift_left(self):
 		self.assertRepr(
@@ -923,8 +922,7 @@ class OperatorTestCase(ToriiTestSuiteCase):
 
 		with self.assertWarns(
 			SyntaxWarning,
-			msg = 'Match pattern \'(cat (const 1\'d0) (const 4\'d11))\' (5\'10110) is wider '
-				'than match value (which has width 4); comparison will never be true'
+			msg = 'Match pattern \'(cat (const 1\'d0) (const 4\'d11))\' (5\'10110) is wider than match value (which has width 4); comparison will never be true' # noqa: E501
 		):
 			s.matches(Cat(0, Const(0b1011, 4)))
 

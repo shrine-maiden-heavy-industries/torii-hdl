@@ -27,7 +27,7 @@ class LayoutTestCase(ToriiTestSuiteCase):
 			('info', [
 				('a', 1),
 				('b', 1),
-			])
+			]) # noqa: E124
 		])
 
 		self.assertFieldEqual(layout['cyc'], (unsigned(1), Direction.NONE))
@@ -125,7 +125,7 @@ class RecordTestCase(ToriiTestSuiteCase):
 			('info', [
 				('a', 1),
 				('b', 1),
-			])
+			]) # noqa: E124
 		])
 
 		self.assertEqual(repr(r), '(rec r stb data (rec r__info a b))')
@@ -190,7 +190,7 @@ class RecordTestCase(ToriiTestSuiteCase):
 			('stb', 1),
 			('info', [
 				('burst', 1)
-			])
+			]) # noqa: E124
 		], fields = {
 			'stb':  ns,
 			'info': nr
@@ -410,14 +410,14 @@ class ConnectTestCase(ToriiTestSuiteCase):
 			('data', [
 				('r',  32, Direction.FANIN),
 				('w',  32, Direction.FANIN),
-			]),
+			]), # noqa: E124
 		]
 		self.periph_layout = [
 			('addr',   32, Direction.FANOUT),
 			('data', [
 				('r',  32, Direction.FANIN),
 				('w',  32, Direction.FANIN),
-			]),
+			]), # noqa: E124
 		]
 
 	def test_flat(self):

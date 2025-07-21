@@ -607,8 +607,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				pass
 			with self.assertRaises(
 				SyntaxError,
-				msg = 'Multiple Default statements within a switch are not allowed, '
-					'as only the first Default will ever be considered.'
+				msg = 'Multiple Default statements within a switch are not allowed, as only the first Default will ever be considered.' # noqa: E501
 			):
 				with m.Default():
 					pass # :nocov:
@@ -746,10 +745,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_FSM_wrong_domain(self):
 		m = Module()
-		with self.assertRaisesRegex(
-			ValueError,
-				r'^FSM may not be driven by the \'comb\' domain$'
-		):
+		with self.assertRaisesRegex(ValueError, r'^FSM may not be driven by the \'comb\' domain$'):
 			with m.FSM(domain = 'comb'):
 				pass # :nocov:
 

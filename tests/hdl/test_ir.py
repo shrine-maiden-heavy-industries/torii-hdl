@@ -742,7 +742,8 @@ class InstanceTestCase(ToriiTestSuiteCase):
 		s4 = Signal()
 		s5 = Signal()
 		s6 = Signal()
-		inst = Instance('foo',
+		inst = Instance(
+			'foo',
 			('a', 'ATTR1', 1),
 			('p', 'PARAM1', 0x1234),
 			('i', 's1', s1),
@@ -772,7 +773,8 @@ class InstanceTestCase(ToriiTestSuiteCase):
 		]))
 
 	def test_cast_ports(self):
-		inst = Instance('foo',
+		inst = Instance(
+			'foo',
 			('i', 's1', 1),
 			('o', 's2', 2),
 			('io', 's3', 3),
@@ -813,7 +815,8 @@ class InstanceTestCase(ToriiTestSuiteCase):
 		self.pins = Signal(8)
 		self.datal = Signal(4)
 		self.datah = Signal(4)
-		self.inst = Instance('cpu',
+		self.inst = Instance(
+			'cpu',
 			p_RESET = 0x1234,
 			i_clk = ClockSignal(),
 			i_rst = self.rst,
