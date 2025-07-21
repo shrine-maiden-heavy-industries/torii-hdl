@@ -82,13 +82,11 @@ class PyCoroProcess(BaseProcess):
 				if isinstance(command, ValueCastable):
 					command = Value.cast(command)
 				if isinstance(command, Value):
-					exec(_RHSValueCompiler.compile(self.state, command, mode = 'curr'),
-						self.exec_locals)
+					exec(_RHSValueCompiler.compile(self.state, command, mode = 'curr'), self.exec_locals)
 					response = Const.normalize(self.exec_locals['result'], command.shape())
 
 				elif isinstance(command, Statement):
-					exec(_StatementCompiler.compile(self.state, command),
-						self.exec_locals)
+					exec(_StatementCompiler.compile(self.state, command), self.exec_locals)
 
 				elif type(command) is Tick:
 					domain = command.domain
@@ -97,8 +95,10 @@ class PyCoroProcess(BaseProcess):
 					elif domain in self.domains:
 						domain = self.domains[domain]
 					else:
-						raise NameError(f'Received command {command!r} that refers to a nonexistent '
-										f'domain {command.domain!r} from process {self.src_loc()!r}')
+						raise NameError(
+							f'Received command {command!r} that refers to a nonexistent '
+							f'domain {command.domain!r} from process {self.src_loc()!r}'
+						)
 					self.add_trigger(domain.clk, trigger = 1 if domain.clk_edge == 'pos' else 0)
 					if domain.rst is not None and domain.async_reset:
 						self.add_trigger(domain.rst, trigger = 1)
@@ -121,9 +121,11 @@ class PyCoroProcess(BaseProcess):
 					self.passive = False
 
 				elif command is None: # only possible if self.default_cmd is None
-					raise TypeError(f'Received default command from process {self.src_loc()!r} that was added '
-									'with add_process(); did you mean to add this process with '
-									'add_sync_process() instead?')
+					raise TypeError(
+						f'Received default command from process {self.src_loc()!r} that was added '
+						'with add_process(); did you mean to add this process with '
+						'add_sync_process() instead?'
+					)
 
 				else:
 					raise TypeError(f'Received unsupported command {command!r} from process {self.src_loc()!r}')

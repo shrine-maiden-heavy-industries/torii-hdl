@@ -320,8 +320,7 @@ class PySimEngine(BaseEngine):
 
 		for vcd_writer in self._vcd_writers:
 			for signal_state in changed:
-				vcd_writer.update(self._timeline.now,
-					signal_state.signal, signal_state.curr)
+				vcd_writer.update(self._timeline.now, signal_state.signal, signal_state.curr)
 
 	def advance(self):
 		self._step()
@@ -336,8 +335,7 @@ class PySimEngine(BaseEngine):
 	def write_vcd(
 		self, *, vcd_file: IO | str | None, gtkw_file: IO | str | None = None, traces: Iterable[Signal]
 	) -> Generator[None, None, None]:
-		vcd_writer = _VCDWriter(self._fragment,
-			vcd_file = vcd_file, gtkw_file = gtkw_file, traces = traces)
+		vcd_writer = _VCDWriter(self._fragment, vcd_file = vcd_file, gtkw_file = gtkw_file, traces = traces)
 		try:
 			self._vcd_writers.append(vcd_writer)
 			yield
