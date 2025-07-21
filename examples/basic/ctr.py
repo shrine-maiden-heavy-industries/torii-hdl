@@ -5,7 +5,7 @@ from torii.hdl  import Elaboratable, Module, Signal
 
 class Counter(Elaboratable):
 	def __init__(self, width: int) -> None:
-		self.v = Signal(width, reset = 2**width-1)
+		self.v = Signal(width, reset = 2**width - 1)
 		self.o = Signal()
 
 	def elaborate(self, platform) -> Module:
