@@ -19,22 +19,22 @@ __all__ = (
 )
 
 # SI Prefix constants
-EXA:   Final = 1e+18
-PETA:  Final = 1e+15
-TERA:  Final = 1e+12
-GIGA:  Final = 1e+9
-MEGA:  Final = 1e+6
-KILO:  Final = 1e+3
+EXA: Final = 1e+18
+PETA: Final = 1e+15
+TERA: Final = 1e+12
+GIGA: Final = 1e+9
+MEGA: Final = 1e+6
+KILO: Final = 1e+3
 HECTO: Final = 1e+2
-DEKA:  Final = 1e+1
-DECI:  Final = 1e-1
+DEKA: Final = 1e+1
+DECI: Final = 1e-1
 CENTI: Final = 1e-2
 MILLI: Final = 1e-3
 MICRO: Final = 1e-6
-NANO:  Final = 1e-9
-PICO:  Final = 1e-12
+NANO: Final = 1e-9
+PICO: Final = 1e-12
 FEMTO: Final = 1e-15
-ATTO:  Final = 1e-18
+ATTO: Final = 1e-18
 
 def ps_to_sec(val: float) -> float:
 	'''
@@ -273,7 +273,7 @@ def iec_size(size: int, dec: int = 2) -> str:
 	from math import floor, log, pow
 
 	suffixes = (
-		'B'  , 'KiB', 'MiB',
+		'B',   'KiB', 'MiB',
 		'GiB', 'TiB', 'PiB',
 		'EiB', 'ZiB', 'YiB',
 	)

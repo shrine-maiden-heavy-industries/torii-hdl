@@ -126,7 +126,7 @@ LinterOptionType: TypeAlias = bool | int
 
 @cache
 def get_linter_option(
-	filename: str , name: str, type: type[LinterOptionType], default: LinterOptionType
+	filename: str, name: str, type: type[LinterOptionType], default: LinterOptionType
 ) -> LinterOptionType:
 	'''
 	Read the Python source file from the given file ``filename`` and search for the option by the name of ``name``
