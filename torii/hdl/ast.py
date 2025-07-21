@@ -574,7 +574,7 @@ class Value(metaclass = ABCMeta):
 
 		return op
 
-	def bit_select(self, offset: Value | int , width: int) -> Value:
+	def bit_select(self, offset: Value | int, width: int) -> Value:
 		'''
 		Part-select with bit granularity.
 
@@ -600,7 +600,7 @@ class Value(metaclass = ABCMeta):
 			return self[offset.value:offset.value + width]
 		return Part(self, offset, width, stride = 1, src_loc_at = 1)
 
-	def word_select(self, offset: Value | int , width: int) -> Value:
+	def word_select(self, offset: Value | int, width: int) -> Value:
 		'''
 		Part-select with word granularity.
 
@@ -985,9 +985,8 @@ class Const(Value, metaclass = _ConstMeta):
 		else:
 			if isinstance(shape, range) and self.value == shape.stop:
 				warnings.warn(
-					message =
-						f'Value {self.value!r} equals the non-inclusive end of the constant '
-						f'shape {shape!r}; this is likely an off-by-one error',
+					f'Value {self.value!r} equals the non-inclusive end of the constant '
+					f'shape {shape!r}; this is likely an off-by-one error',
 					category = SyntaxWarning,
 					stacklevel = 3
 				)
@@ -1011,7 +1010,7 @@ OperatorsT: TypeAlias = Literal[
 ]
 @final
 class Operator(Value):
-	def __init__(self, operator: OperatorsT, operands: Sequence[ValueCastT] , *, src_loc_at: int = 0) -> None:
+	def __init__(self, operator: OperatorsT, operands: Sequence[ValueCastT], *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.operator = operator
 		self.operands = [ Value.cast(op) for op in operands ]
@@ -2190,7 +2189,8 @@ def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> 
 
 # @final
 class Switch(Statement):
-	def __init__(self, test: ValueCastT, cases: Mapping[SwitchCaseT, Iterable[object] | _StatementList], *,
+	def __init__(
+		self, test: ValueCastT, cases: Mapping[SwitchCaseT, Iterable[object] | _StatementList], *,
 		src_loc: SrcLoc | None = None, src_loc_at: int = 0, case_src_locs: dict[SwitchCaseT, SrcLoc] = {}
 	) -> None:
 		if src_loc is None:

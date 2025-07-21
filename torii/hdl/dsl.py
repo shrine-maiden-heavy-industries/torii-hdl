@@ -203,7 +203,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		self._statements   = Statement.cast([])
 		self._ctrl_context = None
-		self._ctrl_stack : list[tuple[str, _CtrlEntry]]  = []
+		self._ctrl_stack: list[tuple[str, _CtrlEntry]] = []
 
 		self._driving      = SignalDict[str]()
 		self._named_submodules = {}
@@ -259,10 +259,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._set_ctrl('If', {
-			'depth'   : self.domain._depth,
-			'tests'   : [],
-			'bodies'  : [],
-			'src_loc' : src_loc,
+			'depth': self.domain._depth,
+			'tests': [],
+			'bodies': [],
+			'src_loc': src_loc,
 			'src_locs': [],
 		})
 		if TYPE_CHECKING:
@@ -329,9 +329,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	def Switch(self, test):
 		self._check_context('Switch', context = None)
 		self._set_ctrl('Switch', {
-			'test'         : Value.cast(test),
-			'cases'        : OrderedDict(),
-			'src_loc'      : tracer.get_src_loc(src_loc_at = 1),
+			'test': Value.cast(test),
+			'cases': OrderedDict(),
+			'src_loc': tracer.get_src_loc(src_loc_at = 1),
 			'case_src_locs': {},
 		})
 		try:
@@ -369,8 +369,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
 					'include whitespace'
 				)
-			if (isinstance(pattern, str) and
-					len("".join(pattern.split())) != len(switch_data['test'])):
+			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(switch_data['test'])):
 				raise SyntaxError(
 					f'Case pattern \'{pattern}\' must have the same width as switch value '
 					f'(which is {len(switch_data["test"])})'
@@ -451,14 +450,14 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')
 		fsm_data = self._set_ctrl('FSM', {
-			'name'          : name,
-			'signal'        : Signal(name = f'{name}_state', src_loc_at = 2),
-			'reset'         : reset,
-			'domain'        : domain,
-			'encoding'      : OrderedDict(),
-			'decoding'      : OrderedDict(),
-			'states'        : OrderedDict(),
-			'src_loc'       : tracer.get_src_loc(src_loc_at = 1),
+			'name': name,
+			'signal': Signal(name = f'{name}_state', src_loc_at = 2),
+			'reset': reset,
+			'domain': domain,
+			'encoding': OrderedDict(),
+			'decoding': OrderedDict(),
+			'states': OrderedDict(),
+			'src_loc': tracer.get_src_loc(src_loc_at = 1),
 			'state_src_locs': {},
 		})
 		if TYPE_CHECKING:
@@ -548,8 +547,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					match = None
 				cases[match] = if_case
 
-			self._statements.append(Switch(Cat(tests), cases,
-				src_loc = src_loc, case_src_locs = dict(zip(cases, if_src_locs))))
+			self._statements.append(
+				Switch(Cat(tests), cases, src_loc = src_loc, case_src_locs = dict(zip(cases, if_src_locs)))
+			)
 
 		if name == 'Switch':
 			if TYPE_CHECKING:
