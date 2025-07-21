@@ -274,8 +274,7 @@ def NORFlashResources(
 
 		io_8bit = list(io_common)
 		io_8bit.append(Subsignal('a', Pins(' '.join((dq15_am1, a)), dir = 'o', conn = conn)))
-		io_8bit.append(Subsignal('dq', Pins(' '.join(dq_0_14[:8]), dir = 'io', conn = conn,
-											assert_width = 8)))
+		io_8bit.append(Subsignal('dq', Pins(' '.join(dq_0_14[:8]), dir = 'io', conn = conn, assert_width = 8)))
 		resources.append(Resource.family(
 			name_or_number, number, default_name = 'nor_flash', ios = io_8bit, name_suffix = '8bit'
 		))

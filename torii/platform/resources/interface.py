@@ -227,7 +227,7 @@ def ULPIResource(
 def PS2Resource(
 	name_or_number: str | int, number: int | None = None, *,
 	clk: str, dat: str,
-	conn :  ResourceConn | None = None, attrs: Attrs | None = None
+	conn:  ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
 	ios: list[SubsigArgT] = []
 
