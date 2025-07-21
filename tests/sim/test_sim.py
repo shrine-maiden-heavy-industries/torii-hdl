@@ -985,11 +985,11 @@ class SimulatorIntegrationTestCase(ToriiTestSuiteCase):
 		self.setUp_clock_phase()
 		with self.assertSimulation(self.m) as sim:
 			period = 1
-			sim.add_clock(period/8, phase = 0,          domain = 'check')
-			sim.add_clock(period,   phase = 0*period/4, domain = 'phase0')
-			sim.add_clock(period,   phase = 1*period/4, domain = 'phase90')
-			sim.add_clock(period,   phase = 2*period/4, domain = 'phase180')
-			sim.add_clock(period,   phase = 3*period/4, domain = 'phase270')
+			sim.add_clock(period / 8, phase = 0,              domain = 'check')
+			sim.add_clock(period,     phase = 0 * period / 4, domain = 'phase0')
+			sim.add_clock(period,     phase = 1 * period / 4, domain = 'phase90')
+			sim.add_clock(period,     phase = 2 * period / 4, domain = 'phase180')
+			sim.add_clock(period,     phase = 3 * period / 4, domain = 'phase270')
 
 			def proc():
 				clocks = [
