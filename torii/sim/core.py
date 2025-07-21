@@ -147,8 +147,7 @@ class Simulator:
 		'''
 
 		if isinstance(domain, ClockDomain):
-			if (domain.name in self._fragment.domains and
-					domain is not self._fragment.domains[domain.name]):
+			if (domain.name in self._fragment.domains and domain is not self._fragment.domains[domain.name]):
 				warn(
 					'Adding a clock process that drives a clock domain object '
 					f'named {domain.name!r}, which is distinct from an identically named domain '
