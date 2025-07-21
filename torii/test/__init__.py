@@ -134,7 +134,7 @@ class ToriiTestCase(TestCase):
 		yield from self.step(c)
 
 	@staticmethod
-	def pulse(sig: Signal , *, neg: bool = False, post_step: bool = True):
+	def pulse(sig: Signal, *, neg: bool = False, post_step: bool = True):
 		'''
 		Pulse a given signal.
 
