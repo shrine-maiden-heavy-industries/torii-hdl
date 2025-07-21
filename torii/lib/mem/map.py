@@ -621,8 +621,7 @@ class MemoryMap:
 
 		if id(resource) in self._resources:
 			_, resource_name, resource_range = self._resources[id(resource)]
-			return ResourceInfo(resource, resource_name, resource_range.start, resource_range.stop,
-								self.data_width)
+			return ResourceInfo(resource, resource_name, resource_range.start, resource_range.stop, self.data_width)
 
 		for window, window_range in self._windows.values():
 			try:
