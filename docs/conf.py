@@ -4,9 +4,9 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, os.path.abspath('.'))
-
 from torii import __version__ as torii_version
+
+sys.path.insert(0, os.path.abspath('.'))
 
 ROOT_DIR = (Path(__file__).parent).parent
 
