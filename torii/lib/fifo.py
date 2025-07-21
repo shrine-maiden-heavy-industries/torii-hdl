@@ -545,8 +545,12 @@ class AsyncFIFOBuffered(Elaboratable, FIFOInterface):
 			]
 			return m
 
-		m.submodules.unbuffered = fifo = AsyncFIFO(width = self.width, depth = self.depth - 1,
-			r_domain = self._r_domain, w_domain = self._w_domain)
+		m.submodules.unbuffered = fifo = AsyncFIFO(
+			width = self.width,
+			depth = self.depth - 1,
+			r_domain = self._r_domain,
+			w_domain = self._w_domain
+		)
 
 		m.d.comb += [
 			fifo.w_data.eq(self.w_data),
