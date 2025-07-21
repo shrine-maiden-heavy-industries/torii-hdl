@@ -134,6 +134,8 @@ linkcheck_ignore  = [
 	'https://www.xilinx.com/products/design-tools/vivado.html',
 	# Creative-Commons seems to suddenly always 403 in CI
 	'https://creativecommons.org/licenses/by-sa/4.0/',
+	# SSL Expired
+	'https://opencores.org/howto/wishbone',
 ]
 linkcheck_anchors_ignore_for_url = [
 	r'^https://web\.libera\.chat/',
