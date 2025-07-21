@@ -781,7 +781,7 @@ class XilinxPlatform(TemplatedPlatform):
 		clock.attrs['keep'] = 'TRUE'
 
 	def _get_xdr_buffer(
-		self, m: Module , pin: Pin, iostd, *, i_invert: bool = False, o_invert: bool = False
+		self, m: Module, pin: Pin, iostd, *, i_invert: bool = False, o_invert: bool = False
 	) -> tuple[Signal | None, Signal | None, Signal | None]:
 		XFDDR_FAMILIES = {
 			'virtex2',
@@ -1302,10 +1302,7 @@ class XilinxPlatform(TemplatedPlatform):
 		m = Module()
 		m.domains += ClockDomain('async_ff', async_reset = True, local = True)
 		flops = [
-			Signal(1,
-				name = f'stage{index}', reset = 1,
-				attrs = { 'ASYNC_REG': 'TRUE' }
-			)
+			Signal(1, name = f'stage{index}', reset = 1, attrs = { 'ASYNC_REG': 'TRUE' })
 			for index in range(async_ff_sync._stages)
 		]
 		if self.toolchain == 'Vivado':

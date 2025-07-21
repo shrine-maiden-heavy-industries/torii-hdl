@@ -85,7 +85,7 @@ class AlteraPlatform(TemplatedPlatform):
 		10763,  # Verilog case statement has overlapping case item expressions with non-constant or don't care bits
 		10935,  # Verilog casex/casez overlaps with a previous casex/casez item expression
 		12125,  # Using design file which is not specified as a design file for the current project, but contains
-				# definitions used in project
+				# definitions used in project # noqa: E131
 		18236,  # Number of processors not specified in QSF
 		292013, # Feature is only available with a valid subscription license
 	]
@@ -536,7 +536,8 @@ class AlteraPlatform(TemplatedPlatform):
 			port.n.attrs['useioff'] = 1
 
 		m = Module()
-		m.submodules[pin.name] = Instance('altiobuf_out',
+		m.submodules[pin.name] = Instance(
+			'altiobuf_out',
 			p_enable_bus_hold = 'FALSE',
 			p_number_of_channels = pin.width,
 			p_use_differential_mode = 'TRUE',
