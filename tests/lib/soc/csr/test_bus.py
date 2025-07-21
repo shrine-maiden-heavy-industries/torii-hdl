@@ -320,8 +320,7 @@ class MultiplexerAlignedTestCase(ToriiTestSuiteCase):
 	def test_sim(self):
 		for shadow_overlaps in [None, 0, 1]:
 			with self.subTest(shadow_overlaps = shadow_overlaps):
-				dut = Multiplexer(addr_width = 16, data_width = 8, alignment = 2,
-									shadow_overlaps = shadow_overlaps)
+				dut = Multiplexer(addr_width = 16, data_width = 8, alignment = 2, shadow_overlaps = shadow_overlaps)
 
 				elem_20_rw = Element(20, 'rw')
 				dut.add(elem_20_rw)
