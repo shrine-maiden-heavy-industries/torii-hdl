@@ -26,7 +26,7 @@ def _check_parity(parity: Literal['none', 'mark', 'space', 'even', 'odd']):
 		raise ValueError(f'Invalid parity {parity!r}; must be one of {", ".join(choices)}')
 
 def _compute_parity_bit(
-	data: Record , parity: Literal['none', 'mark', 'space', 'even', 'odd']
+	data: Record, parity: Literal['none', 'mark', 'space', 'even', 'odd']
 ) -> Const | Record | bool:
 	if parity not in ('none', 'mark', 'space', 'even', 'odd'):
 		raise ValueError(f'Parity must be one of \'none\', \'mark\', \'space\', \'even\', or \'odd\', not \'{parity}\'')
@@ -204,7 +204,7 @@ class AsyncSerialTX(Elaboratable):
 
 	def __init__(
 		self, *, divisor: int, divisor_bits: int | None = None, data_bits: int = 8,
-		parity  : Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
+		parity: Literal['none', 'mark', 'space', 'even', 'odd'] = 'none',
 		pins: Pin | None = None
 	) -> None:
 		_check_parity(parity)
