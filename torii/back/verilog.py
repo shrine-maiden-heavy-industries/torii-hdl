@@ -35,7 +35,8 @@ def _convert_rtlil_text(
 
 	script.append(f'write_verilog -norename {" ".join(write_verilog_opts)}')
 
-	return yosys.run(['-q', '-'], '\n'.join(script),
+	return yosys.run(
+		['-q', '-'], '\n'.join(script),
 		# At the moment, Yosys always shows a warning indicating that not all processes can be
 		# translated to Verilog. We carefully emit only the processes that *can* be translated, and
 		# squash this warning. Once Yosys' write_verilog pass is fixed, we should remove this.

@@ -40,7 +40,7 @@ def _const(value: str | int | ast.Const) -> str:
 	if isinstance(value, str):
 		return f'\"{value.translate(_escape_map)}\"'
 	elif isinstance(value, int):
-		if value in range(0, 2**31-1):
+		if value in range(0, 2**31 - 1):
 			return f'{value:d}'
 		else:
 			# This code path is only used for Instances, where Verilog-like behavior is desirable.
@@ -214,7 +214,7 @@ class _ModuleBuilder(_AttrBuilder, _BufferedBuilder, _Namer):
 		return _ProcessBuilder(self, name, attrs, src)
 
 class _ProcessBuilder(_AttrBuilder, _BufferedBuilder):
-	def __init__(self, rtlil, name: str , attrs: dict[str, str | int | ast.Const], src: str) -> None:
+	def __init__(self, rtlil, name: str, attrs: dict[str, str | int | ast.Const], src: str) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil = rtlil
 		self.name  = name
@@ -254,7 +254,7 @@ class _CaseBuilder(_ProxiedBuilder):
 
 class _SwitchBuilder(_AttrBuilder, _ProxiedBuilder):
 	def __init__(
-		self, rtlil, cond, attrs: dict[str, str | int | ast.Const] , src: str, indent: int
+		self, rtlil, cond, attrs: dict[str, str | int | ast.Const], src: str, indent: int
 	) -> None:
 		super().__init__(emit_src = rtlil.emit_src)
 		self.rtlil  = rtlil
@@ -348,12 +348,14 @@ class _ValueCompilerState:
 		if is_sync_driven:
 			attrs['init'] = ast.Const(signal.reset, signal.width)
 
-		wire_curr = self.rtlil.wire(width = signal.width, name = wire_name,
-									port_id = port_id, port_kind = port_kind,
-									attrs = attrs, src = _src(signal.src_loc))
+		wire_curr = self.rtlil.wire(
+			width = signal.width, name = wire_name, port_id = port_id, port_kind = port_kind,
+			attrs = attrs, src = _src(signal.src_loc)
+		)
 		if is_sync_driven:
-			wire_next = self.rtlil.wire(width = signal.width, name = wire_curr + '$next',
-										src = _src(signal.src_loc))
+			wire_next = self.rtlil.wire(
+				width = signal.width, name = wire_curr + '$next', src = _src(signal.src_loc)
+			)
 		else:
 			wire_next = None
 		self.wires[signal] = (wire_curr, wire_next)
@@ -436,30 +438,30 @@ class _ValueCompiler(xfrm.ValueVisitor):
 
 class _RHSValueCompiler(_ValueCompiler):
 	operator_map = {
-		(1, '~') : '$not',
-		(1, '-') : '$neg',
-		(1, 'b') : '$reduce_bool',
+		(1, '~'): '$not',
+		(1, '-'): '$neg',
+		(1, 'b'): '$reduce_bool',
 		(1, 'r|'): '$reduce_or',
 		(1, 'r&'): '$reduce_and',
 		(1, 'r^'): '$reduce_xor',
-		(2, '+') : '$add',
-		(2, '-') : '$sub',
-		(2, '*') : '$mul',
+		(2, '+'): '$add',
+		(2, '-'): '$sub',
+		(2, '*'): '$mul',
 		(2, '//'): '$divfloor',
-		(2, '%') : '$modfloor',
+		(2, '%'): '$modfloor',
 		(2, '**'): '$pow',
 		(2, '<<'): '$sshl',
 		(2, '>>'): '$sshr',
-		(2, '&') : '$and',
-		(2, '^') : '$xor',
-		(2, '|') : '$or',
+		(2, '&'): '$and',
+		(2, '^'): '$xor',
+		(2, '|'): '$or',
 		(2, '=='): '$eq',
 		(2, '!='): '$ne',
-		(2, '<') : '$lt',
+		(2, '<'): '$lt',
 		(2, '<='): '$le',
-		(2, '>') : '$gt',
+		(2, '>'): '$gt',
 		(2, '>='): '$ge',
-		(3, 'm') : '$mux',
+		(3, 'm'): '$mux',
 	}
 
 	def on_value(self, value):
@@ -500,8 +502,8 @@ class _RHSValueCompiler(_ValueCompiler):
 			'\\Y': res,
 		}, params = {
 			'A_SIGNED': arg_shape.signed,
-			'A_WIDTH' : arg_shape.width,
-			'Y_WIDTH' : res_shape.width,
+			'A_WIDTH': arg_shape.width,
+			'Y_WIDTH': res_shape.width,
 		}, src = _src(value.src_loc))
 		return res
 
@@ -519,8 +521,8 @@ class _RHSValueCompiler(_ValueCompiler):
 			'\\Y': res,
 		}, params = {
 			'A_SIGNED': value_shape.signed,
-			'A_WIDTH' : value_shape.width,
-			'Y_WIDTH' : new_shape.width,
+			'A_WIDTH': value_shape.width,
+			'Y_WIDTH': new_shape.width,
 		}, src = _src(value.src_loc))
 		return res
 
@@ -545,10 +547,10 @@ class _RHSValueCompiler(_ValueCompiler):
 			'\\Y': res,
 		}, params = {
 			'A_SIGNED': lhs_shape.signed,
-			'A_WIDTH' : lhs_shape.width,
+			'A_WIDTH': lhs_shape.width,
 			'B_SIGNED': rhs_shape.signed,
-			'B_WIDTH' : rhs_shape.width,
-			'Y_WIDTH' : res_shape.width,
+			'B_WIDTH': rhs_shape.width,
+			'Y_WIDTH': res_shape.width,
 		}, src = _src(value.src_loc))
 		if value.operator in ('//', '%'):
 			# RTLIL leaves division by zero undefined, but we require it to return zero.
@@ -620,10 +622,10 @@ class _RHSValueCompiler(_ValueCompiler):
 			'\\Y': res,
 		}, params = {
 			'A_SIGNED': lhs_shape.signed,
-			'A_WIDTH' : lhs_shape.width,
+			'A_WIDTH': lhs_shape.width,
 			'B_SIGNED': rhs_shape.signed,
-			'B_WIDTH' : rhs_shape.width,
-			'Y_WIDTH' : res_shape.width,
+			'B_WIDTH': rhs_shape.width,
+			'Y_WIDTH': res_shape.width,
 		}, src = _src(value.src_loc))
 		return res
 
@@ -737,7 +739,7 @@ class _StatementCompiler(xfrm.StatementVisitor):
 		en_wire = self.rhs_compiler(stmt._en)
 		check_wire = self.rhs_compiler(stmt._check)
 		self.state.rtlil.cell(f'${stmt.kind.value}', ports = {
-			'\\A' : check_wire,
+			'\\A': check_wire,
 			'\\EN': en_wire,
 		}, src = _src(stmt.src_loc), name = stmt.name)
 
@@ -1014,24 +1016,24 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 				# `hdl.xfrm.DomainLowerer`.
 				module.cell('$dff', ports = {
 					'\\CLK': wire_clk,
-					'\\D'  : wire_next,
-					'\\Q'  : wire_curr
+					'\\D': wire_next,
+					'\\Q': wire_curr
 				}, params = {
 					'CLK_POLARITY': int(cd.clk_edge == 'pos'),
-					'WIDTH'       : signal.width
+					'WIDTH': signal.width
 				})
 			else:
 				# For async reset flops, the reset value is provided directly to the cell.
 				module.cell('$adff', ports = {
 					'\\ARST': wire_rst,
-					'\\CLK' : wire_clk,
-					'\\D'   : wire_next,
-					'\\Q'   : wire_curr
+					'\\CLK': wire_clk,
+					'\\D': wire_next,
+					'\\Q': wire_curr
 				}, params = {
 					'ARST_POLARITY': ast.Const(1),
-					'ARST_VALUE'   : ast.Const(signal.reset, signal.width),
-					'CLK_POLARITY' : int(cd.clk_edge == 'pos'),
-					'WIDTH'        : signal.width
+					'ARST_VALUE': ast.Const(signal.reset, signal.width),
+					'CLK_POLARITY': int(cd.clk_edge == 'pos'),
+					'WIDTH': signal.width
 				})
 
 		# Any signals that are used but neither driven nor connected to an input port always
