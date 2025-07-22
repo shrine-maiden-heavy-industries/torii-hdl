@@ -58,6 +58,7 @@ def test(session: Session) -> None:
 			with open(devnull, 'w') as f:
 				for example in BASIC_EXAMPLES.iterdir():
 					session.run('python', *coverage_args, str(example), 'generate', stdout = f)
+					session.run('python', *coverage_args, str(example), 'simulate', stdout = f)
 
 		if SKIP_FORMAL:
 			session.log('Skipping formal examples...')
