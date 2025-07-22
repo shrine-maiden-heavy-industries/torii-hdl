@@ -126,7 +126,8 @@ exclude_lines = [
 	'^\s*self\.fail\b',
 ]
 partial_branches = [
-	':nobr:'
+	':nobr:',
+	'''^if __name__ == ['"]__main__['"]:$''',
 ]
 
 # Typechecking
