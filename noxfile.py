@@ -80,7 +80,7 @@ def test(session: Session) -> None:
 			session.log('Generating XML Coverage report...')
 			session.run('python', '-m', 'coverage', 'xml', f'--rcfile={ROOT_DIR / "pyproject.toml"}')
 
-@nox.session(name = 'watch-docs')
+@nox.session(name = 'watch-docs', reuse_venv = True)
 def watch_docs(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'docs'
 
@@ -93,7 +93,7 @@ def watch_docs(session: Session) -> None:
 
 	session.run('sphinx-autobuild', str(DOCS_DIR), str(OUTPUT_DIR))
 
-@nox.session(name = 'build-docs')
+@nox.session(name = 'build-docs', reuse_venv = True)
 def build_docs(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'docs'
 
@@ -105,7 +105,7 @@ def build_docs(session: Session) -> None:
 
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(OUTPUT_DIR))
 
-@nox.session(name = 'build-docs-multiversion')
+@nox.session(name = 'build-docs-multiversion', reuse_venv = True)
 def build_docs_multiversion(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'mv-docs'
 
@@ -159,7 +159,7 @@ def build_docs_multiversion(session: Session) -> None:
 			# Otherwise, link to `main`
 			latest_link.symlink_to(docs_dev)
 
-@nox.session(name = 'linkcheck-docs')
+@nox.session(name = 'linkcheck-docs', reuse_venv = True)
 def linkcheck_docs(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'docs-linkcheck'
 
@@ -171,7 +171,7 @@ def linkcheck_docs(session: Session) -> None:
 
 	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(OUTPUT_DIR))
 
-@nox.session(name = 'typecheck-mypy')
+@nox.session(name = 'typecheck-mypy', reuse_venv = True)
 def typecheck_mypy(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'typing' / 'mypy'
 	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
@@ -190,7 +190,7 @@ def typecheck_mypy(session: Session) -> None:
 		'-p', 'torii', '--html-report', str(OUTPUT_DIR.resolve())
 	)
 
-@nox.session(name = 'typecheck-pyright')
+@nox.session(name = 'typecheck-pyright', reuse_venv = True)
 def typecheck_pyright(session: Session) -> None:
 	OUTPUT_DIR = BUILD_DIR / 'typing' / 'pyright'
 	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
@@ -204,7 +204,7 @@ def typecheck_pyright(session: Session) -> None:
 	with (OUTPUT_DIR / 'pyright.log').open('w') as f:
 		session.run('pyright', *session.posargs, stdout = f)
 
-@nox.session
+@nox.session(reuse_venv = True)
 def lint(session: Session) -> None:
 	if session.venv_backend != 'uv':
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
@@ -216,7 +216,7 @@ def lint(session: Session) -> None:
 		'./torii', './tests', './examples', './docs'
 	)
 
-@nox.session
+@nox.session(reuse_venv = True)
 def dist(session: Session) -> None:
 	if session.venv_backend != 'uv':
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
