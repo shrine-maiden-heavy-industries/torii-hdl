@@ -43,7 +43,7 @@ def test(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('click') # For SBY
-	session.install('.')
+	session.install('-e', '.')
 
 	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
@@ -89,7 +89,7 @@ def watch_docs(session: Session) -> None:
 
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
 	session.install('sphinx-autobuild')
-	session.install('.')
+	session.install('-e', '.')
 
 	session.run('sphinx-autobuild', str(DOCS_DIR), str(OUTPUT_DIR))
 
@@ -101,7 +101,7 @@ def build_docs(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
-	session.install('.')
+	session.install('-e', '.')
 
 	session.run('sphinx-build', '-b', 'html', str(DOCS_DIR), str(OUTPUT_DIR))
 
@@ -115,7 +115,7 @@ def build_docs_multiversion(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
-	session.install('.')
+	session.install('-e', '.')
 
 	# Workaround for sphinx-contrib/multiversion#58
 	# Ask git for the list of tags matching `v*`, and sort them in reverse order by name
@@ -167,7 +167,7 @@ def linkcheck_docs(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('-r', str(DOCS_DIR / 'requirements.txt'))
-	session.install('.')
+	session.install('-e', '.')
 
 	session.run('sphinx-build', '-b', 'linkcheck', str(DOCS_DIR), str(OUTPUT_DIR))
 
@@ -181,7 +181,7 @@ def typecheck_mypy(session: Session) -> None:
 
 	session.install('mypy')
 	session.install('lxml')
-	session.install('.')
+	session.install('-e', '.')
 
 	session.run(
 		'mypy', '--non-interactive', '--install-types', '--pretty',
@@ -199,7 +199,7 @@ def typecheck_pyright(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('pyright')
-	session.install('.')
+	session.install('-e', '.')
 
 	with (OUTPUT_DIR / 'pyright.log').open('w') as f:
 		session.run('pyright', *session.posargs, stdout = f)
