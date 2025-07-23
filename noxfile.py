@@ -181,6 +181,7 @@ def typecheck_mypy(session: Session) -> None:
 
 	session.install('mypy')
 	session.install('lxml')
+	session.install('types-Pygments', 'types-setuptools')
 	session.install('-e', '.')
 
 	session.run(
@@ -199,6 +200,7 @@ def typecheck_pyright(session: Session) -> None:
 		session.warn('Consider installing `uv` to prevent constant re-installs of packages in the session venv')
 
 	session.install('pyright')
+	session.install('types-Pygments', 'types-setuptools')
 	session.install('-e', '.')
 
 	with (OUTPUT_DIR / 'pyright.log').open('w') as f:
