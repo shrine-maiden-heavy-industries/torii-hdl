@@ -8,7 +8,7 @@
 <link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="../hdl/index.html" rel="next" title="Torii HDL Reference"/><link href="../index.html" rel="prev" title="API Reference"/>
 <link href="https://torii.shmdn.link/api/backend/index.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Torii Backends - Torii 0.8.1.dev151 Documentation</title>
+<title>Torii Backends - Torii 0.8.1.dev152 Documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../../_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css"/>
@@ -175,7 +175,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev151 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev152 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +197,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev151 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev152 Documentation</span>
 </a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -354,8 +354,8 @@
 <p>The Torii API reference is a work in progress and we are actively working on improving it,
 however it may be deficient or missing in places.</p>
 </div>
-<p>Torii has 3 primary backends, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a>, each takes a Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code> and produces an RTL netlist in the given output format.</p>
-<p>The primary lingua franca of the Torii backends is <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a> and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a> backends first convert the IR into it, and then use <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> to convert the RTLIL netlist into their respective output formats</p>
+<p>Torii has 3 primary backends, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a>, each takes a Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code> and produces an RTL netlist in the given output format. There is also the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_json.html">JSON</a> backend for generic netlist output.</p>
+<p>The primary lingua franca of the Torii backends is <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_json.html">JSON</a> backends first convert the IR into it, and then use <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> to convert the RTLIL netlist into their respective output formats</p>
 <section id="module-torii.back.rtlil">
 <span id="rtlil-backend"></span><h2>RTLIL Backend<a class="headerlink" href="#module-torii.back.rtlil" title="Link to this heading">¶</a></h2>
 <dl class="py function">
@@ -498,6 +498,52 @@ a signal map.</p>
 </dl>
 </dd></dl>
 </section>
+<section id="module-torii.back.json">
+<span id="json-backend"></span><h2>JSON Backend<a class="headerlink" href="#module-torii.back.json" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.json.convert_fragment">
+<span class="sig-prename descclassname"><span class="pre">torii.back.json.</span></span><span class="sig-name descname"><span class="pre">convert_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><span class="pre">SignalDict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.back.json.convert_fragment" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively lower the given Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code> into a JSON netlist and
+a signal map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> (<em>torii.hdl.ir.Fragment</em>) – The Torii fragment hierarchy to lower.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the root fragment module. (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the resulting JSON. (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The JSON netlist and signal dictionary of the lowered fragment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict">torii.hdl.ast.SignalDict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.json.convert">
+<span class="sig-prename descclassname"><span class="pre">torii.back.json.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable:</span> <span class="pre">~torii.hdl.ir.Fragment</span> <span class="pre">|</span> <span class="pre">~torii.hdl.ir.Elaboratable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_internal_attrs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.back.json.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code> into a JSON netlist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elaboratable</strong> (<em>torii.hdl.ir.Elaboratable</em>) – The Elaboratable to write the JSON netlist for.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the resulting JSON netlist. (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the final JSON netlist. (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resulting JSON netlist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+</section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
 <p>Lets say you have the following Torii design you would like to convert to Verilog:</p>
@@ -629,6 +675,11 @@ a signal map.</p>
 <li><a class="reference internal" href="#torii.back.cxxrtl.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-torii.back.json">JSON Backend</a><ul>
+<li><a class="reference internal" href="#torii.back.json.convert_fragment"><code class="docutils literal notranslate"><span class="pre">convert_fragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.back.json.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
@@ -638,7 +689,7 @@ a signal map.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=c5226915"></script>
+</div><script src="../../_static/documentation_options.js?v=687219d9"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -11,7 +11,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 40
+      "doc_lineno": 48
     },
     {
       "source": "from torii.back.verilog import convert\n\nverilog = convert(Blinky(), name = 'blinker', ports = [])\n",
@@ -63,7 +63,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 54
+      "doc_lineno": 62
     }
   ],
   "api/hdl/ast": [
