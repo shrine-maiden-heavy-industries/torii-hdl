@@ -9,32 +9,39 @@ from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
 from .._typing     import IODirectionIO, SrcLoc
+from ..errors      import DriverConflict, DomainError, UnusedElaboratable
 from ..util        import flatten
 from ..util.tracer import get_src_loc
-from ._unused      import MustUse, UnusedMustUse
+from ._unused      import MustUse
 from .ast          import (
 	ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT,
 )
-from .cd           import ClockDomain, DomainError
+from .cd           import ClockDomain
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
 	from .dsl         import Module
 
 __all__ = (
-	'DriverConflict',
 	'Elaboratable',
 	'Fragment',
 	'Instance',
-	'UnusedElaboratable',
 )
 
-class UnusedElaboratable(UnusedMustUse):
-	# The warning is initially silenced. If everything that has been constructed remains unused,
-	# it means the application likely crashed (with an exception, or in another way that does not
-	# call `sys.excepthook`), and it's not necessary to show any warnings.
-	# Once elaboration starts, the warning is enabled.
-	_MustUse__silence = True
+def __dir__() -> list[str]:
+	return list({*__all__, 'DriverConflict', 'UnusedElaboratable'})
+
+def __getattr__(name: str):
+	if name in ('DriverConflict', 'UnusedElaboratable'):
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		if name == 'DriverConflict':
+			return DriverConflict
+		return UnusedElaboratable
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class Elaboratable(MustUse, metaclass = ABCMeta):
 	_MustUse__warning = UnusedElaboratable
@@ -47,9 +54,6 @@ class Elaboratable(MustUse, metaclass = ABCMeta):
 	def elaborate(self, platform: Platform | None) -> Module:
 		''' '''
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
-
-class DriverConflict(UserWarning):
-	pass
 
 class Fragment:
 	@staticmethod

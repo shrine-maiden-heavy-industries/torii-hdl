@@ -5,18 +5,28 @@ from collections.abc import Callable, Generator, Iterable
 from typing          import Literal
 
 from .._typing       import IODirectionEmpty
+from ..errors        import ResourceError
 from ..hdl.ast       import Signal, SignalDict, Value, ValueCastable
 from ..hdl.rec       import Record
 from ..lib.io        import Pin
 from .dsl            import Attrs, Connector, DiffPairs, Pins, Resource, Subsignal
 
 __all__ = (
-	'ResourceError',
 	'ResourceManager',
 )
 
-class ResourceError(Exception):
-	pass
+def __dir__() -> list[str]:
+	return list({*__all__, 'ResourceError'})
+
+def __getattr__(name: str):
+	if name == 'ResourceError':
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		return ResourceError
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class ResourceManager:
 	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:

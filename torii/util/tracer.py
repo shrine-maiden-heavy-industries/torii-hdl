@@ -5,17 +5,27 @@ from sys       import _getframe, implementation
 from typing    import TYPE_CHECKING
 
 from .._typing import SrcLoc
+from ..errors  import NameNotFound
 
 __all__ = (
 	'get_src_loc',
 	'get_var_name',
-	'NameNotFound',
 )
 
-_IS_PYPY = implementation.name == 'pypy'
+def __dir__() -> list[str]:
+	return list({*__all__, 'NameNotFound'})
 
-class NameNotFound(Exception):
-	pass
+def __getattr__(name: str):
+	if name == 'NameNotFound':
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		return NameNotFound
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
+
+_IS_PYPY = implementation.name == 'pypy'
 
 _raise_exception = object()
 

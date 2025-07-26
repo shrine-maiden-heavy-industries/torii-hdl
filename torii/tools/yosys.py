@@ -9,24 +9,33 @@ from collections.abc import Callable
 from pathlib         import Path
 from typing          import NamedTuple
 
+from ..errors        import YosysError, YosysWarning
 from .               import has_tool, require_tool
 
 __all__ = (
 	'find_yosys',
 	'YosysBinary',
-	'YosysError',
 )
+
+def __dir__() -> list[str]:
+	return list({*__all__, 'YosysError', 'YosysWarning'})
+
+def __getattr__(name: str):
+	if name in ('YosysError', 'YosysWarning'):
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		if name == 'YosysError':
+			return YosysError
+		return YosysWarning
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class YosysVersion(NamedTuple):
 	major: int
 	minor: int
 	distance: int
-
-class YosysError(Exception):
-	pass
-
-class YosysWarning(Warning):
-	pass
 
 class YosysBinary:
 	YOSYS_BINARY = 'yosys'

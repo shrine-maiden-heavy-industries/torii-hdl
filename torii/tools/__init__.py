@@ -3,6 +3,7 @@
 from os            import environ
 from shutil        import which
 
+from ..errors      import ToolNotFound
 from ..util.string import tool_env_var
 
 __doc__ = '''\
@@ -17,11 +18,20 @@ __doc__ = '''\
 __all__ = (
 	'has_tool',
 	'require_tool',
-	'ToolNotFound',
 )
 
-class ToolNotFound(Exception):
-	pass
+def __dir__() -> list[str]:
+	return list({*__all__, 'ToolNotFound'})
+
+def __getattr__(name: str):
+	if name == 'ToolNotFound':
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		return ToolNotFound
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 def _get_tool(name: str) -> str:
 	'''

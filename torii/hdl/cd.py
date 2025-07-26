@@ -1,17 +1,29 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Literal
+from typing   import Literal
 
-from ..util import tracer
-from .ast   import Signal
+from ..errors import NameNotFound
+from ..util   import tracer
+from .ast     import Signal
 
 __all__ = (
 	'ClockDomain',
-	'DomainError',
 )
 
-class DomainError(Exception):
-	pass
+def __dir__() -> list[str]:
+	return list({*__all__, 'DomainError'})
+
+def __getattr__(name: str):
+	if name == 'DomainError':
+		from warnings import warn
+		from torii.errors import DomainError
+
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.{name}', DeprecationWarning, stacklevel = 2
+		)
+		return DomainError
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class ClockDomain:
 	'''
@@ -63,7 +75,7 @@ class ClockDomain:
 		if name is None:
 			try:
 				name = tracer.get_var_name()
-			except tracer.NameNotFound:
+			except NameNotFound:
 				raise ValueError('Clock domain name must be specified explicitly')
 		if name.startswith('cd_'):
 			name = name[3:]
