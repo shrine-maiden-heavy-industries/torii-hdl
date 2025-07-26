@@ -8,7 +8,7 @@
 <link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="../supplementary_libraries.html" rel="next" title="Supplementary Libraries"/><link href="index.html" rel="prev" title="Version Migration Guides"/>
 <link href="https://torii.shmdn.link/migrations/v0_to_v1.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Torii v0.X to v1.0 Migration Guide - Torii 0.8.1.dev156 Documentation</title>
+<title>Torii v0.X to v1.0 Migration Guide - Torii 0.8.1.dev159 Documentation</title>
 <link href="../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css"/>
@@ -175,7 +175,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev156 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev159 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +197,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev156 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev159 Documentation</span>
 </a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -496,13 +496,13 @@
 <h3><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code><a class="headerlink" href="#torii-lib-soc-wishbone" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">wishbone</span></code> module has been removed from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.soc</span></code> and moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>, as it is generally useful for non-SoC designs as well as SoC designs, and is not the only bus type supported.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span>
 
 <span class="c1"># -- OR --</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone.bus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone.bus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span>
 
 <span class="c1"># NEW (&gt;=1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.bus.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="o">...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.bus.wishbone</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter" title="torii.lib.bus.wishbone.Arbiter"><span class="n">Arbiter</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="n">Interface</span></a>
 </pre></div>
 </div>
 </section>
@@ -686,7 +686,7 @@
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=203c5e88"></script>
+</div><script src="../_static/documentation_options.js?v=55bee7b7"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

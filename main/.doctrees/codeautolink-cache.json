@@ -468,7 +468,7 @@
       "doc_lineno": 9
     },
     {
-      "source": ">>> tcl_escape('meow {meow} [meow] \\meow')\n'{meow \\{meow\\} [meow] \\\\meow}'",
+      "source": ">>> tcl_escape('nya {nya} [nya] \\nya')\n'{nya \\{nya\\} [nya] \\\\nya}'",
       "names": [],
       "example": {
         "document": "api/utility/string",
@@ -4444,8 +4444,37 @@
       "doc_lineno": 150
     },
     {
-      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.wishbone import Arbiter, Interface, ...\n\n# -- OR --\nfrom torii.lib.soc.wishbone.bus import Arbiter, Interface, ...\n\n# NEW (>=1.0.0)\nfrom torii.lib.bus.wishbone import Arbiter, Interface, ...\n",
-      "names": [],
+      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.wishbone import Arbiter, Interface\n\n# -- OR --\nfrom torii.lib.soc.wishbone.bus import Arbiter, Interface\n\n# NEW (>=1.0.0)\nfrom torii.lib.bus.wishbone import Arbiter, Interface\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "bus",
+            "wishbone",
+            "Arbiter"
+          ],
+          "code_str": "Arbiter",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "torii.lib.bus.wishbone.Arbiter"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "bus",
+            "wishbone",
+            "Interface"
+          ],
+          "code_str": "Interface",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "torii.lib.bus.wishbone.Interface"
+        }
+      ],
       "example": {
         "document": "migrations/v0_to_v1",
         "ref_id": "torii-lib-soc-wishbone",
