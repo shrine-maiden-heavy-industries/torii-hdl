@@ -30,6 +30,9 @@ jobs:
         with:
           python-version: ${{ env.TOOL_PYTHON_VERSION }}
 
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
+
       - name: 'Initialize Environment'
         shell: bash
         env:
@@ -81,6 +84,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
+
       - name: 'Initialize Environment'
         shell: bash
         env:
@@ -126,6 +132,9 @@ jobs:
         with:
           python-version: ${{ env.TOOL_PYTHON_VERSION }}
 
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
+
       - name: 'Initialize Environment'
         shell: bash
         env:
@@ -158,6 +167,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.TOOL_PYTHON_VERSION }}
+
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
 
       - name: 'Initialize Environment'
         shell: bash
@@ -258,6 +270,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.TOOL_PYTHON_VERSION }}
+
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v6
 
       - name: 'Initialize Environment'
         shell: bash
