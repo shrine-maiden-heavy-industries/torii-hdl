@@ -53,8 +53,8 @@ def tcl_escape(string: str) -> str:
 	-------
 	.. code-block:: pycon
 
-		>>> tcl_escape('meow {meow} [meow] \\meow')
-		'{meow \\{meow\\} [meow] \\\\meow}'
+		>>> tcl_escape('nya {nya} [nya] \\nya')
+		'{nya \\{nya\\} [nya] \\\\nya}'
 
 	Returns
 	-------
