@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
+from torii.errors   import DomainError
 from torii.hdl.ast  import Cat, ClockSignal, ResetSignal, Sample, Signal, SignalSet, Switch
-from torii.hdl.cd   import ClockDomain, DomainError
+from torii.hdl.cd   import ClockDomain
 from torii.hdl.dsl  import Module
 from torii.hdl.ir   import Elaboratable, Fragment
 from torii.hdl.mem  import Memory, MemoryInstance
