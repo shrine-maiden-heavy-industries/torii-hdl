@@ -11,6 +11,7 @@ from sys             import version_info
 from typing          import TYPE_CHECKING, Any, ParamSpec, TypedDict
 
 from .._typing       import SrcLoc, SwitchCaseT
+from ..errors        import ToriiSyntaxError, ToriiSyntaxWarning
 from ..util          import flatten, tracer
 from ..util.units    import bits_for
 from .ast            import (
@@ -25,15 +26,22 @@ if TYPE_CHECKING:
 
 __all__ = (
 	'Module',
-	'SyntaxError',
-	'SyntaxWarning',
 )
 
-class SyntaxError(Exception):
-	pass
+def __dir__() -> list[str]:
+	return list({*__all__, 'SyntaxError', 'SyntaxWarning'})
 
-class SyntaxWarning(Warning):
-	pass
+def __getattr__(name: str):
+	if name in ('SyntaxError', 'SyntaxWarning'):
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.errors.Torii{name}', DeprecationWarning, stacklevel = 2
+		)
+		if name == 'SyntaxError':
+			return ToriiSyntaxError
+		return ToriiSyntaxWarning
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class _ModuleBuilderProxy:
 	_builder: Module
@@ -58,7 +66,7 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 			warnings.warn(
 				f'Using \'<module>.d.{name}\' would add statements to clock domain {name!r}; '
 				f'did you mean <module>.{name} instead?',
-				SyntaxWarning, stacklevel = 2
+				ToriiSyntaxWarning, stacklevel = 2
 			)
 		if name == 'comb':
 			domain = None
@@ -141,7 +149,7 @@ class _GuardedContextManager(_GeneratorContextManager):
 		return super().__init__(func, args, kwds)
 
 	def __bool__(self):
-		raise SyntaxError(f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`')
+		raise ToriiSyntaxError(f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`')
 
 def _guardedcontextmanager(keyword: str):
 	def decorator(func: Callable[Params, Generator[Any, Any, None]]) -> Callable[Params, _GeneratorContextManager]:
@@ -191,7 +199,7 @@ _CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
 	def __init_subclass__(cls):
-		raise SyntaxError(
+		raise ToriiSyntaxError(
 			'Instead of inheriting from `Module`, inherit from `Elaboratable` '
 			'and return a `Module` from the `elaborate(self, platform)` method'
 		)
@@ -214,13 +222,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	def _check_context(self, construct, context):
 		if self._ctrl_context != context:
 			if self._ctrl_context is None:
-				raise SyntaxError(f'{construct} is not permitted outside of {context}')
+				raise ToriiSyntaxError(f'{construct} is not permitted outside of {context}')
 			else:
 				if self._ctrl_context == 'Switch':
 					secondary_context = 'Case'
 				if self._ctrl_context == 'FSM':
 					secondary_context = 'State'
-				raise SyntaxError(
+				raise ToriiSyntaxError(
 					f'{construct} is not permitted directly inside of {self._ctrl_context}; '
 					f'it is permitted inside of {self._ctrl_context} {secondary_context}'
 				)
@@ -249,7 +257,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				'Python booleans with ~, which leads to unexpected results. '
 				'Replace `~flag` with `not flag`. (If this is a false positive, '
 				'silence this warning with `m.If(x)` → `m.If(x.bool())`.)',
-				SyntaxWarning, stacklevel = 4
+				ToriiSyntaxWarning, stacklevel = 4
 			)
 		return cond
 
@@ -289,7 +297,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			raise SyntaxError('Elif without preceding If')
+			raise ToriiSyntaxError('Elif without preceding If')
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -311,7 +319,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			raise SyntaxError('Else without preceding If/Elif')
+			raise ToriiSyntaxError('Else without preceding If/Elif')
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -354,23 +362,23 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
-			raise SyntaxError('Case outside of Switch block')
+			raise ToriiSyntaxError('Case outside of Switch block')
 		new_patterns: SwitchCaseT = ()
 		if () in switch_data['cases']:
 			warnings.warn(
 				'Case statements are order-dependant, any Case after a Default will be ignored',
-				SyntaxWarning, stacklevel = 3
+				ToriiSyntaxWarning, stacklevel = 3
 			)
 
 		# This code should accept exactly the same patterns as `v.matches(...)`.
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
-				raise SyntaxError(
+				raise ToriiSyntaxError(
 					f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
 					'include whitespace'
 				)
 			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(switch_data['test'])):
-				raise SyntaxError(
+				raise ToriiSyntaxError(
 					f'Case pattern \'{pattern}\' must have the same width as switch value '
 					f'(which is {len(switch_data["test"])})'
 				)
@@ -381,7 +389,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				try:
 					pattern = Const.cast(pattern)
 				except TypeError as error:
-					raise SyntaxError(
+					raise ToriiSyntaxError(
 						'Case pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}'
 					) from error
@@ -393,7 +401,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					warnings.warn(
 						f'Case pattern \'{orig_pattern!r}\' ({pattern_len}\'{pattern.value:b}) is wider than '
 						f'switch value (which has width {len(switch_data["test"])}); comparison will never be true',
-						SyntaxWarning, stacklevel = 2
+						ToriiSyntaxWarning, stacklevel = 2
 					)
 					continue
 				new_patterns = (*new_patterns, pattern.value)
@@ -421,7 +429,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
 		if () in switch_data['cases']:
-			raise SyntaxError(
+			raise ToriiSyntaxError(
 				'Multiple Default statements within a switch are not allowed, '
 				'as only the first Default will ever be considered.',
 			)
@@ -429,7 +437,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
-			raise SyntaxError('Default outside of Switch block')
+			raise ToriiSyntaxError('Default outside of Switch block')
 
 		_outer_case = self._statements
 		try:
@@ -485,7 +493,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert fsm_data is None or isinstance(fsm_data, _FSMDict)
 		if fsm_data is None:
-			raise SyntaxError('State outside of FSM block')
+			raise ToriiSyntaxError('State outside of FSM block')
 		if name in fsm_data['states']:
 			raise NameError(f'FSM state \'{name}\' is already defined')
 		if name not in fsm_data['encoding']:
@@ -504,7 +512,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@property
 	def next(self):
-		raise SyntaxError('Only assignment to `m.next` is permitted')
+		raise ToriiSyntaxError('Only assignment to `m.next` is permitted')
 
 	@next.setter
 	def next(self, name):
@@ -522,7 +530,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					)
 					return
 
-		raise SyntaxError('`m.next = <...>` is only permitted inside an FSM state')
+		raise ToriiSyntaxError('`m.next = <...>` is only permitted inside an FSM state')
 
 	def _pop_ctrl(self):
 		name, data = self._ctrl_stack.pop()
@@ -609,7 +617,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		for stmt in Statement.cast(assigns):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
-				raise SyntaxError(f'Only assignments and property checks may be appended to d.{domain_name(domain)}')
+				raise ToriiSyntaxError(f'Only assignments and property checks may be appended to d.{domain_name(domain)}')
 
 			stmt._MustUse__used = True
 			stmt = SampleDomainInjector(domain)(stmt)
@@ -619,7 +627,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					self._driving[signal] = domain
 				elif self._driving[signal] != domain:
 					cd_curr = self._driving[signal]
-					raise SyntaxError(
+					raise ToriiSyntaxError(
 						f'Driver-driver conflict: trying to drive {signal!r} from d.{domain_name(domain)}, but it is '
 						f'already driven from d.{domain_name(cd_curr)}')
 
