@@ -161,13 +161,13 @@ The `wishbone` module has been removed from {py:mod}`torii.lib.soc` and moved to
 
 ```python
 # OLD (<1.0.0)
-from torii.lib.soc.wishbone import Arbiter, Interface, ...
+from torii.lib.soc.wishbone import Arbiter, Interface
 
 # -- OR --
-from torii.lib.soc.wishbone.bus import Arbiter, Interface, ...
+from torii.lib.soc.wishbone.bus import Arbiter, Interface
 
 # NEW (>=1.0.0)
-from torii.lib.bus.wishbone import Arbiter, Interface, ...
+from torii.lib.bus.wishbone import Arbiter, Interface
 ```
 
 ## Module Changes
