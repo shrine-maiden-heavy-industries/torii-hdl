@@ -1,19 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
-import datetime
-import os
-import sys
-from pathlib import Path
+from datetime import date
+from pathlib  import Path
 
-from torii import __version__ as torii_version
-
-sys.path.insert(0, os.path.abspath('.'))
+from torii    import __version__ as torii_version
 
 ROOT_DIR = (Path(__file__).parent).parent
 
 project   = 'Torii'
 version   = torii_version
 release   = version.split('+')[0]
-copyright = f'{datetime.date.today().year} Shrine Maiden Heavy Industries and contributors'
+copyright = f'{date.today().year} Shrine Maiden Heavy Industries and contributors'
 language  = 'en'
 
 extensions = [
