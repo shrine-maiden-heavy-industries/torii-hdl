@@ -114,4 +114,4 @@ The Torii documentation is dual licensed under the [BSD-2-Clause] for all past c
 [`LICENSE`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE
 [CC-BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [`LICENSE.docs`]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/LICENSE.docs
-[git repository]: https://shrine-maiden-heavy.industries/torii-hdl
+[git repository]: https://github.com/shrine-maiden-heavy-industries/torii-hdl
