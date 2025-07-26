@@ -95,7 +95,7 @@ def _get_console(output_stream: TextIO | None) -> Console:
 		return Console(file = output_stream)
 
 # NOTE(aki): I don't like the nocov here but it's *really* hard to test this
-def _render_fancy(cons: Console, filename: str, lineno: int) -> None: # :nocov:
+def _render_fancy(cons: Console, filename: str, lineno: int) -> bool: # :nocov:
 	'''
 	Render the fancy syntax-highlighted code context for the warning display.
 
@@ -109,6 +109,11 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> None: # :nocov:
 
 	lineno : int
 		The line of ``filename`` the warning was raised from.
+
+	Returns
+	-------
+	bool
+		True if there was code to render, otherwise False
 	'''
 
 	# Ensure we have *some* code to actually render
@@ -157,6 +162,9 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> None: # :nocov:
 		else:
 			cons.print(render_title)
 			cons.print(code_render)
+		return True
+
+	return False
 
 # NOTE(aki): I don't like the nocov here but it's *really* hard to test this
 def _warning_handler( # :nocov:
@@ -237,7 +245,7 @@ def _warning_handler( # :nocov:
 
 	# If we can show the source context, do so, otherwise a simplified context
 	if show_source:
-		_render_fancy(cons, filename, lineno)
+		show_source = _render_fancy(cons, filename, lineno)
 	else:
 		# If the line we were given is None try to get it from the linecache
 		if line is None:
