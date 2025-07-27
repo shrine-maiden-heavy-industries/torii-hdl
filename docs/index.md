@@ -22,7 +22,7 @@ migrations/index
 
 supplementary_libraries
 
-Torii Boards <https://shrine-maiden-heavy-industries.github.io/torii-boards/>
+Torii Boards <https://torii-boards.shmdn.link/>
 ```
 
 ```{toctree}
