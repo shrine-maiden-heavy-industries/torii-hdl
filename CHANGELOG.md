@@ -28,6 +28,7 @@ Unreleased template stuff
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
 - New `torii.back.json` backend to emit JSON netlists for designs.
 - Added `det` pin to `torii.platforms.resources.memory.SDCardResources` for hot-plug SD Card detection.
+- New `.from_khz`, `.from_mhz`, and `from_ghz`, on the `torii.build.dsl.Clock` to create a new clock resource from more than just Hz.
 
 ### Changed
 

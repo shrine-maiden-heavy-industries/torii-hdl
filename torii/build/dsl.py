@@ -7,6 +7,7 @@ from collections.abc import Callable, Generator, Iterator, Sequence
 from typing          import TypeAlias
 
 from .._typing       import IODirectionOE
+from ..util.units    import GIGA, KILO, MEGA
 
 __all__ = (
 	'Attrs',
@@ -127,6 +128,54 @@ class Clock:
 			raise TypeError('Clock frequency must be a number')
 
 		self.frequency = float(frequency)
+
+	@classmethod
+	def from_khz(cls: type['Clock'], frequency: float | int) -> 'Clock':
+		'''
+		Create a new Clock resource with the given frequency in kHz.
+
+		Parameters
+		----------
+		frequency: float | int
+			The frequency of the clock in kilohertz.
+
+		Returns
+		-------
+		Clock
+		'''
+		return Clock(frequency * KILO)
+
+	@classmethod
+	def from_mhz(cls: type['Clock'], frequency: float | int) -> 'Clock':
+		'''
+		Create a new Clock resource with the given frequency in MHz.
+
+		Parameters
+		----------
+		frequency: float | int
+			The frequency of the clock in megahertz.
+
+		Returns
+		-------
+		Clock
+		'''
+		return Clock(frequency * MEGA)
+
+	@classmethod
+	def from_ghz(cls: type['Clock'], frequency: float | int) -> 'Clock':
+		'''
+		Create a new Clock resource with the given frequency in GHz.
+
+		Parameters
+		----------
+		frequency: float | int
+			The frequency of the clock in gigahertz.
+
+		Returns
+		-------
+		Clock
+		'''
+		return Clock(frequency * GIGA)
 
 	@property
 	def period(self) -> float:

@@ -175,6 +175,24 @@ class ClockTestCase(ToriiTestSuiteCase):
 		self.assertEqual(c.period, 1e-6)
 		self.assertEqual(repr(c), '(clock 1000000.0)')
 
+	def test_from_khz(self):
+		c = Clock.from_khz(20)
+		self.assertEqual(c.frequency, 20e3)
+		self.assertEqual(c.period, 50e-6)
+		self.assertEqual(repr(c), '(clock 20000.0)')
+
+	def test_from_mhz(self):
+		c = Clock.from_mhz(300)
+		self.assertEqual(c.frequency, 300e6)
+		self.assertAlmostEqual(c.period, 300e-11)
+		self.assertEqual(repr(c), '(clock 300000000.0)')
+
+	def test_from_ghz(self):
+		c = Clock.from_ghz(8)
+		self.assertEqual(c.frequency, 8e9)
+		self.assertAlmostEqual(c.period, 8e-15)
+		self.assertEqual(repr(c), '(clock 8000000000.0)')
+
 class SubsignalTestCase(ToriiTestSuiteCase):
 	def test_basic_pins(self):
 		s = Subsignal('a', Pins('A0'), Attrs(IOSTANDARD = 'LVCMOS33'))
