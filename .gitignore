@@ -1,30 +1,50 @@
-# Python
-__pycache__/
-/*.egg-info
-/.eggs
-/dist
-/.venv
-/.env
-.nox/
-.mypy_cache/
+# SPDX-License-Identifier: BSD-2-Clause
 
-# coverage
-/.coverage
-/htmlcov
-
-# tests
-/tests/**/spec_*/
-*.vcd
-*.gtkw
-
-# misc user-created
-/*.il
-/*.v
-/*.sv
-/*.vhd
-/*.vhdl
 /build
 
+# Python
+__pycache__/
+*.py[codz]
+*.egg-info/
+*.eggs/
+.venv/
+.env/
+.nox/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage Artifacts
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Test Artifacts
+tests/**/spec_*/
+*.vcd
+*.fst
+*.ghw
+*.ftr
+*.gtkw
+*.surf.ron
+
+# Miscellaneous Artifacts
+*.il
+*.v
+*.sv
+*.vhd
+*.vhdl
+
+# Docs Inversions
+# NOTE(aki): We want to include some files we exclude here in the docs
+!docs/_code/**/*.il
+!docs/_code/**/*.v
+!docs/_code/**/*.sv
+!docs/_code/**/*.vhd
+!docs/_code/**/*.vhdl
+!docs/_code/**/*.vcd
+!docs/_code/**/*.gtkw
+!docs/_code/**/*.surf.ron
+
 # Code Editors/IDEs
-/.vs
-/.vscode
+.vscode/*
