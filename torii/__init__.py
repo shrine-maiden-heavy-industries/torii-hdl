@@ -5,7 +5,7 @@ try:
 except ImportError: # :nocov:
 	__version__ = 'unknown'
 
-from .warnings import install_handler
+from .diagnostics.hooks import install_handler
 
 # Install the warnings handler
 install_handler()
