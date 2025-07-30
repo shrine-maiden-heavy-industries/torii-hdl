@@ -13,6 +13,7 @@ __all__ = (
 	'I2CResource',
 	'IrDAResource',
 	'JTAGResource',
+	'PCIBusResources',
 	'PCIeBusResources',
 	'PS2Resource',
 	'SPIResource',
@@ -386,6 +387,93 @@ def HyperBusResource(
 		ios.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'hyperbus', ios = ios)
+
+def PCIBusResources(
+	name_or_number: str | int, number: int | None = None, *,
+	inta_n: str, intb_n: str, intc_n: str, intd_n: str, rst_n: str, clk: str,
+	gnt_n: str, req_n: str, idsel: str, frame_n: str, irdy_n: str, trdy_n: str,
+	devsel_n: str, stop_n: str, lock_n: str, perr_n: str, serr_n: str,
+	smbclk: str, smbdat: str, ad_lower: str, cbe32_n: str, par32: str,
+	ad_upper: str | None = None, cbe64_n: str | None = None, par64: str | None = None,
+	ack64_n: str | None = None, req64_n: str | None = None,
+	pme_n: str | None = None, pcixcap: str | None = None, m66en: str | None = None,
+	tck: str | None = None, tdi: str | None = None, tdo: str | None = None, tms: str | None = None,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None
+) -> list[Resource]:
+	resources: list[Resource]   = []
+	io_common: list[SubsigArgT] = []
+
+	io_common.append(Subsignal('inta', PinsN(inta_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('intb', PinsN(intb_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('intc', PinsN(intc_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('intd', PinsN(intd_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('rst', PinsN(rst_n, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('gnt', PinsN(gnt_n, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('req', PinsN(req_n, dir = 'o', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('idsel', Pins(idsel, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('frame', PinsN(frame_n, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('irdy', PinsN(irdy_n, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('trdy', PinsN(trdy_n, dir = 'o', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('devsel', PinsN(devsel_n, dir = 'o', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('stop', PinsN(stop_n, dir = 'o', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('lock', PinsN(lock_n, dir = 'i', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('perr', PinsN(perr_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('serr', PinsN(serr_n, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('smbclk', Pins(smbclk, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal('smbdat', Pins(smbdat, dir = 'io', conn = conn, assert_width = 1)))
+
+	if pme_n is not None:
+		io_common.append(Subsignal('pme', PinsN(pme_n, dir = 'io', conn = conn, assert_width = 1)))
+
+	if pcixcap is not None:
+		io_common.append(Subsignal('pcixcap', Pins(pcixcap, dir = 'i', conn = conn, assert_width = 1)))
+
+	if m66en is not None:
+		io_common.append(Subsignal('m66en', Pins(m66en, dir = 'i', conn = conn, assert_width = 1)))
+
+	jtag_sigs = (tck, tdi, tdo, tms,) # type: ignore
+
+	if all(jtag_sigs):
+		# HACK(aki): Type coercion, `all` above ensure we have no Nones
+		if TYPE_CHECKING:
+			jtag_sigs: tuple[str, ...] = jtag_sigs
+
+		io_common.append(Subsignal('tck', Pins(jtag_sigs[0], dir = 'i', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal('tdi', Pins(jtag_sigs[1], dir = 'i', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal('tdo', Pins(jtag_sigs[2], dir = 'o', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal('tms', Pins(jtag_sigs[3], dir = 'i', conn = conn, assert_width = 1)))
+
+	if attrs is not None:
+		io_common.append(attrs)
+
+	io_32 = list(io_common)
+
+	io_32.append(Subsignal('ad_low', Pins(ad_lower, dir = 'io', conn = conn, assert_width = 32)))
+	io_32.append(Subsignal('cbe32', PinsN(cbe32_n, dir = 'io', conn = conn, assert_width = 4)))
+	io_32.append(Subsignal('par32', Pins(par32, dir = 'io', conn = conn, assert_width = 1)))
+
+	resources.append(Resource.family(
+		name_or_number, number, default_name = 'pci', ios = io_32, name_suffix = '32'
+	))
+
+	if (
+		ad_upper is not None and cbe64_n is not None and par64 is not None and ack64_n is not None and
+		req64_n is not None
+	):
+		io_64 = list(io_32)
+
+		io_64.append(Subsignal('ad_high', Pins(ad_upper, dir = 'io', conn = conn, assert_width = 32)))
+		io_64.append(Subsignal('cbe64', PinsN(cbe64_n, dir = 'io', conn = conn, assert_width = 4)))
+		io_64.append(Subsignal('par64', Pins(par64, dir = 'io', conn = conn, assert_width = 1)))
+		io_64.append(Subsignal('ack64', Pins(ack64_n, dir = 'io', conn = conn, assert_width = 1)))
+		io_64.append(Subsignal('req64', Pins(req64_n, dir = 'io', conn = conn, assert_width = 1)))
+
+		resources.append(Resource.family(
+			name_or_number, number, default_name = 'pci', ios = io_64, name_suffix = '64'
+		))
+
+	return resources
 
 def PCIeBusResources(
 	name_or_number: str | int, number: int | None = None, *,
