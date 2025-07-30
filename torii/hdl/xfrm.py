@@ -6,6 +6,7 @@ from collections.abc import Iterable
 from copy            import copy
 from warnings        import warn
 
+from ..diagnostics   import DomainError
 from ..util          import flatten, tracer
 from .ast            import (
 	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const,
@@ -13,7 +14,6 @@ from .ast            import (
 	Signal, SignalDict, SignalSet, Slice, Statement, Switch,
 	Value, ValueDict, _StatementList
 )
-from .cd             import DomainError
 from .ir             import Elaboratable, Fragment, Instance
 from .mem            import MemoryInstance
 

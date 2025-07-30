@@ -2,15 +2,16 @@
 # torii: UnusedElaboratable=no
 
 import warnings
-from collections   import OrderedDict
-from enum          import Enum
-from sys           import version_info
+from collections       import OrderedDict
+from enum              import Enum
+from sys               import version_info
 
-from torii.hdl.ast import Cat, ClockSignal, Past, ResetSignal, Signal, SignalSet, Switch
-from torii.hdl.cd  import ClockDomain
-from torii.hdl.dsl import Module, SyntaxError, SyntaxWarning
+from torii.diagnostics import ToriiSyntaxError, ToriiSyntaxWarning
+from torii.hdl.ast     import Cat, ClockSignal, Past, ResetSignal, Signal, SignalSet, Switch
+from torii.hdl.cd      import ClockDomain
+from torii.hdl.dsl     import Module
 
-from ..utils       import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class DSLTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -24,7 +25,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_cant_inherit(self):
 		with self.assertRaisesRegex(
-			SyntaxError, (
+			ToriiSyntaxError, (
 				r'^Instead of inheriting from `Module`, inherit from `Elaboratable` and '
 				r'return a `Module` from the `elaborate\(self, platform\)` method$'
 			)
@@ -76,7 +77,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_d_conflict(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError, (
+			ToriiSyntaxError, (
 				r'^Driver-driver conflict: trying to drive \(sig c1\) from d\.sync, but it '
 				r'is already driven from d\.comb$'
 			)
@@ -95,7 +96,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_d_asgn_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^Only assignments and property checks may be appended to d\.sync$'
 		):
 			m.d.sync += Switch(self.s1, {})
@@ -127,7 +128,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_d_suspicious(self):
 		m = Module()
 		with self.assertWarnsRegex(
-			SyntaxWarning, (
+			ToriiSyntaxWarning, (
 				r'^Using \'<module>\.d\.submodules\' would add statements to clock domain '
 				r'\'submodules\'; did you mean <module>\.submodules instead\?$'
 			)
@@ -282,27 +283,27 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_Elif_wrong(self):
 		m = Module()
-		with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
+		with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
 			with m.Elif(self.s2):
 				pass # :nocov:
 
 	def test_Elif_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
-			with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
+			with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
 				with m.Elif(self.s2):
 					pass # :nocov:
 
 	def test_Else_wrong(self):
 		m = Module()
-		with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If\/Elif$'):
+		with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If\/Elif$'):
 			with m.Else():
 				pass # :nocov:
 
 	def test_Else_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
-			with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If/Elif$'):
+			with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If/Elif$'):
 				with m.Else():
 					pass # :nocov:
 
@@ -311,7 +312,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			pass
 		with m.Elif(self.s2):
-			with self.assertRaisesRegex(SyntaxError, r'^Elif without preceding If$'):
+			with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
 				with m.Elif(self.s3):
 					pass # :nocov:
 
@@ -320,7 +321,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			pass
 		with m.Else():
-			with self.assertRaisesRegex(SyntaxError, r'^Else without preceding If/Elif$'):
+			with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If/Elif$'):
 				with m.Else():
 					pass # :nocov:
 
@@ -341,7 +342,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		def test_If_signed_suspicious(self):
 			m = Module()
 			with self.assertWarnsRegex(
-				SyntaxWarning, (
+				ToriiSyntaxWarning, (
 					r'^Signed values in If\/Elif conditions usually result from inverting Python '
 					r'booleans with ~, which leads to unexpected results\. Replace `~flag` with '
 					r'`not flag`\. \(If this is a false positive, silence this warning with '
@@ -356,7 +357,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.If(0):
 				pass
 			with self.assertWarnsRegex(
-				SyntaxWarning, (
+				ToriiSyntaxWarning, (
 					r'^Signed values in If\/Elif conditions usually result from inverting Python '
 					r'booleans with ~, which leads to unexpected results\. Replace `~flag` with '
 					r'`not flag`\. \(If this is a false positive, silence this warning with '
@@ -369,7 +370,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_if_If_Elif_Else(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^`if m\.If\(\.\.\.\):` does not work; use `with m\.If\(\.\.\.\)`$'
 		):
 			if m.If(0):
@@ -377,13 +378,13 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(0):
 			pass
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^`if m\.Elif\(\.\.\.\):` does not work; use `with m\.Elif\(\.\.\.\)`$'
 		):
 			if m.Elif(0):
 				pass # :nocov:
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^`if m\.Else\(\.\.\.\):` does not work; use `with m\.Else\(\.\.\.\)`$'
 		):
 			if m.Else():
@@ -506,13 +507,13 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
-				SyntaxError,
+				ToriiSyntaxError,
 				r'^Case pattern \'--\' must have the same width as switch value \(which is 4\)$'
 			):
 				with m.Case('--'):
 					pass # :nocov:
 			with self.assertWarnsRegex(
-				SyntaxWarning, (
+				ToriiSyntaxWarning, (
 					r'^Case pattern \'22\' \(5\'10110\) is wider than switch value \(which has width 4\); '
 					r'comparison will never be true$'
 				)
@@ -520,7 +521,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				with m.Case(0b10110):
 					pass
 			with self.assertWarnsRegex(
-				SyntaxWarning, (
+				ToriiSyntaxWarning, (
 					r'^Case pattern \'<Color.RED: 170>\' \(8\'10101010\) is wider than switch value '
 					r'\(which has width 4\); comparison will never be true$'
 				)
@@ -552,7 +553,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
-				SyntaxError, (
+				ToriiSyntaxError, (
 					r'^Case pattern \'abc\' must consist of 0, 1, and - \(don\'t care\) bits, '
 					r'and may include whitespace$'
 				)
@@ -564,7 +565,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
-				SyntaxError,
+				ToriiSyntaxError,
 				r'^Case pattern must be a string or a const-castable expression, not 1\.0$'
 			):
 				with m.Case(1.0):
@@ -573,7 +574,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_Case_outside_Switch_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^Case is not permitted outside of Switch$'
 		):
 			with m.Case(1):
@@ -582,7 +583,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_Default_outside_Switch_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^Default is not permitted outside of Switch$'
 		):
 			with m.Default():
@@ -594,7 +595,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.Default():
 				pass
 			with self.assertWarns(
-				SyntaxWarning,
+				ToriiSyntaxWarning,
 				msg = 'Case statements are order-dependant, any Case after a Default will be ignored'
 			):
 				with m.Case('101-'):
@@ -606,7 +607,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.Default():
 				pass
 			with self.assertRaises(
-				SyntaxError,
+				ToriiSyntaxError,
 				msg = 'Multiple Default statements within a switch are not allowed, '
 					'as only the first Default will ever be considered.'
 			):
@@ -617,7 +618,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with m.Switch(self.s1):
 			with self.assertRaisesRegex(
-				SyntaxError, (
+				ToriiSyntaxError, (
 					r'^If is not permitted directly inside of Switch; '
 					r'it is permitted inside of Switch Case$'
 				)
@@ -630,7 +631,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Switch(self.s1):
 			with m.Case(0):
 				with self.assertRaisesRegex(
-					SyntaxError,
+					ToriiSyntaxError,
 					r'^Case is not permitted outside of Switch$'
 				):
 					with m.Case(1):
@@ -777,17 +778,17 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_FSM_wrong_next(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^Only assignment to `m\.next` is permitted$'
 		):
 			m.next
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state$'
 		):
 			m.next = 'FOO'
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state$'
 		):
 			with m.FSM():
@@ -799,7 +800,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.State('FOO'):
 				pass
 			with self.assertRaisesRegex(
-				SyntaxError, (
+				ToriiSyntaxError, (
 					r'^If is not permitted directly inside of FSM; '
 					r'it is permitted inside of FSM State$'
 				)
@@ -810,7 +811,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_State_outside_FSM_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			SyntaxError,
+			ToriiSyntaxError,
 			r'^FSM State is not permitted outside of FSM'
 		):
 			with m.State('FOO'):
@@ -821,7 +822,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.FSM():
 			with m.State('FOO'):
 				with self.assertRaisesRegex(
-					SyntaxError,
+					ToriiSyntaxError,
 					r'^FSM State is not permitted outside of FSM'
 				):
 					with m.State('BAR'):
