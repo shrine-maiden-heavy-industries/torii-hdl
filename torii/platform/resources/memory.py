@@ -133,7 +133,7 @@ def QSPIFlashResource(
 def SDCardResources(
 	name_or_number: str | int, number: int | None = None, *,
 	clk: str, cmd: str, dat0: str, dat1: str | None = None, dat2: str | None = None,
-	dat3: str | None = None, cd: str | None = None, wp_n: str | None = None,
+	dat3: str | None = None, cd: str | None = None, wp_n: str | None = None, det: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
 	resources: list[Resource]   = []
@@ -147,6 +147,9 @@ def SDCardResources(
 
 	if wp_n is not None:
 		io_common.append(Subsignal('wp', PinsN(wp_n, dir = 'i', conn = conn, assert_width = 1)))
+
+	if det is not None:
+		io_common.append(Subsignal('det', Pins(det, dir = 'i', conn = conn, assert_width = 1)))
 
 	io_native = list(io_common)
 	io_native.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))

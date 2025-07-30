@@ -27,6 +27,7 @@ Unreleased template stuff
 
 - Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.
 - New `torii.back.json` backend to emit JSON netlists for designs.
+- Added `det` pin to `torii.platforms.resources.memory.SDCardResources` for hot-plug SD Card detection.
 
 ### Changed
 
