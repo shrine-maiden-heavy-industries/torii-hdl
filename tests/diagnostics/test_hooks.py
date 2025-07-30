@@ -8,8 +8,8 @@ from io                      import StringIO
 
 from torii.diagnostics.hooks import (
 	_WARN_HANDLER_RESTORE, DEFAULT_FANCY_CONTEXT, DEFAULT_FANCY_WIDTH, DEFAULT_STRIP_PATH, DEFAULT_USE_FANCY,
-	WarningRenderingOptions, _get_console, _populate_options, _warning_handler, install_handler,
-	remove_handler,
+	WarningRenderingOptions, _get_console, _populate_options, _warning_handler, install_warning_handler,
+	remove_warning_handler,
 )
 
 from ..utils                 import ToriiTestSuiteCase
@@ -209,7 +209,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertEqual(warnings.showwarning, _warning_handler)
 
@@ -220,7 +220,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
@@ -230,12 +230,12 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertEqual(self.old_handler, _WARN_HANDLER_RESTORE)
 		self.assertEqual(warnings.showwarning, _warning_handler)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertEqual(self.old_handler, _WARN_HANDLER_RESTORE)
 		self.assertEqual(warnings.showwarning, _warning_handler)
@@ -247,7 +247,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		old_filters = deepcopy(warnings.filters)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertNotEqual(warnings.filters, old_filters)
 
@@ -258,7 +258,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		old_filters = deepcopy(warnings.filters)
 
-		install_handler(catch_all = True)
+		install_warning_handler(catch_all = True)
 
 		self.assertNotEqual(warnings.filters, old_filters)
 
@@ -267,7 +267,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
 
-		remove_handler()
+		remove_warning_handler()
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
@@ -279,7 +279,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
 
-		remove_handler()
+		remove_warning_handler()
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
@@ -289,12 +289,12 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
 
-		install_handler()
+		install_warning_handler()
 
 		self.assertEqual(self.old_handler, _WARN_HANDLER_RESTORE)
 		self.assertEqual(warnings.showwarning, _warning_handler)
 
-		remove_handler()
+		remove_warning_handler()
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
