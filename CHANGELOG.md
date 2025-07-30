@@ -31,6 +31,7 @@ Unreleased template stuff
 - New `.from_khz`, `.from_mhz`, and `from_ghz`, on the `torii.build.dsl.Clock` to create a new clock resource from more than just Hz.
 - Added new `HDMIResource` for HDMI port resources on board platforms.
 - New `PCIeBusResources` for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.
+- New `PCIBusResources` for 32-bit and 64-bit PCI busses.
 
 ### Changed
 
