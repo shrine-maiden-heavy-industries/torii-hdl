@@ -6,8 +6,8 @@ from .extensions import (
 	PmodSPIType2Resource, PmodUARTType3Resource, PmodUARTType4AResource, PmodUARTType4Resource,
 )
 from .interface  import (
-	CANResource, DirectUSBResource, HyperBusResource, I2CResource, IrDAResource, JTAGResource, PS2Resource,
-	SPIResource, UARTResource, ULPIResource,
+	CANResource, DirectUSBResource, HyperBusResource, I2CResource, IrDAResource, JTAGResource, PCIeBusResources,
+	PS2Resource, SPIResource, UARTResource, ULPIResource,
 )
 from .memory     import (
 	DDR3Resource, NORFlashResources, QSPIFlashResource, SDCardResources, SDRAMResource, SPIFlashResources, SRAMResource,
@@ -35,6 +35,7 @@ __all__ = (
 	'I2CResource',
 	'IrDAResource',
 	'JTAGResource',
+	'PCIeBusResources',
 	'PS2Resource',
 	'SPIResource',
 	'UARTResource',
