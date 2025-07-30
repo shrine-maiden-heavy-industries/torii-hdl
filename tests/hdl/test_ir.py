@@ -3,8 +3,9 @@
 
 from collections           import OrderedDict
 
+from torii.diagnostics     import DomainError
 from torii.hdl.ast         import Cat, ClockSignal, Const, ResetSignal, Signal, SignalDict, SignalKey, SignalSet
-from torii.hdl.cd          import ClockDomain, DomainError
+from torii.hdl.cd          import ClockDomain
 from torii.hdl.dsl         import Module
 from torii.hdl.ir          import DriverConflict, Elaboratable, Fragment, Instance
 from torii.platform.formal import FormalPlatform

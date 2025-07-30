@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl.ast  import Cat, ClockSignal, ResetSignal, Sample, Signal, SignalSet, Switch
-from torii.hdl.cd   import ClockDomain, DomainError
-from torii.hdl.dsl  import Module
-from torii.hdl.ir   import Elaboratable, Fragment
-from torii.hdl.mem  import Memory, MemoryInstance
-from torii.hdl.xfrm import (
+from torii.diagnostics import DomainError
+from torii.hdl.ast     import Cat, ClockSignal, ResetSignal, Sample, Signal, SignalSet, Switch
+from torii.hdl.cd      import ClockDomain
+from torii.hdl.dsl     import Module
+from torii.hdl.ir      import Elaboratable, Fragment
+from torii.hdl.mem     import Memory, MemoryInstance
+from torii.hdl.xfrm    import (
 	DomainLowerer, DomainRenamer, EnableInserter, LHSGroupAnalyzer, LHSGroupFilter, ResetInserter,
 	SampleLowerer, SwitchCleaner, TransformedElaboratable,
 )
 
-from ..utils import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class DomainRenamerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
