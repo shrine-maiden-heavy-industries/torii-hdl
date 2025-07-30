@@ -9,11 +9,13 @@ in order to produce pretty and/or machine consumable warning messages.
 
 # TODO(aki): Document once the docs refactor is merged in
 
+import sys
 import warnings
 from linecache    import getline, getlines
 from os           import getenv
 from pathlib      import Path
 from sys          import stdout
+from types        import TracebackType
 from typing       import Final, TextIO, TypedDict
 
 from rich         import get_console
@@ -316,3 +318,14 @@ def remove_handler() -> None:
 
 	# Restore the warning handler
 	warnings.showwarning = _WARN_HANDLER_RESTORE
+
+
+_old_excepthook = sys.excepthook
+def _silence_elaboratable(
+	type: type[BaseException], value: BaseException, traceback: TracebackType | None
+) -> None:
+	# Don't show anything if the interpreter crashed; that'd just obscure the exception
+	# traceback instead of helping.
+	MustUse._MustUse__silence = True
+	_old_excepthook(type, value, traceback)
+sys.excepthook = _silence_elaboratable

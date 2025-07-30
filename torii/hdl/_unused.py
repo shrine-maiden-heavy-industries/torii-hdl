@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import sys
 from sys      import _getframe
-from types         import TracebackType
 from typing   import Any, TypedDict, TypeVar
 from warnings import warn_explicit
 
@@ -67,13 +65,3 @@ class MustUse:
 					self._MustUse__warning,
 					**self._MustUse__context
 				)
-
-_old_excepthook = sys.excepthook
-def _silence_elaboratable(
-	type: type[BaseException], value: BaseException, traceback: TracebackType | None
-) -> None:
-	# Don't show anything if the interpreter crashed; that'd just obscure the exception
-	# traceback instead of helping.
-	MustUse._MustUse__silence = True
-	_old_excepthook(type, value, traceback)
-sys.excepthook = _silence_elaboratable
