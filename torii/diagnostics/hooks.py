@@ -354,3 +354,32 @@ def remove_excepthook() -> None:
 	'''
 
 	sys.excepthook = _EXCEPTHOOK_RESTORE
+
+def install_handlers(*, catch_all: bool = False) -> None:
+	'''
+	Replace the current :py:meth:`sys.excepthook` and :py:meth:`warnings.showwarning` handlers with the
+	Torii handlers, saving the originals so they can be restored when calling :py:meth:`remove_handlers`.
+
+	Note
+	----
+	If the ``catch_all`` parameter is not set, or set to ``False``, then this method will still force
+	enable :py:class:`DeprecationWarning` and :py:class:`SyntaxWarning` warnings for a list of known
+	Torii modules regardless.
+
+	Parameters
+	----------
+	catch_all : bool
+		Flush the Python warnings filters so all warnings are asserted.
+	'''
+
+	install_warning_handler(catch_all = catch_all)
+	install_excepthook()
+
+def remove_handlers() -> None:
+	'''
+	Restore the original :py:meth:`sys.excepthook` and :py:meth:`warnings.showwarning` handlers that were
+	present before the call to :py:meth:`install_handlers`.
+	'''
+
+	remove_warning_handler()
+	remove_excepthook()
