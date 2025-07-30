@@ -266,10 +266,10 @@ def _warning_handler( # :nocov:
 	if show_source:
 		cons.line()
 
-def install_handler(*, catch_all: bool = False) -> None:
+def install_warning_handler(*, catch_all: bool = False) -> None:
 	'''
-	Replace the current :py:meth:`warnings.showwarning` handler with the torii warning handler,
-	saving the original so it can be restored when calling :py:meth:`remove_handler`.
+	Replace the current :py:meth:`warnings.showwarning` handler with the Torii warning handler,
+	saving the original so it can be restored when calling :py:meth:`remove_warning_handler`.
 
 	If the environment variable ``TORII_WARNINGS_NOHANDLE`` is set, then this function has no effect
 	and the current warning handler will remain installed.
@@ -306,10 +306,10 @@ def install_handler(*, catch_all: bool = False) -> None:
 	# Install the new warning handler
 	warnings.showwarning = _warning_handler
 
-def remove_handler() -> None:
+def remove_warning_handler() -> None:
 	'''
 	Restore the original :py:meth:`warnings.showwarning` handler that was present before the
-	call to :py:meth:`install_handler`.
+	call to :py:meth:`install_warning_handler`.
 	'''
 
 	# If we didn't install the handler, we might restore incorrectly, so don't bother
