@@ -78,8 +78,9 @@ def SPIFlashResources(
 
 def QSPIFlashResource(
 	name_or_number: str | int, number: int | None = None, *,
-	cs_n, clk, mode: QSPIMode, data_mode: QSPIDataMode,
-	dq = None, dq_a = None, dq_b = None, clk_fb = None, conn = None, attrs = None
+	cs_n: str, clk: str, mode: QSPIMode, data_mode: QSPIDataMode,
+	dq: str | None = None, dq_a: str | None = None, dq_b: str | None = None,
+	clk_fb: str | None = None, conn: ResourceConn | None = None, attrs: Attrs | None = None
 ):
 	if not isinstance(mode, QSPIMode) or not isinstance(data_mode, QSPIDataMode):
 		raise AssertionError('mode must be a QSPIMode and data_mode a QSPIDataMode')
