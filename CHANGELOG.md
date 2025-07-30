@@ -35,8 +35,20 @@ Unreleased template stuff
 - Minimum Python version has been bumped from `3.10` to `3.11`.
 - Altered the license for the Torii documentation going forward, all past contributions will remain under the [BSD-2-Clause] until they are re-written/superseded and all new/future contributions to the documentation will be under the [CC-BY-SA 4.0].
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
+- Centralized all the Torii diagnostic machinery into `torii.diagnostics`.
+- The `torii.hdl.dsl.SyntaxError` and `torii.hdl.dsl.SyntaxWarning` are now named `ToriiSyntaxError` and `ToriiSyntaxWarning` respectively, and their import from `torii.hdl.dsl` has been deprecated. See deprecated items listed below.
 
 ### Deprecated
+
+- Deprecated the `NameNotFound` import from `torii.util.tracer`, it now lives in `torii.diagnostics`.
+- Deprecated the `YosysError` and `YosysWarning` imports from `torii.tools.yosys`, they now live in `torii.diagnostics`.
+- Deprecated the `YosysError` import from `torii.tools`, it now lives in `torii.diagnostics`.
+- Deprecated the `DriverConflict` and `UnusedElaboratable` imports from `torii.hdl.ir`, they now live in `torii.diagnostics`.
+- Deprecated the `SyntaxError` and `SyntaxWarning` imports from `torii.hdl.dsl`, they now live in `torii.diagnostics` as `ToriiSyntaxError` and `ToriiSyntaxWarning`.
+- Deprecated the `DomainError` import from `torii.hdl.cd`, it now lives in `torii.diagnostics`.
+- Deprecated the `UnusedProperty` import from `torii.hdl.ast`, it now lives in `torii.diagnostics`.
+- Deprecated the `UnusedMustUse` import from `torii.hdl._unused`, it now lives in `torii.diagnostics` as `MustUseWarning`.
+- Deprecated the `ResourceError` import from `torii.build.res`, it now lives in `torii.diagnostics`.
 
 ### Removed
 

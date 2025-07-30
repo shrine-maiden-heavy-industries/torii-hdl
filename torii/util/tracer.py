@@ -4,18 +4,28 @@ from opcode    import opname
 from sys       import _getframe, implementation
 from typing    import TYPE_CHECKING
 
+from ..        import diagnostics
 from .._typing import SrcLoc
 
 __all__ = (
 	'get_src_loc',
 	'get_var_name',
-	'NameNotFound',
 )
 
-_IS_PYPY = implementation.name == 'pypy'
+def __dir__() -> list[str]:
+	return list({*__all__, 'NameNotFound'})
 
-class NameNotFound(Exception):
-	pass
+def __getattr__(name: str):
+	if name == 'NameNotFound':
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
+		)
+		return diagnostics.NameNotFound
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
+
+_IS_PYPY = implementation.name == 'pypy'
 
 _raise_exception = object()
 
@@ -57,7 +67,7 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 		'CALL_FUNCTION', 'CALL_FUNCTION_KW', 'CALL_FUNCTION_EX', 'CALL_METHOD', 'CALL_METHOD_KW', 'CALL', 'CALL_KW'
 	):
 		if default is _raise_exception:
-			raise NameNotFound
+			raise diagnostics.NameNotFound
 		else:
 			if TYPE_CHECKING:
 				assert isinstance(default, str)
@@ -95,7 +105,7 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 			index += 2
 		else:
 			if default is _raise_exception:
-				raise NameNotFound
+				raise diagnostics.NameNotFound
 			else:
 				if TYPE_CHECKING:
 					assert isinstance(default, str)

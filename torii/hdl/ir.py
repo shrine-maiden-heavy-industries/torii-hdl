@@ -8,36 +8,43 @@ from collections   import OrderedDict, defaultdict
 from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
+from ..            import diagnostics
 from .._typing     import IODirectionIO, SrcLoc
 from ..util        import flatten
 from ..util.tracer import get_src_loc
-from ._unused      import MustUse, UnusedMustUse
+from ._unused      import MustUse
 from .ast          import (
 	ClockSignal, ResetSignal, Signal, SignalDict, SignalLikeT, SignalSet, Statement, Value, ValueCastT,
 )
-from .cd           import ClockDomain, DomainError
+from .cd           import ClockDomain
 
 if TYPE_CHECKING:
 	from ..build.plat import Platform
 	from .dsl         import Module
 
 __all__ = (
-	'DriverConflict',
 	'Elaboratable',
 	'Fragment',
 	'Instance',
-	'UnusedElaboratable',
 )
 
-class UnusedElaboratable(UnusedMustUse):
-	# The warning is initially silenced. If everything that has been constructed remains unused,
-	# it means the application likely crashed (with an exception, or in another way that does not
-	# call `sys.excepthook`), and it's not necessary to show any warnings.
-	# Once elaboration starts, the warning is enabled.
-	_MustUse__silence = True
+def __dir__() -> list[str]:
+	return list({*__all__, 'DriverConflict', 'UnusedElaboratable'})
+
+def __getattr__(name: str):
+	if name in ('DriverConflict', 'UnusedElaboratable'):
+		from warnings import warn
+		warn(
+			f'The import of {name} from {__name__} has been deprecated and moved '
+			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
+		)
+		if name == 'DriverConflict':
+			return diagnostics.DriverConflict
+		return diagnostics.UnusedElaboratable
+	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class Elaboratable(MustUse, metaclass = ABCMeta):
-	_MustUse__warning = UnusedElaboratable
+	_MustUse__warning = diagnostics.UnusedElaboratable
 
 	def formal(self, module: Module) -> Module:
 		''' Entry point for elaboration under formal verification '''
@@ -47,9 +54,6 @@ class Elaboratable(MustUse, metaclass = ABCMeta):
 	def elaborate(self, platform: Platform | None) -> Module:
 		''' '''
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
-
-class DriverConflict(UserWarning):
-	pass
 
 class Fragment:
 	@staticmethod
@@ -63,7 +67,7 @@ class Fragment:
 				return obj
 			elif isinstance(obj, Elaboratable):
 				code = obj.elaborate.__code__
-				UnusedElaboratable._MustUse__silence = False
+				diagnostics.UnusedElaboratable._MustUse__silence = False
 				obj._MustUse__used = True
 				new_obj = obj.elaborate(platform)
 				if formal:
@@ -268,10 +272,10 @@ class Fragment:
 			# While we're at it, show a message.
 			message = (f'Signal \'{signal}\' is driven from multiple fragments: {", ".join(subfrag_names)}')
 			if mode == 'error':
-				raise DriverConflict(message)
+				raise diagnostics.DriverConflict(message)
 			elif mode == 'warn':
 				message += '; hierarchy will be flattened'
-				warnings.warn_explicit(message, DriverConflict, *signal.src_loc)
+				warnings.warn_explicit(message, diagnostics.DriverConflict, *signal.src_loc)
 
 		# Flatten hierarchy.
 		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):
@@ -318,7 +322,7 @@ class Fragment:
 			names = [n for f, n, i in subfrags]
 			if not all(names):
 				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
-				raise DomainError(
+				raise diagnostics.DomainError(
 					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
 					f'\'{".".join(hierarchy)}\'; it is necessary to either rename subfragment domains '
 					'explicitly, or give names to subfragments'
@@ -326,7 +330,7 @@ class Fragment:
 
 			if len(names) != len(set(names)):
 				names = sorted(f'#{i}' for f, n, i in subfrags)
-				raise DomainError(
+				raise diagnostics.DomainError(
 					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
 					f'\'{".".join(hierarchy)}\', some of which have identical names; it is necessary to either '
 					'rename subfragment domains explicitly, or give distinct names to subfragments'
@@ -370,7 +374,7 @@ class Fragment:
 				continue
 			value = missing_domain(domain_name)
 			if value is None:
-				raise DomainError(f'Domain \'{domain_name}\' is used but not defined')
+				raise diagnostics.DomainError(f'Domain \'{domain_name}\' is used but not defined')
 			if type(value) is ClockDomain:
 				self.add_domains(value)
 				# And expose ports on the newly added clock domain, since it is added directly
@@ -380,7 +384,7 @@ class Fragment:
 				new_fragment = Fragment.get(value, platform = platform)
 				if domain_name not in new_fragment.domains:
 					defined = new_fragment.domains.keys()
-					raise DomainError(
+					raise diagnostics.DomainError(
 						'Fragment returned by missing domain callback does not define '
 						f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).')
 				self.add_subfragment(new_fragment, f'cd_{domain_name}')
