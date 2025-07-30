@@ -3,16 +3,16 @@
 import os
 import sys
 import warnings
-from copy           import deepcopy
-from io             import StringIO
+from copy                    import deepcopy
+from io                      import StringIO
 
-from torii.warnings import (
+from torii.diagnostics.hooks import (
 	_WARN_HANDLER_RESTORE, DEFAULT_FANCY_CONTEXT, DEFAULT_FANCY_WIDTH, DEFAULT_STRIP_PATH, DEFAULT_USE_FANCY,
 	WarningRenderingOptions, _get_console, _populate_options, _warning_handler, install_handler,
 	remove_handler,
 )
 
-from .utils         import ToriiTestSuiteCase
+from ..utils                 import ToriiTestSuiteCase
 
 class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
