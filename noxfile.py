@@ -54,7 +54,7 @@ def test(session: Session) -> None:
 		session.log('Running core test suite...')
 		session.run('python', *coverage_args, *unitest_args, *session.posargs)
 
-		if SKIP_EXAMPLES:
+		if SKIP_EXAMPLES or len(session.posargs) > 0:
 			session.log('Skipping basic examples...')
 		else:
 			session.log('Testing basic examples...')
@@ -63,7 +63,7 @@ def test(session: Session) -> None:
 					session.run('python', *coverage_args, str(example), 'generate', stdout = f)
 					session.run('python', *coverage_args, str(example), 'simulate', stdout = f)
 
-		if SKIP_FORMAL:
+		if SKIP_FORMAL or len(session.posargs) > 0:
 			session.log('Skipping formal examples...')
 		else:
 			session.log('Testing formal examples...')
