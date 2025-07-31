@@ -1,7 +1,51 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.platform.resources.interface import PCIeBusResources
+from torii.platform.resources.interface import PCIBusResources, PCIeBusResources
 from torii.test                         import ToriiTestCase
+
+class PCIBusResourcesTestCase(ToriiTestCase):
+
+	def test_base(self):
+		resources = PCIBusResources(
+			0,
+			inta_n = 'X', intb_n = 'X', intc_n = 'X', intd_n = 'X',
+			rst_n = 'X', clk = 'X', gnt_n = 'X', req_n = 'X', idsel = 'X',
+			frame_n = 'X', irdy_n = 'X', trdy_n = 'X', devsel_n = 'X', stop_n = 'X',
+			lock_n = 'X', perr_n = 'X', serr_n = 'X', smbclk = 'X', smbdat = 'X',
+			ad_lower = 'X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X',
+			cbe32_n = 'X X X X', par32 = 'X',
+		)
+
+		self.assertEqual(len(resources), 1)
+
+		self.assertEqual(resources[0].name, 'pci_32')
+		self.assertEqual(resources[0].number, 0)
+		self.assertEqual(len(resources[0].ios), 22)
+
+	def test_sub_busses(self):
+		resources = PCIBusResources(
+			0,
+			inta_n = 'X', intb_n = 'X', intc_n = 'X', intd_n = 'X',
+			rst_n = 'X', clk = 'X', gnt_n = 'X', req_n = 'X', idsel = 'X',
+			frame_n = 'X', irdy_n = 'X', trdy_n = 'X', devsel_n = 'X', stop_n = 'X',
+			lock_n = 'X', perr_n = 'X', serr_n = 'X', smbclk = 'X', smbdat = 'X',
+			ad_lower = 'X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X',
+			cbe32_n = 'X X X X', par32 = 'X',
+			ad_upper = 'X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X',
+			cbe64_n = 'X X X X', par64 = 'X', ack64_n = 'X', req64_n = 'X'
+		)
+
+		self.assertEqual(len(resources), 2)
+
+		pci32 = resources[0]
+		self.assertEqual(pci32.name, 'pci_32')
+		self.assertEqual(pci32.number, 0)
+		self.assertEqual(len(pci32.ios), 22)
+
+		pci64 = resources[1]
+		self.assertEqual(pci64.name, 'pci_64')
+		self.assertEqual(pci64.number, 0)
+		self.assertEqual(len(pci64.ios), 27)
 
 class PCIeBusResourcesTestCase(ToriiTestCase):
 
