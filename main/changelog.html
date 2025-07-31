@@ -9,7 +9,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Changelog - Torii 0.8.1.dev170 Documentation</title>
+<title>Changelog - Torii 0.8.1.dev171 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
@@ -199,7 +199,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii 0.8.1.dev170 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii 0.8.1.dev171 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -222,7 +222,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev170 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev171 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -457,7 +457,7 @@ The minimum Python version for Torii is now 3.11</p>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">on</span></code> and <code class="docutils literal notranslate"><span class="pre">enabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">off</span></code> and <code class="docutils literal notranslate"><span class="pre">disabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">False</span></code> when the <code class="docutils literal notranslate"><span class="pre">type</span></code> param of <code class="docutils literal notranslate"><span class="pre">get_linter_option</span></code> is <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p></li>
 <li><p>Added new <code class="docutils literal notranslate"><span class="pre">torii.util.fs</span></code> module for Filesystem related utilities and abstractions, currently only has <code class="docutils literal notranslate"><span class="pre">working_dir</span></code>, which is a context manager for switching working directories for an operation.</p></li>
 <li><p>Added a new way to build C++-based native modules with <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.hash.crc</span></code> module for Cyclic Redundency Check calculation.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.hash.crc</span></code> module for Cyclic Redundancy Check calculation.</p></li>
 </ul>
 </section>
 <section id="id3">
@@ -718,7 +718,7 @@ The minimum Python version for Torii is now 3.11</p>
 <ul class="simple">
 <li><p>Added some minor comments to the <code class="docutils literal notranslate"><span class="pre">torii.sim.core</span></code> module about the function of some of the objects.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.vendor.gowin.GowinPlatform</span></code>.</p></li>
-<li><p>Added support for Xilinx Atrix UltraScale+ part numbers.</p></li>
+<li><p>Added support for Xilinx Artix UltraScale+ part numbers.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">env</span></code> argument to <code class="docutils literal notranslate"><span class="pre">BuildPlan.execute_local</span></code>.</p></li>
 <li><p>Allowed removing <code class="docutils literal notranslate"><span class="pre">src</span></code> attributes on RTLIL output.</p></li>
 </ul>
@@ -946,7 +946,7 @@ The minimum Python version for Torii is now 3.11</p>
 <li><p>Migrated string escape functions from the <code class="docutils literal notranslate"><span class="pre">TemplatedPlatform</span></code> into the new strings utility module.</p></li>
 <li><p>Moved <code class="docutils literal notranslate"><span class="pre">log2_int</span></code> and <code class="docutils literal notranslate"><span class="pre">bits_for</span></code> into the new units utility module.</p></li>
 <li><p>Moved vendor modules into <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor</span></code>.</p></li>
-<li><p>Replaced deprecated <code class="docutils literal notranslate"><span class="pre">abstractproperties</span></code> with <code class="docutils literal notranslate"><span class="pre">property</span></code>/<code class="docutils literal notranslate"><span class="pre">abstractmethod</span></code> combo.</p></li>
+<li><p>Replaced deprecated <code class="docutils literal notranslate"><span class="pre">abstractproperty</span></code>s with <code class="docutils literal notranslate"><span class="pre">property</span></code>/<code class="docutils literal notranslate"><span class="pre">abstractmethod</span></code> combo.</p></li>
 <li><p>Moved the <code class="docutils literal notranslate"><span class="pre">tracer</span></code> module into <code class="docutils literal notranslate"><span class="pre">torii.util</span></code>.</p></li>
 <li><p>Moved the <code class="docutils literal notranslate"><span class="pre">_unused</span></code> module into <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code>.</p></li>
 </ul>
@@ -1074,7 +1074,7 @@ The minimum Python version for Torii is now 3.11</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=42472de3"></script>
+</div><script src="_static/documentation_options.js?v=2688fda7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
