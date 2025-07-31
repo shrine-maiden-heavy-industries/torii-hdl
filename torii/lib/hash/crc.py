@@ -227,7 +227,7 @@ class CombBytewiseCRC(Elaboratable):
 			for bit in range(crcSignal.width):
 				# Start by flattening all the bit lists
 				stateBit: list[Slice | Const] = list(flatten(stateBits[bit]))
-				# With the flattening complted for this bit list, eliminate needless bits
+				# With the flattening completed for this bit list, eliminate needless bits
 				oneBits = 0
 				signalBits = ValueDict[int]()
 				# For each entry int he stateBit list

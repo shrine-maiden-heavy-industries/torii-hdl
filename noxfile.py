@@ -37,7 +37,7 @@ def test(session: Session) -> None:
 	BASIC_EXAMPLES  = ROOT_DIR / 'examples' / 'basic'
 	FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
 
-	unitest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
+	unittest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('click') # For SBY
 	session.install('-e', '.')
@@ -52,7 +52,7 @@ def test(session: Session) -> None:
 
 	with session.chdir(OUTPUT_DIR):
 		session.log('Running core test suite...')
-		session.run('python', *coverage_args, *unitest_args, *session.posargs)
+		session.run('python', *coverage_args, *unittest_args, *session.posargs)
 
 		if SKIP_EXAMPLES or len(session.posargs) > 0:
 			session.log('Skipping basic examples...')

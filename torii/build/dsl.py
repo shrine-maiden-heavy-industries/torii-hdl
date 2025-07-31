@@ -247,7 +247,7 @@ class Resource(Subsignal):
 		name_or_number: str | int, number: int | None = None, *,
 		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
 	) -> Resource:
-		# This cosnstructor accepts two different forms:
+		# This constructor accepts two different forms:
 		#  1. Number-only form:
 		#       Resource.family(0, default_name = 'name', ios = [ Pins('A0 A1') ])
 		#  2. Name-and-number (name override) form:

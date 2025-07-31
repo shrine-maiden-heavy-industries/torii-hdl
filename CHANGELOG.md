@@ -68,7 +68,7 @@ Unreleased template stuff
 - Added `on` and `enabled` as valid values for `True` and `off` and `disabled` as valid values for `False` when the `type` param of `get_linter_option` is `bool`.
 - Added new `torii.util.fs` module for Filesystem related utilities and abstractions, currently only has `working_dir`, which is a context manager for switching working directories for an operation.
 - Added a new way to build C++-based native modules with `torii.tools.cxx.compile_cxx`.
-- Added `torii.lib.hash.crc` module for Cyclic Redundency Check calculation.
+- Added `torii.lib.hash.crc` module for Cyclic Redundancy Check calculation.
 
 ### Changed
 
@@ -264,7 +264,7 @@ Unreleased template stuff
 
 - Added some minor comments to the `torii.sim.core` module about the function of some of the objects.
 - Added `torii.vendor.gowin.GowinPlatform`.
-- Added support for Xilinx Atrix UltraScale+ part numbers.
+- Added support for Xilinx Artix UltraScale+ part numbers.
 - Added `env` argument to `BuildPlan.execute_local`.
 - Allowed removing `src` attributes on RTLIL output.
 
@@ -448,7 +448,7 @@ Unreleased template stuff
 - Migrated string escape functions from the `TemplatedPlatform` into the new strings utility module.
 - Moved `log2_int` and `bits_for` into the new units utility module.
 - Moved vendor modules into `torii.platform.vendor`.
-- Replaced deprecated `abstractproperties` with `property`/`abstractmethod` combo.
+- Replaced deprecated `abstractproperty`s with `property`/`abstractmethod` combo.
 - Moved the `tracer` module into `torii.util`.
 - Moved the `_unused` module into `torii.hdl`.
 

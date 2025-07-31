@@ -312,7 +312,7 @@ class AsyncFIFOSimCase(ToriiTestSuiteCase):
 	def test_async_fifo_r_level_latency(self):
 		fifo = AsyncFIFO(width = 32, depth = 10, r_domain = 'sync', w_domain = 'sync')
 
-		ff_syncronizer_latency = 2
+		ff_synchronizer_latency = 2
 
 		def testbench():
 			for i in range(10):
@@ -320,8 +320,8 @@ class AsyncFIFOSimCase(ToriiTestSuiteCase):
 				yield fifo.w_en.eq(1)
 				yield
 
-				if (i - ff_syncronizer_latency) > 0:
-					self.assertEqual((yield fifo.r_level), i - ff_syncronizer_latency)
+				if (i - ff_synchronizer_latency) > 0:
+					self.assertEqual((yield fifo.r_level), i - ff_synchronizer_latency)
 				else:
 					self.assertEqual((yield fifo.r_level), 0)
 
