@@ -12,7 +12,7 @@ __all__ = (
 
 def _SplitResources(
 	name_or_number: str | int | None = None, number: int | None = None, *,
-	default_name: str, dir: IODirectionIO, pins: str | list[str] | dict[str, str], invert: bool = False,
+	default_name: str, dir: IODirectionIO, pins: str | list[str] | dict[int, str], invert: bool = False,
 	conn: ResourceConn | None = None,
 	attrs: Attrs | None = None,
 ) -> list[Resource]:
@@ -39,8 +39,9 @@ def _SplitResources(
 	return resources
 
 def LEDResources(
-	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],
-	invert: bool = False, conn: ResourceConn | None = None, attrs: Attrs | None = None,
+	name_or_number: str | int | None = None, number: int | None = None, *,
+	pins: str | list[str] | dict[int, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
 		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert, conn = conn, attrs = attrs
@@ -63,16 +64,18 @@ def RGBLEDResource(
 	return Resource.family(name_or_number, number, default_name = 'rgb_led', ios = ios)
 
 def ButtonResources(
-	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],
-	invert: bool = False, conn: ResourceConn | None = None, attrs: Attrs | None = None,
+	name_or_number: str | int | None = None, number: int | None = None, *,
+	pins: str | list[str] | dict[int, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
 		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
 	)
 
 def SwitchResources(
-	name_or_number: str | int | None = None, number: int | None = None, *, pins: str | list[str] | dict[str, str],
-	invert: bool = False, conn: ResourceConn | None = None, attrs: Attrs | None = None,
+	name_or_number: str | int | None = None, number: int | None = None, *,
+	pins: str | list[str] | dict[int, str], invert: bool = False,
+	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
 		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
