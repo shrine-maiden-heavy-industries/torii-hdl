@@ -9,21 +9,26 @@ in order to produce pretty and/or machine consumable warning messages.
 
 # TODO(aki): Document once the docs refactor is merged in
 
+import sys
 import warnings
-from linecache    import getline, getlines
-from os           import getenv
-from pathlib      import Path
-from sys          import stdout
-from typing       import Final, TextIO, TypedDict
+from linecache     import getline, getlines
+from os            import getenv
+from pathlib       import Path
+from sys           import stdout
+from types         import TracebackType
+from typing        import Final, TextIO, TypedDict
 
-from rich         import get_console
-from rich.console import Console
-from rich.padding import Padding
-from rich.panel   import Panel
-from rich.syntax  import Syntax
+from rich          import get_console
+from rich.console  import Console
+from rich.padding  import Padding
+from rich.panel    import Panel
+from rich.syntax   import Syntax
 
-# Create a reference to the warning handler which was installed prior to us loading
+from ..hdl._unused import MustUse
+
+# Create a reference to the handlers that are installed prior to us loading
 _WARN_HANDLER_RESTORE = warnings.showwarning
+_EXCEPTHOOK_RESTORE   = sys.excepthook
 
 # The Torii modules we want to explicitly force warnings on for
 _TORII_MODULES = (
@@ -264,10 +269,22 @@ def _warning_handler( # :nocov:
 	if show_source:
 		cons.line()
 
-def install_handler(*, catch_all: bool = False) -> None:
+def _excepthook(type: type[BaseException], value: BaseException, traceback: TracebackType | None) -> None:
 	'''
-	Replace the current :py:meth:`warnings.showwarning` handler with the torii warning handler,
-	saving the original so it can be restored when calling :py:meth:`remove_handler`.
+	The Torii exception hook handler.
+
+	Currently this only disables the `UnusedElaboratale` diagnostic as having those be emitted
+	when the interpreter dies would just cause more harm than good.
+	'''
+
+	# We assume the interpreter crashed, snuff unused elaboratable warnings
+	MustUse._MustUse__silence = True
+	_EXCEPTHOOK_RESTORE(type, value, traceback)
+
+def install_warning_handler(*, catch_all: bool = False) -> None:
+	'''
+	Replace the current :py:meth:`warnings.showwarning` handler with the Torii warning handler,
+	saving the original so it can be restored when calling :py:meth:`remove_warning_handler`.
 
 	If the environment variable ``TORII_WARNINGS_NOHANDLE`` is set, then this function has no effect
 	and the current warning handler will remain installed.
@@ -304,10 +321,10 @@ def install_handler(*, catch_all: bool = False) -> None:
 	# Install the new warning handler
 	warnings.showwarning = _warning_handler
 
-def remove_handler() -> None:
+def remove_warning_handler() -> None:
 	'''
 	Restore the original :py:meth:`warnings.showwarning` handler that was present before the
-	call to :py:meth:`install_handler`.
+	call to :py:meth:`install_warning_handler`.
 	'''
 
 	# If we didn't install the handler, we might restore incorrectly, so don't bother
@@ -316,3 +333,53 @@ def remove_handler() -> None:
 
 	# Restore the warning handler
 	warnings.showwarning = _WARN_HANDLER_RESTORE
+
+def install_excepthook() -> None:
+	'''
+	Replace the current :py:meth:`sys.excepthook` handler with the Torii excepthook handler,
+	saving the original so it can be restored when calling :py:meth:`remove_excepthook`.
+	'''
+
+	# Store the pre-existing handler
+	global _EXCEPTHOOK_RESTORE
+	_EXCEPTHOOK_RESTORE = sys.excepthook
+
+	# Install the excepthook
+	sys.excepthook = _excepthook
+
+def remove_excepthook() -> None:
+	'''
+	Restore the original :py:meth:`sys.excepthook` handler that was present before the
+	call to :py:meth:`install_excepthook`.
+	'''
+
+	sys.excepthook = _EXCEPTHOOK_RESTORE
+
+def install_handlers(*, catch_all: bool = False) -> None:
+	'''
+	Replace the current :py:meth:`sys.excepthook` and :py:meth:`warnings.showwarning` handlers with the
+	Torii handlers, saving the originals so they can be restored when calling :py:meth:`remove_handlers`.
+
+	Note
+	----
+	If the ``catch_all`` parameter is not set, or set to ``False``, then this method will still force
+	enable :py:class:`DeprecationWarning` and :py:class:`SyntaxWarning` warnings for a list of known
+	Torii modules regardless.
+
+	Parameters
+	----------
+	catch_all : bool
+		Flush the Python warnings filters so all warnings are asserted.
+	'''
+
+	install_warning_handler(catch_all = catch_all)
+	install_excepthook()
+
+def remove_handlers() -> None:
+	'''
+	Restore the original :py:meth:`sys.excepthook` and :py:meth:`warnings.showwarning` handlers that were
+	present before the call to :py:meth:`install_handlers`.
+	'''
+
+	remove_warning_handler()
+	remove_excepthook()
