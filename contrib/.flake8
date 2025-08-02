@@ -1,13 +1,4 @@
 [flake8]
-
-exclude =
-	.git,
-	__pycache__,
-	.eggs,
-	build,
-	_build,
-	deps
-
 max-line-length = 120
 indent-size = 1
 statistics = True
