@@ -209,7 +209,8 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		)
 
 	def test_basic_subsignals(self):
-		s = Subsignal('a',
+		s = Subsignal(
+			'a',
 			Subsignal('b', Pins('A0')),
 			Subsignal('c', Pins('A1'))
 		)
@@ -220,7 +221,8 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		)
 
 	def test_attrs(self):
-		s = Subsignal('a',
+		s = Subsignal(
+			'a',
 			Subsignal('b', Pins('A0')),
 			Subsignal('c', Pins('A0'), Attrs(SLEW = 'FAST')),
 			Attrs(IOSTANDARD = 'LVCMOS33')
@@ -295,7 +297,8 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 
 class ResourceTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
-		r = Resource('serial', 0,
+		r = Resource(
+			'serial', 0,
 			Subsignal('tx', Pins('A0', dir = 'o')),
 			Subsignal('rx', Pins('A1', dir = 'i')),
 			Attrs(IOSTANDARD = 'LVCMOS33')
