@@ -319,18 +319,17 @@ class Fragment:
 			if not all(names):
 				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
 				raise DomainError(
-					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\'; '
-					'it is necessary to either rename subfragment domains '
+					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
+					f'\'{".".join(hierarchy)}\'; it is necessary to either rename subfragment domains '
 					'explicitly, or give names to subfragments'
 				)
 
 			if len(names) != len(set(names)):
 				names = sorted(f'#{i}' for f, n, i in subfrags)
 				raise DomainError(
-					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment \'{".".join(hierarchy)}\', '
-					'some of which have identical names; it is necessary to either '
-					'rename subfragment domains explicitly, or give distinct names '
-					'to subfragments'
+					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
+					f'\'{".".join(hierarchy)}\', some of which have identical names; it is necessary to either '
+					'rename subfragment domains explicitly, or give distinct names to subfragments'
 				)
 
 			for subfrag, name, i in subfrags:
