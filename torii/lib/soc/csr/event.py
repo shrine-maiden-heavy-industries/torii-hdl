@@ -50,7 +50,9 @@ class EventMonitor(Elaboratable):
 		self._monitor: event.Monitor | None = None
 		self._enable: Element | None        = None
 		self._pending: Element | None       = None
-		self._mux                           = Multiplexer(addr_width = 1, data_width = data_width, alignment = alignment)
+		self._mux                           = Multiplexer(
+			addr_width = 1, data_width = data_width, alignment = alignment
+		)
 		self._frozen                        = False
 
 	def freeze(self) -> None:
