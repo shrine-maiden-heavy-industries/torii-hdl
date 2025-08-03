@@ -149,7 +149,7 @@ check_untyped_defs = true
 [tool.ruff]
 cache-dir = 'build/.ruff_cache'
 src = [
-	'examples', 'tests', 'torii'
+	'examples', 'tests', 'torii', 'docs'
 ]
 indent-width = 4
 line-length = 120
