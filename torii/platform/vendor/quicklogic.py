@@ -169,7 +169,8 @@ class QuicklogicPlatform(TemplatedPlatform):
 					raise ValueError('OSC frequency (osc_freq) must be an integer between 2100000 and 80000000')
 				if not isinstance(self.osc_freq, int) or self.osc_freq < 2100000 or self.osc_freq > 80000000:
 					raise ValueError(
-						f'OSC frequency (osc_freq) must be an integer between 2100000 and 80000000, not {self.osc_freq!r}'
+						'OSC frequency (osc_freq) must be an integer between 2100000 and 80000000, '
+						f'not {self.osc_freq!r}'
 					)
 				clk_i = Signal()
 				sys_clk0 = Signal()
