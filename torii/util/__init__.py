@@ -61,7 +61,9 @@ def union(iter: Iterable[T], start: T | None = None) -> T:
 
 	'''
 
-	# NOTE(aki): The two ignores below are due `operator.ior` being stupid and using `Any` for typing rather than a typevar
+	# NOTE(aki):
+	# The two ignores below are due `operator.ior` being stupid and using `Any` for typing rather
+	# than a typevar.
 	result = start
 	for element in iter:
 		if result is None:
