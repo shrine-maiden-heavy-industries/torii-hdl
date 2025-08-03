@@ -1,29 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys      import _getframe
-from typing   import Any, TypedDict, TypeVar
-from warnings import warn_explicit
+from sys           import _getframe
+from typing        import Any, TypedDict, TypeVar
+from warnings      import warn_explicit
 
-from ..       import diagnostics
-from ..util   import get_linter_option
+from ..diagnostics import MustUseWarning
+from ..util        import get_linter_option
 
 __all__ = (
 	'MustUse',
 )
-
-
-def __dir__() -> list[str]:
-	return list({*__all__, 'UnusedMustUse'})
-
-def __getattr__(name: str):
-	if name == 'UnusedMustUse':
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.MustUseWarning', DeprecationWarning, stacklevel = 2
-		)
-		return diagnostics.MustUseWarning
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class _MustUseCtx(TypedDict):
 	filename: str
@@ -34,7 +20,7 @@ T = TypeVar('T')
 
 class MustUse:
 	_MustUse__silence: bool = False
-	_MustUse__warning: type[Warning] = diagnostics.MustUseWarning
+	_MustUse__warning: type[Warning] = MustUseWarning
 	_MustUse__used: bool
 	_MustUse__context: _MustUseCtx
 

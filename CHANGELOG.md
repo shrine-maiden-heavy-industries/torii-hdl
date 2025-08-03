@@ -55,6 +55,15 @@ Unreleased template stuff
 - Removed the deprecated `connect` method in favor of `attach` and the `payload` signal in favor of `data` from `torii.lib.stream.simple`.
 - Removed the deprecated `rdy` and `ack` signals in `torii.lib.stdio.serial.AsyncSerialRX` in favor of `done` andd `start` respectively.
 - Removed the dependency on the `typing_extensions` module.
+- Removed the deprecated `NameNotFound` import from `torii.util.tracer`.
+- Removed the deprecated `YosysError` and `YosysWarning` imports from `torii.tools.yosys`.
+- Removed the deprecated `YosysError` import from `torii.tools`.
+- Removed the deprecated `DriverConflict` and `UnusedElaboratable` imports from `torii.hdl.ir`.
+- Removed the deprecated `SyntaxError` and `SyntaxWarning` imports from `torii.hdl.dsl`.
+- Removed the deprecated `DomainError` import from `torii.hdl.cd`.
+- Removed the deprecated `UnusedProperty` import from `torii.hdl.ast`.
+- Removed the deprecated `UnusedMustUse` import from `torii.hdl._unused` as `MustUseWarning`.
+- Removed the deprecated `ResourceError` import from `torii.build.res`.
 
 ### Fixed
 

@@ -4,7 +4,7 @@ from collections     import OrderedDict
 from collections.abc import Callable, Generator, Iterable
 from typing          import Literal
 
-from ..              import diagnostics
+from ..diagnostics   import ResourceError
 from .._typing       import IODirectionEmpty
 from ..hdl.ast       import Signal, SignalDict, Value, ValueCastable
 from ..hdl.rec       import Record
@@ -14,19 +14,6 @@ from .dsl            import Attrs, Connector, DiffPairs, Pins, Resource, Subsign
 __all__ = (
 	'ResourceManager',
 )
-
-def __dir__() -> list[str]:
-	return list({*__all__, 'ResourceError'})
-
-def __getattr__(name: str):
-	if name == 'ResourceError':
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		return diagnostics.ResourceError
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class ResourceManager:
 	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:
@@ -74,7 +61,7 @@ class ResourceManager:
 
 	def lookup(self, name: str, number: int = 0) -> Resource:
 		if (name, number) not in self.resources:
-			raise diagnostics.ResourceError(f'Resource {name}#{number} does not exist')
+			raise ResourceError(f'Resource {name}#{number} does not exist')
 
 		return self.resources[name, number]
 
@@ -85,7 +72,7 @@ class ResourceManager:
 	) -> Record | Pin:
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
-			raise diagnostics.ResourceError(f'Resource {name}#{number} has already been requested')
+			raise ResourceError(f'Resource {name}#{number} has already been requested')
 
 		def merge_options(
 			subsignal: Subsignal,
@@ -197,7 +184,7 @@ class ResourceManager:
 
 				for phys_name in phys_names:
 					if phys_name in self._phys_reqd:
-						raise diagnostics.ResourceError(
+						raise ResourceError(
 							f'Resource component {name} uses physical pin {phys_name}, but it '
 							f'is already used by resource component {self._phys_reqd[phys_name]} that was '
 							'requested earlier'

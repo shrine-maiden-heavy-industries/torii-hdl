@@ -3,7 +3,7 @@
 from os            import environ
 from shutil        import which
 
-from ..            import diagnostics
+from ..diagnostics import ToolNotFound
 from ..util.string import tool_env_var
 
 __doc__ = '''\
@@ -19,19 +19,6 @@ __all__ = (
 	'has_tool',
 	'require_tool',
 )
-
-def __dir__() -> list[str]:
-	return list({*__all__, 'ToolNotFound'})
-
-def __getattr__(name: str):
-	if name == 'ToolNotFound':
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		return diagnostics.ToolNotFound
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 def _get_tool(name: str) -> str:
 	'''
@@ -93,12 +80,12 @@ def require_tool(name: str) -> str:
 	path = _get_tool(name)
 	if which(path) is None:
 		if env_var in environ:
-			raise diagnostics.ToolNotFound(
+			raise ToolNotFound(
 				f'Could not find required tool {name} in {path} as specified via '
 				f'the {env_var} environment variable'
 			)
 		else:
-			raise diagnostics.ToolNotFound(
+			raise ToolNotFound(
 				f'Could not find required tool {name} in PATH. Place '
 				'it directly in PATH or specify path explicitly '
 				f'via the {env_var} environment variable'

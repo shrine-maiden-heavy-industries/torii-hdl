@@ -8,7 +8,7 @@ from collections   import OrderedDict, defaultdict
 from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
-from ..            import diagnostics
+from ..diagnostics import DomainError, DriverConflict, UnusedElaboratable
 from .._typing     import IODirectionIO, SrcLoc
 from ..util        import flatten
 from ..util.tracer import get_src_loc
@@ -28,23 +28,8 @@ __all__ = (
 	'Instance',
 )
 
-def __dir__() -> list[str]:
-	return list({*__all__, 'DriverConflict', 'UnusedElaboratable'})
-
-def __getattr__(name: str):
-	if name in ('DriverConflict', 'UnusedElaboratable'):
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		if name == 'DriverConflict':
-			return diagnostics.DriverConflict
-		return diagnostics.UnusedElaboratable
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
-
 class Elaboratable(MustUse, metaclass = ABCMeta):
-	_MustUse__warning = diagnostics.UnusedElaboratable
+	_MustUse__warning = UnusedElaboratable
 
 	def formal(self, module: Module) -> Module:
 		''' Entry point for elaboration under formal verification '''
@@ -67,7 +52,7 @@ class Fragment:
 				return obj
 			elif isinstance(obj, Elaboratable):
 				code = obj.elaborate.__code__
-				diagnostics.UnusedElaboratable._MustUse__silence = False
+				UnusedElaboratable._MustUse__silence = False
 				obj._MustUse__used = True
 				new_obj = obj.elaborate(platform)
 				if formal:
@@ -272,10 +257,10 @@ class Fragment:
 			# While we're at it, show a message.
 			message = (f'Signal \'{signal}\' is driven from multiple fragments: {", ".join(subfrag_names)}')
 			if mode == 'error':
-				raise diagnostics.DriverConflict(message)
+				raise DriverConflict(message)
 			elif mode == 'warn':
 				message += '; hierarchy will be flattened'
-				warnings.warn_explicit(message, diagnostics.DriverConflict, *signal.src_loc)
+				warnings.warn_explicit(message, DriverConflict, *signal.src_loc)
 
 		# Flatten hierarchy.
 		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):
@@ -322,7 +307,7 @@ class Fragment:
 			names = [n for f, n, i in subfrags]
 			if not all(names):
 				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
-				raise diagnostics.DomainError(
+				raise DomainError(
 					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
 					f'\'{".".join(hierarchy)}\'; it is necessary to either rename subfragment domains '
 					'explicitly, or give names to subfragments'
@@ -330,7 +315,7 @@ class Fragment:
 
 			if len(names) != len(set(names)):
 				names = sorted(f'#{i}' for f, n, i in subfrags)
-				raise diagnostics.DomainError(
+				raise DomainError(
 					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
 					f'\'{".".join(hierarchy)}\', some of which have identical names; it is necessary to either '
 					'rename subfragment domains explicitly, or give distinct names to subfragments'
@@ -374,7 +359,7 @@ class Fragment:
 				continue
 			value = missing_domain(domain_name)
 			if value is None:
-				raise diagnostics.DomainError(f'Domain \'{domain_name}\' is used but not defined')
+				raise DomainError(f'Domain \'{domain_name}\' is used but not defined')
 			if type(value) is ClockDomain:
 				self.add_domains(value)
 				# And expose ports on the newly added clock domain, since it is added directly
@@ -384,7 +369,7 @@ class Fragment:
 				new_fragment = Fragment.get(value, platform = platform)
 				if domain_name not in new_fragment.domains:
 					defined = new_fragment.domains.keys()
-					raise diagnostics.DomainError(
+					raise DomainError(
 						'Fragment returned by missing domain callback does not define '
 						f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).')
 				self.add_subfragment(new_fragment, f'cd_{domain_name}')

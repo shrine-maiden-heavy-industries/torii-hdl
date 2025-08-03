@@ -10,21 +10,6 @@ __all__ = (
 	'ClockDomain',
 )
 
-def __dir__() -> list[str]:
-	return list({*__all__, 'DomainError'})
-
-def __getattr__(name: str):
-	if name == 'DomainError':
-		from warnings import warn
-		from torii.diagnostics.errors import DomainError
-
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		return DomainError
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
-
 class ClockDomain:
 	'''
 	Synchronous domain.

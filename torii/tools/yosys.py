@@ -9,28 +9,13 @@ from collections.abc import Callable
 from pathlib         import Path
 from typing          import NamedTuple
 
-from ..              import diagnostics
+from ..diagnostics   import YosysError, YosysWarning
 from .               import has_tool, require_tool
 
 __all__ = (
 	'find_yosys',
 	'YosysBinary',
 )
-
-def __dir__() -> list[str]:
-	return list({*__all__, 'YosysError', 'YosysWarning'})
-
-def __getattr__(name: str):
-	if name in ('YosysError', 'YosysWarning'):
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		if name == 'YosysError':
-			return diagnostics.YosysError
-		return diagnostics.YosysWarning
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 class YosysVersion(NamedTuple):
 	major: int
@@ -99,7 +84,7 @@ class YosysBinary:
 		)
 		stdout, stderr = popen.communicate()
 		if popen.returncode:
-			raise diagnostics.YosysError(stderr.strip())
+			raise YosysError(stderr.strip())
 		return Path(stdout.strip())
 
 	@classmethod
@@ -152,11 +137,11 @@ class YosysBinary:
 		cls: type[YosysBinary], returncode: int, stdout: str, stderr: str, ignore_warnings: bool, src_loc_at: int
 	) -> str:
 		if returncode:
-			raise diagnostics.YosysError(stderr.strip())
+			raise YosysError(stderr.strip())
 		if not ignore_warnings:
 			for match in re.finditer(r'(?ms:^Warning: (.+)\n$)', stderr):
 				message = match.group(1).replace('\n', ' ')
-				warnings.warn(message, diagnostics.YosysWarning, stacklevel = 3 + src_loc_at)
+				warnings.warn(message, YosysWarning, stacklevel = 3 + src_loc_at)
 		return stdout
 
 def min_yosys_version(version: YosysVersion) -> bool:
@@ -205,7 +190,7 @@ def find_yosys(
 		version = YosysBinary.version()
 		if version is not None and requirement(version):
 			return YosysBinary
-	raise diagnostics.YosysError(
+	raise YosysError(
 		'Could not find an acceptable Yosys binary.\n'
 		'Please ensure it is in your path or you set YOSYS environment variable.'
 	)

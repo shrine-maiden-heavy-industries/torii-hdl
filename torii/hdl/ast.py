@@ -17,7 +17,7 @@ from typing            import (
 	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec, SupportsIndex, TypeAlias, TypeVar, TypeVarTuple,
 )
 
-from ..                import diagnostics
+from ..diagnostics     import UnusedProperty
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import flatten, tracer, union
 from ..util.decorators import final
@@ -67,20 +67,6 @@ __all__ = (
 	'ValueLike',
 	'ValueSet',
 )
-
-
-def __dir__() -> list[str]:
-	return list({*__all__, 'UnusedProperty'})
-
-def __getattr__(name: str):
-	if name == 'UnusedProperty':
-		from warnings import warn
-		warn(
-			f'The import of {name} from {__name__} has been deprecated and moved '
-			f'to torii.diagnostics.{name}', DeprecationWarning, stacklevel = 2
-		)
-		return diagnostics.UnusedProperty
-	raise AttributeError(f'Module {__name__!r} has no attribute {name!r}')
 
 T = TypeVar('T')
 U = TypeVar('U')
@@ -2154,7 +2140,7 @@ class Assign(Statement):
 
 @final
 class Property(Statement, MustUse):
-	_MustUse__warning = diagnostics.UnusedProperty
+	_MustUse__warning = UnusedProperty
 
 	class Kind(Enum):
 		Assert = 'assert'
