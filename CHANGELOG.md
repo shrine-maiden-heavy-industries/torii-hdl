@@ -29,6 +29,7 @@ Unreleased template stuff
 - New `torii.back.json` backend to emit JSON netlists for designs.
 - Added `det` pin to `torii.platforms.resources.memory.SDCardResources` for hot-plug SD Card detection.
 - New `.from_khz`, `.from_mhz`, and `from_ghz`, on the `torii.build.dsl.Clock` to create a new clock resource from more than just Hz.
+- Added new `HDMIResource` for HDMI port resources on board platforms.
 
 ### Changed
 

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from .display    import Display7SegResource, VGADACResource, VGAResource
+from .display    import Display7SegResource, HDMIResource, VGADACResource, VGAResource
 from .extensions import (
 	PmodDualHBridgeType6Resource, PmodGPIOType1Resource, PmodHBridgeType5Resource, PmodSPIType2AResource,
 	PmodSPIType2Resource, PmodUARTType3Resource, PmodUARTType4AResource, PmodUARTType4Resource,
@@ -16,6 +16,7 @@ from .user       import ButtonResources, LEDResources, RGBLEDResource, SwitchRes
 
 __all__ = (
 	'Display7SegResource',
+	'HDMIResource',
 	'VGADACResource',
 	'VGAResource',
 

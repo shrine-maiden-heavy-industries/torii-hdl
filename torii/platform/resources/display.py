@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ...build.dsl import Attrs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
+from ..._typing   import IODirectionIO
+from ...build.dsl import Attrs, DiffPairs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'Display7SegResource',
+	'HDMIResource',
 	'VGADACResource',
 	'VGAResource',
 )
@@ -32,6 +34,37 @@ def Display7SegResource(
 	if attrs is not None:
 		ios.append(attrs)
 	return Resource.family(name_or_number, number, default_name = 'display_7seg', ios = ios)
+
+def HDMIResource(
+	name_or_number: str | int, number: int | None = None, *,
+	clk_p: str, clk_n: str, d_p: str, d_n: str, scl: str, sda: str,
+	hpd: str | None = None, cec: str | None = None,
+	dir: IODirectionIO = 'io',
+	conn: ResourceConn | None = None, diff_attrs: Attrs = Attrs(), attrs: Attrs = Attrs()
+):
+	ios: list[SubsigArgT] = []
+
+	match dir:
+		case 'i':
+			dir_in = 'i'
+			dir_out = 'o'
+		case 'o':
+			dir_in = 'o'
+			dir_out = 'i'
+		case 'io':
+			dir_in = 'io'
+			dir_out = 'io'
+
+	ios.append(Subsignal('clk', DiffPairs(clk_p, clk_n, dir = dir_in, conn = conn, assert_width = 1), diff_attrs))
+	ios.append(Subsignal('d', DiffPairs(d_p, d_n, dir = dir_in, conn = conn, assert_width = 3), diff_attrs))
+	if cec:
+		ios.append(Subsignal('cec', Pins(cec, dir = 'io', conn = conn, assert_width = 1), attrs))
+	if hpd:
+		ios.append(Subsignal('hpd', Pins(hpd, dir = dir_out, conn = conn, assert_width = 1), attrs))
+	ios.append(Subsignal('sda', Pins(sda, dir = 'io', conn = conn, assert_width = 1), attrs))
+	ios.append(Subsignal('scl', Pins(scl, dir = 'io', conn = conn, assert_width = 1), attrs))
+
+	return Resource.family(name_or_number, number, default_name = 'hdmi', ios = ios)
 
 def VGAResource(
 	name_or_number: str | int, number: int | None = None, *,
