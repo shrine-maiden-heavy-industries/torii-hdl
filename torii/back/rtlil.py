@@ -536,7 +536,9 @@ class _RHSValueCompiler(_ValueCompiler):
 			lhs_wire = self(lhs)
 			rhs_wire = self(rhs)
 		else:
-			lhs_shape = rhs_shape = ast.signed(max(lhs_shape.width + rhs_shape.signed, rhs_shape.width + lhs_shape.signed))
+			lhs_shape = rhs_shape = ast.signed(
+				max(lhs_shape.width + rhs_shape.signed, rhs_shape.width + lhs_shape.signed)
+			)
 
 			lhs_wire = self.match_shape(lhs, lhs_shape)
 			rhs_wire = self.match_shape(rhs, rhs_shape)
