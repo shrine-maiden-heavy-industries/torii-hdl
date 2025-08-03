@@ -147,7 +147,7 @@ class AlteraPlatform(TemplatedPlatform):
 			set_global_assignment -name GENERATE_RBF_FILE ON
 
 			{{get_override("add_settings")|default("# (add_settings placeholder)")}}
-		''',
+		''', # noqa: E501
 		'{{name}}.sdc': r'''
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
 				{% if port_signal is not none -%}
