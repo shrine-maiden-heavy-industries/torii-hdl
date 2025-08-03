@@ -39,7 +39,9 @@ class ResourceManager:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
 			if (res.name, res.number) in self.resources:
-				raise NameError(f'Trying to add {res!r}, but {self.resources[res.name, res.number]!r} has the same name and number')
+				raise NameError(
+					f'Trying to add {res!r}, but {self.resources[res.name, res.number]!r} has the same name and number'
+				)
 
 			self.resources[res.name, res.number] = res
 
@@ -60,7 +62,7 @@ class ResourceManager:
 					raise ValueError(f'Connector pin {conn_pin!r} already in connector!')
 				self._conn_pins[conn_pin] = plat_pin
 
-	def lookup(self, name: str , number: int = 0) -> Resource:
+	def lookup(self, name: str, number: int = 0) -> Resource:
 		if (name, number) not in self.resources:
 			raise ResourceError(f'Resource {name}#{number} does not exist')
 
