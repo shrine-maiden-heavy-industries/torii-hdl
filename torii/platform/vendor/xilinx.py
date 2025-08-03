@@ -647,10 +647,14 @@ class XilinxPlatform(TemplatedPlatform):
 
 		if toolchain == 'Vivado':
 			if self.family in ISE_FAMILIES:
-				raise ValueError(f'Family \'{self.family}\' is not supported by the Vivado toolchain, please use ISE instead')
+				raise ValueError(
+					f'Family \'{self.family}\' is not supported by the Vivado toolchain, please use ISE instead'
+				)
 		elif toolchain == 'ISE':
 			if self.family not in ISE_FAMILIES and self.family != "series7":
-				raise ValueError(f'Family \'{self.family}\' is not supported by the ISE toolchain, please use Vivado instead')
+				raise ValueError(
+					f'Family \'{self.family}\' is not supported by the ISE toolchain, please use Vivado instead'
+				)
 		elif toolchain == "Symbiflow":
 			if self.family != 'series7':
 				raise ValueError(f'Family \'{self.family}\' is not supported by the Symbiflow toolchain')
