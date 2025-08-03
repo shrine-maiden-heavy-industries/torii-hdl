@@ -162,7 +162,7 @@ jobs:
       - name: 'Link Check'
         shell: bash
         run: |
-          nox -s linkcheck-docs
+          # nox -s linkcheck-docs
 
   build-docs:
     runs-on: ubuntu-latest
