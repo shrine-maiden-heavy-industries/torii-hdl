@@ -85,7 +85,9 @@ class _ModuleBuilderRoot:
 
 	def __getattr__(self, name):
 		if name in ('comb', 'sync'):
-			raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?')
+			raise AttributeError(
+				f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?'
+			)
 		raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'')
 
 class _ModuleBuilderSubmodules:
@@ -136,7 +138,9 @@ Params = ParamSpec('Params')
 # It's not particularly clean to depend on an internal interface, but, unfortunately, __bool__
 # must be defined on a class to be called during implicit conversion.
 class _GuardedContextManager(_GeneratorContextManager):
-	def __init__(self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict) -> None:
+	def __init__(
+		self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict
+	) -> None:
 		self.keyword = keyword
 		return super().__init__(func, args, kwds)
 
