@@ -198,7 +198,8 @@ class GowinPlatform(TemplatedPlatform):
 				f'between {div_range.start} and {div_range.stop} in steps of {div_range.step}; '
 				f'the divider for the requested frequency of {self.osc_frequency} Hz was '
 				f'calculated as ({div_frac.numerator}/{div_frac.denominator}), and the closest '
-				f'achievable frequencies are {", ".join(str(self._osc_base_freq // frac) for frac in achievable if frac)}'
+				'achievable frequencies are '
+				f'{", ".join(str(self._osc_base_freq // frac) for frac in achievable if frac)}'
 			)
 
 		return int(div_frac)
