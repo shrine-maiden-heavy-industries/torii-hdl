@@ -40,7 +40,9 @@ class Layout:
 		self.fields = OrderedDict[str, tuple['Layout | ShapeCastT', Direction]]()
 		for field in fields:
 			if not isinstance(field, tuple) or len(field) not in (2, 3):
-				raise TypeError(f'Field {field!r} has invalid layout: should be either (name, shape) or (name, shape, direction)')
+				raise TypeError(
+					f'Field {field!r} has invalid layout: should be either (name, shape) or (name, shape, direction)'
+				)
 			if len(field) == 2:
 				name, layout = field
 				direction = Direction.NONE
@@ -51,7 +53,9 @@ class Layout:
 			else:
 				name, shape, direction = field
 				if not isinstance(direction, Direction):
-					raise TypeError(f'Field {field!r} has invalid direction: should be a Direction instance like Direction.FANIN')
+					raise TypeError(
+						f'Field {field!r} has invalid direction: should be a Direction instance like Direction.FANIN'
+					)
 			if not isinstance(name, str):
 				raise TypeError(f'Field {field!r} has invalid name: should be a string')
 			if not isinstance(shape, Layout):
@@ -60,7 +64,8 @@ class Layout:
 					Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 				except Exception:
 					raise TypeError(
-						f'Field {field!r} has invalid shape: should be castable to Shape or a list of ''fields of a nested record'
+						f'Field {field!r} has invalid shape: should be castable to Shape or a list of '
+						'fields of a nested record'
 					)
 			if name in self.fields:
 				raise NameError(f'Field {field!r} has a name that is already present in the layout')
@@ -285,7 +290,9 @@ class Record(ValueCastable):
 
 			shape, direction = self.layout[field]
 			if not isinstance(shape, Layout) and direction == Direction.NONE:
-				raise TypeError(f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction')
+				raise TypeError(
+					f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction'
+				)
 
 			item = self.fields[field]
 			subord_items = []
