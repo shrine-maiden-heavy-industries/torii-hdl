@@ -24,6 +24,16 @@ Unreleased template stuff
 
 ### Changed
 
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [0.8.1] - 2025-08-03
+
+### Changed
+
 - Centralized all the Torii diagnostic machinery into `torii.diagnostics`.
 - The `torii.hdl.dsl.SyntaxError` and `torii.hdl.dsl.SyntaxWarning` are now named `ToriiSyntaxError` and `ToriiSyntaxWarning` respectively, and their import from `torii.hdl.dsl` has been deprecated. See deprecated items listed below.
 
@@ -38,10 +48,6 @@ Unreleased template stuff
 - Deprecated the `UnusedProperty` import from `torii.hdl.ast`, it now lives in `torii.diagnostics`.
 - Deprecated the `UnusedMustUse` import from `torii.hdl._unused`, it now lives in `torii.diagnostics` as `MustUseWarning`.
 - Deprecated the `ResourceError` import from `torii.build.res`, it now lives in `torii.diagnostics`.
-
-### Removed
-
-### Fixed
 
 ## [0.8.0] - 2025-06-26
 
@@ -301,7 +307,7 @@ Unreleased template stuff
 ### Added
 
 - Added `-norom` and `-proc` options to verilog generation if available in Yosys.
-- Added [a small tutorial](https://torii.shmdn.link/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
+- Added [a small tutorial](https://torii.shmdn.link/latest/tutorials/external_modules.html) on using `platform.add_file` with `Instance` for referencing external modules.
 - Added conversion helpers to/from picoseconds.
 
 ### Changed
@@ -464,7 +470,8 @@ Unreleased template stuff
 
 No changelog is provided for these versions as they are all older tagged releases of [Amaranth](https://github.com/amaranth-lang/amaranth) from before the fork.
 
-[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.0...main
+[unreleased]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.1...main
+[0.8.1]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...v0.8.0
 [0.7.7]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...v0.7.7
 [0.7.6]: https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...v0.7.6
