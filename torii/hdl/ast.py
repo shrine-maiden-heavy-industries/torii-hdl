@@ -97,11 +97,15 @@ class ShapeCastable(metaclass = ABCMeta):
 
 	@abstractmethod
 	def as_shape(self) -> Shape:
-		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method')
+		raise TypeError(
+			f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method'
+		)
 
 	@abstractmethod
 	def const(self, val: ValueCastT | None) -> Const:
-		raise TypeError(f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method')
+		raise TypeError(
+			f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method'
+		)
 
 class Shape:
 	'''
@@ -650,7 +654,8 @@ class Value(metaclass = ABCMeta):
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise SyntaxError(
-					f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may include whitespace'
+					f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
+					'include whitespace'
 				)
 
 			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(self)):
@@ -1220,7 +1225,9 @@ class Cat(Value):
 		super().__init__(src_loc_at = src_loc_at)
 		self.parts: list[Value] = []
 		for index, arg in enumerate(flatten(args)):
-			if isinstance(arg, Enum) and (not isinstance(type(arg), ShapeCastable) or not hasattr(arg, '_torii_shape_')):
+			if isinstance(arg, Enum) and (
+				not isinstance(type(arg), ShapeCastable) or not hasattr(arg, '_torii_shape_')
+			):
 				warnings.warn(
 					f'Argument #{index + 1} of \'Cat()\' is an enumerated value {arg!r} without '
 					'a defined shape used in a bit vector context; use \'Const\' to specify '
@@ -2230,7 +2237,9 @@ class Switch(Statement):
 				else:
 					raise TypeError(f'Object {key!r} cannot be used as a switch key')
 				if len(new_key) != len(self.test):
-					raise ValueError(f'Length mismatch between switch key and test value {len(new_key)} != {len(self.test)}')
+					raise ValueError(
+						f'Length mismatch between switch key and test value {len(new_key)} != {len(self.test)}'
+					)
 				new_keys = (*new_keys, new_key)
 			if not isinstance(stmts, Iterable):
 				stmts = [stmts]
