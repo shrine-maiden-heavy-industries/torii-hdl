@@ -46,7 +46,9 @@ class Pins:
 			raise TypeError(f'Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not {dir!r}')
 
 		if assert_width is not None and len(names) != assert_width:
-			raise AssertionError(f'{len(names)} names are specified ({" ".join(names)}), but {assert_width} names are expected')
+			raise AssertionError(
+				f'{len(names)} names are specified ({" ".join(names)}), but {assert_width} names are expected'
+			)
 
 		self.names  = names
 		self.dir    = dir
@@ -85,8 +87,9 @@ class DiffPairs:
 		self.n = Pins(n, dir = dir, conn = conn, assert_width = assert_width)
 
 		if len(self.p.names) != len(self.n.names):
-			raise TypeError(f'Positive and negative pins must have the same width, but {self.p!r} '
-							f'and {self.n!r} do not')
+			raise TypeError(
+				f'Positive and negative pins must have the same width, but {self.p!r} and {self.n!r} do not'
+			)
 
 		self.dir    = dir
 		self.invert = bool(invert)
@@ -98,7 +101,10 @@ class DiffPairs:
 		return zip(self.p.names, self.n.names)
 
 	def __repr__(self) -> str:
-		return f'(diffpairs{"-n" if self.invert else ""} {self.dir} (p {" ".join(self.p.names)}) (n {" ".join(self.n.names)}))'
+		return (
+			f'(diffpairs{"-n" if self.invert else ""} {self.dir} '
+			f'(p {" ".join(self.p.names)}) (n {" ".join(self.n.names)}))'
+		)
 
 def DiffPairsN(
 	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
@@ -303,15 +309,20 @@ class Connector:
 		if conn is not None:
 			conn_name, conn_number = conn
 			if not (isinstance(conn_name, str) and isinstance(conn_number, (int, str))):
-				raise TypeError('Connector must be None or a pair of string (connector name) and '
-								f'integer/string (connector number), not {conn!r}')
+				raise TypeError(
+					'Connector must be None or a pair of string (connector name) and integer/string '
+					f'(connector number), not {conn!r}'
+				)
 
 			for conn_pin, plat_pin in mapping.items():
 				mapping[conn_pin] = f'{conn_name}_{conn_number}:{plat_pin}'
 		self.mapping = mapping
 
 	def __repr__(self) -> str:
-		return f'(connector {self.name} {self.number} {" ".join(f"{conn}=>{plat}" for conn, plat in self.mapping.items())})'
+		return (
+			f'(connector {self.name} {self.number} '
+			f'{" ".join(f"{conn}=>{plat}" for conn, plat in self.mapping.items())})'
+		)
 
 	def __len__(self) -> int:
 		return len(self.mapping)
