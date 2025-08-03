@@ -313,7 +313,9 @@ class FragmentTransformer:
 class TransformedElaboratable(Elaboratable):
 	def __init__(self, elaboratable, *, src_loc_at = 0) -> None:
 		if not hasattr(elaboratable, 'elaborate'):
-			raise TypeError(f'Unable to elaborate object of type \'{type(elaboratable)}\' which has no \'elaborate\' method')
+			raise TypeError(
+				f'Unable to elaborate object of type \'{type(elaboratable)}\' which has no \'elaborate\' method'
+			)
 
 		# Fields prefixed and suffixed with underscore to avoid as many conflicts with the inner
 		# object as possible, since we're forwarding attribute requests to it.
