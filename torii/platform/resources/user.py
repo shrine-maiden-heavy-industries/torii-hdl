@@ -44,7 +44,8 @@ def LEDResources(
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
-		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert, conn = conn, attrs = attrs
+		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert,
+		conn = conn, attrs = attrs
 	)
 
 def RGBLEDResource(
@@ -69,7 +70,8 @@ def ButtonResources(
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
-		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
+		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert,
+		conn = conn, attrs = attrs
 	)
 
 def SwitchResources(
@@ -78,5 +80,6 @@ def SwitchResources(
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
 	return _SplitResources(
-		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert, conn = conn, attrs = attrs
+		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert,
+		conn = conn, attrs = attrs
 	)
