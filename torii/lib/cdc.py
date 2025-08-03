@@ -170,7 +170,8 @@ class AsyncFFSynchronizer(Elaboratable):
 
 		if self._max_input_delay is not None:
 			raise NotImplementedError(
-				f'Platform \'{type(platform).__name__}\' does not support constraining input delay for AsyncFFSynchronizer'
+				f'Platform \'{type(platform).__name__}\' does not support constraining input delay for '
+				'AsyncFFSynchronizer'
 			)
 
 		m = Module()
