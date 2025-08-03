@@ -15,7 +15,8 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 			Resource('clk100', 0, DiffPairs('H1', 'H2', dir = 'i'), Clock(100e6)),
 			Resource('clk50', 0, Pins('K1'), Clock(50e6)),
 			Resource('user_led', 0, Pins('A0', dir = 'o')),
-			Resource('i2c', 0,
+			Resource(
+				'i2c', 0,
 				Subsignal('scl', Pins('N10', dir = 'o')),
 				Subsignal('sda', Pins('N11'))
 			)
@@ -171,7 +172,8 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 
 	def test_request_via_connector(self):
 		self.cm.add_resources([
-			Resource('spi', 0,
+			Resource(
+				'spi', 0,
 				Subsignal('ss',   Pins('1', conn = ('pmod', 0))),
 				Subsignal('clk',  Pins('2', conn = ('pmod', 0))),
 				Subsignal('miso', Pins('3', conn = ('pmod', 0))),
@@ -192,7 +194,8 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		]
 		self.cm.add_connectors(new_connectors)
 		self.cm.add_resources([
-			Resource('spi', 0,
+			Resource(
+				'spi', 0,
 				Subsignal('ss',   Pins('1', conn = ('pmod_extension', 0))),
 				Subsignal('clk',  Pins('2', conn = ('pmod_extension', 0))),
 				Subsignal('miso', Pins('3', conn = ('pmod_extension', 0))),
