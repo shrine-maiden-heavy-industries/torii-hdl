@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Introduction" href="intro.html" />
-        <link rel="canonical" href="https://torii.shmdn.link/index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installation" href="install.html" /><link rel="prev" title="Torii-HDL" href="index.html" />
+        <link rel="canonical" href="https://torii.shmdn.link/intro.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-        <title>Torii-HDL 0.8.1 documentation</title>
+        <title>Introduction - Torii-HDL 0.8.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">Torii-HDL 0.8.1 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii-HDL 0.8.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -192,7 +192,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   <span class="sidebar-brand-text">Torii-HDL 0.8.1 documentation</span>
   
@@ -202,8 +202,8 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -320,25 +320,57 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <div class="toctree-wrapper compound">
+          <div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>This introduction is written for people well familiar with HDLs; we likely need another one for people who will use Torii as their first HDL.</p>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<section id="torii-hdl">
-<h1>Torii-HDL<a class="headerlink" href="#torii-hdl" title="Link to this heading">¶</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This manual is a work in progress and is seriously incomplete!</p>
-</div>
-<p>Torii is a toolkit for developing hardware based on digital logic, it consists of the　<a class="reference internal" href="language/index.html"><span class="std std-doc">Torii <abbr title="Hardware Definition Language">HDL</abbr></span></a>, the <a class="reference internal" href="library/index.html"><span class="std std-doc">standard library</span></a>, the simulator, and the build system. It covers all steps of the typical <abbr title="Field Programmable Gate Array">FPGA</abbr> development workflow while not restricting the choice of tools, allowing existing <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a>, <a class="reference external" href="https://ieeexplore.ieee.org/document/8299595">SystemVerilog</a>, and <a class="reference external" href="https://ieeexplore.ieee.org/document/8938196">VHDL</a> code to be integrated into the design, while also allow for Torii to be seamlessly integrated into the flow for other <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a> design flows.</p>
-<p>For more information on Torii, see the <a class="reference internal" href="intro.html"><span class="std std-doc">Introduction</span></a> and check out the <a class="reference internal" href="getting_started.html"><span class="std std-doc">Getting Started</span></a> guide for how to get up and running with Torii.</p>
-<p>There is also a <a class="reference external" href="https://torii-boards.shmdn.link/">collection of board definition files</a> for popular FPGA development boards from various vendors, to help you get up to speed with your designs faster.</p>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>The Torii project provides an open-source toolchain for developing hardware based on synchronous digital logic using the Python programming language. It aims to be easy to learn and use, reduce or eliminate common coding mistakes, and simplify the design of complex hardware with reusable components.</p>
+<p>The Torii toolchain consists of the <a class="reference internal" href="#the-torii-language">Torii language</a>, the <a class="reference internal" href="#the-torii-standard-library">standard library</a>, the [simulator], and the <a class="reference internal" href="#the-torii-build-system">build system</a>, covering all steps of a typical FPGA development workflow. At the same time, it does not restrict the designer’s choice of tools: existing industry-standard (System)Verilog or VHDL code can be integrated into an Torii-based design flow, or, conversely, Torii code can be integrated into an existing Verilog-based design flow.</p>
+<section id="the-torii-language">
+<h2>The Torii language<a class="headerlink" href="#the-torii-language" title="Link to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="language/index.html"><span class="std std-doc">Torii hardware description language</span></a> is a Python library for register transfer level modeling of synchronous logic. Ordinary Python code is used to construct a netlist of a digital circuit, which can be simulated, directly synthesized via Yosys_, or converted to human-readable Verilog code for use with industry-standard toolchains.</p>
+<p>By relying on the flexibility, rich functionality and widespread adoption of the Python language, the Torii language is focused on a single task: modeling digital logic well. It has first-class support for building blocks like clock domains and finite state machines, and uses simple rules for arithmetic operations that closely match the Python semantics. Python classes, functions, loops and conditionals can be used to build organized and flexible designs; Python libraries can be seamlessly used with Torii during design or verification; and Python development tools can process Torii code.</p>
+<p>A core design principle of the Torii language is to be not only easy to use, but also hard to accidentally misuse. Some HDLs provide functionality that has unexpected and undesirable behavior in synthesis, often with expensive consequences, and require a significant effort in learning a “safe” coding style and adopting third-party linting tools. Torii lacks non-synthesizable constructs and avoids error-prone inference in favor of explicit instantiation. It has many diagnostics (and regularly adds new ones) highlighting potential design issues. Most importantly, all usability issues are considered <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues">reportable bugs</a>.</p>
+</section>
+<section id="the-torii-standard-library">
+<h2>The Torii standard library<a class="headerlink" href="#the-torii-standard-library" title="Link to this heading">¶</a></h2>
+<p>The Torii language comes with a standard library—a collection of essential digital design components and interfaces. It includes clock domain crossing primitives, synchronous and asynchronous FIFOs, a flexible I/O buffer interface, and more. By providing reliable building blocks out of the box, Torii allows the designer to focus on their application and avoids subtle differences in behavior between different designs.</p>
+<p>Clock domain crossing often requires special treatment, such as using vendor-defined attributes or instantiating device-specific primitives. The CDC primitives in the Torii standard library can be overridden by the platform integration, and every platform integration included with Torii follows the vendor recommendations for CDC.</p>
+<p>High-speed designs usually require the use of registered (and sometimes, geared) I/O buffers. The Torii standard library provides a common interface to be used between I/O buffers and peripheral implementations. The Torii build system, if used, can instantiate I/O buffers for every platform integration included with Torii.</p>
+<p>While many designs will use at least some vendor-specific functionality, the components provided by the Torii standard library reduce the amount of code that needs to be changed when migrating between FPGA families, and the common interfaces simplify peripherals, test benches and simulations. See the <a class="reference internal" href="library/index.html"><span class="std std-doc">standard library documentation</span></a> for a comprehensive list of the included components.</p>
+<p>The Torii standard library is optional: the Torii language can be used without it. Conversely, it is possible to use the Torii standard library components in Verilog or VHDL code, with some limitations.</p>
+</section>
+<section id="the-torii-simulator">
+<h2>The Torii simulator<a class="headerlink" href="#the-torii-simulator" title="Link to this heading">¶</a></h2>
+<p>The Torii project includes an advanced simulator for Torii code implemented in Python with no system dependencies; in this simulator, test benches are written as Python generator functions. Of course, it is always possible to convert an Torii design to Verilog for use with well-known tool like <a class="reference external" href="https://steveicarus.github.io/iverilog/">Icarus Verilog</a> or <a class="reference external" href="https://www.veripool.org/verilator/">Verilator</a>.</p>
+<p>The Torii simulator is event-driven and can simulate designs with multiple clocks or asynchronous resets. Although it is slower than <a class="reference external" href="https://steveicarus.github.io/iverilog/">Icarus Verilog</a>, it compiles the netlist to Python code ahead of time, achieving remarkably high performance for a pure Python implementation—especially when running on <a class="reference external" href="https://pypy.org/">PyPy</a>.</p>
+<p>Although Torii does not support native code simulation or co-simulation at the moment, such support will be added in near future.</p>
+</section>
+<section id="the-torii-build-system">
+<h2>The Torii build system<a class="headerlink" href="#the-torii-build-system" title="Link to this heading">¶</a></h2>
+<p>To achieve an end-to-end FPGA development workflow, the Torii project integrates with all major FPGA toolchains and provides definitions for many common development boards. See the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform documentation</span></a> for more information and details.</p>
+</section>
+<section id="fpga-toolchain-integration">
+<h2>FPGA toolchain integration<a class="headerlink" href="#fpga-toolchain-integration" title="Link to this heading">¶</a></h2>
+<p>Each FPGA family requires the use of synthesis and place &amp; route tools specific for that device family. The Torii build system directly integrates with every major open-source and commercial FPGA toolchain, and can be easily extended to cover others.</p>
+<p>Through this integration, Torii can specialize the CDC primitives and I/O buffers for a particular device and toolchain; generate I/O and clock constraints from board definition files; synchronize the power-on reset in single-clock designs; include (System)Verilog and VHDL files in the design (if supported by the toolchain); and finally, generate a script running synthesis, placement, routing, and timing analysis. The generated code can be customized to insert additional options, commands, constraints, and so on.</p>
+<p>The Torii build system produces self-contained, portable build trees that require only the toolchain to be present in the environment. This makes builds easier to reproduce, or to run on a remote machine. The generated build scripts are always provided for both *nix and Windows.</p>
+</section>
+<section id="development-board-definitions">
+<h2>Development board definitions<a class="headerlink" href="#development-board-definitions" title="Link to this heading">¶</a></h2>
+<p>Getting started with a new FPGA development board often requires going through a laborious and error-prone process of deriving toolchain configuration and constraint files from the supplied documentation. The Torii project includes a community-maintained repository of definitions for many open-source and commercial FPGA development boards.</p>
+<p>These board definitions contain everything that is necessary to start using the board: FPGA family and model, clocks and resets, descriptions of on-board peripherals (including pin direction and attributes such as I/O standard), connector pinouts, and for boards with a built-in debug probe, the steps required to program the board. It takes a single Python invocation to generate, build, and download a test design that shows whether the board, toolchain, and programmer are working correctly.</p>
+<p>Torii establishes a pin naming convention for many common peripherals (such as 7-segment displays, SPI flashes and SDRAM memories), enabling the reuse of unmodified interface code with many different boards. Further, the polarity of all control signals is unified to be active high, eliminating accidental polarity inversions and making simulation traces easier to follow; active low signals are inverted during I/O buffer instantiation.</p>
+<p>These board definitions are available in the <a class="reference external" href="https://torii-boards.shmdn.link/">torii boards</a> package</p>
+</section>
 </section>
 
     <script type="text/javascript">
@@ -352,16 +384,26 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="intro.html">
+          <a class="next-page" href="install.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Introduction</div>
+                <div class="title">Installation</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -380,8 +422,32 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#the-torii-language">The Torii language</a></li>
+<li><a class="reference internal" href="#the-torii-standard-library">The Torii standard library</a></li>
+<li><a class="reference internal" href="#the-torii-simulator">The Torii simulator</a></li>
+<li><a class="reference internal" href="#the-torii-build-system">The Torii build system</a></li>
+<li><a class="reference internal" href="#fpga-toolchain-integration">FPGA toolchain integration</a></li>
+<li><a class="reference internal" href="#development-board-definitions">Development board definitions</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
