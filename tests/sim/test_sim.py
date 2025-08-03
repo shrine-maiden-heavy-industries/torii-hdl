@@ -1557,12 +1557,14 @@ class SimulatorEngineTestCase(ToriiTestSuiteCase):
 	def test_invalid_simulator_engine(self):
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^The specified engine \'NotAValidEngineName\' is not a known simulation engine name, or simulation engine class$'
+			r'^The specified engine \'NotAValidEngineName\' is not a known simulation engine name, or simulation '
+			'engine class$'
 		):
 			_ = Simulator(Module(), engine = 'NotAValidEngineName') # type: ignore
 
 		with self.assertRaisesRegex(
 			TypeError,
-			r'^The specified engine <class \'object\'> is not a known simulation engine name, or simulation engine class$'
+			r'^The specified engine <class \'object\'> is not a known simulation engine name, or simulation '
+			'engine class$'
 		):
 			_ = Simulator(Module(), engine = object) # type: ignore
