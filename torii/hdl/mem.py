@@ -322,7 +322,9 @@ class WritePort(Elaboratable):
 		if not isinstance(granularity, int) or granularity < 0:
 			raise TypeError(f'Write port granularity must be a non-negative integer, not {granularity!r}')
 		if granularity > memory.width:
-			raise ValueError(f'Write port granularity must not be greater than memory width ({granularity} > {memory.width})')
+			raise ValueError(
+				f'Write port granularity must not be greater than memory width ({granularity} > {memory.width})'
+			)
 		if memory.width // granularity * granularity != memory.width:
 			raise ValueError('Write port granularity must divide memory width evenly')
 
