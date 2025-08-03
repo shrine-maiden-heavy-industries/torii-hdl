@@ -259,7 +259,9 @@ class MemoryMap:
 			if not isinstance(addr, int) or addr < 0:
 				raise ValueError(f'Address must be a non-negative integer, not {addr!r}')
 			if addr % (1 << self.alignment) != 0:
-				raise ValueError(f'Explicitly specified address {addr:#x} must be a multiple of {1 << alignment:#x} bytes')
+				raise ValueError(
+					f'Explicitly specified address {addr:#x} must be a multiple of {1 << alignment:#x} bytes'
+				)
 		else:
 			addr = self._align_up(self._next_addr, alignment)
 
@@ -283,7 +285,9 @@ class MemoryMap:
 			for overlap in overlaps:
 				if id(overlap) in self._resources:
 					_, _, resource_range = self._resources[id(overlap)]
-					overlap_descrs.append(f'resource {overlap!r} at {resource_range.start:#x}..{resource_range.stop:#x}')
+					overlap_descrs.append(
+						f'resource {overlap!r} at {resource_range.start:#x}..{resource_range.stop:#x}'
+					)
 				if id(overlap) in self._windows:
 					_, window_range = self._windows[id(overlap)]
 					overlap_descrs.append(f'window {overlap!r} at {window_range.start:#x}..{ window_range.stop:#x}')
@@ -451,7 +455,9 @@ class MemoryMap:
 
 		if id(window) in self._windows:
 			_, addr_range = self._windows[id(window)]
-			raise ValueError(f'Window {window!r} is already added at address range {addr_range.start:#x}..{addr_range.stop:#x}')
+			raise ValueError(
+				f'Window {window!r} is already added at address range {addr_range.start:#x}..{addr_range.stop:#x}'
+			)
 
 		if window.data_width > self.data_width:
 			raise ValueError(
