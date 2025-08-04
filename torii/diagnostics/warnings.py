@@ -24,7 +24,13 @@ class ToriiWarning(Warning):
 
 class ToriiSyntaxWarning(SyntaxWarning):
 	''' Inadvisable or potentially unwanted behavior from Torii code '''
-	pass
+	msg: str
+	filename: str | None
+	lineno: int | None
+	offset: int | None
+	text: str | None
+	end_lineno: int | None
+	end_offset: int | None
 
 class NameWarning(ToriiWarning):
 	''' Inadvisable HDL construct name '''
