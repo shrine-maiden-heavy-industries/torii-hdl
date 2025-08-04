@@ -38,6 +38,8 @@ Unreleased template stuff
 - Minimum Python version has been bumped from `3.10` to `3.11`.
 - Altered the license for the Torii documentation going forward, all past contributions will remain under the [BSD-2-Clause] until they are re-written/superseded and all new/future contributions to the documentation will be under the [CC-BY-SA 4.0].
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
+- Bumped Jinja2 version to `~=3.1`
+- Bumped rich version to `>=13.7.0`
 
 ### Deprecated
 

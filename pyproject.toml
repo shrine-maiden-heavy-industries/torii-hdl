@@ -23,8 +23,8 @@ dependencies = [
 	# things needed before we can drop this runtime dep is long.
 	'setuptools>=66',
 	'pyvcd>=0.4.0,<0.5',
-	'Jinja2~=3.0',
-	'rich>=13.6.0',
+	'Jinja2~=3.1',
+	'rich>=13.7.0',
 ]
 keywords = [
 	'HDL',
