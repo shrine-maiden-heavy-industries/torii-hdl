@@ -42,6 +42,11 @@ Unreleased template stuff
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
 - Bumped Jinja2 version to `~=3.1`
 - Bumped rich version to `>=13.7.0`
+- Re-organized `torii.platform.resources` to better categorize resources.
+  - Subdivided `torii.platform.resources.display` into ``.
+  - Subdivided `torii.platform.resources.interface` into `.bus`, `.network`, and `.serial`.
+  - Subdivided `torii.platform.resources.memory` into `.ram` and `.flash`.
+  - `HyperBusResource` now lives in `torii.platform.resources.memory`
 
 ### Deprecated
 
