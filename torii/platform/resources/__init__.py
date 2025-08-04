@@ -6,20 +6,31 @@ from .extensions import (
 	PmodSPIType2Resource, PmodUARTType3Resource, PmodUARTType4AResource, PmodUARTType4Resource,
 )
 from .interface  import (
-	CANResource, DirectUSBResource, HyperBusResource, I2CResource, IrDAResource, JTAGResource, PCIBusResources,
+	CANResource, DirectUSBResource, EthernetResource, I2CResource, IrDAResource, JTAGResource, PCIBusResources,
 	PCIeBusResources, PS2Resource, SPIResource, UARTResource, ULPIResource,
 )
 from .memory     import (
-	DDR3Resource, NORFlashResources, QSPIFlashResource, SDCardResources, SDRAMResource, SPIFlashResources, SRAMResource,
+	DDR3Resource, HyperBusResource, NORFlashResources, QSPIFlashResource, SDCardResources, SDRAMResource,
+	SPIFlashResources, SRAMResource,
 )
 from .user       import ButtonResources, LEDResources, RGBLEDResource, SwitchResources
 
 __all__ = (
+	'ButtonResources',
+	'CANResource',
+	'DDR3Resource',
+	'DirectUSBResource',
 	'Display7SegResource',
+	'EthernetResource',
 	'HDMIResource',
-	'VGADACResource',
-	'VGAResource',
-
+	'HyperBusResource',
+	'I2CResource',
+	'IrDAResource',
+	'JTAGResource',
+	'LEDResources',
+	'NORFlashResources',
+	'PCIBusResources',
+	'PCIeBusResources',
 	'PmodDualHBridgeType6Resource',
 	'PmodGPIOType1Resource',
 	'PmodHBridgeType5Resource',
@@ -28,30 +39,17 @@ __all__ = (
 	'PmodUARTType3Resource',
 	'PmodUARTType4AResource',
 	'PmodUARTType4Resource',
-
-	'CANResource',
-	'DirectUSBResource',
-	'HyperBusResource',
-	'I2CResource',
-	'IrDAResource',
-	'JTAGResource',
-	'PCIBusResources',
-	'PCIeBusResources',
 	'PS2Resource',
-	'SPIResource',
-	'UARTResource',
-	'ULPIResource',
-
-	'DDR3Resource',
-	'NORFlashResources',
 	'QSPIFlashResource',
+	'RGBLEDResource',
 	'SDCardResources',
 	'SDRAMResource',
 	'SPIFlashResources',
+	'SPIResource',
 	'SRAMResource',
-
-	'ButtonResources',
-	'LEDResources',
-	'RGBLEDResource',
 	'SwitchResources',
+	'UARTResource',
+	'ULPIResource',
+	'VGADACResource',
+	'VGAResource',
 )

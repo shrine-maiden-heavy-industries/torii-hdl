@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ..._typing   import IODirectionIO
-from ...build.dsl import Attrs, DiffPairs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
+from ...._typing   import IODirectionIO
+from ....build.dsl import Attrs, DiffPairs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
 
 __all__ = (
 	'Display7SegResource',
@@ -10,6 +10,7 @@ __all__ = (
 	'VGAResource',
 )
 
+# TODO(aki): Add optional enable signal
 def Display7SegResource(
 	name_or_number: str | int, number: int | None = None, *,
 	a: str, b: str, c: str, d: str, e: str, f: str, g: str, dp: str | None = None,
@@ -66,29 +67,6 @@ def HDMIResource(
 
 	return Resource.family(name_or_number, number, default_name = 'hdmi', ios = ios)
 
-def VGAResource(
-	name_or_number: str | int, number: int | None = None, *,
-	r: str, g: str, b: str, vs: str, hs: str,
-	invert_sync: bool = False, conn: ResourceConn | None = None,
-	attrs: Attrs | None = None
-) -> Resource:
-	ios: list[SubsigArgT] = []
-
-	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
-	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
-	ios.append(Subsignal('b', Pins(b, dir = 'o', conn = conn)))
-	ios.append(Subsignal(
-		'hs', Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
-	))
-	ios.append(Subsignal(
-		'vs', Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
-	))
-
-	if attrs is not None:
-		ios.append(attrs)
-
-	return Resource.family(name_or_number, number, default_name = 'vga', ios = ios)
-
 def VGADACResource(
 	name_or_number: str | int, number: int | None = None, *,
 	clk: str, r: str, g: str, b: str, vs: str, hs: str, extras: list[Subsignal] = [],
@@ -114,3 +92,26 @@ def VGADACResource(
 		ios.append(attrs)
 
 	return Resource.family(name_or_number, number, default_name = 'vgadac', ios = ios)
+
+def VGAResource(
+	name_or_number: str | int, number: int | None = None, *,
+	r: str, g: str, b: str, vs: str, hs: str,
+	invert_sync: bool = False, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
+) -> Resource:
+	ios: list[SubsigArgT] = []
+
+	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
+	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
+	ios.append(Subsignal('b', Pins(b, dir = 'o', conn = conn)))
+	ios.append(Subsignal(
+		'hs', Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+	))
+	ios.append(Subsignal(
+		'vs', Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+	))
+
+	if attrs is not None:
+		ios.append(attrs)
+
+	return Resource.family(name_or_number, number, default_name = 'vga', ios = ios)
