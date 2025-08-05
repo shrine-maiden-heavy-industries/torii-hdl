@@ -32,6 +32,7 @@ Unreleased template stuff
 - Added new `HDMIResource` for HDMI port resources on board platforms.
 - New `PCIeBusResources` for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
+- Ability to cache Torii design build files and elaborated sources to prevent having to re-run a full build if the design didn't change.
 
 ### Changed
 
