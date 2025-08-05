@@ -47,6 +47,7 @@ Unreleased template stuff
   - Subdivided `torii.platform.resources.interface` into `.bus`, `.network`, and `.serial`.
   - Subdivided `torii.platform.resources.memory` into `.ram` and `.flash`.
   - `HyperBusResource` now lives in `torii.platform.resources.memory`
+- The `torii.platform.resources.EthernetResource` now has support for more types of PHY to MAC interfaces (TBI, RTBI, XAUI, etc. ).
 
 ### Deprecated
 
