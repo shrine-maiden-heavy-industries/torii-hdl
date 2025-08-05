@@ -40,6 +40,7 @@ Unreleased template stuff
 - New WASM based simulation backend [torii-sim-wasm](https://github.com/shrine-maiden-heavy-industries/torii-sim-wasm) leveraging [wasmtime](https://wasmtime.dev/) to speed up larger and longer running simulation tests in a cross-platform manner.
 - Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
+- Ability to cache Torii design build files and elaborated sources to prevent having to re-run a full build if the design didn't change.
 
 ### Changed
 
