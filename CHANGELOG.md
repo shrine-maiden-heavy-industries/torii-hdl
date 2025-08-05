@@ -40,6 +40,7 @@ Unreleased template stuff
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
 - Bumped Jinja2 version to `~=3.1`
 - Bumped rich version to `>=13.7.0`
+- Build API is now able to be segmented into individual steps which can then be re-run, and have pre/post hooks for custom functionality.
 
 ### Deprecated
 
