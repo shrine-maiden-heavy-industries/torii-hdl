@@ -39,6 +39,7 @@ Unreleased template stuff
 - Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
 - New WASM based simulation backend [torii-sim-wasm](https://github.com/shrine-maiden-heavy-industries/torii-sim-wasm) leveraging [wasmtime](https://wasmtime.dev/) to speed up larger and longer running simulation tests in a cross-platform manner.
 - Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
+- Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 
 ### Changed
 
