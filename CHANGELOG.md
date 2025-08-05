@@ -40,6 +40,7 @@ Unreleased template stuff
 - Switched from using the old setuptools `setup.py` over to setuptools via `pyproject.toml`
 - Bumped Jinja2 version to `~=3.1`
 - Bumped rich version to `>=13.7.0`
+- The `torii.platform.resources.EthernetResource` now has support for more types of PHY to MAC interfaces (TBI, RTBI, XAUI, etc. ).
 
 ### Deprecated
 
