@@ -46,6 +46,7 @@ Unreleased template stuff
 - New enhanced diagnostics for Torii designs.
 - New `has_submodule` call on `Module`s to check if the current module has a named submodule.
 - Added `Value.shl`/`Value.shr`/`Value.rol`/`Value.ror` operations for in-place rotates/shifts of Values/Signals.
+- New `torii.lib.lfsr` module for Galois and Fibonacci Linear-feedback shift registers (LFSRs).
 
 ### Changed
 
