@@ -42,6 +42,7 @@ Unreleased template stuff
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
+- Ability to cache Torii design build files and elaborated sources to prevent having to re-run a full build if the design didn't change.
 
 ### Changed
 
