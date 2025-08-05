@@ -34,6 +34,7 @@ Unreleased template stuff
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
 - New `platformdirs~=4.0` dependency used for platform correct cache, temp, and config directories.
 - Added a new `torii.util.directories` module for getting appropriate cross-platform directories for things such as cache and configuration directories.
+- Ability to cache Torii design build files and elaborated sources to prevent having to re-run a full build if the design didn't change.
 
 ### Changed
 
