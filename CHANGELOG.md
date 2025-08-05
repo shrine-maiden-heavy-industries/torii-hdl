@@ -47,6 +47,7 @@ Unreleased template stuff
   - Subdivided `torii.platform.resources.interface` into `.bus`, `.network`, and `.serial`.
   - Subdivided `torii.platform.resources.memory` into `.ram` and `.flash`.
   - `HyperBusResource` now lives in `torii.platform.resources.memory`
+- Build API is now able to be segmented into individual steps which can then be re-run, and have pre/post hooks for custom functionality.
 
 ### Deprecated
 
