@@ -59,6 +59,7 @@ Unreleased template stuff
 - The `torii.build.plat` module now has a `PinFeature` enum which replaces the strings used to pass to the `_check_feature` calls for platform implementation.
 - The `torii.build.plat` `get_*` functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.
 - The `torii.lib.io.Pin` record now exposes `i_p`/`i_n` members for input `DiffPairs` and `o_p`/`o_n` members for output `DiffPairs`.
+- The `torii.platform.resources.EthernetResource` now has support for more types of PHY to MAC interfaces (TBI, RTBI, XAUI, etc. ).
 
 ### Deprecated
 
