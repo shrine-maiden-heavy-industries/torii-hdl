@@ -49,6 +49,7 @@ Unreleased template stuff
   - `HyperBusResource` now lives in `torii.platform.resources.memory`
 - The `torii.build.plat` module now has a `PinFeature` enum which replaces the strings used to pass to the `_check_feature` calls for platform implementation.
 - The `torii.build.plat` `get_*` functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.
+- Build API is now able to be segmented into individual steps which can then be re-run, and have pre/post hooks for custom functionality.
 
 ### Deprecated
 
