@@ -49,6 +49,7 @@ Unreleased template stuff
   - `HyperBusResource` now lives in `torii.platform.resources.memory`
 - The `torii.build.plat` module now has a `PinFeature` enum which replaces the strings used to pass to the `_check_feature` calls for platform implementation.
 - The `torii.build.plat` `get_*` functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.
+- The `torii.platform.resources.EthernetResource` now has support for more types of PHY to MAC interfaces (TBI, RTBI, XAUI, etc. ).
 
 ### Deprecated
 
