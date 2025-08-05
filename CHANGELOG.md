@@ -43,6 +43,7 @@ Unreleased template stuff
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 - New enhanced diagnostics for Torii designs.
+- Ability to cache Torii design build files and elaborated sources to prevent having to re-run a full build if the design didn't change.
 
 ### Changed
 
