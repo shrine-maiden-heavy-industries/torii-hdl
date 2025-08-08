@@ -399,9 +399,8 @@ To convert it to the wanted format, call `convert` from the wanted backend and p
       }
 ```
 
-
 [RTLIL]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html
-[Verilog]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html
-[CXXRTL]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html
-[JSON]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_json.html
+[Verilog]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-verilog-write-design-to-verilog-file
+[CXXRTL]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-cxxrtl-convert-design-to-c-rtl-simulation
+[JSON]: https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-json-write-design-to-a-json-file
 [Yosys]: https://github.com/YosysHQ/yosys
