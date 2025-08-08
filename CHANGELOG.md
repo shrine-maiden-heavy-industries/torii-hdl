@@ -32,6 +32,7 @@ Unreleased template stuff
 - Added new `HDMIResource` for HDMI port resources on board platforms.
 - New `PCIeBusResources` for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.
 - New `PCIBusResources` for 32-bit and 64-bit PCI busses.
+- New `platformdirs~=4.0` dependency used for platform correct cache, temp, and config directories.
 
 ### Changed
 

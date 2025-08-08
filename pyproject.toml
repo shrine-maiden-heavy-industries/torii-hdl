@@ -25,6 +25,7 @@ dependencies = [
 	'pyvcd>=0.4.0,<0.5',
 	'Jinja2~=3.1',
 	'rich>=13.7.0',
+	'platformdirs~=4.0',
 ]
 keywords = [
 	'HDL',
