@@ -37,7 +37,9 @@ def test(session: Session) -> None:
 	BASIC_EXAMPLES  = ROOT_DIR / 'examples' / 'basic'
 	FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
 
-	unittest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
+	session.env['TORII_WARNINGS_NOHANDLE'] = '1'
+
+	unittest_args = ('-m', 'torii.test', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('click') # For SBY
 	session.install('-e', '.')
