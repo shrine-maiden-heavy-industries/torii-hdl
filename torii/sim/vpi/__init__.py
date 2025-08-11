@@ -3,7 +3,7 @@
 from typing    import Literal, TypeAlias
 
 from ...hdl.ir import Fragment
-from .._base   import BaseEngine
+from .._base   import BaseEngine, BaseSignalState, BaseSimulation
 
 __all__ = (
 	'VerilatorSimEngine',
@@ -12,6 +12,28 @@ __all__ = (
 )
 
 VPIBackend: TypeAlias = Literal['verilator']
+
+class _VerilatorSignalState(BaseSignalState):
+	pass
+
+class _VerilatorSimulation(BaseSimulation):
+	def __init__(self) -> None:
+		pass
+
+	def reset(self) -> None:
+		pass
+
+	def get_signal(self, signal) -> None:
+		pass
+
+	def add_trigger(self, process, signal, *, trigger=None):
+		pass
+
+	def remove_trigger(self, process, signal):
+		pass
+
+	def wait_interval(self, process, interval):
+		pass
 
 class VPISimEngine(BaseEngine):
 
