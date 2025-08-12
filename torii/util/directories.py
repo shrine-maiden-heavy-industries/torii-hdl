@@ -8,8 +8,6 @@ from warnings     import warn
 
 from platformdirs import PlatformDirs
 
-from ..           import __version__
-
 __all__ = (
 	'TORII_PLATFORM_DIRS',
 	'get_sys_cache',
