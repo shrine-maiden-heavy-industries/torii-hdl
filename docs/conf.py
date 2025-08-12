@@ -125,7 +125,7 @@ ogp_site_url = html_baseurl
 ogp_social_cards = {}
 ogp_image = None
 ogp_image_alt = None
-ogp_custom_meta_tags = {}
+ogp_custom_meta_tags = list[str]()
 ogp_enable_meta_description = True
 
 offline_skin_js_path     = '_static/js/wavedrom.skin.js'
