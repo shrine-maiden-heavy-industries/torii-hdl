@@ -141,6 +141,8 @@ linkcheck_ignore  = [
 	'https://creativecommons.org/licenses/by-sa/4.0/',
 	# SSL Expired
 	'https://opencores.org/howto/wishbone',
+	# SSL Timeout from GitHub actions
+	'https://aur.archlinux.org',
 ]
 linkcheck_anchors_ignore_for_url = [
 	r'^https://web\.libera\.chat/',
