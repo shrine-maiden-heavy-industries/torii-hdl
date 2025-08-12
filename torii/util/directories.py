@@ -25,7 +25,6 @@ __all__ = (
 TORII_PLATFORM_DIRS: Final[PlatformDirs] = PlatformDirs(
 	appname = 'Torii',
 	appauthor = 'Shrine Maiden Heavy Industries',
-	version = __version__,
 	roaming = True, # XXX(aki): Windows-only
 	ensure_exists = True # NOTE(aki): This will cause most if not all `get_sys_*` calls to explode by default
 )
