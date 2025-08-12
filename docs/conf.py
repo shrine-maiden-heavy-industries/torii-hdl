@@ -20,13 +20,14 @@ extensions = [
 	'sphinx.ext.intersphinx',
 	'sphinx.ext.napoleon',
 	'sphinx.ext.todo',
-	'sphinx_inline_tabs',
-	'sphinxcontrib.wavedrom',
 	'myst_parser',
-	'sphinx_copybutton',
-	'sphinx_codeautolink',
-	'sphinx_multiversion',
 	'sphinx_autodoc_typehints',
+	'sphinx_codeautolink',
+	'sphinx_copybutton',
+	'sphinx_inline_tabs',
+	'sphinx_multiversion',
+	'sphinxcontrib.wavedrom',
+	'sphinxext.opengraph',
 ]
 
 source_suffix = {
@@ -118,6 +119,14 @@ html_js_files = [
 	'js/wavedrom.min.js',
 	'js/wavedrom.skin.js',
 ]
+
+# TODO(aki): OpenGraph metadata stuff
+ogp_site_url = html_baseurl
+ogp_social_cards = {}
+ogp_image = None
+ogp_image_alt = None
+ogp_custom_meta_tags = {}
+ogp_enable_meta_description = True
 
 offline_skin_js_path     = '_static/js/wavedrom.skin.js'
 offline_wavedrom_js_path = '_static/js/wavedrom.min.js'

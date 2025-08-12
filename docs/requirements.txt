@@ -1,6 +1,6 @@
 furo
+matplotlib
 myst-parser
-setuptools_scm
 sphinx
 sphinx-autodoc-typehints
 sphinx-codeautolink
@@ -8,4 +8,5 @@ sphinx-copybutton
 sphinx-inline-tabs
 sphinx-multiversion
 sphinxcontrib-wavedrom
+sphinxext-opengraph
 wavedrom
