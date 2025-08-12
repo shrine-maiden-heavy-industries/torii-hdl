@@ -47,8 +47,11 @@ graphviz_output_format = 'svg'
 todo_include_todos     = True
 
 intersphinx_mapping = {
-	'python':       ('https://docs.python.org/3',       None),
-	'torii_boards': ('https://torii-boards.shmdn.link', None),
+	'python': ('https://docs.python.org/3', None),
+	'pyvcd': ('https://pyvcd.readthedocs.io/en/latest/', None),
+	'jinja2': ('https://jinja.palletsprojects.com/en/stable/', None),
+	'rich': ('https://rich.readthedocs.io/en/stable/', None),
+	'platformdirs': ('https://platformdirs.readthedocs.io/en/latest/', None),
 }
 
 napoleon_google_docstring              = False
