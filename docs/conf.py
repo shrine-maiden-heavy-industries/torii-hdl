@@ -40,11 +40,11 @@ extlinks = {
 	'pypi':  ('https://pypi.org/project/%s/', '%s'),
 }
 
-pygments_style         = 'default'
-pygments_dark_style    = 'monokai'
-autodoc_member_order   = 'bysource'
-graphviz_output_format = 'svg'
-todo_include_todos     = True
+pygments_style              = 'default'
+pygments_dark_style         = 'monokai'
+autodoc_member_order        = 'bysource'
+autodoc_docstring_signature = False
+todo_include_todos          = True
 
 intersphinx_mapping = {
 	'python': ('https://docs.python.org/3', None),
