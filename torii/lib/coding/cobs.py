@@ -12,8 +12,10 @@ from ...hdl.dsl import Module
 from ...hdl.ir  import Elaboratable
 
 __all__ = (
+	'RZCOBSEncoder',
 	'RCOBSEncoder',
 	'decode_rcobs',
+	'decode_rzcobs',
 )
 
 class RCOBSEncoder(Elaboratable):
@@ -166,3 +168,93 @@ def decode_rcobs(data: bytes | bytearray) -> bytes:
 
 	res = res[:len(data) - 1]
 	return bytes(res[res_idx:])
+
+class RZCOBSEncoder(Elaboratable):
+	'''
+	Reverse Zero Compressing Consistent Overhead Byte Stuffing (rzCOBS) encoder.
+
+	This is an implementation of the rzCOBS algorithm. The source of the encoding
+	algorithm was originally a Rust crate and can be found at: https://github.com/Dirbaio/rzcobs
+
+	The algorithm is fairly simple, for each byte in a message, do the following for each byte:
+
+		1.
+		2.
+		3.
+		4.
+		5.
+
+	This encoder is just a pure implementation of the encoding logic for a single byte, and as such
+	has a collection of status and control signals to indicate to the outside world its status.
+
+	For decoding rzCOBS encoded messages the :py:func:`decode_rzcobs` method implements that functionality
+	for any host-side applications.
+
+	Attributes
+	----------
+	raw : Signal(8), in
+		The raw byte to encode.
+
+	enc : Signal(8), out
+		The rCOBS encoded byte. Not valid unless ``vld`` signal is high.
+
+	strobe : Signal, in
+		Strobe to signal to encode the byte in ``raw``.
+
+	finish : Signal, in
+		Flush the state of the encoder in preparation for next stream.
+
+	ready : Signal, out
+		Encoder ready signal, indicates when the encoder is ready for the next byte.
+
+	valid : Signal, out
+		Value in ``enc`` is valid and can be latched.
+
+	'''
+
+	def __init__(self) -> None:
+		self.strobe = Signal()
+		self.ready  = Signal()
+		self.valid  = Signal()
+		self.ack    = Signal()
+		self.finish = Signal()
+
+		self.run   = Signal(8)
+		self.raw   = Signal(8)
+		self.enc   = Signal.like(self.raw)
+
+	def elaborate(self, _) -> Module:
+		m = Module()
+
+
+		return m
+
+def decode_rzcobs(data: bytes | bytearray) -> bytes:
+	'''
+	Decode an rzCOBS encoded message.
+
+	The input data is expected to not contain any ``0x00`` framing information, it should be a single
+	complete rzCOBS message.
+
+	Important
+	---------
+	This is not a synthesize construct, it is simply a helper function to decode messages produced with
+	the :py:class:`RZCOBSEncoder` on the host side. Or as a reference for implementation in other
+	languages.
+
+	Parameters
+	----------
+	data : bytes | bytearray
+		The rzCOBS encoded message.
+
+	Returns
+	-------
+	bytes
+		The rzCOBS decoded message.
+
+	Raises
+	------
+	ValueError
+		If the input dat contains a ``0x00`` byte -OR- the message is improperly encoded.
+	'''
+	pass
