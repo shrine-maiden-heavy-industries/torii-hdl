@@ -42,6 +42,7 @@ Unreleased template stuff
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
+- Added `RZCOBSEncoder` to `torii.lib.coding.cobs` for Reverse Zero-Compressing Consistent Overhead Byte Stuffing stream encoding.
 
 ### Changed
 
