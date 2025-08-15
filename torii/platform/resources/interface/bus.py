@@ -69,9 +69,10 @@ def PCIeBusResources(
 	pet29_p: str | None = None, pet29_n: str | None = None, per29_p: str | None = None, per29_n: str | None = None,
 	pet30_p: str | None = None, pet30_n: str | None = None, per30_p: str | None = None, per30_n: str | None = None,
 	pet31_p: str | None = None, pet31_n: str | None = None, per31_p: str | None = None, per31_n: str | None = None,
-	wake_n: str | None = None, smdat: str | None = None, smclk: str | None = None, clkreq_n: str | None = None,
-	pwrbrk_n: str | None = None, tck: str | None = None, tdi: str | None = None, tdo: str | None = None,
-	tms: str | None = None, trst_n: str | None = None, invert: bool = False, conn: ResourceConn | None = None,
+	wake_n: str | None = None, clkreq_n: str | None = None, pwrbrk_n: str | None = None, smbclk: str | None = None,
+	smbdat: str | None = None, scl: str | None = None, sda: str | None = None, tck: str | None = None,
+	tdi: str | None = None, tdo: str | None = None, tms: str | None = None, trst_n: str | None = None,
+	invert: bool = False, conn: ResourceConn | None = None,
 	attrs: Attrs = Attrs(), refclk_attrs: Attrs = Attrs(), lane_attrs: Attrs = Attrs()
 ) -> list[Resource]:
 	'''
@@ -124,13 +125,31 @@ def PCIeBusResources(
 			'wake', PinsN(wake_n, dir = 'i', conn = conn, assert_width = 1), attrs
 		))
 
-	if smdat is not None and smclk is not None:
+	if smbclk is not None and smbdat is not None:
 		io_common.append(Subsignal(
-			'smdat', Pins(smdat, dir = 'io', conn = conn, assert_width = 1), attrs
+			'smbclk', Pins(smbclk, dir = 'io', conn = conn, assert_width = 1), attrs
 		))
 		io_common.append(Subsignal(
-			'smclk', Pins(smclk, dir = 'io', conn = conn, assert_width = 1), attrs
+			'smbdat', Pins(smbdat, dir = 'io', conn = conn, assert_width = 1), attrs
 		))
+	elif any((smbclk, smbdat,)):
+		warn(
+			'Only one of the SMBus CLK/DAT signals were specified, was this intentional?',
+			ResourceWarning, stacklevel = 2
+		)
+
+	if scl is not None and sda is not None:
+		io_common.append(Subsignal(
+			'scl', Pins(scl, dir = 'io', conn = conn, assert_width = 1), attrs
+		))
+		io_common.append(Subsignal(
+			'sda', Pins(sda, dir = 'io', conn = conn, assert_width = 1), attrs
+		))
+	elif any((scl, sda,)):
+		warn(
+			'Only one of the I3C SCL/SDA signals were specified, was this intentional?',
+			ResourceWarning, stacklevel = 2
+		)
 
 	if all(jtag_sigs):
 		# HACK(aki): Type coercion, `all` above ensure we have no Nones

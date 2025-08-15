@@ -115,7 +115,18 @@ class PCIeBusResourcesTestCase(ToriiTestCase):
 			0,
 			perst_n = 'A', refclk_p = 'B', refclk_n = 'C',
 			pet0_p = 'D', pet0_n = 'E', per0_p = 'F', per0_n = 'G',
-			smdat = 'H', smclk = 'I'
+			smbclk = 'H', smbdat = 'I',
+		)[0]
+
+		self.assertEqual(x1_bus.name, 'pcie_x1')
+		self.assertEqual(x1_bus.number, 0)
+		self.assertEqual(len(x1_bus.ios), 6)
+
+		x1_bus = PCIeBusResources(
+			0,
+			perst_n = 'A', refclk_p = 'B', refclk_n = 'C',
+			pet0_p = 'D', pet0_n = 'E', per0_p = 'F', per0_n = 'G',
+			scl = 'H', sda = 'I'
 		)[0]
 
 		self.assertEqual(x1_bus.name, 'pcie_x1')
