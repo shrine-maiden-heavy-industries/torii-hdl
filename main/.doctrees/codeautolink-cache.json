@@ -739,7 +739,7 @@
     }
   ],
   "changelog": [],
-  "getting_started": [
+  "getting_started/index": [
     {
       "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit : int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en : Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n    ovf : Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int) -> None:\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n",
       "names": [
@@ -803,7 +803,7 @@
         }
       ],
       "example": {
-        "document": "getting_started",
+        "document": "getting_started/index",
         "ref_id": "implementing-a-counter",
         "headings": [
           "Getting Started",
@@ -813,7 +813,7 @@
           "Implementing a counter"
         ]
       },
-      "doc_lineno": 26
+      "doc_lineno": 30
     },
     {
       "source": "from torii.sim import Simulator # noqa: E402\n\ndut = UpCounter(25)\ndef bench():\n    # Disabled counter should not overflow.\n    yield dut.en.eq(0)\n    for _ in range(30):\n        yield\n        assert not (yield dut.ovf)\n\n    # Once enabled, the counter should overflow in 25 cycles.\n    yield dut.en.eq(1)\n    for _ in range(25):\n        yield\n        assert not (yield dut.ovf)\n    yield\n    assert (yield dut.ovf)\n\n    # The overflow should clear in one cycle.\n    yield\n    assert not (yield dut.ovf)\n\nsim = Simulator(dut)\nsim.add_clock(1e-6) # 1 MHz\nsim.add_sync_process(bench)\nwith sim.write_vcd('up_counter.vcd'):\n    sim.run()\n",
@@ -840,7 +840,7 @@
         }
       ],
       "example": {
-        "document": "getting_started",
+        "document": "getting_started/index",
         "ref_id": "testing-a-counter",
         "headings": [
           "Getting Started",
@@ -850,7 +850,7 @@
           "Testing a counter"
         ]
       },
-      "doc_lineno": 46
+      "doc_lineno": 50
     },
     {
       "source": "from torii.back import verilog # noqa: E402\n\ntop = UpCounter(25)\nwith open('up_counter.v', 'w') as f:\n    f.write(verilog.convert(top, ports = [top.en, top.ovf]))\n",
@@ -892,7 +892,7 @@
         }
       ],
       "example": {
-        "document": "getting_started",
+        "document": "getting_started/index",
         "ref_id": "converting-a-counter",
         "headings": [
           "Getting Started",
@@ -902,7 +902,7 @@
           "Converting a counter"
         ]
       },
-      "doc_lineno": 67
+      "doc_lineno": 71
     },
     {
       "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass LEDBlinker(Elaboratable):\n    def elaborate(self, platform):\n        m = Module()\n\n        led = platform.request('led')\n\n        half_freq = int(platform.default_clk_frequency // 2)\n        timer = Signal(range(half_freq + 1))\n\n        with m.If(timer == half_freq):\n            m.d.sync += led.eq(~led)\n            m.d.sync += timer.eq(0)\n        with m.Else():\n            m.d.sync += timer.eq(timer + 1)\n\n        return m\n",
@@ -992,7 +992,7 @@
         }
       ],
       "example": {
-        "document": "getting_started",
+        "document": "getting_started/index",
         "ref_id": "a-blinking-led",
         "headings": [
           "Getting Started",
@@ -1001,13 +1001,13 @@
           "A blinking LED"
         ]
       },
-      "doc_lineno": 95
+      "doc_lineno": 99
     },
     {
       "source": "from torii_boards.lattice.icestick import ICEStickPlatform # noqa: E402\n\nICEStickPlatform().build(LEDBlinker(), do_program = True)\n",
       "names": [],
       "example": {
-        "document": "getting_started",
+        "document": "getting_started/index",
         "ref_id": "a-blinking-led",
         "headings": [
           "Getting Started",
@@ -1018,7 +1018,7 @@
           "Todo"
         ]
       },
-      "doc_lineno": 113
+      "doc_lineno": 117
     }
   ],
   "index": [],
