@@ -4,7 +4,7 @@
 
 intro
 install
-getting_started
+getting_started/index
 tutorials/index
 projects
 ```
@@ -57,7 +57,7 @@ We also maintain a list of [projects using Torii], so post it in the [show and t
 [Torii <abbr title="Hardware Definition Language">HDL</abbr>]: ./language/index.md
 [standard library]: ./library/index.md
 [Introduction]: ./intro.md
-[Getting Started]: ./getting_started.md
+[Getting Started]: ./getting_started/index.md
 [collection of board definition files]: https://torii-boards.shmdn.link/
 [libera.chat]: https://libera.chat/
 [web chat]: https://web.libera.chat/#torii

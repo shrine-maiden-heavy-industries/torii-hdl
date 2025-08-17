@@ -424,5 +424,5 @@ Now that you've installed Torii, see the [getting started] guide for a quick int
 [simulation]: #waveform-viewer-optional
 [formal]: #formal-tools-optional
 [torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
-[getting started]: ./getting_started.md
+[getting started]: ./getting_started/index.md
 [language guide]: ./language/index.md

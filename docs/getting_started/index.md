@@ -1,5 +1,9 @@
 # Getting Started
 
+```{toctree}
+:maxdepth: 1
+```
+
 This section demonstrates the basic Torii workflow to provide a cursory overview of the language and the toolchain. See the [Tutorials] section for a step-by-step introduction to the language, and the [Language Guide] for a detailed explanation of every language construct.
 
 ```{todo}
@@ -23,7 +27,7 @@ As a first example, consider a counter with a fixed limit, enable, and overflow.
 A 16-bit up counter with enable input, overflow output, and a limit fixed at design time can be implemented in Torii as follows:
 
 ```{eval-rst}
-.. literalinclude:: _code/up_counter.py
+.. literalinclude:: ../_code/up_counter.py
    :language: python
    :linenos:
    :lineno-match:
@@ -43,7 +47,7 @@ Most `elaborate` implementations use a `Module` helper to describe combinatorial
 To verify its functionality, the counter can be simulated for a small amount of time, with a test bench driving it and checking a few simple conditions:
 
 ```{eval-rst}
-.. literalinclude:: _code/up_counter.py
+.. literalinclude:: ../_code/up_counter.py
    :language: python
    :linenos:
    :lineno-match:
@@ -57,14 +61,14 @@ The test bench is implemented as a Python generator function that is co-simulate
 
 When run, the test bench finishes successfully, since all of the assertions hold, and produces a VCD file with waveforms recorded for every `Signal` as well as the clock of the `sync` domain:
 
-![A screenshot of GTKWave displaying waveforms near the clock cycle where the counter overflows.](_images/up_counter_gtkwave.png)
+![A screenshot of GTKWave displaying waveforms near the clock cycle where the counter overflows.](../_images/up_counter_gtkwave.png)
 
 ### Converting a counter
 
 Although some Torii workflows do not include Verilog at all, it is still the de facto standard for HDL interoperability. Any Torii design can be converted to synthesizable Verilog using the corresponding backend:
 
 ```{eval-rst}
-.. literalinclude:: _code/up_counter.py
+.. literalinclude:: ../_code/up_counter.py
    :language: python
    :linenos:
    :lineno-match:
@@ -76,7 +80,7 @@ The signals that will be connected to the ports of the top-level Verilog module 
 <!-- TODO: link to clock domain section of language reference -->
 
 ```{eval-rst}
-.. literalinclude:: _code/up_counter.v
+.. literalinclude:: ../_code/up_counter.v
    :language: verilog
    :linenos:
 ```
@@ -92,7 +96,7 @@ Unfortunately, at the moment none of the supported toolchains will use the sourc
 Although Torii works well as a standalone HDL, it also includes a build system that integrates with FPGA toolchains, and many board definition files for common developer boards that include pinouts and programming adapter invocations. The following code will blink a LED with a frequency of 1 Hz on any board that has a LED and an oscillator:
 
 ```{eval-rst}
-.. literalinclude:: _code/led_blinker.py
+.. literalinclude:: ../_code/led_blinker.py
    :language: python
    :linenos:
    :lineno-match:
@@ -110,7 +114,7 @@ Link to the installation instructions for the FOSS iCE40 toolchain, probably as 
 ```
 
 ```{eval-rst}
-.. literalinclude:: _code/led_blinker.py
+.. literalinclude:: ../_code/led_blinker.py
    :language: python
    :linenos:
    :lineno-match:
@@ -133,7 +137,7 @@ The ability to check with minimal effort whether the entire toolchain functions 
 
 This command will build and program a test bitstream similar to the example above.
 
-[Tutorials]: ./tutorials/index.md
-[Language Guide]: ./language/index.md
-[Download]: _code/up_counter.py
+[Tutorials]: ../tutorials/index.md
+[Language Guide]: ../language/index.md
+[Download]: ../_code/up_counter.py
 [Lattice iCEStick evaluation board]: https://www.latticesemi.com/icestick
