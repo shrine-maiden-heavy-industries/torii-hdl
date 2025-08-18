@@ -73,6 +73,7 @@ Unreleased template stuff
 - Removed the deprecated `UnusedProperty` import from `torii.hdl.ast`.
 - Removed the deprecated `UnusedMustUse` import from `torii.hdl._unused` as `MustUseWarning`.
 - Removed the deprecated `ResourceError` import from `torii.build.res`.
+- Removed `torii.util.fs` module and replaced `working_dir` with `contextlib.chdir`.
 
 ### Fixed
 

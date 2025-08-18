@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from collections.abc                 import Generator, Iterable
+from contextlib                      import chdir
 from enum                            import Enum, auto, unique
 from pathlib                         import Path
 from shlex                           import split
@@ -8,8 +9,6 @@ from sysconfig                       import get_config_vars
 
 # NOTE(aki): So this looks a little hokey, but should be "fine":tm:
 from setuptools._distutils.ccompiler import CCompiler, new_compiler
-
-from ..util.fs                       import working_dir
 
 __all__ = (
 	'compile_cxx',
@@ -132,7 +131,8 @@ def compile_cxx(
 	# There should be a better way to do this, but it works:tm:
 	# setuptools/distutils assumes a lot of things are relative paths, so we need to ensure we're in
 	# the final build directory so we don't puke object files all over the place.
-	with working_dir(build_dir) as cwd:
+	with chdir(build_dir):
+		cwd = build_dir
 		# Compute where we dump out the source files
 		src_dir = cwd / 'src'
 		src_dir.mkdir(exist_ok = True)
