@@ -14,6 +14,54 @@ __all__ = (
 	'_WASMFragmentCompiler',
 )
 
+WASM_SIGN = '''
+	(func $sign (param $value i64) (param $sign i64) (result i64)
+		(if (result i64) (i64.ne (i64.and (local.get $value) (local.get $sign)) (i64.const 0))
+			(then (return (i64.or (local.get $value) (local.get $sign))))
+			(else (return (local.get $value)))
+		)
+	)
+'''
+
+# Signed floor div for integers
+WASM_ZDIV = '''
+	(func $zdiv (param $lhs i64) (param $rhs i64) (result i64)
+		(local $res i64)
+		(if (result i64) (i64.eq (local.get $rhs) (i64.const 0))
+			(then (return (i64.const 0)))
+			(else
+				(local.set $res (i64.div_s (local.get $lhs) (local.get $rhs)))
+				(if (i32.gt_u (i32.and
+							(i64.lt_s (i64.xor (local.get $lhs) (local.get $rhs)) (i64.const 0))
+							(i64.ne (i64.rem_s (local.get $lhs) (local.get $rhs)) (i64.const 0))
+						)
+						(i32.const 0)
+					)
+					(then (local.set $res (i64.sub (local.get $res) (i64.const 1))))
+				)
+				(return (local.get $res))
+			)
+		)
+	)
+'''
+
+WASM_ZMOD = '''
+	(func $zmod (param $lhs i64) (param $rhs i64) (result i64)
+		(if (result i64) (i64.eq (local.get $rhs) (i64.const 0))
+			(then (return (i64.const 0)))
+			(else (return
+				(i64.rem_s
+					(i64.add
+						(i64.rem_s (local.get $lhs) (local.get $rhs))
+						(local.get $rhs)
+					)
+					(local.get $rhs)
+				)
+			))
+		)
+	)
+'''
+
 class WASMRTLProcess(BaseProcess):
 	__slots__ = ('is_comb', 'runnable', 'passive', 'run')
 
@@ -84,6 +132,12 @@ class _WASMEmitter:
 		module += '\n'
 		module += ''.join(self._imports)
 		module += '\n'
+		module += WASM_SIGN
+		module += '\n'
+		module += WASM_ZDIV
+		module += '\n'
+		module += WASM_ZMOD
+		module += '\n'
 		if result:
 			module += '\t(func (export "run") (result i64)\n'
 		else:
@@ -104,8 +158,7 @@ class _Compiler:
 class _ValueCompiler(ValueVisitor, _Compiler):
 	def on_value(self, value):
 		# Very large values are unlikely to compile or simulate in reasonable time.
-		# probably not neeeded on wasm?
-		if len(value) > 2 ** 16:
+		if len(value) > 2 ** 61:
 			if value.src_loc:
 				src = '{}:{}'.format(*value.src_loc)
 			else:
@@ -116,8 +169,6 @@ class _ValueCompiler(ValueVisitor, _Compiler):
 			)
 
 		val = super().on_value(value)
-		if isinstance(val, str) and len(val) > 1000:
-			return self.emitter.def_var('intermediate', val)
 		return val
 
 	def on_ClockSignal(self, value):
@@ -162,27 +213,79 @@ class _RHSValueCompiler(_ValueCompiler):
 			return f'(i64.and (i64.const {value_mask:#x}) {self(value)})'
 
 		def sign(value):
+			# TODO: is the do we need to consider the shape in wasm?
 			if value.shape().signed:
-				raise NotImplementedError
+				return f'(call $sign {mask(value)} (i64.const {-1 << (len(value) - 1):#x}))'
 			else: # unsigned
 				return mask(value)
+			return mask(value)
 
-		if len(value.operands) == 2:
+		if len(value.operands) == 1:
+			arg, = value.operands
+			if value.operator == '~':
+				return f'(i64.xor {mask(arg)} (i64.const 0xffffffffffffffff))'
+			if value.operator == '-':
+				return f'(i64.mul {sign(arg)} (i64.const -1))'
+			if value.operator == 'b':
+				return f'(i64.extend_i32_u (i64.gt_u {mask(arg)} (i64.const 0)))'
+			if value.operator == 'r|':
+				return f'(i64.extend_i32_u (i64.ne {mask(arg)} (i64.const 0)))'
+			if value.operator == 'r&':
+				return f'(i64.extend_i32_u (i64.eq {mask(arg)} (i64.const {(1 << len(arg)) - 1})))'
+			if value.operator == 'r^':
+				return f'(i64.rem_u (i64.popcnt {mask(arg)}) (i64.const 2))'
+			if value.operator in ('u', 's'):
+				# These operators don't change the bit pattern, only its interpretation.
+				return self(arg)
+		elif len(value.operands) == 2:
 			lhs, rhs = value.operands
 			if value.operator == '+':
 				return f'(i64.add {sign(lhs)} {sign(rhs)})'
+			if value.operator == '-':
+				return f'(i64.sub {sign(lhs)} {sign(rhs)})'
+			if value.operator == '*':
+				return f'(i64.mul {sign(lhs)} {sign(rhs)})'
+			if value.operator == '//':
+				return f'(call $zdiv {sign(lhs)} {sign(rhs)})'
+			if value.operator == '%':
+				return f'(call $zmod {sign(lhs)} {sign(rhs)})'
 			if value.operator == '&':
 				return f'(i64.and {sign(lhs)} {sign(rhs)})'
+			if value.operator == '|':
+				return f'(i64.or {sign(lhs)} {sign(rhs)})'
+			if value.operator == '^':
+				return f'(i64.xor {sign(lhs)} {sign(rhs)})'
+			if value.operator == '<<':
+				return f'(i64.shl {sign(lhs)} {sign(rhs)})'
+			if value.operator == '>>':
+				return f'(i64.shr_u {sign(lhs)} {sign(rhs)})'
+			if value.operator == '!=':
+				return f'(i64.extend_i32_u (i64.ne {sign(lhs)} {sign(rhs)}))'
+			if value.operator == '<':
+				return f'(i64.extend_i32_u (i64.lt_s {sign(lhs)} {sign(rhs)}))'
+			if value.operator == '<=':
+				return f'(i64.extend_i32_u (i64.le_s {sign(lhs)} {sign(rhs)}))'
+			if value.operator == '>':
+				return f'(i64.extend_i32_u (i64.gt_s {sign(lhs)} {sign(rhs)}))'
+			if value.operator == '>=':
+				return f'(i64.extend_i32_u (i64.ge_s {sign(lhs)} {sign(rhs)}))'
 			if value.operator == '==':
 				# i64.eq will push i32 into a stack so we need to extend it to i64
 				return f'(i64.extend_i32_u (i64.eq {sign(lhs)} {sign(rhs)}))'
+		elif len(value.operands) == 3:
+			if value.operator == 'm':
+				sel, val1, val0 = value.operands
+				return f'(if (result i64) (i64.gt_u {mask(sel)} (i64.const 0)) (then {sign(val1)}) (else {sign(val0)}))'
 		raise NotImplementedError(f'Operator \'{value.operator}\' not implemented') # :nocov:
 
 	def on_Slice(self, value):
-		raise NotImplementedError
+		and_shift = f'(i64.shr_u {self(value.value)} (i64.const {value.start}))'
+		return f'(i64.and (i64.const {(1 << len(value)) - 1:#x}) {and_shift})'
 
 	def on_Part(self, value):
-		raise NotImplementedError
+		offset_mask = (1 << len(value.offset)) - 1
+		offset = f'(i64.mul (i64.const {value.stride}) (i64.and (i64.const {offset_mask:#x}) {self(value.offset)}))'
+		return f'(i64.and (i64.const {(1 << value.width) - 1}) (i64.shr_u {self(value.value)} {offset}))'
 
 	def on_Cat(self, value):
 		gen_parts = []
@@ -191,12 +294,35 @@ class _RHSValueCompiler(_ValueCompiler):
 			part_mask = (1 << len(part)) - 1
 			gen_parts.append(f'(i64.shl (i64.and (i64.const {part_mask:#x}) {self(part)}) (i64.const {offset}))')
 			offset += len(part)
+
+		# we have to nest the or statements so time to do annoying paren stuff
 		if gen_parts:
-			return f'{"".join(gen_parts)}'
-		return '0'
+			return f'{"(i64.or ".join(gen_parts)}{")" * (len(gen_parts) - 1)}'
+		return '(i64.const 0)'
 
 	def on_ArrayProxy(self, value):
-		raise NotImplementedError
+		index_mask = (1 << len(value.index)) - 1
+		gen_index = self.emitter.def_var('rhs_index', f'(i64.and (i64.const {index_mask:#x}) {self(value.index)})')
+		gen_value = self.emitter.def_var('rhs_proxy', '(i64.const 0)')
+		if value.elems:
+			for index, elem in enumerate(value.elems):
+				check = f'(i64.eq (i64.const {index}) (local.get ${gen_index}))'
+				if index == 0:
+					self.emitter.append(f'(if {check} (then')
+				else:
+					self.emitter.append(f'(else (if {check} (then')
+				with self.emitter.indent():
+					self.emitter.append(f'(local.set ${gen_value} {self(elem)})')
+				self.emitter.append(')')
+
+			self.emitter.append('(else')
+			with self.emitter.indent():
+				self.emitter.append(f'(local.set ${gen_value} {self(value.elems[-1])})')
+
+			self.emitter.append('))' + '))' * (len(value.elems) - 1))
+			return f'(local.get ${gen_value})'
+		else:
+			return '(i64.const 0)'
 
 	@classmethod
 	def compile(cls, state, value, *, mode):
@@ -236,26 +362,77 @@ class _LHSValueCompiler(_ValueCompiler):
 		def gen(arg):
 			value_mask = (1 << len(value)) - 1
 			if value.shape().signed:
-				raise NotImplementedError
+				value_const = f'(i64.const {-1 << (len(value) - 1):#x})'
+				value_sign = f'(call $sign (i64.and (i64.const {value_mask:#x}) {arg}) {value_const})'
 			else: # unsigned
 				value_sign = f'(i64.and (i64.const {value_mask:#x}) {arg})'
 			self.emitter.append(f'(local.set $next_{self.state.get_signal(value)} {value_sign})')
 		return gen
 
 	def on_Operator(self, value):
-		raise NotImplementedError
+		if value.operator in ('u', 's'):
+			return self(value.operands[0])
+		raise TypeError # :nocov:
 
 	def on_Slice(self, value):
-		raise NotImplementedError
+		def gen(arg):
+			width_mask = (1 << (value.stop - value.start)) - 1
+			self(value.value)(
+				f'(i64.or '
+				f'(i64.and {self.lrhs(value.value)} '
+				f'(i64.const {~(width_mask << value.start):#x})) '
+				f'(i64.shl (i64.and (i64.const {width_mask:#x}) {arg}) (i64.const {value.start}))'
+				f')'
+			)
+		return gen
 
 	def on_Part(self, value):
-		raise NotImplementedError
+		def gen(arg):
+			width_mask = (1 << value.width) - 1
+			offset_mask = (1 << len(value.offset)) - 1
+			offset_and = f'(i64.and (i64.const {offset_mask:#x}) {self.rrhs(value.offset)})'
+			offset = f'(i64.mul (i64.const {value.stride}) {offset_and})'
+			self(value.value)(
+				f'(i64.and {self.lrhs(value.value)} '
+				f'(i64.or '
+				f'(i64.xor (i64.shl (i64.const {width_mask:#x}) {offset}) (i64.const 0xffffffffffffffff)) '
+				f'(i64.shl (i64.and (i64.const {width_mask:#x}) {arg}) {offset}))'
+				f')'
+			)
+		return gen
 
 	def on_Cat(self, value):
-		raise NotImplementedError
+		def gen(arg):
+			gen_arg = self.emitter.def_var('cat', arg)
+			offset = 0
+			for part in value.parts:
+				part_mask = (1 << len(part)) - 1
+				part_shift = f'(i64.shr_u (local.get ${gen_arg}) (i64.const {offset}))'
+				self(part)(f'(i64.and (i64.const {part_mask:#x}) {part_shift})')
+				offset += len(part)
+		return gen
 
 	def on_ArrayProxy(self, value):
-		raise NotImplementedError
+		def gen(arg):
+			index_mask = (1 << len(value.index)) - 1
+			gen_index = self.emitter.def_var('index', f'(i64.and {self.rrhs(value.index)} (i64.const {index_mask:#x}))')
+			if value.elems:
+				for index, elem in enumerate(value.elems):
+					check = f'(i64.eq (i64.const {index}) (local.get ${gen_index}))'
+					if index == 0:
+						self.emitter.append(f'(if {check} (then')
+					else:
+						self.emitter.append(f'(else (if {check} (then')
+					with self.emitter.indent():
+						self(elem)(arg)
+					self.emitter.append(')')
+
+				self.emitter.append('(else')
+				with self.emitter.indent():
+					self(value.elems[-1])(arg)
+
+				self.emitter.append('))' + '))' * (len(value.elems) - 1))
+		return gen
 
 class _StatementCompiler(StatementVisitor, _Compiler):
 	def __init__(self, state, emitter, *, inputs = None, outputs = None) -> None:
@@ -273,7 +450,7 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 		gen_rhs_value = self.rhs(stmt.rhs) # check for oversized value before generating mask
 		gen_rhs = f'(i64.and (i64.const {(1 << len(stmt.rhs)) - 1:#x}) {gen_rhs_value})'
 		if stmt.rhs.shape().signed:
-			raise NotImplementedError
+			gen_rhs = f'(call $sign {gen_rhs} (i64.const {-1 << (len(stmt.rhs) - 1):#x}))'
 		return self.lhs(stmt.lhs)(gen_rhs)
 
 	def on_Switch(self, stmt):
@@ -399,5 +576,10 @@ class _WASMFragmentCompiler:
 			run = instance.exports(self.state.store)["run"]
 			domain_process.run = _WASMExec(run, self.state.store)
 			processes.add(domain_process)
+
+		for subfragment_index, (subfragment, subfragment_name) in enumerate(fragment.subfragments):
+			if subfragment_name is None:
+				subfragment_name = f'U${subfragment_index}'
+			processes.update(self(subfragment))
 
 		return processes

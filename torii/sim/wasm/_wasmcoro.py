@@ -27,7 +27,10 @@ class WASMCoroProcess(BaseProcess):
 		self.passive = False
 
 		self.coroutine = self.constructor()
+		self.waits_on = SignalSet()
+		self.reset_globals()
 
+	def reset_globals(self):
 		self.globals = []
 		glob_vars = []
 		glob_func = []
@@ -39,8 +42,6 @@ class WASMCoroProcess(BaseProcess):
 
 		self.globals.extend(glob_vars)
 		self.globals.extend(glob_func)
-
-		self.waits_on = SignalSet()
 
 	def src_loc(self):
 		coroutine = self.coroutine
@@ -92,6 +93,10 @@ class WASMCoroProcess(BaseProcess):
 					command = Value.cast(command)
 				if isinstance(command, Value):
 					module_code = _RHSValueCompiler.compile(self.state, command, mode = 'curr')
+					# Sometimes compiling a Value will add new slots, if that's the case
+					# we need to recreate the wasm globals state
+					if len(self.globals) != len(self.state.slots):
+						self.reset_globals()
 					module = Module(self.state.store.engine, module_code)
 					instance = Instance(self.state.store, module, self.globals)
 					run = instance.exports(self.state.store)["run"]
@@ -100,6 +105,10 @@ class WASMCoroProcess(BaseProcess):
 
 				elif isinstance(command, Statement):
 					module_code = _StatementCompiler.compile(self.state, command)
+					# Sometimes compiling a Value will add new slots, if that's the case
+					# we need to recreate the wasm globals state
+					if len(self.globals) != len(self.state.slots):
+						self.reset_globals()
 					module = Module(self.state.store.engine, module_code)
 					instance = Instance(self.state.store, module, self.globals)
 					run = instance.exports(self.state.store)["run"]
