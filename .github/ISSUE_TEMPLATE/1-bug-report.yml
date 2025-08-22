@@ -156,7 +156,7 @@ body:
   - type: textarea
     id: bug-description
     attributes:
-      label: 'What happened?'
+      label: 'Whats Wrong?'
       description: >
         Please provide as detailed of a description as you can, and any additional steps needed to
         reproduce it if possible.
