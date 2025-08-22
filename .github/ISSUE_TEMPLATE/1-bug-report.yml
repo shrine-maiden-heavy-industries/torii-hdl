@@ -104,6 +104,36 @@ body:
     validations:
       required: false
 
+  - type: dropdown
+    id: fpga-platform
+    attributes:
+      label: 'FPGA Platform'
+      description: >
+        If this issue is specific to an FPGA vendor Platform, please specify.
+    options:
+      - 'Altera'
+      - 'Gowin'
+      - 'Lattice'
+      - 'QuickLogic'
+      - 'Xilinx'
+    validations:
+      required: false
+
+  - type: input
+    id: fpga-platform-toolchain
+    attributes:
+      label: 'FPGA Platform toolchain'
+      description: >
+        If this problem only effects a specific toolchain for the FPGA platform, please
+        specify it and the version below.
+
+
+        In the case of the Open Source toolchains, try to provide the versions for
+        Yosys and nextpnr as well.
+      placeholder: 'e.g. Lattice Diamond 3.12, prjtrellis f98e72e, Vivado 2024.1, etc.'
+    validations:
+      required: false
+
   - type: markdown
     attributes:
       value: '### A Note on Reproducibility'
