@@ -110,12 +110,12 @@ body:
       label: 'FPGA Platform'
       description: >
         If this issue is specific to an FPGA vendor Platform, please specify.
-    options:
-      - 'Altera'
-      - 'Gowin'
-      - 'Lattice'
-      - 'QuickLogic'
-      - 'Xilinx'
+      options:
+        - 'Altera'
+        - 'Gowin'
+        - 'Lattice'
+        - 'QuickLogic'
+        - 'Xilinx'
     validations:
       required: false
 
