@@ -21,10 +21,11 @@ if TYPE_CHECKING:
 	from collections.abc import Callable
 	from contextlib      import contextmanager
 	from re              import Pattern
-	from typing          import Any, Iterator, TypeVar, overload
-	from unittest.case   import _AssertRaisesContext
+	from typing          import Any, Iterator, ParamSpec, TypeVar, overload
+	from unittest.case   import _AssertRaisesContext, _AssertWarnsContext
 
 	_E = TypeVar('_E', bound = BaseException)
+	_P = ParamSpec("_P")
 
 	class SimulatorUnitTestMixinBase:
 		def assertStatement(self, stmt, inputs, output, reset = 0) -> None:
@@ -70,9 +71,47 @@ if TYPE_CHECKING:
 			msg: Any = ...
 		) -> _AssertRaisesContext[_E]:
 			...
+
+	class SimulatorRegressionTestMixinBase:
+		def get_simulator(self, dut) -> Simulator:
+			...
+
+		def assertEqual(self, first: Any, second: Any, msg: Any = None) -> None:
+			...
+
+		@overload
+		def assertRaisesRegex( # type: ignore
+			self, expected_exception: type[BaseException] | tuple[type[BaseException], ...],
+			expected_regex: str | Pattern[str], callable: Callable[..., object], *args: Any, **kwargs: Any,
+		) -> None:
+			...
+
+		@overload
+		def assertRaisesRegex(
+			self, expected_exception: type[_E] | tuple[type[_E], ...], expected_regex: str | Pattern[str], *,
+			msg: Any = ...
+		) -> _AssertRaisesContext[_E]:
+			...
+
+		@overload
+		def assertWarnsRegex( # type: ignore
+			self, expected_warning: type[Warning] | tuple[type[Warning], ...],
+			expected_regex: str | Pattern[str], callable: Callable[_P, object], *args: _P.args, **kwargs: _P.kwargs,
+		) -> None:
+			...
+
+		@overload
+		def assertWarnsRegex(
+			self, expected_warning: type[Warning] | tuple[type[Warning], ...], expected_regex: str | Pattern[str], *,
+			msg: Any = ...
+		) -> _AssertWarnsContext:
+			...
+
+
 else:
 	SimulatorUnitTestMixinBase = object
 	SimulatorIntegrationTestMixinBase = object
+	SimulatorRegressionTestMixinBase = object
 
 class SimulatorUnitTestsMixin(SimulatorUnitTestMixinBase):
 
@@ -1503,3 +1542,66 @@ class SimulatorIntegrationTestsMixin(SimulatorIntegrationTestMixinBase):
 				yield Settle()
 				self.assertEqual((yield o), 1)
 			sim.add_process(process)
+
+class SimulatorRegressionTestMixin(SimulatorRegressionTestMixinBase):
+	def test_bug_325(self):
+		dut = Module()
+		dut.d.comb += Signal().eq(Cat())
+		self.get_simulator(dut).run()
+
+	def test_bug_473(self):
+		sim = self.get_simulator(Module())
+
+		def process():
+			self.assertEqual((yield -(Const(0b11, 2).as_signed())), 1)
+		sim.add_process(process)
+		sim.run()
+
+	def test_bug_595(self):
+		dut = Module()
+		with dut.FSM(name = 'name with space'):
+			with dut.State(0):
+				pass
+		sim = self.get_simulator(dut)
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Signal \'bench\.top\.name with space_state\' contains a whitespace character$'
+		):
+			with open(os.path.devnull, 'w') as f:
+				with sim.write_vcd(f):
+					sim.run() # :nocov:
+
+	def test_bug_588(self):
+		dut = Module()
+		a = Signal(32)
+		b = Signal(32)
+		z = Signal(32)
+		dut.d.comb += z.eq(a << b)
+		with self.assertRaisesRegex(
+			OverflowError,
+			r'^Value defined at .+?[\\/]sim_harness\.py:\d+ is 4294967327 bits wide, '
+			r'which is unlikely to simulate in reasonable time$'
+		):
+			self.get_simulator(dut)
+
+	def test_bug_566(self):
+		dut = Module()
+		dut.d.sync += Signal().eq(0)
+		sim = self.get_simulator(dut)
+		with self.assertWarnsRegex(
+			UserWarning,
+			r'^Adding a clock process that drives a clock domain object named \'sync\', '
+			r'which is distinct from an identically named domain in the simulated design$'
+		):
+			sim.add_clock(1e-6, domain = ClockDomain('sync'))
+
+	def test_bug_826(self):
+		sim = self.get_simulator(Module())
+
+		def process():
+			self.assertEqual((yield Const(0b0000, 4) | ~Const(1, 1)), 0b0000)
+			self.assertEqual((yield Const(0b1111, 4) & ~Const(1, 1)), 0b0000)
+			self.assertEqual((yield Const(0b1111, 4) ^ ~Const(1, 1)), 0b1111)
+
+		sim.add_process(process)
+		sim.run()

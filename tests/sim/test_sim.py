@@ -1,18 +1,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-import os
 from contextlib    import contextmanager
 
-from torii.hdl.ast import Cat, Const, Signal, Value
-from torii.hdl.cd  import ClockDomain
+from torii.hdl.ast import Signal, Value
 from torii.hdl.dsl import Module, Statement
 from torii.hdl.ir  import Fragment
 from torii.sim     import Settle, Simulator
 from torii.util    import flatten
 
 from ..utils       import ToriiTestSuiteCase
-from .sim_harness  import SimulatorUnitTestsMixin, SimulatorIntegrationTestsMixin
+from .sim_harness  import SimulatorIntegrationTestsMixin, SimulatorRegressionTestMixin, SimulatorUnitTestsMixin
 
 class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
@@ -51,68 +49,9 @@ class PysimSimulatorIntegrationTestCase(ToriiTestSuiteCase, SimulatorIntegration
 			else:
 				sim.run_until(deadline)
 
-class SimulatorRegressionTestCase(ToriiTestSuiteCase):
-	def test_bug_325(self):
-		dut = Module()
-		dut.d.comb += Signal().eq(Cat())
-		Simulator(dut).run()
-
-	def test_bug_473(self):
-		sim = Simulator(Module())
-
-		def process():
-			self.assertEqual((yield -(Const(0b11, 2).as_signed())), 1)
-		sim.add_process(process)
-		sim.run()
-
-	def test_bug_595(self):
-		dut = Module()
-		with dut.FSM(name = 'name with space'):
-			with dut.State(0):
-				pass
-		sim = Simulator(dut)
-		with self.assertRaisesRegex(
-			NameError,
-			r'^Signal \'bench\.top\.name with space_state\' contains a whitespace character$'
-		):
-			with open(os.path.devnull, 'w') as f:
-				with sim.write_vcd(f):
-					sim.run() # :nocov:
-
-	def test_bug_588(self):
-		dut = Module()
-		a = Signal(32)
-		b = Signal(32)
-		z = Signal(32)
-		dut.d.comb += z.eq(a << b)
-		with self.assertRaisesRegex(
-			OverflowError,
-			r'^Value defined at .+?[\\/]test_sim\.py:\d+ is 4294967327 bits wide, '
-			r'which is unlikely to simulate in reasonable time$'
-		):
-			Simulator(dut)
-
-	def test_bug_566(self):
-		dut = Module()
-		dut.d.sync += Signal().eq(0)
-		sim = Simulator(dut)
-		with self.assertWarnsRegex(
-			UserWarning,
-			r'^Adding a clock process that drives a clock domain object named \'sync\', '
-			r'which is distinct from an identically named domain in the simulated design$'
-		):
-			sim.add_clock(1e-6, domain = ClockDomain('sync'))
-
-	def test_bug_826(self):
-		sim = Simulator(Module())
-
-		def process():
-			self.assertEqual((yield Const(0b0000, 4) | ~Const(1, 1)), 0b0000)
-			self.assertEqual((yield Const(0b1111, 4) & ~Const(1, 1)), 0b0000)
-			self.assertEqual((yield Const(0b1111, 4) ^ ~Const(1, 1)), 0b1111)
-
-		sim.add_process(process)
-		sim.run()
+class PysimRegressionTestCase(ToriiTestSuiteCase, SimulatorRegressionTestMixin):
+	def get_simulator(self, dut) -> Simulator:
+		return Simulator(dut, engine = 'pysim')
 
 # TODO(aki): Figure out a better name
 class SimulatorEngineTestCase(ToriiTestSuiteCase):
