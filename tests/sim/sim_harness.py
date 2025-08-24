@@ -16,9 +16,15 @@ from torii.sim     import Delay, Passive, Settle, Simulator, Tick
 
 # NOTE(aki):
 # This is just applying typing stubs to ensure the type checker is happy, doesn't effect runtime
+# and a chunk of this was taken from the typeshed stubs for `unittest.case.TestCase`.
 if TYPE_CHECKING:
-	from contextlib import contextmanager
-	from typing     import Iterator
+	from collections.abc import Callable
+	from contextlib      import contextmanager
+	from re              import Pattern
+	from typing          import Any, Iterator, TypeVar, overload
+	from unittest.case   import _AssertRaisesContext
+
+	_E = TypeVar('_E', bound = BaseException)
 
 	class SimulatorUnitTestMixinBase:
 		def assertStatement(self, stmt, inputs, output, reset = 0) -> None:
@@ -32,18 +38,37 @@ if TYPE_CHECKING:
 		def assertSimulation(self, module, deadline = None) -> Iterator[Simulator]:
 			...
 
-		def assertEqual(self, first, second, msg = None) -> None:
+		def assertEqual(self, first: Any, second: Any, msg: Any = None) -> None:
 			...
 
-		def assertTrue(self, stmt) -> None:
+		def assertTrue(self, expr: Any, msg: Any = None) -> None:
 			...
 
-		@contextmanager
-		def assertRaises(self, type) -> Iterator[None]:
+		@overload
+		def assertRaises( # type: ignore
+			self, expected_exception: type[BaseException] | tuple[type[BaseException], ...],
+			callable: Callable[..., object], *args: Any, **kwargs: Any,
+		) -> None:
 			...
 
-		@contextmanager
-		def assertRaisesRegex(self, type, msg) -> Iterator[None]:
+		@overload
+		def assertRaises(
+			self, expected_exception: type[_E] | tuple[type[_E], ...], *, msg: Any = ...
+		) -> _AssertRaisesContext[_E]:
+			...
+
+		@overload
+		def assertRaisesRegex( # type: ignore
+			self, expected_exception: type[BaseException] | tuple[type[BaseException], ...],
+			expected_regex: str | Pattern[str], callable: Callable[..., object], *args: Any, **kwargs: Any,
+		) -> None:
+			...
+
+		@overload
+		def assertRaisesRegex(
+			self, expected_exception: type[_E] | tuple[type[_E], ...], expected_regex: str | Pattern[str], *,
+			msg: Any = ...
+		) -> _AssertRaisesContext[_E]:
 			...
 else:
 	SimulatorUnitTestMixinBase = object
