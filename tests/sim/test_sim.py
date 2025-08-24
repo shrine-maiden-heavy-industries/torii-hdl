@@ -14,6 +14,44 @@ from .integration_harness import SimulatorIntegrationTestsMixin
 from .regression_harness  import SimulatorRegressionTestMixin
 from .unitest_harness     import SimulatorUnitTestsMixin
 
+# TODO(aki): Figure out a better name
+class SimulatorEngineTestCase(ToriiTestSuiteCase):
+	def test_external_sim_engine(self):
+		from torii.sim._base import BaseEngine
+
+		class DummyEngine(BaseEngine):
+			def __init__(self, fragment) -> None:
+				pass
+
+		_ = Simulator(Module(), engine = DummyEngine)
+
+	def test_invalid_simulator_engine(self):
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^The specified engine \'NotAValidEngineName\' is not a known simulation engine name, or simulation '
+			'engine class$'
+		):
+			_ = Simulator(Module(), engine = 'NotAValidEngineName') # type: ignore
+
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^The specified engine <class \'object\'> is not a known simulation engine name, or simulation '
+			'engine class$'
+		):
+			_ = Simulator(Module(), engine = object) # type: ignore
+
+
+class PysimSimulatorIntegrationTestCase(ToriiTestSuiteCase, SimulatorIntegrationTestsMixin):
+	@contextmanager
+	def assertSimulation(self, module, deadline = None):
+		sim = Simulator(module, engine = 'pysim')
+		yield sim
+		with sim.write_vcd('test.vcd', 'test.gtkw'):
+			if deadline is None:
+				sim.run()
+			else:
+				sim.run_until(deadline)
+
 class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
 		inputs = [Value.cast(i) for i in inputs]
@@ -40,43 +78,6 @@ class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 		with sim.write_vcd('test.vcd', 'test.gtkw', traces = [ *isigs, osig ]):
 			sim.run()
 
-class PysimSimulatorIntegrationTestCase(ToriiTestSuiteCase, SimulatorIntegrationTestsMixin):
-	@contextmanager
-	def assertSimulation(self, module, deadline = None):
-		sim = Simulator(module, engine = 'pysim')
-		yield sim
-		with sim.write_vcd('test.vcd', 'test.gtkw'):
-			if deadline is None:
-				sim.run()
-			else:
-				sim.run_until(deadline)
-
 class PysimRegressionTestCase(ToriiTestSuiteCase, SimulatorRegressionTestMixin):
 	def get_simulator(self, dut) -> Simulator:
 		return Simulator(dut, engine = 'pysim')
-
-# TODO(aki): Figure out a better name
-class SimulatorEngineTestCase(ToriiTestSuiteCase):
-	def test_external_sim_engine(self):
-		from torii.sim._base import BaseEngine
-
-		class DummyEngine(BaseEngine):
-			def __init__(self, fragment) -> None:
-				pass
-
-		_ = Simulator(Module(), engine = DummyEngine)
-
-	def test_invalid_simulator_engine(self):
-		with self.assertRaisesRegex(
-			TypeError,
-			r'^The specified engine \'NotAValidEngineName\' is not a known simulation engine name, or simulation '
-			'engine class$'
-		):
-			_ = Simulator(Module(), engine = 'NotAValidEngineName') # type: ignore
-
-		with self.assertRaisesRegex(
-			TypeError,
-			r'^The specified engine <class \'object\'> is not a known simulation engine name, or simulation '
-			'engine class$'
-		):
-			_ = Simulator(Module(), engine = object) # type: ignore
