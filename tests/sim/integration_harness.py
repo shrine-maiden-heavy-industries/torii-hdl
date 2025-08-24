@@ -642,3 +642,46 @@ class SimulatorIntegrationTestsMixin(SimulatorIntegrationTestMixinBase):
 				yield Settle()
 				self.assertEqual((yield o), 1)
 			sim.add_process(process)
+
+	def test_switch_any(self):
+		m = Module()
+		a = Signal(3)
+		o = Signal(3)
+		with m.Switch(a):
+			with m.Case('0-0'):
+				m.d.comb += o.eq(0b000)
+			with m.Case('0-1'):
+				m.d.comb += o.eq(0b001)
+			with m.Case('1-0'):
+				m.d.comb += o.eq(0b100)
+			with m.Case('1-1'):
+				m.d.comb += o.eq(0b101)
+
+		with self.assertSimulation(m) as sim:
+			def process():
+				yield a.eq(0b000)
+				yield Settle()
+				self.assertEqual((yield o), 0)
+				yield a.eq(0b010)
+				yield Settle()
+				self.assertEqual((yield o), 0)
+				yield a.eq(0b001)
+				yield Settle()
+				self.assertEqual((yield o), 1)
+				yield a.eq(0b011)
+				yield Settle()
+				self.assertEqual((yield o), 1)
+				yield a.eq(0b100)
+				yield Settle()
+				self.assertEqual((yield o), 0b100)
+				yield a.eq(0b110)
+				yield Settle()
+				self.assertEqual((yield o), 0b100)
+				yield a.eq(0b101)
+				yield Settle()
+				self.assertEqual((yield o), 0b101)
+				yield a.eq(0b111)
+				yield Settle()
+				self.assertEqual((yield o), 0b101)
+
+			sim.add_process(process)
