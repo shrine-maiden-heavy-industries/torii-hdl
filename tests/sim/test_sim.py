@@ -1,16 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from contextlib    import contextmanager
+from contextlib           import contextmanager
 
-from torii.hdl.ast import Signal, Value
-from torii.hdl.dsl import Module, Statement
-from torii.hdl.ir  import Fragment
-from torii.sim     import Settle, Simulator
-from torii.util    import flatten
+from torii.hdl.ast        import Signal, Value
+from torii.hdl.dsl        import Module, Statement
+from torii.hdl.ir         import Fragment
+from torii.sim            import Settle, Simulator
+from torii.util           import flatten
 
-from ..utils       import ToriiTestSuiteCase
-from .sim_harness  import SimulatorIntegrationTestsMixin, SimulatorRegressionTestMixin, SimulatorUnitTestsMixin
+from ..utils              import ToriiTestSuiteCase
+from .integration_harness import SimulatorIntegrationTestsMixin
+from .regression_harness  import SimulatorRegressionTestMixin
+from .unitest_harness     import SimulatorUnitTestsMixin
 
 class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 	def assertStatement(self, stmt, inputs, output, reset = 0):
