@@ -46,7 +46,7 @@ class PysimSimulatorIntegrationTestCase(ToriiTestSuiteCase, SimulatorIntegration
 	def assertSimulation(self, module, deadline = None):
 		sim = Simulator(module, engine = 'pysim')
 		yield sim
-		with sim.write_vcd('test.vcd', 'test.gtkw'):
+		with sim.write_vcd('pysim_integration_test.vcd', 'pysim_integration_test.gtkw'):
 			if deadline is None:
 				sim.run()
 			else:
@@ -75,7 +75,7 @@ class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 			self.assertEqual((yield osig), output.value)
 
 		sim.add_process(process)
-		with sim.write_vcd('test.vcd', 'test.gtkw', traces = [ *isigs, osig ]):
+		with sim.write_vcd('pysim_unit_test.vcd', 'pysim_unit_test.gtkw', traces = [ *isigs, osig ]):
 			sim.run()
 
 class PysimRegressionTestCase(ToriiTestSuiteCase, SimulatorRegressionTestMixin):
