@@ -283,6 +283,44 @@ class ECP5Platform(TemplatedPlatform):
 		''',
 	]
 
+	# NOTE(aki): The `EXTREFB` and `DCU` pins are "routable" and need to be handled specially
+	_special_pseudo_routable = {
+		'MG285': (
+			# `EXTREFB0`
+			'U1', 'T1',
+			# `DCU0`
+			'V12', 'V11', 'V9', 'V8', 'V6', 'V5', 'V3', 'V2',
+		),
+		'BG381': (
+			# `EXTREFB0`
+			'Y11', 'Y12',
+			# `EXTREFB1`
+			'Y19', 'W20',
+			# `DCU0`
+			'W4', 'W5', 'Y5', 'Y6', 'Y7', 'Y8', 'W8', 'W9',
+			# `DCU1`
+			'W13', 'W14', 'Y14', 'Y15', 'Y16', 'Y17', 'W17', 'W18',
+		),
+		'BG554': (
+			# `EXTREFB0`
+			'AF12', 'AF13',
+			# `EXTREFB1`
+			'AF21', 'AF22',
+			# `DCU0`
+			'AD7', 'AD8', 'AF6', 'AF7', 'AF9', 'AF10', 'AD10', 'AD11',
+			# `DCU1`
+			'AD16', 'AD17', 'AF15', 'AF16', 'AF18', 'AF19', 'AD19', 'AD20',
+		),
+		'BG756': (
+			# `EXTREFB` Pins
+			'AM14', 'AM15', 'AM23', 'AM24',
+			# `DCU0`
+			'AK9', 'AK10', 'AM8', 'AM9', 'AM11', 'AM12', 'AK12', 'AK13',
+			# `DCU1`
+			'AK18', 'AK19', 'AM17', 'AM18', 'AM20', 'AM21', 'AK21', 'AK22',
+		),
+	}
+
 	# Common logic
 
 	def __init__(
