@@ -249,18 +249,18 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
 
 	def _check_feature(
-		self, feature: str, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None
+		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None
 	) -> None:
 		if len(valid_xdrs) == 0:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature}')
+			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature!s}')
 
 		elif pin.xdr not in valid_xdrs:
 			raise NotImplementedError(
-				f'Platform \'{type(self).__name__}\' does not support {feature} for XDR {pin.xdr}'
+				f'Platform \'{type(self).__name__}\' does not support {feature!s} for XDR {pin.xdr}'
 			)
 
 		if not valid_attrs and attrs:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support attributes for {feature}')
+			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support attributes for {feature!s}')
 
 	@staticmethod
 	def _invert_if(invert: bool, value):
@@ -272,7 +272,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature('single-ended input', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
 		m = Module()
 		m.d.comb += pin.i.eq(self._invert_if(invert, port))
@@ -281,7 +281,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature('single-ended output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
 		m = Module()
 		m.d.comb += port.eq(self._invert_if(invert, pin.o))
@@ -290,7 +290,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature('single-ended tristate', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
 		m = Module()
 		m.submodules += Instance(
@@ -305,7 +305,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature('single-ended input/output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
 		m = Module()
 		m.submodules += Instance(
@@ -321,22 +321,22 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature('differential input', pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature('differential output', pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature('differential tristate', pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature('differential input/output', pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 class TemplatedPlatform(Platform):
 	@property
