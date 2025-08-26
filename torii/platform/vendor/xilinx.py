@@ -4,7 +4,7 @@ from abc             import abstractmethod
 from collections.abc import Iterable
 from typing          import Literal
 
-from ...build        import Attrs, TemplatedPlatform
+from ...build        import Attrs, PinFeature, TemplatedPlatform
 from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
 from ...lib.cdc      import ResetSynchronizer
 from ...lib.io       import Pin
@@ -1120,7 +1120,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended input', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1137,7 +1137,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1160,7 +1160,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_tristate(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'single-ended tristate', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1181,7 +1181,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_input_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'single-ended input/output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1203,7 +1203,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_input(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'differential input', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1224,7 +1224,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'differential output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1245,7 +1245,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_tristate(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'differential tristate', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
@@ -1267,7 +1267,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_input_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			'differential input/output', pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
 		)
 
 		m = Module()
