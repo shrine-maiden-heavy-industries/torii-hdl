@@ -47,6 +47,8 @@ Unreleased template stuff
   - Subdivided `torii.platform.resources.interface` into `.bus`, `.network`, and `.serial`.
   - Subdivided `torii.platform.resources.memory` into `.ram` and `.flash`.
   - `HyperBusResource` now lives in `torii.platform.resources.memory`
+- The `torii.build.plat` module now has a `PinFeature` enum which replaces the strings used to pass to the `_check_feature` calls for platform implementation.
+- The `torii.build.plat` `get_*` functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.
 
 ### Deprecated
 
