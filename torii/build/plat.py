@@ -179,25 +179,25 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 				pin_fragment.flatten = True
 			fragment.add_subfragment(pin_fragment, name = f'pin_{pin.name}')
 
-		for pin, port, attrs, invert in self.iter_single_ended_pins():
+		for pin, port, attrs, invert, names in self.iter_single_ended_pins():
 			if pin.dir == 'i':
-				add_pin_fragment(pin, self.get_input(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_input(pin, port, attrs, invert, names))
 			if pin.dir == 'o':
-				add_pin_fragment(pin, self.get_output(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_output(pin, port, attrs, invert, names))
 			if pin.dir == 'oe':
-				add_pin_fragment(pin, self.get_tristate(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_tristate(pin, port, attrs, invert, names))
 			if pin.dir == 'io':
-				add_pin_fragment(pin, self.get_input_output(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_input_output(pin, port, attrs, invert, names))
 
-		for pin, port, attrs, invert in self.iter_differential_pins():
+		for pin, port, attrs, invert, names in self.iter_differential_pins():
 			if pin.dir == 'i':
-				add_pin_fragment(pin, self.get_diff_input(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_diff_input(pin, port, attrs, invert, names))
 			if pin.dir == 'o':
-				add_pin_fragment(pin, self.get_diff_output(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_diff_output(pin, port, attrs, invert, names))
 			if pin.dir == 'oe':
-				add_pin_fragment(pin, self.get_diff_tristate(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_diff_tristate(pin, port, attrs, invert, names))
 			if pin.dir == 'io':
-				add_pin_fragment(pin, self.get_diff_input_output(pin, port, attrs, invert))
+				add_pin_fragment(pin, self.get_diff_input_output(pin, port, attrs, invert, names))
 
 		fragment._propagate_ports(ports = self.iter_ports(), all_undef_as_ports = False)
 		return self.toolchain_prepare(fragment, name, **kwargs)
@@ -238,7 +238,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			return value
 
 	def get_input(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature('single-ended input', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -247,7 +247,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_output(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature('single-ended output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -256,7 +256,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_tristate(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature('single-ended tristate', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -271,7 +271,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_input_output(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature('single-ended input/output', pin, attrs, valid_xdrs = (0,), valid_attrs = None)
 
@@ -287,23 +287,23 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return m
 
 	def get_diff_input(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
 		self._check_feature('differential input', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_output(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
 		self._check_feature('differential output', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_tristate(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
 		self._check_feature('differential tristate', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 	def get_diff_input_output(
-		self, pin: Pin, port: Record, attrs: Attrs, invert: bool
-	) -> None:
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module | None:
 		self._check_feature('differential input/output', pin, attrs, valid_xdrs = (), valid_attrs = None)
 
 class TemplatedPlatform(Platform):
