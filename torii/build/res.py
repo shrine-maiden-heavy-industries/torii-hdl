@@ -212,22 +212,25 @@ class ResourceManager:
 		return value
 
 	def iter_single_ended_pins(self) -> Generator[tuple[
-		Pin, Record, Attrs, bool
+		Pin, Record, Attrs, bool, Iterable[str]
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
 			if isinstance(res.ios[0], Pins):
-				yield (pin, port, attrs, res.ios[0].invert)
+				yield (pin, port, attrs, res.ios[0].invert, res.ios[0].map_names(self._conn_pins, res))
 
 	def iter_differential_pins(self) -> Generator[tuple[
-		Pin, Record, Attrs, bool
+		Pin, Record, Attrs, bool, tuple[Iterable[str], Iterable[str]]
 	], None, None]:
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
 			if isinstance(res.ios[0], DiffPairs):
-				yield (pin, port, attrs, res.ios[0].invert)
+				yield (
+					pin, port, attrs, res.ios[0].invert,
+					(res.ios[0].p.map_names(self._conn_pins, res), res.ios[0].n.map_names(self._conn_pins, res))
+				)
 
 	def should_skip_port_component(
 		self, port: Record | None, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']

@@ -92,8 +92,10 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		self.assertIs(scl_info[1].io, scl)
 		self.assertEqual(scl_info[2], {})
 		self.assertEqual(scl_info[3], False)
+		self.assertEqual(scl_info[4], ['N10'])
 		self.assertIs(sda_info[0], i2c.sda)
 		self.assertIs(sda_info[1].io, sda)
+		self.assertEqual(sda_info[4], ['N11'])
 
 		self.assertEqual(list(self.cm.iter_port_constraints()), [
 			('i2c_0__scl__io', ['N10'], {}),
@@ -120,6 +122,7 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		self.assertIs(clk100_info[1].n, n)
 		self.assertEqual(clk100_info[2], {})
 		self.assertEqual(clk100_info[3], False)
+		self.assertEqual(clk100_info[4], (['H1'], ['H2']))
 
 		self.assertEqual(list(self.cm.iter_port_constraints()), [
 			('clk100_0__p', ['H1'], {}),
@@ -142,6 +145,7 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		self.assertIs(cs_info[1].io, cs_io)
 		self.assertEqual(cs_info[2], {})
 		self.assertEqual(cs_info[3], True)
+		self.assertEqual(cs_info[4], ['X0'])
 
 		clk_info, = self.cm.iter_differential_pins()
 		self.assertIs(clk_info[0], clk)
@@ -149,6 +153,7 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		self.assertIs(clk_info[1].n, clk_n)
 		self.assertEqual(clk_info[2], {})
 		self.assertEqual(clk_info[3], True)
+		self.assertEqual(clk_info[4], (['Y0'], ['Y1']))
 
 	def test_request_raw(self):
 		clk50 = self.cm.request('clk50', 0, dir = '-')
