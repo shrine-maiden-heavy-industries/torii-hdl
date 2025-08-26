@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc         import abstractmethod
-from typing      import Literal
+from abc             import abstractmethod
+from collections.abc import Iterable
+from typing          import Literal
 
-from ....build   import Attrs, Clock, Subsignal, TemplatedPlatform
-from ....hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
-from ....lib.cdc import ResetSynchronizer
-from ....lib.io  import Pin
+from ....build       import Attrs, Clock, Subsignal, TemplatedPlatform
+from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
+from ....lib.cdc     import ResetSynchronizer
+from ....lib.io      import Pin
 
 __all__ = (
 	'ICE40Platform',
@@ -634,7 +635,9 @@ class ICE40Platform(TemplatedPlatform):
 			else:
 				m.submodules[f'{pin.name}_{bit}'] = Instance('SB_IO', *io_args)
 
-	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -643,7 +646,9 @@ class ICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert)
 		return m
 
-	def get_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -652,7 +657,9 @@ class ICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_tristate(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -661,7 +668,9 @@ class ICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, o_invert = invert)
 		return m
 
-	def get_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_input_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -670,7 +679,9 @@ class ICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.io, attrs, i_invert = invert, o_invert = invert)
 		return m
 
-	def get_diff_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -680,7 +691,9 @@ class ICE40Platform(TemplatedPlatform):
 		self._get_io_buffer(m, pin, port.p, attrs, i_invert = invert)
 		return m
 
-	def get_diff_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)

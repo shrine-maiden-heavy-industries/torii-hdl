@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from abc        import abstractmethod
-from typing     import Literal
+from abc             import abstractmethod
+from collections.abc import Iterable
+from typing          import Literal
 
-from ....build  import Attrs, Clock, Subsignal, TemplatedPlatform
-from ....hdl    import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
-from ....lib.io import Pin
+from ....build       import Attrs, Clock, Subsignal, TemplatedPlatform
+from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
+from ....lib.io      import Pin
 
 __all__ = (
 	'MachXO2Or3LPlatform',
@@ -380,7 +381,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def get_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -395,7 +398,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -410,7 +415,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_tristate(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -426,7 +433,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_input_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -443,7 +452,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -458,7 +469,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -473,7 +486,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_tristate(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_tristate(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -489,7 +504,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input_output(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_diff_input_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
