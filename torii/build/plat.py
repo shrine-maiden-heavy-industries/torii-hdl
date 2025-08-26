@@ -249,7 +249,8 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
 
 	def _check_feature(
-		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None
+		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None,
+		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
 	) -> None:
 		if len(valid_xdrs) == 0:
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature!s}')
@@ -272,7 +273,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature(PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(
+			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
+		)
 
 		m = Module()
 		m.d.comb += pin.i.eq(self._invert_if(invert, port))
@@ -281,7 +284,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature(PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(
+			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
+		)
 
 		m = Module()
 		m.d.comb += port.eq(self._invert_if(invert, pin.o))
@@ -290,7 +295,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature(PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(
+			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
+		)
 
 		m = Module()
 		m.submodules += Instance(
@@ -305,7 +312,9 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
-		self._check_feature(PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None)
+		self._check_feature(
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
+		)
 
 		m = Module()
 		m.submodules += Instance(
@@ -321,22 +330,30 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature(PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
+		)
 
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature(PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(
+			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
+		)
 
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature(PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(
+			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
+		)
 
 	def get_diff_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
-		self._check_feature(PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None)
+		self._check_feature(
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
+		)
 
 class TemplatedPlatform(Platform):
 	@property

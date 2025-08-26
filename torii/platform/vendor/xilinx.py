@@ -1120,7 +1120,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1137,7 +1137,7 @@ class XilinxPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1160,7 +1160,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_tristate(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1181,7 +1181,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_input_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1203,7 +1203,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_input(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1224,7 +1224,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1245,7 +1245,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_tristate(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()
@@ -1267,7 +1267,7 @@ class XilinxPlatform(TemplatedPlatform):
 			return super().get_diff_input_output(pin, port, attrs, invert, names)
 
 		self._check_feature(
-			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = self._get_valid_xdrs(), valid_attrs = True, names = names
 		)
 
 		m = Module()

@@ -429,7 +429,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -450,7 +450,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -472,7 +472,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -495,7 +495,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -518,7 +518,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -541,7 +541,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -565,7 +565,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
@@ -590,7 +590,7 @@ class AlteraPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True, names = names
 		)
 
 		if pin.xdr == 1:
