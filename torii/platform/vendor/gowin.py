@@ -5,7 +5,7 @@ from abc             import abstractmethod
 from collections.abc import Iterable
 from fractions       import Fraction
 
-from ...build        import Attrs, Clock, TemplatedPlatform
+from ...build        import Attrs, Clock, PinFeature, TemplatedPlatform
 from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 from ...lib.cdc      import ResetSynchronizer
 from ...lib.io       import Pin
@@ -551,7 +551,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
@@ -567,7 +567,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, port.io, o_invert = invert)
@@ -583,7 +583,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
@@ -600,7 +600,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
 		self._check_feature(
-			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert, o_invert = invert)
@@ -618,7 +618,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_INPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
@@ -635,7 +635,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
@@ -652,7 +652,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
@@ -670,7 +670,7 @@ class GowinPlatform(TemplatedPlatform):
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
 		self._check_feature(
-			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
+			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert, o_invert = invert)
