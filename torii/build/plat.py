@@ -6,6 +6,7 @@ import textwrap
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Generator, Iterable
+from enum            import Enum, auto, unique
 from typing          import IO, Literal, TypeVar
 
 import jinja2
@@ -27,9 +28,40 @@ from .res            import ResourceManager
 from .run            import BuildPlan, BuildProducts
 
 __all__ = (
+	'PinFeature',
 	'Platform',
 	'TemplatedPlatform',
 )
+
+@unique
+class PinFeature(Enum):
+	DIFF_INOUT    = auto()
+	DIFF_INPUT    = auto()
+	DIFF_OUTPUT   = auto()
+	DIFF_TRISTATE = auto()
+	SE_INOUT      = auto()
+	SE_INPUT      = auto()
+	SE_OUTPUT     = auto()
+	SE_TRISTATE   = auto()
+
+	def __str__(self) -> str:
+		match self:
+			case PinFeature.DIFF_INOUT:
+				return 'differential input/output'
+			case PinFeature.DIFF_INPUT:
+				return 'differential input'
+			case PinFeature.DIFF_OUTPUT:
+				return 'differential output'
+			case PinFeature.DIFF_TRISTATE:
+				return 'differential tristate'
+			case PinFeature.SE_INOUT:
+				return 'single-ended input/output'
+			case PinFeature.SE_INPUT:
+				return 'single-ended input'
+			case PinFeature.SE_OUTPUT:
+				return 'single-ended output'
+			case PinFeature.SE_TRISTATE:
+				return 'single-ended tristate'
 
 class Platform(ResourceManager, metaclass = ABCMeta):
 	@property
