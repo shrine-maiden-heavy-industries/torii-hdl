@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import re
-from abc        import abstractmethod
-from fractions  import Fraction
+from abc             import abstractmethod
+from collections.abc import Iterable
+from fractions       import Fraction
 
-from ...build   import Clock, TemplatedPlatform
-from ...hdl     import ClockDomain, ClockSignal, Const, Instance, Module, Signal
-from ...lib.cdc import ResetSynchronizer
+from ...build        import Attrs, Clock, TemplatedPlatform
+from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
+from ...lib.cdc      import ResetSynchronizer
+from ...lib.io       import Pin
 
 # Acknowledgments:
 #   Parts of this file originate from https://github.com/tcjie/Gowin
@@ -545,7 +547,9 @@ class GowinPlatform(TemplatedPlatform):
 
 		return (i, o, t)
 
-	def get_input(self, pin, port, attrs, invert):
+	def get_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -559,7 +563,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_output(self, pin, port, attrs, invert):
+	def get_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -573,7 +579,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_tristate(self, pin, port, attrs, invert):
+	def get_tristate(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -588,7 +596,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_input_output(self, pin, port, attrs, invert):
+	def get_input_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
+	) -> Module:
 		self._check_feature(
 			'single-ended input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -604,7 +614,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input(self, pin, port, attrs, invert):
+	def get_diff_input(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential input', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -619,7 +631,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_output(self, pin, port, attrs, invert):
+	def get_diff_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -634,7 +648,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_tristate(self, pin, port, attrs, invert):
+	def get_diff_tristate(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential tristate', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
@@ -650,7 +666,9 @@ class GowinPlatform(TemplatedPlatform):
 			)
 		return m
 
-	def get_diff_input_output(self, pin, port, attrs, invert):
+	def get_diff_input_output(
+		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
+	) -> Module:
 		self._check_feature(
 			'differential input/output', pin, attrs, valid_xdrs = (0, 1, 2), valid_attrs = True
 		)
