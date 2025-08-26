@@ -334,12 +334,16 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
+		raise NotImplementedError('This platform does not support differential inputs')
+
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
 		self._check_feature(
 			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
+
+		raise NotImplementedError('This platform does not support differential outputs')
 
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
@@ -348,12 +352,16 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
+		raise NotImplementedError('This platform does not implement differential tristate')
+
 	def get_diff_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
 		self._check_feature(
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
+
+		raise NotImplementedError('This platform does not implement differential inputs/outputs')
 
 class TemplatedPlatform(Platform):
 	@property
