@@ -157,8 +157,8 @@ class _Compiler:
 
 class _ValueCompiler(ValueVisitor, _Compiler):
 	def on_value(self, value):
-		# Very large values are unlikely to compile or simulate in reasonable time.
-		if len(value) > 2 ** 61:
+		# Wasm currently only supports 61 bit wide values
+		if len(value) > 61:
 			if value.src_loc:
 				src = '{}:{}'.format(*value.src_loc)
 			else:
@@ -443,8 +443,6 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 	def on_statements(self, stmts):
 		for stmt in stmts:
 			self(stmt)
-		if not stmts:
-			raise NotImplementedError
 
 	def on_Assign(self, stmt):
 		gen_rhs_value = self.rhs(stmt.rhs) # check for oversized value before generating mask
@@ -466,7 +464,8 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 					if "-" in pattern:
 						mask  = int(''.join('0' if b == '-' else '1' for b in pattern), 2)
 						value = int(''.join('0' if b == '-' else b for b in pattern), 2)
-						gen_checks.append(f'{value} == ({mask} & {gen_test})')
+						value_and = f'(i64.and (i64.const {mask}) (local.get ${gen_test}))'
+						gen_checks.append(f'(i64.eq (i64.const {value}) {value_and})')
 					else:
 						value = int(pattern or '0', 2)
 						gen_checks.append(f'(i64.eq (i64.const {value}) (local.get ${gen_test}))')
