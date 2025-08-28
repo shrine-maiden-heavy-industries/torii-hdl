@@ -2,15 +2,20 @@
 
 from abc             import abstractmethod
 from collections.abc import Iterable
-from typing          import Literal
+from typing          import Literal, TypedDict
 
 from ....build       import Attrs, Clock, Subsignal, PinFeature, TemplatedPlatform
 from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 from ....lib.io      import Pin
+from ....util        import flatten
 
 __all__ = (
 	'ECP5Platform',
 )
+
+class SpecialPinsDict(TypedDict):
+	EXTREF: list[tuple[str, str]]
+	DCU: list[tuple[str, str, str, str, str, str, str, str]]
 
 class ECP5Platform(TemplatedPlatform):
 	'''
@@ -283,42 +288,60 @@ class ECP5Platform(TemplatedPlatform):
 		''',
 	]
 
-	# NOTE(aki): The `EXTREFB` and `DCU` pins are "routable" and need to be handled specially
-	_special_pseudo_routable = {
-		'MG285': (
-			# `EXTREFB0`
-			'U1', 'T1',
-			# `DCU0`
-			'V12', 'V11', 'V9', 'V8', 'V6', 'V5', 'V3', 'V2',
-		),
-		'BG381': (
-			# `EXTREFB0`
-			'Y11', 'Y12',
-			# `EXTREFB1`
-			'Y19', 'W20',
-			# `DCU0`
-			'W4', 'W5', 'Y5', 'Y6', 'Y7', 'Y8', 'W8', 'W9',
-			# `DCU1`
-			'W13', 'W14', 'Y14', 'Y15', 'Y16', 'Y17', 'W17', 'W18',
-		),
-		'BG554': (
-			# `EXTREFB0`
-			'AF12', 'AF13',
-			# `EXTREFB1`
-			'AF21', 'AF22',
-			# `DCU0`
-			'AD7', 'AD8', 'AF6', 'AF7', 'AF9', 'AF10', 'AD10', 'AD11',
-			# `DCU1`
-			'AD16', 'AD17', 'AF15', 'AF16', 'AF18', 'AF19', 'AD19', 'AD20',
-		),
-		'BG756': (
-			# `EXTREFB` Pins
-			'AM14', 'AM15', 'AM23', 'AM24',
-			# `DCU0`
-			'AK9', 'AK10', 'AM8', 'AM9', 'AM11', 'AM12', 'AK12', 'AK13',
-			# `DCU1`
-			'AK18', 'AK19', 'AM17', 'AM18', 'AM20', 'AM21', 'AK21', 'AK22',
-		),
+	# NOTE: The `EXTREFB` and `DCU` pins are "routable" and need to be handled specially
+	_special_pseudo_routable: dict[str, SpecialPinsDict] = {
+		'MG285': {
+			'EXTREF': [
+				# `EXTREFB0`
+				('U1', 'T1'),
+			],
+			'DCU': [
+				# `DCU0`
+				('V12', 'V11', 'V9', 'V8', 'V6', 'V5', 'V3', 'V2'),
+			],
+		},
+		'BG381': {
+			'EXTREF': [
+				# `EXTREFB0`
+				('Y11', 'Y12'),
+				# `EXTREFB1`
+				('Y19', 'W20'),
+			],
+			'DCU': [
+				# `DCU0`
+				('W4', 'W5', 'Y5', 'Y6', 'Y7', 'Y8', 'W8', 'W9'),
+				# `DCU1`
+				('W13', 'W14', 'Y14', 'Y15', 'Y16', 'Y17', 'W17', 'W18'),
+			],
+		},
+		'BG554': {
+			'EXTREF': [
+				# `EXTREFB0`
+				('AF12', 'AF13'),
+				# `EXTREFB1`
+				('AF21', 'AF22'),
+			],
+			'DCU': [
+				# `DCU0`
+				('AD7', 'AD8', 'AF6', 'AF7', 'AF9', 'AF10', 'AD10', 'AD11'),
+				# `DCU1`
+				('AD16', 'AD17', 'AF15', 'AF16', 'AF18', 'AF19', 'AD19', 'AD20'),
+			],
+		},
+		'BG756': {
+			'EXTREF': [
+				# `EXTREFB0` Pins
+				('AM14', 'AM15'),
+				# `EXTREFB1` Pins
+				('AM23', 'AM24'),
+			],
+			'DCU': [
+				# `DCU0`
+				('AK9', 'AK10', 'AM8', 'AM9', 'AM11', 'AM12', 'AK12', 'AK13'),
+				# `DCU1`
+				('AK18', 'AK19', 'AM17', 'AM18', 'AM20', 'AM21', 'AK21', 'AK22'),
+			],
+		},
 	}
 
 	# Common logic
@@ -369,7 +392,7 @@ class ECP5Platform(TemplatedPlatform):
 			return Clock(310e6 / self.oscg_div)
 		return super().default_clk_constraint
 
-	def create_missing_domain(self, name: str) -> Module:
+	def create_missing_domain(self, name: str) -> Module | None:
 		# Lattice ECP5 devices have two global set/reset signals: PUR, which is driven at startup
 		# by the configuration logic and unconditionally resets every storage element, and GSR,
 		# which is driven by user logic and each storage element may be configured as affected or
@@ -412,6 +435,8 @@ class ECP5Platform(TemplatedPlatform):
 			m.domains += ClockDomain('sync', reset_less = True)
 			m.d.comb += ClockSignal('sync').eq(clk_i)
 			return m
+		else:
+			return None
 
 	_single_ended_io_types = [
 		'HSUL12', 'LVCMOS12', 'LVCMOS15', 'LVCMOS18', 'LVCMOS25', 'LVCMOS33', 'LVTTL33',
@@ -432,6 +457,55 @@ class ECP5Platform(TemplatedPlatform):
 		if attrs.get('IO_TYPE', 'LVCMOS25') in self._differential_io_types and component == 'n':
 			return True
 		return False
+
+	def _check_feature(
+		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...],
+		valid_attrs: str | None, names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
+	) -> None:
+		super()._check_feature(
+			feature, pin, attrs, valid_xdrs, valid_attrs, names
+		)
+
+		# If it's one of the parts with SERDES, check whether the pins are for the EXTREFs or DCUs
+		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
+			# Unpack this package's special pins definition
+			special = self._special_pseudo_routable[self.package]
+			# Flatten out the pins/ball names in the request for membership checking
+			if isinstance(names, tuple):
+				pin_names = list[str](flatten(zip(names[0], names[1])))
+			else:
+				pin_names = list(names)
+			# Loop through each of the special blocks
+			for block, pin_sets in special.items():
+				# Look through each of the pin sets in the special block
+				for pins in pin_sets:
+					# If any of the pins for this are in the special set, do further work
+					if any(name in pins for name in pin_names):
+						match block:
+							case 'EXTREF':
+								self._check_extref(pin, pins, names)
+							case 'DCU':
+								self._check_dcu(pin, pins, names)
+							case _:
+								raise ValueError(f'Invalid special block type {block}')
+
+	def _check_extref(self, pin: Pin, pins: tuple[str, ...], names: Iterable[str] | tuple[Iterable[str], Iterable[str]]):
+		# EXTREFs must be specied as DiffPairs, so `names` must be a tuple if iterables of str
+		if not isinstance(names, tuple):
+			raise NotImplementedError('Platform \'ECP5Platform\' only supports EXTREF pins specified with DiffPairs')
+		# Unpack the pins used
+		p_names: Iterable[str] = names[0]
+		n_names: Iterable[str] = names[1]
+		# Check that the Pin is input (EXTREF can only be input!)
+		if pin.dir != 'i':
+			raise NotImplementedError(f'The ECP5 parts do not support I/O direction \'{pin.dir}\' for the EXTREF blocks')
+
+		pairs = list(zip(p_names, n_names))
+		if pins not in pairs:
+			raise ValueError('The DiffPairs requested is invalid to refer to a EXTREF')
+
+	def _check_dcu(self, pin: Pin, pins: tuple[str, ...], names: Iterable[str] | tuple[Iterable[str], Iterable[str]]):
+		pass
 
 	def _get_xdr_buffer(
 		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
