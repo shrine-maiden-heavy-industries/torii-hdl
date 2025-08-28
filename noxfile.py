@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from os             import devnull, getenv
-from pathlib        import Path
-from shutil         import copy
+from os           import devnull, getenv
+from pathlib      import Path
+from shutil       import copy, make_archive, rmtree
 
 import nox
-from nox.sessions   import Session
+from nox.sessions import Session
 
 ROOT_DIR  = Path(__file__).parent
 
@@ -146,6 +146,48 @@ def build_docs_multiversion(session: Session) -> None:
 			session.warn(f'Docs for {latest} did not seem to be built, using development docs instead')
 			# Otherwise, link to `main`
 			latest_link.symlink_to(docs_dev)
+
+@nox.session(name = 'build-docset', reuse_venv = True)
+def build_docset(session: Session) -> None:
+	DOCS_DIR = BUILD_DIR / 'docs'
+
+	# XXX(aki): We can't `session.notify` here because we need the docs first
+	build_docs(session)
+
+	session.install('doc2dash')
+
+	# Get the Torii version
+	torii_version: str = session.run(
+		'python', '-c', 'import torii;print(torii.__version__)',
+		silent = True
+	)
+
+	with session.chdir(BUILD_DIR):
+		# If the docset is already built, shred it because `doc2dash` won't overwrite it
+		if (BUILD_DIR / 'Torii.docset').exists():
+			rmtree(BUILD_DIR / 'Torii.docset')
+
+		# Build the docset
+		session.run(
+			'doc2dash', '-n', 'Torii', '-j', '--full-text-search', 'on', str(DOCS_DIR)
+		)
+
+		# Compress it
+		make_archive(f'torii-{torii_version.strip()}-docset', 'zip', BUILD_DIR, 'Torii.docset')
+
+@nox.session(name = 'dist-docs', reuse_venv = True)
+def dist_docs(session: Session) -> None:
+	# XXX(aki): We can't `session.notify` here because we need the docs first
+	build_docs(session)
+
+	# Get the Torii version
+	torii_version: str = session.run(
+		'python', '-c', 'import torii;print(torii.__version__)',
+		silent = True
+	)
+
+	with session.chdir(BUILD_DIR):
+		make_archive(f'torii-{torii_version.strip()}-docs', 'zip', BUILD_DIR, 'docs')
 
 @nox.session(name = 'linkcheck-docs', reuse_venv = True)
 def linkcheck_docs(session: Session) -> None:
