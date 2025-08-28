@@ -483,6 +483,12 @@ class ECP5Platform(TemplatedPlatform):
 					if any(name in pins for name in pin_names):
 						match block:
 							case 'EXTREF':
+								# Check that the Pin is input (EXTREF can only be input!)
+								if feature != PinFeature.DIFF_INPUT:
+									raise NotImplementedError(
+										'The ECP5 parts do not support I/O direction '
+										f'\'{pin.dir}\' for the EXTREF blocks'
+									)
 								self._check_extref(pin, pins, names)
 							case 'DCU':
 								self._check_dcu(pin, pins, names)
@@ -496,9 +502,6 @@ class ECP5Platform(TemplatedPlatform):
 		# Unpack the pins used
 		p_names: Iterable[str] = names[0]
 		n_names: Iterable[str] = names[1]
-		# Check that the Pin is input (EXTREF can only be input!)
-		if pin.dir != 'i':
-			raise NotImplementedError(f'The ECP5 parts do not support I/O direction \'{pin.dir}\' for the EXTREF blocks')
 
 		pairs = list(zip(p_names, n_names))
 		if pins not in pairs:
