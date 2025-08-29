@@ -15,7 +15,17 @@ __all__ = (
 
 class SpecialPinsDict(TypedDict):
 	EXTREF: list[tuple[str, str]]
-	DCU: list[tuple[str, str, str, str, str, str, str, str]]
+	DCU: list[dict[str, dict[str, tuple[str, str]]]]
+
+def _unpack_special(special: dict[str, SpecialPinsDict], pkg: str) -> tuple[str, ...]:
+	return tuple[str, ...](
+		*flatten(special[pkg]['EXTREF']),
+		*flatten((
+			list(ch.values() for ch in pair) for pair in (
+				list(dcu.values()) for dcu in special[pkg]['DCU']
+			)
+		)),
+	)
 
 class ECP5Platform(TemplatedPlatform):
 	'''
@@ -297,7 +307,10 @@ class ECP5Platform(TemplatedPlatform):
 			],
 			'DCU': [
 				# `DCU0`
-				('V12', 'V11', 'V9', 'V8', 'V6', 'V5', 'V3', 'V2'),
+				{
+					'CH0': { 'TX': ('V12', 'V11'), 'RX': ('V9', 'V8'), },
+					'CH1': { 'TX': ('V3', 'V2'), 'RX': ('V6', 'V5'), }
+				},
 			],
 		},
 		'BG381': {
@@ -309,9 +322,15 @@ class ECP5Platform(TemplatedPlatform):
 			],
 			'DCU': [
 				# `DCU0`
-				('W4', 'W5', 'Y5', 'Y6', 'Y7', 'Y8', 'W8', 'W9'),
+				{
+					'CH0': { 'TX': ('W4', 'W5'), 'RX': ('Y5', 'Y6'), },
+					'CH1': { 'TX': ('W8', 'W9'), 'RX': ('Y7', 'Y8'), },
+				},
 				# `DCU1`
-				('W13', 'W14', 'Y14', 'Y15', 'Y16', 'Y17', 'W17', 'W18'),
+				{
+					'CH0': { 'TX': ('W13', 'W14'), 'RX': ('Y14', 'Y15'), },
+					'CH1': { 'TX': ('W17', 'W18'), 'RX': ('Y16', 'Y17'), }
+				}
 			],
 		},
 		'BG554': {
@@ -323,9 +342,15 @@ class ECP5Platform(TemplatedPlatform):
 			],
 			'DCU': [
 				# `DCU0`
-				('AD7', 'AD8', 'AF6', 'AF7', 'AF9', 'AF10', 'AD10', 'AD11'),
+				{
+					'CH0': { 'TX': ('AD7', 'AD8'), 'RX': ('AF6', 'AF7'), },
+					'CH1': { 'TX': ('AD10', 'AD11'), 'RX': ('AF9', 'AF10'), },
+				},
 				# `DCU1`
-				('AD16', 'AD17', 'AF15', 'AF16', 'AF18', 'AF19', 'AD19', 'AD20'),
+				{
+					'CH0': { 'TX': ('AD16', 'AD17'), 'RX': ('AF15', 'AF16'), },
+					'CH1': { 'TX': ('AD19', 'AD20'), 'RX': ('AF18', 'AF19'), },
+				},
 			],
 		},
 		'BG756': {
@@ -337,9 +362,15 @@ class ECP5Platform(TemplatedPlatform):
 			],
 			'DCU': [
 				# `DCU0`
-				('AK9', 'AK10', 'AM8', 'AM9', 'AM11', 'AM12', 'AK12', 'AK13'),
+				{
+					'CH0': { 'TX': ('AK9', 'AK10'), 'RX': ('AM8', 'AM9'), },
+					'CH1': { 'TX': ('AK12', 'AK13'), 'RX': ('AM11', 'AM12'), },
+				},
 				# `DCU1`
-				('AK18', 'AK19', 'AM17', 'AM18', 'AM20', 'AM21', 'AK21', 'AK22'),
+				{
+					'CH0': { 'TX': ('AK18', 'AK19'), 'RX': ('AM17', 'AM18'), },
+					'CH1': { 'TX': ('AK21', 'AK22'), 'RX': ('AM20', 'AM21'), },
+				},
 			],
 		},
 	}
@@ -355,6 +386,8 @@ class ECP5Platform(TemplatedPlatform):
 			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', must be either \'Trellis\', or \'Diamond\'')
 
 		self.toolchain = toolchain
+
+		self._special_pins_hittest = _unpack_special(self._special_pseudo_routable, self.device)
 
 	@property
 	def required_tools(self) -> list[str]:
