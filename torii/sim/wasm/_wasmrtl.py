@@ -14,6 +14,23 @@ __all__ = (
 	'_WASMFragmentCompiler',
 )
 
+WASM_SET_SLOT = '''
+	(func $slots_set (param $index i64) (param $value i64)
+		(local $curr i64)
+		(local $next i64)
+		(local $next_off i64)
+		(local.set $curr (i64.load (i64.mul (local.get $index) (i64.const 16))))
+		(local.set $next_off (i64.mul (i64.add (i64.mul (local.get $index) (i64.const 2)) (i64.const 1)) (i64.const 8)))
+		(local.set $next (i64.load (local.get $next_off)))
+		(if (i64.ne (local.get $next) (local.get $value))
+			(then
+				(i64.store (local.get $next_off) (local.get $value))
+				(call $slots_set_py (local.get $index) (local.get $value))
+			)
+		)
+	)
+'''
+
 WASM_SIGN = '''
 	(func $sign (param $value i64) (param $sign i64) (result i64)
 		(if (result i64) (i64.ne (i64.and (local.get $value) (local.get $sign)) (i64.const 0))
@@ -100,7 +117,7 @@ class _WASMEmitter:
 
 	def add_func(self, name):
 		self._imports.append('\t')
-		self._imports.append(f'(func ${name} (import "" "{name}") (param i64))')
+		self._imports.append(f'(func ${name} (import "" "{name}") (param i64) (param i64))')
 		self._imports.append('\n')
 
 	def add_global_var(self, name):
@@ -128,9 +145,14 @@ class _WASMEmitter:
 
 	def flush(self, result: bool = False):
 		module = '(module\n'
+		module += '\t(import "" "gmem" (memory $gmem i64 0 2 shared ))\n'
+		module += '\t(func $slots_set_py (import "" "slots_set_py") (param i64) (param i64))\n'
+		# module += ''
 		module += ''.join(self._globals)
 		module += '\n'
 		module += ''.join(self._imports)
+		module += '\n'
+		module += WASM_SET_SLOT
 		module += '\n'
 		module += WASM_SIGN
 		module += '\n'
@@ -203,7 +225,7 @@ class _RHSValueCompiler(_ValueCompiler):
 			self.inputs.add(value)
 
 		if self.mode == 'curr':
-			return f'(global.get $slots_{self.state.get_signal(value)}_{self.mode})'
+			return f'(i64.load (i64.const {self.state.get_signal(value) * 2 * 8}))'
 		else:
 			return f'(local.get $next_{self.state.get_signal(value)})'
 
@@ -213,7 +235,6 @@ class _RHSValueCompiler(_ValueCompiler):
 			return f'(i64.and (i64.const {value_mask:#x}) {self(value)})'
 
 		def sign(value):
-			# TODO: is the do we need to consider the shape in wasm?
 			if value.shape().signed:
 				return f'(call $sign {mask(value)} (i64.const {-1 << (len(value) - 1):#x}))'
 			else: # unsigned
@@ -329,13 +350,6 @@ class _RHSValueCompiler(_ValueCompiler):
 		emitter = _WASMEmitter()
 		compiler = cls(state, emitter, mode = mode)
 		emitter.append(compiler(value))
-
-		# TODO: only import signals that are actually needed. They need to be in order!
-		for slot in state.slots:
-			signal_index = state.get_signal(slot.signal)
-			emitter.add_global_var(f'slots_{signal_index}_curr')
-			emitter.add_global_var(f'slots_{signal_index}_next')
-			emitter.add_func(f'slots_{signal_index}_set')
 
 		output_code = emitter.flush(True)
 		return output_code
@@ -494,18 +508,11 @@ class _StatementCompiler(StatementVisitor, _Compiler):
 		emitter = _WASMEmitter()
 		for signal_index in output_indexes:
 			emitter.add_variable(f'next_{signal_index}')
-			emitter.append(f'(local.set $next_{signal_index} (global.get $slots_{signal_index}_next))')
+			emitter.append(f'(local.set $next_{signal_index} (i64.load (i64.const {(signal_index * 2 + 1) * 8})))')
 		compiler = cls(state, emitter)
 		compiler(stmt)
 		for signal_index in output_indexes:
-			emitter.append(f'(call $slots_{signal_index}_set (local.get $next_{signal_index}))')
-
-		# TODO: only import signals that are actually needed. They need to be in order!
-		for slot in state.slots:
-			signal_index = state.get_signal(slot.signal)
-			emitter.add_global_var(f'slots_{signal_index}_curr')
-			emitter.add_global_var(f'slots_{signal_index}_next')
-			emitter.add_func(f'slots_{signal_index}_set')
+			emitter.append(f'(call $slots_set (i64.const {signal_index}) (local.get $next_{signal_index}))')
 
 		output_code = emitter.flush()
 		return output_code
@@ -545,31 +552,21 @@ class _WASMFragmentCompiler:
 				for signal in domain_signals:
 					signal_index = self.state.get_signal(signal)
 					emitter.add_variable(f'next_{signal_index}')
-					emitter.append(f'(local.set $next_{signal_index} (global.get $slots_{signal_index}_next))')
+					index_const = f'(i64.const {(signal_index * 2 + 1) * 8})'
+					emitter.append(f'(local.set $next_{signal_index} (i64.load {index_const}))')
 
 				_StatementCompiler(self.state, emitter)(domain_stmts)
 
 			for signal in domain_signals:
 				signal_index = self.state.get_signal(signal)
-				emitter.append(f'(call $slots_{signal_index}_set (local.get $next_{signal_index}))')
+				emitter.append(f'(call $slots_set (i64.const {signal_index}) (local.get $next_{signal_index}))')
 
-			glob_vars = []
-			glob_func = []
-
-			for slot in self.state.slots:
-				signal_index = self.state.get_signal(slot.signal)
-				emitter.add_global_var(f'slots_{signal_index}_curr')
-				emitter.add_global_var(f'slots_{signal_index}_next')
-				emitter.add_func(f'slots_{signal_index}_set')
-				glob_func.append(Func(self.state.store, FuncType([ValType.i64()], []), slot.set))
-				# current is first, next is second
-				glob_vars.append(slot.curr.wasm_value())
-				glob_vars.append(slot.next.wasm_value())
-
-			# Make sure that globals are imported in the order they are imported
-			# in the WASMEmitter
-			glob_vars.extend(glob_func)
+			glob_vars = [
+				self.state.memory.memory(),
+				Func(self.state.store, FuncType([ValType.i64(), ValType.i64()], []), self.state.set_slot)
+			]
 			module_code = emitter.flush()
+
 			module = Module(self.state.store.engine, module_code)
 			instance = Instance(self.state.store, module, glob_vars)
 			run = instance.exports(self.state.store)["run"]

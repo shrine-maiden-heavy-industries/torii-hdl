@@ -13,6 +13,9 @@ __all__ = (
 	'WASMCoroProcess',
 )
 
+def foo(one, two):
+	assert False
+
 class WASMCoroProcess(BaseProcess):
 	def __init__(self, state, domains, constructor, *, default_cmd = None) -> None:
 		self.state = state
@@ -28,20 +31,10 @@ class WASMCoroProcess(BaseProcess):
 
 		self.coroutine = self.constructor()
 		self.waits_on = SignalSet()
-		self.reset_globals()
-
-	def reset_globals(self):
-		self.globals = []
-		glob_vars = []
-		glob_func = []
-		for slot in self.state.slots:
-			glob_func.append(Func(self.state.store, FuncType([ValType.i64()], []), slot.set))
-			# current is first, next is second
-			glob_vars.append(slot.curr.wasm_value())
-			glob_vars.append(slot.next.wasm_value())
-
-		self.globals.extend(glob_vars)
-		self.globals.extend(glob_func)
+		self.globals = [
+			self.state.memory.memory(),
+			Func(self.state.store, FuncType([ValType.i64(), ValType.i64()], []), self.state.set_slot)
+		]
 
 	def src_loc(self):
 		coroutine = self.coroutine
@@ -93,10 +86,6 @@ class WASMCoroProcess(BaseProcess):
 					command = Value.cast(command)
 				if isinstance(command, Value):
 					module_code = _RHSValueCompiler.compile(self.state, command, mode = 'curr')
-					# Sometimes compiling a Value will add new slots, if that's the case
-					# we need to recreate the wasm globals state
-					if len(self.globals) != len(self.state.slots):
-						self.reset_globals()
 					module = Module(self.state.store.engine, module_code)
 					instance = Instance(self.state.store, module, self.globals)
 					run = instance.exports(self.state.store)["run"]
@@ -105,10 +94,6 @@ class WASMCoroProcess(BaseProcess):
 
 				elif isinstance(command, Statement):
 					module_code = _StatementCompiler.compile(self.state, command)
-					# Sometimes compiling a Value will add new slots, if that's the case
-					# we need to recreate the wasm globals state
-					if len(self.globals) != len(self.state.slots):
-						self.reset_globals()
 					module = Module(self.state.store.engine, module_code)
 					instance = Instance(self.state.store, module, self.globals)
 					run = instance.exports(self.state.store)["run"]

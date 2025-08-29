@@ -5,7 +5,7 @@ from contextlib      import contextmanager
 from itertools       import chain
 from re              import search
 from typing          import IO
-from wasmtime        import Store, ValType, Global, GlobalType
+from wasmtime        import Store, Engine, Config, Memory, MemoryType, Limits
 
 from vcd             import VCDWriter
 from vcd.gtkw        import GTKWSave
@@ -208,51 +208,82 @@ class _Timeline:
 
 		return True
 
-class _WASMGlobal():
-	def __init__(self, store: Store, value) -> None:
+class _WASMMemory():
+	def __init__(self, store: Store) -> None:
 		self._store = store
-		self._value = Global(self._store, GlobalType(ValType.i64(), True), value)
+		# wasm page size 64 * 1024 bytes
+		# reserve 2 of them for now
+		# TODO: make this dynamic
+		self._memory = Memory(self._store, MemoryType(Limits(2, 2), is_64=True, shared=True))
 
-	def wasm_value(self):
-		return self._value
+	def memory(self):
+		return self._memory
+
+	def __getitem__(self, idx):
+		value = self._memory.read(self._store, idx * 8, idx * 8 + 8)
+		return int.from_bytes(value, 'little')
+
+	def __setitem__(self, idx, value):
+		value = value.to_bytes(8, 'little')
+		self._memory.write(self._store, value, idx * 8)
+
+class _WASMGlobal():
+	def __init__(self, memory: _WASMMemory, signal, offset, value) -> None:
+		self._memory = memory
+		self._offset = offset
+		self._signal = signal
+		self._value  = value
+		self.set(value)
 
 	def set(self, value):
-		self._value.set_value(self._store, value)
+		self._value = value
+		self._memory[self._offset] = value & ((1 << len(self._signal)) - 1)
 
 	def get(self):
-		return self._value.value(self._store)
+		return self._memory[self._offset]
+
+	def value(self):
+		return self._value
+
+	def update(self, value):
+		self._value = value
 
 	def __eq__(self, other):
 		if isinstance(other, _WASMGlobal):
-			return self.get() == other.get()
+			return self.value() == other.value()
 		else:
-			return self.get() == int(other)
+			return self.value() == int(other)
 
 class _WASMSignalState(BaseSignalState):
 	__slots__ = ('signal', 'curr', 'next', 'waiters', 'pending')
 
-	def __init__(self, store: Store, signal, pending) -> None:
+	def __init__(self, memory: _WASMMemory, base, signal, pending) -> None:
 		self.signal = signal
 		self.pending = pending
 		self.waiters = dict()
-		self.curr = _WASMGlobal(store, signal.reset)
-		self.next = _WASMGlobal(store, signal.reset)
+		self.curr = _WASMGlobal(memory, signal, base, signal.reset)
+		self.next = _WASMGlobal(memory, signal, base + 1, signal.reset)
 
 	def set(self, value):
+		self.next.update(value)
+		self.pending.add(self)
+
+	def update(self, value):
 		raw_val = int(value)
-		if self.next.get() == raw_val:
+		if self.next.value() == raw_val:
 			return
+
 		self.next.set(raw_val)
 		self.pending.add(self)
 
 	def commit(self):
 		if self.curr == self.next:
 			return False
-		self.curr.set(self.next.get())
+		self.curr.set(self.next.value())
 
 		awoken_any = False
 		for process, trigger in self.waiters.items():
-			if trigger is None or trigger == self.curr.get():
+			if trigger is None or trigger == self.curr.value():
 				process.runnable = awoken_any = True
 		return awoken_any
 
@@ -262,14 +293,24 @@ class _WASMimulation(BaseSimulation):
 		self.signals  = SignalDict()
 		self.slots    = []
 		self.pending  = set()
-		self.store    = Store()
+		self.store    = Store(engine=self._engine())
+		self.memory   = _WASMMemory(self.store)
+
+	def _engine(self):
+		config = Config()
+		config.strategy = "winch"
+		return Engine(config)
+
+	def set_slot(self, index, value):
+		self.slots[index].set(value)
 
 	def get_signal(self, signal):
 		try:
 			return self.signals[signal]
 		except KeyError:
 			index = len(self.slots)
-			self.slots.append(_WASMSignalState(self.store, signal, self.pending))
+			base = index * 2
+			self.slots.append(_WASMSignalState(self.memory, base, signal, self.pending))
 			self.signals[signal] = index
 			return index
 
@@ -337,7 +378,7 @@ class WASMSimEngine(BaseEngine):
 
 		for vcd_writer in self._vcd_writers:
 			for signal_state in changed:
-				vcd_writer.update(self._timeline.now, signal_state.signal, signal_state.curr.get())
+				vcd_writer.update(self._timeline.now, signal_state.signal, signal_state.curr.value())
 
 	def advance(self):
 		self._step()
