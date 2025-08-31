@@ -10,7 +10,7 @@ from typing        import TYPE_CHECKING, Literal, TypeAlias
 
 from ..diagnostics import DomainError, DriverConflict, UnusedElaboratable
 from .._typing     import IODirectionIO, SrcLoc
-from ..util        import flatten
+from ..util        import _check_name, flatten
 from ..util.tracer import get_src_loc
 from ._unused      import MustUse
 from .ast          import (
@@ -95,6 +95,9 @@ class Fragment:
 					yield port
 
 	def add_driver(self, signal: SignalLikeT | None, domain: str | None = None):
+		if domain is not None and (domain == '' or not _check_name(domain)):
+			raise NameError('Domain must not be empty or contain any control or whitespace characters')
+
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
 		self.drivers[domain].add(signal)
@@ -146,6 +149,9 @@ class Fragment:
 			self.statements.append(stmt)
 
 	def add_subfragment(self, subfragment, name: str | None = None) -> None:
+		if name is not None and (name == '' or not _check_name(name)):
+			raise NameError('Subfragment name must not be empty or contain any control or whitespace characters')
+
 		if not isinstance(subfragment, Fragment):
 			raise TypeError(f'Unable to add subfragment that is of type \'{type(subfragment)}\', not \'Fragment\'')
 		self.subfragments.append((subfragment, name))
@@ -691,6 +697,9 @@ class Instance(Fragment):
 	) -> None:
 		super().__init__()
 
+		if type == '' or not _check_name(type):
+			raise NameError('Instance type must not be empty or contain any control or whitespace characters')
+
 		self.type        = type
 		self.parameters  = OrderedDict[str, 'ValueCastT | str']()
 		self.named_ports = OrderedDict[str, tuple[Value, IODirectionIO]]()
@@ -710,6 +719,9 @@ class Instance(Fragment):
 				)
 
 		for kw, arg in kwargs.items():
+			if not _check_name(kw):
+				raise NameError('Instance parameter must not contain any control or whitespace characters')
+
 			if kw.startswith(('i_', 'o_', 'io_')) and isinstance(arg, str):
 				raise TypeError(
 					'The argument for \'i_\', \'o_\', or \'io_\', parameters to an'

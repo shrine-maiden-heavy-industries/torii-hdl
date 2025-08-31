@@ -71,6 +71,27 @@ class FragmentGeneratedTestCase(ToriiTestSuiteCase):
 		):
 			f1.find_subfragment('fx')
 
+	def test_subfragment_name_wrong(self):
+		f1 = Fragment()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_subfragment(Fragment(), '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_subfragment(Fragment(), ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_subfragment(Fragment(), '\u000C')
+
 	def test_find_generated(self):
 		f1 = Fragment()
 		f2 = Fragment()
@@ -588,6 +609,28 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 		):
 			f1._propagate_domains(missing_domain = lambda name: f2)
 
+	def test_domain_name_wrong(self):
+		f1 = Fragment()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Domain must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_driver(Signal(), '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Domain must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_driver(Signal(), '\t')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Domain must not be empty or contain any control or whitespace characters$'
+		):
+			f1.add_driver(Signal(), '\u2069')
+
+
 class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 	def setUp_self_sub(self):
 		self.s1 = Signal()
@@ -810,6 +853,25 @@ class InstanceTestCase(ToriiTestSuiteCase):
 		):
 			Instance('foo', x_s1 = s)
 
+	def test_instance_type_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Instance type must not be empty or contain any control or whitespace characters$'
+		):
+			Instance('', a_NYA = 'meow')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Instance type must not be empty or contain any control or whitespace characters$'
+		):
+			Instance('\t', a_NYA = 'meow')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Instance type must not be empty or contain any control or whitespace characters$'
+		):
+			Instance('\u0085', a_NYA = 'meow')
+
 	def setUp_cpu(self):
 		self.rst = Signal()
 		self.stb = Signal()
@@ -944,6 +1006,21 @@ class InstanceTestCase(ToriiTestSuiteCase):
 			f: ('top',),
 			a_f: ('top', 'a$U$0')
 		})
+
+	def test_instance_kwargs_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Instance parameter must not contain any control or whitespace characters$'
+		):
+			params = { 'a_\tNYA': 'MEOW' }
+			Instance('NYA', **params)
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Instance parameter must not contain any control or whitespace characters$'
+		):
+			params = { 'a_N\u202AYA': 'MEOW' }
+			Instance('NYA', **params)
 
 class ElaboratableTestCase(ToriiTestSuiteCase):
 	def test_formal_on_nonformal_elaboratable(self):
