@@ -6,6 +6,7 @@ from linecache       import getlines
 from operator        import ior
 from re              import Match, compile
 from typing          import TypeAlias, TypeVar
+from unicodedata     import category
 
 __all__ = (
 	'flatten',
@@ -191,3 +192,26 @@ def get_linter_option(
 			return default
 
 	return default
+
+def _check_name(name: str) -> bool:
+	'''
+	Validate that a name that will be emitted to RTLIL is valid by checking for
+	any whitespace or control characters.
+
+	Warning
+	----
+	This does not to full name validation, it only checks the rough Unicode category,
+	meaning it's possible for invalid characters to leak through.
+
+	Parameters
+	----------
+	name: str
+		The name to check.
+
+	Returns
+	-------
+	bool
+		True if the name is valid, otherwise False
+	'''
+
+	return not any(category(ch) in ('Cc', 'Cf', 'Cs', 'Co', 'Cn', 'Zs', 'Zl', 'Zp') for ch in name)
