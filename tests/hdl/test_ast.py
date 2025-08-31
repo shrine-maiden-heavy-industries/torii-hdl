@@ -5,7 +5,7 @@ from enum          import Enum, EnumMeta
 from sys           import version_info
 
 from torii.hdl.ast import (
-	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, ResetSignal, Rose, Sample,
+	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, Property, ResetSignal, Rose, Sample,
 	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
 	signed, unsigned,
 )
@@ -13,7 +13,6 @@ from torii.hdl.cd  import ClockDomain
 from torii.hdl.dsl import Module
 from torii.hdl.ir  import Elaboratable
 from torii.sim     import Delay, Simulator, Tick
-
 
 from ..utils       import ToriiTestSuiteCase
 
@@ -1324,6 +1323,28 @@ class SignalTestCase(ToriiTestSuiteCase):
 		s2 = Signal(name = 'sig')
 		self.assertEqual(s2.name, 'sig')
 
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(TypeError, r'^Name must be a string, not 1$'):
+			Signal(name = 1)
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Signal name must not be empty or contain any control or whitespace characters$'
+		):
+			Signal(name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Signal name must not be empty or contain any control or whitespace characters$'
+		):
+			Signal(name = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Signal name must not be empty or contain any control or whitespace characters$'
+		):
+			Signal(name = '\u0006')
+
 	def test_reset(self):
 		s1 = Signal(4, reset = 0b111, reset_less = True)
 		self.assertEqual(s1.reset, 0b111)
@@ -1487,6 +1508,25 @@ class ClockSignalTestCase(ToriiTestSuiteCase):
 		):
 			ClockSignal('comb')
 
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockSignal('')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockSignal(' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockSignal('\u0006')
+
 class ResetSignalTestCase(ToriiTestSuiteCase):
 	def test_domain(self):
 		s1 = ResetSignal()
@@ -1515,6 +1555,25 @@ class ResetSignalTestCase(ToriiTestSuiteCase):
 			r'^Domain \'comb\' does not have a reset$'
 		):
 			ResetSignal('comb')
+
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ResetSignal('')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ResetSignal(' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ResetSignal('\u0006')
 
 class MockValueCastable(ValueCastable):
 	def __init__(self, dest) -> None:
@@ -1972,6 +2031,25 @@ class SampleTestCase(ToriiTestSuiteCase):
 		with sim.write_vcd('test.vcd'):
 			sim.run()
 
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+		):
+			Sample(Signal(), 1, domain = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+		):
+			Sample(Signal(), 1, domain = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+		):
+			Sample(Signal(), 1, domain = '\x15')
+
 class InitialTestCase(ToriiTestSuiteCase):
 	def test_initial(self):
 		i = Initial()
@@ -2012,3 +2090,26 @@ class SwitchTestCase(ToriiTestSuiteCase):
 	def test_two_cases(self):
 		s = Switch(Const(0, 8), {('00001111', 123): []})
 		self.assertEqual(s.cases, {('00001111', '01111011'): []})
+
+class PropertyTestCase(ToriiTestSuiteCase):
+
+	def test_name_wrong(self):
+		Property._MustUse__silence = True
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Property name must not be empty or contain any control or whitespace characters$'
+		):
+			Property('assert', Signal(), name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Property name must not be empty or contain any control or whitespace characters$'
+		):
+			Property('assert', Signal(), name = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Property name must not be empty or contain any control or whitespace characters$'
+		):
+			Property('assert', Signal(), name = '\x18')

@@ -19,7 +19,7 @@ from typing            import (
 
 from ..diagnostics     import UnusedProperty
 from .._typing         import SrcLoc, SwitchCaseT
-from ..util            import flatten, tracer, union
+from ..util            import _check_name, flatten, tracer, union
 from ..util.decorators import final
 from ..util.units      import bits_for
 from ._unused          import MustUse
@@ -1316,8 +1316,11 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 
-		if name is not None and not isinstance(name, str):
-			raise TypeError(f'Name must be a string, not {name!r}')
+		if name is not None:
+			if not isinstance(name, str):
+				raise TypeError(f'Name must be a string, not {name!r}')
+			if name == '' or not _check_name(name):
+				raise NameError('Signal name must not be empty or contain any control or whitespace characters')
 
 		self.name = name or tracer.get_var_name(depth = 2 + src_loc_at, default = '$signal')
 
@@ -1471,6 +1474,10 @@ class ClockSignal(Value):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
+
+		if domain == '' or not _check_name(domain):
+			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+
 		if domain == 'comb':
 			raise ValueError(f'Domain \'{domain}\' does not have a clock')
 		self.domain = domain
@@ -1509,6 +1516,10 @@ class ResetSignal(Value):
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
 			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
+
+		if domain == '' or not _check_name(domain):
+			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+
 		if domain == 'comb':
 			raise ValueError(f'Domain \'{domain}\' does not have a reset')
 		self.domain = domain
@@ -1881,6 +1892,9 @@ class Sample(Value):
 		if not (self.domain is None or isinstance(self.domain, str)):
 			raise TypeError(f'Domain name must be a string or None, not {self.domain!r}')
 
+		if self.domain is not None and (self.domain == '' or not _check_name(self.domain)):
+			raise NameError('Sample domain name must not be empty or contain any control or whitespace characters')
+
 	def shape(self) -> Shape:
 		return self.value.shape()
 
@@ -2159,6 +2173,9 @@ class Property(Statement, MustUse):
 
 		if not isinstance(self.name, str) and self.name is not None:
 			raise TypeError(f'Property name must be a string of None, not {self.name!r}')
+
+		if self.name is not None and (self.name == '' or not _check_name(self.name)):
+			raise NameError('Property name must not be empty or contain any control or whitespace characters')
 
 		if _check is None:
 			self._check: Signal = Signal(reset_less = True, name = f'${self.kind.value}$check')
