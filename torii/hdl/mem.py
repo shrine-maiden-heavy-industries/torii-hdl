@@ -6,7 +6,7 @@ import operator
 from collections     import OrderedDict
 from collections.abc import Sequence
 
-from ..util          import tracer
+from ..util          import _check_name, tracer
 from .ast            import Array, Cat, Const, Mux, Signal, Switch
 from .ir             import Elaboratable, Fragment
 
@@ -65,6 +65,9 @@ class Memory(Elaboratable):
 			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')
 		if not isinstance(depth, int) or depth < 0:
 			raise TypeError(f'Memory depth must be a non-negative integer, not {depth!r}')
+
+		if name is not None and (name == '' or not _check_name(name)):
+			raise NameError('Memory name must not be empty or contain any control or whitespace characters')
 
 		self.name    = name or tracer.get_var_name(depth = 2, default = '$memory')
 		self.src_loc = tracer.get_src_loc()
@@ -242,6 +245,9 @@ class ReadPort(Elaboratable):
 		if domain == 'comb' and not transparent:
 			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
 
+		if domain == '' or not _check_name(domain):
+			raise NameError('ReadPort domain must not be empty or contain any control or whitespace characters')
+
 		self.memory      = memory
 		self.domain      = domain
 		self.transparent = transparent
@@ -328,6 +334,9 @@ class WritePort(Elaboratable):
 		if memory.width // granularity * granularity != memory.width:
 			raise ValueError('Write port granularity must divide memory width evenly')
 
+		if domain == '' or not _check_name(domain):
+			raise NameError('WritePort domain must not be empty or contain any control or whitespace characters')
+
 		self.memory       = memory
 		self.domain       = domain
 		self.granularity  = granularity
@@ -397,12 +406,19 @@ class DummyPort:
 		self, *, data_width: int, addr_width: int, domain: str = 'sync', name: str | None = None,
 		granularity: int | None = None
 	) -> None:
+		if domain == '' or not _check_name(domain):
+			raise NameError('DummyPort domain must not be empty or contain any control or whitespace characters')
+
 		self.domain = domain
 
 		if granularity is None:
 			granularity = data_width
+
 		if name is None:
 			name = tracer.get_var_name(depth = 2, default = 'dummy')
+		else:
+			if name == '' or not _check_name(name):
+				raise NameError('DummyPort name must not be empty or contain any control or whitespace characters')
 
 		self.addr = Signal(addr_width, name = f'{name}_addr', src_loc_at = 1)
 		self.data = Signal(data_width, name = f'{name}_data', src_loc_at = 1)

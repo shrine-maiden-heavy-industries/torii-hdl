@@ -15,6 +15,25 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		m3 = Memory(width = 8, depth = 4, name = 'foo')
 		self.assertEqual(m3.name, 'foo')
 
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Memory name must not be empty or contain any control or whitespace characters$'
+		):
+			Memory(width = 8, depth = 4, name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Memory name must not be empty or contain any control or whitespace characters$'
+		):
+			Memory(width = 8, depth = 4, name = '\t')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Memory name must not be empty or contain any control or whitespace characters$'
+		):
+			Memory(width = 8, depth = 4, name = '\u061C')
+
 	def test_geometry(self):
 		m = Memory(width = 8, depth = 4)
 		self.assertEqual(m.width, 8)
@@ -98,6 +117,27 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		):
 			mem.read_port(domain = 'comb', transparent = False)
 
+	def test_read_port_domain_wrong_empty(self):
+		mem = Memory(width = 8, depth = 4)
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.read_port(domain = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.read_port(domain = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.read_port(domain = '\u202E')
+
 	def test_write_port(self):
 		mem    = Memory(width = 8, depth = 4)
 		wrport = mem.write_port()
@@ -136,6 +176,27 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		):
 			mem.write_port(granularity = 3)
 
+	def test_write_port_domain_wrong_empty(self):
+		mem = Memory(width = 8, depth = 4)
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.write_port(domain = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.write_port(domain = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+		):
+			mem.write_port(domain = '\u202E')
+
 class DummyPortTestCase(ToriiTestSuiteCase):
 	def test_name(self):
 		p1 = DummyPort(data_width = 8, addr_width = 2)
@@ -144,6 +205,44 @@ class DummyPortTestCase(ToriiTestSuiteCase):
 		self.assertEqual(p2.addr.name, 'dummy_addr')
 		p3 = DummyPort(data_width = 8, addr_width = 2, name = 'foo')
 		self.assertEqual(p3.addr.name, 'foo_addr')
+
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, name = ' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, name = '\u200C')
+
+	def test_domain_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, domain = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, domain = '\v')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+		):
+			DummyPort(data_width = 8, addr_width = 4, domain = '\u200D')
 
 	def test_sizes(self):
 		p1 = DummyPort(data_width = 8, addr_width = 2)
