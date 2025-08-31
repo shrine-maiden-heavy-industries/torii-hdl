@@ -750,6 +750,51 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.FSM(domain = 'comb'):
 				pass # :nocov:
 
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(domain = ''):
+				pass # :nocov:
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(domain = ' '):
+				pass # :nocov:
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(domain = '\r'):
+				pass # :nocov:
+
+	def test_FSM_name_wrong(self):
+		m = Module()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM name must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(name = ''):
+				pass # :nocov:
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM name must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(name = ' '):
+				pass # :nocov:
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^FSM name must not be empty or contain any control or whitespace characters$'
+		):
+			with m.FSM(name = '\r'):
+				pass # :nocov:
+
 	def test_FSM_wrong_undefined(self):
 		m = Module()
 		with self.assertRaisesRegex(
@@ -866,6 +911,28 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m1.submodules['foo'] = m2
 		self.assertEqual(m1._anon_submodules, [])
 		self.assertEqual(m1._named_submodules, {'foo': m2})
+
+	def test_submodule_name_wrong(self):
+		m = Module()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^A submodule name must not be empty if provided, to add an anonymous submodule either'
+			r' omit the `name` parameter or explicitly set it to `None`$'
+		):
+			m.submodules[''] = Module()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Submodule name must not contain any control or whitespace characters$'
+		):
+			m.submodules['\t'] = Module()
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Submodule name must not contain any control or whitespace characters$'
+		):
+			m.submodules['\0'] = Module()
 
 	def test_submodule_wrong(self):
 		m = Module()

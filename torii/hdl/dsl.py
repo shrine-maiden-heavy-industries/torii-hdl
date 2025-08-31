@@ -12,7 +12,7 @@ from typing          import TYPE_CHECKING, Any, ParamSpec, TypedDict
 
 from ..diagnostics   import ToriiSyntaxError, ToriiSyntaxWarning
 from .._typing       import SrcLoc, SwitchCaseT
-from ..util          import flatten, tracer
+from ..util          import _check_name, flatten, tracer
 from ..util.units    import bits_for
 from .ast            import (
 	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value, ValueCastT, _StatementList,
@@ -448,6 +448,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')
+
+		if name == '' or not _check_name(name):
+			raise NameError('FSM name must not be empty or contain any control or whitespace characters')
+
+		if domain == '' or not _check_name(domain):
+			raise NameError('FSM domain must not be empty or contain any control or whitespace characters')
+
 		fsm_data = self._set_ctrl('FSM', {
 			'name': name,
 			'signal': Signal(name = f'{name}_state', src_loc_at = 2),
@@ -629,12 +636,22 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	def _add_submodule(self, submodule, name = None):
 		if not hasattr(submodule, 'elaborate'):
 			raise TypeError(f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule')
-		if name is None:
-			self._anon_submodules.append(submodule)
-		else:
-			if name in self._named_submodules:
-				raise NameError(f'Submodule named \'{name}\' already exists')
-			self._named_submodules[name] = submodule
+
+		match name:
+			case None:
+				self._anon_submodules.append(submodule)
+			case '':
+				raise NameError(
+					'A submodule name must not be empty if provided, to add an anonymous submodule either omit the '
+					'`name` parameter or explicitly set it to `None`'
+				)
+			case _:
+				if not _check_name(name):
+					raise NameError('Submodule name must not contain any control or whitespace characters')
+
+				if name in self._named_submodules:
+					raise NameError(f'Submodule named \'{name}\' already exists')
+				self._named_submodules[name] = submodule
 
 	def _get_submodule(self, name: str):
 		if name in self._named_submodules:

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-import os
-
 from torii.hdl.ast   import Cat, Const, Signal
 from torii.hdl.cd    import ClockDomain
 from torii.hdl.dsl   import Module
@@ -21,20 +19,6 @@ class SimulatorRegressionTestMixin(SimulatorRegressionTestMixinBase):
 			self.assertEqual((yield -(Const(0b11, 2).as_signed())), 1)
 		sim.add_process(process)
 		sim.run()
-
-	def test_bug_595(self):
-		dut = Module()
-		with dut.FSM(name = 'name with space'):
-			with dut.State(0):
-				pass
-		sim = self.get_simulator(dut)
-		with self.assertRaisesRegex(
-			NameError,
-			r'^Signal \'bench\.top\.name with space_state\' contains a whitespace character$'
-		):
-			with open(os.path.devnull, 'w') as f:
-				with sim.write_vcd(f):
-					sim.run() # :nocov:
 
 	def test_bug_588(self):
 		dut = Module()
