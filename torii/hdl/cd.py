@@ -3,7 +3,7 @@
 from typing        import Literal
 
 from ..diagnostics import NameNotFound
-from ..util        import tracer
+from ..util        import _check_name, tracer
 from .ast          import Signal
 
 __all__ = (
@@ -62,6 +62,10 @@ class ClockDomain:
 				name = tracer.get_var_name()
 			except NameNotFound:
 				raise ValueError('Clock domain name must be specified explicitly')
+
+		if name == '' or not _check_name(name):
+			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+
 		if name.startswith('cd_'):
 			name = name[3:]
 		if name == 'comb':
@@ -85,6 +89,9 @@ class ClockDomain:
 		self.local = local
 
 	def rename(self, new_name: str) -> None:
+		if new_name == '' or not _check_name(new_name):
+			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+
 		self.name = new_name
 		self.clk.name = self._name_for(new_name, 'clk')
 		if self.rst is not None:

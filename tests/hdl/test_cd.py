@@ -27,6 +27,44 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 		cd_reset = ClockDomain(local = True)
 		self.assertEqual(cd_reset.local, True)
 
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain('')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain(' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain('\x14')
+
+	def test_rename_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain('meow').rename('')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain('meow').rename(' ')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+		):
+			ClockDomain('meow').rename('\x7F')
+
 	def test_edge(self):
 		sync = ClockDomain()
 		self.assertEqual(sync.clk_edge, 'pos')
