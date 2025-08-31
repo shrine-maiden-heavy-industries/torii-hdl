@@ -79,6 +79,21 @@ Unreleased template stuff
 
 ### Fixed
 
+- Fixed several instances where HDL constructs would accept invalid names and domains resulting in the generated RTLIL to be malformed.
+  - `torii.hdl.ast.Signal` properly checks that `name` is valid.
+  - `torii.hdl.ast.ClockSignal` and `torii.hdl.ast.ResetSignal` properly check that the clock domain name is valid.
+  - `torii.hdl.ast.Property` now properly checks that `name` is valid.
+  - `torii.hdl.cd.ClockDomain` now properly checks that `name` is valid in it's constructor and `rename` method.
+  - `torii.hdl.dsl.Module.FSM` now properly checks that `name` and `domain` are valid.
+  - `torii.hdl.dsl.Module` now properly validates the name of of submodules when added.
+  - `torii.hdl.ir.Fragment` now properly checks that `domain` is valid in `add_driver` and that `name` is valid in `add_subfragment`.
+  - `torii.hdl.ir.Instance` now properly checks that the instance type is valid as well as the the names of the `kwargs`.
+  - `torii.hdl.mem.Memory` now properly checks that `name` is valid.
+  - `torii.hdl.mem.ReadPort`, `torii.hdl.mem.WritePort`, and `torii.hdl.mem.DummyPort` all now properly check that `domain` is valid.
+  - `torii.hdl.mem.DummyPort` now properly checks that `name` is valid.
+  - `torii.hdl.rec.Layout` now properly checks that `name` is valid.
+  - `torii.hdl.rec.Record` now properly checks that `name` is valid in the constructor and `like` method.
+
 ## [0.8.1] - 2025-08-03
 
 ### Changed
