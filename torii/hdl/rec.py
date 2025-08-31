@@ -9,7 +9,7 @@ from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
 
-from ..util          import tracer, union
+from ..util          import _check_name, tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
@@ -58,6 +58,8 @@ class Layout:
 					)
 			if not isinstance(name, str):
 				raise TypeError(f'Field {field!r} has invalid name: should be a string')
+			if name == '' or not _check_name(name):
+				raise NameError('Field name must not be empty or contain any control or whitespace characters')
 			if not isinstance(shape, Layout):
 				try:
 					# Check provided shape by calling Shape.cast and checking for exception
@@ -114,6 +116,9 @@ class Record(ValueCastable):
 		else:
 			new_name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
+		if new_name == '' or not _check_name(new_name):
+			raise NameError('Record name must not be empty or contain any control or whitespace characters')
+
 		def concat(a: str | None, b: str) -> str:
 			if a is None:
 				return b
@@ -165,6 +170,9 @@ class Record(ValueCastable):
 	) -> None:
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
+		else:
+			if name == '' or not _check_name(name):
+				raise NameError('Record name must not be empty or contain any control or whitespace characters')
 
 		self.name    = name
 		self.src_loc = tracer.get_src_loc(src_loc_at)

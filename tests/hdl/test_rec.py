@@ -92,6 +92,24 @@ class LayoutTestCase(ToriiTestSuiteCase):
 		):
 			Layout.cast([(1, 1)])
 
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Field name must not be empty or contain any control or whitespace characters$'
+		):
+			Layout.cast([('', 1)])
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Field name must not be empty or contain any control or whitespace characters$'
+		):
+			Layout.cast([('\a', 1)])
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Field name must not be empty or contain any control or whitespace characters$'
+		):
+			Layout.cast([('\n', 1)])
+
 	def test_wrong_name_duplicate(self):
 		with self.assertRaisesRegex(
 			NameError,
@@ -211,6 +229,27 @@ class RecordTestCase(ToriiTestSuiteCase):
 		self.assertEqual(r3.name, 'foo')
 		r4 = Record.like(r1, name_suffix = 'foo')
 		self.assertEqual(r4.name, 'r1foo')
+
+	def test_like_name_wrong(self):
+		r1 = Record([('a', 1), ('b', 2)])
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record.like(r1, name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record.like(r1, name = '\0')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record.like(r1, name = '\v')
 
 	def test_like_modifications(self):
 		r1 = Record([('a', 1), ('b', [('s', 1)])])
@@ -390,6 +429,25 @@ class RecordTestCase(ToriiTestSuiteCase):
 			repr(ulpi_int),
 			'(rec ulpi_int (rec ulpi_int__data i o oe) nxt stp (rec ulpi_int__dir i) rst)'
 		)
+
+	def test_name_wrong(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record([('nya', 1)], name = '')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record([('nya', 1)], name = '\0')
+
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Record name must not be empty or contain any control or whitespace characters$'
+		):
+			Record([('nya', 1)], name = '\v')
 
 class ConnectTestCase(ToriiTestSuiteCase):
 	def setUp_flat(self):
