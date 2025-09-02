@@ -36,6 +36,7 @@ Unreleased template stuff
 - Added a new `torii.util.directories` module for getting appropriate cross-platform directories for things such as cache and configuration directories.
 - Added `torii.lib.cdc.PulseStretcher` so smear one-cycle pulses over to multiple cycles.
 - Added `torii.lib.stream.simple.ConstantStreamGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
+- Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
 
 ### Changed
 

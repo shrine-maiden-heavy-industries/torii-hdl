@@ -12,7 +12,7 @@ from typing          import TypeAlias, Literal, Generic, TypeVar
 from torii.build.plat import Platform
 
 from .               import StreamInterface
-from ....hdl.ast     import Const, Signal
+from ....hdl.ast     import Array, Const, Signal
 from ....hdl.dsl     import Module
 from ....hdl.ir      import Elaboratable
 from ....hdl.mem     import Memory
@@ -260,4 +260,108 @@ class ConstantStreamGenerator(Generic[T], Elaboratable):
 
 		if self._domain != 'sync':
 			m = DomainRenamer(sync = self._domain)(m)
+		return m
+
+class StreamSerializer(Generic[T], Elaboratable):
+	'''
+	Serialize a small chunk of data into the given stream.
+
+	Parameters
+	----------
+	data_length: int
+		The length of the data to be serialized and transmitted.
+
+	domain: str
+		The clock domain this generator operates on.
+
+	data_width: int
+		The width of the constant payload.
+
+	stream_type: type[T]
+		The type of stream used, must be a :py:class:`SimpleStream` or subclass thereof.
+
+	max_len_width: int | None
+		If provided, the width of the `max_len` signal.
+
+	Attributes
+	----------
+	start : Signal
+		An active high strobe that indicates when the stream should be started.
+
+	done: Signal
+		An active high strobe that is generated when the transmission is completed.
+
+	data: Array
+		The data that is to be sent out.
+
+	stream: T
+		The stream interface being used to send the data.
+
+	max_len: Signal | Int
+		The max length to be sent. Only settable if `max_len_width` is set, Otherwise is read-only.
+	'''
+
+	def __init__(
+		self, data_length: int, domain: str = 'sync', data_width: int = 8, stream_type: type[T] = StreamInterface,
+		max_length_width: int | None = None
+	) -> None:
+		self._domain           = domain
+		self._len              = data_length
+		self._width            = data_width
+		self._max_length_width = max_length_width
+
+		self.start     = Signal()
+		self.done      = Signal()
+
+		self.data   = Array(Signal(self._width, name = f'datum_{i}') for i in range(self._len))
+		self.stream = stream_type(data_width = self._width)
+
+		if max_length_width:
+			self.max_length = Signal(max_length_width)
+		else:
+			self.max_length = self._len
+
+	def elaborate(self, platform: Platform | None) -> Module:
+		m = Module()
+
+		stream_pos = Signal(range(self._len))
+
+		on_first = stream_pos == 0
+		on_last  = (stream_pos == self._len - 1) | (stream_pos == self.max_length - 1)
+
+		m.d.comb += [
+			self.stream.first.eq(on_first & self.stream.valid),
+			self.stream.last.eq(on_last & self.stream.valid),
+		]
+
+		with m.FSM(domain = self._domain) as fsm:
+			m.d.comb += [ self.stream.valid.eq(fsm.ongoing('STREAMING')), ]
+
+			with m.State('IDLE'):
+				m.d.sync += [ stream_pos.eq(0), ]
+
+				with m.If(self.start & (self.max_length > 1)):
+					m.next = 'STREAMING'
+
+			with m.State('STREAMING'):
+				m.d.comb += [ self.stream.data.eq(self.data[stream_pos]), ]
+
+				with m.If(self.stream.ready):
+					should_continue = (
+						((stream_pos + 1) < self.max_length) &
+						((stream_pos + 1) < self._len)
+					)
+
+					with m.If(should_continue):
+						m.d.sync += [ stream_pos.inc(), ]
+					with m.Else():
+						m.next = 'DONE'
+
+			with m.State('DONE'):
+				m.d.comb += [ self.done.eq(1), ]
+				m.next = 'IDLE'
+
+		if self._domain != 'sync':
+			m = DomainRenamer(sync = self._domain)(m)
+
 		return m
