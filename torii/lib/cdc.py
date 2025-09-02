@@ -1,15 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing    import Literal
+from __future__   import annotations
 
-from ..hdl.ast import ClockSignal, ResetSignal, Signal
-from ..hdl.cd  import ClockDomain
-from ..hdl.dsl import Module
-from ..hdl.ir  import Elaboratable
+from typing       import TYPE_CHECKING, Literal
+
+from ..hdl.ast    import ClockSignal, ResetSignal, Signal
+from ..hdl.cd     import ClockDomain
+from ..hdl.dsl    import Module
+from ..hdl.ir     import Elaboratable
+
+if TYPE_CHECKING:
+	from ..build.plat import Platform
 
 __all__ = (
 	'AsyncFFSynchronizer',
 	'FFSynchronizer',
+	'PulseStretcher',
 	'PulseSynchronizer',
 	'ResetSynchronizer',
 )
@@ -294,5 +300,53 @@ class PulseSynchronizer(Elaboratable):
 		m.d[self._i_domain] += i_toggle.eq(i_toggle ^ self.i)
 		m.d[self._o_domain] += r_toggle.eq(o_toggle)
 		m.d.comb += self.o.eq(o_toggle ^ r_toggle)
+
+		return m
+
+class PulseStretcher(Elaboratable):
+	'''
+	Stretch a pulse to the given number of cycles.
+
+	Parameters
+	----------
+	cycles: int
+		The number of cycles to stretch the pulse.
+
+	domain: str
+		The domain that this pulse stretcher runs on.
+
+	Attributes
+	----------
+	i: Signal
+		The input pulse to stretch.
+
+	o: Signal
+		The stretched pulse.
+	'''
+
+	def __init__(self, cycles: int = 1, domain: str = 'sync') -> None:
+
+		if cycles <= 0:
+			raise ValueError(f'Cycle count must be one or greater, not {cycles}')
+
+		self._cycles = cycles
+		self._domain = domain
+
+		self.i = Signal()
+		self.o = Signal()
+
+	def elaborate(self, platform: Platform | None) -> Module:
+		m = Module()
+
+		# If we are only stretching a single cycle then we don't need to do anything
+		if self._cycles == 1:
+			m.d.comb += [ self.o.eq(self.i), ]
+
+			return m
+
+		delayed_pulse = Signal(self._cycles - 1)
+
+		m.d[self._domain] += [ delayed_pulse.eq((delayed_pulse << 1) | self.i), ]
+		m.d.comb += [ self.o.eq(self.i | (delayed_pulse != 0)) ]
 
 		return m

@@ -4,7 +4,7 @@
 from torii.hdl.ast import Signal
 from torii.hdl.cd  import ClockDomain
 from torii.hdl.dsl import Module
-from torii.lib.cdc import AsyncFFSynchronizer, FFSynchronizer, PulseSynchronizer, ResetSynchronizer
+from torii.lib.cdc import AsyncFFSynchronizer, FFSynchronizer, PulseStretcher, PulseSynchronizer, ResetSynchronizer
 from torii.sim     import Delay, Simulator, Tick
 
 from ..utils       import ToriiTestSuiteCase
@@ -289,5 +289,65 @@ class PulseSynchronizerTestCase(ToriiTestSuiteCase):
 				yield Tick()
 				accum += yield ps.o
 			self.assertEqual(accum, 4)
+		sim.add_process(process)
+		sim.run()
+
+class PulseStretcherTestCase(ToriiTestSuiteCase):
+	def test_cycles_wrong(self):
+		with self.assertRaisesRegex(
+			ValueError,
+			r'^Cycle count must be one or greater, not 0$'
+		):
+			PulseStretcher(cycles = 0)
+
+	def test_sim_multi_cycle(self):
+		m = Module()
+		m.domains += ClockDomain('sync')
+		ps = m.submodules.dut = PulseStretcher(cycles = 5)
+
+		sim = Simulator(m)
+		sim.add_clock(1e-6)
+
+		def process():
+			yield ps.i.eq(1)
+			self.assertEqual((yield ps.o), 0)
+			yield Tick()
+			yield ps.i.eq(0)
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 0)
+			yield Tick()
+			self.assertEqual((yield ps.o), 0)
+			yield Tick()
+			self.assertEqual((yield ps.o), 0)
+
+		sim.add_process(process)
+		sim.run()
+
+	def test_sim_single_cycle(self):
+		m = Module()
+		m.domains += ClockDomain('sync')
+		ps = m.submodules.dut = PulseStretcher()
+
+		sim = Simulator(m)
+		sim.add_clock(1e-6)
+
+		def process():
+			yield ps.i.eq(1)
+			self.assertEqual((yield ps.o), 0)
+			yield Tick()
+			yield ps.i.eq(0)
+			self.assertEqual((yield ps.o), 1)
+			yield Tick()
+			self.assertEqual((yield ps.o), 0)
+
 		sim.add_process(process)
 		sim.run()
