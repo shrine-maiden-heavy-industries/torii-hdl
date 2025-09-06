@@ -11,4 +11,5 @@ however it may be deficient or missing in places.
 backend/index
 hdl/index
 utility/index
+tools
 ```

@@ -54,32 +54,32 @@ def compile_cxx(
 
 	Parameters
 	----------
-	name : str
+	name: str
 		The name of the output object without its suffix.
 
-	output_dir : str | Path
+	output_dir: str | pathlib.Path
 		The output directory used for the intermediate and final build products.
 
-	source_files : Iterable[str | Path] | None
+	source_files: collections.abc.Iterable[str | pathlib.Path] | None
 		A list of C++ source files to build.
 
 		This can be used to include extra or externally generated source files
 		from tooling, this allows you to not need to read the file in to pass to the
 		``source_listings`` argument which expects the full source of the file.
 
-	include_paths : Iterable[str | Path] | None
+	include_paths: collections.abc.Iterable[str | pathlib.Path] | None
 		A list of extra include paths to pass to the compiler.
 
-	library_paths : Iterable[str | Path] | None
+	library_paths: collections.abc.Iterable[str | pathlib.Path] | None
 		A list of extra library search paths to pass to the compiler.
 
-	defines : dict[str, str] | None
+	defines: dict[str, str] | None
 		A collection of preprocessor definitions to pass to the compiler.
 
-	output_type : ObjectType
+	output_type: ObjectType
 		The type of object to build.
 
-	source_listings : dict[str, str] | None
+	source_listings: dict[str, str] | None
 		A collection of ``filename: source listing`` pairs to include in the build.
 		They will be written out to the build directory for inclusion in the build.
 
@@ -87,27 +87,27 @@ def compile_cxx(
 		of the file via the ``source_files`` parameter rather than reading the file into memory
 		to pass here.
 
-	extra_libs : Iterable[str | Path] | None
+	extra_libs: collections.abc.Iterable[str | pathlib.Path] | None
 		A list of extra libraries to link against.
 
-	extra_objs : Iterable[str | Path] | None
+	extra_objs: collections.abc.Iterable[str | pathlib.Path] | None
 		A list of extra object files to link with.
 
-	extra_cxx_opts : Iterable[str] | None
+	extra_cxx_opts: collections.abc.Iterable[str] | None
 		A list of extra options to pass to the compiler.
 
-	extra_ld_opts : Iterable[str] | None
+	extra_ld_opts: collections.abc.Iterable[str] | None
 		A list of extra options to pass to the linker.
 
-	verbose : bool
+	verbose: bool
 		Enable verbose compiler output.
 
-	debug : bool
+	debug: bool
 		Build in debug mode.
 
 	Returns
 	-------
-	Path
+	pathlib.Path
 		The path to the final output file from the compilation process.
 
 	Raises

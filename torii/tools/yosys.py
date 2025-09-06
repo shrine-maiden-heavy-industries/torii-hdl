@@ -18,24 +18,29 @@ __all__ = (
 )
 
 class YosysVersion(NamedTuple):
+	''' A 3-tuple that contains the Yosys version in the form of ``(major, minor, distance)`` '''
+
 	major: int
 	minor: int
 	distance: int
 
 class YosysBinary:
+	''' Represents a Yosys binary that lives somewhere on the system. '''
+
 	YOSYS_BINARY = 'yosys'
 
 	@classmethod
 	def available(cls: type[YosysBinary]) -> bool:
 		'''
-		Check for Yosys availability.
+		Check to see if we can find a Yosys binary on the system via the ``PATH`` or alternative
+		lookup methods. See :py:func:`has_tool <torii.tools.has_tool>` for more information on the
+		lookup preformed.
 
 		Returns
 		-------
-		available : bool
+		bool
 			``True`` if Yosys is installed, ``False`` otherwise. Installed binary may still not
 			be runnable, or might be too old to be useful.
-
 		'''
 
 		return has_tool(cls.YOSYS_BINARY)
@@ -43,19 +48,12 @@ class YosysBinary:
 	@classmethod
 	def version(cls: type[YosysBinary]) -> YosysVersion | None:
 		'''
-		Get Yosys version.
+		Return the version of the Yosys binary installed on the system.
 
 		Returns
 		-------
-		``None`` if version number could not be determined, or a 3-tuple ``(major, minor, distance)`` if it could.
-
-		major : int
-			Major version.
-		minor : int
-			Minor version.
-		distance : int
-			Distance to last tag per ``git describe``. May not be exact for system Yosys.
-
+		YosysVersion | None
+			The version of Yosys found, otherwise ``None`` if we are unable to determine the version.
 		'''
 
 		version = cls.run(['-V'])
@@ -68,13 +66,18 @@ class YosysBinary:
 	@classmethod
 	def data_dir(cls: type[YosysBinary]) -> Path:
 		'''
-		Get Yosys data directory.
+		Return the path to the data directory for the Yosys installed on the system.
 
 		Returns
 		-------
-		data_dir : pathlib.Path
-			Yosys data directory (also known as 'datdir').
+		pathlib.Path
+			The path to the Yosys data directory.
 
+		Raises
+		------
+		torii.diagnostics.YosysError
+			If the invocation of Yosys failed for any reason. The error message will be the contents
+			of standard error.
 		'''
 
 		popen = subprocess.Popen(
@@ -92,30 +95,33 @@ class YosysBinary:
 		cls: type[YosysBinary], args: list[str], stdin: str = '', *, ignore_warnings: bool = False, src_loc_at: int = 0
 	) -> str:
 		'''
-		Run Yosys process.
+		Run Yosys with the given arguments, and standard input.
 
 		Parameters
 		----------
-		args : list of str
-			Arguments, not including the program name.
-		stdin : str
-			Standard input.
-		ignore_warnings : bool
-			Ignore any warnings produce
-		src_loc_at : int
-			Source location
+		args: list[str]
+			Arguments to pass to the invocation of the Yosys process.
+
+		stdin: str
+			Commands or other information to be fed to the standard input of the Yosys process.
+
+		ignore_warnings: bool
+			Ignore any warnings that Yosys generates.
+
+		src_loc_at: int
+			The source location to adjust the warning context to so Yosys warnings
+			do not originate at the call site for ``run``.
 
 		Returns
 		-------
-		stdout : str
-			Standard output.
+		str
+			The contents of ``stdout`` from the Yosys process.
 
-		Exceptions
-		----------
-		YosysError
+		Raises
+		------
+		torii.diagnostics.YosysError
 			Raised if Yosys returns a non-zero code. The exception message is the standard error
 			output.
-
 		'''
 
 		popen = subprocess.Popen(
@@ -147,18 +153,21 @@ class YosysBinary:
 def min_yosys_version(version: YosysVersion) -> bool:
 	'''
 	Returns if the yosys version is greater than or equal to the minimum
-	required version
+	required version for Torii.
+
+	Note
+	----
+	The current Version requirement for Yosys is ``>=0.30,!=0.37``.
 
 	Parameters
 	----------
-	version: tuple[int, int, int]
+	version: YosysVersion
 		The version of Yosys found on the system
 
 	Returns
 	-------
-	bool:
-		If the version meets the minimum requirement. (currently 0.30+ except 0.37)
-
+	bool
+		If the version meets the minimum requirement.
 	'''
 
 	return version >= (0, 30) and version != (0, 37)
@@ -167,23 +176,24 @@ def find_yosys(
 	requirement: Callable[[YosysVersion], bool] = min_yosys_version
 ) -> type[YosysBinary]:
 	'''
-	Find an available Yosys executable of required version.
+	Attempt to find a valid Yosys install on the host system that matches the given version
+	requirement.
 
 	Parameters
 	----------
-	requirement : function
-		Version check. Should return ``True`` if the version is acceptable, ``False`` otherwise.
+	requirement: collections.abc.Callable[[YosysVersion], bool]
+		The method used to check to make sure the found version of Yosys is valid. Should return ``True``
+		if it is, otherwise ``False``.
 
 	Returns
 	-------
-	yosys_binary : subclass of YosysBinary
+	type[YosysBinary]
 		Proxy for running the requested version of Yosys.
 
-	Exceptions
-	----------
-	YosysError
+	Raises
+	------
+	torii.diagnostics.YosysError
 		Raised if required Yosys version is not found.
-
 	'''
 
 	if YosysBinary.available():
