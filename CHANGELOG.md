@@ -41,6 +41,7 @@ Unreleased template stuff
 - Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
+- New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 
 ### Changed
 
