@@ -40,6 +40,7 @@ def test(session: Session) -> None:
 	unittest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
 	session.install('click') # For SBY
+	session.install('wasmtime') # For SBY
 	session.install('-e', '.')
 
 	if ENABLE_COVERAGE:

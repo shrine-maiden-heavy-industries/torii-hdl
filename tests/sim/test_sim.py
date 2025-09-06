@@ -81,3 +81,44 @@ class PysimSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
 class PysimRegressionTestCase(ToriiTestSuiteCase, SimulatorRegressionTestMixin):
 	def get_simulator(self, dut) -> Simulator:
 		return Simulator(dut, engine = 'pysim')
+
+class WASMSimulatorUnitTestCase(ToriiTestSuiteCase, SimulatorUnitTestsMixin):
+	def assertStatement(self, stmt, inputs, output, reset = 0):
+		inputs = [Value.cast(i) for i in inputs]
+		output = Value.cast(output)
+
+		isigs = [ Signal(i.shape(), name = n) for i, n in zip(inputs, 'abcd') ]
+		osig  = Signal(output.shape(), name = 'y', reset = reset)
+
+		stmt = stmt(osig, *isigs)
+		frag = Fragment()
+		frag.add_statements(stmt)
+		for signal in flatten(s._lhs_signals() for s in Statement.cast(stmt)):
+			frag.add_driver(signal)
+
+		sim = Simulator(frag, engine = 'wasm')
+
+		def process():
+			for isig, input in zip(isigs, inputs):
+				yield isig.eq(input)
+			yield Settle()
+			self.assertEqual((yield osig), output.value)
+
+		sim.add_process(process)
+		with sim.write_vcd('test.vcd', 'test.gtkw', traces = [ *isigs, osig ]):
+			sim.run()
+
+class WASMSimulatorIntegrationTestCase(ToriiTestSuiteCase, SimulatorIntegrationTestsMixin):
+	@contextmanager
+	def assertSimulation(self, module, deadline = None):
+		sim = Simulator(module, engine = 'wasm')
+		yield sim
+		with sim.write_vcd('test.vcd', 'test.gtkw'):
+			if deadline is None:
+				sim.run()
+			else:
+				sim.run_until(deadline)
+
+class WASMRegressionTestCase(ToriiTestSuiteCase, SimulatorRegressionTestMixin):
+	def get_simulator(self, dut) -> Simulator:
+		return Simulator(dut, engine = 'wasm')
