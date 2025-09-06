@@ -27,7 +27,7 @@ TORII_PLATFORM_DIRS: Final[PlatformDirs] = PlatformDirs(
 	roaming = True, # XXX(aki): Windows-only
 	ensure_exists = False, # NOTE(aki): We fall-back to user dirs if we can make the sys-dir
 )
-''' A pre-constructed :py:class:`PlatformDirs <platformdirs.PlatformDirs>` object for Torii '''
+''' A pre-constructed :py:class:`PlatformDirs <platformdirs.api.PlatformDirsABC>` object for Torii '''
 
 @cache
 def get_sys_cache(mkdir: bool = True) -> Path:
@@ -38,7 +38,7 @@ def get_sys_cache(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -74,7 +74,7 @@ def get_sys_config(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -110,7 +110,7 @@ def get_sys_data(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -146,7 +146,7 @@ def get_sys_runtime(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -182,7 +182,7 @@ def get_user_cache(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -210,7 +210,7 @@ def get_user_config(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -238,7 +238,7 @@ def get_user_data(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -266,7 +266,7 @@ def get_user_runtime(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns
@@ -294,7 +294,7 @@ def get_user_state(mkdir: bool = True) -> Path:
 
 	Parameters
 	----------
-	mkdir : bool
+	mkdir: bool
 		Create the target directory if it doesn't exist.
 
 	Returns

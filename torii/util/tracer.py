@@ -20,13 +20,33 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 	'''
 	Get the variable name from an assignment up the call stack.
 
+	By default, the result will be the file and line number from the call
+	frame directly above the on in which ``get_var_name`` is called.
+
+	This means, that if ``get_var_name`` is called in the constructor of an object,
+	then the return value will be the name of the assignment that was done when constructing
+	the object.
+
+	Example
+	-------
+	.. autolink-preface:: from torii.util.tracer import get_var_name
+	.. code:: pycon
+
+		>>> class Nya:
+		... 	def __init__(self) -> None:
+		... 		self.name = get_var_name()
+		...
+		>>> meow = Nya() # `meow.name` will be `meow`
+		>>> meow.name
+		'meow'
+
 	Parameters
 	----------
-	depth : int
-		The number of stack frames above us to look.
+	depth: int
+		The number frames up the stack to look for the name from the variable assignment.
 
-	default : str | object
-		The default name of the variable if it's not found.
+	default: str | object
+		The default name to use if we are unable to determine what it should have been.
 
 	Important
 	---------
@@ -36,7 +56,7 @@ def get_var_name(depth: int = 2, default: str | object = _raise_exception) -> st
 	Raises
 	------
 	NameNotFound
-		When ``default`` is set to the default value of ``_raise_exception`` and the name is not found.
+		When the value of ``default`` is not explicitly set and we are unable to determine the name.
 	'''
 
 	frame = _getframe(depth)
@@ -102,15 +122,30 @@ def get_src_loc(src_loc_at: int = 0) -> SrcLoc:
 	'''
 	Get the file and line number from the given frame on the call stack.
 
+	By default, the result will be the file and line number from the call
+	frame directly above the on in which ``get_src_loc`` is called.
+
+	This means, that if ``get_src_loc`` is called in the constructor of an object,
+	then the location information returned will be of where that constructor
+	was called.
+
 	Parameters
 	----------
-	src_loc_at : int
+	src_loc_at: int
 		The frame above this call in which to get the file and line number from.
 
-	Important
-	---------
-	When passing ``0``, the resulting frame is the one *directly above* the call site, i.e. the line
-	that the function this was called in was invoked on.
+	Example
+	-------
+	.. autolink-preface:: from torii.util.tracer import get_src_loc
+	.. code:: pycon
+
+		>>> class Nya:
+		... 	def __init__(self) -> None:
+		... 		self.src = get_src_loc()
+		...
+		>>> meow = Nya() # `meow.src` will be this line
+		>>> meow.src
+		('<python-input-4>', 1)
 
 	Returns
 	-------

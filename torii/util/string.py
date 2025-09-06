@@ -15,7 +15,7 @@ def ascii_escape(string: str) -> str:
 
 	Parameters
 	----------
-	string : str
+	string: str
 		The string to escape.
 
 	Example
@@ -46,7 +46,7 @@ def tcl_escape(string: str) -> str:
 
 	Parameters
 	----------
-	string : str
+	string: str
 		The string to escape.
 
 	Example
@@ -70,7 +70,7 @@ def tcl_quote(string: str) -> str:
 
 	Parameters
 	----------
-	string : str
+	string: str
 		The string to escape.
 
 	Example
@@ -95,12 +95,12 @@ def tool_env_var(name: str) -> str:
 	Convert the given tool name into a normalized version for
 	environment variables.
 
-	This generally means replacing any `-`'s with `_`'s and any
-	`+`'s with `X`'s and converting the entire name to uppercase.
+	This generally means replacing any ``-``'s with ``_``'s and any
+	``+``'s with ``X``'s and converting the entire name to uppercase.
 
 	Parameters
 	----------
-	name : str
+	name: str
 		The tool/executable name.
 
 	Example
@@ -117,7 +117,6 @@ def tool_env_var(name: str) -> str:
 	str
 		The name of the environment variable used to look for
 		for tool overrides.
-
 	'''
 
 	return name.upper().replace('-', '_').replace('+', 'X')
