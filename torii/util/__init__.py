@@ -24,7 +24,7 @@ def flatten(iter: Iterable[str | T | Iterable]) -> Generator[str | T]:
 
 	Parameters
 	----------
-	iter : Iterable[str | T | Iterable]
+	iter: Iterable[str | T | Iterable]
 		The nested iterator to flatten
 
 	Returns
@@ -49,10 +49,10 @@ def union(iter: Iterable[T], start: T | None = None) -> T:
 
 	Parameters
 	----------
-	iter : Iterable[T]
+	iter: Iterable[T]
 		The iterable to apply :py:meth:`operator.ior` over.
 
-	start : T | None
+	start: T | None
 		The initial value for the result of the union.
 
 	Returns
@@ -91,7 +91,7 @@ def get_linter_options(filename: str) -> dict[str, str]:
 
 	Parameters
 	----------
-	filename : str
+	filename: str
 		The name of the Python source file to ingest
 
 	Returns
@@ -147,16 +147,16 @@ def get_linter_option(
 
 	Parameters
 	----------
-	filename : str
+	filename: str
 		The name of the Python source file to ingest.
 
-	name : str
+	name: str
 		The name of the option to get.
 
-	type : type[LinterOptionType]
+	type: type[LinterOptionType]
 		The type of the option ``name``.
 
-	default : LinterOptionType
+	default: LinterOptionType
 		The default value to return if ``name`` is not found.
 
 	Returns
@@ -199,7 +199,7 @@ def _check_name(name: str) -> bool:
 	any whitespace or control characters.
 
 	Warning
-	----
+	-------
 	This does not to full name validation, it only checks the rough Unicode category,
 	meaning it's possible for invalid characters to leak through.
 

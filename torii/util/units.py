@@ -18,23 +18,56 @@ __all__ = (
 	'us_to_sec',
 )
 
-# SI Prefix constants
-EXA: Final = 1e+18
-PETA: Final = 1e+15
-TERA: Final = 1e+12
-GIGA: Final = 1e+9
-MEGA: Final = 1e+6
-KILO: Final = 1e+3
+# Fractional SI Prefix constants
+
+EXA: Final   = 1e+18
+''' SI Prefix Exa (10^18) '''
+
+PETA: Final  = 1e+15
+''' SI Prefix Peta (10^15) '''
+
+TERA: Final  = 1e+12
+''' SI Prefix Tera (10^12) '''
+
+GIGA: Final  = 1e+9
+''' SI Prefix Giga (10^9) '''
+
+MEGA: Final  = 1e+6
+''' SI Prefix Mega (10^6) '''
+
+KILO: Final  = 1e+3
+''' SI Prefix Kilo (10^3) '''
+
 HECTO: Final = 1e+2
-DECA: Final = 1e+1
-DECI: Final = 1e-1
+''' SI Prefix Hecto (10^2) '''
+
+DECA: Final  = 1e+1
+''' SI Prefix Deca (10^1) '''
+
+DECI: Final  = 1e-1
+''' SI Prefix Deci (10^-1) '''
+
 CENTI: Final = 1e-2
+''' SI Prefix Centi (10^-2) '''
+
 MILLI: Final = 1e-3
+''' SI Prefix Milli (10^-3) '''
+
 MICRO: Final = 1e-6
-NANO: Final = 1e-9
-PICO: Final = 1e-12
+''' SI Prefix Micro (10^-6) '''
+
+NANO: Final  = 1e-9
+''' SI Prefix Nano (10^-9) '''
+
+PICO: Final  = 1e-12
+''' SI Prefix Pico (10^-12) '''
+
 FEMTO: Final = 1e-15
-ATTO: Final = 1e-18
+''' SI Prefix Femto (10^-15) '''
+
+ATTO: Final  = 1e-18
+''' SI Prefix Atto (10^-18) '''
+
 
 def ps_to_sec(val: float) -> float:
 	'''
@@ -42,7 +75,7 @@ def ps_to_sec(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of picoseconds to convert into seconds.
 
 	Example
@@ -68,7 +101,7 @@ def ns_to_sec(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of nanoseconds to convert into seconds.
 
 	Example
@@ -94,7 +127,7 @@ def us_to_sec(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of microseconds to convert into seconds.
 
 	Example
@@ -120,7 +153,7 @@ def ms_to_sec(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of milliseconds to convert into seconds.
 
 	Example
@@ -146,7 +179,7 @@ def sec_to_ps(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of seconds to convert to picoseconds.
 
 	Example
@@ -172,7 +205,7 @@ def sec_to_ns(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of seconds to convert into nanoseconds.
 
 	Example
@@ -198,7 +231,7 @@ def sec_to_us(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of seconds to convert into microseconds.
 
 	Example
@@ -224,7 +257,7 @@ def sec_to_ms(val: float) -> float:
 
 	Parameters
 	----------
-	val : float
+	val: float
 		The number of seconds to convert into milliseconds.
 
 	Example
@@ -250,9 +283,10 @@ def iec_size(size: int, dec: int = 2) -> str:
 
 	Parameters
 	----------
-	size : int
+	size: int
 		The raw byte count.
-	dec : int
+
+	dec: int
 		The number of decimal digits to include if ``size`` is a non-whole unit.
 
 	Example
@@ -299,7 +333,7 @@ def log2_ceil(value: SupportsIndex) -> int:
 
 	Parameters
 	----------
-	value: SupportsIndex
+	value: typing.SupportsIndex
 		The value to calculate the ``⌈log₂(value)⌉`` for.
 
 	Example
@@ -314,12 +348,12 @@ def log2_ceil(value: SupportsIndex) -> int:
 	Returns
 	-------
 	int
-		The integer log₂ of smallest power of 2 that is equal to or greater than ``value``
+		The integer ``log₂`` of smallest power of 2 that is equal to or greater than ``value``.
 
 	Raises
 	------
 	ValueError
-		when ``value`` is negative
+		when ``value`` is negative.
 	'''
 
 	n = operator.index(value)
@@ -335,7 +369,7 @@ def log2_exact(value: SupportsIndex) -> int:
 
 	Parameters
 	----------
-	value: SupportsIndex
+	value: typing.SupportsIndex
 		The value to calculate the ``log₂(value)`` for.
 
 	Example
@@ -360,7 +394,7 @@ def log2_exact(value: SupportsIndex) -> int:
 	Raises
 	------
 	ValueError
-		when ``value`` is  not a power of 2
+		when ``value`` is  not a power of ``2``.
 	'''
 
 	n = operator.index(value)
@@ -370,16 +404,16 @@ def log2_exact(value: SupportsIndex) -> int:
 
 def bits_for(value: SupportsIndex, require_sign_bit: bool = False) -> int:
 	'''
-	Get the number of bits needed to represent the integer value ``n``.
+	Get the number of bits needed to represent the integer value ``value``.
 
 	Parameters
 	----------
-	value: SupportsIndex
+	value: typing.SupportsIndex
 		The value to find the number of bits to fit for.
 
 	require_sign_bit: bool
-		If ``value`` is signed, requiring us to add a sign bit. This is calculated automatically
-		if ``value`` is less than ``0``.
+		If ``value`` is signed, add an extra bit to ensure we can store the signed value. This is
+		done automatically if ``value`` is less than ``0``.
 
 	Example
 	-------
@@ -397,7 +431,7 @@ def bits_for(value: SupportsIndex, require_sign_bit: bool = False) -> int:
 	Returns
 	-------
 	int
-		The minimum number of bits needed to represent ``n``
+		The minimum number of bits needed to represent ``value``.
 	'''
 
 	n = operator.index(value)
