@@ -19,7 +19,7 @@ __all__ = (
 	'Tick',
 )
 
-SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim']
+SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim', 'wasm']
 
 class Command:
 	'''
@@ -99,6 +99,9 @@ class Simulator:
 			case 'pysim':
 				from .pysim import PySimEngine
 				engine = PySimEngine
+			case 'wasm':
+				from torii_sim_wasm import WASMSimEngine
+				engine = WASMSimEngine
 			case e if isclass(e) and issubclass(e, BaseEngine):
 				engine = e
 			case _:
