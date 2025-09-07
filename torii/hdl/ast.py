@@ -75,7 +75,10 @@ Params     = ParamSpec('Params')
 ReturnType = TypeVar('ReturnType')
 
 ShapeCastT: TypeAlias = 'Shape | int | bool | range | type | ShapeCastable'
+''' .. todo:: Document Me '''
+
 ValueCastT: TypeAlias = 'Value | int | bool | EnumMeta | ValueCastable | ValueLike'
+''' .. todo:: Document Me '''
 
 class DUID:
 	''' Deterministic Unique IDentifier. '''
@@ -87,10 +90,10 @@ class DUID:
 
 class ShapeCastable(metaclass = ABCMeta):
 	'''
-	Interface of user-defined objects that can be cast to a :class:`Shape`.
+	Interface of user-defined objects that can be cast to a :py:class:`Shape`.
 
-	An object deriving from :class:`ShapeCastable` is automatically converted to a :class:`Shape`
-	when it is used in a context where a :class:`Shape` is expected. Such objects can contain
+	An object deriving from :py:class:`ShapeCastable` is automatically converted to a :py:class:`Shape`
+	when it is used in a context where a :py:class:`Shape` is expected. Such objects can contain
 	a richer description of the shape than what is supported by the core Torii language, yet
 	still be transparently used with it.
 
@@ -98,12 +101,20 @@ class ShapeCastable(metaclass = ABCMeta):
 
 	@abstractmethod
 	def as_shape(self) -> Shape:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise TypeError(
 			f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `as_shape` method'
 		)
 
 	@abstractmethod
 	def const(self, val: ValueCastT | None) -> Const:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise TypeError(
 			f'Class \'{type(self).__name__}\' deriving from `ShapeCastable` must override the `const` method'
 		)
@@ -115,7 +126,7 @@ class Shape:
 	A ``Shape`` can be constructed using:
 
 	  * explicit bit width and signedness;
-	  * aliases :func:`signed` and :func:`unsigned`;
+	  * aliases :py:func:`signed` and :py:func:`unsigned`;
 	  * casting from a variety of objects.
 
 	A ``Shape`` can be cast from:
@@ -123,15 +134,16 @@ class Shape:
 	  * an integer, where the integer specifies the bit width;
 	  * a range, where the result is wide enough to represent any element of the range, and is
 		signed if any element of the range is signed;
-	  * an :class:`Enum` with all integer members or :class:`IntEnum`, where the result is wide
+	  * an :py:class:`Enum` with all integer members or :py:class:`IntEnum`, where the result is wide
 		enough to represent any member of the enumeration, and is signed if any member of
 		the enumeration is signed.
 
 	Parameters
 	----------
-	width : int
+	width: int
 		The number of bits in the representation, including the sign bit (if any).
-	signed : bool
+
+	signed: bool
 		If ``False``, the value is unsigned. If ``True``, the value is signed two's complement.
 
 	'''  # noqa: E101
@@ -151,6 +163,10 @@ class Shape:
 	# for `Shape.cast()`.
 	@staticmethod
 	def _cast_plain_enum(obj: EnumMeta) -> Shape:
+		'''
+		.. todo:: Document Me
+		'''
+
 		signed = False
 		width  = 0
 		# TODO(aki): This needs proper typing, rather than just being ignored, however I'm not sure that
@@ -175,6 +191,10 @@ class Shape:
 
 	@staticmethod
 	def cast(obj: object, *, src_loc_at: int = 0) -> Shape:
+		'''
+		.. todo:: Document Me
+		'''
+
 		while True:
 			if isinstance(obj, Shape):
 				return obj
@@ -217,6 +237,10 @@ class Shape:
 		return self.width == other.width and self.signed == other.signed
 
 class _ShapeLikeMeta(type):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __subclasscheck__(cls: type[T], subclass: type[U]) -> bool:
 		return (
 			issubclass(subclass, (Shape, ShapeCastable, int, range, EnumMeta)) or
@@ -235,24 +259,24 @@ class _ShapeLikeMeta(type):
 @final
 class ShapeLike(metaclass = _ShapeLikeMeta):
 	'''
-	An abstract class representing all objects that can be cast to a :class:`Shape`.
+	An abstract class representing all objects that can be cast to a :py:class:`Shape`.
 
 	``issubclass(cls, ShapeLike)`` returns ``True`` for:
 
-	- :class:`Shape`
-	- :class:`ShapeCastable` and its subclasses
+	- :py:class:`Shape`
+	- :py:class:`ShapeCastable` and its subclasses
 	- ``int`` and its subclasses
 	- ``range`` and its subclasses
-	- :class:`enum.EnumMeta` and its subclasses
-	- :class:`ShapeLike` itself
+	- :py:class:`enum.EnumMeta` and its subclasses
+	- :py:class:`ShapeLike` itself
 
 	``isinstance(obj, ShapeLike)`` returns ``True`` for:
 
-	- :class:`Shape` instances
-	- :class:`ShapeCastable` instances
+	- :py:class:`Shape` instances
+	- :py:class:`ShapeCastable` instances
 	- non-negative ``int`` values
 	- ``range`` instances
-	- :class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
+	- :py:class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
 
 	This class is only usable for the above checks — no instances and no (non-virtual)
 	subclasses can be created.
@@ -273,7 +297,7 @@ def _overridable_by_swapping(method_name: str):
 	'''
 	Allow overriding the decorated method.
 
-	Allows :class:`ValueCastable` to override the decorated method by implementing
+	Allows :py:class:`ValueCastable` to override the decorated method by implementing
 	a reflected method named ``method_name``. Intended for operators, but
 	also usable for other methods that have a reflected counterpart.
 	'''
@@ -292,6 +316,10 @@ def _overridable_by_swapping(method_name: str):
 	return decorator
 
 def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
+	'''
+	.. todo:: Document Me
+	'''
+
 	n = len(value)
 	if isinstance(key, int):
 		if key not in range(-n, n):
@@ -315,17 +343,21 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 		raise TypeError(f'Cannot index value with {key!r}')
 
 class Value(metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
 
 	src_loc: tuple[str, int] | None
+	''' .. todo:: Document Me '''
 
 	@staticmethod
 	def cast(obj: ValueCastT) -> Value:
 		'''
 		Converts ``obj`` to an Torii value.
 
-		Booleans and integers are wrapped into a :class:`Const`. Enumerations whose members are
-		all integers are converted to a :class:`Const` with a shape that fits every member.
-		:class:`ValueCastable` objects are recursively cast to an Torii value.
+		Booleans and integers are wrapped into a :py:class:`Const`. Enumerations whose members are
+		all integers are converted to a :py:class:`Const` with a shape that fits every member.
+		:py:class:`ValueCastable` objects are recursively cast to an Torii value.
 
 		'''
 		while True:
@@ -488,9 +520,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			This ``Value`` reinterpreted as a unsigned integer.
-
 		'''
 
 		return Operator('u', (self,))
@@ -501,10 +532,10 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			This ``Value`` reinterpreted as a signed integer.
-
 		'''
+
 		if len(self) == 0:
 			raise ValueError('Cannot create a 0-width signed value')
 		return Operator('s', (self,))
@@ -515,9 +546,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			``1`` if any bits are set, ``0`` otherwise.
-
 		'''
 
 		return Operator('b', (self,))
@@ -528,9 +558,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			``1`` if any bits are set, ``0`` otherwise.
-
 		'''
 
 		return Operator('r|', (self,))
@@ -541,9 +570,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			``1`` if all bits are set, ``0`` otherwise.
-
 		'''
 
 		return Operator('r&', (self,))
@@ -554,9 +582,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			``1`` if an odd number of bits are set, ``0`` if an even number of bits are set.
-
 		'''
 
 		return Operator('r^', (self,))
@@ -567,9 +594,8 @@ class Value(metaclass = ABCMeta):
 
 		Returns
 		-------
-		Value, out
+		Operator
 			``0`` if ``premise`` is true and ``conclusion`` is not, ``1`` otherwise.
-
 		'''
 
 		op = ~premise | conclusion
@@ -588,16 +614,16 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		offset : Value, int
+		offset: Value | int
 			Index of first selected bit.
-		width : int
+
+		width: int
 			Number of selected bits.
 
 		Returns
 		-------
-		Part, out
+		Part
 			Selected part of the ``Value``
-
 		'''
 
 		offset = Value.cast(offset)
@@ -614,16 +640,16 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		offset : Value, int
+		offset: Value | int
 			Index of first selected word.
-		width : int
+
+		width: int
 			Number of selected bits.
 
 		Returns
 		-------
-		Part, out
+		Part
 			Selected part of the ``Value``
-
 		'''
 
 		offset = Value.cast(offset)
@@ -640,14 +666,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		patterns : int, str, or Enum
+		patterns: int | str | Enum
 			Patterns to match against.
 
 		Returns
 		-------
-		Value, out
+		Value
 			``1`` if any pattern matches the value, ``0`` otherwise.
-
 		'''
 
 		matches: list[Value] = []
@@ -706,14 +731,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		amount : int
+		amount: int
 			Amount to shift by.
 
 		Returns
 		-------
-		Value, out
+		Value
 			If the amount is positive, the input shifted left. Otherwise, the input shifted right.
-
 		'''
 
 		if not isinstance(amount, int):
@@ -731,14 +755,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		amount : int
+		amount: int
 			Amount to shift by.
 
 		Returns
 		-------
-		Value, out
+		Value
 			If the amount is positive, the input shifted right. Otherwise, the input shifted left.
-
 		'''
 
 		if not isinstance(amount, int):
@@ -758,14 +781,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		amount : int
+		amount: int
 			Amount to rotate by.
 
 		Returns
 		-------
-		Value, out
+		Value
 			If the amount is positive, the input rotated left. Otherwise, the input rotated right.
-
 		'''
 
 		if not isinstance(amount, int):
@@ -780,14 +802,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		amount : int
+		amount: int
 			Amount to rotate by.
 
 		Returns
 		-------
-		Value, out
+		Value
 			If the amount is positive, the input rotated right. Otherwise, the input rotated right.
-
 		'''
 
 		if not isinstance(amount, int):
@@ -807,14 +828,15 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		count : int
+		count: int
 			Number of replications.
 
 		Returns
 		-------
-		Value, out
+		Value
 			Replicated value.
 		'''
+
 		if not isinstance(count, int) or count < 0:
 			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
 		return Cat(*(self for _ in range(count)))
@@ -825,14 +847,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		value : Value, in
+		value: Value
 			Value to be assigned.
 
 		Returns
 		-------
 		Assign
 			Assignment statement that can be used in combinatorial or synchronous context.
-
 		'''
 
 		return Assign(self, value, src_loc_at = 1)
@@ -845,14 +866,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		value : Value, in
+		value: Value
 			Value to increment by.
 
 		Returns
 		-------
 		Assign
 			Assignment statement that can be used in combinatorial or synchronous context.
-
 		'''
 
 		return Assign(self, self + value, src_loc_at = 1)
@@ -865,14 +885,13 @@ class Value(metaclass = ABCMeta):
 
 		Parameters
 		----------
-		value : Value, in
+		value: Value
 			Value to decrement by.
 
 		Returns
 		-------
 		Assign
 			Assignment statement that can be used in combinatorial or synchronous context.
-
 		'''
 
 		return Assign(self, self - value, src_loc_at = 1)
@@ -885,27 +904,40 @@ class Value(metaclass = ABCMeta):
 		Returns
 		-------
 		Shape
-			See :class:`Shape`.
+			See :py:class:`Shape`.
 
 		Examples
 		--------
-		>>> Signal(8).shape()
-		Shape(width = 8, signed = False)
-		>>> Const(0xaa).shape()
-		Shape(width = 8, signed = False)
+		.. code-block:: pycon
 
+			>>> Signal(8).shape()
+			Shape(width = 8, signed = False)
+			>>> Const(0xaa).shape()
+			Shape(width = 8, signed = False)
 		'''
 
 		raise NotImplementedError('.shape has not been implemented')
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise TypeError(f'Value {self!r} cannot be used in assignments')
 
 	@abstractmethod
 	def _rhs_signals(self) -> SignalSet | ValueSet:
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 class _ConstMeta(ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __call__(
 			cls, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, *,
 			src_loc_at: int = 0, **kwargs
@@ -921,23 +953,30 @@ class Const(Value, metaclass = _ConstMeta):
 
 	Parameters
 	----------
-	value : int
-	shape : int or tuple or None
+	value: int
+
+	shape: int | tuple[int, bool] | None
 		Either an integer ``width`` or a tuple ``(width, signed)`` specifying the number of bits
 		in this constant and whether it is signed (can represent negative values).
 		``shape`` defaults to the minimum possible width and signedness of ``value``.
 
 	Attributes
 	----------
-	width : int
-	signed : bool
+	width: int
+
+	signed: bool
 
 	'''
 
 	src_loc = None
+	''' .. todo:: Document Me '''
 
 	@staticmethod
 	def normalize(value: int, shape: Shape) -> int:
+		'''
+		.. todo:: Document Me
+		'''
+
 		mask = (1 << shape.width) - 1
 		value &= mask
 		if shape.signed and (value >> (shape.width - 1)) & 1:
@@ -949,7 +988,7 @@ class Const(Value, metaclass = _ConstMeta):
 		'''
 		Converts ``obj`` to an Torii constant.
 
-		First, ``obj`` is converted to a value using :meth:`Value.cast`. If it is a constant, it
+		First, ``obj`` is converted to a value using :py:meth:`Value.cast`. If it is a constant, it
 		is returned. If it is a constant-castable expression, it is evaluated and returned.
 		Otherwise, :py:exc:`TypeError` is raised.
 		'''
@@ -1005,6 +1044,10 @@ class Const(Value, metaclass = _ConstMeta):
 		return Shape(self.width, self.signed)
 
 	def _rhs_signals(self) -> SignalSet:
+		'''
+		.. todo:: Document Me
+		'''
+
 		return SignalSet()
 
 	def __repr__(self) -> str:
@@ -1016,6 +1059,10 @@ OperatorsT: TypeAlias = Literal[
 ]
 @final
 class Operator(Value):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, operator: OperatorsT, operands: Sequence[ValueCastT], *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.operator = operator
@@ -1100,23 +1147,27 @@ def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 
 	Parameters
 	----------
-	sel : Value, in
+	sel: Value
 		Selector.
-	val1 : Value, in
-	val0 : Value, in
+
+	val1: Value
+	val0: Value
 		Input values.
 
 	Returns
 	-------
-	Value, out
+	Value
 		Output ``Value``. If ``sel`` is asserted, the Mux returns ``val1``, else ``val0``.
-
 	'''
 
 	return Operator('m', (sel, val1, val0))
 
 @final
 class Slice(Value):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, value: ValueCastT, start: int, stop: int, *, src_loc_at: int = 0
 	) -> None:
@@ -1157,6 +1208,10 @@ class Slice(Value):
 
 @final
 class Part(Value):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, value: ValueCastT, offset: ValueCastT, width: int, stride: int = 1, *,
 		src_loc_at: int = 0
@@ -1212,14 +1267,13 @@ class Cat(Value):
 
 	Parameters
 	----------
-	*args : Values or iterables of Values, inout
+	*args: Values or iterables of Values, inout
 		``Value`` s to be concatenated.
 
 	Returns
 	-------
-	Value, inout
+	Value
 		Resulting ``Value`` obtained by concatenation.
-
 	'''
 
 	def __init__(self, *args: ValueCastT | Iterable[ValueCastT], src_loc_at: int = 0) -> None:
@@ -1269,26 +1323,31 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 
 	Parameters
 	----------
-	shape : ``Shape``-castable object or None
+	shape: ``Shape``-castable object or None
 		Specification for the number of bits in this ``Signal`` and its signedness (whether it
 		can represent negative values). See ``Shape.cast`` for details.
 		If not specified, ``shape`` defaults to 1-bit and non-signed.
-	name : str
+
+	name: str
 		Name hint for this signal. If ``None`` (default) the name is inferred from the variable
 		name this ``Signal`` is assigned to.
-	reset : int or integral Enum
+
+	reset: int or integral Enum
 		Reset (synchronous) or default (combinatorial) value.
 		When this ``Signal`` is assigned to in synchronous context and the corresponding clock
 		domain is reset, the ``Signal`` assumes the given value. When this ``Signal`` is unassigned
 		in combinatorial context (due to conditional assignments not being taken), the ``Signal``
 		assumes its ``reset`` value. Defaults to 0.
-	reset_less : bool
+
+	reset_less: bool
 		If ``True``, do not generate reset logic for this ``Signal`` in synchronous statements.
 		The ``reset`` value is only used as a combinatorial default or as the initial value.
 		Defaults to ``False``.
-	attrs : dict
+
+	attrs: dict
 		Dictionary of synthesis attributes.
-	decoder : function or Enum
+
+	decoder: function or Enum
 		A function converting integer signal values to human-readable strings (e.g. FSM state
 		names). If an ``Enum`` subclass is passed, it is concisely decoded using format string
 		``"{0.name:}/{0.value:}"``, or a number if the signal value is not a member of
@@ -1296,13 +1355,19 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 
 	Attributes
 	----------
-	width : int
-	signed : bool
-	name : str
-	reset : int
-	reset_less : bool
-	attrs : dict
-	decoder : function
+	width: int
+
+	signed: bool
+
+	name: str
+
+	reset: int
+
+	reset_less: bool
+
+	attrs: dict
+
+	decoder: function
 
 	'''
 
@@ -1416,9 +1481,8 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 
 		Parameters
 		----------
-		other : Value
+		other: Value
 			Object to base this Signal on.
-
 		'''
 
 		if name is not None:
@@ -1465,9 +1529,8 @@ class ClockSignal(Value):
 
 	Parameters
 	----------
-	domain : str
-		Clock domain to obtain a clock signal for. Defaults to ``'sync'``.
-
+	domain: str
+		Clock domain to obtain a clock signal for. Defaults to ``sync``.
 	'''
 
 	def __init__(self, domain: str = 'sync', *, src_loc_at: int = 0) -> None:
@@ -1505,11 +1568,11 @@ class ResetSignal(Value):
 
 	Parameters
 	----------
-	domain : str
-		Clock domain to obtain a reset signal for. Defaults to ``'sync'``.
-	allow_reset_less : bool
-		If the clock domain is reset-less, act as a constant ``0`` instead of reporting an error.
+	domain: str
+		Clock domain to obtain a reset signal for. Defaults to ``sync``.
 
+	allow_reset_less: bool
+		If the clock domain is reset-less, act as a constant ``0`` instead of reporting an error.
 	'''
 
 	def __init__(self, domain: str = 'sync', allow_reset_less: bool = False, *, src_loc_at: int = 0) -> None:
@@ -1539,6 +1602,10 @@ class ResetSignal(Value):
 
 @final
 class AnyValue(Value, DUID):
+	'''
+	.. todo:: Document Me
+	'''
+
 	class Kind(Enum):
 		AnyConst = 'anyconst'
 		AnySeq   = 'anyseq'
@@ -1561,9 +1628,17 @@ class AnyValue(Value, DUID):
 		return f'({self.kind.value} {self.width}\'{"s" if self.signed else ""})'
 
 def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return AnyValue('anyconst', shape, src_loc_at = src_loc_at + 1)
 
 def AnySeq(shape, *, src_loc_at: int = 0) -> AnyValue:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return AnyValue('anyseq', shape, src_loc_at = src_loc_at + 1)
 
 class Array(MutableSequence[Value]):
@@ -1662,6 +1737,10 @@ class Array(MutableSequence[Value]):
 		del self._inner[index]
 
 	def insert(self, index: SupportsIndex, value: Value) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_mutability()
 		self._inner.insert(index, value)
 
@@ -1670,6 +1749,10 @@ class Array(MutableSequence[Value]):
 
 @final
 class ArrayProxy(Value):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, elems, index: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.elems = elems
@@ -1731,21 +1814,21 @@ class ArrayProxy(Value):
 
 class ValueCastable:
 	'''
-	Interface of user-defined objects that can be cast to :class:`Value` s.
+	Interface of user-defined objects that can be cast to :py:class:`Value` s.
 
-	An object deriving from :class:`ValueCastable`` is automatically converted to a :class:`Value`
-	when it is used in a context where a :class:`Value`` is expected. Such objects can implement
+	An object deriving from :py:class:`ValueCastable`` is automatically converted to a :py:class:`Value`
+	when it is used in a context where a :py:class:`Value`` is expected. Such objects can implement
 	different or richer semantics than what is supported by the core Torii language, yet still
 	be transparently used with it as long as the final underlying representation is a single
-	Torii :class:`Value`. These objects also need not commit to a specific representation until
+	Torii :py:class:`Value`. These objects also need not commit to a specific representation until
 	they are converted to a concrete Torii value.
 
 	Note that it is necessary to ensure that Torii's view of representation of all values stays
-	internally consistent. The class deriving from :class:`ValueCastable`` must decorate
-	the :meth:`as_value` method with the :meth:`lowermethod` decorator, which ensures that all
-	calls to :meth:`as_value` return the same :class:`Value` representation. If the class deriving
-	from :class:`ValueCastable` is mutable, it is up to the user to ensure that it is not mutated
-	in a way that changes its representation after the first call to :meth:`as_value`.
+	internally consistent. The class deriving from :py:class:`ValueCastable`` must decorate
+	the :py:meth:`as_value` method with the :py:meth:`lowermethod` decorator, which ensures that all
+	calls to :py:meth:`as_value` return the same :py:class:`Value` representation. If the class deriving
+	from :py:class:`ValueCastable` is mutable, it is up to the user to ensure that it is not mutated
+	in a way that changes its representation after the first call to :py:meth:`as_value`.
 
 	'''
 
@@ -1798,15 +1881,15 @@ class ValueCastable:
 
 class _ValueLikeMeta(type):
 	'''
-	An abstract class representing all objects that can be cast to a :class:`Value`.
+	An abstract class representing all objects that can be cast to a :py:class:`Value`.
 
 	``issubclass(cls, ValueLike)`` returns ``True`` for:
 
-	- :class:`Value`
-	- :class:`ValueCastable` and its subclasses
+	- :py:class:`Value`
+	- :py:class:`ValueCastable` and its subclasses
 	- ``int`` and its subclasses
-	- :class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
-	- :class:`ValueLike` itself
+	- :py:class:`enum.Enum` subclasses where all values are :ref:`value-like <lang-valuelike>`
+	- :py:class:`ValueLike` itself
 
 	``isinstance(obj, ValueLike)`` returns the same value as ``issubclass(type(obj), ValueLike)``.
 
@@ -1828,6 +1911,10 @@ class _ValueLikeMeta(type):
 
 @final
 class ValueLike(metaclass = _ValueLikeMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __new__(cls, *args, **kwargs):
 		raise TypeError('ValueLike is an abstract class and cannot be constructed')
 
@@ -1859,24 +1946,24 @@ class Sample(Value):
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Attributes
 	----------
-	value : Value
+	value: Value
 		The Value of the input expression.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past to sample from.
 
-	domain : str
+	domain: str
 		The domain the sample is taken on.
 	'''
 
@@ -1930,13 +2017,13 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Returns
@@ -1962,13 +2049,13 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Returns
@@ -1998,13 +2085,13 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Returns
@@ -2034,13 +2121,13 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Returns
@@ -2070,13 +2157,13 @@ def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	Parameters
 	----------
-	expr : ValueCastT
+	expr: ValueCastT
 		The Signal or Const expression to sample.
 
-	clocks : int
+	clocks: int
 		The number of clock cycles in the past this sample should represent.
 
-	domain : str | None
+	domain: str | None
 		The domain this sample should be taken on. If ``None`` the default domain is used.
 
 	Returns
@@ -2114,15 +2201,27 @@ class Initial(Value):
 		return '(initial)'
 
 class _StatementList(list['Statement']):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __repr__(self) -> str:
 		return f'({" ".join(map(repr, self))})'
 
 class Statement:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, *, src_loc_at: int = 0) -> None:
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
 	@staticmethod
 	def cast(obj: Iterable | Statement):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(obj, Iterable):
 			return _StatementList(list(chain.from_iterable(map(Statement.cast, obj))))
 		else:
@@ -2133,6 +2232,10 @@ class Statement:
 
 @final
 class Assign(Statement):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, lhs: ValueCastT, rhs: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.lhs = Value.cast(lhs)
@@ -2154,9 +2257,17 @@ class Assign(Statement):
 
 @final
 class Property(Statement, MustUse):
+	'''
+	.. todo:: Document Me
+	'''
+
 	_MustUse__warning = UnusedProperty
 
 	class Kind(Enum):
+		'''
+		.. todo:: Document Me
+		'''
+
 		Assert = 'assert'
 		Assume = 'assume'
 		Cover  = 'cover'
@@ -2201,16 +2312,32 @@ class Property(Statement, MustUse):
 		return f'({self.kind.value} {self.test!r})'
 
 def Assert(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Property('assert', test, name = name, src_loc_at = src_loc_at + 1)
 
 def Assume(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Property('assume', test, name = name, src_loc_at = src_loc_at + 1)
 
 def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Property('cover', test, name = name, src_loc_at = src_loc_at + 1)
 
 # @final
 class Switch(Statement):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, test: ValueCastT, cases: Mapping[SwitchCaseT, Iterable[object] | _StatementList], *,
 		src_loc: SrcLoc | None = None, src_loc_at: int = 0, case_src_locs: dict[SwitchCaseT, SrcLoc] = {}
@@ -2311,6 +2438,10 @@ class _MappedKeyCollection(Generic[IntKey, Key], metaclass = ABCMeta):
 		pass # :nocov:
 
 class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKey, Key]):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, pairs: tuple[tuple[Key, Val], ...] = ()) -> None:
 		self._storage = OrderedDict[IntKey | None, Val]()
 		for key, value in pairs:
@@ -2367,19 +2498,35 @@ class _MappedKeyDict(MutableMapping[Key | None, Val], _MappedKeyCollection[IntKe
 		return f'{type(self).__module__}.{type(self).__name__}([{", ".join(pairs)}])'
 
 class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, elements: Iterable[Key] = ()) -> None:
 		self._storage = OrderedDict[IntKey, None]()
 		for elem in elements:
 			self.add(elem)
 
 	def add(self, key: Key) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._storage[self._map_key(key)] = None
 
 	def update(self, keys: Iterable[Key]) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for key in keys:
 			self.add(key)
 
 	def discard(self, key: Key) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if key in self:
 			del self._storage[self._map_key(key)]
 
@@ -2401,6 +2548,10 @@ class _MappedKeySet(MutableSet[Key], _MappedKeyCollection[IntKey, Key]):
 		return f'{type(self).__module__}.{type(self).__name__}({", ".join(repr(x) for x in self)})'
 
 class ValueKey:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, value: ValueCastT) -> None:
 		self.value = Value.cast(value)
 		if isinstance(self.value, Const):

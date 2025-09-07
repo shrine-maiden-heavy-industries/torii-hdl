@@ -29,6 +29,10 @@ __all__ = (
 )
 
 class _ModuleBuilderProxy:
+	'''
+	.. todo:: Document Me
+	'''
+
 	_builder: Module
 	_depth: int
 
@@ -37,6 +41,10 @@ class _ModuleBuilderProxy:
 		object.__setattr__(self, '_depth', depth)
 
 class _ModuleBuilderDomain(_ModuleBuilderProxy):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, builder: Module, depth: int, domain: str | None) -> None:
 		super().__init__(builder, depth)
 		self._domain = domain
@@ -46,6 +54,10 @@ class _ModuleBuilderDomain(_ModuleBuilderProxy):
 		return self
 
 class _ModuleBuilderDomains(_ModuleBuilderProxy):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __getattr__(self, name: str):
 		if name == 'submodules':
 			warnings.warn(
@@ -72,6 +84,10 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 		return self.__setattr__(name, value)
 
 class _ModuleBuilderRoot:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, builder: Module, depth: int) -> None:
 		self._builder = builder
 		self.domain = self.d = _ModuleBuilderDomains(builder, depth)
@@ -84,6 +100,10 @@ class _ModuleBuilderRoot:
 		raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'')
 
 class _ModuleBuilderSubmodules:
+	'''
+	.. todo:: Document Me
+	'''
+
 	_builder: Module
 
 	def __init__(self, builder: Module) -> None:
@@ -107,6 +127,10 @@ class _ModuleBuilderSubmodules:
 		return self.__getattr__(name)
 
 class _ModuleBuilderDomainSet:
+	'''
+	.. todo:: Document Me
+	'''
+
 	_builder: Module
 
 	def __init__(self, builder: Module) -> None:
@@ -131,6 +155,10 @@ Params = ParamSpec('Params')
 # It's not particularly clean to depend on an internal interface, but, unfortunately, __bool__
 # must be defined on a class to be called during implicit conversion.
 class _GuardedContextManager(_GeneratorContextManager):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, keyword: str, func: Callable[Params, Generator[Any, Any, None]], args: tuple, kwds: dict
 	) -> None:
@@ -143,6 +171,10 @@ class _GuardedContextManager(_GeneratorContextManager):
 		)
 
 def _guardedcontextmanager(keyword: str):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def decorator(func: Callable[Params, Generator[Any, Any, None]]) -> Callable[Params, _GeneratorContextManager]:
 		@wraps(func)
 		def helper(*args: Params.args, **kwds: Params.kwargs):
@@ -151,17 +183,29 @@ def _guardedcontextmanager(keyword: str):
 	return decorator
 
 class FSM:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, state, encoding, decoding) -> None:
 		self.state    = state
 		self.encoding = encoding
 		self.decoding = decoding
 
 	def ongoing(self, name):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if name not in self.encoding:
 			self.encoding[name] = len(self.encoding)
 		return Operator('==', [ self.state, self.encoding[name] ], src_loc_at = 0)
 
 class _IfDict(TypedDict):
+	'''
+	.. todo:: Document Me
+	'''
+
 	depth: int
 	tests: list
 	bodies: list
@@ -169,12 +213,20 @@ class _IfDict(TypedDict):
 	src_locs: list[SrcLoc]
 
 class _SwitchDict(TypedDict):
+	'''
+	.. todo:: Document Me
+	'''
+
 	test: Value
 	cases: OrderedDict[SwitchCaseT, _StatementList]
 	src_loc: SrcLoc
 	case_src_locs: dict[SwitchCaseT, SrcLoc]
 
 class _FSMDict(TypedDict):
+	'''
+	.. todo:: Document Me
+	'''
+
 	name: str
 	signal: Signal
 	reset: str | None
@@ -188,6 +240,10 @@ class _FSMDict(TypedDict):
 _CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 
 class Module(_ModuleBuilderRoot, Elaboratable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@classmethod
 	def __init_subclass__(cls):
 		raise ToriiSyntaxError(
@@ -211,6 +267,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._generated    = {}
 
 	def _check_context(self, construct, context):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._ctrl_context != context:
 			if self._ctrl_context is None:
 				raise ToriiSyntaxError(f'{construct} is not permitted outside of {context}')
@@ -225,21 +285,37 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				)
 
 	def _get_ctrl(self, name: str):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._ctrl_stack:
 			top_name, top_data = self._ctrl_stack[-1]
 			if top_name == name:
 				return top_data
 
 	def _flush_ctrl(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		while len(self._ctrl_stack) > self.domain._depth:
 			self._pop_ctrl()
 
 	def _set_ctrl(self, name: str, data: _CtrlEntry):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._flush_ctrl()
 		self._ctrl_stack.append((name, data))
 		return data
 
 	def _check_signed_cond(self, cond: ValueCastT):
+		'''
+		.. todo:: Document Me
+		'''
+
 		cond = Value.cast(cond)
 		if version_info < (3, 12, 0) and cond.shape().signed:
 			# TODO(py3.11): remove; ~True is a warning in 3.12+, finally!
@@ -254,6 +330,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@_guardedcontextmanager('If')
 	def If(self, cond: ValueCastT):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('If', context = None)
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
@@ -281,6 +361,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@_guardedcontextmanager('Elif')
 	def Elif(self, cond: ValueCastT):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('Elif', context = None)
 		cond = self._check_signed_cond(cond)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
@@ -304,6 +388,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@_guardedcontextmanager('Else')
 	def Else(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('Else', context = None)
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		if_data = self._get_ctrl('If')
@@ -326,6 +414,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def Switch(self, test):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('Switch', context = None)
 		self._set_ctrl('Switch', {
 			'test': Value.cast(test),
@@ -344,6 +436,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def Case(self, *patterns):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if not patterns:
 			raise ValueError('Empty Case() clauses have been superseded by Default()')
 
@@ -416,6 +512,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def Default(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('Default', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		switch_data = self._get_ctrl('Switch')
@@ -445,6 +545,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def FSM(self, reset: str | None = None, domain = 'sync', name = 'fsm'):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
 			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')
@@ -485,6 +589,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@contextmanager
 	def State(self, name: str):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_context('FSM State', context = 'FSM')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		fsm_data = self._get_ctrl('FSM')
@@ -510,10 +618,18 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	@property
 	def next(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise ToriiSyntaxError('Only assignment to `m.next` is permitted')
 
 	@next.setter
 	def next(self, name):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._ctrl_context != 'FSM':
 			for level, (ctrl_name, ctrl_data) in enumerate(reversed(self._ctrl_stack)):
 				if ctrl_name == 'FSM':
@@ -531,6 +647,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		raise ToriiSyntaxError('`m.next = <...>` is only permitted inside an FSM state')
 
 	def _pop_ctrl(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		name, data = self._ctrl_stack.pop()
 		src_loc = data['src_loc']
 
@@ -604,6 +724,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			)
 
 	def _add_statement(self, assigns, domain: str, depth, compat_mode = False):
+		'''
+		.. todo:: Document Me
+		'''
+
 		def domain_name(domain):
 			if domain is None:
 				return 'comb'
@@ -634,6 +758,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._statements.append(stmt)
 
 	def _add_submodule(self, submodule, name = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if not hasattr(submodule, 'elaborate'):
 			raise TypeError(f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule')
 
@@ -654,21 +782,37 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				self._named_submodules[name] = submodule
 
 	def _get_submodule(self, name: str):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if name in self._named_submodules:
 			return self._named_submodules[name]
 		else:
 			raise AttributeError(f'No submodule named \'{name}\' exists')
 
 	def _add_domain(self, cd: ClockDomain):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if cd.name in self._domains:
 			raise NameError(f'Clock domain named \'{cd.name}\' already exists')
 		self._domains[cd.name] = cd
 
 	def _flush(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		while self._ctrl_stack:
 			self._pop_ctrl()
 
 	def elaborate(self, platform: Platform | None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._flush()
 
 		fragment = Fragment()

@@ -16,31 +16,35 @@ class ClockDomain:
 
 	Parameters
 	----------
-	name : str or None
+	name: str | None
 		Domain name. If ``None`` (the default) the name is inferred from the variable name this
 		``ClockDomain`` is assigned to (stripping any `"cd_"` prefix).
-	reset_less : bool
+
+	reset_less: bool
 		If ``True``, the domain does not use a reset signal. Registers within this domain are
 		still all initialized to their reset state once, e.g. through Verilog `"initial"`
 		statements.
-	clk_edge : str
+
+	clk_edge: str
 		The edge of the clock signal on which signals are sampled. Must be one of "pos" or "neg".
-	async_reset : bool
+
+	async_reset: bool
 		If ``True``, the domain uses an asynchronous reset, and registers within this domain
 		are initialized to their reset state when reset level changes. Otherwise, registers
 		are initialized to reset state at the next clock cycle when reset is asserted.
-	local : bool
+
+	local: bool
 		If ``True``, the domain will propagate only downwards in the design hierarchy. Otherwise,
 		the domain will propagate everywhere.
 
 	Attributes
 	----------
-	clk : Signal, inout
+	clk: Signal, inout
 		The clock for this domain. Can be driven or used to drive other signals (preferably
 		in combinatorial context).
-	rst : Signal or None, inout
-		Reset signal for this domain. Can be driven or used to drive.
 
+	rst: Signal | None, inout
+		Reset signal for this domain. Can be driven or used to drive.
 	'''
 
 	clk: Signal
@@ -89,6 +93,10 @@ class ClockDomain:
 		self.local = local
 
 	def rename(self, new_name: str) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if new_name == '' or not _check_name(new_name):
 			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
 

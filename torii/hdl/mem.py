@@ -23,38 +23,37 @@ class Memory(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Access granularity. Each storage element of this memory is ``width`` bits in size.
 
-	depth : int
+	depth: int
 		Word count. This memory contains ``depth`` storage elements.
 
-	init : Sequence[int]
+	init: collections.abc.Sequence[int]
 		Initial values. At power on, each storage element in this memory is initialized to
 		the corresponding element of ``init``, if any, or to zero otherwise.
 		Uninitialized memories are not currently supported.
 
-	name : str | None
+	name: str | None
 		Name hint for this memory. If ``None`` the name is inferred from the variable
 		name this ``Memory`` is assigned to.
 
-	attrs : dict | None
+	attrs: dict | None
 		Dictionary of synthesis attributes.
 
 	Attributes
 	----------
-	width : int
+	width: int
 		Width of each element in this memory.
 
-	depth : int
+	depth: int
 		Number of elements in this memory.
 
-	init : list of int
+	init: list[int]
 		Initial values for this memory.
 
-	attrs : dict
+	attrs: dict
 		Synthesis attributes.
-
 	'''
 
 	def __init__(
@@ -88,10 +87,18 @@ class Memory(Elaboratable):
 
 	@property
 	def init(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return self._init
 
 	@init.setter
 	def init(self, new_init):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._init = [] if new_init is None else list(new_init)
 		if len(self.init) > self.depth:
 			raise ValueError(f'Memory initialization value count exceed memory depth ({len(self.init)} > {self.depth})')
@@ -111,18 +118,18 @@ class Memory(Elaboratable):
 
 		See :py:class:`ReadPort` for details.
 
-		Arguments
-		---------
-		domain : str
+		Parameters
+		----------
+		domain: str
 			The domain this :py:class:`ReadPort` operates on.
 
-		transparent : bool
+		transparent: bool
 			Port transparency.
 
 		Returns
 		-------
-		An instance of :py:class:`ReadPort` associated with this memory.
-
+		ReadPort
+			A read-port for this memory.
 		'''
 
 		return ReadPort(self, domain = domain, transparent = transparent, src_loc_at = 1 + src_loc_at)
@@ -133,18 +140,18 @@ class Memory(Elaboratable):
 
 		See :py:class:`WritePort` for details.
 
-		Arguments
-		---------
-		domain : str
+		Parameters
+		----------
+		domain: str
 			The domain this :py:class:`WritePort` operates on.
 
-		granularity : int | None
+		granularity: int | None
 			Port granularity
 
 		Returns
 		-------
-		An instance of :py:class:`WritePort` associated with this memory.
-
+		WritePort
+			A write-port instance for this memory.
 		'''
 
 		return WritePort(self, domain = domain, granularity = granularity, src_loc_at = 1 + src_loc_at)
@@ -203,42 +210,42 @@ class ReadPort(Elaboratable):
 
 	Parameters
 	----------
-	memory : Memory
+	memory: Memory
 		Memory associated with the port.
 
-	domain : str
+	domain: str
 		The clock domain this port operates on. If set to the ``'comb'`` domain, the port is
 		asynchronous, otherwise reads have a latency of 1 clock cycle.
 
-	transparent : bool
+	transparent: bool
 		Port transparency. If set a read at an address that is also being written to in
 		the same clock cycle will output the new value. Otherwise, the old value will be output
 		first. This behavior only applies to ports in the same domain.
 
 	Attributes
 	----------
-	memory : Memory
+	memory: Memory
 		The memory associated to this port.
 
-	domain : str
+	domain: str
 		The clock domain this port operates on.
 
-	transparent : bool
+	transparent: bool
 		If port transparency is enabled.
 
-	addr : Signal(range(memory.depth)), in
+	addr: Signal(range(memory.depth)), in
 		Read address.
 
-	data : Signal(memory.width), out
+	data: Signal(memory.width), out
 		Read data.
 
-	en : Signal or Const, in
+	en: Signal | Const
 		Read enable. If asserted, ``data`` is updated with the word stored at ``addr``.
 
 	Raises
 	------
-	:class:`ValueError` if the read port is simultaneously asynchronous and non-transparent.
-
+	ValueError
+		If the read port is simultaneously asynchronous and non-transparent.
 	'''
 
 	def __init__(self, memory: Memory, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0) -> None:
@@ -282,42 +289,42 @@ class WritePort(Elaboratable):
 
 	Parameters
 	----------
-	memory : Memory
+	memory: Memory
 		Memory associated with the port.
 
-	domain : str
+	domain: str
 		The clock domain this port operates on. Writes have a latency of 1 clock cycle.
 
-	granularity : int | None
+	granularity: int | None
 		Port granularity. Write data is split evenly in ``memory.width // granularity`` chunks,
 		which can be updated independently. If ``None`` defaults to ``memory.width``.
 
 	Attributes
 	----------
-	memory : Memory
+	memory: Memory
 		The memory associated to this port.
 
-	domain : str
+	domain: str
 		The clock domain this port operates on.
 
-	granularity : int
+	granularity: int
 		The port granularity.
 
-	addr : Signal(range(memory.depth)), in
+	addr: Signal(range(memory.depth)), in
 		Write address.
 
-	data : Signal(memory.width), in
+	data: Signal(memory.width), in
 		Write data.
 
-	en : Signal(memory.width // granularity), in
+	en: Signal(memory.width // granularity), in
 		Write enable. Each bit selects a non-overlapping chunk of ``granularity`` bits on the
 		``data`` signal, which is written to memory at ``addr``. Unselected chunks are ignored.
 
 	Raises
 	------
-	:class:`ValueError` if the write port granularity is greater than memory width, or does not
-	divide memory width evenly.
-
+	ValueError
+		If the write port granularity is greater than memory width, or does not
+		divide memory width evenly.
 	'''
 
 	def __init__(
@@ -372,33 +379,33 @@ class DummyPort:
 
 	Parameters
 	----------
-	data_width : int
+	data_width: int
 		The width of the ``data`` signal on this port.
 
-	addr_width : int
+	addr_width: int
 		The width of the ``addr`` signal on this port.
 
-	domain : str
+	domain: str
 		The domain this port is to operate on.
 
-	name : str | None
+	name: str | None
 		The name of this port.
 
-	granularity : str | None
+	granularity: str | None
 		Port granularity if set. If ``None`` defaults to ``data_width``.
 
 	Attributes
 	----------
-	domain : str
+	domain: str
 		Port domain.
 
-	addr : Signal(addr_width)
+	addr: Signal(addr_width)
 		Port address.
 
-	data : Signal(data_width)
+	data: Signal(data_width)
 		Port data.
 
-	en : Signal(data_width // granularity)
+	en: Signal(data_width // granularity)
 		Port enable bitmask.
 	'''
 
@@ -425,6 +432,10 @@ class DummyPort:
 		self.en   = Signal(data_width // granularity, name = f'{name}_en', src_loc_at = 1)
 
 class MemoryInstance(Fragment):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, memory: Memory, read_ports: list[ReadPort], write_ports: list[WritePort]) -> None:
 		super().__init__()
 		self.memory      = memory

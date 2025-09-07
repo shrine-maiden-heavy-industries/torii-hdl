@@ -34,61 +34,125 @@ __all__ = (
 )
 
 class ValueVisitor(metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@abstractmethod
 	def on_Const(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Signal(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_ClockSignal(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_ResetSignal(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_AnyValue(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Operator(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Slice(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Part(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Cat(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_ArrayProxy(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Sample(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Initial(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	def on_unknown_value(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise TypeError(f'Cannot transform value {value!r}') # :nocov:
 
 	def replace_value_src_loc(self, value, new_value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return True
 
 	def on_value(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if type(value) is Const:
 			new_value = self.on_Const(value)
 		elif type(value) is Signal:
@@ -123,6 +187,10 @@ class ValueVisitor(metaclass = ABCMeta):
 		return self.on_value(value)
 
 class ValueTransformer(ValueVisitor):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def on_Const(self, value):
 		return value
 
@@ -163,29 +231,61 @@ class ValueTransformer(ValueVisitor):
 		return value
 
 class StatementVisitor(metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@abstractmethod
 	def on_Assign(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Property(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_Switch(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	@abstractmethod
 	def on_statements(self, stmts):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass # :nocov:
 
 	def on_unknown_statement(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise TypeError(f'Cannot transform statement {stmt!r}') # :nocov:
 
 	def replace_statement_src_loc(self, stmt, new_stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return True
 
 	def on_statement(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if type(stmt) is Assign:
 			new_stmt = self.on_Assign(stmt)
 		elif type(stmt) is Property:
@@ -209,7 +309,15 @@ class StatementVisitor(metaclass = ABCMeta):
 		return self.on_statement(stmt)
 
 class StatementTransformer(StatementVisitor):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def on_value(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return value
 
 	def on_Assign(self, stmt):
@@ -229,15 +337,31 @@ class StatementTransformer(StatementVisitor):
 		return _StatementList(flatten(self.on_statement(stmt) for stmt in stmts))
 
 class FragmentTransformer:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def map_subfragments(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for subfragment, name in fragment.subfragments:
 			new_fragment.add_subfragment(self(subfragment), name)
 
 	def map_ports(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for port, dir in fragment.ports.items():
 			new_fragment.add_ports(port, dir = dir)
 
 	def map_named_ports(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if hasattr(self, 'on_value'):
 			for name, (value, dir) in fragment.named_ports.items():
 				new_fragment.named_ports[name] = self.on_value(value), dir
@@ -245,20 +369,36 @@ class FragmentTransformer:
 			new_fragment.named_ports = OrderedDict(fragment.named_ports.items())
 
 	def map_domains(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain in fragment.iter_domains():
 			new_fragment.add_domains(fragment.domains[domain])
 
 	def map_statements(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if hasattr(self, 'on_statement'):
 			new_fragment.add_statements(map(self.on_statement, fragment.statements))
 		else:
 			new_fragment.add_statements(fragment.statements)
 
 	def map_drivers(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain, signal in fragment.iter_drivers():
 			new_fragment.add_driver(signal, domain)
 
 	def map_memory_ports(self, fragment, new_fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		new_fragment.read_ports = [
 			copy(port) for port in fragment.read_ports
 		]
@@ -279,6 +419,10 @@ class FragmentTransformer:
 				port.data = self.on_value(port.data)
 
 	def on_fragment(self, fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(fragment, MemoryInstance):
 			new_fragment = MemoryInstance(fragment.memory, [], [])
 			self.map_memory_ports(fragment, new_fragment)
@@ -311,6 +455,10 @@ class FragmentTransformer:
 			raise AttributeError(f'Object {value!r} cannot be elaborated')
 
 class TransformedElaboratable(Elaboratable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, elaboratable, *, src_loc_at = 0) -> None:
 		if not hasattr(elaboratable, 'elaborate'):
 			raise TypeError(
@@ -332,12 +480,20 @@ class TransformedElaboratable(Elaboratable):
 		return fragment
 
 class DomainCollector(ValueVisitor, StatementVisitor):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self) -> None:
 		self.used_domains = set()
 		self.defined_domains = set()
 		self._local_domains = set()
 
 	def _add_used_domain(self, domain_name):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if domain_name is None:
 			return
 		if domain_name in self._local_domains:
@@ -345,6 +501,10 @@ class DomainCollector(ValueVisitor, StatementVisitor):
 		self.used_domains.add(domain_name)
 
 	def on_ignore(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		pass
 
 	on_Const = on_ignore
@@ -400,6 +560,10 @@ class DomainCollector(ValueVisitor, StatementVisitor):
 			self.on_statement(stmt)
 
 	def on_fragment(self, fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(fragment, MemoryInstance):
 			for port in fragment.read_ports:
 				self.on_value(port.addr)
@@ -445,7 +609,7 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 
 	Parameters
 	----------
-	**kwargs : str
+	**kwargs: str
 		Domain translation mapping
 
 	Attention
@@ -516,10 +680,18 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 				port.domain = self.domain_map[port.domain]
 
 class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, domains = None) -> None:
 		self.domains = domains
 
 	def _resolve(self, domain, context):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if domain not in self.domains:
 			raise DomainError(f'Signal {context!r} refers to nonexistent domain \'{domain}\'')
 		return self.domains[domain]
@@ -545,6 +717,10 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		return domain.rst
 
 	def _insert_resets(self, fragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain_name, signals in fragment.drivers.items():
 			if domain_name is None:
 				continue
@@ -564,6 +740,10 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		return new_fragment
 
 class SampleDomainInjector(ValueTransformer, StatementTransformer):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, domain) -> None:
 		self.domain = domain
 
@@ -576,12 +756,20 @@ class SampleDomainInjector(ValueTransformer, StatementTransformer):
 		return self.on_statement(stmts)
 
 class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self) -> None:
 		self.initial = None
 		self.sample_cache = None
 		self.sample_stmts = None
 
 	def _name_reset(self, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(value, Const):
 			return f'c${value.value}', value.value
 		elif isinstance(value, Signal):
@@ -637,7 +825,15 @@ class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 			new_fragment.add_subfragment(Instance('$initstate', o_Y = self.initial))
 
 class SwitchCleaner(StatementVisitor):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def on_ignore(self, stmt):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return stmt
 
 	on_Assign = on_ignore
@@ -653,11 +849,19 @@ class SwitchCleaner(StatementVisitor):
 		return _StatementList(stmt for stmt in stmts if stmt is not None)
 
 class LHSGroupAnalyzer(StatementVisitor):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self) -> None:
 		self.signals = SignalDict()
 		self.unions  = OrderedDict()
 
 	def find(self, signal):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if signal not in self.signals:
 			self.signals[signal] = len(self.signals)
 		group = self.signals[signal]
@@ -667,6 +871,10 @@ class LHSGroupAnalyzer(StatementVisitor):
 		return group
 
 	def unify(self, root, *leaves):
+		'''
+		.. todo:: Document Me
+		'''
+
 		root_group = self.find(root)
 		for leaf in leaves:
 			leaf_group = self.find(leaf)
@@ -675,6 +883,10 @@ class LHSGroupAnalyzer(StatementVisitor):
 			self.unions[leaf_group] = root_group
 
 	def groups(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		groups = OrderedDict()
 		for signal in self.signals:
 			group = self.find(signal)
@@ -706,6 +918,10 @@ class LHSGroupAnalyzer(StatementVisitor):
 		return self.groups()
 
 class LHSGroupFilter(SwitchCleaner):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, signals) -> None:
 		self.signals = signals
 
@@ -724,6 +940,10 @@ class LHSGroupFilter(SwitchCleaner):
 			return stmt
 
 class _ControlInserter(FragmentTransformer):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, controls) -> None:
 		self.src_loc = None
 		if isinstance(controls, Value):
@@ -739,6 +959,10 @@ class _ControlInserter(FragmentTransformer):
 		return new_fragment
 
 	def _insert_control(self, fragment, domain, signals):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError # :nocov:
 
 	def __call__(self, value, *, src_loc_at = 0):

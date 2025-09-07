@@ -23,15 +23,26 @@ class Direction(Enum):
 	''' Signal/Subsignal Direction '''
 
 	NONE   = auto()
+	'''  '''
 	FANOUT = auto()
+	''' '''
 	FANIN  = auto()
+	''' '''
 
 
 LayoutFieldT: TypeAlias = 'Iterable[tuple[str, LayoutFieldT | ShapeCastT] | tuple[str, Layout | ShapeCastT, Direction]] | Layout' # noqa: E501
 
 class Layout:
+	'''
+	.. todo:: Document Me
+	'''
+
 	@staticmethod
 	def cast(obj: LayoutFieldT, *, src_loc_at: int = 0) -> Layout:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(obj, Layout):
 			return obj
 		return Layout(obj, src_loc_at = 1 + src_loc_at)
@@ -105,10 +116,18 @@ class Layout:
 		return f'Layout([{", ".join(field_reprs)}])'
 
 class Record(ValueCastable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	_annotations: dict[str, Any]
 
 	@staticmethod
 	def like(other: Record, *, name = None, name_suffix = None, src_loc_at = 0) -> Record:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if name is not None:
 			new_name = str(name)
 		elif name_suffix is not None:
@@ -275,6 +294,10 @@ class Record(ValueCastable):
 		return self.as_value().shape()
 
 	def connect(self, *subordinates, include = None, exclude = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		def rec_name(record):
 			if record.name is None:
 				return 'unnamed record'

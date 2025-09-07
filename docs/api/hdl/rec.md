@@ -8,5 +8,4 @@ however it may be deficient or missing in places.
 ```{eval-rst}
 .. automodule:: torii.hdl.rec
   :members:
-
 ```

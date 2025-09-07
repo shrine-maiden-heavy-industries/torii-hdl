@@ -29,23 +29,41 @@ __all__ = (
 )
 
 class Elaboratable(MustUse, metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	_MustUse__warning = UnusedElaboratable
 
 	def formal(self, module: Module) -> Module:
-		''' Entry point for elaboration under formal verification '''
+		'''
+		Entry point for elaboration under formal verification
+		'''
+
 		return module
 
 	@abstractmethod
 	def elaborate(self, platform: Platform | None) -> Module:
-		''' '''
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Elaboratables must implement the \'elaborate\' method')
 
 class Fragment:
+	'''
+	.. todo:: Document Me
+	'''
+
 	@staticmethod
 	def get(
 		obj: Fragment | Elaboratable, platform: Platform | None,
 		*, formal: bool = False
 	) -> Fragment:
+		'''
+		.. todo:: Document Me
+		'''
+
 		code = None
 		while True:
 			if isinstance(obj, Fragment):
@@ -80,6 +98,10 @@ class Fragment:
 		self.flatten = False
 
 	def add_ports(self, *ports, dir):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if dir not in ('i', 'o', 'io'):
 			raise ValueError(f'Expected dir to be \'i\', \'o\', or \'io\', not \'{dir}\'')
 
@@ -87,6 +109,10 @@ class Fragment:
 			self.ports[port] = dir
 
 	def iter_ports(self, dir = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if dir is None:
 			yield from self.ports
 		else:
@@ -95,6 +121,10 @@ class Fragment:
 					yield port
 
 	def add_driver(self, signal: SignalLikeT | None, domain: str | None = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if domain is not None and (domain == '' or not _check_name(domain)):
 			raise NameError('Domain must not be empty or contain any control or whitespace characters')
 
@@ -103,15 +133,27 @@ class Fragment:
 		self.drivers[domain].add(signal)
 
 	def iter_drivers(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain, signals in self.drivers.items():
 			for signal in signals:
 				yield domain, signal
 
 	def iter_comb(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if None in self.drivers:
 			yield from self.drivers[None]
 
 	def iter_sync(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain, signals in self.drivers.items():
 			if domain is None:
 				continue
@@ -119,6 +161,10 @@ class Fragment:
 				yield domain, signal
 
 	def iter_signals(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		signals = SignalSet()
 		signals |= self.ports.keys()
 		for domain, domain_signals in self.drivers.items():
@@ -131,6 +177,10 @@ class Fragment:
 		return signals
 
 	def add_domains(self, *domains):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for domain in flatten(domains):
 			if not isinstance(domain, ClockDomain):
 				raise TypeError(f'Domain must be a \'ClockDomain\', not a \'{domain!r}\'')
@@ -141,14 +191,26 @@ class Fragment:
 			self.domains[domain.name] = domain
 
 	def iter_domains(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		yield from self.domains
 
 	def add_statements(self, *stmts):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for stmt in Statement.cast(stmts):
 			stmt._MustUse__used = True
 			self.statements.append(stmt)
 
 	def add_subfragment(self, subfragment, name: str | None = None) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if name is not None and (name == '' or not _check_name(name)):
 			raise NameError('Subfragment name must not be empty or contain any control or whitespace characters')
 
@@ -157,6 +219,10 @@ class Fragment:
 		self.subfragments.append((subfragment, name))
 
 	def find_subfragment(self, name_or_index):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if isinstance(name_or_index, int):
 			if name_or_index < len(self.subfragments):
 				subfragment, name = self.subfragments[name_or_index]
@@ -169,6 +235,10 @@ class Fragment:
 			raise NameError(f'No subfragment with name \'{name_or_index}\'')
 
 	def find_generated(self, *path):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if len(path) > 1:
 			path_component, *path = path
 			return self.find_subfragment(path_component).find_generated(*path)
@@ -177,9 +247,17 @@ class Fragment:
 			return self.generated[item]
 
 	def elaborate(self, platform):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return self
 
 	def _merge_subfragment(self, subfragment):
+		'''
+		.. todo:: Document Me
+		'''
+
 		# Merge subfragment's everything except clock domains into this fragment.
 		# Flattening is done after clock domain propagation, so we can assume the domains
 		# are already the same in every involved fragment in the first place.
@@ -200,6 +278,10 @@ class Fragment:
 			raise RuntimeError('Unable to find merged subfragment!')
 
 	def _resolve_hierarchy_conflicts(self, hierarchy = ('top',), mode = 'warn'):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if mode not in ('silent', 'warn', 'error'):
 			raise ValueError(f'Expected mode to be one of \'silent\', \'warn\', or \'error\', not \'{mode!r}\'')
 
@@ -286,6 +368,10 @@ class Fragment:
 		return SignalSet(driver_subfrags.keys())
 
 	def _propagate_domains_up(self, hierarchy = ('top',)):
+		'''
+		.. todo:: Document Me
+		'''
+
 		from .xfrm import DomainRenamer
 
 		domain_subfrags = defaultdict(set)
@@ -339,6 +425,10 @@ class Fragment:
 				self.add_domains(domain)
 
 	def _propagate_domains_down(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		# For each domain defined in this fragment, ensure it also exists in all subfragments.
 		for subfrag, name in self.subfragments:
 			for domain in self.iter_domains():
@@ -354,6 +444,10 @@ class Fragment:
 			subfrag._propagate_domains_down()
 
 	def _create_missing_domains(self, missing_domain, *, platform = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		from .xfrm import DomainCollector
 
 		collector = DomainCollector()
@@ -383,6 +477,10 @@ class Fragment:
 		return new_domains
 
 	def _propagate_domains(self, missing_domain, *, platform = None):
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._propagate_domains_up()
 		self._propagate_domains_down()
 		self._resolve_hierarchy_conflicts()
@@ -391,6 +489,10 @@ class Fragment:
 		return new_domains
 
 	def _prepare_use_def_graph(self, parent, level, uses, defs, ios, top):
+		'''
+		.. todo:: Document Me
+		'''
+
 		def add_uses(*sigs, self = self):
 			for sig in flatten(sigs):
 				if sig not in uses:
@@ -445,6 +547,10 @@ class Fragment:
 				subfrag._prepare_use_def_graph(parent, level, uses, defs, ios, top)
 
 	def _propagate_ports(self, ports, all_undef_as_ports):
+		'''
+		.. todo:: Document Me
+		'''
+
 		# Take this fragment graph:
 		#
 		#    __ B (def: q, use: p r)
@@ -533,6 +639,10 @@ class Fragment:
 				self.add_ports(sig, dir = 'i')
 
 	def prepare(self, ports = None, missing_domain = lambda name: ClockDomain(name)):
+		'''
+		.. todo:: Document Me
+		'''
+
 		from .xfrm import DomainLowerer, SampleLowerer
 
 		fragment = SampleLowerer()(self)
@@ -569,7 +679,7 @@ class Fragment:
 
 		Returns
 		-------
-		SignalDict of Signal to str
+		SignalDict[str]
 			A mapping from signals used in this fragment to their local names. Because names are
 			deduplicated using local information only, the same signal used in a different fragment
 			may get a different name.
@@ -618,14 +728,14 @@ class Fragment:
 		backends. This method assigns every such subfragment a name, ``<name>$U$<number>``, where
 		``name`` is its original name, and ``<number>`` is based on its location in the hierarchy.
 
-		Arguments
-		---------
-		hierarchy : tuple of str
+		Parameters
+		----------
+		hierarchy: tuple[str, ...]
 			Name of this fragment.
 
 		Returns
 		-------
-		dict of Fragment to tuple of str
+		dict[Fragment, tuple[str, ...]]
 			A mapping from this fragment and its subfragments to their full hierarchical names.
 		'''
 
@@ -688,7 +798,6 @@ class Instance(Fragment):
 	----------
 	type: str
 		The name/type of object to instantiate
-
 	'''
 
 	def __init__(

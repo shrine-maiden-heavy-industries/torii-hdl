@@ -12,6 +12,10 @@ __all__ = (
 )
 
 class _MustUseCtx(TypedDict):
+	'''
+	.. todo:: Document Me
+	'''
+
 	filename: str
 	lineno: int
 	source: object
@@ -19,6 +23,10 @@ class _MustUseCtx(TypedDict):
 T = TypeVar('T')
 
 class MustUse:
+	'''
+	.. todo:: Document Me
+	'''
+
 	_MustUse__silence: bool = False
 	_MustUse__warning: type[Warning] = MustUseWarning
 	_MustUse__used: bool
