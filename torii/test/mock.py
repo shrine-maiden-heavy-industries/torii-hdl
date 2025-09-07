@@ -40,7 +40,7 @@ class MockRecord(Record):
 
 		Parameters
 		----------
-		item : str
+		item: str
 			The requested field to mock
 
 		'''
@@ -63,9 +63,8 @@ class MockRecord(Record):
 
 		Parameters
 		----------
-		item : Any
+		item: str
 			The name of the requested field
-
 		'''
 
 		if isinstance(item, str):
@@ -84,7 +83,6 @@ class MockPlatform:
 	This is a mock platform that returns a :py:class:`MockRecord`
 	whenever any call to ``request`` is made, regardless of the
 	resource being requested.
-
 	'''
 
 	def request(self, name: str, number: int = 0) -> MockRecord:
@@ -96,9 +94,9 @@ class MockPlatform:
 
 		Parameters
 		----------
-		name : str
+		name: str
 			The name of the resource to request
-		number : int
+		number: int
 			The index of the resource to request
 
 		'''

@@ -20,23 +20,26 @@ class ToriiTestCase(TestCase):
 	'''
 	Torii test case wrapper for pythons unittest library
 
-	This class wraps the :py:class:`TestCase` class from the `unittest` module
+	This class wraps the :py:class:`TestCase <unittest.unittest>` class from the `unittest` module
 	from the python standard lib. It has useful methods for testing and simulating
 	Torii based gateware.
 
 	Attributes
 	----------
-	domains : tuple[tuple[str, float], ...]
+	domains: tuple[tuple[str, float], ...]
 		The collection of clock domains and frequencies
-	out_dir : str
-		The test output directory.
-	dut : Elaboratable
-		The elaboratable to test.
-	dut_args : dict[str, Any]
-		The initialization arguments for the elaboratable.
-	platform : MockPlatform, Any
-		The platform passed to the Elaboratable DUT
 
+	out_dir: str
+		The test output directory.
+
+	dut: torii.hdl.ir.Elaboratable
+		The elaboratable to test.
+
+	dut_args: dict[str, Any]
+		The initialization arguments for the elaboratable.
+
+	platform: MockPlatform, Any
+		The platform passed to the Elaboratable DUT
 	'''
 
 	domains: tuple[tuple[str, float], ...] = (('sync', 1e8),)
@@ -74,9 +77,8 @@ class ToriiTestCase(TestCase):
 
 		Keyword Args
 		------------
-		suffix : str
+		suffix: str
 			The option VCD test case suffix.
-
 		'''
 
 		if getenv('TORII_TEST_INHIBIT_VCD', default = False):
@@ -124,9 +126,8 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		time : float
+		time: float
 			The unit of time to wait.
-
 		'''
 
 		c = ceil(time / self.clk_period(domain))
@@ -143,16 +144,16 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		sig : Signal
+		sig: Signal
 			The signal to pulse.
 
 		Keyword Args
 		------------
-		neg : bool
+		neg: bool
 			Inverts the pulse direction.
-		post_step : bool
-			Insert additional simulation step after pulse.
 
+		post_step: bool
+			Insert additional simulation step after pulse.
 		'''
 
 		if not neg:
@@ -173,14 +174,13 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		sig : Signal
+		sig: Signal
 			The signal to pulse.
 
 		Keyword Args
 		------------
-		post_step : bool
+		post_step: bool
 			Insert additional simulation step after pulse.
-
 		'''
 
 		yield from ToriiTestCase.pulse(sig, neg = False, post_step = post_step)
@@ -192,14 +192,13 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		sig : Signal
+		sig: Signal
 			The signal to pulse.
 
 		Keyword Args
 		------------
-		post_step : bool
+		post_step: bool
 			Insert additional simulation step after pulse.
-
 		'''
 
 		yield from ToriiTestCase.pulse(sig, neg = True, post_step = post_step)
@@ -215,7 +214,6 @@ class ToriiTestCase(TestCase):
 		----------
 		cycles : int
 			Number of cycles to step the simulator.
-
 		'''
 
 		for _ in range(cycles + 1):
@@ -230,9 +228,8 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		count : int
+		count: int
 			Number of settles to invoke in the simulator.
-
 		'''
 		for _ in range(count):
 			yield Settle()
@@ -254,12 +251,12 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		strobe : Signal
+		strobe: Signal
 			The signal to check the strobe for.
 
 		Keyword Args
 		------------
-		timeout : int
+		timeout: int
 			The max number of cycles to wait.
 		'''
 
@@ -285,14 +282,13 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		strobe : Signal
+		strobe: Signal
 			The signal to check the strobe for.
 
 		Keyword Args
 		------------
-		timeout : int
+		timeout: int
 			The max number of cycles to wait.
-
 		'''
 
 		elapsed_cycles = 0
@@ -316,7 +312,6 @@ class ToriiTestCase(TestCase):
 		----------
 		func
 			The decorated function.
-
 		'''
 
 		def _run(self: ToriiTestCase):
@@ -338,9 +333,8 @@ class ToriiTestCase(TestCase):
 
 		Parameters
 		----------
-		domain : str
+		domain: str
 			The domain this process belongs to
-
 		'''
 
 		def _sync(func):
