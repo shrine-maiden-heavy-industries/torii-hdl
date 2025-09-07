@@ -15,9 +15,17 @@ __all__ = (
 )
 
 def PmodGPIOType1Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(name, number, Pins('1 2 3 4', dir = 'io', conn = ('pmod', pmod)), *args)
 
 def PmodSPIType2Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('cs',   PinsN('1', dir = 'o', conn = ('pmod', pmod))),
@@ -28,6 +36,10 @@ def PmodSPIType2Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -
 	)
 
 def PmodSPIType2AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('cs',   PinsN('1', dir = 'o', conn = ('pmod', pmod))),
@@ -40,6 +52,10 @@ def PmodSPIType2AResource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 	)
 
 def PmodUARTType3Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'o', conn = ('pmod', pmod))),
@@ -50,6 +66,10 @@ def PmodUARTType3Resource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 	)
 
 def PmodUARTType4Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'i', conn = ('pmod', pmod))),
@@ -60,6 +80,10 @@ def PmodUARTType4Resource(name: str, number: int, *args: SubsigArgT, pmod: int) 
 	)
 
 def PmodUARTType4AResource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('cts',   Pins('1', dir = 'i', conn = ('pmod', pmod))),
@@ -72,6 +96,10 @@ def PmodUARTType4AResource(name: str, number: int, *args: SubsigArgT, pmod: int)
 	)
 
 def PmodHBridgeType5Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('dir',   Pins('1', dir = 'o', conn = ('pmod', pmod))),
@@ -82,6 +110,10 @@ def PmodHBridgeType5Resource(name: str, number: int, *args: SubsigArgT, pmod: in
 	)
 
 def PmodDualHBridgeType6Resource(name: str, number: int, *args: SubsigArgT, pmod: int) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Resource(
 		name, number,
 		Subsignal('dir',   Pins('1 3', dir = 'o', conn = ('pmod', pmod))),

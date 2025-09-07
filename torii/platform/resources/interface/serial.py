@@ -18,6 +18,10 @@ def I2CResource(
 	scl: str, sda: str, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('scl', Pins(scl, dir = 'io', conn = conn, assert_width = 1)))
@@ -33,6 +37,10 @@ def IrDAResource(
 	rx: str, tx: str, en: str | None = None, sd: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	# Exactly one of en (active-high enable) or sd (shutdown, active-low enable) should
 	# be specified, and it is mapped to a logic level en subsignal.
 	if not (en is not None) ^ (sd is not None):
@@ -59,6 +67,10 @@ def JTAGResource(
 	tck: str, tms: str, tdi: str, tdo: str,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = [
 		Subsignal('tck', Pins(tck, dir = 'i', conn = conn, assert_width = 1)),
 		Subsignal('tms', Pins(tms, dir = 'i', conn = conn, assert_width = 1)),
@@ -74,6 +86,10 @@ def PS2Resource(
 	clk: str, dat: str,
 	conn:  ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1)))
@@ -90,6 +106,9 @@ def SPIResource(
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 	role: Literal['controller', 'peripheral', 'generic'] = 'controller'
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
 
 	if role not in ('controller', 'peripheral', 'generic'):
 		raise ValueError(f'role must be one of \'controller\', \'peripheral\', or \'generic\' not {role!r}')
@@ -150,6 +169,9 @@ def UARTResource(
 	ri: str | None = None, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None, role: str | None  = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
 
 	if any(line is not None for line in (rts, cts, dtr, dsr, dcd, ri)):
 		if role not in ('dce', 'dte'):

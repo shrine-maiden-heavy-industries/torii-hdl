@@ -30,6 +30,10 @@ def HyperBusResource(
 	rsto_n: str | None = None, int_n: str | None = None,
 	conn: ResourceConn | None = None, diff_attrs = None, attrs: Attrs | None = None,
 ):
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = [
 		Subsignal('cs', PinsN(cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1)),
 		Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 8)),

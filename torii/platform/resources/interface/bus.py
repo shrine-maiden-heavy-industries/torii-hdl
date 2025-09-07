@@ -18,6 +18,10 @@ def DirectUSBResource(
 	d_p: str, d_n: str, pullup: str | None = None, vbus_valid: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('d_p', Pins(d_p, dir = 'io', conn = conn, assert_width = 1)))
@@ -581,6 +585,10 @@ def PCIBusResources(
 	tck: str | None = None, tdi: str | None = None, tdo: str | None = None, tms: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	resources: list[Resource]   = []
 	io_common: list[SubsigArgT] = []
 
@@ -662,6 +670,9 @@ def ULPIResource(
 	clk_dir: IODirection = 'i', rst_invert: bool = False, attrs: Attrs | None = None,
 	clk_attrs: Attrs | None = None, conn: ResourceConn | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
 
 	if clk_dir not in ('i', 'o'):
 		raise ValueError(f'clk_dir should be \'i\' or \'o\' not {clk_dir!r}')

@@ -15,12 +15,20 @@ __all__ = (
 
 @unique
 class QSPIMode(Enum):
+	'''
+	.. todo:: Document Me
+	'''
+
 	Single       = auto()
 	DualStacked  = auto()
 	DualParallel = auto()
 
 @unique
 class QSPIDataMode(Enum):
+	'''
+	.. todo:: Document Me
+	'''
+
 	x1 = auto()
 	x2 = auto()
 	x4 = auto()
@@ -32,6 +40,10 @@ def NORFlashResources(
 	cs_n: str, oe_n: str, we_n: str, wp_n: str, by: str, a: str, dq: str,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	resources: list[Resource]   = []
 	io_common: list[SubsigArgT] = []
 
@@ -80,6 +92,10 @@ def QSPIFlashResource(
 	dq: str | None = None, dq_a: str | None = None, dq_b: str | None = None,
 	clk_fb: str | None = None, conn: ResourceConn | None = None, attrs: Attrs | None = None
 ):
+	'''
+	.. todo:: Document Me
+	'''
+
 	if not isinstance(mode, QSPIMode) or not isinstance(data_mode, QSPIDataMode):
 		raise AssertionError('mode must be a QSPIMode and data_mode a QSPIDataMode')
 	elif mode == QSPIMode.Single and data_mode == QSPIDataMode.x8:
@@ -134,6 +150,10 @@ def SDCardResources(
 	dat3: str | None = None, cd: str | None = None, wp_n: str | None = None, det: str | None = None,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	resources: list[Resource]   = []
 	io_common: list[SubsigArgT] = []
 
@@ -192,6 +212,10 @@ def SPIFlashResources(
 	hold_n: str | None = None, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	resources: list[Resource] = []
 	io_all: list[SubsigArgT]  = []
 

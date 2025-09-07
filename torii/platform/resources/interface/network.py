@@ -12,6 +12,10 @@ def CANResource(
 	rx: str, tx: str,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = [
 		Subsignal('rx', Pins(rx, dir = 'i', conn = conn)),
 		Subsignal('tx', Pins(tx, dir = 'o', conn = conn)),
@@ -32,6 +36,9 @@ def EthernetResource(
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 	mdio_attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
 
 	if len(rxd.split()) not in (4, 8):
 		raise ValueError(

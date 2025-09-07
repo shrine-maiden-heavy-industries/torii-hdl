@@ -17,6 +17,10 @@ def Display7SegResource(
 	invert: bool = False, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('a', Pins(a, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
@@ -43,6 +47,10 @@ def HDMIResource(
 	dir: IODirectionIO = 'io',
 	conn: ResourceConn | None = None, diff_attrs: Attrs = Attrs(), attrs: Attrs = Attrs()
 ):
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	match dir:
@@ -73,6 +81,10 @@ def VGADACResource(
 	invert_sync: bool = False, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
@@ -99,6 +111,10 @@ def VGAResource(
 	invert_sync: bool = False, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))

@@ -6,5 +6,5 @@ Torii integrates with several FPGA vendors, it allows for a full end-to-end flow
 :maxdepth: 2
 
 fpga/index
-
+resources/index
 ```

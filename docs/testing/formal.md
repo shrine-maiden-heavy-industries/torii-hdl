@@ -1,5 +1,6 @@
 # Formal Verification
 
-```{todo}
-document this
+```{eval-rst}
+.. automodule:: torii.platform.formal
+  :members:
 ```

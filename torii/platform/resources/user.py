@@ -16,6 +16,9 @@ def _SplitResources(
 	conn: ResourceConn | None = None,
 	attrs: Attrs | None = None,
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
 
 	if not isinstance(pins, (str, list, dict)):
 		raise TypeError(f'pins is expected to be a \'str\', \'list\', or \'dict\' not {pins!r}')
@@ -43,6 +46,10 @@ def ButtonResources(
 	pins: str | list[str] | dict[int, str], invert: bool = False,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return _SplitResources(
 		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert,
 		conn = conn, attrs = attrs
@@ -53,6 +60,10 @@ def LEDResources(
 	pins: str | list[str] | dict[int, str], invert: bool = False,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return _SplitResources(
 		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert,
 		conn = conn, attrs = attrs
@@ -63,6 +74,10 @@ def RGBLEDResource(
 	r: str, g: str, b: str, invert: bool = False,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	ios.append(Subsignal('r', Pins(r, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
@@ -79,6 +94,10 @@ def SwitchResources(
 	pins: str | list[str] | dict[int, str], invert: bool = False,
 	conn: ResourceConn | None = None, attrs: Attrs | None = None,
 ) -> list[Resource]:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return _SplitResources(
 		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert,
 		conn = conn, attrs = attrs

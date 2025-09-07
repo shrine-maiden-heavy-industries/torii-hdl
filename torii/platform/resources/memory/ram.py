@@ -17,6 +17,10 @@ def DDR3Resource(
 	conn: ResourceConn | None = None,
 	diff_attrs = None, attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	ios: list[SubsigArgT] = []
 
 	if rst_n is not None:
@@ -47,6 +51,10 @@ def SDRAMResource(
 	dqm: str | None = None, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
@@ -77,6 +85,10 @@ def SRAMResource(
 	dm_n: str | None = None, conn: ResourceConn | None = None,
 	attrs: Attrs | None = None
 ) -> Resource:
+	'''
+	.. todo:: Document Me
+	'''
+
 	io: list[SubsigArgT] = []
 
 	io.append(Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1)))
