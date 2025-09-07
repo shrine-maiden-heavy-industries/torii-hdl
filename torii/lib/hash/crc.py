@@ -13,6 +13,10 @@ __all__ = (
 )
 
 class BitwiseCRC(Elaboratable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
 	) -> None:
@@ -84,6 +88,10 @@ class BitwiseCRC(Elaboratable):
 		return m
 
 class LUTBytewiseCRC(Elaboratable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
 	) -> None:
@@ -141,6 +149,10 @@ class LUTBytewiseCRC(Elaboratable):
 		return m
 
 	def compute_crc(self, c: int, k: int) -> int:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# If we've recursed through all bits in the byte, return the resulting CRC fragment
 		if k == 0:
 			return c
@@ -148,6 +160,10 @@ class LUTBytewiseCRC(Elaboratable):
 		return self.compute_crc((self._poly if (c & 1) == 1 else 0) ^ (c >> 1), k - 1)
 
 	def generate_rom(self) -> Memory:
+		'''
+		.. todo:: Document Me
+		'''
+
 		entries = 2 ** self.data.width
 		# For each of the possible 256 byte values, compute the CRC32 fragment for that value
 		crcTable = tuple(self.compute_crc(byte, 8) for byte in range(entries))
@@ -155,6 +171,10 @@ class LUTBytewiseCRC(Elaboratable):
 		return Memory(width = self.crc.width, depth = entries, init = crcTable)
 
 class CombBytewiseCRC(Elaboratable):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, *, data_width: int, crc_width: int, polynomial: int, reset_value: int = 0, inverted_output: bool = True
 	) -> None:
@@ -198,6 +218,10 @@ class CombBytewiseCRC(Elaboratable):
 		return m
 
 	def generateCRC(self, m: Module, crcSignal: Signal):
+		'''
+		.. todo:: Document Me
+		'''
+
 		polynomial = self._poly
 		# Extract each individual bit into lists for both the input data and CRC
 		data = [self.data[i] for i in range(self.data.width)]
