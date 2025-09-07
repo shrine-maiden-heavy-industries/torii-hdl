@@ -62,7 +62,13 @@ napoleon_use_admonition_for_examples   = True
 napoleon_use_admonition_for_references = True
 napoleon_custom_sections  = [
 	('Attributes', 'params_style'),
-	'Platform overrides'
+	'Platform overrides',
+	'Latency',
+	'Usage',
+	'Alignment',
+	'Operation',
+	'Address assignment',
+	'Sparse addressing',
 ]
 
 myst_heading_anchors = 3
