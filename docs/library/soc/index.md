@@ -9,5 +9,4 @@ event
 periph
 
 csr/index
-
 ```

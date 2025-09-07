@@ -22,31 +22,6 @@ __all__ = (
 )
 
 class Element(Record):
-	class Access(Enum):
-		'''
-		Register access mode.
-
-		Coarse access mode for the entire register. Individual fields can have more restrictive
-		access mode, e.g. R/O fields can be a part of an R/W register.
-
-		'''
-
-		R  = 'r'
-		W  = 'w'
-		RW = 'rw'
-
-		def readable(self) -> bool:
-			return self == self.R or self == self.RW
-
-		def writable(self) -> bool:
-			return self == self.W or self == self.RW
-
-	r_data: Signal
-	r_stb: Signal
-	w_data: Signal
-	w_stb: Signal
-	name: str
-
 	'''
 	Peripheral-side CSR interface.
 
@@ -56,27 +31,76 @@ class Element(Record):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Width of the register.
-	access : :class:`Access`
+
+	access: Access
 		Register access mode.
-	name : str
+
+	name: str
 		Name of the underlying record.
 
 	Attributes
 	----------
-	r_data : Signal(width)
+	r_data: Signal(width)
 		Read data. Must be always valid, and is sampled when ``r_stb`` is asserted.
-	r_stb : Signal()
+
+	r_stb: Signal
 		Read strobe. Registers with read side effects should perform the read side effect when this
 		strobe is asserted.
-	w_data : Signal(width)
+
+	w_data: Signal(width)
 		Write data. Valid only when ``w_stb`` is asserted.
-	w_stb : Signal()
+
+	w_stb: Signal
 		Write strobe. Registers should update their value or perform the write side effect when
 		this strobe is asserted.
-
 	'''
+
+	class Access(Enum):
+		'''
+		Register access mode.
+
+		Coarse access mode for the entire register. Individual fields can have more restrictive
+		access mode, e.g. R/O fields can be a part of an R/W register.
+		'''
+
+		R  = 'r'
+		''' '''
+		W  = 'w'
+		''' '''
+		RW = 'rw'
+		''' '''
+
+		def readable(self) -> bool:
+			'''
+			Check to see if this Access mode is readable.
+
+			Returns
+			-------
+			bool
+				``True`` if Access is ``R`` or ``RW`` otherwise false.
+			'''
+
+			return self == self.R or self == self.RW
+
+		def writable(self) -> bool:
+			'''
+			Check to see if this Access mode is writeable.
+
+			Returns
+			-------
+			bool
+				``True`` if Access is ``W`` or ``RW`` otherwise false.
+			'''
+
+			return self == self.W or self == self.RW
+
+	r_data: Signal
+	r_stb: Signal
+	w_data: Signal
+	w_stb: Signal
+	name: str
 
 	def __init__(
 		self, width: int, access: Access, *, name: str | None = None, src_loc_at: int = 0
@@ -112,7 +136,6 @@ class Interface(Record):
 
 	Operation
 	---------
-
 	CSR registers mapped to the CSR bus are split into chunks according to the bus data width.
 	Each chunk is assigned a consecutive address on the bus. This allows accessing CSRs of any
 	size using any datapath width.
@@ -125,35 +148,38 @@ class Interface(Record):
 
 	Parameters
 	----------
-	addr_width : int
+	addr_width: int
 		Address width. At most ``(2 ** addr_width) * data_width`` register bits will be available.
-	data_width : int
+
+	data_width: int
 		Data width. Registers are accessed in ``data_width`` sized chunks.
-	name : str
+
+	name: str
 		Name of the underlying record.
 
 	Attributes
 	----------
-	memory_map : MemoryMap
-		Map of the bus.
-	addr : Signal(addr_width)
+	addr: Signal(addr_width)
 		Address for reads and writes.
-	r_data : Signal(data_width)
+
+	r_data: Signal(data_width)
 		Read data. Valid on the next cycle after ``r_stb`` is asserted. Otherwise, zero. (Keeping
 		read data of an unused interface at zero simplifies multiplexers.)
-	r_stb : Signal()
+
+	r_stb: Signal
 		Read strobe. If ``addr`` points to the first chunk of a register, captures register value
 		and causes read side effects to be performed (if any). If ``addr`` points to any chunk
 		of a register, latches the captured value to ``r_data``. Otherwise, latches zero
 		to ``r_data``.
-	w_data : Signal(data_width)
+
+	w_data: Signal(data_width)
 		Write data. Must be valid when ``w_stb`` is asserted.
-	w_stb : Signal()
+
+	w_stb: Signal
 		Write strobe. If ``addr`` points to the last chunk of a register, writes captured value
 		to the register and causes write side effects to be performed (if any). If ``addr`` points
 		to any chunk of a register, latches ``w_data`` to the captured value. Otherwise, does
 		nothing.
-
 	'''
 
 	addr: Signal
@@ -181,12 +207,18 @@ class Interface(Record):
 
 	@property
 	def memory_map(self) -> MemoryMap:
+		''' Map of the bus. '''
+
 		if self._map is None:
 			raise NotImplementedError(f'Bus interface {self!r} does not have a memory map')
 		return self._map
 
 	@memory_map.setter
 	def memory_map(self, memory_map: MemoryMap) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if not isinstance(memory_map, MemoryMap):
 			raise TypeError(f'Memory map must be an instance of MemoryMap, not {memory_map!r}')
 		if memory_map.addr_width != self.addr_width:
@@ -202,14 +234,92 @@ class Interface(Record):
 		memory_map.freeze()
 		self._map = memory_map
 
+# TODO(aki): Do something about this absurd class nesting
 class Multiplexer(Elaboratable):
+	'''
+	CSR register multiplexer.
+
+	An address-based multiplexer for CSR registers implementing atomic updates.
+
+	This implementation assumes the following from the CSR bus:
+
+	* an initiator must have exclusive ownership over the multiplexer for the full duration of
+		a register transaction;
+	* an initiator must access a register in ascending order of addresses, but it may abort a
+		transaction after any bus cycle.
+
+	Writes are registered, and are performed 1 cycle after ``w_stb`` is asserted.
+
+	Alignment
+	---------
+	Because the CSR bus conserves logic and routing resources, it is common to e.g. access
+	a CSR bus with an *n*-bit data path from a CPU with a *k*-bit datapath (*k>n*) in cases
+	where CSR access latency is less important than resource usage. In this case, two strategies
+	are possible for connecting the CSR bus to the CPU:
+
+	* The CPU could access the CSR bus directly (with no intervening logic other than simple
+		translation of control signals). In this case, the register alignment should be set
+		to 1 (i.e. `alignment` should be set to 0), and each *w*-bit register would occupy
+		*ceil(w/n)* addresses from the CPU perspective, requiring the same amount of memory
+		instructions to access.
+	* The CPU could also access the CSR bus through a width down-converter, which would issue
+		*k/n* CSR accesses for each CPU access. In this case, the register alignment should be
+		set to *k/n*, and each *w*-bit register would occupy *ceil(w/k)* addresses from the CPU
+		perspective, requiring the same amount of memory instructions to access.
+
+	If the register alignment (i.e. `2 ** alignment`) is greater than 1, it affects which CSR bus
+	write is considered a write to the last register chunk. For example, if a 24-bit register is
+	used with a 8-bit CSR bus and a CPU with a 32-bit datapath, a write to this register requires
+	4 CSR bus writes to complete and the 4th write is the one that actually writes the value to
+	the register. This allows determining write latency solely from the amount of addresses the
+	register occupies in the CPU address space, and the width of the CSR bus.
+
+	Parameters
+	----------
+	addr_width: int
+		Address width. See :py:class:`Interface`.
+
+	data_width: int
+		Data width. See :py:class:`Interface`.
+
+	alignment: log2 of int
+		Register alignment. See :py:class:`torii.lib.mem.map.MemoryMap`.
+
+	name: str | None
+		Window name
+
+	shadow_overlaps: int
+		Maximum number of CSR registers that can share a chunk of a shadow register.
+		Optional. If ``None``, any number of CSR registers can share a shadow chunk.
+		See :py:class:`Multiplexer._Shadow` for details.
+	'''
+
 	class _Shadow:
+		'''
+		CSR multiplexer shadow register.
+
+		Attributes
+		----------
+		name: str
+			Name of the shadow register.
+
+		granularity: int
+			Amount of bits stored in a chunk of the shadow register.
+
+		overlaps: int | None
+			Maximum number of CSR elements that can share a chunk of the shadow register.
+			If ``None``, it is implicitly set by :py:meth:`Multiplexer._Shadow.prepare`.
+		'''
+
 		class Chunk:
+			'''
+			The interface between a CSR multiplexer and a shadow register chunk.
+			'''
+
 			data: Signal
 			r_en: Signal
 			w_en: Signal
 
-			'''The interface between a CSR multiplexer and a shadow register chunk.'''
 			def __init__(self, shadow: Multiplexer._Shadow, offset: int, elements: list[range]) -> None:
 				self.name = f'{shadow.name}__{offset}'
 				self.data = Signal(shadow.granularity, name = f'{self.name}__data')
@@ -219,21 +329,9 @@ class Multiplexer(Elaboratable):
 
 			def elements(self) -> Generator[range]:
 				'''Iterate the address ranges of CSR elements using this chunk.'''
+
 				yield from self._elements
 
-		'''
-		CSR multiplexer shadow register.
-
-		Attributes
-		----------
-		name : :class:`str`
-			Name of the shadow register.
-		granularity : :class:`int`
-			Amount of bits stored in a chunk of the shadow register.
-		overlaps : :class:`int`
-			Maximum number of CSR elements that can share a chunk of the shadow register. Optional.
-			If ``None``, it is implicitly set by :meth:`Multiplexer._Shadow.prepare`.
-		'''
 		def __init__(self, granularity: int, overlaps: int | None, *, name: str) -> None:
 			assert isinstance(name, str)
 			assert isinstance(granularity, int) and granularity >= 0
@@ -252,22 +350,23 @@ class Multiplexer(Elaboratable):
 
 			Returns
 			-------
-			:class:`int`
-				The amount of :class:`Multiplexer._Shadow.Chunk`s of the shadow. It can increase
-				by calling :meth:`Multiplexer._Shadow.add` or :meth:`Multiplexer._Shadow.prepare`.
+			int
+				The amount of :py:class:`Multiplexer._Shadow.Chunk`s of the shadow. It can increase
+				by calling :py:meth:`Multiplexer._Shadow.add` or :py:meth:`Multiplexer._Shadow.prepare`.
 			'''
+
 			return self._size
 
 		def add(self, elem_range: range) -> None:
 			'''
 			Add a CSR element to the shadow.
 
-			Arguments
-			---------
-			elem_range : :class:`range`
-				Address range of a CSR :class:`Element`. It uses ``2 ** log2_ceil(elem_range.stop -
+			Parameters
+			----------
+			elem_range: range
+				Address range of a CSR :py:class:`Element`. It uses ``2 ** log2_ceil(elem_range.stop -
 				elem_range.start)`` chunks of the shadow register. If this amount is greater than
-				:attr:`~Multiplexer._Shadow.size`, it replaces the latter.
+				:py:attr:`~Multiplexer._Shadow.size`, it replaces the latter.
 			'''
 			assert isinstance(elem_range, range)
 			assert isinstance(self._ranges, set)
@@ -281,14 +380,14 @@ class Multiplexer(Elaboratable):
 
 			Returns
 			-------
-			:class:`int`
-				The shadow register offset corresponding to the :class:`Multiplexer._Shadow.Chunk`
+			int
+				The shadow register offset corresponding to the :py:class:`Multiplexer._Shadow.Chunk`
 				used by ``addr``.
 
 				The address decoding scheme is illustrated by the following example:
 					* ``addr`` is ``0x1c``;
 					* ``elem_range`` is ``range(0x1b, 0x1f)``;
-					* the :attr:`~Multiplexer._Shadow.size` of the shadow is ``16``.
+					* the :py:attr:`~Multiplexer._Shadow.size` of the shadow is ``16``.
 
 				The lower bits of the offset would be ``0b00``, extracted from ``addr``:
 
@@ -313,6 +412,7 @@ class Multiplexer(Elaboratable):
 
 				The decoded offset would therefore be ``8`` (i.e. ``0b1000``).
 			''' # noqa: E101
+
 			assert elem_range in self._ranges and addr in elem_range
 			elem_size: int = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			self_mask = self.size - 1
@@ -325,10 +425,11 @@ class Multiplexer(Elaboratable):
 
 			Returns
 			-------
-			:class:`int`
-				The bus address in ``elem_range`` using the :class:`Multiplexer._Shadow.Chunk`
-				located at ``offset``. See :meth:`~Multiplexer._Shadow.decode_address` for details.
+			int
+				The bus address in ``elem_range`` using the :py:class:`Multiplexer._Shadow.Chunk`
+				located at ``offset``. See :py:meth:`~Multiplexer._Shadow.decode_address` for details.
 			'''
+
 			assert elem_range in self._ranges and isinstance(offset, int)
 			elem_size = 2 ** log2_ceil(elem_range.stop - elem_range.start)
 			return elem_range.start + ((offset - elem_range.start) % elem_size)
@@ -337,18 +438,19 @@ class Multiplexer(Elaboratable):
 			'''
 			Balance out and instantiate the shadow register chunks.
 
-			The scheme used by :meth:`~Multiplexer._Shadow.decode_address` allows multiple bus
+			The scheme used by :py:meth:`~Multiplexer._Shadow.decode_address` allows multiple bus
 			addresses to be decoded to the same shadow register offset. Depending on the platform
 			and its toolchain, this may create nets with high fan-in (if the chunk is read from
 			the bus) or fan-out (if written), which may impact timing closure or resource usage.
 
 			If any shadow register offset is aliased to more bus addresses than permitted by the
-			:attr:`~Multiplexer._Shadow.overlaps` constraint, the :attr:`~Multiplexer._Shadow.size`
+			:py:attr:`~Multiplexer._Shadow.overlaps` constraint, the :py:attr:`~Multiplexer._Shadow.size`
 			of the shadow is doubled. This increases the number of address bits used for decoding,
 			which effectively balances chunk usage across the shadow register.
 
 			This method is recursive until the overlap constraint is satisfied.
 			'''
+
 			if isinstance(self._ranges, frozenset):
 				return
 			if self.overlaps is None:
@@ -376,74 +478,11 @@ class Multiplexer(Elaboratable):
 				self.prepare()
 
 		def chunks(self) -> Generator[tuple[int, Chunk]]:
-			'''Iterate shadow register chunks used by at least one CSR element.'''
+			''' Iterate shadow register chunks used by at least one CSR element. '''
+
 			if self._chunks is None:
 				return None
 			yield from self._chunks.items()
-
-	'''
-	CSR register multiplexer.
-
-	An address-based multiplexer for CSR registers implementing atomic updates.
-
-	This implementation assumes the following from the CSR bus:
-	* an initiator must have exclusive ownership over the multiplexer for the full duration of
-		a register transaction;
-	* an initiator must access a register in ascending order of addresses, but it may abort a
-		transaction after any bus cycle.
-
-	Latency
-	-------
-
-	Writes are registered, and are performed 1 cycle after ``w_stb`` is asserted.
-
-	Alignment
-	---------
-
-	Because the CSR bus conserves logic and routing resources, it is common to e.g. access
-	a CSR bus with an *n*-bit data path from a CPU with a *k*-bit datapath (*k>n*) in cases
-	where CSR access latency is less important than resource usage. In this case, two strategies
-	are possible for connecting the CSR bus to the CPU:
-
-		* The CPU could access the CSR bus directly (with no intervening logic other than simple
-		  translation of control signals). In this case, the register alignment should be set
-		  to 1 (i.e. `alignment` should be set to 0), and each *w*-bit register would occupy
-		  *ceil(w/n)* addresses from the CPU perspective, requiring the same amount of memory
-		  instructions to access.
-		* The CPU could also access the CSR bus through a width down-converter, which would issue
-		  *k/n* CSR accesses for each CPU access. In this case, the register alignment should be
-		  set to *k/n*, and each *w*-bit register would occupy *ceil(w/k)* addresses from the CPU
-		  perspective, requiring the same amount of memory instructions to access.
-
-	If the register alignment (i.e. `2 ** alignment`) is greater than 1, it affects which CSR bus
-	write is considered a write to the last register chunk. For example, if a 24-bit register is
-	used with a 8-bit CSR bus and a CPU with a 32-bit datapath, a write to this register requires
-	4 CSR bus writes to complete and the 4th write is the one that actually writes the value to
-	the register. This allows determining write latency solely from the amount of addresses the
-	register occupies in the CPU address space, and the width of the CSR bus.
-
-	Parameters
-	----------
-	addr_width : int
-		Address width. See :class:`Interface`.
-	data_width : int
-		Data width. See :class:`Interface`.
-	alignment : log2 of int
-		Register alignment. See :class:`..memory.MemoryMap`.
-	name : str
-		Window name. Optional.
-
-	shadow_overlaps : int
-		Maximum number of CSR registers that can share a chunk of a shadow register.
-		Optional. If ``None``, any number of CSR registers can share a shadow chunk.
-		See :class:`Multiplexer._Shadow` for details.
-
-	Attributes
-	----------
-	bus : :class:`Interface`
-		CSR bus providing access to registers.
-
-	''' # noqa: E101
 
 	def __init__(
 		self, *, addr_width: int, data_width: int, alignment: int = 0, name: str | None = None,
@@ -459,6 +498,8 @@ class Multiplexer(Elaboratable):
 
 	@property
 	def bus(self) -> Interface:
+		''' CSR bus providing access to registers. '''
+
 		if self._bus is None:
 			self._map.freeze()
 			self._bus = Interface(
@@ -473,8 +514,7 @@ class Multiplexer(Elaboratable):
 		'''
 		Align the implicit address of the next register.
 
-		See :meth:`MemoryMap.align_to` for details.
-
+		See :py:meth:`torii.lib.mem.map.MemoryMap.align_to` for details.
 		'''
 
 		return self._map.align_to(alignment)
@@ -486,8 +526,7 @@ class Multiplexer(Elaboratable):
 		'''
 		Add a register.
 
-		See :meth:`MemoryMap.add_resource` for details.
-
+		See :py:meth:`torii.lib.mem.map.MemoryMap.add_resource` for details.
 		'''
 
 		if not isinstance(element, Element):
@@ -584,34 +623,33 @@ class Decoder(Elaboratable):
 
 	An address decoder for subordinate CSR buses.
 
-	Usage
-	-----
-
 	Although there is no functional difference between adding a set of registers directly to
-	a :class:`Multiplexer` and adding a set of registers to multiple :class:`Multiplexer`s that are
-	aggregated with a :class:`Decoder`, hierarchical CSR buses are useful for organizing
+	a :py:class:`Multiplexer` and adding a set of registers to multiple :py:class:`Multiplexer` that are
+	aggregated with a :py:class:`Decoder`, hierarchical CSR buses are useful for organizing
 	a hierarchical design. If many peripherals are directly served by a single
-	:class:`Multiplexer`, a very large amount of ports will connect the peripheral registers with
+	:py:class:`Multiplexer`, a very large amount of ports will connect the peripheral registers with
 	the decoder, and the cost of decoding logic would not be attributed to specific peripherals.
 	With a decoder, only five signals per peripheral will be used, and the logic could be kept
 	together with the peripheral.
 
 	Parameters
 	----------
-	addr_width : int
-		Address width. See :class:`Interface`.
-	data_width : int
-		Data width. See :class:`Interface`.
-	alignment : log2 of int
-		Window alignment. See :class:`..memory.MemoryMap`.
-	name : str
-		Window name. Optional.
+	addr_width: int
+		Address width. See :py:class:`Interface`.
+
+	data_width: int
+		Data width. See :py:class:`Interface`.
+
+	alignment: log2 of int
+		Window alignment. See :py:class:`torii.lib.mem.map.MemoryMap`.
+
+	name: str | None
+		Window name.
 
 	Attributes
 	----------
-	bus : :class:`Interface`
+	bus: torii.lib.soc.csr.bus.Interface
 		CSR bus providing access to subordinate buses.
-
 	'''
 
 	def __init__(
@@ -626,6 +664,10 @@ class Decoder(Elaboratable):
 
 	@property
 	def bus(self) -> Interface:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._bus is None:
 			self._map.freeze()
 			self._bus = Interface(
@@ -640,8 +682,7 @@ class Decoder(Elaboratable):
 		'''
 		Align the implicit address of the next window.
 
-		See :meth:`MemoryMap.align_to` for details.
-
+		See :py:meth:`torii.lib.mem.map.MemoryMap.align_to` for details.
 		'''
 
 		return self._map.align_to(alignment)
@@ -652,8 +693,7 @@ class Decoder(Elaboratable):
 		'''
 		Add a window to a subordinate bus.
 
-		See :meth:`MemoryMap.add_resource` for details.
-
+		See :py:meth:`torii.lib.mem.map.MemoryMap.add_resource` for details.
 		'''
 
 		if not isinstance(sub_bus, Interface):

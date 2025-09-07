@@ -19,22 +19,24 @@ class EventMonitor(Elaboratable):
 
 	A monitor for subordinate event sources, with a CSR bus interface.
 
-	CSR registers
-	-------------
-	enable : ``self.src.event_map.size``, read/write
-		Enabled events. See :meth:`..event.EventMap.sources` for layout.
-	pending : ``self.src.event_map.size``, read/clear
-		Pending events. See :meth:`..event.EventMap.sources` for layout.
-
 	Parameters
 	----------
-	data_width : int
-		CSR bus data width. See :class:`..csr.Interface`.
-	alignment : int
-		CSR address alignment. See :class:`...mem.map.MemoryMap`.
-	trigger : :class:`..event.Source.Trigger`
-		Trigger mode. See :class:`..event.Source`.
+	data_width: int
+		CSR bus data width. See :py:class:`torii.lib.soc.csr.bus.Interface`.
 
+	alignment: int
+		CSR address alignment. See :py:class:`torii.lib.mem.map.MemoryMap`.
+
+	trigger: torii.lib.soc.event.Source.Trigger
+		Trigger mode. See :py:class:`torii.lib.soc.event.Source`.
+
+	Attributes
+	----------
+	enable: ``self.src.event_map.size``, read/write
+		Enabled events. See :py:meth:`torii.lib.soc.event.EventMap.sources` for layout.
+
+	pending: ``self.src.event_map.size``, read/clear
+		Pending events. See :py:meth:`torii.lib.soc.event.EventMap.sources` for layout.
 	'''
 
 	def __init__(
@@ -60,7 +62,6 @@ class EventMonitor(Elaboratable):
 		Freeze the event monitor.
 
 		Once the event monitor is frozen, subordinate sources cannot be added anymore.
-
 		'''
 
 		if self._frozen:
@@ -77,11 +78,11 @@ class EventMonitor(Elaboratable):
 		'''
 		Event source.
 
-		Return value
-		------------
-		An :class:`..event.Source`. Its input line is asserted by the monitor when a subordinate
-		event is enabled and pending.
-
+		Returns
+		-------
+		torii.lib.soc.event.Source
+			The event source whose input line is asserted by the monitor when a subordinate event
+			is enabled and pending.
 		'''
 
 		self.freeze()
@@ -93,10 +94,10 @@ class EventMonitor(Elaboratable):
 		'''
 		CSR bus interface.
 
-		Return value
-		------------
-		A :class:`..csr.Interface` providing access to registers.
-
+		Returns
+		-------
+		torii.lib.soc.csr.bus.Interface
+			Interface providing access to registers.
 		'''
 
 		self.freeze()
@@ -106,8 +107,7 @@ class EventMonitor(Elaboratable):
 		'''
 		Add a subordinate event source.
 
-		See :meth:`..event.EventMap.add` for details.
-
+		See :py:meth:`torii.lib.soc.event.EventMap.add` for details.
 		'''
 
 		self._map.add(src)

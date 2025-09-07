@@ -3,26 +3,20 @@
 ## Bus
 
 ```{eval-rst}
-
-.. autoclass:: torii.lib.soc.csr.bus.Element
-.. autoclass:: torii.lib.soc.csr.bus.Interface
-.. autoclass:: torii.lib.soc.csr.bus.Decoder
-.. autoclass:: torii.lib.soc.csr.bus.Multiplexer
-
+.. automodule:: torii.lib.soc.csr.bus
+  :members:
 ```
 
 ## Events
 
 ```{eval-rst}
-
-.. autoclass:: torii.lib.soc.csr.event.EventMonitor
-
+.. automodule:: torii.lib.soc.csr.event
+  :members:
 ```
 
 ## Wishbone
 
 ```{eval-rst}
-
-.. autoclass:: torii.lib.soc.csr.wishbone.WishboneCSRBridge
-
+.. automodule:: torii.lib.soc.csr.wishbone
+  :members:
 ```

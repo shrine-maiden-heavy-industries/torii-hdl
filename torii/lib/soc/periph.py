@@ -16,6 +16,10 @@ __all__ = (
 )
 
 class ConstantValue:
+	'''
+	.. todo:: Document Me
+	'''
+
 	pass
 
 class ConstantBool(ConstantValue):
@@ -24,9 +28,8 @@ class ConstantBool(ConstantValue):
 
 	Parameters
 	----------
-	value : bool
+	value: bool
 		Constant value.
-
 	'''
 
 	def __init__(self, value: bool) -> None:
@@ -36,6 +39,8 @@ class ConstantBool(ConstantValue):
 
 	@property
 	def value(self) -> bool:
+		''' The value of this constant. '''
+
 		return self._value
 
 	def __repr__(self) -> str:
@@ -47,13 +52,16 @@ class ConstantInt(ConstantValue):
 
 	Parameters
 	----------
-	value : int
+	value: int
 		Constant value.
-	width : int
-		Width in bits. Optional. ``bits_for(value)`` by default.
-	signed : bool
-		Signedness. Optional. ``value < 0`` by default.
 
+	width: int | None
+		Width of ``value`` in bits. If ``None`` it is calculated by using
+		:py:meth:`bits_for <torii.util.units.bits_for>` to derive it from ``value``.
+
+	signed: bool | None
+		If the value is signed. If ``None`` this is determined by checking
+		if ``value > 0``.
 	'''
 
 	def __init__(
@@ -79,14 +87,20 @@ class ConstantInt(ConstantValue):
 
 	@property
 	def value(self) -> int:
+		''' The value of this constant. '''
+
 		return self._value
 
 	@property
 	def width(self) -> int:
+		''' The width in bits needed to represent this constant. '''
+
 		return self._width
 
 	@property
 	def signed(self) -> bool:
+		''' If the value in this constant is signed or not. '''
+
 		return self._signed
 
 	def __repr__(self) -> str:
@@ -100,14 +114,15 @@ class ConstantMap(Mapping):
 
 	Parameters
 	----------
-	**constants : dict(str : :class:`ConstantValue`)
+	**constants: dict[str, ConstantValue]
 		Named constants.
 
 	Examples
 	--------
-	>>> ConstantMap(RX_FIFO_DEPTH = 16)
-	ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])
+	.. code-block:: pycon
 
+		>>> ConstantMap(RX_FIFO_DEPTH = 16)
+		ConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])
 	'''
 
 	def __init__(self, **constants: dict[str, ConstantValue]) -> None:
@@ -142,13 +157,14 @@ class PeripheralInfo:
 
 	Parameters
 	----------
-	memory_map : :class:`MemoryMap`
+	memory_map: MemoryMap
 		Memory map of the peripheral.
-	irq : :class:`event.Source`
-		IRQ line of the peripheral. Optional.
-	constant_map : :class:`ConstantMap`
-		Constant map of the peripheral. Optional.
 
+	irq: event.Source | None
+		IRQ line of the peripheral.
+
+	constant_map: ConstantMap | None
+		Constant map of the peripheral.
 	'''
 
 	def __init__(
@@ -175,10 +191,10 @@ class PeripheralInfo:
 		'''
 		Memory map.
 
-		Return value
-		------------
-		A :class:`MemoryMap` describing the local address space of the peripheral.
-
+		Returns
+		-------
+		MemoryMap
+			The memory map describing the local address space of the peripheral.
 		'''
 
 		return self._memory_map
@@ -188,15 +204,16 @@ class PeripheralInfo:
 		'''
 		IRQ line.
 
-		Return value
-		------------
-		An :class:`event.Source` used by the peripheral to request interrupts. If provided, its
-		event map describes local events.
+		Returns
+		-------
+		event.Source
+			An event source used by the peripheral to request interrupts. If provided, its
+			event map describes local events.
 
-		Exceptions
-		----------
-		Raises :exn:`NotImplementedError` if the peripheral info does not have an IRQ line.
-
+		Raises
+		------
+		NotImplementedError
+			If peripheral info does not have an IRQ line.
 		'''
 
 		if self._irq is None:
@@ -208,10 +225,10 @@ class PeripheralInfo:
 		'''
 		Constant map.
 
-		Return value
-		------------
-		A :class:`ConstantMap` containing configuration constants of the peripheral.
-
+		Returns
+		-------
+		ConstantMap
+			The map containing the configuration constants of the peripheral.
 		'''
 
 		return self._constant_map

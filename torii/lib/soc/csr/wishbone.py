@@ -19,26 +19,24 @@ class WishboneCSRBridge(Elaboratable):
 	A bus bridge for accessing CSR registers from Wishbone. This bridge supports any Wishbone
 	data width greater or equal to CSR data width and performs appropriate address translation.
 
-	Latency
-	-------
-
 	Reads and writes always take ``self.data_width // csr_bus.data_width + 1`` cycles to complete,
 	regardless of the select inputs. Write side effects occur simultaneously with acknowledgement.
 
 	Parameters
 	----------
-	csr_bus : :class:`..csr.Interface`
+	csr_bus: torii.lib.soc.csr.bus.Interface
 		CSR bus driven by the bridge.
-	data_width : int or None
+
+	data_width: int | None
 		Wishbone bus data width. If not specified, defaults to ``csr_bus.data_width``.
-	name : str
-		Window name. Optional.
+
+	name: str | None
+		Window name.
 
 	Attributes
 	----------
-	wb_bus : :class:`...bus.wishbone.Interface`
+	wb_bus: torii.lib.bus.wishbone.Interface
 		Wishbone bus provided by the bridge.
-
 	'''
 
 	def __init__(

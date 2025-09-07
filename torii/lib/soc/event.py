@@ -18,30 +18,34 @@ __all__ = (
 )
 
 class Source(Record):
-	class Trigger(Enum):
-		''' Event trigger mode. '''
-		LEVEL = 'level'
-		RISE  = 'rise'
-		FALL  = 'fall'
-
 	'''
 	Event source interface.
 
 	Parameters
 	----------
-	trigger : :class:`Trigger`
+	trigger: Source.Trigger
 		Trigger mode. An event can be edge- or level-triggered by the input line.
+
 	name: str
 		Name of the underlying record.
 
 	Attributes
 	----------
-	i : Signal()
+	i: Signal()
 		Input line. Sampled in order to detect an event.
-	trg : Signal()
-		Event trigger. Asserted when an event occurs, according to the trigger mode.
 
+	trg: Signal()
+		Event trigger. Asserted when an event occurs, according to the trigger mode.
 	'''
+
+	class Trigger(Enum):
+		''' Event trigger mode. '''
+		LEVEL = 'level'
+		''' '''
+		RISE  = 'rise'
+		''' '''
+		FALL  = 'fall'
+		''' '''
 
 	def __init__(
 		self, *, trigger: Trigger = 'level', name: str | None = None, src_loc_at: int = 0
@@ -62,14 +66,15 @@ class Source(Record):
 		'''
 		Event map.
 
-		Return value
-		------------
-		A :class:`EventMap` describing subordinate event sources.
+		Returns
+		-------
+		EventMap
+			An :py:class:`EventMap` describing subordinate event sources.
 
-		Exceptions
-		----------
-		Raises :exn:`NotImplementedError` if the source does not have an event map.
-
+		Raises
+		------
+		NotImplementedError
+			If the source does not have an event map.
 		'''
 
 		if self._map is None:
@@ -93,8 +98,8 @@ class EventMap:
 	An event map is a description of a set of events. It is built by adding event sources
 	and can be queried later to determine their index. Event indexing is done implicitly by
 	increment, starting at 0.
-
 	'''
+
 	def __init__(self) -> None:
 		self._sources = OrderedDict()
 		self._frozen  = False
@@ -104,11 +109,12 @@ class EventMap:
 		'''
 		Size of the event map.
 
-		Return value
-		------------
-		The number of event sources in the map.
-
+		Returns
+		-------
+		int
+			The number of event sources in the map.
 		'''
+
 		return len(self._sources)
 
 	def freeze(self) -> None:
@@ -116,7 +122,6 @@ class EventMap:
 		Freeze the event map.
 
 		Once the event map is frozen, sources cannot be added anymore.
-
 		'''
 
 		self._frozen = True
@@ -125,15 +130,15 @@ class EventMap:
 		'''
 		Add an event source.
 
-		Arguments
-		---------
-		src : :class:`Source`
+		Parameters
+		----------
+		src: Source
 			Event source.
 
-		Exceptions
-		----------
-		Raises :exn:`ValueError` if the event map is frozen.
-
+		Raises
+		------
+		ValueError
+			If the event map is frozen.
 		'''
 
 		if self._frozen:
@@ -147,19 +152,20 @@ class EventMap:
 		'''
 		Get the index corresponding to an event source.
 
-		Arguments
-		---------
-		src : :class:`Source`
+		Parameters
+		----------
+		src: Source
 			Event source.
 
-		Return value
-		------------
-		The index of the source.
+		Returns
+		-------
+		int
+			The index of the source.
 
-		Exceptions
-		----------
-		Raises :exn:`KeyError` if the source is not found.
-
+		Raises
+		------
+		KeyError
+			If the source is not found.
 		'''
 
 		if not isinstance(src, Source):
@@ -170,10 +176,10 @@ class EventMap:
 		'''
 		Iterate event sources.
 
-		Yield values
-		------------
-		A tuple ``src, index`` corresponding to an event source and its index.
-
+		Returns
+		-------
+		Generator[tuple[Source, int]]
+			A generator that yields tuples of ``src, index`` corresponding to an event source and its index.
 		'''
 
 		yield from self._sources.items()
@@ -186,22 +192,25 @@ class Monitor(Elaboratable):
 
 	Parameters
 	----------
-	event_map : :class:`EventMap`
+	event_map: EventMap
 		Event map.
-	trigger : :class:`Source.Trigger`
-		Trigger mode. See :class:`Source`.
+
+	trigger: Source.Trigger
+		Trigger mode. See :py:class:`Source`.
 
 	Attributes
 	----------
-	src : :class:`Source`
+	src: Source
 		Event source. Its input is asserted when a subordinate event is enabled and pending.
-	enable : Signal(event_map.size), bit mask, in
-		Enabled events.
-	pending : Signal(event_map.size), bit mask, out
-		Pending events.
-	clear : Signal(event_map.size), bit mask, in
-		Clear selected pending events.
 
+	enable: Signal(event_map.size), bit mask, in
+		Enabled events.
+
+	pending: Signal(event_map.size), bit mask, out
+		Pending events.
+
+	clear: Signal(event_map.size), bit mask, in
+		Clear selected pending events.
 	'''
 
 	def __init__(self, event_map: EventMap, *, trigger: Source.Trigger = 'level') -> None:
