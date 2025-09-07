@@ -35,47 +35,51 @@ class FFSynchronizer(Elaboratable):
 
 	Parameters
 	----------
-	i : Signal(n), in
+	i: Signal(n), in
 		Signal to be resynchronized.
-	o : Signal(n), out
+	o: Signal(n), out
 		Signal connected to synchronizer output.
-	o_domain : str
+
+	o_domain: str
 		Name of output clock domain.
-	reset : int
+
+	reset: int
 		Reset value of the flip-flops. On FPGAs, even if ``reset_less`` is ``True``,
-		the :class:`FFSynchronizer` is still set to this value during initialization.
-	reset_less : bool
-		If ``True`` (the default), this :class:`FFSynchronizer` is unaffected by ``o_domain``
+		the :py:class:`FFSynchronizer` is still set to this value during initialization.
+
+	reset_less: bool
+		If ``True`` (the default), this :py:class:`FFSynchronizer` is unaffected by ``o_domain``
 		reset. See the note below for details.
-	stages : int, >=2
+
+	stages: int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased latency.
-	max_input_delay : None or float
+
+	max_input_delay: None | float
 		Maximum delay from the input signal's clock to the first synchronization stage, in seconds.
 		If specified and the platform does not support it, elaboration will fail.
 
-	.. note::
+	Note
+	----
+	:py:class:`FFSynchronizer` is non-resettable by default. Usually this is the safest option;
+	on FPGAs the :py:class:`FFSynchronizer` will still be initialized to its ``reset`` value when
+	the FPGA loads its configuration.
 
-		:class:`FFSynchronizer` is non-resettable by default. Usually this is the safest option;
-		on FPGAs the :class:`FFSynchronizer` will still be initialized to its ``reset`` value when
-		the FPGA loads its configuration.
+	However, in designs where the value of the :py:class:`FFSynchronizer` must be valid immediately
+	after reset, consider setting ``reset_less`` to ``False`` if any of the following is true:
 
-		However, in designs where the value of the :class:`FFSynchronizer` must be valid immediately
-		after reset, consider setting ``reset_less`` to ``False`` if any of the following is true:
+	- You are targeting an ASIC, or an FPGA that does not allow arbitrary initial flip-flop states;
+	- Your design features warm (non-power-on) resets of ``o_domain``, so the one-time
+		initialization at power on is insufficient;
+	- Your design features a sequenced reset, and the :py:class:`FFSynchronizer` must maintain
+		its reset value until ``o_domain`` reset specifically is de-asserted.
 
-		- You are targeting an ASIC, or an FPGA that does not allow arbitrary initial flip-flop states;
-		- Your design features warm (non-power-on) resets of ``o_domain``, so the one-time
-		  initialization at power on is insufficient;
-		- Your design features a sequenced reset, and the :class:`FFSynchronizer` must maintain
-		  its reset value until ``o_domain`` reset specifically is de-asserted.
-
-		:class:`FFSynchronizer` is reset by the ``o_domain`` reset only.
+	:py:class:`FFSynchronizer` is reset by the ``o_domain`` reset only.
 
 	Platform overrides
 	------------------
 	Define the ``get_ff_sync`` platform method to override the implementation of
-	:class:`FFSynchronizer`, e.g. to instantiate library cells directly.
-
+	:py:class:`FFSynchronizer`, e.g. to instantiate library cells directly.
 	''' # noqa: E101
 
 	def __init__(
@@ -117,33 +121,37 @@ class AsyncFFSynchronizer(Elaboratable):
 	'''
 	Synchronize de-assertion of an asynchronous signal.
 
-	The signal driven by the :class:`AsyncFFSynchronizer` is asserted asynchronously and de-asserted
+	The signal driven by the :py:class:`AsyncFFSynchronizer` is asserted asynchronously and de-asserted
 	synchronously, eliminating metastability during de-assertion.
 
 	This synchronizer is primarily useful for resets and reset-like signals.
 
 	Parameters
 	----------
-	i : Signal(1), in
+	i: Signal(1), in
 		Asynchronous input signal, to be synchronized.
-	o : Signal(1), out
+
+	o: Signal(1), out
 		Synchronously released output signal.
-	o_domain : str
+
+	o_domain: str
 		Name of clock domain to synchronize to.
-	stages : int, >=2
+
+	stages: int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
-	async_edge : str
+
+	async_edge: str
 		The edge of the input signal which causes the output to be set. Must be one of "pos" or "neg".
-	max_input_delay : None or float
+
+	max_input_delay: None | float
 		Maximum delay from the input signal's clock to the first synchronization stage, in seconds.
 		If specified and the platform does not support it, elaboration will fail.
 
 	Platform overrides
 	------------------
 	Define the ``get_async_ff_sync`` platform method to override the implementation of
-	:class:`AsyncFFSynchronizer`, e.g. to instantiate library cells directly.
-
+	:py:class:`AsyncFFSynchronizer`, e.g. to instantiate library cells directly.
 	'''
 
 	def __init__(
@@ -205,7 +213,7 @@ class ResetSynchronizer(Elaboratable):
 	'''
 	Synchronize de-assertion of a clock domain reset.
 
-	The reset of the clock domain driven by the :class:`ResetSynchronizer` is asserted
+	The reset of the clock domain driven by the :py:class:`ResetSynchronizer` is asserted
 	asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.
 
 	The driven clock domain could use a reset that is asserted either synchronously or
@@ -216,22 +224,24 @@ class ResetSynchronizer(Elaboratable):
 
 	Parameters
 	----------
-	arst : Signal(1), in
+	arst: Signal(1), in
 		Asynchronous reset signal, to be synchronized.
-	domain : str
+
+	domain: str
 		Name of clock domain to reset.
-	stages : int, >=2
+
+	stages: int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
-	max_input_delay : None or float
+
+	max_input_delay: None | float
 		Maximum delay from the input signal's clock to the first synchronization stage, in seconds.
 		If specified and the platform does not support it, elaboration will fail.
 
 	Platform overrides
 	------------------
 	Define the ``get_reset_sync`` platform method to override the implementation of
-	:class:`ResetSynchronizer`, e.g. to instantiate library cells directly.
-
+	:py:class:`ResetSynchronizer`, e.g. to instantiate library cells directly.
 	'''
 
 	def __init__(
@@ -267,14 +277,15 @@ class PulseSynchronizer(Elaboratable):
 
 	Parameters
 	----------
-	i_domain : str
+	i_domain: str
 		Name of input clock domain.
-	o_domain : str
+
+	o_domain: str
 		Name of output clock domain.
-	stages : int, >=2
+
+	stages: int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
-
 	'''
 
 	def __init__(self, i_domain: str, o_domain: str, *, stages: int = 2) -> None:
