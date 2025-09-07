@@ -58,37 +58,47 @@ class AsyncSerialRX(Elaboratable):
 
 	Parameters
 	----------
-	divisor : int
+	divisor: int
 		Clock divisor reset value. Should be set to ``int(clk_frequency // baudrate)``.
-	divisor_bits : int
+
+	divisor_bits: int | None
 		Optional. Clock divisor width. If omitted, ``bits_for(divisor)`` is used instead.
-	data_bits : int
+
+	data_bits: int
 		Data width.
-	parity : ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
+
+	parity: ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
 		Parity mode.
-	pins : :class:`torii.lib.io.Pin`
-		Optional. UART pins. See :class:`torii_boards.resources.UARTResource` for layout.
+
+	pins: torii.lib.io.Pin | None
+		Optional. UART pins. See :py:class:`torii.platform.resources.interface.UARTResource` for layout.
 
 	Attributes
 	----------
-	divisor : Signal, in
+	divisor: Signal, in
 		Clock divisor.
-	data : Signal, out
+
+	data: Signal, out
 		Read data. Valid only when ``rdy`` is asserted.
-	err.overflow : Signal, out
+
+	err.overflow: Signal, out
 		Error flag. A new frame has been received, but the previous one was not acknowledged.
-	err.frame : Signal, out
+
+	err.frame: Signal, out
 		Error flag. The received bits do not fit in a frame.
-	err.parity : Signal, out
+
+	err.parity: Signal, out
 		Error flag. The parity check has failed.
-	done : Signal, out
+
+	done: Signal, out
 		Strobe that indicates we successfully completed receiving a frame of data.
-	start : Signal, in
+
+	start: Signal, in
 		Indication from the driving gateware that it is interested in new data from the receiver.
 		Must be held asserted to indicate reception is okay.
-	i : Signal, in
-		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
 
+	i: Signal, in
+		Serial input. If ``pins`` has been specified, ``pins.rx.i`` drives it.
 	'''
 
 	def __init__(
@@ -176,30 +186,37 @@ class AsyncSerialTX(Elaboratable):
 
 	Parameters
 	----------
-	divisor : int
+	divisor: int
 		Clock divisor reset value. Should be set to ``int(clk_frequency // baudrate)``.
-	divisor_bits : int
+
+	divisor_bits: int | None
 		Optional. Clock divisor width. If omitted, ``bits_for(divisor)`` is used instead.
-	data_bits : int
+
+	data_bits: int
 		Data width.
-	parity : ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
+
+	parity: ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
 		Parity mode.
-	pins : :class:`torii.lib.io.Pin`
-		Optional. UART pins. See :class:`torii_boards.resources.UARTResource` for layout.
+
+	pins: torii.lib.io.Pin | None
+		Optional. UART pins. See :py:class:`torii.platform.resources.interface.UARTResource` for layout.
 
 	Attributes
 	----------
-	divisor : Signal, in
+	divisor: Signal, in
 		Clock divisor.
-	data : Signal, in
-		Write data. Valid only when ``ack`` is asserted.
-	rdy : Signal, out
-		Write ready. Asserted when the transmitter is ready to transmit data.
-	ack : Signal, in
-		Write strobe. Data gets transmitted when both ``rdy`` and ``ack`` are asserted.
-	o : Signal, out
-		Serial output. If ``pins`` has been specified, it drives ``pins.tx.o``.
 
+	data: Signal, in
+		Write data. Valid only when ``ack`` is asserted.
+
+	rdy: Signal, out
+		Write ready. Asserted when the transmitter is ready to transmit data.
+
+	ack: Signal, in
+		Write strobe. Data gets transmitted when both ``rdy`` and ``ack`` are asserted.
+
+	o: Signal, out
+		Serial output. If ``pins`` has been specified, it drives ``pins.tx.o``.
 	'''
 
 	def __init__(
@@ -265,26 +282,31 @@ class AsyncSerial(Elaboratable):
 
 	Parameters
 	----------
-	divisor : int
+	divisor: int
 		Clock divisor reset value. Should be set to ``int(clk_frequency // baudrate)``.
-	divisor_bits : int
+
+	divisor_bits: int | None
 		Optional. Clock divisor width. If omitted, ``bits_for(divisor)`` is used instead.
-	data_bits : int
+
+	data_bits: int
 		Data width.
-	parity : ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
+
+	parity: ``'none'``, ``'mark'``, ``'space'``, ``'even'``, ``'odd'``
 		Parity mode.
-	pins : :class:`torii.lib.io.Pin`
-		Optional. UART pins. See :class:`torii_boards.resources.UARTResource` for layout.
+
+	pins: torii.lib.io.Pin | None
+		Optional. UART pins. See :py:class:`torii.platform.resources.interface.UARTResource` for layout.
 
 	Attributes
 	----------
-	divisor : Signal, in
+	divisor: Signal, in
 		Clock divisor.
-	rx : :class:`AsyncSerialRX`
-		See :class:`AsyncSerialRX`.
-	tx : :class:`AsyncSerialTX`
-		See :class:`AsyncSerialTX`.
 
+	rx: AsyncSerialRX
+		See :py:class:`AsyncSerialRX`.
+
+	tx: AsyncSerialTX
+		See :py:class:`AsyncSerialTX`.
 	'''
 
 	def __init__(
