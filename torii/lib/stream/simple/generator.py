@@ -28,53 +28,52 @@ class ConstantStreamGenerator(Generic[T], Elaboratable):
 
 	Parameters
 	----------
-	data : ConstData
+	data: ConstData
 		The constant data to be emitted from the stream.
 
-	data_width : int | None = None
+	data_width: int | None = None
 		The width in bits of ``data``. If not provided it will be taken from the ``StreamInterface``s width.
 		(default: None)
 
-	max_length_width : int | None
+	max_length_width: int | None
 		If provided, a ``max_length_width`` signal will be present that can limit the total length transmitted.
 		(default: None)
 
-	endianness : Literal['big', 'little']
+	endianness: Literal['big', 'little']
 		If ``data`` is a bytes-like object, and ``data_width`` is more than 8 bits.
 		(default: 'little')
 
-	stream_type : type
+	stream_type: type
 		The type of stream to create, must be either :py:class:`StreamInterface <torii.lib.stream.StreamInterface>`
 		or a subtype there of.
 		(default: torii.lib.stream.StreamInterface)
 
-	domain : str
+	domain: str
 		The clock domain in which the stream generator should be clocked.
 		(default: 'sync')
 
 	Attributes
 	----------
-	start : Signal, in
+	start: Signal, in
 		Input strobe to start the stream
 
-	done : Signal, out
+	done: Signal, out
 		Output strobe indicating the transmission is completed
 
-	start_pos : Signal(range(len(data))), in
+	start_pos: Signal(range(len(data))), in
 		The starting position within ``data``. Latched when ``start`` is strobed.
 
-	max_length : Signal(max_length_width), in
+	max_length: Signal(max_length_width), in
 		The maximum length of ``data`` to be sent in bytes.
 		Must be >= ``len(data)``.
 		By default this value is the length of ``data``.
 
-	out_length : Signal(max_length_width), out
+	out_length: Signal(max_length_width), out
 		Indicates the the total amount of data that has streamed out.
 		Will always be less than ``max_len``.
 
-	stream : stream_type, out
+	stream: stream_type, out
 		The output data stream.
-
 	'''
 
 	def __init__(

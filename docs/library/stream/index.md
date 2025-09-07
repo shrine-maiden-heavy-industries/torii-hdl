@@ -1,9 +1,8 @@
 # Stream Library
 
 ```{eval-rst}
-
 .. automodule:: torii.lib.stream
-
+  :members:
 ```
 
 ```{toctree}

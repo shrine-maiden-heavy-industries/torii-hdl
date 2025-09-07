@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 '''
-The :py:mod:`torii.lib.streams.simple` module provides a simple and extensible unidirectional stream
+The :py:mod:`torii.lib.stream.simple` module provides a simple and extensible unidirectional stream
 interface :py:class:`.StreamInterface` as well as an :py:class:`Arbiter <.StreamArbiter>` to join multiple
 streams into a single output stream.
 
@@ -29,24 +29,24 @@ class StreamInterface(Record):
 
 	Parameters
 	----------
-	data_width : int
+	data_width: int
 		The width of the stream data in bits.
 
-	valid_width : int | None
+	valid_width: int | None
 		The width of the valid field. If ``None`` it will default to ``data_width // 8``.
 
-	name : str | None
+	name: str | None
 		The name of this stream.
 
-	extra : Iterable[tuple[str, int]]
+	extra: collections.abc.Iterable[tuple[str, int]]
 		Any extra or ancillary fields to graft on to the stream.
 
 	Attributes
 	----------
-	data : Signal(data_width), send
+	data: Signal(data_width), send
 		The data in the stream to be transmitted.
 
-	valid : Signal(valid_width), send
+	valid: Signal(valid_width), send
 		This can be two things, by default, when ``valid_width`` is ``data_width // 8``, it represents
 		a set of bit flags for each byte in ``data`` determining if that byte of ``data`` is valid.
 
@@ -56,19 +56,18 @@ class StreamInterface(Record):
 		When set to ``1`` it can simply mean that the whole of ``data`` is valid for this transaction. It
 		can be as granular or corse as you wish, as long as both sides of the stream agree.
 
-	first : Signal, send
+	first: Signal, send
 		Indicates that the data is the first of the current packet.
 
-	last : Signal, send
+	last: Signal, send
 		Indicates that the data is the last of the current packet.
 
-	ready : Signal, recv
+	ready: Signal, recv
 		Indicates that the receiver will accept the data at the next active
 		clock edge.
 
-	payload : Signal(data_width), send (alias)
+	payload: Signal(data_width), send (alias)
 		This is a dynamic alias to the ``data`` member of the record.
-
 	'''
 
 	valid: Signal
@@ -116,10 +115,10 @@ class StreamInterface(Record):
 
 		Parameters
 		----------
-		stream : torii.lib.stream.StreamInterface
+		stream: torii.lib.stream.StreamInterface
 			The stream we are attaching to.
 
-		omit : set[str]
+		omit: set[str]
 			A set of additional stream fields to exclude from the tap connection.
 		'''
 
@@ -163,12 +162,13 @@ class StreamInterface(Record):
 
 		Parameters
 		----------
-		stream : torii.lib.stream.StreamInterface
+		stream: torii.lib.stream.StreamInterface
 			The stream to attach to this stream.
 
-		omit : set[str]
+		omit: set[str]
 			A set of additional stream fields to exclude from the tap connection.
 		'''
+
 		return stream.attach(self, omit = omit)
 
 	def tap(self, stream: StreamInterface, *, tap_ready: bool = False, omit: set = set()):
@@ -187,14 +187,14 @@ class StreamInterface(Record):
 
 		Parameters
 		----------
-		stream : torii.lib.stream.StreamInterface
+		stream: torii.lib.stream.StreamInterface
 			The stream to use as the interface to this tap.
 
-		tap_ready : bool
+		tap_ready: bool
 			By default the ``ready`` signal is excluded from the tap, passing ``True`` here will also
 			connect that signal.
 
-		omit : set[str]
+		omit: set[str]
 			A set of additional stream fields to exclude from the tap connection.
 		'''
 
@@ -217,21 +217,19 @@ class StreamArbiter(Generic[T], Elaboratable):
 
 	Parameters
 	----------
-	domain : str
+	domain: str
 		The domain in which the arbiter should operate.
 
-	stream_type : type
-		The type of stream to create, must be either :py:class:`StreamInterface <torii.lib.stream.StreamInterface>`
-		or a subtype there of.
+	stream_type: type[T]
+		The type of stream to create, must be either :py:class:`StreamInterface` or a subtype there of.
 
 	Attributes
 	----------
-	out : stream_type, out
+	out: T, out
 		The output stream.
 
-	idle : Signal, out
+	idle: Signal, out
 		Indicates the arbiter is idle, this occurs when the input source stream is not active.
-
 	'''
 
 	def __init__(self, *, domain: str = 'sync', stream_type: type[T] = StreamInterface) -> None:
@@ -248,12 +246,13 @@ class StreamArbiter(Generic[T], Elaboratable):
 
 		Parameters
 		----------
-		stream : torii.lib.stream.StreamInterface
+		stream: torii.lib.stream.StreamInterface
 			The stream to connect to the arbiter.
 
-		priority : int
+		priority: int
 			The stream priority.
 		'''
+
 		if priority > 0:
 			self._sources.append(stream)
 		else:
@@ -294,16 +293,14 @@ class StreamMultiplexer(Generic[T], Elaboratable):
 	----------
 	output: StreamInterface(), output stream
 		Our output interface; has all of the active busses merged together.
-
 	'''
 
 	def __init__(self, stream_type: type[T] = StreamInterface) -> None:
 		'''
 		Parameters
 		----------
-		stream_type
+		stream_type: type[T]
 			The type of stream we'll be multiplexing. Must be a subclass of StreamInterface.
-
 		'''
 
 		# Collection that stores each of the interfaces added to this bus.
@@ -315,8 +312,8 @@ class StreamMultiplexer(Generic[T], Elaboratable):
 		self.output = stream_type()
 
 	def add_input(self, input_interface: T) -> None:
-
 		''' Adds a transmit interface to the multiplexer. '''
+
 		self._inputs.append(input_interface)
 
 	def elaborate(self, platform) -> Module:
