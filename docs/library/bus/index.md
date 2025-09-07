@@ -2,7 +2,7 @@
 
 ```{eval-rst}
 .. automodule:: torii.lib.bus
-
+  :members:
 ```
 
 ```{toctree}

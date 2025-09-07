@@ -21,17 +21,33 @@ __all__ = (
 
 class CycleType(Enum):
 	''' Wishbone Registered Feedback cycle type. '''
+
 	CLASSIC      = 0b000
+	''' '''
+
 	CONST_BURST  = 0b001
+	''' '''
+
 	INCR_BURST   = 0b010
+	''' '''
+
 	END_OF_BURST = 0b111
+	''' '''
 
 class BurstTypeExt(Enum):
 	''' Wishbone Registered Feedback burst type extension. '''
+
 	LINEAR  = 0b00
+	''' '''
+
 	WRAP_4  = 0b01
+	''' '''
+
 	WRAP_8  = 0b10
+	''' '''
+
 	WRAP_16 = 0b11
+	''' '''
 
 def _check_interface(
 	addr_width: int, data_width: int, granularity: int,
@@ -63,56 +79,74 @@ class Interface(Record):
 
 	Parameters
 	----------
-	addr_width : int
+	addr_width: int
 		Width of the address signal.
-	data_width : int
+
+	data_width: int
 		Width of the data signals ("port size" in Wishbone terminology).
 		One of 8, 16, 32, 64.
-	granularity : int
+
+	granularity: int
 		Granularity of select signals ("port granularity" in Wishbone terminology).
 		One of 8, 16, 32, 64.
-	features : iter(str)
+
+	features: iter(str)
 		Selects the optional signals that will be a part of this interface.
-	name : str
+
+	name: str
 		Name of the underlying record.
 
 	Attributes
 	----------
-	The correspondence between the Torii-SoC signals and the Wishbone signals changes depending
-	on whether the interface acts as an initiator or a target.
-
-	adr : Signal(addr_width)
+	adr: Signal(addr_width)
 		Corresponds to Wishbone signal ``ADR_O`` (initiator) or ``ADR_I`` (target).
-	dat_w : Signal(data_width)
+
+	dat_w: Signal(data_width)
 		Corresponds to Wishbone signal ``DAT_O`` (initiator) or ``DAT_I`` (target).
-	dat_r : Signal(data_width)
+
+	dat_r: Signal(data_width)
 		Corresponds to Wishbone signal ``DAT_I`` (initiator) or ``DAT_O`` (target).
-	sel : Signal(data_width // granularity)
+
+	sel: Signal(data_width // granularity)
 		Corresponds to Wishbone signal ``SEL_O`` (initiator) or ``SEL_I`` (target).
-	cyc : Signal()
+
+	cyc: Signal()
 		Corresponds to Wishbone signal ``CYC_O`` (initiator) or ``CYC_I`` (target).
-	stb : Signal()
+
+	stb: Signal()
 		Corresponds to Wishbone signal ``STB_O`` (initiator) or ``STB_I`` (target).
-	we : Signal()
+
+	we: Signal()
 		Corresponds to Wishbone signal ``WE_O``  (initiator) or ``WE_I``  (target).
-	ack : Signal()
+
+	ack: Signal()
 		Corresponds to Wishbone signal ``ACK_I`` (initiator) or ``ACK_O`` (target).
-	err : Signal()
+
+	err: Signal()
 		Optional. Corresponds to Wishbone signal ``ERR_I`` (initiator) or ``ERR_O`` (target).
-	rty : Signal()
+
+	rty: Signal()
 		Optional. Corresponds to Wishbone signal ``RTY_I`` (initiator) or ``RTY_O`` (target).
-	stall : Signal()
+
+	stall: Signal()
 		Optional. Corresponds to Wishbone signal ``STALL_I`` (initiator) or ``STALL_O`` (target).
-	lock : Signal()
+
+	lock: Signal()
 		Optional. Corresponds to Wishbone signal ``LOCK_O`` (initiator) or ``LOCK_I`` (target).
 		torii-soc Wishbone support assumes that initiators that don't want bus arbitration to happen in
 		between two transactions need to use ``lock`` feature to guarantee this. An initiator without
 		the ``lock`` feature may be arbitrated in between two transactions even if ``cyc`` is kept high.
-	cti : Signal()
+
+	cti: Signal()
 		Optional. Corresponds to Wishbone signal ``CTI_O`` (initiator) or ``CTI_I`` (target).
-	bte : Signal()
+
+	bte: Signal()
 		Optional. Corresponds to Wishbone signal ``BTE_O`` (initiator) or ``BTE_I`` (target).
 
+	Note
+	----
+	The correspondence between the :py:mod:`torii.lib.soc` signals and the Wishbone signals changes depending
+	on whether the interface acts as an initiator or a target.
 	'''
 
 	def __init__(
@@ -189,24 +223,23 @@ class Decoder(Elaboratable):
 
 	Parameters
 	----------
-	addr_width : int
-		Address width. See :class:`Interface`.
-	data_width : int
-		Data width. See :class:`Interface`.
-	granularity : int
-		Granularity. See :class:`Interface`
-	features : iter(str)
-		Optional signal set. See :class:`Interface`.
-	alignment : log2 of int
-		Window alignment. See :class:`..memory.MemoryMap`
-	name : str
-		Window name. Optional.
+	addr_width: int
+		Address width. See :py:class:`Interface`.
 
-	Attributes
-	----------
-	bus : :class:`Interface`
-		Wishbone bus providing access to subordinate buses.
+	data_width: int
+		Data width. See :py:class:`Interface`.
 
+	granularity: int
+		Granularity. See :py:class:`Interface`
+
+	features: iter(str)
+		Optional signal set. See :py:class:`Interface`.
+
+	alignment: log2 of int
+		Window alignment. See :py:class:`..memory.MemoryMap`
+
+	name: str | None
+		Window name.
 	'''
 
 	def __init__(
@@ -235,6 +268,8 @@ class Decoder(Elaboratable):
 
 	@property
 	def bus(self) -> Interface:
+		''' Wishbone bus providing access to subordinate buses. '''
+
 		if self._bus is None:
 			self._map.freeze()
 			granularity_bits = log2_exact(self.data_width // self.granularity)
@@ -250,8 +285,7 @@ class Decoder(Elaboratable):
 		'''
 		Align the implicit address of the next window.
 
-		See :meth:`MemoryMap.align_to` for details.
-
+		See :py:meth:`MemoryMap.align_to` for details.
 		'''
 
 		return self._map.align_to(alignment)
@@ -270,8 +304,7 @@ class Decoder(Elaboratable):
 		the window may be discontiguous. In either case, the granularity of the subordinate bus
 		must be equal to or less than the granularity of the decoder.
 
-		See :meth:`MemoryMap.add_resource` for details.
-
+		See :py:meth:`MemoryMap.add_resource` for details.
 		'''
 
 		if not isinstance(sub_bus, Interface):
@@ -362,20 +395,22 @@ class Arbiter(Elaboratable):
 
 	Parameters
 	----------
-	addr_width : int
-		Address width. See :class:`Interface`.
-	data_width : int
-		Data width. See :class:`Interface`.
-	granularity : int
-		Granularity. See :class:`Interface`
-	features : iter(str)
-		Optional signal set. See :class:`Interface`.
+	addr_width: int
+		Address width. See :py:class:`Interface`.
+
+	data_width: int
+		Data width. See :py:class:`Interface`.
+
+	granularity: int
+		Granularity. See :py:class:`Interface`
+
+	features: iter(str)
+		Optional signal set. See :py:class:`Interface`.
 
 	Attributes
 	----------
-	bus : :class:`Interface`
+	bus: Interface
 		Shared Wishbone bus.
-
 	'''
 
 	def __init__(
@@ -397,7 +432,6 @@ class Arbiter(Elaboratable):
 		The initiator bus must have the same address width and data width as the arbiter. The
 		granularity of the initiator bus must be greater than or equal to the granularity of
 		the arbiter.
-
 		'''
 
 		if not isinstance(intr_bus, Interface):
