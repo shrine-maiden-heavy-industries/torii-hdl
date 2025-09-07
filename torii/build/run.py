@@ -23,16 +23,16 @@ __all__ = (
 )
 
 class BuildPlan:
+	'''
+	A build plan.
+
+	Parameters
+	----------
+	script: str
+		The base name (without extension) of the script that will be executed.
+	'''
+
 	def __init__(self, script: str) -> None:
-		'''
-		A build plan.
-
-		Parameters
-		----------
-		script : str
-			The base name (without extension) of the script that will be executed.
-
-		'''
 		self.script = script
 		self.files  = OrderedDict[str, str | bytes]()
 
@@ -42,6 +42,7 @@ class BuildPlan:
 		as ``filename``. The file name can be a relative path with directories separated by
 		forward slashes (``/``).
 		'''
+
 		if not isinstance(filename, str) or filename in self.files:
 			raise ValueError('filename must be a string and must not already exist inside the file set already!')
 
@@ -54,7 +55,13 @@ class BuildPlan:
 		'''
 		Compute a `digest`, a short byte sequence deterministically and uniquely identifying
 		this build plan.
+
+		Returns
+		-------
+		bytes
+			The :py:class:`blake2b <hashlib.blake2b>` digest of this build plan.
 		'''
+
 		hasher = hashlib.blake2b(digest_size = size)
 		for filename in sorted(self.files):
 			hasher.update(filename.encode('utf-8'))
@@ -71,13 +78,13 @@ class BuildPlan:
 
 		Parameters
 		----------
-		file : str | Path
+		file: str | Path
 			The archive file path to write to.
 
-		archive_type : 'tar' | 'zip'
+		archive_type: 'tar' | 'zip'
 			The type of archive to produce.
-
 		'''
+
 		_archive_types = {
 			'zip': (zipfile.ZipFile, zipfile.ZipInfo, 'w',    '.zip'   ),
 			'tar': (tarfile.TarFile, tarfile.TarInfo, 'w:xz', '.tar.xz')
@@ -103,7 +110,8 @@ class BuildPlan:
 
 		Returns
 		-------
-			:class:`pathlib.Path`
+		pathlib.Path
+			The path to the extracted file on disk.
 		'''
 
 		if isinstance(root, str):
@@ -150,7 +158,9 @@ class BuildPlan:
 
 		If ``env`` is not ``None``, the environment is extended (not replaced) with ``env``.
 
-		Returns :class:`LocalBuildProducts`.
+		Returns
+		-------
+		LocalBuildProducts
 		'''
 
 		build_dir = self.extract(root)
@@ -180,13 +190,13 @@ class BuildPlan:
 		Execute build plan using the default strategy. Use one of the ``execute_*`` methods
 		explicitly to have more control over the strategy.
 		'''
+
 		return self.execute_local()
 
 	def execute_docker(
 		self, image: str, root: str | Path = 'root', docker_mount: str = '/build', docker_args: list[str] = []
 	) -> LocalBuildProducts:
 		'''
-
 		Execute a build plan inside a Docker container.
 
 		The build root is mounted into the container under ``docker_mount``
@@ -196,22 +206,24 @@ class BuildPlan:
 
 		Parameters
 		----------
-		image : str
+		image: str
 			The docker container image to use
 
-		root : str | Path
+		root: str | Path
 			The Torii build root.
 
-		docker_mount : str
+		docker_mount: str
 			The internal docker bind mount location for the build root.
 
-		docker_args : list[str]
+		docker_args: list[str]
 			Any additional arguments to pass to the docker engine.
 
 		Returns
 		-------
-			:class:`LocalBuildProducts`
+		LocalBuildProducts
+
 		'''
+
 		build_dir = self.extract(root)
 
 		subprocess.check_call([
@@ -225,6 +237,10 @@ class BuildPlan:
 		return LocalBuildProducts(build_dir)
 
 class BuildProducts(metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@abstractmethod
 	def get_str(self, filename: str) -> str:
 		'''
@@ -239,7 +255,6 @@ class BuildProducts(metaclass = ABCMeta):
 		-------
 		str
 			The contents of ``filename`` as a UTF-8 encoded string.
-
 		'''
 		raise NotImplementedError()
 
@@ -257,8 +272,8 @@ class BuildProducts(metaclass = ABCMeta):
 		-------
 		bytes
 			The contents of ``filename`` as raw bytes.
-
 		'''
+
 		raise NotImplementedError()
 
 	@abstractmethod
@@ -267,6 +282,7 @@ class BuildProducts(metaclass = ABCMeta):
 		Extract ``filename`` from build products, and return it as a :py:class:`bytes` (if ``mode``
 		is ``"b"``) or a :py:class:`str` (if ``mode`` is ``"t"``).
 		'''
+
 		raise NotImplementedError()
 
 	@contextmanager
@@ -280,6 +296,7 @@ class BuildProducts(metaclass = ABCMeta):
 					as bitstream_filename, config_filename:
 				subprocess.check_call(["program", "-c", config_filename, bitstream_filename])
 		'''
+
 		files: list[_TemporaryFileWrapper[bytes]] = []
 		try:
 			for filename in filenames:
@@ -304,6 +321,10 @@ class BuildProducts(metaclass = ABCMeta):
 				os.unlink(file.name)
 
 class LocalBuildProducts(BuildProducts):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, root: str | Path) -> None:
 		# We provide no guarantees that files will be available on the local filesystem (i.e. in
 		# any way other than through `products.get()`) in general, so downstream code must never
@@ -314,14 +335,62 @@ class LocalBuildProducts(BuildProducts):
 			self.__root = root
 
 	def get_str(self, filename: str) -> str:
+		'''
+		Get the contents of the given file as a string.
+
+		Parameters
+		----------
+		filename: str
+			The name of the file from the build products to get the contents of.
+
+		Returns
+		-------
+		str
+			The contents of ``filename`` as a string.
+		'''
+
 		with (self.__root / filename).resolve().open('rt') as f:
 			return f.read()
 
 	def get_bin(self, filename: str) -> bytes:
+		'''
+		Get the contents of the given file as raw bytes.
+
+		Parameters
+		----------
+		filename: str
+			The name of the file from the build products to get the contents of.
+
+		Returns
+		-------
+		bytes
+			The contents of ``filename`` as raw bytes.
+		'''
+
 		with (self.__root / filename).resolve().open('rb') as f:
 			return f.read()
 
 	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
+		'''
+		Get the contents of the given file as either a string or a bytes array.
+
+		Parameters
+		----------
+		filename: str
+			The name of the build product to get the contents of.
+
+		mode: Literal['b', 't']
+			The mode in which to get the contents of ``filename``.
+
+		Returns
+		-------
+		str
+			If ``mode`` is ``t``, the contents of ``filename`` as a string.
+
+		bytes
+			If ``mode`` is ``b``, the contests of ``filename`` as raw bytes.
+		'''
+
 		match mode:
 			case 'b':
 				return self.get_bin(filename)

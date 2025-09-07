@@ -24,6 +24,10 @@ __all__ = (
 ResourceConn: TypeAlias = tuple[str, str | int]
 
 class Pins:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, pins: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
 		assert_width: int | None = None
@@ -61,6 +65,10 @@ class Pins:
 		return iter(self.names)
 
 	def map_names(self, mapping: dict[str, str], resource) -> list[str]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		mapped_names: list[str] = []
 		for name in self.names:
 			while ':' in name:
@@ -76,9 +84,17 @@ class Pins:
 def PinsN(
 	names: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
 ) -> Pins:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return Pins(names, dir = dir, invert = True, conn = conn, assert_width = assert_width)
 
 class DiffPairs:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, p: str, n: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
 		assert_width: int | None = None
@@ -109,9 +125,17 @@ class DiffPairs:
 def DiffPairsN(
 	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
 ) -> DiffPairs:
+	'''
+	.. todo:: Document Me
+	'''
+
 	return DiffPairs(p = p, n = n, dir = dir, invert = True, conn = conn, assert_width = assert_width)
 
 class Attrs(OrderedDict[str, int | str | Callable]):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, **attrs: int | str | Callable) -> None:
 		for key, value in attrs.items():
 			if not (value is None or isinstance(value, (str, int)) or hasattr(value, '__call__')):
@@ -129,6 +153,10 @@ class Attrs(OrderedDict[str, int | str | Callable]):
 		return f'(attrs {" ".join(items)})'
 
 class Clock:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, frequency: float | int) -> None:
 		if not isinstance(frequency, (float, int)):
 			raise TypeError('Clock frequency must be a number')
@@ -148,6 +176,7 @@ class Clock:
 		Returns
 		-------
 		Clock
+			An new clock at the given frequency in kilohertz.
 		'''
 		return Clock(frequency * KILO)
 
@@ -164,6 +193,7 @@ class Clock:
 		Returns
 		-------
 		Clock
+			A new clock at the given frequency in megahertz.
 		'''
 		return Clock(frequency * MEGA)
 
@@ -180,11 +210,16 @@ class Clock:
 		Returns
 		-------
 		Clock
+			A new clock at the given frequency in gigahertz.
 		'''
 		return Clock(frequency * GIGA)
 
 	@property
 	def period(self) -> float:
+		'''
+		.. todo:: Document Me
+		'''
+
 		return 1 / self.frequency
 
 	def __repr__(self) -> str:
@@ -193,6 +228,10 @@ class Clock:
 SubsigArgT: TypeAlias = 'Pins | DiffPairs | Subsignal | Attrs | Clock'
 
 class Subsignal:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, name: str, *args: SubsigArgT) -> None:
 		self.name                  = name
 		self.ios: list[SubsigArgT] = []
@@ -247,12 +286,20 @@ class Subsignal:
 		return f'(subsignal {self.name} {self._content_repr()})'
 
 class Resource(Subsignal):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@classmethod
 	def family(
 		cls: type[Resource],
 		name_or_number: str | int, number: int | None = None, *,
 		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
 	) -> Resource:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# This constructor accepts two different forms:
 		#  1. Number-only form:
 		#       Resource.family(0, default_name = 'name', ios = [ Pins('A0 A1') ])
@@ -283,6 +330,10 @@ class Resource(Subsignal):
 		return f'(resource {self.name} {self.number} {self._content_repr()})'
 
 class Connector:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, name: str, number: int, io: str | dict[str, str], *, conn: ResourceConn | None = None) -> None:
 		self.name   = name
 		self.number = number

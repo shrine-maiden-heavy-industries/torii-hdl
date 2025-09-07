@@ -16,6 +16,10 @@ __all__ = (
 )
 
 class ResourceManager:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, resources: list[Resource], connectors: list[Connector]) -> None:
 		self.resources  = OrderedDict[tuple[str, int], Resource]()
 		self._requested = OrderedDict[tuple[str, int], Record | Pin]()
@@ -32,6 +36,10 @@ class ResourceManager:
 		self.add_connectors(connectors)
 
 	def add_resources(self, resources: Iterable[Resource]) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for res in resources:
 			if not isinstance(res, Resource):
 				raise TypeError(f'Object {res!r} is not a Resource')
@@ -43,6 +51,10 @@ class ResourceManager:
 			self.resources[res.name, res.number] = res
 
 	def add_connectors(self, connectors: Iterable[Connector]) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for conn in connectors:
 			if not isinstance(conn, Connector):
 				raise TypeError(f'Object {conn!r} is not a Connector')
@@ -60,6 +72,10 @@ class ResourceManager:
 				self._conn_pins[conn_pin] = plat_pin
 
 	def lookup(self, name: str, number: int = 0) -> Resource:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if (name, number) not in self.resources:
 			raise ResourceError(f'Resource {name}#{number} does not exist')
 
@@ -70,6 +86,10 @@ class ResourceManager:
 		dir: IODirectionEmpty | None = None,
 		xdr: dict[str, int] | None = None
 	) -> Record | Pin:
+		'''
+		.. todo:: Document Me
+		'''
+
 		resource = self.lookup(name, number)
 		if (resource.name, resource.number) in self._requested:
 			raise ResourceError(f'Resource {name}#{number} has already been requested')
@@ -79,6 +99,9 @@ class ResourceManager:
 			dir: IODirectionEmpty | dict[str, IODirectionEmpty] | None,
 			xdr: int | dict[str, int] | None
 		) -> tuple[IODirectionEmpty, int] | tuple[dict[str, IODirectionEmpty], dict[str, int]]:
+			'''
+			.. todo:: Document Me
+			'''
 
 			if isinstance(subsignal.ios[0], Subsignal):
 				if dir is None:
@@ -130,6 +153,10 @@ class ResourceManager:
 			xdr: int | dict[str, int],
 			name: str, attrs: Attrs
 		) -> Record | Pin:
+			'''
+			.. todo:: Document Me
+			'''
+
 			for attr_key, attr_value in attrs.items():
 				if isinstance(attr_value, Callable):
 					attr_value = attr_value(self)
@@ -214,6 +241,10 @@ class ResourceManager:
 	def iter_single_ended_pins(self) -> Generator[tuple[
 		Pin, Record, Attrs, bool, Iterable[str]
 	], None, None]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
@@ -223,6 +254,10 @@ class ResourceManager:
 	def iter_differential_pins(self) -> Generator[tuple[
 		Pin, Record, Attrs, bool, tuple[Iterable[str], Iterable[str]]
 	], None, None]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for res, pin, port, attrs in self._ports:
 			if pin is None:
 				continue
@@ -235,9 +270,17 @@ class ResourceManager:
 	def should_skip_port_component(
 		self, port: Record | None, attrs: Attrs, component: Literal['io', 'i', 'o', 'p', 'n', 'oe']
 	) -> bool:
+		'''
+		.. todo:: Document Me
+		'''
+
 		return False
 
 	def iter_ports(self) -> Generator[ValueCastable | Value, None, None]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
 				if not self.should_skip_port_component(port, attrs, 'io'):
@@ -251,6 +294,10 @@ class ResourceManager:
 				raise TypeError(f'Expected either \'Pins\', or \'DiffPairs\', not \'{res.ios[0]!r}\'')
 
 	def iter_port_constraints(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		for res, pin, port, attrs in self._ports:
 			if isinstance(res.ios[0], Pins):
 				assert isinstance(port.io, Signal)
@@ -269,6 +316,10 @@ class ResourceManager:
 	def iter_port_constraints_bits(self) -> Generator[
 		tuple[str, str, Attrs], None, None
 	]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for port_name, pin_names, attrs in self.iter_port_constraints():
 			if len(pin_names) == 1:
 				yield (port_name, pin_names[0], attrs)
@@ -277,6 +328,10 @@ class ResourceManager:
 					yield (f'{port_name}[{bit}]', pin_name, attrs)
 
 	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if not isinstance(clock, Signal):
 			raise TypeError(f'Object {clock!r} is not a Signal')
 		if not isinstance(frequency, (int, float)):
@@ -293,6 +348,10 @@ class ResourceManager:
 	def iter_clock_constraints(self) -> Generator[
 		tuple[Signal | None, Signal | None, float], None, None
 	]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# Back-propagate constraints through the input buffer. For clock constraints on pins
 		# (the majority of cases), toolchains work better if the constraint is defined on the pin
 		# and not on the buffered internal net; and if the toolchain is advanced enough that

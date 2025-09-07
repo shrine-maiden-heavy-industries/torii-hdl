@@ -35,6 +35,10 @@ __all__ = (
 
 @unique
 class PinFeature(Enum):
+	'''
+	.. todo:: Document Me
+	'''
+
 	DIFF_INOUT    = auto()
 	DIFF_INPUT    = auto()
 	DIFF_OUTPUT   = auto()
@@ -64,29 +68,56 @@ class PinFeature(Enum):
 				return 'single-ended tristate'
 
 class Platform(ResourceManager, metaclass = ABCMeta):
+	'''
+	.. todo:: Document Me
+	'''
+
 	@property
 	@abstractmethod
 	def resources(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
 	def description(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return None
 
 	@property
 	def pretty_name(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return None
 
 	@property
 	def connectors(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		return [] # Connectors are very rarely used, so make declaring them optional
 
 	default_clk    = None
+	''' .. todo:: Document Me '''
+
 	default_rst    = None
+	''' ..todo:: Document Me '''
 
 	@property
 	@abstractmethod
 	def required_tools(self):
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Platform must implement this property')
 
 	def __init__(self) -> None:
@@ -98,6 +129,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	@property
 	def default_clk_constraint(self) -> Clock:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self.default_clk is None:
 			raise AttributeError(f'Platform \'{type(self).__name__}\' does not define a default clock')
 
@@ -105,6 +140,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	@property
 	def default_clk_frequency(self) -> float:
+		'''
+		.. todo:: Document Me
+		'''
+
 		constraint = self.default_clk_constraint
 		if constraint is None:
 			raise AttributeError(f'Platform \'{type(self).__name__}\' does not constrain its default clock')
@@ -112,6 +151,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return constraint.frequency
 
 	def add_file(self, filename: str, content: str | bytes | IO) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if not isinstance(filename, str):
 			raise TypeError(f'File name must be a string, not {filename!r}')
 		if hasattr(content, 'read'):
@@ -126,18 +169,30 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			self.extra_files[filename] = content
 
 	def iter_files(self, *suffixes: str) -> Iterable[str]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for filename in self.extra_files:
 			if filename.endswith(suffixes):
 				yield filename
 
 	@property
 	def _toolchain_env_var(self) -> str:
+		'''
+		.. todo:: Document Me
+		'''
+
 		return f'TORII_ENV_{tool_env_var(self.toolchain)}'
 
 	def build(
 		self, elaboratable: Fragment | Elaboratable, name: str = 'top', build_dir: str = 'build',
 		do_build: bool = True, program_opts: dict[str, str] | None = None, do_program: bool = False, **kwargs
 	) -> BuildPlan | BuildProducts | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# The following code performs a best-effort check for presence of required tools upfront,
 		# before performing any build actions, to provide a better diagnostic. It does not handle
 		# several corner cases:
@@ -166,11 +221,19 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return None
 
 	def has_required_tools(self) -> bool:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._toolchain_env_var in os.environ:
 			return True
 		return all(has_tool(name) for name in self.required_tools)
 
 	def create_missing_domain(self, name: str) -> Module | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# Simple instantiation of a clock domain driven directly by the board clock and reset.
 		# This implementation uses a single ResetSynchronizer to ensure that:
 		#   * an external reset is definitely synchronized to the system clock;
@@ -195,6 +258,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def prepare(
 		self, elaboratable: Fragment | Elaboratable, name: str = 'top', **kwargs
 	) -> BuildPlan:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if self._prepared:
 			raise RuntimeError(f'Design \'{name}\' is already prepared!')
 
@@ -252,6 +319,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None,
 		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
 	) -> None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		if len(valid_xdrs) == 0:
 			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature!s}')
 
@@ -265,6 +336,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	@staticmethod
 	def _invert_if(invert: bool, value):
+		'''
+		.. todo:: Document Me
+		'''
+
 		if invert:
 			return ~value
 		else:
@@ -273,6 +348,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.SE_INPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
 		)
@@ -284,6 +363,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.SE_OUTPUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
 		)
@@ -295,6 +378,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.SE_TRISTATE, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
 		)
@@ -312,6 +399,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: Iterable[str]
 	) -> Module:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.SE_INOUT, pin, attrs, valid_xdrs = (0,), valid_attrs = None, names = names
 		)
@@ -330,6 +421,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
@@ -339,6 +434,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
@@ -348,6 +447,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
@@ -357,6 +460,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	def get_diff_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		self._check_feature(
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
@@ -367,16 +474,28 @@ class TemplatedPlatform(Platform):
 	@property
 	@abstractmethod
 	def toolchain(self) -> str | None:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
 	@abstractmethod
 	def file_templates(self) -> dict[str, str]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Platform must implement this property')
 
 	@property
 	@abstractmethod
 	def command_templates(self) -> list[str]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		raise NotImplementedError('Platform must implement this property')
 
 	build_script_templates = {
@@ -394,10 +513,15 @@ class TemplatedPlatform(Platform):
 			{{emit_commands("bat")}}
 		''',
 	}
+	''' .. todo:: Document Me '''
 
 	def iter_clock_constraints(self) -> Generator[
 		tuple[str, Signal, float], None, None
 	]:
+		'''
+		.. todo:: Document Me
+		'''
+
 		for net_signal, port_signal, frequency in super().iter_clock_constraints():
 			# Skip any clock constraints placed on signals that are never used in the design.
 			# Otherwise, it will cause a crash in the vendor platform if it supports clock
@@ -407,6 +531,10 @@ class TemplatedPlatform(Platform):
 			yield (net_signal, port_signal, frequency)
 
 	def toolchain_prepare(self, fragment: Fragment, name: str, *, emit_src = True, **kwargs) -> BuildPlan:
+		'''
+		.. todo:: Document Me
+		'''
+
 		# Restrict the name of the design to a strict alphanumeric character set. Platforms will
 		# interpolate the name of the design in many different contexts: filesystem paths, Python
 		# scripts, Tcl scripts, ad-hoc constraint files, and so on. It is not practical to add
@@ -433,6 +561,10 @@ class TemplatedPlatform(Platform):
 		def _extract_override(
 			var: str, *, expected_type: type[_ETYPE]
 		) -> jinja2.Undefined | _ETYPE:
+			'''
+			.. todo:: Document Me
+			'''
+
 			var_env = f'TORII_{tool_env_var(var)}'
 			if var_env in os.environ:
 				# On Windows, there is no way to define an "empty but set" variable; it is tempting
@@ -454,18 +586,34 @@ class TemplatedPlatform(Platform):
 				return jinja2.Undefined(name = var)
 
 		def get_override(var: str) -> str | jinja2.Undefined:
+			'''
+			.. todo:: Document Me
+			'''
+
 			value = _extract_override(var, expected_type = str)
 			return value
 
 		def get_override_int(var: str) -> int | jinja2.Undefined:
+			'''
+			.. todo:: Document Me
+			'''
+
 			value = _extract_override(var, expected_type = int)
 			return value
 
 		def get_override_list(var: str) -> Iterable | jinja2.Undefined:
+			'''
+			.. todo:: Document Me
+			'''
+
 			value = _extract_override(var, expected_type = Iterable)
 			return value
 
 		def get_override_flag(var: str) -> bool | jinja2.Undefined:
+			'''
+			.. todo:: Document Me
+			'''
+
 			value = _extract_override(var, expected_type = bool)
 			if isinstance(value, str):
 				value = value.lower()
@@ -481,14 +629,26 @@ class TemplatedPlatform(Platform):
 			return value
 
 		def emit_rtlil() -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			return rtlil_text
 
 		def emit_verilog(opts: tuple[str, ...] = ()) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			return verilog._convert_rtlil_text(
 				rtlil_text, strip_internal_attrs = True, write_verilog_opts = opts
 			)
 
 		def emit_debug_verilog(opts: tuple[str, ...] = ()) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			if not get_override_flag('debug_verilog'):
 				return '/* Debug Verilog generation was disabled. */'
 			else:
@@ -497,6 +657,10 @@ class TemplatedPlatform(Platform):
 				)
 
 		def emit_commands(syntax: Literal['sh', 'bat']) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			commands = []
 
 			for name in self.required_tools:
@@ -527,6 +691,10 @@ class TemplatedPlatform(Platform):
 
 		@jinja2.pass_context
 		def invoke_tool(context, name: str) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			env_var = tool_env_var(name)
 			if context.parent['syntax'] == 'sh':
 				return f'"${env_var}"'
@@ -536,21 +704,37 @@ class TemplatedPlatform(Platform):
 				raise ValueError(f'Shell syntax must be either \'bat\' or \'sh\', not \'{context.parent["syntax"]}\'')
 
 		def options(opts: str | Iterable[str]) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			if isinstance(opts, str):
 				return opts
 			else:
 				return ' '.join(opts)
 
 		def hierarchy(signal, separator):
+			'''
+			.. todo:: Document Me
+			'''
+
 			return separator.join(self._name_map[signal][1:])
 
 		def verbose(arg: str) -> jinja2.Undefined | str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			if get_override_flag('verbose'):
 				return arg
 			else:
 				return jinja2.Undefined(name = 'quiet')
 
 		def quiet(arg: str) -> jinja2.Undefined | str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			if get_override_flag('verbose'):
 				return jinja2.Undefined(name = 'quiet')
 			else:
@@ -559,6 +743,10 @@ class TemplatedPlatform(Platform):
 		def render(
 			source: str, origin: str, syntax: Literal['sh', 'bat'] | None = None
 		) -> str:
+			'''
+			.. todo:: Document Me
+			'''
+
 			try:
 				source   = textwrap.dedent(source).strip()
 				compiled = jinja2.Template(
