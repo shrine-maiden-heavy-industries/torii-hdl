@@ -22,16 +22,25 @@ __all__ = (
 SimulationEngine: TypeAlias = type[BaseEngine] | Literal['pysim']
 
 class Command:
+	'''
+	.. todo:: Document Me
+	'''
+
 	pass
 
 class Settle(Command):
 	'''
-		micro-steps the simulation until just before the next clock cycle would start
+	Micro-steps the simulation until just before the next clock cycle would start
 	'''
+
 	def __repr__(self) -> str:
 		return '(settle)'
 
 class Delay(Command):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(self, interval: int | float | None = None) -> None:
 		self.interval = None if interval is None else float(interval)
 
@@ -43,14 +52,14 @@ class Delay(Command):
 
 class Tick(Command):
 	'''
-		Runs only the transition from high->low->high but does not progress execution
-		further than that.
+	Runs only the transition from high->low->high but does not progress execution
+	further than that.
 
-		.. warning::
-
-			This can cause things to appear out-of-step.
-
+	Warning
+	-------
+	This can cause things to appear out-of-step.
 	'''
+
 	def __init__(self, domain: str | ClockDomain = 'sync') -> None:
 		if not isinstance(domain, (str, ClockDomain)):
 			raise TypeError(f'Domain must be a string or a ClockDomain instance, not {domain!r}')
@@ -63,14 +72,26 @@ class Tick(Command):
 		return f'(tick {self.domain})'
 
 class Passive(Command):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __repr__(self) -> str:
 		return '(passive)'
 
 class Active(Command):
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __repr__(self) -> str:
 		return '(active)'
 
 class Simulator:
+	'''
+	.. todo:: Document Me
+	'''
+
 	def __init__(
 		self, fragment: Fragment | Elaboratable, *, engine: SimulationEngine = 'pysim'
 	) -> None:
@@ -97,6 +118,15 @@ class Simulator:
 		return process
 
 	def add_process(self, process: Callable[[], Generator] | Callable[[], Coroutine]) -> None:
+		'''
+		Add a process that runs purely in the combinatorial domain.
+
+		Parameters
+		----------
+		process: collections.abc.Callable[[], Generator] | collections.abc.Callable[[], Coroutine]
+			The simulation process to add.
+		'''
+
 		process = self._check_process(process)
 
 		def wrapper():
@@ -109,6 +139,18 @@ class Simulator:
 	def add_sync_process(
 		self, process: Callable[[], Generator] | Callable[[], Coroutine], *, domain: str | ClockDomain = 'sync'
 	) -> None:
+		'''
+		Add a process that runs synchronously on a given clock domain.
+
+		Parameters
+		----------
+		process: collections.abc.Callable[[], Generator] | collections.abc.Callable[[], Coroutine]
+			The simulation process to add.
+
+		domain: str | torii.hdl.cd.ClockDomain
+			The clock domain to add this process to.
+		'''
+
 		process = self._check_process(process)
 
 		def wrapper():
@@ -124,26 +166,26 @@ class Simulator:
 		domain: str | ClockDomain = 'sync', if_exists: bool = False
 	) -> None:
 		'''
-		Add a clock process.
+		Add a clock process that drives the clock signal of ``domain`` at a 50% duty cycle.
 
-		Adds a process that drives the clock signal of ``domain`` at a 50% duty cycle.
-
-		Arguments
-		---------
-		period : float
+		Parameters
+		----------
+		period: float
 			Clock period. The process will toggle the ``domain`` clock signal every ``period / 2``
 			seconds.
-		phase : None or float
+
+		phase: None or float
 			Clock phase. The process will wait ``phase`` seconds before the first clock transition.
 			If not specified, defaults to ``period / 2``.
-		domain : str or ClockDomain
+
+		domain: str or ClockDomain
 			Driven clock domain. If specified as a string, the domain with that name is looked up
 			in the root fragment of the simulation.
-		if_exists : bool
+
+		if_exists: bool
 			If ``False`` (the default), raise an error if the driven domain is specified as
 			a string and the root fragment does not have such a domain. If ``True``, do nothing
 			in this case.
-
 		'''
 
 		if isinstance(domain, ClockDomain):
@@ -181,7 +223,6 @@ class Simulator:
 		Reset the simulation.
 
 		Assign the reset value to every signal in the simulation, and restart every user process.
-
 		'''
 
 		self._engine.reset()
@@ -194,8 +235,10 @@ class Simulator:
 		to the closest deadline (if any). If there is an unstable combinatorial loop,
 		this function will never return.
 
-		Returns ``True`` if there are any active processes, ``False`` otherwise.
-
+		Returns
+		-------
+		bool
+			``True`` if there are any active simulation processes, otherwise ``False``.
 		'''
 
 		return self._engine.advance()
@@ -204,10 +247,9 @@ class Simulator:
 		'''
 		Run the simulation while any processes are active.
 
-		Processes added with :meth:`add_process` and :meth:`add_sync_process` are initially active,
+		Processes added with :py:meth:`add_process` and :py:meth:`add_sync_process` are initially active,
 		and may change their status using the ``yield Passive()`` and ``yield Active()`` commands.
-		Processes compiled from HDL and added with :meth:`add_clock` are always passive.
-
+		Processes compiled from HDL and added with :py:meth:`add_clock` are always passive.
 		'''
 
 		while self.advance():
@@ -218,11 +260,20 @@ class Simulator:
 		Run the simulation until it advances to ``deadline``.
 
 		If ``run_passive`` is ``False``, the simulation also stops when there are no active
-		processes, similar to :meth:`run`. Otherwise, the simulation will stop only after it
+		processes, similar to :py:meth:`run`. Otherwise, the simulation will stop only after it
 		advances to or past ``deadline``.
 
+		Danger
+		------
 		If the simulation stops advancing, this function will never return.
 
+		Parameters
+		----------
+		deadline: int
+			The number of simulation steps to set the deadline at.
+
+		run_passive: bool
+			If ``True`` the simulation will only stop once ``deadline`` is reached or passed.
 		'''
 
 		# Convert deadline in seconds into internal 1 ps units
@@ -241,22 +292,26 @@ class Simulator:
 		'''
 		Write waveforms to a Value Change Dump file, optionally populating a GTKWave save file.
 
-		This method returns a context manager. It can be used as: ::
+		This method returns a context manager. It can be used as:
+
+		.. autolink-preface:: from torii.sim import Simulator
+		.. code-block:: Python
 
 			sim = Simulator(frag)
 			sim.add_clock(1e-6)
 			with sim.write_vcd('dump.vcd", "dump.gtkw'):
 				sim.run_until(1e-3)
 
-		Arguments
-		---------
-		vcd_file : str or file-like object
+		Parameters
+		----------
+		vcd_file: typing.IO | str | None
 			Verilog Value Change Dump file or filename.
-		gtkw_file : str or file-like object
-			GTKWave save file or filename.
-		traces : iterable of Signal
-			Signals to display traces for.
 
+		gtkw_file: typing.IO | str | None
+			GTKWave save file or filename.
+
+		traces: collections.abc.Iterable[torii.hdl.ast.Signal]
+			Signals to display traces for.
 		'''
 
 		if self._engine.now != 0:
