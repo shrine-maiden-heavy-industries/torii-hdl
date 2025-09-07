@@ -6,5 +6,4 @@ The {py:mod}`torii.lib.mem` module provides various modules for dealing with thi
 :maxdepth: 2
 
 map
-
 ```
