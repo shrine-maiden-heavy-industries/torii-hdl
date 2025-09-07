@@ -40,11 +40,15 @@ extlinks = {
 	'pypi':  ('https://pypi.org/project/%s/', '%s'),
 }
 
+autodoc_docstring_signature = False
+autodoc_member_order        = 'bysource'
+autodoc_typehints_format    = 'short'
+autodoc_type_aliases        = {
+
+}
+todo_include_todos          = True
 pygments_style              = 'default'
 pygments_dark_style         = 'monokai'
-autodoc_member_order        = 'bysource'
-autodoc_docstring_signature = False
-todo_include_todos          = True
 
 intersphinx_mapping = {
 	'python': ('https://docs.python.org/3', None),
