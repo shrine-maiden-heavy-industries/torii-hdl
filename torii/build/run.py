@@ -38,7 +38,7 @@ class BuildPlan:
 
 	def add_file(self, filename: str, content: str | bytes) -> None:
 		'''
-		Add ``content``, which can be a :class:`str`` or :class:`bytes`, to the build plan
+		Add ``content``, which can be a :py:class:`str`` or :py:class:`bytes`, to the build plan
 		as ``filename``. The file name can be a relative path with directories separated by
 		forward slashes (``/``).
 		'''
@@ -264,8 +264,8 @@ class BuildProducts(metaclass = ABCMeta):
 	@abstractmethod
 	def get(self, filename: str, mode: Literal['b', 't'] = 'b') -> str | bytes:
 		'''
-		Extract ``filename`` from build products, and return it as a :class:`bytes` (if ``mode``
-		is ``"b"``) or a :class:`str` (if ``mode`` is ``"t"``).
+		Extract ``filename`` from build products, and return it as a :py:class:`bytes` (if ``mode``
+		is ``"b"``) or a :py:class:`str` (if ``mode`` is ``"t"``).
 		'''
 		raise NotImplementedError()
 

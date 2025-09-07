@@ -237,8 +237,8 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 	@abstractmethod
 	def toolchain_prepare(self, fragment: Fragment, name: str, **kwargs) -> BuildPlan:
 		'''
-		Convert the ``fragment`` and constraints recorded in this :class:`Platform` into
-		a :class:`BuildPlan`.
+		Convert the ``fragment`` and constraints recorded in this :py:class:`Platform` into
+		a :py:class:`BuildPlan`.
 		'''
 		raise NotImplementedError # :nocov:
 

@@ -43,15 +43,16 @@ def convert_fragment(
 
 	Parameters
 	----------
-	fragment : torii.hdl.ir.Fragment
+	fragment: torii.hdl.ir.Fragment
 		The Torii fragment hierarchy to lower.
-	name : str
+
+	name: str
 		The name of the root fragment module.
 
-	emit_src : bool
+	emit_src: bool
 		Emit source line attributes in the resulting CXXRTL text.
 
-	black_boxes : dict[str, str]
+	black_boxes: dict[str, str]
 		A map of CXXRTL blackboxes to use in the resulting design.
 
 	Returns
@@ -72,19 +73,22 @@ def convert(
 
 	Parameters
 	----------
-	elaboratable : torii.hdl.ir.Elaboratable
-		The Elaboratable to lower into Verilog.
-	name : str
-		The name of the resulting Verilog module.
+	elaboratable: torii.hdl.ir.Elaboratable
+		The Elaboratable to lower into CXXRTL.
 
-	platform : torii.build.plat.Platform
+	name: str
+		The name of the resulting CXXRTL module.
+
+	platform: torii.build.plat.Platform
 		The platform to use for Elaboratable evaluation.
-	ports : list[]
+
+	ports: list[]
 		The list of ports on the top-level module.
-	emit_src : bool
+
+	emit_src: bool
 		Emit source line attributes in the final CXXRTL text.
 
-	black_boxes : dict[str, str]
+	black_boxes: dict[str, str]
 		A map of CXXRTL blackboxes to use in the resulting design.
 
 	Returns
