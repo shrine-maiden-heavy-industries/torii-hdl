@@ -7,7 +7,6 @@ The {py:mod}`torii.lib.coding` module provides building blocks for conversion be
 ```{eval-rst}
 .. autoclass:: torii.lib.coding.Encoder
 .. autoclass:: torii.lib.coding.Decoder
-
 ```
 
 ## Priority coding
@@ -15,7 +14,6 @@ The {py:mod}`torii.lib.coding` module provides building blocks for conversion be
 ```{eval-rst}
 .. autoclass:: torii.lib.coding.PriorityEncoder
 .. autoclass:: torii.lib.coding.PriorityDecoder
-
 ```
 
 ## Gray coding
@@ -23,7 +21,6 @@ The {py:mod}`torii.lib.coding` module provides building blocks for conversion be
 ```{eval-rst}
 .. autoclass:: torii.lib.coding.GrayEncoder
 .. autoclass:: torii.lib.coding.GrayDecoder
-
 ```
 
 ## Consistent Overhead Byte Stuffing
@@ -31,5 +28,4 @@ The {py:mod}`torii.lib.coding` module provides building blocks for conversion be
 ```{eval-rst}
 .. automodule:: torii.lib.coding.cobs
    :members:
-
 ```

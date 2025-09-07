@@ -15,16 +15,16 @@ class Encoder(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Bit width.
 
 	Attributes
 	----------
-	i : Signal(width), in
+	i: Signal(width), in
 		Natural binary input.
-	o : Signal(width), out
-		Encoded Gray code.
 
+	o: Signal(width), out
+		Encoded Gray code.
 	'''
 
 	def __init__(self, width: int) -> None:
@@ -44,16 +44,16 @@ class Decoder(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Bit width.
 
 	Attributes
 	----------
-	i : Signal(width), in
+	i: Signal(width), in
 		Gray code input.
-	o : Signal(width), out
-		Decoded natural binary.
 
+	o: Signal(width), out
+		Decoded natural binary.
 	'''
 
 	def __init__(self, width: int) -> None:

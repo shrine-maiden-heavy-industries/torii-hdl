@@ -18,18 +18,19 @@ class Encoder(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Bit width of the input
 
 	Attributes
 	----------
-	i : Signal(width), in
+	i: Signal(width), in
 		One-hot input.
-	o : Signal(range(width)), out
-		Encoded natural binary.
-	n : Signal, out
-		Invalid: either none or multiple input bits are asserted.
 
+	o: Signal(range(width)), out
+		Encoded natural binary.
+
+	n: Signal, out
+		Invalid: either none or multiple input bits are asserted.
 	'''
 
 	def __init__(self, width: int) -> None:
@@ -58,18 +59,19 @@ class Decoder(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Bit width of the output.
 
 	Attributes
 	----------
-	i : Signal(range(width)), in
+	i: Signal(range(width)), in
 		Input binary.
-	o : Signal(width), out
-		Decoded one-hot.
-	n : Signal, in
-		Invalid, no output bits are to be asserted.
 
+	o: Signal(width), out
+		Decoded one-hot.
+
+	n: Signal, in
+		Invalid, no output bits are to be asserted.
 	'''
 
 	def __init__(self, width: int) -> None:

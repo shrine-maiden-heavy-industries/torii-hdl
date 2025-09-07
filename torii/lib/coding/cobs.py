@@ -25,11 +25,11 @@ class RCOBSEncoder(Elaboratable):
 
 	The algorithm is fairly simple, for each byte in a message, do the following for each byte:
 
-		1. Increment the running total byte counter
-		2. If the byte is ``0x00`` then write the value of the byte counter out and reset it to ``0``
-		3. If it is not, then check to see if the running total counter is about to overflow
-		4. If we are about to overflow, write out ``0xFF`` and reset the counter
-		5. Otherwise, write out the byte
+	1. Increment the running total byte counter
+	2. If the byte is ``0x00`` then write the value of the byte counter out and reset it to ``0``
+	3. If it is not, then check to see if the running total counter is about to overflow
+	4. If we are about to overflow, write out ``0xFF`` and reset the counter
+	5. Otherwise, write out the byte
 
 	This encoder is just a pure implementation of the encoding logic for a single byte, and as such
 	has a collection of status and control signals to indicate to the outside world its status.
@@ -39,24 +39,23 @@ class RCOBSEncoder(Elaboratable):
 
 	Attributes
 	----------
-	raw : Signal(8), in
+	raw: Signal(8), in
 		The raw byte to encode.
 
-	enc : Signal(8), out
+	enc: Signal(8), out
 		The rCOBS encoded byte. Not valid unless ``vld`` signal is high.
 
-	strobe : Signal, in
+	strobe: Signal, in
 		Strobe to signal to encode the byte in ``raw``.
 
-	finish : Signal, in
+	finish: Signal, in
 		Flush the state of the encoder in preparation for next stream.
 
-	ready : Signal, out
+	ready: Signal, out
 		Encoder ready signal, indicates when the encoder is ready for the next byte.
 
-	valid : Signal, out
+	valid: Signal, out
 		Value in ``enc`` is valid and can be latched.
-
 	'''
 
 	def __init__(self) -> None:
@@ -132,7 +131,7 @@ def decode_rcobs(data: bytes | bytearray) -> bytes:
 
 	Parameters
 	----------
-	data : bytes | bytearray
+	data: bytes | bytearray
 		The rCOBS encoded message.
 
 	Returns

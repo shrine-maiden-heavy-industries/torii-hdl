@@ -20,18 +20,19 @@ class Encoder(Elaboratable):
 
 	Parameters
 	----------
-	width : int
+	width: int
 		Bit width of the input.
 
 	Attributes
 	----------
-	i : Signal(width), in
+	i: Signal(width), in
 		Input requests.
-	o : Signal(range(width)), out
-		Encoded natural binary.
-	n : Signal, out
-		Invalid: no input bits are asserted.
 
+	o: Signal(range(width)), out
+		Encoded natural binary.
+
+	n: Signal, out
+		Invalid: no input bits are asserted.
 	'''
 
 	def __init__(self, width: int) -> None:
@@ -54,5 +55,4 @@ class Decoder(OneHotDecoder):
 	Decode binary to priority request.
 
 	Identical to :py:class:`torii.lib.coding.one_hot.Decoder`.
-
 	'''
