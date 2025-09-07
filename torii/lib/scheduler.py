@@ -18,22 +18,24 @@ class RoundRobin(Elaboratable):
 	a greater number, restarting from zero once it reaches the
 	highest one.
 
-	Use :class:`EnableInserter` to control when the scheduler
+	Use :py:class:`EnableInserter` to control when the scheduler
 	is updated.
 
 	Parameters
 	----------
-	count : int
+	count: int
 		Number of requests.
 
 	Attributes
 	----------
-	requests : Signal(count), in
+	requests: Signal(count), in
 		Set of requests.
-	grant : Signal(range(count)), out
+
+	grant: Signal(range(count)), out
 		Number of the granted request. Does not change if there are no
 		active requests.
-	valid : Signal(), out
+
+	valid: Signal(), out
 		Asserted if grant corresponds to an active request. De-asserted
 		otherwise, i.e. if no requests are active.
 
