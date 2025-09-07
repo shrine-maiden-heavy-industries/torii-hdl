@@ -14,13 +14,11 @@ class ice40Warmboot(Elaboratable):
 
 	Attributes
 	----------
-
-	boot_sel : Signal(2)
+	boot_sel: Signal(2)
 		boot slot selection
 
 	boot_strb: Signal
 		Strobe to trigger warmboot
-
 	'''
 
 	def __init__(self) -> None:

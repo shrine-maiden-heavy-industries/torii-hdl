@@ -5,7 +5,6 @@ The {py:mod}`torii.lib.vendor.lattice` module provides wrapper instances for use
 ## iCE40 Blocks
 
 ```{eval-rst}
-
-.. autoclass:: torii.lib.vendor.lattice.ice40.ice40Warmboot
-
+.. automodule:: torii.lib.vendor.lattice.ice40
+  :members:
 ```
