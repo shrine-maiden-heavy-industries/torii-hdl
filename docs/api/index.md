@@ -9,6 +9,7 @@ however it may be deficient or missing in places.
 :maxdepth: 2
 
 backend/index
+diagnostics
 hdl/index
 utility/index
 tools
