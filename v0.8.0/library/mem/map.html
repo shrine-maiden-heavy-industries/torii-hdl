@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -413,53 +413,23 @@ address decoders of peripherals as well as bus bridges. It is built by adding re
 (range allocations for registers, memory, etc) and windows (range allocations for bus bridges),
 and can be queried later to determine the address of any given resource from a specific
 vantage point in the design.</p>
-<section id="address-assignment">
-<h2>Address assignment<a class="headerlink" href="#address-assignment" title="Link to this heading">¶</a></h2>
+<p class="rubric">Address assignment</p>
 <p>To simplify address assignment, each memory map has an implicit next address, starting at 0.
 If a resource or a window is added without specifying an address explicitly, the implicit next
 address is used. In any case, the implicit next address is set to the address immediately
 following the newly added resource or window.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type addr_width<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
-</dd>
-<dt class="field-even">param addr_width<span class="colon">:</span></dt>
-<dd class="field-even"><p>Address width.</p>
-</dd>
-<dt class="field-odd">type addr_width<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-<dt class="field-even">type data_width<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
-</dd>
-<dt class="field-odd">param data_width<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Data width.</p>
-</dd>
-<dt class="field-even">type data_width<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">type alignment<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
-</dd>
-<dt class="field-even">param alignment<span class="colon">:</span></dt>
-<dd class="field-even"><p>Range alignment. Each added resource and window will be placed at an address that is
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width.</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Range alignment. Each added resource and window will be placed at an address that is
 a multiple of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>, and its size will be rounded up to be a multiple of
-<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p>
-</dd>
-<dt class="field-odd">type alignment<span class="colon">:</span></dt>
-<dd class="field-odd"><p>log2 of int</p>
-</dd>
-<dt class="field-even">type name<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-<dt class="field-odd">param name<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Name of the address range. Optional. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p>
-</dd>
-<dt class="field-even">type name<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the address range. Optional. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
 </dd>
 </dl>
-</section>
 </dd></dl>
 
 </section>
@@ -539,7 +509,7 @@ a multiple of <code class="docutils literal notranslate"><span class="pre">2</sp
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

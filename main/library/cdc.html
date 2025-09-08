@@ -20,7 +20,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Clock Domain Crossing - Torii 0.8.1.dev276 Documentation</title>
+<title>Clock Domain Crossing - Torii 0.8.1.dev299 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+      <a href="../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -258,6 +258,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/cd.html">Clock Domain</a></li>
@@ -269,11 +270,13 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/units.html">Unit Helpers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../api/tools.html">Torii Tool Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Standard Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -317,14 +320,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -391,7 +402,47 @@
         <article role="main" id="furo-main-content">
           <section id="clock-domain-crossing">
 <h1>Clock Domain Crossing<a class="headerlink" href="#clock-domain-crossing" title="Link to this heading">¶</a></h1>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.cdc</span></code> module provides building blocks for transferring data between clock domains.</p>
+<p>The <a class="reference internal" href="#module-torii.lib.cdc" title="torii.lib.cdc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.cdc</span></code></a> module provides building blocks for transferring data between clock domains.</p>
+<dl class="py class" id="module-torii.lib.cdc">
+<dt class="sig sig-object py" id="torii.lib.cdc.AsyncFFSynchronizer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">AsyncFFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">o_domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">async_edge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pos'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'neg'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pos'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_input_delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.AsyncFFSynchronizer" title="Link to this definition">¶</a></dt>
+<dd><p>Synchronize de-assertion of an asynchronous signal.</p>
+<p>The signal driven by the <a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a> is asserted asynchronously and de-asserted
+synchronously, eliminating metastability during de-assertion.</p>
+<p>This synchronizer is primarily useful for resets and reset-like signals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Asynchronous input signal, to be synchronized.</p></li>
+<li><p><strong>o</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Synchronously released output signal.</p></li>
+<li><p><strong>o_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of clock domain to synchronize to. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+<li><p><strong>stages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>&gt;=2</em>) – Number of synchronization stages between input and output. The lowest safe number is 2,
+with higher numbers reducing MTBF further, at the cost of increased de-assertion latency. (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
+<li><p><strong>async_edge</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The edge of the input signal which causes the output to be set. Must be one of “pos” or “neg”. (default: <code class="docutils literal notranslate"><span class="pre">'pos'</span></code>)</p></li>
+<li><p><strong>max_input_delay</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
+If specified and the platform does not support it, elaboration will fail. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Platform overrides</p>
+<p>Define the <code class="docutils literal notranslate"><span class="pre">get_async_ff_sync</span></code> platform method to override the implementation of
+<a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a>, e.g. to instantiate library cells directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.cdc.AsyncFFSynchronizer.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.AsyncFFSynchronizer.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.cdc.FFSynchronizer">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">FFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">o_domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_less</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_input_delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.FFSynchronizer" title="Link to this definition">¶</a></dt>
@@ -410,82 +461,84 @@ the <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="to
 reset. See the note below for details. (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
 <li><p><strong>stages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>&gt;=2</em>) – Number of synchronization stages between input and output. The lowest safe number is 2,
 with higher numbers reducing MTBF further, at the cost of increased latency. (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
-<li><p><strong>max_input_delay</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
+<li><p><strong>max_input_delay</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
 If specified and the platform does not support it, elaboration will fail. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>note::</strong> (<em>..</em>) – <p><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> is non-resettable by default. Usually this is the safest option;
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> is non-resettable by default. Usually this is the safest option;
 on FPGAs the <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> will still be initialized to its <code class="docutils literal notranslate"><span class="pre">reset</span></code> value when
 the FPGA loads its configuration.</p>
 <p>However, in designs where the value of the <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> must be valid immediately
 after reset, consider setting <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code> if any of the following is true:</p>
-<ul>
+<ul class="simple">
 <li><p>You are targeting an ASIC, or an FPGA that does not allow arbitrary initial flip-flop states;</p></li>
-<li><p>Your design features warm (non-power-on) resets of <code class="docutils literal notranslate"><span class="pre">o_domain</span></code>, so the one-time
-initialization at power on is insufficient;</p></li>
-<li><p>Your design features a sequenced reset, and the <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> must maintain
-its reset value until <code class="docutils literal notranslate"><span class="pre">o_domain</span></code> reset specifically is de-asserted.</p></li>
-</ul>
-<p><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> is reset by the <code class="docutils literal notranslate"><span class="pre">o_domain</span></code> reset only.</p>
-</p></li>
-</ul>
+<li><dl class="simple">
+<dt>Your design features warm (non-power-on) resets of <code class="docutils literal notranslate"><span class="pre">o_domain</span></code>, so the one-time</dt><dd><p>initialization at power on is insufficient;</p>
 </dd>
 </dl>
+</li>
+<li><dl class="simple">
+<dt>Your design features a sequenced reset, and the <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> must maintain</dt><dd><p>its reset value until <code class="docutils literal notranslate"><span class="pre">o_domain</span></code> reset specifically is de-asserted.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a> is reset by the <code class="docutils literal notranslate"><span class="pre">o_domain</span></code> reset only.</p>
+</div>
 <p class="rubric">Platform overrides</p>
 <p>Define the <code class="docutils literal notranslate"><span class="pre">get_ff_sync</span></code> platform method to override the implementation of
 <a class="reference internal" href="#torii.lib.cdc.FFSynchronizer" title="torii.lib.cdc.FFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a>, e.g. to instantiate library cells directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.cdc.FFSynchronizer.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.FFSynchronizer.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.cdc.AsyncFFSynchronizer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">AsyncFFSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">o_domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">async_edge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pos'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'neg'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pos'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_input_delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.AsyncFFSynchronizer" title="Link to this definition">¶</a></dt>
-<dd><p>Synchronize de-assertion of an asynchronous signal.</p>
-<p>The signal driven by the <a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a> is asserted asynchronously and de-asserted
-synchronously, eliminating metastability during de-assertion.</p>
-<p>This synchronizer is primarily useful for resets and reset-like signals.</p>
+<dt class="sig sig-object py" id="torii.lib.cdc.PulseStretcher">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">PulseStretcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.PulseStretcher" title="Link to this definition">¶</a></dt>
+<dd><p>Stretch a pulse to the given number of cycles.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Asynchronous input signal, to be synchronized.</p></li>
-<li><p><strong>o</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>out</em>) – Synchronously released output signal.</p></li>
-<li><p><strong>o_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of clock domain to synchronize to. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
-<li><p><strong>stages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>&gt;=2</em>) – Number of synchronization stages between input and output. The lowest safe number is 2,
-with higher numbers reducing MTBF further, at the cost of increased de-assertion latency. (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
-<li><p><strong>async_edge</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The edge of the input signal which causes the output to be set. Must be one of “pos” or “neg”. (default: <code class="docutils literal notranslate"><span class="pre">'pos'</span></code>)</p></li>
-<li><p><strong>max_input_delay</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
-If specified and the platform does not support it, elaboration will fail. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>cycles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of cycles to stretch the pulse. (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain that this pulse stretcher runs on. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>i</strong> (<em>Signal</em>) – The input pulse to stretch.</p></li>
+<li><p><strong>o</strong> (<em>Signal</em>) – The stretched pulse.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Platform overrides</p>
-<p>Define the <code class="docutils literal notranslate"><span class="pre">get_async_ff_sync</span></code> platform method to override the implementation of
-<a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a>, e.g. to instantiate library cells directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.cdc.PulseStretcher.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Platform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.PulseStretcher.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.cdc.ResetSynchronizer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">ResetSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_input_delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.ResetSynchronizer" title="Link to this definition">¶</a></dt>
-<dd><p>Synchronize de-assertion of a clock domain reset.</p>
-<p>The reset of the clock domain driven by the <a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer" title="torii.lib.cdc.ResetSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a> is asserted
-asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.</p>
-<p>The driven clock domain could use a reset that is asserted either synchronously or
-asynchronously; a reset is always de-asserted synchronously. A domain with an asynchronously
-asserted reset is useful if the clock of the domain may be gated, yet the domain still
-needs to be reset promptly; otherwise, synchronously asserted reset (the default) should
-be used.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>arst</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Asynchronous reset signal, to be synchronized.</p></li>
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of clock domain to reset. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
-<li><p><strong>stages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>&gt;=2</em>) – Number of synchronization stages between input and output. The lowest safe number is 2,
-with higher numbers reducing MTBF further, at the cost of increased de-assertion latency. (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
-<li><p><strong>max_input_delay</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
-If specified and the platform does not support it, elaboration will fail. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Platform overrides</p>
-<p>Define the <code class="docutils literal notranslate"><span class="pre">get_reset_sync</span></code> platform method to override the implementation of
-<a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer" title="torii.lib.cdc.ResetSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a>, e.g. to instantiate library cells directly.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -506,6 +559,62 @@ with higher numbers reducing MTBF further, at the cost of increased de-assertion
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.cdc.PulseSynchronizer.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.PulseSynchronizer.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.cdc.ResetSynchronizer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.cdc.</span></span><span class="sig-name descname"><span class="pre">ResetSynchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_input_delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.ResetSynchronizer" title="Link to this definition">¶</a></dt>
+<dd><p>Synchronize de-assertion of a clock domain reset.</p>
+<p>The reset of the clock domain driven by the <a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer" title="torii.lib.cdc.ResetSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a> is asserted
+asynchronously and de-asserted synchronously, eliminating metastability during de-assertion.</p>
+<p>The driven clock domain could use a reset that is asserted either synchronously or
+asynchronously; a reset is always de-asserted synchronously. A domain with an asynchronously
+asserted reset is useful if the clock of the domain may be gated, yet the domain still
+needs to be reset promptly; otherwise, synchronously asserted reset (the default) should
+be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arst</strong> (<a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>Signal</em></a><em>(</em><em>1</em><em>)</em><em>, </em><em>in</em>) – Asynchronous reset signal, to be synchronized.</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of clock domain to reset. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+<li><p><strong>stages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>&gt;=2</em>) – Number of synchronization stages between input and output. The lowest safe number is 2,
+with higher numbers reducing MTBF further, at the cost of increased de-assertion latency. (default: <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
+<li><p><strong>max_input_delay</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum delay from the input signal’s clock to the first synchronization stage, in seconds.
+If specified and the platform does not support it, elaboration will fail. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Platform overrides</p>
+<p>Define the <code class="docutils literal notranslate"><span class="pre">get_reset_sync</span></code> platform method to override the implementation of
+<a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer" title="torii.lib.cdc.ResetSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a>, e.g. to instantiate library cells directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.cdc.ResetSynchronizer.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><span class="pre">AsyncFFSynchronizer</span></a></span></span><a class="headerlink" href="#torii.lib.cdc.ResetSynchronizer.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer" title="torii.lib.cdc.AsyncFFSynchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -572,10 +681,26 @@ with higher numbers reducing MTBF further, at the cost of increased de-assertion
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Clock Domain Crossing</a><ul>
-<li><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.cdc.PulseSynchronizer"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.cdc.AsyncFFSynchronizer.elaborate"><code class="docutils literal notranslate"><span class="pre">AsyncFFSynchronizer.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.cdc.FFSynchronizer.elaborate"><code class="docutils literal notranslate"><span class="pre">FFSynchronizer.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.cdc.PulseStretcher"><code class="docutils literal notranslate"><span class="pre">PulseStretcher</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.cdc.PulseStretcher.elaborate"><code class="docutils literal notranslate"><span class="pre">PulseStretcher.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.cdc.PulseSynchronizer"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.cdc.PulseSynchronizer.elaborate"><code class="docutils literal notranslate"><span class="pre">PulseSynchronizer.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.cdc.ResetSynchronizer.elaborate"><code class="docutils literal notranslate"><span class="pre">ResetSynchronizer.elaborate()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -587,7 +712,7 @@ with higher numbers reducing MTBF further, at the cost of increased de-assertion
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../_static/documentation_options.js?v=4698d2f6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

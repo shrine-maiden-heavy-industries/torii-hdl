@@ -17,7 +17,7 @@
 <link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="../utility/index.html" rel="next" title="Torii Utility Library"/><link href="rec.html" rel="prev" title="Records"/>
 <link href="https://torii.shmdn.link/api/hdl/xfrm.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>XFRM - Torii 0.8.1.dev276 Documentation</title>
+<title>XFRM - Torii 0.8.1.dev299 Documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 </a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii HDL Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cd.html">Clock Domain</a></li>
@@ -241,11 +242,13 @@
 </ul>
 </input></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/units.html">Unit Helpers</a></li>
 </ul>
 </input></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
 </ul>
 </input></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -289,14 +292,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -367,6 +378,206 @@
 however it may be deficient or missing in places.</p>
 </div>
 <dl class="py class" id="module-torii.hdl.xfrm">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">DomainCollector</span></span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_ignore">
+<span class="sig-name descname"><span class="pre">on_ignore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_ignore" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Const">
+<span class="sig-name descname"><span class="pre">on_Const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Const" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Signal">
+<span class="sig-name descname"><span class="pre">on_Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Signal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_AnyValue">
+<span class="sig-name descname"><span class="pre">on_AnyValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_AnyValue" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_ClockSignal">
+<span class="sig-name descname"><span class="pre">on_ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_ClockSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_ResetSignal">
+<span class="sig-name descname"><span class="pre">on_ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_ResetSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Operator">
+<span class="sig-name descname"><span class="pre">on_Operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Operator" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Slice">
+<span class="sig-name descname"><span class="pre">on_Slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Slice" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Part">
+<span class="sig-name descname"><span class="pre">on_Part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Part" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id10">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Cat">
+<span class="sig-name descname"><span class="pre">on_Cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Cat" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id11">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_ArrayProxy">
+<span class="sig-name descname"><span class="pre">on_ArrayProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_ArrayProxy" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id12">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Sample">
+<span class="sig-name descname"><span class="pre">on_Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Sample" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id13">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Initial">
+<span class="sig-name descname"><span class="pre">on_Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Initial" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id14">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Assign">
+<span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id15">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Property">
+<span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id16">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_Switch">
+<span class="sig-name descname"><span class="pre">on_Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_Switch" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id17">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_statements">
+<span class="sig-name descname"><span class="pre">on_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id18">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainCollector.on_fragment">
+<span class="sig-name descname"><span class="pre">on_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainCollector.on_fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id19">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">DomainLowerer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id20">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer.map_drivers">
+<span class="sig-name descname"><span class="pre">map_drivers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer.map_drivers" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id21">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer.replace_value_src_loc">
+<span class="sig-name descname"><span class="pre">replace_value_src_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer.replace_value_src_loc" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id22">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer.on_ClockSignal">
+<span class="sig-name descname"><span class="pre">on_ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer.on_ClockSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id23">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer.on_ResetSignal">
+<span class="sig-name descname"><span class="pre">on_ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer.on_ResetSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id24">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainLowerer.on_fragment">
+<span class="sig-name descname"><span class="pre">on_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainLowerer.on_fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id25">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">DomainRenamer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer" title="Link to this definition">¶</a></dt>
 <dd><p>Rename domains on given Elaboratable or Module.</p>
@@ -392,16 +603,680 @@ and the value is the new domain.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – When trying to rename a domain to/from <code class="docutils literal notranslate"><span class="pre">comb</span></code> to any other domain.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer.on_ClockSignal">
+<span class="sig-name descname"><span class="pre">on_ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer.on_ClockSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id26">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer.on_ResetSignal">
+<span class="sig-name descname"><span class="pre">on_ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer.on_ResetSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id27">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer.map_domains">
+<span class="sig-name descname"><span class="pre">map_domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer.map_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id28">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer.map_drivers">
+<span class="sig-name descname"><span class="pre">map_drivers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer.map_drivers" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id29">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.DomainRenamer.map_memory_ports">
+<span class="sig-name descname"><span class="pre">map_memory_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.DomainRenamer.map_memory_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id30">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.xfrm.EnableInserter">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">EnableInserter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controls</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.EnableInserter" title="Link to this definition">¶</a></dt>
 <dd><p>Inject a synchronous enable signal into the given Elaboratable.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.EnableInserter.on_fragment">
+<span class="sig-name descname"><span class="pre">on_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.EnableInserter.on_fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id31">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">FragmentTransformer</span></span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id32">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_subfragments">
+<span class="sig-name descname"><span class="pre">map_subfragments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_subfragments" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id33">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_ports">
+<span class="sig-name descname"><span class="pre">map_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id34">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_named_ports">
+<span class="sig-name descname"><span class="pre">map_named_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_named_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id35">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_domains">
+<span class="sig-name descname"><span class="pre">map_domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id36">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_statements">
+<span class="sig-name descname"><span class="pre">map_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id37">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_drivers">
+<span class="sig-name descname"><span class="pre">map_drivers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_drivers" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id38">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.map_memory_ports">
+<span class="sig-name descname"><span class="pre">map_memory_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.map_memory_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id39">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.FragmentTransformer.on_fragment">
+<span class="sig-name descname"><span class="pre">on_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.FragmentTransformer.on_fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id40">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">LHSGroupAnalyzer</span></span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id41">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.find" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id42">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">leaves</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.unify" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id43">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.groups">
+<span class="sig-name descname"><span class="pre">groups</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.groups" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id44">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.on_Assign">
+<span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id45">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.on_Property">
+<span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id46">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.on_Switch">
+<span class="sig-name descname"><span class="pre">on_Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Switch" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id47">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupAnalyzer.on_statements">
+<span class="sig-name descname"><span class="pre">on_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id48">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupFilter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">LHSGroupFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signals</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupFilter" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id49">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupFilter.on_Assign">
+<span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupFilter.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id50">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.LHSGroupFilter.on_Property">
+<span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.LHSGroupFilter.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id51">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.xfrm.ResetInserter">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">ResetInserter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controls</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.ResetInserter" title="Link to this definition">¶</a></dt>
 <dd><p>Inject a synchronous reset signal into the given Elaboratable.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleDomainInjector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">SampleDomainInjector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.SampleDomainInjector" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id52">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleDomainInjector.on_Sample">
+<span class="sig-name descname"><span class="pre">on_Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SampleDomainInjector.on_Sample" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id53">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleLowerer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">SampleLowerer</span></span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.SampleLowerer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id54">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleLowerer.on_Sample">
+<span class="sig-name descname"><span class="pre">on_Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SampleLowerer.on_Sample" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id55">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleLowerer.on_Initial">
+<span class="sig-name descname"><span class="pre">on_Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SampleLowerer.on_Initial" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id56">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SampleLowerer.map_statements">
+<span class="sig-name descname"><span class="pre">map_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fragment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SampleLowerer.map_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id57">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">StatementTransformer</span></span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id58">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer.on_value">
+<span class="sig-name descname"><span class="pre">on_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer.on_value" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id59">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer.on_Assign">
+<span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id60">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer.on_Property">
+<span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id61">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer.on_Switch">
+<span class="sig-name descname"><span class="pre">on_Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer.on_Switch" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id62">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementTransformer.on_statements">
+<span class="sig-name descname"><span class="pre">on_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementTransformer.on_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id63">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">StatementVisitor</span></span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id64">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_Assign">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id65">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_Property">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id66">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_Switch">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_Switch" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id67">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_statements">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id68">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_unknown_statement">
+<span class="sig-name descname"><span class="pre">on_unknown_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_unknown_statement" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id69">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.replace_statement_src_loc">
+<span class="sig-name descname"><span class="pre">replace_statement_src_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.replace_statement_src_loc" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id70">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.StatementVisitor.on_statement">
+<span class="sig-name descname"><span class="pre">on_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.StatementVisitor.on_statement" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id71">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">SwitchCleaner</span></span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id72">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner.on_ignore">
+<span class="sig-name descname"><span class="pre">on_ignore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner.on_ignore" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id73">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner.on_Assign">
+<span class="sig-name descname"><span class="pre">on_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner.on_Assign" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id74">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner.on_Property">
+<span class="sig-name descname"><span class="pre">on_Property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner.on_Property" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id75">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner.on_Switch">
+<span class="sig-name descname"><span class="pre">on_Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner.on_Switch" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id76">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.SwitchCleaner.on_statements">
+<span class="sig-name descname"><span class="pre">on_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.SwitchCleaner.on_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id77">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.TransformedElaboratable">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">TransformedElaboratable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.xfrm.TransformedElaboratable" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id78">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.TransformedElaboratable.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.TransformedElaboratable.elaborate" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id79">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">ValueTransformer</span></span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id80">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Const">
+<span class="sig-name descname"><span class="pre">on_Const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Const" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id81">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Signal">
+<span class="sig-name descname"><span class="pre">on_Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Signal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id82">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_ClockSignal">
+<span class="sig-name descname"><span class="pre">on_ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_ClockSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id83">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_ResetSignal">
+<span class="sig-name descname"><span class="pre">on_ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_ResetSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id84">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_AnyValue">
+<span class="sig-name descname"><span class="pre">on_AnyValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_AnyValue" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id85">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Operator">
+<span class="sig-name descname"><span class="pre">on_Operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Operator" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id86">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Slice">
+<span class="sig-name descname"><span class="pre">on_Slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Slice" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id87">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Part">
+<span class="sig-name descname"><span class="pre">on_Part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Part" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id88">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Cat">
+<span class="sig-name descname"><span class="pre">on_Cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Cat" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id89">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_ArrayProxy">
+<span class="sig-name descname"><span class="pre">on_ArrayProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_ArrayProxy" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id90">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Sample">
+<span class="sig-name descname"><span class="pre">on_Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Sample" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id91">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueTransformer.on_Initial">
+<span class="sig-name descname"><span class="pre">on_Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueTransformer.on_Initial" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id92">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.xfrm.</span></span><span class="sig-name descname"><span class="pre">ValueVisitor</span></span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id93">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Const">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Const" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id94">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Signal">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Signal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id95">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_ClockSignal">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_ClockSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_ClockSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id96">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_ResetSignal">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_ResetSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_ResetSignal" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id97">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_AnyValue">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_AnyValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_AnyValue" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id98">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Operator">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Operator" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id99">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Slice">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Slice" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id100">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Part">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Part" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id101">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Cat">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Cat" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id102">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_ArrayProxy">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_ArrayProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_ArrayProxy" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id103">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Sample">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Sample" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id104">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_Initial">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_Initial" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id105">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_unknown_value">
+<span class="sig-name descname"><span class="pre">on_unknown_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_unknown_value" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id106">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.replace_value_src_loc">
+<span class="sig-name descname"><span class="pre">replace_value_src_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.replace_value_src_loc" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id107">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.xfrm.ValueVisitor.on_value">
+<span class="sig-name descname"><span class="pre">on_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.xfrm.ValueVisitor.on_value" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id108">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
 </dd></dl>
 </section>
 <script type="text/javascript">
@@ -458,9 +1333,147 @@ and the value is the new domain.</p>
 <div class="toc-tree">
 <ul>
 <li><a class="reference internal" href="#">XFRM</a><ul>
-<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a></li>
-<li><a class="reference internal" href="#torii.hdl.xfrm.EnableInserter"><code class="docutils literal notranslate"><span class="pre">EnableInserter</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector"><code class="docutils literal notranslate"><span class="pre">DomainCollector</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_ignore"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_ignore()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Const"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Const()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Signal"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Signal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_AnyValue"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_AnyValue()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_ClockSignal"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_ClockSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_ResetSignal"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_ResetSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Operator"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Operator()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Slice"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Slice()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Part"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Part()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Cat"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Cat()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_ArrayProxy"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_ArrayProxy()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Sample"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Sample()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Initial"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Initial()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Assign"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Property"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Property()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_Switch"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_Switch()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_statements"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_statements()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainCollector.on_fragment"><code class="docutils literal notranslate"><span class="pre">DomainCollector.on_fragment()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer"><code class="docutils literal notranslate"><span class="pre">DomainLowerer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer.map_drivers"><code class="docutils literal notranslate"><span class="pre">DomainLowerer.map_drivers()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer.replace_value_src_loc"><code class="docutils literal notranslate"><span class="pre">DomainLowerer.replace_value_src_loc()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer.on_ClockSignal"><code class="docutils literal notranslate"><span class="pre">DomainLowerer.on_ClockSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer.on_ResetSignal"><code class="docutils literal notranslate"><span class="pre">DomainLowerer.on_ResetSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainLowerer.on_fragment"><code class="docutils literal notranslate"><span class="pre">DomainLowerer.on_fragment()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer"><code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer.on_ClockSignal"><code class="docutils literal notranslate"><span class="pre">DomainRenamer.on_ClockSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer.on_ResetSignal"><code class="docutils literal notranslate"><span class="pre">DomainRenamer.on_ResetSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer.map_domains"><code class="docutils literal notranslate"><span class="pre">DomainRenamer.map_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer.map_drivers"><code class="docutils literal notranslate"><span class="pre">DomainRenamer.map_drivers()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.DomainRenamer.map_memory_ports"><code class="docutils literal notranslate"><span class="pre">DomainRenamer.map_memory_ports()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.EnableInserter"><code class="docutils literal notranslate"><span class="pre">EnableInserter</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.EnableInserter.on_fragment"><code class="docutils literal notranslate"><span class="pre">EnableInserter.on_fragment()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_subfragments"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_subfragments()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_ports"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_named_ports"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_named_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_domains"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_statements"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_statements()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_drivers"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_drivers()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.map_memory_ports"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.map_memory_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.FragmentTransformer.on_fragment"><code class="docutils literal notranslate"><span class="pre">FragmentTransformer.on_fragment()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.find"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.find()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.unify"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.unify()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.groups"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.groups()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Assign"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Property"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.on_Property()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_Switch"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.on_Switch()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupAnalyzer.on_statements"><code class="docutils literal notranslate"><span class="pre">LHSGroupAnalyzer.on_statements()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupFilter"><code class="docutils literal notranslate"><span class="pre">LHSGroupFilter</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupFilter.on_Assign"><code class="docutils literal notranslate"><span class="pre">LHSGroupFilter.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.LHSGroupFilter.on_Property"><code class="docutils literal notranslate"><span class="pre">LHSGroupFilter.on_Property()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#torii.hdl.xfrm.ResetInserter"><code class="docutils literal notranslate"><span class="pre">ResetInserter</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleDomainInjector"><code class="docutils literal notranslate"><span class="pre">SampleDomainInjector</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleDomainInjector.on_Sample"><code class="docutils literal notranslate"><span class="pre">SampleDomainInjector.on_Sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleLowerer"><code class="docutils literal notranslate"><span class="pre">SampleLowerer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleLowerer.on_Sample"><code class="docutils literal notranslate"><span class="pre">SampleLowerer.on_Sample()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleLowerer.on_Initial"><code class="docutils literal notranslate"><span class="pre">SampleLowerer.on_Initial()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SampleLowerer.map_statements"><code class="docutils literal notranslate"><span class="pre">SampleLowerer.map_statements()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer"><code class="docutils literal notranslate"><span class="pre">StatementTransformer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer.on_value"><code class="docutils literal notranslate"><span class="pre">StatementTransformer.on_value()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer.on_Assign"><code class="docutils literal notranslate"><span class="pre">StatementTransformer.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer.on_Property"><code class="docutils literal notranslate"><span class="pre">StatementTransformer.on_Property()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer.on_Switch"><code class="docutils literal notranslate"><span class="pre">StatementTransformer.on_Switch()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementTransformer.on_statements"><code class="docutils literal notranslate"><span class="pre">StatementTransformer.on_statements()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor"><code class="docutils literal notranslate"><span class="pre">StatementVisitor</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_Assign"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_Property"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_Property()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_Switch"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_Switch()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_statements"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_statements()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_unknown_statement"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_unknown_statement()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.replace_statement_src_loc"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.replace_statement_src_loc()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.StatementVisitor.on_statement"><code class="docutils literal notranslate"><span class="pre">StatementVisitor.on_statement()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner.on_ignore"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner.on_ignore()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner.on_Assign"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner.on_Assign()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner.on_Property"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner.on_Property()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner.on_Switch"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner.on_Switch()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.SwitchCleaner.on_statements"><code class="docutils literal notranslate"><span class="pre">SwitchCleaner.on_statements()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.TransformedElaboratable"><code class="docutils literal notranslate"><span class="pre">TransformedElaboratable</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.TransformedElaboratable.elaborate"><code class="docutils literal notranslate"><span class="pre">TransformedElaboratable.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer"><code class="docutils literal notranslate"><span class="pre">ValueTransformer</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Const"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Const()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Signal"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Signal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_ClockSignal"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_ClockSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_ResetSignal"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_ResetSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_AnyValue"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_AnyValue()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Operator"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Operator()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Slice"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Slice()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Part"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Part()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Cat"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Cat()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_ArrayProxy"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_ArrayProxy()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Sample"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Sample()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueTransformer.on_Initial"><code class="docutils literal notranslate"><span class="pre">ValueTransformer.on_Initial()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor"><code class="docutils literal notranslate"><span class="pre">ValueVisitor</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Const"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Const()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Signal"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Signal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_ClockSignal"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_ClockSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_ResetSignal"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_ResetSignal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_AnyValue"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_AnyValue()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Operator"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Operator()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Slice"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Slice()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Part"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Part()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Cat"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Cat()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_ArrayProxy"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_ArrayProxy()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Sample"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Sample()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_Initial"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_Initial()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_unknown_value"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_unknown_value()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.replace_value_src_loc"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.replace_value_src_loc()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.xfrm.ValueVisitor.on_value"><code class="docutils literal notranslate"><span class="pre">ValueVisitor.on_value()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -469,7 +1482,7 @@ and the value is the new domain.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -18,7 +18,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Wishbone Bus - Torii 0.8.1.dev276 Documentation</title>
+<title>Wishbone Bus - Torii 0.8.1.dev299 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -231,7 +231,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -256,6 +256,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/hdl/cd.html">Clock Domain</a></li>
@@ -267,11 +268,13 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/utility/units.html">Unit Helpers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/tools.html">Torii Tool Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Standard Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -315,14 +318,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -387,18 +398,175 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="wishbone-bus">
-<h1>Wishbone Bus<a class="headerlink" href="#wishbone-bus" title="Link to this heading">¶</a></h1>
+          <section id="module-torii.lib.bus.wishbone">
+<span id="wishbone-bus"></span><h1>Wishbone Bus<a class="headerlink" href="#module-torii.lib.bus.wishbone" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">CycleType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType" title="Link to this definition">¶</a></dt>
-<dd><p>Wishbone Registered Feedback cycle type.</p>
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Arbiter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Arbiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'rty'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'err'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'stall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cti'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bte'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({})</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Arbiter" title="Link to this definition">¶</a></dt>
+<dd><p>Wishbone bus arbiter.</p>
+<p>A round-robin arbiter for initiators accessing a shared Wishbone bus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>bus</strong> (<em>Interface</em>) – Shared Wishbone bus.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Arbiter.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intr_bus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="pre">Interface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Arbiter.add" title="Link to this definition">¶</a></dt>
+<dd><p>Add an initiator bus to the arbiter.</p>
+<p>The initiator bus must have the same address width and data width as the arbiter. The
+granularity of the initiator bus must be greater than or equal to the granularity of
+the arbiter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Arbiter.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Arbiter.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">BurstTypeExt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt" title="Link to this definition">¶</a></dt>
 <dd><p>Wishbone Registered Feedback burst type extension.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt.LINEAR">
+<span class="sig-name descname"><span class="pre">LINEAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt.LINEAR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt.WRAP_4">
+<span class="sig-name descname"><span class="pre">WRAP_4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_4" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt.WRAP_8">
+<span class="sig-name descname"><span class="pre">WRAP_8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.BurstTypeExt.WRAP_16">
+<span class="sig-name descname"><span class="pre">WRAP_16</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_16" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">CycleType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType" title="Link to this definition">¶</a></dt>
+<dd><p>Wishbone Registered Feedback cycle type.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType.CLASSIC">
+<span class="sig-name descname"><span class="pre">CLASSIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType.CLASSIC" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType.CONST_BURST">
+<span class="sig-name descname"><span class="pre">CONST_BURST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType.CONST_BURST" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType.INCR_BURST">
+<span class="sig-name descname"><span class="pre">INCR_BURST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType.INCR_BURST" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.CycleType.END_OF_BURST">
+<span class="sig-name descname"><span class="pre">END_OF_BURST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#torii.lib.bus.wishbone.CycleType.END_OF_BURST" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'rty'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'err'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'stall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cti'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bte'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder" title="Link to this definition">¶</a></dt>
+<dd><p>Wishbone bus decoder.</p>
+<p>An address decoder for subordinate Wishbone buses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <code class="xref py py-class docutils literal notranslate"><span class="pre">memory.MemoryMap</span></code> (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder.bus">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="pre">Interface</span></a></em><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder.bus" title="Link to this definition">¶</a></dt>
+<dd><p>Wishbone bus providing access to subordinate buses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder.align_to">
+<span class="sig-name descname"><span class="pre">align_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder.align_to" title="Link to this definition">¶</a></dt>
+<dd><p>Align the implicit address of the next window.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MemoryMap.align_to()</span></code> for details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_bus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="pre">Interface</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder.add" title="Link to this definition">¶</a></dt>
+<dd><p>Add a window to a subordinate bus.</p>
+<p>The decoder can perform either sparse or dense address translation. If dense address
+translation is used (the default), the subordinate bus must have the same data width as
+the decoder; the window will be contiguous. If sparse address translation is used,
+the subordinate bus may have data width less than the data width of the decoder;
+the window may be discontiguous. In either case, the granularity of the subordinate bus
+must be equal to or less than the granularity of the decoder.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">MemoryMap.add_resource()</span></code> for details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -425,8 +593,6 @@ One of 8, 16, 32, 64. (default: <code class="docutils literal notranslate"><span
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>The correspondence between the Torii-SoC signals and the Wishbone signals changes depending</strong></p></li>
-<li><p><strong>on whether the interface acts as an initiator or a target.</strong></p></li>
 <li><p><strong>adr</strong> (<em>Signal(addr_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">ADR_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">ADR_I</span></code> (target).</p></li>
 <li><p><strong>dat_w</strong> (<em>Signal(data_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (target).</p></li>
 <li><p><strong>dat_r</strong> (<em>Signal(data_width)</em>) – Corresponds to Wishbone signal <code class="docutils literal notranslate"><span class="pre">DAT_I</span></code> (initiator) or <code class="docutils literal notranslate"><span class="pre">DAT_O</span></code> (target).</p></li>
@@ -447,48 +613,11 @@ the <code class="docutils literal notranslate"><span class="pre">lock</span></co
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Decoder">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'rty'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'err'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'stall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cti'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bte'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Decoder" title="Link to this definition">¶</a></dt>
-<dd><p>Wishbone bus decoder.</p>
-<p>An address decoder for subordinate Wishbone buses.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
-<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <code class="xref py py-class docutils literal notranslate"><span class="pre">memory.MemoryMap</span></code> (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Window name. Optional. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Wishbone bus providing access to subordinate buses.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="torii.lib.bus.wishbone.Arbiter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.lib.bus.wishbone.</span></span><span class="sig-name descname"><span class="pre">Arbiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'rty'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'err'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'stall'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cti'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bte'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">frozenset({})</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.bus.wishbone.Arbiter" title="Link to this definition">¶</a></dt>
-<dd><p>Wishbone bus arbiter.</p>
-<p>A round-robin arbiter for initiators accessing a shared Wishbone bus.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>bus</strong> (<a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>) – Shared Wishbone bus.</p>
-</dd>
-</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The correspondence between the <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.soc</span></code> signals and the Wishbone signals changes depending
+on whether the interface acts as an initiator or a target.</p>
+</div>
 </dd></dl>
 
 </section>
@@ -555,11 +684,33 @@ the <code class="docutils literal notranslate"><span class="pre">lock</span></co
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Wishbone Bus</a><ul>
-<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Arbiter.add"><code class="docutils literal notranslate"><span class="pre">Arbiter.add()</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Arbiter.elaborate"><code class="docutils literal notranslate"><span class="pre">Arbiter.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt.LINEAR"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt.LINEAR</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_4"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt.WRAP_4</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_8"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt.WRAP_8</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.BurstTypeExt.WRAP_16"><code class="docutils literal notranslate"><span class="pre">BurstTypeExt.WRAP_16</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType"><code class="docutils literal notranslate"><span class="pre">CycleType</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType.CLASSIC"><code class="docutils literal notranslate"><span class="pre">CycleType.CLASSIC</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType.CONST_BURST"><code class="docutils literal notranslate"><span class="pre">CycleType.CONST_BURST</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType.INCR_BURST"><code class="docutils literal notranslate"><span class="pre">CycleType.INCR_BURST</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.CycleType.END_OF_BURST"><code class="docutils literal notranslate"><span class="pre">CycleType.END_OF_BURST</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a><ul>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder.bus"><code class="docutils literal notranslate"><span class="pre">Decoder.bus</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder.align_to"><code class="docutils literal notranslate"><span class="pre">Decoder.align_to()</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder.add"><code class="docutils literal notranslate"><span class="pre">Decoder.add()</span></code></a></li>
+<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder.elaborate"><code class="docutils literal notranslate"><span class="pre">Decoder.elaborate()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#torii.lib.bus.wishbone.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.bus.wishbone.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a></li>
-<li><a class="reference internal" href="#torii.lib.bus.wishbone.Arbiter"><code class="docutils literal notranslate"><span class="pre">Arbiter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -571,7 +722,7 @@ the <code class="docutils literal notranslate"><span class="pre">lock</span></co
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

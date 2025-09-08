@@ -14,10 +14,10 @@
 <meta content="https://torii.shmdn.link/_images/social_previews/summary_api_utility_units_5ef8cb31.png" property="og:image"/>
 <meta content="" property="og:image:alt"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="../../library/index.html" rel="next" title="Standard Library"/><link href="tracer.html" rel="prev" title="Tracer"/>
+<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="../tools.html" rel="next" title="Torii Tool Interface"/><link href="tracer.html" rel="prev" title="Tracer"/>
 <link href="https://torii.shmdn.link/api/utility/units.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Unit Helpers - Torii 0.8.1.dev276 Documentation</title>
+<title>Unit Helpers - Torii 0.8.1.dev299 Documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 </a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a></li>
@@ -241,11 +242,13 @@
 </ul>
 </input></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii Utility Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tracer.html">Tracer</a></li>
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Unit Helpers</a></li>
 </ul>
 </input></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
 </ul>
 </input></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -289,14 +292,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -359,23 +370,18 @@
 </label>
 </div>
 <article id="furo-main-content" role="main">
-<section id="unit-helpers">
-<h1>Unit Helpers<a class="headerlink" href="#unit-helpers" title="Link to this heading">¶</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The Torii API reference is a work in progress and we are actively working on improving it,
-however it may be deficient or missing in places.</p>
-</div>
-<dl class="py function" id="module-torii.util.units">
+<section id="module-torii.util.units">
+<span id="unit-helpers"></span><h1>Unit Helpers<a class="headerlink" href="#module-torii.util.units" title="Link to this heading">¶</a></h1>
+<dl class="py function">
 <dt class="sig sig-object py" id="torii.util.units.bits_for">
 <span class="sig-prename descclassname"><span class="pre">torii.util.units.</span></span><span class="sig-name descname"><span class="pre">bits_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.SupportsIndex" title="(in Python v3.13)"><span class="pre">SupportsIndex</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_sign_bit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#torii.util.units.bits_for" title="Link to this definition">¶</a></dt>
-<dd><p>Get the number of bits needed to represent the integer value <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<dd><p>Get the number of bits needed to represent the integer value <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<em>SupportsIndex</em>) – The value to find the number of bits to fit for.</p></li>
-<li><p><strong>require_sign_bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">value</span></code> is signed, requiring us to add a sign bit. This is calculated automatically
-if <code class="docutils literal notranslate"><span class="pre">value</span></code> is less than <code class="docutils literal notranslate"><span class="pre">0</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.SupportsIndex" title="(in Python v3.13)"><em>SupportsIndex</em></a>) – The value to find the number of bits to fit for.</p></li>
+<li><p><strong>require_sign_bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">value</span></code> is signed, add an extra bit to ensure we can store the signed value. This is
+done automatically if <code class="docutils literal notranslate"><span class="pre">value</span></code> is less than <code class="docutils literal notranslate"><span class="pre">0</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -394,7 +400,7 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The minimum number of bits needed to represent <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
+<dd class="field-odd"><p>The minimum number of bits needed to represent <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
@@ -437,7 +443,7 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 <dd><p>Calculate the integer result of <code class="docutils literal notranslate"><span class="pre">⌈log₂(value)⌉</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<em>SupportsIndex</em>) – The value to calculate the <code class="docutils literal notranslate"><span class="pre">⌈log₂(value)⌉</span></code> for.</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.SupportsIndex" title="(in Python v3.13)"><em>SupportsIndex</em></a>) – The value to calculate the <code class="docutils literal notranslate"><span class="pre">⌈log₂(value)⌉</span></code> for.</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -451,13 +457,13 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The integer log₂ of smallest power of 2 that is equal to or greater than <code class="docutils literal notranslate"><span class="pre">value</span></code></p>
+<dd class="field-odd"><p>The integer <code class="docutils literal notranslate"><span class="pre">log₂</span></code> of smallest power of 2 that is equal to or greater than <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – when <code class="docutils literal notranslate"><span class="pre">value</span></code> is negative</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – when <code class="docutils literal notranslate"><span class="pre">value</span></code> is negative.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -467,7 +473,7 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 <dd><p>Calculate the integer result of <code class="docutils literal notranslate"><span class="pre">log₂(value)</span></code> where <code class="docutils literal notranslate"><span class="pre">value</span></code> is an exact power of 2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<em>SupportsIndex</em>) – The value to calculate the <code class="docutils literal notranslate"><span class="pre">log₂(value)</span></code> for.</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.SupportsIndex" title="(in Python v3.13)"><em>SupportsIndex</em></a>) – The value to calculate the <code class="docutils literal notranslate"><span class="pre">log₂(value)</span></code> for.</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -492,7 +498,7 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – when <code class="docutils literal notranslate"><span class="pre">value</span></code> is  not a power of 2</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – when <code class="docutils literal notranslate"><span class="pre">value</span></code> is  not a power of <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -723,12 +729,12 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 </div>
 <footer>
 <div class="related-pages">
-<a class="next-page" href="../../library/index.html">
+<a class="next-page" href="../tools.html">
 <div class="page-info">
 <div class="context">
 <span>Next</span>
 </div>
-<div class="title">Standard Library</div>
+<div class="title">Torii Tool Interface</div>
 </div>
 <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
 </a>
@@ -787,7 +793,7 @@ if <code class="docutils literal notranslate"><span class="pre">value</span></co
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

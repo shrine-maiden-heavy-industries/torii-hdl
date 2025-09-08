@@ -19,7 +19,7 @@
 <link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="../projects.html" rel="next" title="Projects Using Torii"/><link href="index.html" rel="prev" title="Tutorials"/>
 <link href="https://torii.shmdn.link/tutorials/external_modules.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Including External non-Torii Modules - Torii 0.8.1.dev276 Documentation</title>
+<title>Including External non-Torii Modules - Torii 0.8.1.dev299 Documentation</title>
 <link href="../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -186,7 +186,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -208,7 +208,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 </a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -232,6 +232,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/cd.html">Clock Domain</a></li>
@@ -243,11 +244,13 @@
 </ul>
 </input></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/units.html">Unit Helpers</a></li>
 </ul>
 </input></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/tools.html">Torii Tool Interface</a></li>
 </ul>
 </input></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -291,14 +294,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -409,21 +420,21 @@
 <p>When you are using a generated or a raw <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a> module, then you need to tell torii to include it so it can properly synthesize, you do this with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">torii.build.plat.Platform.add_file()</span></code> method, it takes the name and contents of a file to add to the sources collection which is then used in the synthesis step.</p>
 <p>An example Torii elaboratable for a <a class="reference external" href="https://ieeexplore.ieee.org/document/1620780">Verilog</a>  module would look like this:</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="pathlib"><span class="nn">pathlib</span></a><span class="w">   </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="pathlib.Path"><span class="n">Path</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elaboratable</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ir.html#torii.hdl.ir.Instance" title="torii.hdl.ir.Instance"><span class="n">Instance</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="n">Elaboratable</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">Module</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ir.html#torii.hdl.ir.Instance" title="torii.hdl.ir.Instance"><span class="n">Instance</span></a>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">MyInverter</span><span class="p">(</span><span class="n">Elaboratable</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyInverter</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../api/hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="n">Elaboratable</span></a><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extern_module</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="pathlib.Path"><span class="n">Path</span></a><span class="p">(</span><span class="s1">'./my_inverter.v'</span><span class="p">)</span><span class="o">.</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.resolve" title="pathlib.Path.resolve"><span class="n">resolve</span></a><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Module</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span> <span class="o">-&gt;</span> <a class="sphinx-codeautolink-a" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">Module</span></a><span class="p">:</span>
         <span class="c1"># Add the file to the platform</span>
         <span class="k">if</span> <span class="n">platform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">extern_module</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">platform</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extern_module</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 
-        <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">()</span>
+        <a class="sphinx-codeautolink-a" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">m</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">Module</span></a><span class="p">()</span>
 
         <span class="c1"># Add the</span>
         <span class="n">m</span><span class="o">.</span><span class="n">submodules</span> <span class="o">+=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ir.html#torii.hdl.ir.Instance" title="torii.hdl.ir.Instance"><span class="n">Instance</span></a><span class="p">(</span>
@@ -432,7 +443,7 @@
             <span class="n">i_dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">m</span>
+        <span class="k">return</span> <a class="sphinx-codeautolink-a" href="../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">m</span></a>
 </pre></div>
 </div>
 <p>It’s not necessary to pass the file in within the elaborate of the module itself, however keeping the wrapper elaboratable coupled to the dependant HDL source file is recommended.</p>
@@ -502,7 +513,7 @@
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../_static/documentation_options.js?v=4698d2f6"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

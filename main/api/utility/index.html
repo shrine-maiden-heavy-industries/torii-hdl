@@ -8,19 +8,19 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://torii.shmdn.link/api/utility/index.html" />
 <meta property="og:site_name" content="Torii" />
-<meta property="og:description" content="String Helpers- ascii_escape(), tcl_escape(), tcl_quote(), tool_env_var()., Tracer- get_src_loc(), get_var_name()., Unit Helpers- bits_for(), iec_size(), log2_ceil(), log2_exact(), ms_to_sec(), ns_..." />
+<meta property="og:description" content="Filesystem Paths- TORII_PLATFORM_DIRS, get_sys_cache(), get_sys_config(), get_sys_data(), get_sys_runtime(), get_user_cache(), get_user_config(), get_user_data(), get_user_runtime(), get_user_state..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://torii.shmdn.link/_images/social_previews/summary_api_utility_index_e61d8595.png" />
-<meta property="og:image:alt" content="String Helpers- ascii_escape(), tcl_escape(), tcl_quote(), tool_env_var()., Tracer- get_src_loc(), get_var_name()., Unit Helpers- bits_for(), iec_size(), log2_ceil(), log2_exact(), ms_to_sec(), ns_..." />
-<meta name="description" content="String Helpers- ascii_escape(), tcl_escape(), tcl_quote(), tool_env_var()., Tracer- get_src_loc(), get_var_name()., Unit Helpers- bits_for(), iec_size(), log2_ceil(), log2_exact(), ms_to_sec(), ns_..." />
+<meta property="og:image" content="https://torii.shmdn.link/_images/social_previews/summary_api_utility_index_954b9e9c.png" />
+<meta property="og:image:alt" content="Filesystem Paths- TORII_PLATFORM_DIRS, get_sys_cache(), get_sys_config(), get_sys_data(), get_sys_runtime(), get_user_cache(), get_user_config(), get_user_data(), get_user_runtime(), get_user_state..." />
+<meta name="description" content="Filesystem Paths- TORII_PLATFORM_DIRS, get_sys_cache(), get_sys_config(), get_sys_data(), get_sys_runtime(), get_user_cache(), get_user_config(), get_user_data(), get_user_runtime(), get_user_state..." />
 <meta name="twitter:card" content="summary_large_image" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="String Helpers" href="string.html" /><link rel="prev" title="XFRM" href="../hdl/xfrm.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Filesystem Paths" href="directories.html" /><link rel="prev" title="XFRM" href="../hdl/xfrm.html" />
         <link rel="canonical" href="https://torii.shmdn.link/api/utility/index.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Torii Utility Library - Torii 0.8.1.dev276 Documentation</title>
+<title>Torii Utility Library - Torii 0.8.1.dev299 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -258,6 +258,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a></li>
@@ -269,11 +270,13 @@
 </ul>
 </li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">Torii Utility Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="units.html">Unit Helpers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -317,14 +320,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -391,13 +402,21 @@
         <article role="main" id="furo-main-content">
           <section id="torii-utility-library">
 <h1>Torii Utility Library<a class="headerlink" href="#torii-utility-library" title="Link to this heading">¶</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The Torii API reference is a work in progress and we are actively working on improving it,
-however it may be deficient or missing in places.</p>
-</div>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="directories.html">Filesystem Paths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.TORII_PLATFORM_DIRS"><code class="docutils literal notranslate"><span class="pre">TORII_PLATFORM_DIRS</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_sys_cache"><code class="docutils literal notranslate"><span class="pre">get_sys_cache()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_sys_config"><code class="docutils literal notranslate"><span class="pre">get_sys_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_sys_data"><code class="docutils literal notranslate"><span class="pre">get_sys_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_sys_runtime"><code class="docutils literal notranslate"><span class="pre">get_sys_runtime()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_user_cache"><code class="docutils literal notranslate"><span class="pre">get_user_cache()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_user_config"><code class="docutils literal notranslate"><span class="pre">get_user_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_user_data"><code class="docutils literal notranslate"><span class="pre">get_user_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_user_runtime"><code class="docutils literal notranslate"><span class="pre">get_user_runtime()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="directories.html#torii.util.directories.get_user_state"><code class="docutils literal notranslate"><span class="pre">get_user_state()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="string.html">String Helpers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="string.html#torii.util.string.ascii_escape"><code class="docutils literal notranslate"><span class="pre">ascii_escape()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="string.html#torii.util.string.tcl_escape"><code class="docutils literal notranslate"><span class="pre">tcl_escape()</span></code></a></li>
@@ -440,12 +459,12 @@ however it may be deficient or missing in places.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="string.html">
+          <a class="next-page" href="directories.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">String Helpers</div>
+                <div class="title">Filesystem Paths</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -484,7 +503,7 @@ however it may be deficient or missing in places.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

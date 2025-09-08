@@ -19,7 +19,7 @@
 <link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="../supplementary_libraries.html" rel="next" title="Supplementary Libraries"/><link href="index.html" rel="prev" title="Version Migration Guides"/>
 <link href="https://torii.shmdn.link/migrations/v0_to_v1.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Torii v0.X to v1.0 Migration Guide - Torii 0.8.1.dev276 Documentation</title>
+<title>Torii v0.X to v1.0 Migration Guide - Torii 0.8.1.dev299 Documentation</title>
 <link href="../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -186,7 +186,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -208,7 +208,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 </a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -232,6 +232,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/hdl/index.html">Torii HDL Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/hdl/cd.html">Clock Domain</a></li>
@@ -243,11 +244,13 @@
 </ul>
 </input></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/utility/units.html">Unit Helpers</a></li>
 </ul>
 </input></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/tools.html">Torii Tool Interface</a></li>
 </ul>
 </input></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -291,14 +294,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Version Migration Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Version Migration Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -384,14 +395,14 @@
 <section id="importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog">
 <h3>Importing <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code><a class="headerlink" href="#importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog" title="Link to this heading">¶</a></h3>
 <p>The ability to directly import <code class="xref py py-class docutils literal notranslate"><span class="pre">YosysError</span></code> from the <a class="reference internal" href="../api/backend/index.html#module-torii.back.cxxrtl" title="torii.back.cxxrtl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code></a> and <a class="reference internal" href="../api/backend/index.html#module-torii.back.verilog" title="torii.back.verilog"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.back.verilog</span></code></a> modules has been removed, as it made little sense logically.</p>
-<p>It must now be directly imported from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code> itself.</p>
+<p>It must now be directly imported from <a class="reference internal" href="../api/tools.html#module-torii.tools.yosys" title="torii.tools.yosys"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code></a> itself.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
 <span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/backend/index.html#module-torii.back.cxxrtl" title="torii.back.cxxrtl"><span class="nn">torii.back.cxxrtl</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
 <span class="c1"># -- OR --</span>
 <span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/backend/index.html#module-torii.back.verilog" title="torii.back.verilog"><span class="nn">torii.back.verilog</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
 
 <span class="c1"># NEW (&gt;=1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.yosys</span><span class="w"> </span><span class="kn">import</span> <span class="n">YosysError</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/tools.html#module-torii.tools.yosys" title="torii.tools.yosys"><span class="nn">torii.tools.yosys</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/diagnostics.html#torii.diagnostics.YosysError" title="torii.diagnostics.errors.YosysError"><span class="n">YosysError</span></a>
 </pre></div>
 </div>
 </section>
@@ -411,9 +422,9 @@
 <span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#module-torii.hdl.rec" title="torii.hdl.rec"><span class="nn">torii.hdl.rec</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#torii.hdl.rec.Direction" title="torii.hdl.rec.Direction"><span class="n">Direction</span></a>
 
 <span class="n">rec</span> <span class="o">=</span> <span class="n">Record</span><span class="p">([</span>
-	<span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">FANIN</span><span class="p">),</span>
-	<span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">FANOUT</span><span class="p">),</span>
-	<span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Direction</span><span class="o">.</span><span class="n">NONE</span><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#torii.hdl.rec.Direction.FANIN" title="torii.hdl.rec.Direction.FANIN"><span class="n">Direction</span><span class="o">.</span><span class="n">FANIN</span></a><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#torii.hdl.rec.Direction.FANOUT" title="torii.hdl.rec.Direction.FANOUT"><span class="n">Direction</span><span class="o">.</span><span class="n">FANOUT</span></a><span class="p">),</span>
+	<span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#torii.hdl.rec.Direction.NONE" title="torii.hdl.rec.Direction.NONE"><span class="n">Direction</span><span class="o">.</span><span class="n">NONE</span></a><span class="p">),</span>
 <span class="p">])</span>
 </pre></div>
 </div>
@@ -421,9 +432,9 @@
 </section>
 <section id="build-cxx-from-torii-tools-cxx">
 <h3><code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code><a class="headerlink" href="#build-cxx-from-torii-tools-cxx" title="Link to this heading">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> function from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code> has been removed in favor of the <code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code>, which offers more control and capabilities.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">build_cxx</span></code> function from <a class="reference internal" href="../api/tools.html#module-torii.tools.cxx" title="torii.tools.cxx"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code></a> has been removed in favor of the <a class="reference internal" href="../api/tools.html#torii.tools.cxx.compile_cxx" title="torii.tools.cxx.compile_cxx"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code></a>, which offers more control and capabilities.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.cxx</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_cxx</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/tools.html#module-torii.tools.cxx" title="torii.tools.cxx"><span class="nn">torii.tools.cxx</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">build_cxx</span>
 
 <span class="n">build_dir</span><span class="p">,</span> <span class="n">output_file</span> <span class="o">=</span> <span class="n">build_cxx</span><span class="p">(</span>
 	<span class="n">cxx_sources</span> <span class="o">=</span> <span class="p">{</span>
@@ -435,9 +446,9 @@
 <span class="p">)</span>
 
 <span class="c1"># NEW (&gt;=1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.tools.cxx</span><span class="w"> </span><span class="kn">import</span> <span class="n">compile_cxx</span>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../api/tools.html#module-torii.tools.cxx" title="torii.tools.cxx"><span class="nn">torii.tools.cxx</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/tools.html#torii.tools.cxx.compile_cxx" title="torii.tools.cxx.compile_cxx"><span class="n">compile_cxx</span></a>
 
-<a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="pathlib.Path"><span class="n">output_file</span></a> <span class="o">=</span> <span class="n">compile_cxx</span><span class="p">(</span>
+<a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="pathlib.Path"><span class="n">output_file</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/tools.html#torii.tools.cxx.compile_cxx" title="torii.tools.cxx.compile_cxx"><span class="n">compile_cxx</span></a><span class="p">(</span>
 	<span class="s1">'foo'</span><span class="p">,</span>
 	<span class="n">build_dir</span><span class="p">,</span>
 	<span class="kc">None</span><span class="p">,</span>
@@ -448,7 +459,7 @@
 
 </pre></div>
 </div>
-<p>For more information see the full documentation on <code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code> for all of it’s capabilities and examples of more advanced usage.</p>
+<p>For more information see the full documentation on <a class="reference internal" href="../api/tools.html#torii.tools.cxx.compile_cxx" title="torii.tools.cxx.compile_cxx"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile_cxx</span></code></a> for all of it’s capabilities and examples of more advanced usage.</p>
 <p>The equivalent functionality can be maintained with a little bit of scaffolding:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_cxx</span><span class="p">(</span>
 	<span class="n">cxx_sources</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#dict" title="dict"><span class="nb">dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">],</span> <span class="n">output_name</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <span class="n">include_dirs</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#list" title="list"><span class="nb">list</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">],</span> <span class="n">macros</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#list" title="list"><span class="nb">list</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">]</span>
@@ -497,18 +508,18 @@
 <section id="torii-lib-soc-memory">
 <h3><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code><a class="headerlink" href="#torii-lib-soc-memory" title="Link to this heading">¶</a></h3>
 <p>The contents of the <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code> module have been moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem</span></code>, as they are generally useful for non-SoC designs as well as SoC designs.</p>
-<p>More specifically the <a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryMap</span></code></a>, <a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">_RangeMap</span></code> have been moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem.map</span></code>.</p>
+<p>More specifically the <a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryMap</span></code></a>, <a class="reference internal" href="../library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">_RangeMap</span></code> have been moved to <a class="reference internal" href="../library/mem/map.html#module-torii.lib.mem.map" title="torii.lib.mem.map"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.mem.map</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.memory</span><span class="w"> </span><span class="kn">import</span> <span class="n">MemoryMap</span><span class="p">,</span> <span class="n">ResourceInfo</span>
 
 <span class="c1"># NEW (&gt;=1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.mem.map</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><span class="n">MemoryMap</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><span class="n">ResourceInfo</span></a>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../library/mem/map.html#module-torii.lib.mem.map" title="torii.lib.mem.map"><span class="nn">torii.lib.mem.map</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><span class="n">MemoryMap</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../library/mem/map.html#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><span class="n">ResourceInfo</span></a>
 </pre></div>
 </div>
 </section>
 <section id="torii-lib-soc-wishbone">
 <h3><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code><a class="headerlink" href="#torii-lib-soc-wishbone" title="Link to this heading">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">wishbone</span></code> module has been removed from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.soc</span></code> and moved to <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>, as it is generally useful for non-SoC designs as well as SoC designs, and is not the only bus type supported.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">wishbone</span></code> module has been removed from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.soc</span></code> and moved to <a class="reference internal" href="../library/bus/wishbone.html#module-torii.lib.bus.wishbone" title="torii.lib.bus.wishbone"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code></a>, as it is generally useful for non-SoC designs as well as SoC designs, and is not the only bus type supported.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD (&lt;1.0.0)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span>
 
@@ -516,7 +527,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.soc.wishbone.bus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Arbiter</span><span class="p">,</span> <span class="n">Interface</span>
 
 <span class="c1"># NEW (&gt;=1.0.0)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.bus.wishbone</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter" title="torii.lib.bus.wishbone.Arbiter"><span class="n">Arbiter</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="n">Interface</span></a>
+<span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#module-torii.lib.bus.wishbone" title="torii.lib.bus.wishbone"><span class="nn">torii.lib.bus.wishbone</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Arbiter" title="torii.lib.bus.wishbone.Arbiter"><span class="n">Arbiter</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../library/bus/wishbone.html#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><span class="n">Interface</span></a>
 </pre></div>
 </div>
 </section>
@@ -566,7 +577,7 @@
 <a class="sphinx-codeautolink-a" href="../library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_b</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">StreamInterface</span></a><span class="p">()</span>
 
 <span class="c1"># OLD (&lt;1.0.0)</span>
-<span class="n">stream_a</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_b</span></a><span class="p">)</span>
+<a class="sphinx-codeautolink-a" href="../api/hdl/rec.html#torii.hdl.rec.Record.connect" title="torii.hdl.rec.Record.connect"><span class="n">stream_a</span><span class="o">.</span><span class="n">connect</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="../library/stream/simple.html#torii.lib.stream.simple.StreamInterface" title="torii.lib.stream.simple.StreamInterface"><span class="n">stream_b</span></a><span class="p">)</span>
 
 <span class="c1"># ...</span>
 
@@ -587,9 +598,9 @@
 </section>
 <section id="asyncserialrx-from-torii-lib-stdio-serial">
 <h3><code class="docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code><a class="headerlink" href="#asyncserialrx-from-torii-lib-stdio-serial" title="Link to this heading">¶</a></h3>
-<p>The <a class="reference internal" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a> from <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code> has had the <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals removed in favor of the <code class="docutils literal notranslate"><span class="pre">done</span></code> and <code class="docutils literal notranslate"><span class="pre">start</span></code> signals respectively.</p>
+<p>The <a class="reference internal" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSerialRX</span></code></a> from <a class="reference internal" href="../library/stdio/index.html#module-torii.lib.stdio.serial" title="torii.lib.stdio.serial"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.lib.stdio.serial</span></code></a> has had the <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals removed in favor of the <code class="docutils literal notranslate"><span class="pre">done</span></code> and <code class="docutils literal notranslate"><span class="pre">start</span></code> signals respectively.</p>
 <p>This was done to match them more logically to what they actually do in order to avoid common pitfalls and confusion when using the module.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.lib.stdio.serial</span><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">AsyncSerialRX</span></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../library/stdio/index.html#module-torii.lib.stdio.serial" title="torii.lib.stdio.serial"><span class="nn">torii.lib.stdio.serial</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">AsyncSerialRX</span></a>
 
 <a class="sphinx-codeautolink-a" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">uart_rx</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../library/stdio/index.html#torii.lib.stdio.serial.AsyncSerialRX" title="torii.lib.stdio.serial.AsyncSerialRX"><span class="n">AsyncSerialRX</span></a><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 
@@ -700,7 +711,7 @@
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../_static/documentation_options.js?v=4698d2f6"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

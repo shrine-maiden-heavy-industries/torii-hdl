@@ -17,7 +17,7 @@
 <link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="mem.html" rel="next" title="Memory"/><link href="dsl.html" rel="prev" title="DSL"/>
 <link href="https://torii.shmdn.link/api/hdl/ir.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>IR - Torii 0.8.1.dev276 Documentation</title>
+<title>IR - Torii 0.8.1.dev299 Documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev276 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev276 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
 </a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii HDL Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Torii HDL Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="ast.html">Abstract Syntax Tree</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cd.html">Clock Domain</a></li>
@@ -241,11 +242,13 @@
 </ul>
 </input></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../utility/index.html">Torii Utility Library</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Torii Utility Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utility/directories.html">Filesystem Paths</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/string.html">String Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/tracer.html">Tracer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utility/units.html">Unit Helpers</a></li>
 </ul>
 </input></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
 </ul>
 </input></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Standard Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -289,14 +292,22 @@
 <li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Platform Resources</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Testing and Verification</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of Version Migration Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
 </ul>
 </li>
@@ -367,6 +378,183 @@
 however it may be deficient or missing in places.</p>
 </div>
 <dl class="py class" id="module-torii.hdl.ir">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Elaboratable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Elaboratable" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable.formal">
+<span class="sig-name descname"><span class="pre">formal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Elaboratable.formal" title="Link to this definition">¶</a></dt>
+<dd><p>Entry point for elaboration under formal verification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable.elaborate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Platform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Elaboratable.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Fragment</span></span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.get">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="pre">Elaboratable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Platform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">formal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment.get" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_ports">
+<span class="sig-name descname"><span class="pre">add_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_ports">
+<span class="sig-name descname"><span class="pre">iter_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_driver">
+<span class="sig-name descname"><span class="pre">add_driver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ClockSignal" title="torii.hdl.ast.ClockSignal"><span class="pre">ClockSignal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ResetSignal" title="torii.hdl.ast.ResetSignal"><span class="pre">ResetSignal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_driver" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_drivers">
+<span class="sig-name descname"><span class="pre">iter_drivers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_drivers" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_comb">
+<span class="sig-name descname"><span class="pre">iter_comb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_comb" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_sync">
+<span class="sig-name descname"><span class="pre">iter_sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_sync" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id10">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_signals">
+<span class="sig-name descname"><span class="pre">iter_signals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_signals" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id11">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_domains">
+<span class="sig-name descname"><span class="pre">add_domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">domains</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id12">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_domains">
+<span class="sig-name descname"><span class="pre">iter_domains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id13">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_statements">
+<span class="sig-name descname"><span class="pre">add_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id14">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_subfragment">
+<span class="sig-name descname"><span class="pre">add_subfragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subfragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_subfragment" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id15">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.find_subfragment">
+<span class="sig-name descname"><span class="pre">find_subfragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.find_subfragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id16">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.find_generated">
+<span class="sig-name descname"><span class="pre">find_generated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.find_generated" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id17">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.elaborate" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id18">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.prepare">
+<span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ports=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">Fragment.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.prepare" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id19">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.ir.Instance">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InstanceArgsT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SrcLoc</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ValueCastT</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Instance" title="Link to this definition">¶</a></dt>
 <dd><p>Allows for the direct instantiation of external modules, cells, or primitives.</p>
@@ -471,6 +659,30 @@ are able to instantiate it as follows:</p>
 <div class="toc-tree">
 <ul>
 <li><a class="reference internal" href="#">IR</a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable"><code class="docutils literal notranslate"><span class="pre">Elaboratable</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable.formal"><code class="docutils literal notranslate"><span class="pre">Elaboratable.formal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable.elaborate"><code class="docutils literal notranslate"><span class="pre">Elaboratable.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment"><code class="docutils literal notranslate"><span class="pre">Fragment</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.get"><code class="docutils literal notranslate"><span class="pre">Fragment.get()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_ports"><code class="docutils literal notranslate"><span class="pre">Fragment.add_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_ports"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_driver"><code class="docutils literal notranslate"><span class="pre">Fragment.add_driver()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_drivers"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_drivers()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_comb"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_comb()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_sync"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_sync()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_signals"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_signals()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_domains"><code class="docutils literal notranslate"><span class="pre">Fragment.add_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_domains"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_statements"><code class="docutils literal notranslate"><span class="pre">Fragment.add_statements()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_subfragment"><code class="docutils literal notranslate"><span class="pre">Fragment.add_subfragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.find_subfragment"><code class="docutils literal notranslate"><span class="pre">Fragment.find_subfragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.find_generated"><code class="docutils literal notranslate"><span class="pre">Fragment.find_generated()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.elaborate"><code class="docutils literal notranslate"><span class="pre">Fragment.elaborate()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.prepare"><code class="docutils literal notranslate"><span class="pre">Fragment.prepare()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
 </ul>
 </li>
@@ -480,7 +692,7 @@ are able to instantiate it as follows:</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=f4dc8e14"></script>
+</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
