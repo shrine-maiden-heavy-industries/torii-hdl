@@ -269,5 +269,4 @@ with m.FSM(name = 'rx') as fsm:
 		with m.If(uart_rx.done):
 			m.d.sync += [ data_rx.eq(uart_rx.data), ]
 			m.next = 'CMD'
-
 ```
