@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.util.tracer
-  :members:
+   :members:
 ```

@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.util.directories
-  :members:
+   :members:
 ```
