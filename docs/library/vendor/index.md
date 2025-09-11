@@ -7,5 +7,4 @@ The {py:mod}`torii.lib.vendor` module provides wrapper instances for various FPG
 
 lattice/index
 xilinx/index
-
 ```
