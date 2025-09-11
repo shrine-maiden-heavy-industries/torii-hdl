@@ -37,6 +37,7 @@ Unreleased template stuff
 - Added `torii.lib.cdc.PulseStretcher` so smear one-cycle pulses over to multiple cycles.
 - Added `torii.lib.stream.simple.ConstantStreamGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 - Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
+- New `torii.lib.lfsr` module for Galois and Fibonacci Linear-feedback shift registers (LFSRs).
 
 ### Changed
 
