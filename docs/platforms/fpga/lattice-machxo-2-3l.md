@@ -5,10 +5,13 @@ The {py:mod}`torii.platform.vendor.lattice.machxo_2_3l` module provides a base p
 ```{eval-rst}
 .. autoclass:: torii.platform.vendor.lattice.machxo_2_3l.MachXO2Platform
 .. autoclass:: torii.platform.vendor.lattice.machxo_2_3l.MachXO3LPlatform
+```
 
-.. note:: Both of the above are aliases for the actual platform below, however only the aliased
-          definitions are actually exported from the module for use.
+:::{note}
+Both of the above are aliases for the actual platform below, however only the aliased definitions are actually exported from the module for use.
+:::
 
+```{eval-rst}
 .. autoclass:: torii.platform.vendor.lattice.machxo_2_3l.MachXO2Or3LPlatform
 ```
 
