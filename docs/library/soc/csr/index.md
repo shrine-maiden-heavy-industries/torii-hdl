@@ -4,19 +4,19 @@
 
 ```{eval-rst}
 .. automodule:: torii.lib.soc.csr.bus
-  :members:
+   :members:
 ```
 
 ## Events
 
 ```{eval-rst}
 .. automodule:: torii.lib.soc.csr.event
-  :members:
+   :members:
 ```
 
 ## Wishbone
 
 ```{eval-rst}
 .. automodule:: torii.lib.soc.csr.wishbone
-  :members:
+   :members:
 ```
