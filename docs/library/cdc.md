@@ -4,5 +4,5 @@ The {py:mod}`torii.lib.cdc` module provides building blocks for transferring dat
 
 ```{eval-rst}
 .. automodule:: torii.lib.cdc
-  :members:
+   :members:
 ```
