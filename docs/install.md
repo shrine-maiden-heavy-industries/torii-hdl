@@ -1,8 +1,8 @@
 # Installation
 
-```{warning}
+:::{warning}
 The following instructions are a work-in-progress and may not be entirely up to date, or work for the target system, if you run into anything, please [report an issue]!
-```
+:::
 
 ## System requirements
 

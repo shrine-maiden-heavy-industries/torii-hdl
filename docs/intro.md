@@ -1,13 +1,12 @@
-```{todo}
-This introduction is written for people well familiar with HDLs; we likely need another one for people who will use Torii as their first HDL.
-```
-
 # Introduction
+
+:::{todo}
+This introduction is written for people well familiar with HDLs; we likely need another one for people who will use Torii as their first HDL.
+:::
 
 The Torii project provides an open-source toolchain for developing hardware based on synchronous digital logic using the Python programming language. It aims to be easy to learn and use, reduce or eliminate common coding mistakes, and simplify the design of complex hardware with reusable components.
 
 The Torii toolchain consists of the [Torii language], the [standard library], the [simulator], and the [build system], covering all steps of a typical FPGA development workflow. At the same time, it does not restrict the designer's choice of tools: existing industry-standard (System)Verilog or VHDL code can be integrated into an Torii-based design flow, or, conversely, Torii code can be integrated into an existing Verilog-based design flow.
-
 
 ## The Torii language
 
@@ -16,7 +15,6 @@ The [Torii hardware description language] is a Python library for register trans
 By relying on the flexibility, rich functionality and widespread adoption of the Python language, the Torii language is focused on a single task: modeling digital logic well. It has first-class support for building blocks like clock domains and finite state machines, and uses simple rules for arithmetic operations that closely match the Python semantics. Python classes, functions, loops and conditionals can be used to build organized and flexible designs; Python libraries can be seamlessly used with Torii during design or verification; and Python development tools can process Torii code.
 
 A core design principle of the Torii language is to be not only easy to use, but also hard to accidentally misuse. Some HDLs provide functionality that has unexpected and undesirable behavior in synthesis, often with expensive consequences, and require a significant effort in learning a "safe" coding style and adopting third-party linting tools. Torii lacks non-synthesizable constructs and avoids error-prone inference in favor of explicit instantiation. It has many diagnostics (and regularly adds new ones) highlighting potential design issues. Most importantly, all usability issues are considered [reportable bugs].
-
 
 ## The Torii standard library
 
