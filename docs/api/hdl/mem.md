@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.hdl.mem
-  :members:
+   :members:
 ```
