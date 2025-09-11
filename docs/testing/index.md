@@ -11,5 +11,5 @@ formal
 
 ```{eval-rst}
 .. automodule:: torii.test
-  :members:
+   :members:
 ```
