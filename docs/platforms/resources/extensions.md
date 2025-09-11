@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.platform.resources.extensions
-  :members:
+   :members:
 ```
