@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.lib.bus.wishbone
-  :members:
+   :members:
 ```
