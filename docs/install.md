@@ -70,11 +70,11 @@ Follow the instructions and ensure that the installer installs `pip` and puts th
 ### Yosys
 
 ::::::{tab} Linux
-There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by [YosysHQ](https://github.com/YosysHQ) known as the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/tree/main).
+There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by [YosysHQ] known as the [OSS CAD Suite].
 
 The OSS CAD Suite is very large and has lots of extra things, such as it's own version of python, and a suite of other tools, it's very convenient, but can cause some problems if you're using it for your primary environment for Torii.
 
-There is also a distribution of the Yosys toolchain built to target WASM and installable from [pypi](https://pypi.org/) called [YoWASP](https://yowasp.org/), currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
+There is also a distribution of the Yosys toolchain built to target WASM and installable from [PyPI] called [YoWASP], currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
 
 :::::{tab} Native
 ::::{tab} Arch-like
@@ -83,7 +83,7 @@ There is also a distribution of the Yosys toolchain built to target WASM and ins
 $ sudo pacman -S yosys
 ```
 
-On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the [AUR](https://aur.archlinux.org/) with an AUR helper or using manually using `makepkg` directly.
+On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the [AUR] with an AUR helper or using manually using `makepkg` directly.
 
 :::{tab} AUR
 
@@ -120,7 +120,7 @@ Find a source for suse packages
 ::::
 :::::
 :::::{tab} OSS-CAD-Suite
-Simply download the latest [release](https://github.com/YosysHQ/oss-cad-suite-build/releases) for your architecture, extract it to a good home, and then add it to your `$PATH`
+Simply download the latest [OSS-CAD-Suite release] for your architecture, extract it to a good home, and then add it to your `$PATH`
 
 ```console
 $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-09-10/oss-cad-suite-linux-x64-20250910.tgz
@@ -136,12 +136,12 @@ YoWASP Support
 :::::
 ::::::
 :::::{tab} macOS
-For macOS systems it is recommended to use the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/tree/main) provided by [YosysHQ](https://github.com/YosysHQ).
+For macOS systems it is recommended to use the [OSS CAD Suite] provided by [YosysHQ].
 
-There is also a distribution of the Yosys toolchain built to target WASM and installable from [pypi](https://pypi.org/) called [YoWASP](https://yowasp.org/), currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
+There is also a distribution of the Yosys toolchain built to target WASM and installable from [PyPI] called [YoWASP], currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
 
 ::::{tab} OSS-CAD-Suite
-Simply download the latest [release](https://github.com/YosysHQ/oss-cad-suite-build/releases) for your architecture, extract it to a good home, and then add it to your `$PATH`.
+Simply download the latest [OSS-CAD-Suite release] for your architecture, extract it to a good home, and then add it to your `$PATH`.
 
 ```console
 $ curl -LOJ https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-09-10/oss-cad-suite-darwin-arm64-20250910.tgz
@@ -157,12 +157,12 @@ YoWASP Support
 ::::
 :::::
 :::::{tab} Windows
-For Windows systems it is recommended to use the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/tree/main) provided by [YosysHQ](https://github.com/YosysHQ).
+For Windows systems it is recommended to use the [OSS CAD Suite] provided by [YosysHQ].
 
-There is also a distribution of the Yosys toolchain built to target WASM and installable from [pypi](https://pypi.org/) called [YoWASP](https://yowasp.org/), currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
+There is also a distribution of the Yosys toolchain built to target WASM and installable from [PyPI] called [YoWASP], currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.
 
 ::::{tab} OSS-CAD-Suite
-Simply download the latest [release](https://github.com/YosysHQ/oss-cad-suite-build/releases) for your architecture, extract it to a good home, and then add it to your `%PATH%`.
+Simply download the latest [OSS-CAD-Suite release] for your architecture, extract it to a good home, and then add it to your `%PATH%`.
 
 ```console
 $ call %cd%\oss-cad-suite\environment.bat
@@ -181,7 +181,7 @@ YoWASP Support
 An EDA Waveform Viewer is optional, but highly recommended. [GTKWave] is the standard of the Open Source EDA world, and has been around for a long time, and is what you will find most tutorials using. On the other hand, [surfer] is an up-and-coming waveform viewer that's written in Rust and is able to run in your web browser via WASM.
 
 ::::::{tab} Linux
-There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by [YosysHQ](https://github.com/YosysHQ) known as the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/tree/main).
+There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a "Native", or via pre-build binary distributions provided by [YosysHQ] known as the [OSS CAD Suite].
 
 The OSS CAD Suite only provides GTKWave, so if you wish to use surfer instead see the Native install options.
 
@@ -219,7 +219,7 @@ $ sudo zypper install gtkwave
 ::::{tab} Surfer
 There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
 
-Please see the [surfer install instructions](https://gitlab.com/surfer-project/surfer#installation) for up-to-date installation instructions for your platform.
+Please see the [surfer installation instructions] for up-to-date installation instructions for your platform.
 ::::
 :::::
 :::::{tab} OSS-CAD-Suite
@@ -240,7 +240,7 @@ The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use
 :::::{tab} Surfer
 There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
 
-Please see the [surfer install instructions](https://gitlab.com/surfer-project/surfer#installation) for up-to-date installation instructions for your platform.
+Please see the [surfer installation instructions] for up-to-date installation instructions for your platform.
 :::::
 ::::::
 ::::::{tab} Windows
@@ -257,7 +257,7 @@ The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use
 :::::{tab} Surfer
 There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.
 
-Please see the [surfer install instructions](https://gitlab.com/surfer-project/surfer#installation) for up-to-date installation instructions for your platform.
+Please see the [surfer installation instructions] for up-to-date installation instructions for your platform.
 :::::
 ::::::
 
@@ -266,7 +266,7 @@ Please see the [surfer install instructions](https://gitlab.com/surfer-project/s
 :::::::{tab} Linux
 ::::::{tab} Native
 :::::{tab} Arch-like
-On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the [AUR](https://aur.archlinux.org/) with an AUR helper or manually using `makepkg` directly.
+On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the [AUR] with an AUR helper or manually using `makepkg` directly.
 
 ::::{tab} AUR
 
@@ -371,12 +371,12 @@ Run the `pip3 install --editable .` command each time the editable development s
 
 ## Installing Board Definitions
 
-The [torii-boards] package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.
+The [Torii Boards] package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.
 
 Just like with Torii proper, there are two versions you can install, the latest stable, or the development version.
 
 :::{tab} Stable Release
-The stable release of Torii-boards can be installed directly from [PyPI](https://pypi.org/project/torii-boards/).
+The stable release of Torii Boards can be installed directly from [PyPI](https://pypi.org/project/torii-boards/).
 
 ```console
 $ pip3 install --user --upgrade torii-boards
@@ -426,14 +426,21 @@ Now that you've installed Torii, see the [getting started] guide for a quick int
 [CPython]: https://www.python.org/
 [PyPy]: https://pypy.org/
 [Yosys]: https://github.com/YosysHQ/yosys
+[YosysHQ]: https://github.com/YosysHQ
+[OSS CAD Suite]: https://github.com/YosysHQ/oss-cad-suite-build/tree/main
+[OSS-CAD-Suite release]: https://github.com/YosysHQ/oss-cad-suite-build/releases
+[PyPI]: https://pypi.org/
+[YoWASP]: https://yowasp.org/
+[AUR]: https://aur.archlinux.org/
 [GTKWave]: https://github.com/gtkwave/gtkwave
 [surfer]: https://surfer-project.org/
+[surfer installation instructions]: https://gitlab.com/surfer-project/surfer#installation
 [platform]: ./platforms/index.md
 [sby]: https://github.com/YosysHQ/sby
 [yices]: https://yices.csl.sri.com/
 [bitwuzla]: https://bitwuzla.github.io/
 [simulation]: #waveform-viewer-optional
 [formal]: #formal-tools-optional
-[torii-boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
+[Torii Boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
 [getting started]: ./getting_started/index.md
 [language guide]: ./language/index.md
