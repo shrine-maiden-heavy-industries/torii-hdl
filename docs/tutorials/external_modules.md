@@ -73,4 +73,3 @@ It's not necessary to pass the file in within the elaborate of the module itself
 [Clash]: https://clash-lang.org/
 [Chisel]: https://www.chisel-lang.org/
 [SpinalHDL]: https://github.com/SpinalHDL/SpinalHDL
-[Torii-Boards]: https://github.com/shrine-maiden-heavy-industries/torii-boards
