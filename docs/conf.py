@@ -36,8 +36,9 @@ source_suffix = {
 }
 
 extlinks = {
-	'issue': ('https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/%s', 'torii/%s'),
-	'pypi':  ('https://pypi.org/project/%s/', '%s'),
+	'torii-issue': ('https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues/%s', 'torii/issue/%s'),
+	'torii-pr': ('https://github.com/shrine-maiden-heavy-industries/torii-hdl/pull/%s', 'torii/pr/%s'),
+	'pypi': ('https://pypi.org/project/%s/', '%s'),
 }
 
 autodoc_docstring_signature = False
@@ -60,7 +61,10 @@ intersphinx_mapping = {
 
 napoleon_google_docstring              = False
 napoleon_numpy_docstring               = True
+napoleon_preprocess_types              = False
 napoleon_use_ivar                      = True
+# XXX(aki): If Napoleon uses :rtype: it breaks autodoc-typehints
+napoleon_use_rtype                     = False
 napoleon_use_admonition_for_notes      = True
 napoleon_use_admonition_for_examples   = True
 napoleon_use_admonition_for_references = True
@@ -76,11 +80,20 @@ napoleon_custom_sections  = [
 ]
 
 myst_heading_anchors = 3
+myst_links_external_new_tab = True
+myst_enable_extensions = [
+	'colon_fence',
+	'substitution',
+]
+myst_substitutions = {
+	'': ''
+}
 
 always_use_bars_union = True
-typehints_defaults = 'braces-after'
+typehints_defaults = 'braces'
 typehints_use_signature = True
 typehints_use_signature_return = True
+typehints_document_rtype_none = False
 
 templates_path = [
 	'_templates',
