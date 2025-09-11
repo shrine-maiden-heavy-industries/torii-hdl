@@ -6,5 +6,5 @@ The {py:mod}`torii.lib.vendor.lattice` module provides wrapper instances for use
 
 ```{eval-rst}
 .. automodule:: torii.lib.vendor.lattice.ice40
-  :members:
+   :members:
 ```
