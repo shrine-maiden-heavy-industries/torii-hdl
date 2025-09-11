@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -411,11 +411,6 @@ for it has been created, the proxy will refer to stale data.</p>
 <dt class="sig sig-object py" id="torii.hdl.ast.Array.insert">
 <span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.SupportsIndex" title="(in Python v3.13)"><span class="pre">SupportsIndex</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Array.insert" title="Link to this definition">¶</a></dt>
 <dd><p>S.insert(index, value) – insert value before index</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -438,10 +433,7 @@ the bit lengths of the arguments:</p>
 <dd class="field-odd"><p><strong>*args</strong> (<em>Values</em><em> or </em><em>iterables</em><em> of </em><em>Values</em><em>, </em><em>inout</em>) – <code class="docutils literal notranslate"><span class="pre">Value</span></code> s to be concatenated.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Resulting <code class="docutils literal notranslate"><span class="pre">Value</span></code> obtained by concatenation.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Value, inout</p>
+<dd class="field-even"><p><em>Value, inout</em> – Resulting <code class="docutils literal notranslate"><span class="pre">Value</span></code> obtained by concatenation.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -449,11 +441,11 @@ the bit lengths of the arguments:</p>
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Cat.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -476,7 +468,7 @@ All of these signals ultimately refer to the same signal, but they can be manipu
 independently of the clock domain, even before the clock domain is created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain to obtain a clock signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p>
+<dd class="field-odd"><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain to obtain a clock signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -484,11 +476,11 @@ independently of the clock domain, even before the clock domain is created.</p>
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.ClockSignal.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -512,7 +504,7 @@ independently of the clock domain, even before the clock domain is created.</p>
 <li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em> or </em><em>None</em>) – Either an integer <code class="docutils literal notranslate"><span class="pre">width</span></code> or a tuple <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">signed)</span></code> specifying the number of bits
 in this constant and whether it is signed (can represent negative values).
-<code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to the minimum possible width and signedness of <code class="docutils literal notranslate"><span class="pre">value</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to the minimum possible width and signedness of <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -540,11 +532,11 @@ Otherwise, <a class="reference external" href="https://docs.python.org/3/library
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Const.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -576,16 +568,16 @@ Otherwise, <a class="reference external" href="https://docs.python.org/3/library
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>expr</strong> (<em>ValueCastT</em>) – The Signal or Const expression to sample.</p></li>
 <li><p><strong>clocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of clock cycles in the past this sample should represent.
-(default: 0) (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+(default: 0)</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The domain this sample should be taken on. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default domain is used.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the sample rose or fell between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Operator</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Operator</em> – If the sample rose or fell between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -607,16 +599,16 @@ Otherwise, <a class="reference external" href="https://docs.python.org/3/library
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>expr</strong> (<em>ValueCastT</em>) – The Signal or Const expression to sample.</p></li>
 <li><p><strong>clocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of clock cycles in the past this sample should represent.
-(default: 0) (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+(default: 0)</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The domain this sample should be taken on. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default domain is used.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the sample fell between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Operator</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Operator</em> – If the sample fell between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -630,11 +622,11 @@ Otherwise, <a class="reference external" href="https://docs.python.org/3/library
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Initial.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -660,11 +652,11 @@ Otherwise, <a class="reference external" href="https://docs.python.org/3/library
 <li><p><strong>val0</strong> (<em>Value</em><em>, </em><em>in</em>) – Input values.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Output <code class="docutils literal notranslate"><span class="pre">Value</span></code>. If <code class="docutils literal notranslate"><span class="pre">sel</span></code> is asserted, the Mux returns <code class="docutils literal notranslate"><span class="pre">val1</span></code>, else <code class="docutils literal notranslate"><span class="pre">val0</span></code>.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Value, out</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value, out</em> – Output <code class="docutils literal notranslate"><span class="pre">Value</span></code>. If <code class="docutils literal notranslate"><span class="pre">sel</span></code> is asserted, the Mux returns <code class="docutils literal notranslate"><span class="pre">val1</span></code>, else <code class="docutils literal notranslate"><span class="pre">val0</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -696,16 +688,16 @@ example with different <code class="docutils literal notranslate"><span class="p
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>expr</strong> (<em>ValueCastT</em>) – The Signal or Const expression to sample.</p></li>
 <li><p><strong>clocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of clock cycles in the past this sample should represent.
-(default: 1) (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+(default: 1)</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The domain this sample should be taken on. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default domain is used.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The sample value.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#torii.hdl.ast.Sample" title="torii.hdl.ast.Sample">Sample</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Sample</em> – The sample value.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -719,8 +711,8 @@ independently of the clock domain, even before the clock domain is created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain to obtain a reset signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
-<li><p><strong>allow_reset_less</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If the clock domain is reset-less, act as a constant <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of reporting an error. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Clock domain to obtain a reset signal for. Defaults to <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>.</p></li>
+<li><p><strong>allow_reset_less</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If the clock domain is reset-less, act as a constant <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of reporting an error.</p></li>
 </ul>
 </dd>
 </dl>
@@ -729,11 +721,11 @@ independently of the clock domain, even before the clock domain is created.</p>
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.ResetSignal.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -765,16 +757,16 @@ independently of the clock domain, even before the clock domain is created.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>expr</strong> (<em>ValueCastT</em>) – The Signal or Const expression to sample.</p></li>
 <li><p><strong>clocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of clock cycles in the past this sample should represent.
-(default: 0) (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+(default: 0)</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The domain this sample should be taken on. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default domain is used.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the sample rose between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Operator</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Operator</em> – If the sample rose between <code class="docutils literal notranslate"><span class="pre">clocks</span></code> and <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -825,11 +817,11 @@ example with different <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Sample.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -875,8 +867,8 @@ the enumeration is signed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of bits in the representation, including the sign bit (if any). (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
-<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the value is unsigned. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the value is signed two’s complement. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of bits in the representation, including the sign bit (if any).</p></li>
+<li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the value is unsigned. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the value is signed two’s complement.</p></li>
 </ul>
 </dd>
 </dl>
@@ -923,22 +915,22 @@ subclasses can be created.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>shape</strong> (<code class="docutils literal notranslate"><span class="pre">Shape</span></code>-castable object or None) – Specification for the number of bits in this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> and its signedness (whether it
 can represent negative values). See <code class="docutils literal notranslate"><span class="pre">Shape.cast</span></code> for details.
-If not specified, <code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to 1-bit and non-signed. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+If not specified, <code class="docutils literal notranslate"><span class="pre">shape</span></code> defaults to 1-bit and non-signed.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name hint for this signal. If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default) the name is inferred from the variable
-name this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> is assigned to. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+name this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> is assigned to.</p></li>
 <li><p><strong>reset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> or </em><em>integral Enum</em>) – Reset (synchronous) or default (combinatorial) value.
 When this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> is assigned to in synchronous context and the corresponding clock
 domain is reset, the <code class="docutils literal notranslate"><span class="pre">Signal</span></code> assumes the given value. When this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> is unassigned
 in combinatorial context (due to conditional assignments not being taken), the <code class="docutils literal notranslate"><span class="pre">Signal</span></code>
-assumes its <code class="docutils literal notranslate"><span class="pre">reset</span></code> value. Defaults to 0. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+assumes its <code class="docutils literal notranslate"><span class="pre">reset</span></code> value. Defaults to 0.</p></li>
 <li><p><strong>reset_less</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, do not generate reset logic for this <code class="docutils literal notranslate"><span class="pre">Signal</span></code> in synchronous statements.
 The <code class="docutils literal notranslate"><span class="pre">reset</span></code> value is only used as a combinatorial default or as the initial value.
-Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
-<li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of synthesis attributes. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of synthesis attributes.</p></li>
 <li><p><strong>decoder</strong> (<em>function</em><em> or </em><em>Enum</em>) – A function converting integer signal values to human-readable strings (e.g. FSM state
 names). If an <code class="docutils literal notranslate"><span class="pre">Enum</span></code> subclass is passed, it is concisely decoded using format string
 <code class="docutils literal notranslate"><span class="pre">"{0.name:}/{0.value:}"</span></code>, or a number if the signal value is not a member of
-the enumeration. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+the enumeration.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -971,11 +963,11 @@ the enumeration. (default: <code class="docutils literal notranslate"><span clas
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><span class="pre">Shape</span></a></span></span><a class="headerlink" href="#torii.hdl.ast.Signal.shape" title="Link to this definition">¶</a></dt>
 <dd><p>Bit width and signedness of a value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape">Shape</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Shape</em> – See <a class="reference internal" href="#torii.hdl.ast.Shape" title="torii.hdl.ast.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a>.</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -1037,16 +1029,16 @@ signal ID.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>expr</strong> (<em>ValueCastT</em>) – The Signal or Const expression to sample.</p></li>
 <li><p><strong>clocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of clock cycles in the past this sample should represent.
-(default: 0) (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+(default: 0)</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The domain this sample should be taken on. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default domain is used.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the sample is stable over <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code> samples.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Operator</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Operator</em> – If the sample is stable over <code class="docutils literal notranslate"><span class="pre">clocks</span> <span class="pre">+</span> <span class="pre">1</span></code> samples.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1214,7 +1206,7 @@ internally consistent.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

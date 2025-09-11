@@ -177,7 +177,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -352,8 +352,8 @@
 <p>The Torii API reference is a work in progress and we are actively working on improving it,
 however it may be deficient or missing in places.</p>
 </div>
-<p>Torii has 3 primary backends, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a>, each takes a Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code> and produces an RTL netlist in the given output format.</p>
-<p>The primary lingua franca of the Torii backends is <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html">RTLIL</a>, the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html">Verilog</a> and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html">CXXRTL</a> backends first convert the IR into it, and then use <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> to convert the RTLIL netlist into their respective output formats</p>
+<p>Torii has 3 primary backends, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html" rel="noreferer noopener" target="_blank">RTLIL</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html" rel="noreferer noopener" target="_blank">Verilog</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html" rel="noreferer noopener" target="_blank">CXXRTL</a>, each takes a Torii <code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code> and produces an RTL netlist in the given output format.</p>
+<p>The primary lingua franca of the Torii backends is <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html" rel="noreferer noopener" target="_blank">RTLIL</a>, the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_verilog.html" rel="noreferer noopener" target="_blank">Verilog</a> and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/write_cxxrtl.html" rel="noreferer noopener" target="_blank">CXXRTL</a> backends first convert the IR into it, and then use <a class="reference external" href="https://github.com/YosysHQ/yosys" rel="noreferer noopener" target="_blank">Yosys</a> to convert the RTLIL netlist into their respective output formats</p>
 <section id="module-torii.back.rtlil">
 <span id="rtlil-backend"></span><h2>RTLIL Backend<a class="headerlink" href="#module-torii.back.rtlil" title="Link to this heading">¶</a></h2>
 <dl class="py function">
@@ -366,16 +366,16 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fragment</strong> (<em>torii.hdl.ir.Fragment</em>) – The Torii fragment hierarchy to lower.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the root fragment module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
+(default: ‘top’)</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the resulting RTLIL text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+(default: True)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The RTLIL text and signal dictionary of the lowered fragment.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict">torii.hdl.ast.SignalDict</a>]</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The RTLIL text and signal dictionary of the lowered fragment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -388,18 +388,18 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>elaboratable</strong> (<em>torii.hdl.ir.Elaboratable</em>) – The Elaboratable to lower into RTLIL.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the resulting RTLIL module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
-<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: ‘top’)</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
 <li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the final RTLIL text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+(default: True)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting RTLIL.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting RTLIL.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -416,17 +416,17 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fragment</strong> (<em>torii.hdl.ir.Fragment</em>) – The Torii fragment hierarchy to lower.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the root fragment module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
+(default: ‘top’)</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the resulting Verilog text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
-<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+(default: True)</p></li>
+<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The Verilog text and signal dictionary of the lowered fragment.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict">torii.hdl.ast.SignalDict</a>]</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The Verilog text and signal dictionary of the lowered fragment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,19 +439,19 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>elaboratable</strong> (<em>torii.hdl.ir.Elaboratable</em>) – The Elaboratable to lower into Verilog.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the resulting Verilog module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
-<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: ‘top’)</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
 <li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the final Verilog text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
-<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+(default: True)</p></li>
+<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting Verilog.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting Verilog.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,17 +468,17 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fragment</strong> (<em>torii.hdl.ir.Fragment</em>) – The Torii fragment hierarchy to lower.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the root fragment module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
+(default: ‘top’)</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the resulting CXXRTL text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
-<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: True)</p></li>
+<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The CXXRTL text and signal dictionary of the lowered fragment.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict">torii.hdl.ast.SignalDict</a>]</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The CXXRTL text and signal dictionary of the lowered fragment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -491,19 +491,19 @@ a signal map.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>elaboratable</strong> (<em>torii.hdl.ir.Elaboratable</em>) – The Elaboratable to lower into Verilog.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the resulting Verilog module.
-(default: ‘top’) (default: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>)</p></li>
-<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: ‘top’)</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
 <li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
 <li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Emit source line attributes in the final CXXRTL text.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
-<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: True)</p></li>
+<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting CXXRTL.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting CXXRTL.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -648,7 +648,7 @@ a signal map.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -200,7 +200,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -392,11 +392,11 @@ any such attributes may be set manually.</p>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the <code class="docutils literal notranslate"><span class="pre">data</span></code> signal on this port.</p></li>
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the <code class="docutils literal notranslate"><span class="pre">addr</span></code> signal on this port.</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this port is to operate on.
-(default: ‘sync’) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: ‘sync’)</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The name of this port.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 <li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Port granularity if set. If <code class="docutils literal notranslate"><span class="pre">None</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">data_width</span></code>.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -421,12 +421,12 @@ any such attributes may be set manually.</p>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Word count. This memory contains <code class="docutils literal notranslate"><span class="pre">depth</span></code> storage elements.</p></li>
 <li><p><strong>init</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Initial values. At power on, each storage element in this memory is initialized to
 the corresponding element of <code class="docutils literal notranslate"><span class="pre">init</span></code>, if any, or to zero otherwise.
-Uninitialized memories are not currently supported. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+Uninitialized memories are not currently supported.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Name hint for this memory. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the name is inferred from the variable
 name this <code class="docutils literal notranslate"><span class="pre">Memory</span></code> is assigned to.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em> | </em><em>None</em>) – Dictionary of synthesis attributes.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -447,13 +447,16 @@ name this <code class="docutils literal notranslate"><span class="pre">Memory</s
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> operates on.
-(default: ‘sync’) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: ‘sync’)</p></li>
 <li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Port transparency.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+(default: True)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> associated with this memory.</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of <a class="reference internal" href="#torii.hdl.mem.ReadPort" title="torii.hdl.mem.ReadPort"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadPort</span></code></a> associated with this memory.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -467,13 +470,16 @@ name this <code class="docutils literal notranslate"><span class="pre">Memory</s
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain this <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> operates on.
-(default: ‘sync’) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: ‘sync’)</p></li>
 <li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Port granularity
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> associated with this memory.</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of <a class="reference internal" href="#torii.hdl.mem.WritePort" title="torii.hdl.mem.WritePort"><code class="xref py py-class docutils literal notranslate"><span class="pre">WritePort</span></code></a> associated with this memory.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -490,11 +496,11 @@ name this <code class="docutils literal notranslate"><span class="pre">Memory</s
 <li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><em>Memory</em></a>) – Memory associated with the port.</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The clock domain this port operates on. If set to the <code class="docutils literal notranslate"><span class="pre">'comb'</span></code> domain, the port is
 asynchronous, otherwise reads have a latency of 1 clock cycle.
-(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
 <li><p><strong>transparent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Port transparency. If set a read at an address that is also being written to in
 the same clock cycle will output the new value. Otherwise, the old value will be output
 first. This behavior only applies to ports in the same domain.
-(default: True) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+(default: True)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -522,10 +528,10 @@ first. This behavior only applies to ports in the same domain.
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>memory</strong> (<a class="reference internal" href="#torii.hdl.mem.Memory" title="torii.hdl.mem.Memory"><em>Memory</em></a>) – Memory associated with the port.</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The clock domain this port operates on. Writes have a latency of 1 clock cycle.
-(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
 <li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Port granularity. Write data is split evenly in <code class="docutils literal notranslate"><span class="pre">memory.width</span> <span class="pre">//</span> <span class="pre">granularity</span></code> chunks,
 which can be updated independently. If <code class="docutils literal notranslate"><span class="pre">None</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">memory.width</span></code>.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -631,7 +637,7 @@ which can be updated independently. If <code class="docutils literal notranslate
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -186,7 +186,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -369,10 +369,10 @@ that occurs between streams to schedule which stream is connected to the output 
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The domain in which the arbiter should operate.
-(default: sync) (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+(default: sync)</p></li>
 <li><p><strong>stream_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><em>type</em></a>) – The type of stream to create, must be either <code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInterface</span></code>
 or a subtype there of.
-(default: torii.lib.stream.StreamInterface) (default: <code class="docutils literal notranslate"><span class="pre">&lt;class</span> <span class="pre">'torii.lib.stream.simple.StreamInterface'&gt;</span></code>)</p></li>
+(default: torii.lib.stream.StreamInterface)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -391,11 +391,8 @@ or a subtype there of.
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to connect to the arbiter.</p></li>
 <li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The stream priority.
-(default: -1) (default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>)</p></li>
+(default: -1)</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -408,13 +405,13 @@ or a subtype there of.
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The width of the stream data in bits.
-(default: 8) (default: <code class="docutils literal notranslate"><span class="pre">8</span></code>)</p></li>
+(default: 8)</p></li>
 <li><p><strong>valid_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The width of the valid field. If <code class="docutils literal notranslate"><span class="pre">None</span></code> it will default to <code class="docutils literal notranslate"><span class="pre">data_width</span> <span class="pre">//</span> <span class="pre">8</span></code>.
-(default: 1) (default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+(default: 1)</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The name of this stream.
-(default: None) (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(default: None)</p></li>
 <li><p><strong>extra</strong> (<em>Iterable</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>) – Any extra or ancillary fields to graft on to the stream.
-(default: []) (default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>)</p></li>
+(default: [])</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -445,7 +442,7 @@ clock edge.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream we are attaching to.</p></li>
 <li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {}) (default: <code class="docutils literal notranslate"><span class="pre">set()</span></code>)</p></li>
+(default: {})</p></li>
 </ul>
 </dd>
 </dl>
@@ -470,7 +467,7 @@ is the receiving stream.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream we are attaching to.</p></li>
 <li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {}) (default: <code class="docutils literal notranslate"><span class="pre">set()</span></code>)</p></li>
+(default: {})</p></li>
 </ul>
 </dd>
 </dl>
@@ -501,7 +498,7 @@ is just:</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to attach to this stream.</p></li>
 <li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {}) (default: <code class="docutils literal notranslate"><span class="pre">set()</span></code>)</p></li>
+(default: {})</p></li>
 </ul>
 </dd>
 </dl>
@@ -524,9 +521,9 @@ is just:</p>
 <li><p><strong>stream</strong> (<em>torii.lib.stream.StreamInterface</em>) – The stream to use as the interface to this tap.</p></li>
 <li><p><strong>tap_ready</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – By default the <code class="docutils literal notranslate"><span class="pre">ready</span></code> signal is excluded from the tap, passing <code class="docutils literal notranslate"><span class="pre">True</span></code> here will also
 connect that signal.
-(default: False) (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+(default: False)</p></li>
 <li><p><strong>omit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.13)"><em>set</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A set of additional stream fields to exclude from the tap connection.
-(default: {}) (default: <code class="docutils literal notranslate"><span class="pre">set()</span></code>)</p></li>
+(default: {})</p></li>
 </ul>
 </dd>
 </dl>
@@ -606,7 +603,7 @@ connect that signal.
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

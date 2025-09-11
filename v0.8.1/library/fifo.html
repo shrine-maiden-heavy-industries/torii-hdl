@@ -202,7 +202,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -390,7 +390,7 @@ to the input also appears first on the output.</p>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – First-word fallthrough. If set, when <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> rises, the first entry is already
 available, i.e. <code class="docutils literal notranslate"><span class="pre">r_data</span></code> is valid. Otherwise, after <code class="docutils literal notranslate"><span class="pre">r_rdy</span></code> rises, it is necessary
-to strobe <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid. (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+to strobe <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -428,7 +428,7 @@ are needed, use <a class="reference internal" href="#torii.lib.fifo.AsyncFIFO" t
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – First-word fallthrough. If set, when the queue is empty and an entry is written into it,
 that entry becomes available on the output on the same clock cycle. Otherwise, it is
-necessary to assert <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid. (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+necessary to assert <code class="docutils literal notranslate"><span class="pre">r_en</span></code> for <code class="docutils literal notranslate"><span class="pre">r_data</span></code> to become valid.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -501,8 +501,8 @@ the <code class="docutils literal notranslate"><span class="pre">depth</span></c
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Bit width of data entries.</p></li>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
-<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain. (default: <code class="docutils literal notranslate"><span class="pre">'read'</span></code>)</p></li>
-<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain. (default: <code class="docutils literal notranslate"><span class="pre">'write'</span></code>)</p></li>
+<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain.</p></li>
+<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain.</p></li>
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
@@ -544,8 +544,8 @@ becoming available on the output is increased by one cycle compared to <a class=
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Bit width of data entries.</p></li>
 <li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Depth of the queue. If zero, the FIFO cannot be read from or written to.</p></li>
-<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain. (default: <code class="docutils literal notranslate"><span class="pre">'read'</span></code>)</p></li>
-<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain. (default: <code class="docutils literal notranslate"><span class="pre">'write'</span></code>)</p></li>
+<li><p><strong>r_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Read clock domain.</p></li>
+<li><p><strong>w_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Write clock domain.</p></li>
 <li><p><strong>fwft</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Always set.</p></li>
 </ul>
 </dd>
@@ -649,7 +649,7 @@ the write-domain reset.</p></li>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

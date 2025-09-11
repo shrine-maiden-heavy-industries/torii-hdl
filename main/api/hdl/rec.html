@@ -18,7 +18,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Records - Torii 0.8.1.dev299 Documentation</title>
+<title>Records - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -231,7 +231,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -398,14 +398,9 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="records">
-<h1>Records<a class="headerlink" href="#records" title="Link to this heading">¶</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The Torii API reference is a work in progress and we are actively working on improving it,
-however it may be deficient or missing in places.</p>
-</div>
-<dl class="py class" id="module-torii.hdl.rec">
+          <section id="module-torii.hdl.rec">
+<span id="records"></span><h1>Records<a class="headerlink" href="#module-torii.hdl.rec" title="Link to this heading">¶</a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="torii.hdl.rec.Direction">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.rec.</span></span><span class="sig-name descname"><span class="pre">Direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.rec.Direction" title="Link to this definition">¶</a></dt>
 <dd><p>Signal/Subsignal Direction</p>
@@ -475,11 +470,11 @@ however it may be deficient or missing in places.</p>
 <span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.all" title="Link to this definition">¶</a></dt>
 <dd><p>Check if all bits are <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1</span></code> if all bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – <code class="docutils literal notranslate"><span class="pre">1</span></code> if all bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -489,11 +484,11 @@ however it may be deficient or missing in places.</p>
 <span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.any" title="Link to this definition">¶</a></dt>
 <dd><p>Check if any bits are <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1</span></code> if any bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – <code class="docutils literal notranslate"><span class="pre">1</span></code> if any bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -503,11 +498,11 @@ however it may be deficient or missing in places.</p>
 <span class="sig-name descname"><span class="pre">as_signed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_signed" title="Link to this definition">¶</a></dt>
 <dd><p>Conversion to signed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This <code class="docutils literal notranslate"><span class="pre">Value</span></code> reinterpreted as a signed integer.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – This <code class="docutils literal notranslate"><span class="pre">Value</span></code> reinterpreted as a signed integer.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -517,11 +512,11 @@ however it may be deficient or missing in places.</p>
 <span class="sig-name descname"><span class="pre">as_unsigned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.as_unsigned" title="Link to this definition">¶</a></dt>
 <dd><p>Conversion to unsigned.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This <code class="docutils literal notranslate"><span class="pre">Value</span></code> reinterpreted as a unsigned integer.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – This <code class="docutils literal notranslate"><span class="pre">Value</span></code> reinterpreted as a unsigned integer.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -539,11 +534,11 @@ parts overlap by all but 1 bit.</p>
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of selected bits.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Selected part of the <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Part" title="torii.hdl.ast.Part">Part</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Part</em> – Selected part of the <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -553,11 +548,11 @@ parts overlap by all but 1 bit.</p>
 <span class="sig-name descname"><span class="pre">bool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.bool" title="Link to this definition">¶</a></dt>
 <dd><p>Conversion to boolean.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1</span></code> if any bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – <code class="docutils literal notranslate"><span class="pre">1</span></code> if any bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -570,11 +565,11 @@ parts overlap by all but 1 bit.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>value</strong> (<a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><em>Value</em></a>) – Value to be assigned.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Assignment statement that can be used in combinatorial or synchronous context.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Assign" title="torii.hdl.ast.Assign"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assign</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Assign" title="torii.hdl.ast.Assign">Assign</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Assign</em> – Assignment statement that can be used in combinatorial or synchronous context.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -584,11 +579,11 @@ parts overlap by all but 1 bit.</p>
 <span class="sig-name descname"><span class="pre">implies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conclusion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><span class="pre">Value</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.EnumType" title="(in Python v3.13)"><span class="pre">EnumType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ValueCastable" title="torii.hdl.ast.ValueCastable"><span class="pre">ValueCastable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ValueLike" title="torii.hdl.ast.ValueLike"><span class="pre">ValueLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.implies" title="Link to this definition">¶</a></dt>
 <dd><p>Implication.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0</span></code> if <code class="docutils literal notranslate"><span class="pre">premise</span></code> is true and <code class="docutils literal notranslate"><span class="pre">conclusion</span></code> is not, <code class="docutils literal notranslate"><span class="pre">1</span></code> otherwise.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – <code class="docutils literal notranslate"><span class="pre">0</span></code> if <code class="docutils literal notranslate"><span class="pre">premise</span></code> is true and <code class="docutils literal notranslate"><span class="pre">conclusion</span></code> is not, <code class="docutils literal notranslate"><span class="pre">1</span></code> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -603,11 +598,11 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>patterns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>Enum</em>) – Patterns to match against.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">1</span></code> if any pattern matches the value, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value">Value</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value</em> – <code class="docutils literal notranslate"><span class="pre">1</span></code> if any pattern matches the value, <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -620,11 +615,11 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Amount to rotate by.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the amount is positive, the input rotated left. Otherwise, the input rotated right.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value">Value</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value</em> – If the amount is positive, the input rotated left. Otherwise, the input rotated right.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -637,11 +632,11 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Amount to rotate by.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the amount is positive, the input rotated right. Otherwise, the input rotated right.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value">Value</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value</em> – If the amount is positive, the input rotated right. Otherwise, the input rotated right.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -654,11 +649,11 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Amount to shift by.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the amount is positive, the input shifted left. Otherwise, the input shifted right.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value">Value</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value</em> – If the amount is positive, the input shifted left. Otherwise, the input shifted right.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -671,11 +666,11 @@ the same grammar as <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Amount to shift by.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the amount is positive, the input shifted right. Otherwise, the input shifted left.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value">Value</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Value</em> – If the amount is positive, the input shifted right. Otherwise, the input shifted left.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -693,11 +688,11 @@ parts do not overlap.</p>
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of selected bits.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Selected part of the <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Value" title="torii.hdl.ast.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Part" title="torii.hdl.ast.Part">Part</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Part</em> – Selected part of the <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -707,11 +702,11 @@ parts do not overlap.</p>
 <span class="sig-name descname"><span class="pre">xor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><span class="pre">Operator</span></a></span></span><a class="headerlink" href="#torii.hdl.rec.Record.xor" title="Link to this definition">¶</a></dt>
 <dd><p>Compute pairwise exclusive-or of every bit.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1</span></code> if an odd number of bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> if an even number of bits are set.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="ast.html#torii.hdl.ast.Operator" title="torii.hdl.ast.Operator">Operator</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operator</em> – <code class="docutils literal notranslate"><span class="pre">1</span></code> if an odd number of bits are set, <code class="docutils literal notranslate"><span class="pre">0</span></code> if an even number of bits are set.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -832,7 +827,7 @@ parts do not overlap.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

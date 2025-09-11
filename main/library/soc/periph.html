@@ -17,7 +17,7 @@
 <link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="csr/index.html" rel="next" title="CSRs"/><link href="event.html" rel="prev" title="Events"/>
 <link href="https://torii.shmdn.link/library/soc/periph.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Peripherals - Torii 0.8.1.dev299 Documentation</title>
+<title>Peripherals - Torii 0.8.1.dev336 Documentation</title>
 <link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 </a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -396,9 +396,9 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Constant value.</p></li>
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Width of <code class="docutils literal notranslate"><span class="pre">value</span></code> in bits. If <code class="docutils literal notranslate"><span class="pre">None</span></code> it is calculated by using
-<a class="reference internal" href="../../api/utility/units.html#torii.util.units.bits_for" title="torii.util.units.bits_for"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bits_for</span></code></a> to derive it from <code class="docutils literal notranslate"><span class="pre">value</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<a class="reference internal" href="../../api/utility/units.html#torii.util.units.bits_for" title="torii.util.units.bits_for"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bits_for</span></code></a> to derive it from <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p></li>
 <li><p><strong>signed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – If the value is signed. If <code class="docutils literal notranslate"><span class="pre">None</span></code> this is determined by checking
-if <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+if <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -454,8 +454,8 @@ recover its memory windows, CSR registers, event sources and configuration const
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>memory_map</strong> (<a class="reference internal" href="../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><em>MemoryMap</em></a>) – Memory map of the peripheral.</p></li>
-<li><p><strong>irq</strong> (<a class="reference internal" href="event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><em>event.Source</em></a><em> | </em><em>None</em>) – IRQ line of the peripheral. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>constant_map</strong> (<a class="reference internal" href="#torii.lib.soc.periph.ConstantMap" title="torii.lib.soc.periph.ConstantMap"><em>ConstantMap</em></a><em> | </em><em>None</em>) – Constant map of the peripheral. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>irq</strong> (<a class="reference internal" href="event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><em>event.Source</em></a><em> | </em><em>None</em>) – IRQ line of the peripheral.</p></li>
+<li><p><strong>constant_map</strong> (<a class="reference internal" href="#torii.lib.soc.periph.ConstantMap" title="torii.lib.soc.periph.ConstantMap"><em>ConstantMap</em></a><em> | </em><em>None</em>) – Constant map of the peripheral.</p></li>
 </ul>
 </dd>
 </dl>
@@ -465,10 +465,7 @@ recover its memory windows, CSR registers, event sources and configuration const
 <dd><p>Memory map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The memory map describing the local address space of the peripheral.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap">MemoryMap</a></p>
+<dd class="field-odd"><p><em>MemoryMap</em> – The memory map describing the local address space of the peripheral.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -478,14 +475,11 @@ recover its memory windows, CSR registers, event sources and configuration const
 <dd><p>IRQ line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An event source used by the peripheral to request interrupts. If provided, its
+<dd class="field-odd"><p><em>event.Source</em> – An event source used by the peripheral to request interrupts. If provided, its
 event map describes local events.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source">event.Source</a></p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If peripheral info does not have an IRQ line.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If peripheral info does not have an IRQ line.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -495,10 +489,7 @@ event map describes local events.</p>
 <dd><p>Constant map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The map containing the configuration constants of the peripheral.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.lib.soc.periph.ConstantMap" title="torii.lib.soc.periph.ConstantMap">ConstantMap</a></p>
+<dd class="field-odd"><p><em>ConstantMap</em> – The map containing the configuration constants of the peripheral.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -584,7 +575,7 @@ event map describes local events.</p>
 </div>
 </aside>
 </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
 <script src="../../_static/doctools.js?v=9bcbadda"></script>
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

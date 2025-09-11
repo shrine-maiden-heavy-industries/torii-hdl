@@ -18,7 +18,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Memory Map - Torii 0.8.1.dev299 Documentation</title>
+<title>Memory Map - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -231,7 +231,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -421,8 +421,8 @@ following the newly added resource or window.</p>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width.</p></li>
 <li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Range alignment. Each added resource and window will be placed at an address that is
 a multiple of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>, and its size will be rounded up to be a multiple of
-<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Name of the address range. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">alignment</span></code>.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Name of the address range.</p></li>
 </ul>
 </dd>
 </dl>
@@ -468,11 +468,6 @@ a multiple of <code class="docutils literal notranslate"><span class="pre">2</sp
 <dd><p>Freeze the memory map.</p>
 <p>Once the memory map is frozen, its visible state becomes immutable. Resources and windows
 cannot be added anymore, and its address width cannot be extended further.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -484,11 +479,11 @@ cannot be added anymore, and its address width cannot be extended further.</p>
 <dd class="field-odd"><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address alignment. The start of the implicit next address will be a multiple of
 <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">max(alignment,</span> <span class="pre">self.alignment)</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Implicit next address.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – Implicit next address.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -507,19 +502,19 @@ a register or a memory block.</p>
 present in this memory map.</p></li>
 <li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Address of the resource. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the implicit next address will be used.
 Otherwise, the exact specified address (which must be a multiple of
-<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">max(alignment,</span> <span class="pre">self.alignment)</span></code>) will be used. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">max(alignment,</span> <span class="pre">self.alignment)</span></code>) will be used.</p></li>
 <li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Size of the resource, in minimal addressable units. Rounded up to a multiple of
 <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">max(alignment,</span> <span class="pre">self.alignment)</span></code>.</p></li>
-<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Alignment of the resource. If not specified, the memory map alignment is used. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Alignment of the resource. If not specified, the memory map alignment is used.</p></li>
 <li><p><strong>extend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Allow memory map extension. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the upper bound of the address space is
-raised as needed, in order to fit a resource that would otherwise be out of bounds. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+raised as needed, in order to fit a resource that would otherwise be out of bounds.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple <code class="docutils literal notranslate"><span class="pre">[start,</span> <span class="pre">end)</span></code> describing the address range assigned to the resource.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[int, int]</em> – A tuple <code class="docutils literal notranslate"><span class="pre">[start,</span> <span class="pre">end)</span></code> describing the address range assigned to the resource.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If one of the following occurs:
@@ -540,11 +535,8 @@ raised as needed, in order to fit a resource that would otherwise be out of boun
 <p>Non-recursively iterate resources in ascending order of their address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Yields a tuple <code class="docutils literal notranslate"><span class="pre">resource,</span> <span class="pre">name,</span> <span class="pre">(start,</span> <span class="pre">end)</span></code> describing the address range assigned to the
+<dd class="field-odd"><p><em>Generator[]</em> – Yields a tuple <code class="docutils literal notranslate"><span class="pre">resource,</span> <span class="pre">name,</span> <span class="pre">(start,</span> <span class="pre">end)</span></code> describing the address range assigned to the
 resource.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generator[]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -571,21 +563,21 @@ and any contiguous resource on the narrow bus stays contiguous on the wide bus.<
 being added to this memory map.</p></li>
 <li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> or </em><em>None</em>) – Address of the window. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the implicit next address will be used after
 aligning it to <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">window.addr_width</span></code>. Otherwise, the exact specified address
-(which must be a multiple of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">window.addr_width</span></code>) will be used. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+(which must be a multiple of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">window.addr_width</span></code>) will be used.</p></li>
 <li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> or </em><em>None</em>) – Address translation type. Ignored if the datapath widths of both memory maps are
-equal; must be specified otherwise. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+equal; must be specified otherwise.</p></li>
 <li><p><strong>extend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Allow memory map extension. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the upper bound of the address space is
-raised as needed, in order to fit a window that would otherwise be out of bounds. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+raised as needed, in order to fit a window that would otherwise be out of bounds.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple <code class="docutils literal notranslate"><span class="pre">(start,</span> <span class="pre">end,</span> <span class="pre">ratio)</span></code> describing the address range assigned to the window.
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[int, int, int]</em> – A tuple <code class="docutils literal notranslate"><span class="pre">(start,</span> <span class="pre">end,</span> <span class="pre">ratio)</span></code> describing the address range assigned to the window.
 When bridging buses of unequal data width, <code class="docutils literal notranslate"><span class="pre">ratio</span></code> is the amount of contiguous addresses
 on the narrower bus that are accessed for each transaction on the wider bus. Otherwise,
 it is always 1.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If one of the following occurs:
@@ -609,13 +601,10 @@ it is always 1.</p>
 <p>Non-recursively iterate windows in ascending order of their address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Yields a tuple <code class="docutils literal notranslate"><span class="pre">window,</span> <span class="pre">(start,</span> <span class="pre">end,</span> <span class="pre">ratio)</span></code> describing the address range assigned to
+<dd class="field-odd"><p><em>Generator</em> – Yields a tuple <code class="docutils literal notranslate"><span class="pre">window,</span> <span class="pre">(start,</span> <span class="pre">end,</span> <span class="pre">ratio)</span></code> describing the address range assigned to
 the window. When bridging buses of unequal data width, <code class="docutils literal notranslate"><span class="pre">ratio</span></code> is the amount of
 contiguous addresses on the narrower bus that are accessed for each transaction on
 the wider bus. Otherwise, it is always 1.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generator</p>
 </dd>
 </dl>
 </dd></dl>
@@ -626,16 +615,16 @@ the wider bus. Otherwise, it is always 1.</p>
 <dd><p>Iterate local windows and patterns that match their address ranges.</p>
 <p>Non-recursively iterate windows in ascending order of their address.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Yields a tuple <code class="docutils literal notranslate"><span class="pre">window,</span> <span class="pre">(pattern,</span> <span class="pre">ratio)</span></code> describing the address range assigned to the window.
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference internal" href="#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryMap</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Generator[tuple[MemoryMap, tuple[str, int]]]</em> – Yields a tuple <code class="docutils literal notranslate"><span class="pre">window,</span> <span class="pre">(pattern,</span> <span class="pre">ratio)</span></code> describing the address range assigned to the window.
 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> is a <code class="docutils literal notranslate"><span class="pre">self.addr_width</span></code> wide pattern that may be used in <code class="docutils literal notranslate"><span class="pre">Case</span></code> or <code class="docutils literal notranslate"><span class="pre">match</span></code>
 to determine if an address signal is within the address range of <code class="docutils literal notranslate"><span class="pre">window</span></code>. When bridging
 buses of unequal data width, <code class="docutils literal notranslate"><span class="pre">ratio</span></code> is the amount of contiguous addresses on
 the narrower bus that are accessed for each transaction on the wider bus. Otherwise,
 it is always 1.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generator[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference internal" href="#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap">MemoryMap</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -647,11 +636,11 @@ it is always 1.</p>
 <p>Recursively iterate all resources in ascending order of their address, performing address
 translation for resources that are located behind a window.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Yields instances of <a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> describing the resource and its address range.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a>]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generator[<a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo">ResourceInfo</a>]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Generator[ResourceInfo]</em> – Yields instances of <a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> describing the resource and its address range.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -666,11 +655,11 @@ resources that are located behind a window.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>resource</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></span>) – Resource previously added to this memory map or any windows.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> describing the resource and its address range.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo">ResourceInfo</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ResourceInfo</em> – An instance of <a class="reference internal" href="#torii.lib.mem.map.ResourceInfo" title="torii.lib.mem.map.ResourceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceInfo</span></code></a> describing the resource and its address range.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.13)"><strong>KeyError</strong></a> – If the resource is not found.</p>
@@ -868,7 +857,7 @@ is located behind a window that uses sparse addressing.</p></li>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

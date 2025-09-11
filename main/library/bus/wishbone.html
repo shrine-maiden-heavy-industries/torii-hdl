@@ -18,7 +18,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Wishbone Bus - Torii 0.8.1.dev299 Documentation</title>
+<title>Wishbone Bus - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -231,7 +231,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -410,8 +410,8 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -425,11 +425,6 @@
 <p>The initiator bus must have the same address width and data width as the arbiter. The
 granularity of the initiator bus must be greater than or equal to the granularity of
 the arbiter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -510,10 +505,10 @@ the arbiter.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
-<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <code class="xref py py-class docutils literal notranslate"><span class="pre">memory.MemoryMap</span></code> (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Optional signal set. See <a class="reference internal" href="#torii.lib.bus.wishbone.Interface" title="torii.lib.bus.wishbone.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <code class="xref py py-class docutils literal notranslate"><span class="pre">memory.MemoryMap</span></code></p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name.</p></li>
 </ul>
 </dd>
 </dl>
@@ -586,9 +581,9 @@ of the underlying memory map is extended to reflect that.</p>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Width of the data signals (“port size” in Wishbone terminology).
 One of 8, 16, 32, 64.</p></li>
 <li><p><strong>granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Granularity of select signals (“port granularity” in Wishbone terminology).
-One of 8, 16, 32, 64. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Selects the optional signals that will be a part of this interface. (default: <code class="docutils literal notranslate"><span class="pre">frozenset()</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+One of 8, 16, 32, 64.</p></li>
+<li><p><strong>features</strong> (<em>iter</em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>)</em>) – Selects the optional signals that will be a part of this interface.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -722,7 +717,7 @@ on whether the interface acts as an initiator or a target.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

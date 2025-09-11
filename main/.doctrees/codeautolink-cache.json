@@ -2,7 +2,174 @@
   "api/backend/index": [
     {
       "source": "class Blinky(Elaboratable):\n    def elaborate(self, platform) -> Module:\n        led   = Signal()\n        timer = Signal(20)\n\n        m = Module()\n        m.d.sync += timer.eq(timer + 1)\n        m.d.comb += led.eq(timer[-1])\n        return m\n",
-      "names": [],
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "led",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "led.eq",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
       "example": {
         "document": "api/backend/index",
         "ref_id": "example",
@@ -11,10 +178,10 @@
           "Example"
         ]
       },
-      "doc_lineno": 48
+      "doc_lineno": 45
     },
     {
-      "source": "from torii.back.verilog import convert\n\nverilog = convert(Blinky(), name = 'blinker', ports = [])",
+      "source": "from torii.back.verilog import convert\n\nverilog = convert(Blinky(), name = 'blinker', ports = [])\n",
       "names": [
         {
           "import_components": [
@@ -63,10 +230,10 @@
           "Example"
         ]
       },
-      "doc_lineno": 65
+      "doc_lineno": 61
     },
     {
-      "source": "from torii.back.cxxrtl import convert\n\ncxxrtl = convert(Blinky(), name = 'blinker', ports = [])",
+      "source": "from torii.back.cxxrtl import convert\n\ncxxrtl = convert(Blinky(), name = 'blinker', ports = [])\n",
       "names": [
         {
           "import_components": [
@@ -115,10 +282,10 @@
           "Example"
         ]
       },
-      "doc_lineno": 114
+      "doc_lineno": 109
     },
     {
-      "source": "from torii.back.json import convert\n\njson = convert(Blinky(), name = 'blinker', ports = [])",
+      "source": "from torii.back.json import convert\n\njson = convert(Blinky(), name = 'blinker', ports = [])\n",
       "names": [
         {
           "import_components": [
@@ -167,7 +334,7 @@
           "Example"
         ]
       },
-      "doc_lineno": 235
+      "doc_lineno": 229
     }
   ],
   "api/diagnostics": [],
@@ -188,7 +355,7 @@
       ],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -224,7 +391,7 @@
       ],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -250,7 +417,7 @@
       ],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -265,7 +432,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -314,7 +481,7 @@
       ],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -335,7 +502,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -357,7 +524,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -380,7 +547,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -406,7 +573,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -434,7 +601,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -464,7 +631,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -496,42 +663,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
-        "headings": [
-          "Abstract Syntax Tree",
-          "Todo",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Todo",
-          "Todo",
-          "Examples",
-          "Examples",
-          "Todo",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Examples",
-          "Todo",
-          "Todo",
-          "Examples"
-        ]
-      },
-      "doc_lineno": 8
-    },
-    {
-      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
-      "names": [],
-      "example": {
-        "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -556,7 +688,6 @@
           "Examples",
           "Todo",
           "Todo",
-          "Examples",
           "Examples"
         ]
       },
@@ -567,7 +698,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -593,6 +724,42 @@
           "Todo",
           "Todo",
           "Examples",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
           "Examples",
           "Todo",
           "Todo",
@@ -607,7 +774,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -670,7 +837,7 @@
       ],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -717,7 +884,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ast",
-        "ref_id": "abstract-syntax-tree",
+        "ref_id": "module-torii.hdl.ast",
         "headings": [
           "Abstract Syntax Tree",
           "Todo",
@@ -770,7 +937,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/ir",
-        "ref_id": "ir",
+        "ref_id": "module-torii.hdl.ir",
         "headings": [
           "IR",
           "Todo",
@@ -805,7 +972,7 @@
       "names": [],
       "example": {
         "document": "api/hdl/xfrm",
-        "ref_id": "xfrm",
+        "ref_id": "module-torii.hdl.xfrm",
         "headings": [
           "XFRM",
           "Todo",
@@ -1187,7 +1354,7 @@
   "changelog": [],
   "getting_started/index": [
     {
-      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit : int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en : Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n    ovf : Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int) -> None:\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n",
+      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit: int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en: Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n\n    ovf: Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int) -> None:\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n\n",
       "names": [
         {
           "import_components": [
@@ -1242,22 +1409,10 @@
             "int"
           ],
           "code_str": "int",
-          "lineno": 20,
-          "end_lineno": 20,
+          "lineno": 21,
+          "end_lineno": 21,
           "context": "none",
           "resolved_location": "int"
-        },
-        {
-          "import_components": [
-            "torii",
-            "hdl",
-            "Signal"
-          ],
-          "code_str": "Signal",
-          "lineno": 24,
-          "end_lineno": 24,
-          "context": "none",
-          "resolved_location": "torii.hdl.ast.Signal"
         },
         {
           "import_components": [
@@ -1278,8 +1433,20 @@
             "Signal"
           ],
           "code_str": "Signal",
-          "lineno": 28,
-          "end_lineno": 28,
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 29,
+          "end_lineno": 29,
           "context": "none",
           "resolved_location": "torii.hdl.ast.Signal"
         },
@@ -1290,8 +1457,8 @@
             "Module"
           ],
           "code_str": "Module",
-          "lineno": 30,
-          "end_lineno": 30,
+          "lineno": 31,
+          "end_lineno": 31,
           "context": "none",
           "resolved_location": "torii.hdl.dsl.Module"
         },
@@ -1302,8 +1469,8 @@
             "Module"
           ],
           "code_str": "Module",
-          "lineno": 31,
-          "end_lineno": 31,
+          "lineno": 32,
+          "end_lineno": 32,
           "context": "none",
           "resolved_location": "torii.hdl.dsl.Module"
         },
@@ -1315,24 +1482,10 @@
             "()"
           ],
           "code_str": "m",
-          "lineno": 31,
-          "end_lineno": 31,
+          "lineno": 32,
+          "end_lineno": 32,
           "context": "none",
           "resolved_location": "torii.hdl.dsl.Module"
-        },
-        {
-          "import_components": [
-            "torii",
-            "hdl",
-            "Module",
-            "()",
-            "If"
-          ],
-          "code_str": "m.If",
-          "lineno": 35,
-          "end_lineno": 35,
-          "context": "none",
-          "resolved_location": "torii.hdl.dsl.Module.If"
         },
         {
           "import_components": [
@@ -1354,11 +1507,25 @@
             "hdl",
             "Module",
             "()",
+            "If"
+          ],
+          "code_str": "m.If",
+          "lineno": 37,
+          "end_lineno": 37,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.If"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
             "Else"
           ],
           "code_str": "m.Else",
-          "lineno": 38,
-          "end_lineno": 38,
+          "lineno": 39,
+          "end_lineno": 39,
           "context": "none",
           "resolved_location": "torii.hdl.dsl.Module.Else"
         },
@@ -1370,8 +1537,8 @@
             "()"
           ],
           "code_str": "m",
-          "lineno": 41,
-          "end_lineno": 41,
+          "lineno": 42,
+          "end_lineno": 42,
           "context": "none",
           "resolved_location": "torii.hdl.dsl.Module"
         }
@@ -1387,10 +1554,10 @@
           "Implementing a counter"
         ]
       },
-      "doc_lineno": 30
+      "doc_lineno": 29
     },
     {
-      "source": "from torii.sim import Simulator # noqa: E402\n\ndut = UpCounter(25)\ndef bench():\n    # Disabled counter should not overflow.\n    yield dut.en.eq(0)\n    for _ in range(30):\n        yield\n        assert not (yield dut.ovf)\n\n    # Once enabled, the counter should overflow in 25 cycles.\n    yield dut.en.eq(1)\n    for _ in range(25):\n        yield\n        assert not (yield dut.ovf)\n    yield\n    assert (yield dut.ovf)\n\n    # The overflow should clear in one cycle.\n    yield\n    assert not (yield dut.ovf)\n\nsim = Simulator(dut)\nsim.add_clock(1e-6) # 1 MHz\nsim.add_sync_process(bench)\nwith sim.write_vcd('up_counter.vcd'):\n    sim.run()\n",
+      "source": "from torii.sim import Simulator # noqa: E402\n\ndut = UpCounter(25)\ndef bench():\n    # Disabled counter should not overflow.\n    yield dut.en.eq(0)\n    for _ in range(30):\n        yield\n        assert not (yield dut.ovf)\n\n    # Once enabled, the counter should overflow in 25 cycles.\n    yield dut.en.eq(1)\n    for _ in range(25):\n        yield\n        assert not (yield dut.ovf)\n    yield\n    assert (yield dut.ovf)\n\n    # The overflow should clear in one cycle.\n    yield\n    assert not (yield dut.ovf)\n\nsim = Simulator(dut)\nsim.add_clock(1e-6) # 1 MHz\nsim.add_sync_process(bench)\nwith sim.write_vcd('up_counter.vcd'):\n    sim.run()\n\n",
       "names": [
         {
           "import_components": [
@@ -1472,7 +1639,7 @@
           "Testing a counter"
         ]
       },
-      "doc_lineno": 50
+      "doc_lineno": 48
     },
     {
       "source": "from torii.back import verilog # noqa: E402\n\ntop = UpCounter(25)\nwith open('up_counter.v', 'w') as f:\n    f.write(verilog.convert(top, ports = [top.en, top.ovf]))\n",
@@ -1524,10 +1691,10 @@
           "Converting a counter"
         ]
       },
-      "doc_lineno": 71
+      "doc_lineno": 68
     },
     {
-      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass LEDBlinker(Elaboratable):\n    def elaborate(self, platform):\n        m = Module()\n\n        led = platform.request('led')\n\n        half_freq = int(platform.default_clk_frequency // 2)\n        timer = Signal(range(half_freq + 1))\n\n        with m.If(timer == half_freq):\n            m.d.sync += led.eq(~led)\n            m.d.sync += timer.eq(0)\n        with m.Else():\n            m.d.sync += timer.eq(timer + 1)\n\n        return m\n",
+      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass LEDBlinker(Elaboratable):\n    def elaborate(self, platform):\n        m = Module()\n\n        led = platform.request('led')\n\n        half_freq = int(platform.default_clk_frequency // 2)\n        timer = Signal(range(half_freq + 1))\n\n        with m.If(timer == half_freq):\n            m.d.sync += led.eq(~led)\n            m.d.sync += timer.eq(0)\n        with m.Else():\n            m.d.sync += timer.eq(timer + 1)\n\n        return m\n\n",
       "names": [
         {
           "import_components": [
@@ -1753,10 +1920,10 @@
           "A blinking LED"
         ]
       },
-      "doc_lineno": 99
+      "doc_lineno": 94
     },
     {
-      "source": "from torii_boards.lattice.icestick import ICEStickPlatform # noqa: E402\n\nICEStickPlatform().build(LEDBlinker(), do_program = True)\n",
+      "source": "from torii_boards.lattice.ice40 import ICEStickPlatform # noqa: E402\n\nICEStickPlatform().build(LEDBlinker(), do_program = True)\n",
       "names": [],
       "example": {
         "document": "getting_started/index",
@@ -1770,7 +1937,7 @@
           "Todo"
         ]
       },
-      "doc_lineno": 117
+      "doc_lineno": 111
     }
   ],
   "index": [],
@@ -1839,7 +2006,7 @@
           "Shapes"
         ]
       },
-      "doc_lineno": 43
+      "doc_lineno": 39
     },
     {
       "source": ">>> unsigned(5) == Shape(width = 5, signed = False)\nTrue\n>>> signed(12) == Shape(width = 12, signed = True)\nTrue",
@@ -1901,7 +2068,7 @@
           "Shapes"
         ]
       },
-      "doc_lineno": 54
+      "doc_lineno": 48
     },
     {
       "source": ">>> Const(5).shape()\nunsigned(3)\n>>> len(Const(5))\n3",
@@ -1963,7 +2130,7 @@
           "Shapes of values"
         ]
       },
-      "doc_lineno": 67
+      "doc_lineno": 59
     },
     {
       "source": ">>> ten = Const(10)\n>>> minus_two = Const(-2)",
@@ -2027,7 +2194,7 @@
           "Constants"
         ]
       },
-      "doc_lineno": 85
+      "doc_lineno": 77
     },
     {
       "source": ">>> ten.shape()\nunsigned(4)\n>>> minus_two.shape()\nsigned(2)\n>>> Const(0).shape()\nunsigned(1)",
@@ -2095,7 +2262,7 @@
           "Constants"
         ]
       },
-      "doc_lineno": 95
+      "doc_lineno": 84
     },
     {
       "source": ">>> Const(360, unsigned(8)).value\n104\n>>> Const(129, signed(8)).value\n-127\n>>> Const(1, unsigned(0)).value\n0",
@@ -2181,7 +2348,7 @@
           "Constants"
         ]
       },
-      "doc_lineno": 109
+      "doc_lineno": 95
     },
     {
       "source": ">>> Shape.cast(5)\nunsigned(5)\n>>> Const(0, 3).shape()\nunsigned(3)",
@@ -2235,7 +2402,7 @@
           "Shapes from integers"
         ]
       },
-      "doc_lineno": 131
+      "doc_lineno": 114
     },
     {
       "source": ">>> Const(0, range(100)).shape()\nunsigned(7)\n>>> items = [1, 2, 3]\n>>> Const(1, range(len(items))).shape()\nunsigned(2)",
@@ -2332,7 +2499,7 @@
           "Shapes from ranges"
         ]
       },
-      "doc_lineno": 150
+      "doc_lineno": 130
     },
     {
       "source": ">>> fencepost = Const(256, range(256))\n>>> fencepost.shape()\nunsigned(8)\n>>> fencepost.value\n0",
@@ -2396,10 +2563,10 @@
           "Shapes from ranges"
         ]
       },
-      "doc_lineno": 165
+      "doc_lineno": 141
     },
     {
-      "source": "class Direction(enum.Enum):\n    TOP    = 0\n    LEFT   = 1\n    BOTTOM = 2\n    RIGHT  = 3",
+      "source": "class Direction(enum.Enum):\n      TOP    = 0\n      LEFT   = 1\n      BOTTOM = 2\n      RIGHT  = 3",
       "names": [],
       "example": {
         "document": "language/index",
@@ -2410,7 +2577,7 @@
           "Shapes from enumerations"
         ]
       },
-      "doc_lineno": 193
+      "doc_lineno": 167
     },
     {
       "source": ">>> Shape.cast(Direction)\nunsigned(2)",
@@ -2438,7 +2605,7 @@
           "Shapes from enumerations"
         ]
       },
-      "doc_lineno": 202
+      "doc_lineno": 178
     },
     {
       "source": ">>> Value.cast(5)\n(const 3'd5)",
@@ -2466,7 +2633,7 @@
           "Values from integers"
         ]
       },
-      "doc_lineno": 227
+      "doc_lineno": 200
     },
     {
       "source": ">>> Value.cast(Direction.LEFT)\n(const 2'd1)",
@@ -2494,7 +2661,7 @@
           "Values from enumeration members"
         ]
       },
-      "doc_lineno": 243
+      "doc_lineno": 213
     },
     {
       "source": ">>> Const.cast(Cat(Direction.TOP, Direction.LEFT))\n(const 4'd4)",
@@ -2533,7 +2700,7 @@
           "Constant casting"
         ]
       },
-      "doc_lineno": 263
+      "doc_lineno": 230
     },
     {
       "source": ">>> Signal().shape()\nunsigned(1)\n>>> Signal(4).shape()\nunsigned(4)\n>>> Signal(range(-8, 7)).shape()\nsigned(4)\n>>> Signal(Direction).shape()\nunsigned(2)\n>>> Signal(0).shape()\nunsigned(0)",
@@ -2688,7 +2855,7 @@
           "Signal shapes"
         ]
       },
-      "doc_lineno": 288
+      "doc_lineno": 252
     },
     {
       "source": ">>> foo = Signal()\n>>> foo.name\n'foo'\n>>> self.bar = Signal()\n>>> self.bar.name\n'bar'",
@@ -2740,7 +2907,7 @@
           "Signal names"
         ]
       },
-      "doc_lineno": 315
+      "doc_lineno": 276
     },
     {
       "source": ">>> foo2 = Signal(name = 'second_foo')\n>>> foo2.name\n'second_foo'",
@@ -2780,7 +2947,7 @@
           "Signal names"
         ]
       },
-      "doc_lineno": 329
+      "doc_lineno": 287
     },
     {
       "source": ">>> Signal(4).reset\n0\n>>> Signal(4, reset = 5).reset\n5\n>>> Signal(Direction, reset = Direction.LEFT).reset\n1",
@@ -2831,7 +2998,7 @@
           "Initial signal values"
         ]
       },
-      "doc_lineno": 347
+      "doc_lineno": 303
     },
     {
       "source": ">>> Signal().reset_less\nFalse\n>>> Signal(reset_less = True).reset_less\nTrue",
@@ -2870,7 +3037,7 @@
           "Reset-less signals"
         ]
       },
-      "doc_lineno": 367
+      "doc_lineno": 320
     },
     {
       "source": ">>> a = 5\n>>> a + 1\n6",
@@ -2884,7 +3051,7 @@
           "Performing or describing computations?"
         ]
       },
-      "doc_lineno": 385
+      "doc_lineno": 335
     },
     {
       "source": ">>> a = Signal(8, reset = 5)\n>>> a + 1\n(+ (sig a) (const 1'd1))",
@@ -2937,10 +3104,10 @@
           "Performing or describing computations?"
         ]
       },
-      "doc_lineno": 396
+      "doc_lineno": 343
     },
     {
-      "source": ">>> if a == 0:\n...     print('Zero!')\nTraceback (most recent call last):\n  ...\nTypeError: Attempted to convert Torii value to Python boolean",
+      "source": ">>> if a == 0:\n...     print('Zero!')\nTraceback (most recent call last):\n   ...\nTypeError: Attempted to convert Torii value to Python boolean",
       "names": [
         {
           "import_components": [
@@ -2962,7 +3129,7 @@
           "Performing or describing computations?"
         ]
       },
-      "doc_lineno": 407
+      "doc_lineno": 351
     },
     {
       "source": ">>> a = Signal(8)\n>>> (a + 1).shape() # needs to represent 1 to 256\nunsigned(9)",
@@ -3015,7 +3182,7 @@
           "Arithmetic operators"
         ]
       },
-      "doc_lineno": 429
+      "doc_lineno": 371
     },
     {
       "source": ">>> a = Signal(unsigned(8))\n>>> b = Signal(signed(8))\n>>> (a + b).shape() # needs to represent -128 to 382\nsigned(10)",
@@ -3130,7 +3297,7 @@
           "Arithmetic operators"
         ]
       },
-      "doc_lineno": 439
+      "doc_lineno": 379
     },
     {
       "source": ">>> (1 << Const(0, 32)).shape()\nunsigned(4294967296)",
@@ -3157,7 +3324,7 @@
           "Bitwise, shift, and rotate operators"
         ]
       },
-      "doc_lineno": 513
+      "doc_lineno": 449
     },
     {
       "source": ">>> en = Signal()\n>>> addr = Signal(8)\n>>> en & (addr == 0) # correct\n(& (sig en) (== (sig addr) (const 1'd0)))\n>>> en & addr == 0 # WRONG! addr is truncated to 1 bit\n(== (& (sig en) (sig addr)) (const 1'd0))",
@@ -3274,7 +3441,7 @@
           "Logical operators"
         ]
       },
-      "doc_lineno": 567
+      "doc_lineno": 500
     },
     {
       "source": ">>> ~False\n-1\n>>> ~True\n-2",
@@ -3288,7 +3455,7 @@
           "Logical operators"
         ]
       },
-      "doc_lineno": 582
+      "doc_lineno": 514
     },
     {
       "source": ">>> stb = Signal()\n>>> use_stb = True\n>>> (not use_stb) | stb # correct\n(| (const 1'd0) (sig stb))\n>>> ~use_stb | stb # WRONG! MSB of 2-bit wide OR expression is always 1\n(| (const 2'sd-2) (sig stb))",
@@ -3354,7 +3521,7 @@
           "Logical operators"
         ]
       },
-      "doc_lineno": 591
+      "doc_lineno": 523
     },
     {
       "source": ">>> m = Module()",
@@ -3393,7 +3560,7 @@
           "Modules"
         ]
       },
-      "doc_lineno": 671
+      "doc_lineno": 599
     },
     {
       "source": ">>> s = Signal()\n>>> s.eq(1)\n(eq (sig s) (const 1'd1))",
@@ -3447,7 +3614,7 @@
           "Assigning to signals"
         ]
       },
-      "doc_lineno": 694
+      "doc_lineno": 619
     },
     {
       "source": ">>> a = Signal(8)\n>>> b = Signal(4)\n>>> Cat(a, b).eq(0)\n(eq (cat (sig a) (sig b)) (const 1'd0))\n>>> a[:4].eq(b)\n(eq (slice (sig a) 0:4) (sig b))\n>>> Cat(a, a).bit_select(b, 2).eq(0b11)\n(eq (part (cat (sig a) (sig a)) (sig b) 2 1) (const 2'd3))",
@@ -3671,10 +3838,10 @@
           "Assignment targets"
         ]
       },
-      "doc_lineno": 711
+      "doc_lineno": 633
     },
     {
-      "source": "a = Signal()\nb = Signal()\nc = Signal()\nm.d.comb += a.eq(1)\nm.d.sync += [\n    b.eq(c),\n    c.eq(b),\n]",
+      "source": "a = Signal()\nb = Signal()\nc = Signal()\nm.d.comb += a.eq(1)\nm.d.sync += [\n      b.eq(c),\n      c.eq(b),\n]\n",
       "names": [
         {
           "import_components": [
@@ -3829,10 +3996,10 @@
           "Assignment domains"
         ]
       },
-      "doc_lineno": 730
+      "doc_lineno": 651
     },
     {
-      "source": "def add_toggle(num):\n    t = Signal()\n    m.d[f'sync_{num}'] += t.eq(~t)\nadd_toggle(2)",
+      "source": "def add_toggle(num):\n      t = Signal()\n      m.d[f'sync_{num}'] += t.eq(~t)\nadd_toggle(2)\n",
       "names": [
         {
           "import_components": [
@@ -3896,10 +4063,10 @@
           "Assignment domains"
         ]
       },
-      "doc_lineno": 747
+      "doc_lineno": 667
     },
     {
-      "source": ">>> d = Signal()\n>>> m.d.comb += d.eq(1)\n>>> m.d.sync += d.eq(0)\nTraceback (most recent call last):\n  ...\ntorii.hdl.dsl.SyntaxError: Driver-driver conflict: trying to drive (sig d) from d.sync, but it is already driven from d.comb",
+      "source": ">>> d = Signal()\n>>> m.d.comb += d.eq(1)\n>>> m.d.sync += d.eq(0)\nTraceback (most recent call last):\n   ...\ntorii.hdl.dsl.SyntaxError: Driver-driver conflict: trying to drive (sig d) from d.sync, but it is already driven from d.comb",
       "names": [
         {
           "import_components": [
@@ -3964,10 +4131,10 @@
           "Assignment domains"
         ]
       },
-      "doc_lineno": 759
+      "doc_lineno": 676
     },
     {
-      "source": "e = Signal(2)\nm.d.comb += e[0].eq(0)\nm.d.sync += e[1].eq(1)",
+      "source": "e = Signal(2)\nm.d.comb += e[0].eq(0)\nm.d.sync += e[1].eq(1)\n",
       "names": [
         {
           "import_components": [
@@ -4030,10 +4197,10 @@
           "Assignment domains"
         ]
       },
-      "doc_lineno": 773
+      "doc_lineno": 691
     },
     {
-      "source": "a = Signal(8)\nm.d.comb += [\n    a[0:4].eq(Const(1, 4)),\n    a[4:8].eq(Const(2, 4)),\n]",
+      "source": "a = Signal(8)\nm.d.comb += [\n      a[0:4].eq(Const(1, 4)),\n      a[4:8].eq(Const(2, 4)),\n]\n",
       "names": [
         {
           "import_components": [
@@ -4120,10 +4287,10 @@
           "Assignment order"
         ]
       },
-      "doc_lineno": 791
+      "doc_lineno": 709
     },
     {
-      "source": "a = Signal(8)\nm.d.comb += a.eq(Cat(Const(1, 4), Const(2, 4)))",
+      "source": "a = Signal(8)\nm.d.comb += a.eq(Cat(Const(1, 4), Const(2, 4)))\n",
       "names": [
         {
           "import_components": [
@@ -4210,10 +4377,10 @@
           "Assignment order"
         ]
       },
-      "doc_lineno": 800
+      "doc_lineno": 720
     },
     {
-      "source": "b = Signal(9)\nm.d.comb += [\n    b[0:9].eq(Cat(Const(1, 3), Const(2, 3), Const(3, 3))),\n    b[0:6].eq(Cat(Const(4, 3), Const(5, 3))),\n    b[3:6].eq(Const(6, 3)),\n]",
+      "source": "b = Signal(9)\nm.d.comb += [\n   b[0:9].eq(Cat(Const(1, 3), Const(2, 3), Const(3, 3))),\n   b[0:6].eq(Cat(Const(4, 3), Const(5, 3))),\n   b[3:6].eq(Const(6, 3)),\n]\n",
       "names": [
         {
           "import_components": [
@@ -4385,10 +4552,10 @@
           "Assignment order"
         ]
       },
-      "doc_lineno": 811
+      "doc_lineno": 730
     },
     {
-      "source": "b = Signal(9)\nm.d.comb += b.eq(Cat(Const(4, 3), Const(6, 3), Const(3, 3)))",
+      "source": "b = Signal(9)\nm.d.comb += b.eq(Cat(Const(4, 3), Const(6, 3), Const(3, 3)))\n",
       "names": [
         {
           "import_components": [
@@ -4487,10 +4654,10 @@
           "Assignment order"
         ]
       },
-      "doc_lineno": 821
+      "doc_lineno": 742
     },
     {
-      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n    m.d.sync += timer.eq(10)\nwith m.Else():\n    m.d.sync += timer.eq(timer - 1)",
+      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n      m.d.sync += timer.eq(10)\nwith m.Else():\n      m.d.sync += timer.eq(timer - 1)\n",
       "names": [
         {
           "import_components": [
@@ -4581,10 +4748,10 @@
           "Control structures"
         ]
       },
-      "doc_lineno": 838
+      "doc_lineno": 758
     },
     {
-      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))",
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))\n",
       "names": [
         {
           "import_components": [
@@ -4673,10 +4840,10 @@
           "Control structures"
         ]
       },
-      "doc_lineno": 852
+      "doc_lineno": 771
     },
     {
-      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n    print('inside `If`')\n    m.d.sync += timer.eq(10)\nwith m.Else():\n    print('inside `Else`')\n    m.d.sync += timer.eq(timer - 1)",
+      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n      print('inside `If`')\n      m.d.sync += timer.eq(10)\nwith m.Else():\n      print('inside `Else`')\n      m.d.sync += timer.eq(timer - 1)\n",
       "names": [
         {
           "import_components": [
@@ -4787,10 +4954,10 @@
           "Control structures"
         ]
       },
-      "doc_lineno": 863
+      "doc_lineno": 781
     },
     {
-      "source": "timer = Signal(8)\nm.d.sync += timer.eq(timer - 1)\nwith m.If(timer == 0):\n    m.d.sync += timer.eq(10)",
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(timer - 1)\nwith m.If(timer == 0):\n      m.d.sync += timer.eq(10)\n",
       "names": [
         {
           "import_components": [
@@ -4881,7 +5048,7 @@
           "Active and inactive assignments"
         ]
       },
-      "doc_lineno": 888
+      "doc_lineno": 805
     },
     {
       "source": "m.d.sync += timer.eq(timer - 1)\nm.d.sync += timer.eq(10)\n",
@@ -4895,7 +5062,7 @@
           "Active and inactive assignments"
         ]
       },
-      "doc_lineno": 899
+      "doc_lineno": 814
     },
     {
       "source": "m.d.sync += timer.eq(10)\n",
@@ -4909,7 +5076,7 @@
           "Active and inactive assignments"
         ]
       },
-      "doc_lineno": 906
+      "doc_lineno": 821
     },
     {
       "source": "m.d.sync += timer.eq(timer - 1)\n",
@@ -4923,10 +5090,10 @@
           "Active and inactive assignments"
         ]
       },
-      "doc_lineno": 912
+      "doc_lineno": 827
     },
     {
-      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))",
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))\n",
       "names": [
         {
           "import_components": [
@@ -5015,10 +5182,10 @@
           "Active and inactive assignments"
         ]
       },
-      "doc_lineno": 920
+      "doc_lineno": 836
     },
     {
-      "source": "a = Signal(8, reset=1)\nwith m.If(en):\n    m.d.comb += a.eq(b + 1)",
+      "source": "a = Signal(8, reset=1)\nwith m.If(en):\n      m.d.comb += a.eq(b + 1)\n",
       "names": [
         {
           "import_components": [
@@ -5069,7 +5236,7 @@
           "Combinatorial evaluation"
         ]
       },
-      "doc_lineno": 935
+      "doc_lineno": 850
     }
   ],
   "library/bus/index": [],
@@ -6043,7 +6210,7 @@
       "doc_lineno": 215
     },
     {
-      "source": "from torii.lib.stdio.serial import AsyncSerialRX\n\nuart_rx = AsyncSerialRX(...)\n\n# OLD (<1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.ack.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.rdy):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n# NEW (>=1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.start.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.done):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n",
+      "source": "from torii.lib.stdio.serial import AsyncSerialRX\n\nuart_rx = AsyncSerialRX(...)\n\n# OLD (<1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.ack.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.rdy):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n# NEW (>=1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.start.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.done):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n",
       "names": [
         {
           "import_components": [
@@ -6226,7 +6393,7 @@
   ],
   "tutorials/external_modules": [
     {
-      "source": "Instance(\n    'MyInverter',\n    i_src = input_signal,\n    o_dst = output_signal\n)",
+      "source": "Instance(\n    'MyInverter',\n    i_src = input_signal,\n    o_dst = output_signal\n)\n",
       "names": [
         {
           "import_components": [
@@ -6249,7 +6416,7 @@
           "Torii Instance"
         ]
       },
-      "doc_lineno": 15
+      "doc_lineno": 16
     },
     {
       "source": "from pathlib   import Path\nfrom torii.hdl import Elaboratable, Module, Signal, Instance\n\nclass MyInverter(Elaboratable):\n    def __init__(self) -> None:\n        self.input = Signal()\n        self.output = Signal()\n        self.extern_module = Path('./my_inverter.v').resolve()\n\n    def elaborate(self, platform) -> Module:\n        # Add the file to the platform\n        if platform is not None:\n            with self.extern_module.open('r') as f:\n                platform.add_file(self.extern_module.name, f)\n\n        m = Module()\n\n        # Add the\n        m.submodules += Instance(\n            'MyInverter',\n            i_src = self.input,\n            i_dst = self.output\n        )\n\n        return m\n",

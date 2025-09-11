@@ -6,15 +6,16 @@ class UpCounter(Elaboratable):
 
     Parameters
     ----------
-    limit : int
+    limit: int
         The value at which the counter overflows.
 
     Attributes
     ----------
-    en : Signal, in
+    en: Signal, in
         The counter is incremented if ``en`` is asserted, and retains
         its value otherwise.
-    ovf : Signal, out
+
+    ovf: Signal, out
         ``ovf`` is asserted when the counter reaches its limit.
     '''
     def __init__(self, limit: int) -> None:
@@ -39,6 +40,7 @@ class UpCounter(Elaboratable):
                 m.d.sync += self.count.eq(self.count + 1)
 
         return m
+
 # --- TEST ---
 from torii.sim import Simulator # noqa: E402
 
@@ -67,6 +69,7 @@ sim.add_clock(1e-6) # 1 MHz
 sim.add_sync_process(bench)
 with sim.write_vcd('up_counter.vcd'):
     sim.run()
+
 # --- CONVERT ---
 from torii.back import verilog # noqa: E402
 

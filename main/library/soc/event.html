@@ -18,7 +18,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Events - Torii 0.8.1.dev299 Documentation</title>
+<title>Events - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
@@ -208,7 +208,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -231,7 +231,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -413,10 +413,7 @@ increment, starting at 0.</p>
 <dd><p>Size of the event map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The number of event sources in the map.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-odd"><p><em>int</em> – The number of event sources in the map.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,11 +423,6 @@ increment, starting at 0.</p>
 <span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.soc.event.EventMap.freeze" title="Link to this definition">¶</a></dt>
 <dd><p>Freeze the event map.</p>
 <p>Once the event map is frozen, sources cannot be added anymore.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -444,9 +436,6 @@ increment, starting at 0.</p>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the event map is frozen.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -458,11 +447,11 @@ increment, starting at 0.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>src</strong> (<a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><em>Source</em></a>) – Event source.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The index of the source.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The index of the source.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.13)"><strong>KeyError</strong></a> – If the source is not found.</p>
@@ -475,11 +464,11 @@ increment, starting at 0.</p>
 <span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><span class="pre">Source</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.lib.soc.event.EventMap.sources" title="Link to this definition">¶</a></dt>
 <dd><p>Iterate event sources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A generator that yields tuples of <code class="docutils literal notranslate"><span class="pre">src,</span> <span class="pre">index</span></code> corresponding to an event source and its index.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generator[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source">Source</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Generator[tuple[Source, int]]</em> – A generator that yields tuples of <code class="docutils literal notranslate"><span class="pre">src,</span> <span class="pre">index</span></code> corresponding to an event source and its index.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -495,7 +484,7 @@ increment, starting at 0.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_map</strong> (<a class="reference internal" href="#torii.lib.soc.event.EventMap" title="torii.lib.soc.event.EventMap"><em>EventMap</em></a>) – Event map.</p></li>
-<li><p><strong>trigger</strong> (<a class="reference internal" href="#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>Source.Trigger</em></a>) – Trigger mode. See <a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">'level'</span></code>)</p></li>
+<li><p><strong>trigger</strong> (<a class="reference internal" href="#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>Source.Trigger</em></a>) – Trigger mode. See <a class="reference internal" href="#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -530,8 +519,8 @@ increment, starting at 0.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trigger</strong> (<a class="reference internal" href="#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>Source.Trigger</em></a>) – Trigger mode. An event can be edge- or level-triggered by the input line. (default: <code class="docutils literal notranslate"><span class="pre">'level'</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>trigger</strong> (<a class="reference internal" href="#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>Source.Trigger</em></a>) – Trigger mode. An event can be edge- or level-triggered by the input line.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -568,13 +557,10 @@ increment, starting at 0.</p>
 <dd><p>Event map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An <a class="reference internal" href="#torii.lib.soc.event.EventMap" title="torii.lib.soc.event.EventMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventMap</span></code></a> describing subordinate event sources.</p>
+<dd class="field-odd"><p><em>EventMap</em> – An <a class="reference internal" href="#torii.lib.soc.event.EventMap" title="torii.lib.soc.event.EventMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventMap</span></code></a> describing subordinate event sources.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.lib.soc.event.EventMap" title="torii.lib.soc.event.EventMap">EventMap</a></p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If the source does not have an event map.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If the source does not have an event map.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -678,7 +664,7 @@ increment, starting at 0.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -20,7 +20,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Installation - Torii 0.8.1.dev299 Documentation</title>
+<title>Installation - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -400,17 +400,18 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="installation">
+          <!-- markdownlint-disable MD014 -->
+<section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The following instructions are a work-in-progress and may not be entirely up to date, or work for the target system, if you run into anything, please <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues">report an issue</a>!</p>
+<p>The following instructions are a work-in-progress and may not be entirely up to date, or work for the target system, if you run into anything, please <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/issues" rel="noreferer noopener" target="_blank">report an issue</a>!</p>
 </div>
 <section id="system-requirements">
 <h2>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h2>
-<p>Torii requires Python 3.10 or newer, and has been tested with <a class="reference external" href="https://www.python.org/">CPython</a> and <a class="reference external" href="https://pypy.org/">PyPy</a>, but only CPython is officially supported.</p>
-<p>In addition, Torii also requires a copy of <a class="reference external" href="https://github.com/YosysHQ/yosys">Yosys</a> version 0.30 or newer, excluding version 0.37 due to a bug in the Verilog backend.</p>
-<p>These are the only two “hard” requirements for Torii, you can do things like simulation without any additional software, however to view simulation results, a waveform viewer such as <a class="reference external" href="https://surfer-project.org/">surfer</a> or <a class="reference external" href="https://github.com/gtkwave/gtkwave">GTKWave</a> is invaluable for debugging. Formal verification support, additionally needs <a class="reference external" href="https://github.com/YosysHQ/sby">sby</a> and an SMT solver such as <a class="reference external" href="https://yices.csl.sri.com/">Yices</a> or <a class="reference external" href="https://bitwuzla.github.io/">Bitwuzla</a>.</p>
+<p>Torii requires Python 3.10 or newer, and has been tested with <a class="reference external" href="https://www.python.org/" rel="noreferer noopener" target="_blank">CPython</a> and <a class="reference external" href="https://pypy.org/" rel="noreferer noopener" target="_blank">PyPy</a>, but only CPython is officially supported.</p>
+<p>In addition, Torii also requires a copy of <a class="reference external" href="https://github.com/YosysHQ/yosys" rel="noreferer noopener" target="_blank">Yosys</a> version 0.30 or newer, excluding version 0.37 due to a bug in the Verilog backend.</p>
+<p>These are the only two “hard” requirements for Torii, you can do things like simulation without any additional software, however to view simulation results, a waveform viewer such as <a class="reference external" href="https://surfer-project.org/" rel="noreferer noopener" target="_blank">surfer</a> or <a class="reference external" href="https://github.com/gtkwave/gtkwave" rel="noreferer noopener" target="_blank">GTKWave</a> is invaluable for debugging. Formal verification support, additionally needs <a class="reference external" href="https://github.com/YosysHQ/sby" rel="noreferer noopener" target="_blank">sby</a> and an SMT solver such as <a class="reference external" href="https://yices.csl.sri.com/" rel="noreferer noopener" target="_blank">Yices</a> or <a class="reference external" href="https://bitwuzla.github.io/" rel="noreferer noopener" target="_blank">Bitwuzla</a>.</p>
 <p>To synthesize, place-and-route, and pack a Torii design for an FPGA, you need the toolchain specific to the family of FPGA you are targeting, see the <a class="reference internal" href="platforms/index.html"><span class="std std-doc">platform</span></a> specific documentation for more information regarding vendor toolchains.</p>
 </section>
 <section id="installing-prerequisites">
@@ -422,22 +423,22 @@
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Linux</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Arch-Like</label><div class="tab-content docutils">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Arch-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>python<span class="w"> </span>python-pip
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Fedora-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Fedora-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Debian-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Debian-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">SUSE-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">SUSE-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>zypper<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
 </pre></div>
 </div>
@@ -445,13 +446,13 @@
 </div>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">macOS</label><div class="tab-content docutils">
-<p>Install <a class="reference external" href="https://brew.sh/">Homebrew</a> if not done already, then install the requirements.</p>
+<p>Install <a class="reference external" href="https://brew.sh/" rel="noreferer noopener" target="_blank">Homebrew</a> if not done already, then install the requirements.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew<span class="w"> </span>install<span class="w"> </span>python
 </pre></div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--1-input--3" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--3">Windows</label><div class="tab-content docutils">
-<p>Download the latest Python installer from the <a class="reference external" href="https://www.python.org/downloads/">python downloads</a> page.</p>
+<p>Download the latest Python installer from the <a class="reference external" href="https://www.python.org/downloads/" rel="noreferer noopener" target="_blank">Python downloads</a> page.</p>
 <p>Follow the instructions and ensure that the installer installs <code class="docutils literal notranslate"><span class="pre">pip</span></code> and puts the python executable in your <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code></p>
 </div>
 </div>
@@ -460,21 +461,24 @@
 <h3>Yosys<a class="headerlink" href="#yosys" title="Link to this heading">¶</a></h3>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--1">Linux</label><div class="tab-content docutils">
-<p>There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main">OSS CAD Suite</a>.</p>
+<p>There are two primary ways to get a copy of Yosys for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ" rel="noreferer noopener" target="_blank">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main" rel="noreferer noopener" target="_blank">OSS CAD Suite</a>.</p>
 <p>The OSS CAD Suite is very large and has lots of extra things, such as it’s own version of python, and a suite of other tools, it’s very convenient, but can cause some problems if you’re using it for your primary environment for Torii.</p>
-<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/" rel="noreferer noopener" target="_blank">PyPI</a> called <a class="reference external" href="https://yowasp.org/" rel="noreferer noopener" target="_blank">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--4-input--1" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--1">Native</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Arch-Like</label><div class="tab-content docutils">
-<p>On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the <a class="reference external" href="https://aur.archlinux.org/">AUR</a> with an AUR helper or using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
+<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Arch-like</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>yosys
+</pre></div>
+</div>
+<p>On Arch Linux and Arch-likes, you can install nightly Yosys packages which are located in the <a class="reference external" href="https://aur.archlinux.org/" rel="noreferer noopener" target="_blank">AUR</a> with an AUR helper or using manually using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">AUR</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>yay<span class="w"> </span>-S<span class="w"> </span>yosys-nightly
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">makepkg</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Manual</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/yosys-nightly.git
 <span class="gp">$ </span><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>yosys-nightly<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>makepkg<span class="w"> </span>-sic<span class="o">)</span>
 </pre></div>
@@ -482,18 +486,18 @@
 </div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Fedora-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Fedora-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>yosys
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Debian-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Debian-like</label><div class="tab-content docutils">
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Find a source for deb packages</p>
 </div>
 </div>
-<input class="tab-input" id="tab-set--3-input--4" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--4">SUSE-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--3-input--4" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--4">SUSE-like</label><div class="tab-content docutils">
 <div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Find a source for suse packages</p>
@@ -502,44 +506,56 @@
 </div>
 </div>
 <input class="tab-input" id="tab-set--4-input--2" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
-<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-linux-x64-20250317.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-linux-x64-20250317.tgz
+<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases" rel="noreferer noopener" target="_blank">OSS-CAD-Suite release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-09-10/oss-cad-suite-linux-x64-20250910.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-linux-x64-20250910.tgz
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:`pwd`/oss-cad-suite/bin&quot;</span>
 </pre></div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--4-input--3" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--3">YoWASP</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>YoWASP Support</p>
+</div>
 </div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">macOS</label><div class="tab-content docutils">
-<p>For macOS systems it is recommended to use the <cite>OSS CAD Suite &lt;https://github.com/YosysHQ/oss-cad-suite-build/tree/main&gt;_</cite> provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a>.</p>
-<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<p>For macOS systems it is recommended to use the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main" rel="noreferer noopener" target="_blank">OSS CAD Suite</a> provided by <a class="reference external" href="https://github.com/YosysHQ" rel="noreferer noopener" target="_blank">YosysHQ</a>.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/" rel="noreferer noopener" target="_blank">PyPI</a> called <a class="reference external" href="https://yowasp.org/" rel="noreferer noopener" target="_blank">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--5-input--1" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
-<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-03-17/oss-cad-suite-darwin-x64-20250317.tgz
-<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-darwin-x64-20250317.tgz
+<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases" rel="noreferer noopener" target="_blank">OSS-CAD-Suite release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-LOJ<span class="w"> </span>https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2025-09-10/oss-cad-suite-darwin-arm64-20250910.tgz
+<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>oss-cad-suite-darwin-arm64-20250910.tgz
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:`pwd`/oss-cad-suite/bin&quot;</span>
 </pre></div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--5-input--2" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--2">YoWASP</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>YoWASP Support</p>
+</div>
 </div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--7-input--3" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--3">Windows</label><div class="tab-content docutils">
-<p>For Windows systems it is recommended to use the <cite>OSS CAD Suite &lt;https://github.com/YosysHQ/oss-cad-suite-build/tree/main&gt;_</cite> provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a>.</p>
-<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/">pypi</a> called <a class="reference external" href="https://yowasp.org/">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
+<p>For Windows systems it is recommended to use the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main" rel="noreferer noopener" target="_blank">OSS CAD Suite</a> provided by <a class="reference external" href="https://github.com/YosysHQ" rel="noreferer noopener" target="_blank">YosysHQ</a>.</p>
+<p>There is also a distribution of the Yosys toolchain built to target WASM and installable from <a class="reference external" href="https://pypi.org/" rel="noreferer noopener" target="_blank">PyPI</a> called <a class="reference external" href="https://yowasp.org/" rel="noreferer noopener" target="_blank">YoWASP</a>, currently Torii is not able to find a Yosys install from these so it is not a viable way to install Yosys for Torii to use at the moment.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
-<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases">release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p>
+<p>Simply download the latest <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/releases" rel="noreferer noopener" target="_blank">OSS-CAD-Suite release</a> for your architecture, extract it to a good home, and then add it to your <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>call<span class="w"> </span>%cd%<span class="se">\o</span>ss-cad-suite<span class="se">\e</span>nvironment.bat
 </pre></div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--2">YoWASP</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>YoWASP Support</p>
+</div>
 </div>
 </div>
 </div>
@@ -547,32 +563,32 @@
 </section>
 <section id="waveform-viewer-optional">
 <h3>Waveform Viewer (Optional)<a class="headerlink" href="#waveform-viewer-optional" title="Link to this heading">¶</a></h3>
-<p>An EDA Waveform Viewer is optional, but highly recommended. <a class="reference external" href="https://github.com/gtkwave/gtkwave">GTKWave</a> is the standard of the Open Source EDA world, and has been around for a long time, and is what you will find most tutorials using. On the other hand, <a class="reference external" href="https://surfer-project.org/">surfer</a> is an up-and-coming waveform viewer that’s written in Rust and is able to run in your web browser via WASM.</p>
+<p>An EDA Waveform Viewer is optional, but highly recommended. <a class="reference external" href="https://github.com/gtkwave/gtkwave" rel="noreferer noopener" target="_blank">GTKWave</a> is the standard of the Open Source EDA world, and has been around for a long time, and is what you will find most tutorials using. On the other hand, <a class="reference external" href="https://surfer-project.org/" rel="noreferer noopener" target="_blank">surfer</a> is an up-and-coming waveform viewer that’s written in Rust and is able to run in your web browser via WASM.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--15-input--1" name="tab-set--15" type="radio"><label class="tab-label" for="tab-set--15-input--1">Linux</label><div class="tab-content docutils">
-<p>There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main">OSS CAD Suite</a>.</p>
+<p>There are two primary ways to get a waveform viewer for your system, the first is with the systems package manager, a.k.a “Native”, or via pre-build binary distributions provided by <a class="reference external" href="https://github.com/YosysHQ" rel="noreferer noopener" target="_blank">YosysHQ</a> known as the <a class="reference external" href="https://github.com/YosysHQ/oss-cad-suite-build/tree/main" rel="noreferer noopener" target="_blank">OSS CAD Suite</a>.</p>
 <p>The OSS CAD Suite only provides GTKWave, so if you wish to use surfer instead see the Native install options.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--10-input--1" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--1">Native</label><div class="tab-content docutils">
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--9-input--1" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--1">GTKWave</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--8-input--1" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--1">Arch-Like</label><div class="tab-content docutils">
+<input checked="True" class="tab-input" id="tab-set--8-input--1" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--1">Arch-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>gtkwave
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--8-input--2" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--2">Fedora-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--8-input--2" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--2">Fedora-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>gtkwave
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--8-input--3" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--3">Debian-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--8-input--3" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--3">Debian-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gtkwave
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--8-input--4" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--4">SUSE-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--8-input--4" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--4">SUSE-like</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>zypper<span class="w"> </span>install<span class="w"> </span>gtkwave
 </pre></div>
 </div>
@@ -581,7 +597,7 @@
 </div>
 <input class="tab-input" id="tab-set--9-input--2" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--2">Surfer</label><div class="tab-content docutils">
 <p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
-<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation" rel="noreferer noopener" target="_blank">surfer installation instructions</a> for up-to-date installation instructions for your platform.</p>
 </div>
 </div>
 </div>
@@ -594,16 +610,20 @@
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--12-input--1" name="tab-set--12" type="radio"><label class="tab-label" for="tab-set--12-input--1">GTKWave</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--11-input--1" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
-<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
+<input checked="True" class="tab-input" id="tab-set--11-input--1" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--1">Native</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
 </div>
-<input class="tab-input" id="tab-set--11-input--2" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--2">Native</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--11-input--2" name="tab-set--11" type="radio"><label class="tab-label" for="tab-set--11-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
 </div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--12-input--2" name="tab-set--12" type="radio"><label class="tab-label" for="tab-set--12-input--2">Surfer</label><div class="tab-content docutils">
 <p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
-<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation" rel="noreferer noopener" target="_blank">surfer installation instructions</a> for up-to-date installation instructions for your platform.</p>
 </div>
 </div>
 </div>
@@ -611,16 +631,20 @@
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--14-input--1" name="tab-set--14" type="radio"><label class="tab-label" for="tab-set--14-input--1">GTKWave</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--13-input--1" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--1">OSS-CAD-Suite</label><div class="tab-content docutils">
-<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
+<input checked="True" class="tab-input" id="tab-set--13-input--1" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--1">Native</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
 </div>
-<input class="tab-input" id="tab-set--13-input--2" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--2">Native</label><div class="tab-content docutils">
+</div>
+<input class="tab-input" id="tab-set--13-input--2" name="tab-set--13" type="radio"><label class="tab-label" for="tab-set--13-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
+<p>The OSS-CAD-Suite builds come bundled with a copy of GTKWave. If you wish to use surfer, see the Native install instructions.</p>
 </div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--14-input--2" name="tab-set--14" type="radio"><label class="tab-label" for="tab-set--14-input--2">Surfer</label><div class="tab-content docutils">
 <p>There are two ways to install Surfer, the first is from source, and the other is using a pre-built binary.</p>
-<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation">surfer install instructions</a> for up-to-date installation instructions for your platform.</p>
+<p>Please see the <a class="reference external" href="https://gitlab.com/surfer-project/surfer#installation" rel="noreferer noopener" target="_blank">surfer installation instructions</a> for up-to-date installation instructions for your platform.</p>
 </div>
 </div>
 </div>
@@ -633,15 +657,15 @@
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--18-input--1" name="tab-set--18" type="radio"><label class="tab-label" for="tab-set--18-input--1">Native</label><div class="tab-content docutils">
 <div class="tab-set docutils">
-<input checked="True" class="tab-input" id="tab-set--17-input--1" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--1">Arch-Like</label><div class="tab-content docutils">
-<p>On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the <a class="reference external" href="https://aur.archlinux.org/">AUR</a> with an AUR helper or using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
+<input checked="True" class="tab-input" id="tab-set--17-input--1" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--1">Arch-like</label><div class="tab-content docutils">
+<p>On Arch Linux and Arch-likes, you can install nightly sby packages which are located in the <a class="reference external" href="https://aur.archlinux.org/" rel="noreferer noopener" target="_blank">AUR</a> with an AUR helper or manually using <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> directly.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--16-input--1" name="tab-set--16" type="radio"><label class="tab-label" for="tab-set--16-input--1">AUR</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>yay<span class="w"> </span>-S<span class="w"> </span>sby-nightly
 </pre></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--16-input--2" name="tab-set--16" type="radio"><label class="tab-label" for="tab-set--16-input--2">makepkg</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--16-input--2" name="tab-set--16" type="radio"><label class="tab-label" for="tab-set--16-input--2">Manual</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/sby-nightly.git
 <span class="gp">$ </span><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>yosys-nightly<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>makepkg<span class="w"> </span>-sic<span class="o">)</span>
 </pre></div>
@@ -649,11 +673,23 @@
 </div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--17-input--2" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--2">Fedora-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--17-input--2" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--2">Fedora-like</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
 </div>
-<input class="tab-input" id="tab-set--17-input--3" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--3">Debian-Like</label><div class="tab-content docutils">
 </div>
-<input class="tab-input" id="tab-set--17-input--4" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--4">SUSE-Like</label><div class="tab-content docutils">
+<input class="tab-input" id="tab-set--17-input--3" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--3">Debian-like</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--17-input--4" name="tab-set--17" type="radio"><label class="tab-label" for="tab-set--17-input--4">SUSE-like</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id10">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
+</div>
 </div>
 </div>
 </div>
@@ -665,6 +701,10 @@
 <input class="tab-input" id="tab-set--21-input--2" name="tab-set--21" type="radio"><label class="tab-label" for="tab-set--21-input--2">macOS</label><div class="tab-content docutils">
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--19-input--1" name="tab-set--19" type="radio"><label class="tab-label" for="tab-set--19-input--1">Native</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id11">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
+</div>
 </div>
 <input class="tab-input" id="tab-set--19-input--2" name="tab-set--19" type="radio"><label class="tab-label" for="tab-set--19-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
 <p>The OSS-CAD-Suite builds already include <code class="docutils literal notranslate"><span class="pre">sby</span></code> as well as a suite of SMT solvers.</p>
@@ -674,6 +714,10 @@
 <input class="tab-input" id="tab-set--21-input--3" name="tab-set--21" type="radio"><label class="tab-label" for="tab-set--21-input--3">Windows</label><div class="tab-content docutils">
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--20-input--1" name="tab-set--20" type="radio"><label class="tab-label" for="tab-set--20-input--1">Native</label><div class="tab-content docutils">
+<div class="admonition-todo admonition" id="id12">
+<p class="admonition-title">Todo</p>
+<p>Instructions</p>
+</div>
 </div>
 <input class="tab-input" id="tab-set--20-input--2" name="tab-set--20" type="radio"><label class="tab-label" for="tab-set--20-input--2">OSS-CAD-Suite</label><div class="tab-content docutils">
 <p>The OSS-CAD-Suite builds already include <code class="docutils literal notranslate"><span class="pre">sby</span></code> as well as a suite of SMT solvers.</p>
@@ -688,7 +732,7 @@
 <p>The latest stable release of Torii is recommended for any new projects planning to use Torii. It provides the most up-to-date stable version of the API. However, if needed, you can also install a development snapshot to get access to the bleeding-edge, however things might break.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--23-input--1" name="tab-set--23" type="radio"><label class="tab-label" for="tab-set--23-input--1">Stable Release</label><div class="tab-content docutils">
-<p>The stable release of Torii can be installed directly from <a class="reference external" href="https://pypi.org/project/torii/">PyPI</a>.</p>
+<p>The stable release of Torii can be installed directly from <a class="reference external" href="https://pypi.org/project/torii/" rel="noreferer noopener" target="_blank">PyPI</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii
 </pre></div>
 </div>
@@ -722,18 +766,18 @@
 </section>
 <section id="installing-board-definitions">
 <h2>Installing Board Definitions<a class="headerlink" href="#installing-board-definitions" title="Link to this heading">¶</a></h2>
-<p>The <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards">torii-boards</a> package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.</p>
+<p>The <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards" rel="noreferer noopener" target="_blank">Torii Boards</a> package includes a collection of pre-made board files for various FPGA development boards, it is generally useful to have.</p>
 <p>Just like with Torii proper, there are two versions you can install, the latest stable, or the development version.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--25-input--1" name="tab-set--25" type="radio"><label class="tab-label" for="tab-set--25-input--1">Stable Release</label><div class="tab-content docutils">
-<p>The stable release of Torii-boards can be installed directly from <a class="reference external" href="https://pypi.org/project/torii-boards/">PyPI</a>.</p>
+<p>The stable release of Torii Boards can be installed directly from <a class="reference external" href="https://pypi.org/project/torii-boards/" rel="noreferer noopener" target="_blank">PyPI</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>torii-boards
 </pre></div>
 </div>
 </div>
 <input class="tab-input" id="tab-set--25-input--2" name="tab-set--25" type="radio"><label class="tab-label" for="tab-set--25-input--2">Development Snapshot</label><div class="tab-content docutils">
 <p>There are two possible ways to install a development snapshot for the board support package, the first is using <code class="docutils literal notranslate"><span class="pre">pip</span></code> and to get it directly from GitHub.</p>
-<p>The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on the board files themselves.s</p>
+<p>The other way is to have a local git clone of the repository and install it in an editable manner, this is recommended if you plan to do any development work on the board files themselves.</p>
 <div class="tab-set docutils">
 <input checked="True" class="tab-input" id="tab-set--24-input--1" name="tab-set--24" type="radio"><label class="tab-label" for="tab-set--24-input--1">Standard</label><div class="tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s1">&#39;torii-boards @ git+https://github.com/shrine-maiden-heavy-industries/torii-boards.git&#39;</span>
@@ -849,7 +893,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

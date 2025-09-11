@@ -17,7 +17,7 @@
 <link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="formal.html" rel="next" title="Formal Verification"/><link href="index.html" rel="prev" title="Testing and Verification"/>
 <link href="https://torii.shmdn.link/testing/simulation.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Simulation - Torii 0.8.1.dev299 Documentation</title>
+<title>Simulation - Torii 0.8.1.dev336 Documentation</title>
 <link href="../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 </a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -418,16 +418,13 @@
 <li><p><strong>period</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Clock period. The process will toggle the <code class="docutils literal notranslate"><span class="pre">domain</span></code> clock signal every <code class="docutils literal notranslate"><span class="pre">period</span> <span class="pre">/</span> <span class="pre">2</span></code>
 seconds.</p></li>
 <li><p><strong>phase</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Clock phase. The process will wait <code class="docutils literal notranslate"><span class="pre">phase</span></code> seconds before the first clock transition.
-If not specified, defaults to <code class="docutils literal notranslate"><span class="pre">period</span> <span class="pre">/</span> <span class="pre">2</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+If not specified, defaults to <code class="docutils literal notranslate"><span class="pre">period</span> <span class="pre">/</span> <span class="pre">2</span></code>.</p></li>
 <li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> or </em><a class="reference internal" href="../api/hdl/cd.html#torii.hdl.cd.ClockDomain" title="torii.hdl.cd.ClockDomain"><em>ClockDomain</em></a>) – Driven clock domain. If specified as a string, the domain with that name is looked up
-in the root fragment of the simulation. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+in the root fragment of the simulation.</p></li>
 <li><p><strong>if_exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> (the default), raise an error if the driven domain is specified as
 a string and the root fragment does not have such a domain. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, do nothing
-in this case. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+in this case.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,9 +436,6 @@ in this case. (default: <code class="docutils literal notranslate"><span class="
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>process</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><em>collections.abc.Callable</em></a><em>[</em><em>[</em><em>]</em><em>, </em><em>Generator</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><em>collections.abc.Callable</em></a><em>[</em><em>[</em><em>]</em><em>, </em><em>Coroutine</em><em>]</em>) – The simulation process to add.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
 </dl>
 </dd></dl>
 <dl class="py method">
@@ -452,11 +446,8 @@ in this case. (default: <code class="docutils literal notranslate"><span class="
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>process</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><em>collections.abc.Callable</em></a><em>[</em><em>[</em><em>]</em><em>, </em><em>Generator</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><em>collections.abc.Callable</em></a><em>[</em><em>[</em><em>]</em><em>, </em><em>Coroutine</em><em>]</em>) – The simulation process to add.</p></li>
-<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference internal" href="../api/hdl/cd.html#torii.hdl.cd.ClockDomain" title="torii.hdl.cd.ClockDomain"><em>torii.hdl.cd.ClockDomain</em></a>) – The clock domain to add this process to. (default: <code class="docutils literal notranslate"><span class="pre">'sync'</span></code>)</p></li>
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference internal" href="../api/hdl/cd.html#torii.hdl.cd.ClockDomain" title="torii.hdl.cd.ClockDomain"><em>torii.hdl.cd.ClockDomain</em></a>) – The clock domain to add this process to.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,11 +459,11 @@ in this case. (default: <code class="docutils literal notranslate"><span class="
 to the closest deadline (if any). If there is an unstable combinatorial loop,
 this function will never return.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if there are any active simulation processes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if there are any active simulation processes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -481,11 +472,6 @@ this function will never return.</p>
 <span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.sim.Simulator.reset" title="Link to this definition">¶</a></dt>
 <dd><p>Reset the simulation.</p>
 <p>Assign the reset value to every signal in the simulation, and restart every user process.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.sim.Simulator.run">
@@ -494,11 +480,6 @@ this function will never return.</p>
 <p>Processes added with <a class="reference internal" href="#torii.sim.Simulator.add_process" title="torii.sim.Simulator.add_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_process()</span></code></a> and <a class="reference internal" href="#torii.sim.Simulator.add_sync_process" title="torii.sim.Simulator.add_sync_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_sync_process()</span></code></a> are initially active,
 and may change their status using the <code class="docutils literal notranslate"><span class="pre">yield</span> <span class="pre">Passive()</span></code> and <code class="docutils literal notranslate"><span class="pre">yield</span> <span class="pre">Active()</span></code> commands.
 Processes compiled from HDL and added with <a class="reference internal" href="#torii.sim.Simulator.add_clock" title="torii.sim.Simulator.add_clock"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_clock()</span></code></a> are always passive.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torii.sim.Simulator.run_until">
@@ -515,11 +496,8 @@ advances to or past <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deadline</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of simulation steps to set the deadline at.</p></li>
-<li><p><strong>run_passive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the simulation will only stop once <code class="docutils literal notranslate"><span class="pre">deadline</span></code> is reached or passed. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+<li><p><strong>run_passive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the simulation will only stop once <code class="docutils literal notranslate"><span class="pre">deadline</span></code> is reached or passed.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -538,8 +516,8 @@ advances to or past <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>vcd_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.IO" title="(in Python v3.13)"><em>IO</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Verilog Value Change Dump file or filename.</p></li>
-<li><p><strong>gtkw_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.IO" title="(in Python v3.13)"><em>IO</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – GTKWave save file or filename. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>traces</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><em>collections.abc.Iterable</em></a><em>[</em><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>torii.hdl.ast.Signal</em></a><em>]</em>) – Signals to display traces for. (default: <code class="docutils literal notranslate"><span class="pre">()</span></code>)</p></li>
+<li><p><strong>gtkw_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.IO" title="(in Python v3.13)"><em>IO</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – GTKWave save file or filename.</p></li>
+<li><p><strong>traces</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><em>collections.abc.Iterable</em></a><em>[</em><a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><em>torii.hdl.ast.Signal</em></a><em>]</em>) – Signals to display traces for.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -637,7 +615,7 @@ further than that.</p>
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../_static/documentation_options.js?v=fa3e9d2b"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -20,7 +20,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>CSRs - Torii 0.8.1.dev299 Documentation</title>
+<title>CSRs - Torii 0.8.1.dev336 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=25af2a20" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">Torii 0.8.1.dev299 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev299 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -422,8 +422,8 @@ together with the peripheral.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Window alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -491,7 +491,7 @@ always succeed and complete in one cycle.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Width of the register.</p></li>
 <li><p><strong>access</strong> (<a class="reference internal" href="#torii.lib.soc.csr.bus.Element.Access" title="torii.lib.soc.csr.bus.Element.Access"><em>Access</em></a>) – Register access mode.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -531,11 +531,11 @@ access mode, e.g. R/O fields can be a part of an R/W register.</p>
 <span class="sig-name descname"><span class="pre">readable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#torii.lib.soc.csr.bus.Element.Access.readable" title="Link to this definition">¶</a></dt>
 <dd><p>Check to see if this Access mode is readable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if Access is <code class="docutils literal notranslate"><span class="pre">R</span></code> or <code class="docutils literal notranslate"><span class="pre">RW</span></code> otherwise false.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if Access is <code class="docutils literal notranslate"><span class="pre">R</span></code> or <code class="docutils literal notranslate"><span class="pre">RW</span></code> otherwise false.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,11 +545,11 @@ access mode, e.g. R/O fields can be a part of an R/W register.</p>
 <span class="sig-name descname"><span class="pre">writable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#torii.lib.soc.csr.bus.Element.Access.writable" title="Link to this definition">¶</a></dt>
 <dd><p>Check to see if this Access mode is writeable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if Access is <code class="docutils literal notranslate"><span class="pre">W</span></code> or <code class="docutils literal notranslate"><span class="pre">RW</span></code> otherwise false.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if Access is <code class="docutils literal notranslate"><span class="pre">W</span></code> or <code class="docutils literal notranslate"><span class="pre">RW</span></code> otherwise false.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -577,7 +577,7 @@ than datapath width.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. At most <code class="docutils literal notranslate"><span class="pre">(2</span> <span class="pre">**</span> <span class="pre">addr_width)</span> <span class="pre">*</span> <span class="pre">data_width</span></code> register bits will be available.</p></li>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. Registers are accessed in <code class="docutils literal notranslate"><span class="pre">data_width</span></code> sized chunks.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the underlying record.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -657,11 +657,11 @@ register occupies in the CPU address space, and the width of the CSR bus.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>addr_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Address width. See <a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Data width. See <a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interface</span></code></a>.</p></li>
-<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Register alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>alignment</strong> (<em>log2</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Register alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name</p></li>
 <li><p><strong>shadow_overlaps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum number of CSR registers that can share a chunk of a shadow register.
 Optional. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, any number of CSR registers can share a shadow chunk.
-See <code class="xref py py-class docutils literal notranslate"><span class="pre">Multiplexer._Shadow</span></code> for details. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+See <code class="xref py py-class docutils literal notranslate"><span class="pre">Multiplexer._Shadow</span></code> for details.</p></li>
 </ul>
 </dd>
 </dl>
@@ -723,8 +723,8 @@ See <code class="xref py py-class docutils literal notranslate"><span class="pre
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – CSR bus data width. See <a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.soc.csr.bus.Interface</span></code></a>.</p></li>
-<li><p><strong>alignment</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – CSR address alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
-<li><p><strong>trigger</strong> (<a class="reference internal" href="../event.html#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>torii.lib.soc.event.Source.Trigger</em></a>) – Trigger mode. See <a class="reference internal" href="../event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.soc.event.Source</span></code></a>. (default: <code class="docutils literal notranslate"><span class="pre">'level'</span></code>)</p></li>
+<li><p><strong>alignment</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – CSR address alignment. See <a class="reference internal" href="../../mem/map.html#torii.lib.mem.map.MemoryMap" title="torii.lib.mem.map.MemoryMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.mem.map.MemoryMap</span></code></a>.</p></li>
+<li><p><strong>trigger</strong> (<a class="reference internal" href="../event.html#torii.lib.soc.event.Source.Trigger" title="torii.lib.soc.event.Source.Trigger"><em>torii.lib.soc.event.Source.Trigger</em></a>) – Trigger mode. See <a class="reference internal" href="../event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">torii.lib.soc.event.Source</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -739,11 +739,6 @@ See <code class="xref py py-class docutils literal notranslate"><span class="pre
 <span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.soc.csr.event.EventMonitor.freeze" title="Link to this definition">¶</a></dt>
 <dd><p>Freeze the event monitor.</p>
 <p>Once the event monitor is frozen, subordinate sources cannot be added anymore.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -752,11 +747,8 @@ See <code class="xref py py-class docutils literal notranslate"><span class="pre
 <dd><p>Event source.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The event source whose input line is asserted by the monitor when a subordinate event
+<dd class="field-odd"><p><em>torii.lib.soc.event.Source</em> – The event source whose input line is asserted by the monitor when a subordinate event
 is enabled and pending.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source">torii.lib.soc.event.Source</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -767,10 +759,7 @@ is enabled and pending.</p>
 <dd><p>CSR bus interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Interface providing access to registers.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface">torii.lib.soc.csr.bus.Interface</a></p>
+<dd class="field-odd"><p><em>torii.lib.soc.csr.bus.Interface</em> – Interface providing access to registers.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -780,11 +769,6 @@ is enabled and pending.</p>
 <span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../event.html#torii.lib.soc.event.Source" title="torii.lib.soc.event.Source"><span class="pre">Source</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.lib.soc.csr.event.EventMonitor.add" title="Link to this definition">¶</a></dt>
 <dd><p>Add a subordinate event source.</p>
 <p>See <a class="reference internal" href="../event.html#torii.lib.soc.event.EventMap.add" title="torii.lib.soc.event.EventMap.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torii.lib.soc.event.EventMap.add()</span></code></a> for details.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -818,8 +802,8 @@ regardless of the select inputs. Write side effects occur simultaneously with ac
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>csr_bus</strong> (<a class="reference internal" href="#torii.lib.soc.csr.bus.Interface" title="torii.lib.soc.csr.bus.Interface"><em>torii.lib.soc.csr.bus.Interface</em></a>) – CSR bus driven by the bridge.</p></li>
-<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Wishbone bus data width. If not specified, defaults to <code class="docutils literal notranslate"><span class="pre">csr_bus.data_width</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>data_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – Wishbone bus data width. If not specified, defaults to <code class="docutils literal notranslate"><span class="pre">csr_bus.data_width</span></code>.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – Window name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
@@ -968,7 +952,7 @@ regardless of the select inputs. Write side effects occur simultaneously with ac
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=4698d2f6"></script>
+</div><script src="../../../_static/documentation_options.js?v=fa3e9d2b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
