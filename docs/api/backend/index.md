@@ -9,7 +9,6 @@ The primary lingua franca of the Torii backends is [RTLIL], the [Verilog], [CXXR
 ```{eval-rst}
 .. automodule:: torii.back.rtlil
   :members:
-
 ```
 
 ## Verilog Backend
@@ -17,7 +16,6 @@ The primary lingua franca of the Torii backends is [RTLIL], the [Verilog], [CXXR
 ```{eval-rst}
 .. automodule:: torii.back.verilog
   :members:
-
 ```
 
 ## CXXRTL Backend
@@ -25,7 +23,6 @@ The primary lingua franca of the Torii backends is [RTLIL], the [Verilog], [CXXR
 ```{eval-rst}
 .. automodule:: torii.back.cxxrtl
   :members:
-
 ```
 
 ## JSON Backend
@@ -33,7 +30,6 @@ The primary lingua franca of the Torii backends is [RTLIL], the [Verilog], [CXXR
 ```{eval-rst}
 .. automodule:: torii.back.json
   :members:
-
 ```
 
 ## Example
