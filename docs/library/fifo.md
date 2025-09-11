@@ -13,5 +13,4 @@ The {py:mod}`torii.lib.fifo` module provides building blocks for first-in, first
 .. autoclass:: torii.lib.fifo.SyncFIFOBuffered
 .. autoclass:: torii.lib.fifo.AsyncFIFO
 .. autoclass:: torii.lib.fifo.AsyncFIFOBuffered
-
 ```
