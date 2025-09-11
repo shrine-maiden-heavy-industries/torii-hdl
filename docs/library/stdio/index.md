@@ -6,5 +6,5 @@ The {py:mod}`torii.lib.stdio` module provides industry standard I/O modules.
 
 ```{eval-rst}
 .. automodule:: torii.lib.stdio.serial
-  :members:
+   :members:
 ```
