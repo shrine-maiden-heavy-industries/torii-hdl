@@ -2,5 +2,5 @@
 
 ```{eval-rst}
 .. automodule:: torii.lib.mem.map
-  :members:
+   :members:
 ```
