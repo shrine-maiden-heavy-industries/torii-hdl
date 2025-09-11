@@ -16,7 +16,8 @@ class LEDBlinker(Elaboratable):
             m.d.sync += timer.eq(timer + 1)
 
         return m
+
 # --- BUILD ---
-from torii_boards.lattice.icestick import ICEStickPlatform # noqa: E402
+from torii_boards.lattice.ice40 import ICEStickPlatform # noqa: E402
 
 ICEStickPlatform().build(LEDBlinker(), do_program = True)
