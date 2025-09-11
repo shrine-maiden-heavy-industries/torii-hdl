@@ -17,15 +17,21 @@ class SpecialPinsDict(TypedDict):
 	EXTREF: list[tuple[str, str]]
 	DCU: list[dict[str, dict[str, tuple[str, str]]]]
 
-def _unpack_special(special: dict[str, SpecialPinsDict], pkg: str) -> tuple[str, ...]:
-	return tuple[str, ...](
-		*flatten(special[pkg]['EXTREF']),
-		*flatten((
-			list(ch.values() for ch in pair) for pair in (
-				list(dcu.values()) for dcu in special[pkg]['DCU']
-			)
-		)),
-	)
+class FlattenedSpecialPins(TypedDict):
+	EXTREF: tuple[str, ...]
+	DCU: tuple[tuple[str, ...], tuple[str, ...]]
+	ALL: tuple[str, ...]
+
+def _unpack_special(special: dict[str, SpecialPinsDict], pkg: str) -> FlattenedSpecialPins:
+	extref = special[pkg]['EXTREF']
+	dcus = (*(tuple(flatten((ch.values() for ch in dcu.values()))) for dcu in special[pkg]['DCU']),)
+
+	# XXX(aki): The `type: ignore` is fine here, as we have some data guarantees
+	return {
+		'EXTREF': extref,
+		'DCU': dcus,
+		'ALL': (*flatten((*flatten(extref), dcus)),)
+	} # type: ignore
 
 class ECP5Platform(TemplatedPlatform):
 	'''
@@ -387,7 +393,8 @@ class ECP5Platform(TemplatedPlatform):
 
 		self.toolchain = toolchain
 
-		self._special_pins_hittest = _unpack_special(self._special_pseudo_routable, self.device)
+		if self.package in self._special_pseudo_routable:
+			self._special_pins_hittest = _unpack_special(self._special_pseudo_routable, self.package)
 
 	@property
 	def required_tools(self) -> list[str]:
@@ -501,46 +508,44 @@ class ECP5Platform(TemplatedPlatform):
 
 		# If it's one of the parts with SERDES, check whether the pins are for the EXTREFs or DCUs
 		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
-			# Unpack this package's special pins definition
-			special = self._special_pseudo_routable[self.package]
-			# Flatten out the pins/ball names in the request for membership checking
+			# Flatten the pins we want to test against
 			if isinstance(names, tuple):
 				pin_names = list[str](flatten(zip(names[0], names[1])))
 			else:
 				pin_names = list(names)
-			# Loop through each of the special blocks
-			for block, pin_sets in special.items():
-				# Look through each of the pin sets in the special block
-				for pins in pin_sets:
-					# If any of the pins for this are in the special set, do further work
-					if any(name in pins for name in pin_names):
-						match block:
-							case 'EXTREF':
-								# Check that the Pin is input (EXTREF can only be input!)
-								if feature != PinFeature.DIFF_INPUT:
-									raise NotImplementedError(
-										'The ECP5 parts do not support I/O direction '
-										f'\'{pin.dir}\' for the EXTREF blocks'
-									)
-								self._check_extref(pin, pins, names)
-							case 'DCU':
-								self._check_dcu(pin, pins, names)
-							case _:
-								raise ValueError(f'Invalid special block type {block}')
 
-	def _check_extref(self, pin: Pin, pins: tuple[str, ...], names: Iterable[str] | tuple[Iterable[str], Iterable[str]]):
-		# EXTREFs must be specied as DiffPairs, so `names` must be a tuple if iterables of str
+			if any(name in self._special_pins_hittest['ALL'] for name in pin_names):
+				if all(name in flatten(self._special_pins_hittest['EXTREF']) for name in pin_names):
+					self._check_extref(feature, pin, self._special_pins_hittest['EXTREF'], names)
+				elif all(name in flatten(self._special_pins_hittest['DCU']) for name in pin_names):
+					self._check_dcu(feature, pin, self._special_pins_hittest['DCU'], names)
+				else:
+					raise ValueError()
+
+	def _check_extref(
+		self, feature: PinFeature, pin: Pin, pins: tuple[str, ...],
+		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
+	) -> None:
+		if feature != PinFeature.DIFF_INPUT:
+			raise NotImplementedError(
+				f'The ECP5 parts do not support I/O direction \'{pin.dir}\' for the EXTREF blocks'
+			)
+
+		# EXTREFs must be specified as DiffPairs, so `names` must be a tuple if iterables of str
 		if not isinstance(names, tuple):
 			raise NotImplementedError('Platform \'ECP5Platform\' only supports EXTREF pins specified with DiffPairs')
 		# Unpack the pins used
 		p_names: Iterable[str] = names[0]
 		n_names: Iterable[str] = names[1]
 
-		pairs = list(zip(p_names, n_names))
-		if pins not in pairs:
-			raise ValueError('The DiffPairs requested is invalid to refer to a EXTREF')
+		pairs = list(zip(p_names, n_names))[0]
+		if pairs not in pins:
+			raise ValueError(f'The DiffPairs requested ({pairs!r}) is invalid to refer to a EXTREF')
 
-	def _check_dcu(self, pin: Pin, pins: tuple[str, ...], names: Iterable[str] | tuple[Iterable[str], Iterable[str]]):
+	def _check_dcu(
+		self, feature: PinFeature, pin: Pin, pins: tuple[tuple[str, ...], tuple[str, ...]],
+		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
+	) -> None:
 		pass
 
 	def _get_xdr_buffer(
