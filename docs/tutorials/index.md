@@ -6,14 +6,14 @@
 external_modules
 ```
 
-```{todo}
+:::{todo}
 Currently there are few official tutorials for Torii, however due to it being a fork of [Amaranth] the following tutorials written by the Amaranth community are a good place to start.
 
- * [Learning FPGA Design with nMigen] by Vivonomicon;
- * ["I want to learn nMigen] by kbob;
- * [A tutorial for using Amaranth HDL] by Robert Baruch.
- * [Graded exercises for Amaranth HDL] by Robert Baruch.
-```
+* [Learning FPGA Design with nMigen] by Vivonomicon;
+* ["I want to learn nMigen] by kbob;
+* [A tutorial for using Amaranth HDL] by Robert Baruch.
+* [Graded exercises for Amaranth HDL] by Robert Baruch.
+:::
 
 [Amaranth]: https://github.com/amaranth-lang/amaranth
 [Learning FPGA Design with nMigen]: https://vivonomicon.com/2020/04/14/learning-fpga-design-with-nmigen/
