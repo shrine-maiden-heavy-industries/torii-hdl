@@ -10,15 +10,15 @@ A Torii instance takes the name of the module or primitive you wish to instantia
 
 An example of an `Instance` that instantiates a module called `MyInverter` (who's implementation is not important) which has 1 input port named `src` and 1 output port named `dst` would be as follows.
 
-```{eval-rst}
-.. autolink-preface:: from torii.hdl import *
-.. code-block:: python
+```{autolink-preface} from torii.hdl import *
+```
 
-       Instance(
-           'MyInverter',
-           i_src = input_signal,
-           o_dst = output_signal
-       )
+```py
+Instance(
+    'MyInverter',
+    i_src = input_signal,
+    o_dst = output_signal
+)
 ```
 
 The prefix on the front of the port name is important, as it tells Torii what that parameter of the instance is, and the port name itself must match the port name of the module or cell you're instantiating. The accepted prefixes and corresponding types are listed in the table below.
