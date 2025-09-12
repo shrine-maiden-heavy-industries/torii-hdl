@@ -22,15 +22,15 @@ class FlattenedSpecialPins(TypedDict):
 	DCU: tuple[tuple[str, ...], tuple[str, ...]]
 	ALL: tuple[str, ...]
 
-def _unpack_special(special: dict[str, SpecialPinsDict], pkg: str) -> FlattenedSpecialPins:
-	extref = special[pkg]['EXTREF']
-	dcus = (*(tuple(flatten((ch.values() for ch in dcu.values()))) for dcu in special[pkg]['DCU']),)
+def _unpack_special(special: SpecialPinsDict) -> FlattenedSpecialPins:
+	extref = special['EXTREF']
+	dcus = tuple((tuple(flatten((ch.values() for ch in dcu.values()))) for dcu in special['DCU']))
 
 	# XXX(aki): The `type: ignore` is fine here, as we have some data guarantees
 	return {
 		'EXTREF': extref,
 		'DCU': dcus,
-		'ALL': (*flatten((*flatten(extref), dcus)),)
+		'ALL': tuple(flatten((tuple(flatten(extref)), dcus)))
 	} # type: ignore
 
 class ECP5Platform(TemplatedPlatform):
@@ -393,8 +393,10 @@ class ECP5Platform(TemplatedPlatform):
 
 		self.toolchain = toolchain
 
-		if self.package in self._special_pseudo_routable:
-			self._special_pins_hittest = _unpack_special(self._special_pseudo_routable, self.package)
+		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
+			self._special_pins_hittest = _unpack_special(self._special_pseudo_routable[self.package])
+		else:
+			self._special_pins_hittest = None
 
 	@property
 	def required_tools(self) -> list[str]:
@@ -507,20 +509,22 @@ class ECP5Platform(TemplatedPlatform):
 		)
 
 		# If it's one of the parts with SERDES, check whether the pins are for the EXTREFs or DCUs
-		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
+		if self._special_pins_hittest is not None:
 			# Flatten the pins we want to test against
 			if isinstance(names, tuple):
 				pin_names = list[str](flatten(zip(names[0], names[1])))
 			else:
 				pin_names = list(names)
 
+			# Check to see if it's any of the pins we care about
 			if any(name in self._special_pins_hittest['ALL'] for name in pin_names):
+				# If any of them are DCU or EXTREF then check those
 				if all(name in flatten(self._special_pins_hittest['EXTREF']) for name in pin_names):
 					self._check_extref(feature, pin, self._special_pins_hittest['EXTREF'], names)
 				elif all(name in flatten(self._special_pins_hittest['DCU']) for name in pin_names):
 					self._check_dcu(feature, pin, self._special_pins_hittest['DCU'], names)
 				else:
-					raise ValueError()
+					raise NotImplementedError('Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal.')
 
 	def _check_extref(
 		self, feature: PinFeature, pin: Pin, pins: tuple[str, ...],
