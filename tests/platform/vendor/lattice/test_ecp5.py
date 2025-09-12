@@ -2,7 +2,7 @@
 
 from unittest                           import TestCase
 
-from torii.hdl                          import Elaboratable, Module
+from torii.hdl                          import Instance, Elaboratable, Module
 from torii.build.res                    import Resource, Subsignal, DiffPairs, Pins, Attrs
 from torii.platform.vendor.lattice.ecp5 import ECP5Platform
 
@@ -23,23 +23,137 @@ class TestExtrefElaboratable(Elaboratable):
 		return m
 
 class TestDCUElaboratable(Elaboratable):
+	def __init__(self, mk_instance: bool = False) -> None:
+		self.mk_instance = mk_instance
+
 	def elaborate(self, platform: TestPlatform) -> Module:
 		m = Module()
 		dcu = platform.request('dcu', 0)
+
+		if self.mk_instance:
+			m.submodules.dcu_inst = Instance(
+				'DCUA',
+				i_CH0_HDINP  = dcu.rx.i_p[0],
+				i_CH0_HDINN  = dcu.rx.i_n[0],
+				o_CH0_HDOUTP = dcu.tx.o_p[0],
+				o_CH0_HDOUTN = dcu.tx.o_n[0],
+				i_CH1_HDINP  = dcu.rx.i_p[1],
+				i_CH1_HDINN  = dcu.rx.i_n[1],
+				o_CH1_HDOUTP = dcu.tx.o_p[1],
+				o_CH1_HDOUTN = dcu.tx.o_n[1],
+			)
+
 		return m
 
 class ECP5PlatformTestCase(TestCase):
 	def test_inst_dcu_good(self):
 		resource = Resource(
 			'dcu', 0,
-			Subsignal('tx', DiffPairs('W4', 'W5', dir = 'o')),
-			Subsignal('rx', DiffPairs('Y5', 'Y6', dir = 'i')),
+			Subsignal('tx', DiffPairs('W4 W8', 'W5 W9', dir = 'o')),
+			Subsignal('rx', DiffPairs('Y5 Y7', 'Y6 Y8', dir = 'i')),
 		)
 
 		platform = TestPlatform()
 		platform.add_resources((resource, ))
 
-		platform.prepare(TestDCUElaboratable())
+		plan = platform.prepare(TestDCUElaboratable(mk_instance = True))
+
+		# Grab the RTLIL generated
+		rtlil = plan.files['top.il']
+
+		assert isinstance(rtlil, str)
+		# Remove the auto-gen line for Torii
+		rtlil_lines = rtlil.splitlines()[1:]
+		# If the line begins with `attribute` (ignoring whitespace), drop it
+		rtlil_lines = list(
+			filter(lambda line: not line.strip().startswith('attribute'), rtlil_lines)
+		)
+		# Recombobulate it and check the result is correct
+		rtlil = '\n'.join(rtlil_lines)
+
+		self.assertEqual(rtlil, r'''module \top.pin_dcu_0__tx
+  wire width 2 output 0 \dcu_0__tx__p
+  wire width 2 input 1 \dcu_0__tx__o_p
+  wire width 2 output 2 \dcu_0__tx__n
+  wire width 2 input 3 \dcu_0__tx__o_n
+  process $group_0
+    assign \dcu_0__tx__p 2'00
+    assign \dcu_0__tx__p [0] \dcu_0__tx__o_p [0]
+    assign \dcu_0__tx__p [1] \dcu_0__tx__o_p [1]
+  end
+  process $group_1
+    assign \dcu_0__tx__n 2'00
+    assign \dcu_0__tx__n [0] \dcu_0__tx__o_n [0]
+    assign \dcu_0__tx__n [1] \dcu_0__tx__o_n [1]
+  end
+end
+module \top.pin_dcu_0__rx
+  wire width 2 output 0 \dcu_0__rx__i_p
+  wire width 2 output 1 \dcu_0__rx__i_n
+  wire width 2 input 2 \dcu_0__rx__p
+  wire width 2 input 3 \dcu_0__rx__n
+  process $group_0
+    assign \dcu_0__rx__i_p 2'00
+    assign \dcu_0__rx__i_p [0] \dcu_0__rx__p [0]
+    assign \dcu_0__rx__i_p [1] \dcu_0__rx__p [1]
+  end
+  process $group_1
+    assign \dcu_0__rx__i_n 2'00
+    assign \dcu_0__rx__i_n [0] \dcu_0__rx__n [0]
+    assign \dcu_0__rx__i_n [1] \dcu_0__rx__n [1]
+  end
+end
+module \top
+  wire width 2 output 0 \dcu_0__tx__p
+  wire width 2 output 1 \dcu_0__tx__n
+  wire width 2 input 2 \dcu_0__rx__p
+  wire width 2 input 3 \dcu_0__rx__n
+  wire width 2 \dcu_0__rx__i_p
+  wire width 2 \dcu_0__rx__i_n
+  wire width 2 \dcu_0__tx__o_p
+  wire width 2 \dcu_0__tx__o_n
+  cell \DCUA \dcu_inst
+    connect \CH0_HDINP \dcu_0__rx__i_p [0]
+    connect \CH0_HDINN \dcu_0__rx__i_n [0]
+    connect \CH0_HDOUTP \dcu_0__tx__o_p [0]
+    connect \CH0_HDOUTN \dcu_0__tx__o_n [0]
+    connect \CH1_HDINP \dcu_0__rx__i_p [1]
+    connect \CH1_HDINN \dcu_0__rx__i_n [1]
+    connect \CH1_HDOUTP \dcu_0__tx__o_p [1]
+    connect \CH1_HDOUTN \dcu_0__tx__o_n [1]
+  end
+  cell \top.pin_dcu_0__tx \pin_dcu_0__tx
+    connect \dcu_0__tx__p \dcu_0__tx__p
+    connect \dcu_0__tx__o_p \dcu_0__tx__o_p
+    connect \dcu_0__tx__n \dcu_0__tx__n
+    connect \dcu_0__tx__o_n \dcu_0__tx__o_n
+  end
+  cell \top.pin_dcu_0__rx \pin_dcu_0__rx
+    connect \dcu_0__rx__i_p \dcu_0__rx__i_p
+    connect \dcu_0__rx__i_n \dcu_0__rx__i_n
+    connect \dcu_0__rx__p \dcu_0__rx__p
+    connect \dcu_0__rx__n \dcu_0__rx__n
+  end
+end''') # noqa: E101
+
+		# Grab the LPF generated
+		lpf = plan.files['top.lpf']
+		assert isinstance(lpf, str)
+		# Remove the auto-gen line for Torii
+		lpf_lines = lpf.splitlines()[1:]
+		# Recombobulate it and check the result is correct
+		lpf = '\n'.join(lpf_lines)
+		self.assertEqual(lpf, r'''BLOCK ASYNCPATHS;
+BLOCK RESETPATHS;
+LOCATE COMP "dcu_0__tx__p[0]" SITE "W4";
+LOCATE COMP "dcu_0__tx__p[1]" SITE "W8";
+LOCATE COMP "dcu_0__tx__n[0]" SITE "W5";
+LOCATE COMP "dcu_0__tx__n[1]" SITE "W9";
+LOCATE COMP "dcu_0__rx__p[0]" SITE "Y5";
+LOCATE COMP "dcu_0__rx__p[1]" SITE "Y7";
+LOCATE COMP "dcu_0__rx__n[0]" SITE "Y6";
+LOCATE COMP "dcu_0__rx__n[1]" SITE "Y8";
+# (add_preferences placeholder)''')
 
 	def test_inst_dcu_as_pins(self) -> None:
 		resource = Resource(
