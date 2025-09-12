@@ -906,7 +906,7 @@ class ECP5Platform(TemplatedPlatform):
 				p_REFCK_PWDNB = Const(1),
 				i_REFCLKP = port.p[bit],
 				i_REFCLKN = port.n[bit],
-				o_REFCLKO = pin[bit],
+				o_REFCLKO = pin.i[bit],
 			)
 		return m
 

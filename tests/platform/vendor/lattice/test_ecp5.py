@@ -154,7 +154,7 @@ class ECP5PlatformTestCase(TestCase):
     parameter \REFCK_PWDNB 1'1
     connect \REFCLKP \extref_0__p
     connect \REFCLKN \extref_0__n
-    connect \REFCLKO { \extref_0__i }
+    connect \REFCLKO \extref_0__i
   end
 end
 module \top
