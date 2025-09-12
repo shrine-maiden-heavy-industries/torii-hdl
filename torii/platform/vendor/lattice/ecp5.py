@@ -550,6 +550,14 @@ class ECP5Platform(TemplatedPlatform):
 		self, feature: PinFeature, pin: Pin, pins: tuple[tuple[str, ...], tuple[str, ...]],
 		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
 	) -> None:
+		if not isinstance(names, tuple):
+			raise NotImplementedError('Platform \'ECP5Platform\' only supports DCU pins specified with DiffPairs')
+
+		# Unpack the pins used
+		p_names: Iterable[str] = names[0]
+		n_names: Iterable[str] = names[1]
+
+		pairs = list(zip(p_names, n_names))[0]
 		pass
 
 	def _get_xdr_buffer(
