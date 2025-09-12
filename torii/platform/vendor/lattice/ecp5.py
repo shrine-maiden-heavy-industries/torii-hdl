@@ -911,7 +911,7 @@ class ECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_dcu(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_dcu(self, pin: Pin, port: Record) -> Module:
 		m = Module()
 
 		for bit in range(pin.width):
@@ -952,7 +952,7 @@ class ECP5Platform(TemplatedPlatform):
 									return self.get_extref(pin, port, attrs, loc)
 					case 'DCU':
 						if all(name in flatten(self._special_pins_hittest['DCU']) for name in flatten(name_pairs)):
-							return self.get_dcu(pin, port, attrs, invert)
+							return self.get_dcu(pin, port)
 
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
@@ -977,7 +977,7 @@ class ECP5Platform(TemplatedPlatform):
 			name_pairs = list(zip(names[0], names[1]))
 			# Scan through the pseudo pins blocks checking which ones the name pairs blong to
 			if all(name in flatten(self._special_pins_hittest['DCU']) for name in flatten(name_pairs)):
-				return self.get_dcu(pin, port, attrs, invert)
+				return self.get_dcu(pin, port)
 
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
