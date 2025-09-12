@@ -15,7 +15,7 @@ __all__ = (
 	'Pin',
 )
 
-def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
+def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0, diff: bool = False) -> Layout:
 	'''
 	Layout of the platform interface of a pin or several pins, which may be used inside
 	user-defined records.
@@ -40,6 +40,10 @@ def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
 		else:
 			for n in range(xdr):
 				fields.append((f'i{n}', width))
+		if diff:
+			fields.append(('i_p', width))
+			fields.append(('i_n', width))
+
 	if dir in ('o', 'oe', 'io'):
 		if xdr > 0:
 			fields.append(('o_clk', 1))
@@ -50,6 +54,11 @@ def pin_layout(width: int, dir: IODirectionOE, xdr: int = 0) -> Layout:
 		else:
 			for n in range(xdr):
 				fields.append((f'o{n}', width))
+
+		if diff:
+			fields.append(('o_p', width))
+			fields.append(('o_n', width))
+
 	if dir in ('oe', 'io'):
 		fields.append(('oe', 1))
 	return Layout(fields)
@@ -127,13 +136,14 @@ class Pin(Record):
 
 	def __init__(
 		self, width: int, dir: IODirectionOE, *,
-		xdr: int = 0, name: str | None = None, src_loc_at: int = 0
+		xdr: int = 0, name: str | None = None, diff: bool = False, src_loc_at: int = 0
 	) -> None:
 		self.width = width
 		self.dir   = dir
 		self.xdr   = xdr
+		self.diff  = diff
 
 		super().__init__(
-			pin_layout(self.width, self.dir, self.xdr),
+			pin_layout(self.width, self.dir, self.xdr, self.diff),
 			name = name, src_loc_at = src_loc_at + 1
 		)
