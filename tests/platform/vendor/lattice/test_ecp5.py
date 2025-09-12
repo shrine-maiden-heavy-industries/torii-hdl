@@ -15,22 +15,24 @@ class TestPlatform(ECP5Platform):
 	resources = []
 	connectors = []
 
-class TestElaboratable(Elaboratable):
+
+class TestExtrefElaboratable(Elaboratable):
 	def elaborate(self, platform: TestPlatform) -> Module:
 		m = Module()
 		extref0 = platform.request('extref', 0)
 		return m
 
 class ECP5PlatformTestCase(TestCase):
-
-	def test_inst_extref_good(self):
+	def test_inst_extref_good(self) -> None:
 		resource = Resource(
-			'extref', 0, DiffPairs('Y11', 'Y12', dir = 'i'),
-			Attrs(RTERM = True, DCBIAS = True))
+			'extref', 0,
+			DiffPairs('Y11', 'Y12', dir = 'i'),
+			Attrs(RTERM = True, DCBIAS = True)
+		)
 		platform = TestPlatform()
 		platform.add_resources((resource, ))
 
-		plan = platform.prepare(TestElaboratable())
+		plan = platform.prepare(TestExtrefElaboratable())
 
 		# Grab the RTLIL generated
 		rtlil = plan.files['top.il']
@@ -78,39 +80,46 @@ LOCATE COMP "extref_0__p" SITE "Y11";
 LOCATE COMP "extref_0__n" SITE "Y12";
 # (add_preferences placeholder)''')
 
-	def test_inst_extref_as_pins(self):
+	def test_inst_extref_as_pins(self) -> None:
 		resource = Resource(
 			'extref', 0,
 			Subsignal('p', Pins('Y11', dir = 'i')),
 			Subsignal('n', Pins('Y12', dir = 'i')),
 		)
+
 		platform = TestPlatform()
 		platform.add_resources((resource, ))
 
-		with self.assertRaises(
+		with self.assertRaisesRegex(
+			NotImplementedError, r'^The ECP5 parts do not support I/O type of single-ended input for the EXTREF blocks$'
+		):
+			platform.prepare(TestExtrefElaboratable())
+
+	def test_inst_extref_bad_diffpair(self) -> None:
+		resource = Resource(
+			'extref', 0,
+			DiffPairs('Y11', 'Y10', dir = 'i')
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			ValueError, r'^Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal\.$'
+		):
+			platform.prepare(TestExtrefElaboratable())
+
+	def test_inst_extref_wrong_dir(self) -> None:
+		resource = Resource(
+			'extref', 0,
+			DiffPairs('Y11', 'Y12', dir = 'o')
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
 			NotImplementedError,
-			msg = 'Platform \'ECP5Platform\' only supports EXTREF pins specified with DiffPairs'
+			r'^The ECP5 parts do not support I/O type of differential output for the EXTREF blocks$'
 		):
-			platform.prepare(TestElaboratable())
-
-	def test_inst_extref_bad_diffpair(self):
-		resource = Resource('extref', 0, DiffPairs('Y11', 'Y10', dir = 'i'))
-		platform = TestPlatform()
-		platform.add_resources((resource, ))
-
-		with self.assertRaises(
-			ValueError,
-			msg = 'The DiffPairs requested is invalid to refer to a EXTREF'
-		):
-			platform.prepare(TestElaboratable())
-
-	def test_inst_extref_wrong_dir(self):
-		resource = Resource('extref', 0, DiffPairs('Y11', 'Y12', dir = 'o'))
-		platform = TestPlatform()
-		platform.add_resources((resource, ))
-
-		with self.assertRaises(
-			NotImplementedError,
-			msg = 'The ECP5 parts do not support I/O direction \'o\' for the EXTREF blocks'
-		):
-			platform.prepare(TestElaboratable())
+			platform.prepare(TestExtrefElaboratable())
