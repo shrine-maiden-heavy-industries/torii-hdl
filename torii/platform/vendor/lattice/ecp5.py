@@ -910,6 +910,23 @@ class ECP5Platform(TemplatedPlatform):
 			)
 		return m
 
+	def get_dcu(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+		m = Module()
+
+		for bit in range(pin.width):
+			match pin.dir:
+				case 'o':
+					m.d.comb += [
+						port.p[bit].eq(pin.o_p[bit]),
+						port.n[bit].eq(pin.o_n[bit]),
+					]
+				case 'i':
+					m.d.comb += [
+						pin.i_p[bit].eq(port.p[bit]),
+						pin.i_n[bit].eq(port.n[bit]),
+					]
+		return m
+
 	def get_diff_input(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
 	) -> Module:
