@@ -898,9 +898,11 @@ class ECP5Platform(TemplatedPlatform):
 		m = Module()
 		termination = attrs.pop('RTERM', False)
 		dc_biasing = attrs.pop('DCBIAS', False)
+		loc: str = attrs.pop('LOC', 'EXTREF0')
 		for bit in range(pin.width):
 			m.submodules[f'{pin.name}_{bit}'] = Instance(
 				'EXTREFB',
+				a_LOC = loc,
 				p_REFCK_DCBIAS_EN = Const(1 if dc_biasing else 0),
 				p_REFCK_RTERM = Const(1 if termination else 0),
 				p_REFCK_PWDNB = Const(1),
