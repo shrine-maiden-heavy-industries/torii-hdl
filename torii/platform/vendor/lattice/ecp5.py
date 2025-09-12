@@ -6,6 +6,7 @@ from typing          import Literal, TypedDict
 
 from ....build       import Attrs, Clock, Subsignal, PinFeature, TemplatedPlatform
 from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
+from ....hdl.ast     import SignalSet
 from ....lib.io      import Pin
 from ....util        import flatten
 
@@ -185,7 +186,7 @@ class ECP5Platform(TemplatedPlatform):
 				{% endif %}
 			{% endfor %}
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
-				{% if port_signal is not none -%}
+				{% if port_signal is not none and net_signal not in platform._active_extrefs -%}
 					FREQUENCY PORT "{{port_signal.name}}" {{frequency}} HZ;
 				{% else -%}
 					FREQUENCY NET "{{net_signal|hierarchy(".")}}" {{frequency}} HZ;
@@ -286,7 +287,7 @@ class ECP5Platform(TemplatedPlatform):
 		''',
 		'{{name}}.sdc': r'''
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
-				{% if port_signal is not none -%}
+				{% if port_signal is not none and net_signal not in platform._active_extrefs -%}
 					create_clock -name {{port_signal.name|tcl_escape}} -period {{1000000000/frequency}} [get_ports {{port_signal.name|tcl_escape}}]
 				{% else -%}
 					create_clock -name {{net_signal.name|tcl_escape}} -period {{1000000000/frequency}} [get_nets {{net_signal|hierarchy("/")|tcl_escape}}]
@@ -402,6 +403,7 @@ class ECP5Platform(TemplatedPlatform):
 
 		self.toolchain = toolchain
 
+		self._active_extrefs = SignalSet()
 		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
 			self._special_pins_hittest = _unpack_special(self._special_pseudo_routable[self.package])
 		else:
@@ -903,17 +905,17 @@ class ECP5Platform(TemplatedPlatform):
 		m = Module()
 		termination = attrs.pop('RTERM', False)
 		dc_biasing = attrs.pop('DCBIAS', False)
-		for bit in range(pin.width):
-			m.submodules[f'{pin.name}_{bit}'] = Instance(
-				'EXTREFB',
-				a_LOC = f'EXTREF{loc}',
-				p_REFCK_DCBIAS_EN = Const(1 if dc_biasing else 0),
-				p_REFCK_RTERM = Const(1 if termination else 0),
-				p_REFCK_PWDNB = Const(1),
-				i_REFCLKP = port.p[bit],
-				i_REFCLKN = port.n[bit],
-				o_REFCLKO = pin.i[bit],
-			)
+		m.submodules[pin.name] = Instance(
+			'EXTREFB',
+			a_LOC = f'EXTREF{loc}',
+			p_REFCK_DCBIAS_EN = Const(1 if dc_biasing else 0),
+			p_REFCK_RTERM = Const(1 if termination else 0),
+			p_REFCK_PWDNB = Const(1),
+			i_REFCLKP = port.p,
+			i_REFCLKN = port.n,
+			o_REFCLKO = pin.i,
+		)
+		self._active_extrefs.add(pin.i)
 		return m
 
 	def get_dcu(self, pin: Pin, port: Record) -> Module:
