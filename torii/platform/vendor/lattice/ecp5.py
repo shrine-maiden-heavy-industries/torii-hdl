@@ -567,7 +567,23 @@ class ECP5Platform(TemplatedPlatform):
 		n_names: Iterable[str] = names[1]
 
 		pairs = list(zip(p_names, n_names))[0]
-		pass
+
+		for dcu in pins:
+			match feature:
+				case PinFeature.DIFF_INPUT:
+					rx_pins = dcu[1]
+					if pairs in rx_pins:
+						return
+				case PinFeature.DIFF_OUTPUT:
+					tx_pins = dcu[0]
+					if pairs in tx_pins:
+						return
+				case _:
+					raise NotImplementedError(
+						f'Pin types for DCU pins must either be Diff Input or Diff Output, not {feature}'
+					)
+
+		raise ValueError(f'The DiffPairs requested ({pairs!r}) is invalid to refer to a DCU channel')
 
 	def _get_xdr_buffer(
 		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
