@@ -262,7 +262,7 @@ LOCATE COMP "dcu_0__rx__n[1]" SITE "Y8";
   wire width 1 input 0 \extref_0__p
   wire width 1 input 1 \extref_0__n
   wire width 1 \extref_0__i
-  cell \EXTREFB \extref_0_0
+  cell \EXTREFB \extref_0
     parameter \REFCK_DCBIAS_EN 1'1
     parameter \REFCK_RTERM 1'1
     parameter \REFCK_PWDNB 1'1
