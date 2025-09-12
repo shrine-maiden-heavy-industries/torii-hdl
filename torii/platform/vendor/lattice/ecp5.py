@@ -935,20 +935,23 @@ class ECP5Platform(TemplatedPlatform):
 		)
 
 		# If it's one of the parts with SERDES, check whether the pins are for the EXTREFs or DCUs
-		if self.device.startswith('LFE5UM') and self.package in self._special_pseudo_routable:
+		if self._special_pins_hittest is not None:
 			# Unpack this package's special pins definition
 			special_pseudo = self._special_pseudo_routable[self.package]
 			# Turn the names into lists of pairs
 			name_pairs = list(zip(names[0], names[1]))
 			# Scan through the pseudo pins blocks checking which ones the name pairs blong to
 			for block, pin_sets in special_pseudo.items():
-				for pins in pin_sets:
-					for name_pair in name_pairs:
-						# If we have a match, dispatch on the block type
-						if pins == name_pair:
-							match block:
-								case 'EXTREF':
+				match block:
+					case 'EXTREF':
+						for pins in pin_sets:
+							for name_pair in name_pairs:
+								# If we have a match, dispatch on the block type
+								if pins == name_pair:
 									return self.get_extref(pin, port, attrs, invert)
+					case 'DCU':
+						if all(name in flatten(self._special_pins_hittest['DCU']) for name in flatten(name_pairs)):
+							return self.get_dcu(pin, port, attrs, invert)
 
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, i_invert = invert)
@@ -966,6 +969,14 @@ class ECP5Platform(TemplatedPlatform):
 		self._check_feature(
 			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (0, 1, 2, 4, 7), valid_attrs = True, names = names
 		)
+
+		# If it's one of the parts with SERDES, check whether the pins are for the EXTREFs or DCUs
+		if self._special_pins_hittest is not None:
+			# Turn the names into lists of pairs
+			name_pairs = list(zip(names[0], names[1]))
+			# Scan through the pseudo pins blocks checking which ones the name pairs blong to
+			if all(name in flatten(self._special_pins_hittest['DCU']) for name in flatten(name_pairs)):
+				return self.get_dcu(pin, port, attrs, invert)
 
 		m = Module()
 		i, o, t = self._get_xdr_buffer(m, pin, o_invert = invert)
