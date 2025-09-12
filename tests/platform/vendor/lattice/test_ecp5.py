@@ -19,7 +19,7 @@ class TestPlatform(ECP5Platform):
 class TestExtrefElaboratable(Elaboratable):
 	def elaborate(self, platform: TestPlatform) -> Module:
 		m = Module()
-		extref0 = platform.request('extref', 0)
+		_ = platform.request('extref', 0)
 		return m
 
 class TestDCUElaboratable(Elaboratable):
