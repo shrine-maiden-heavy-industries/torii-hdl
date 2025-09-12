@@ -20,7 +20,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
 
-<title>Changelog - Torii 0.8.1.dev336 Documentation</title>
+<title>Changelog - Torii 0.8.1.dev360 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Torii 0.8.1.dev336 documentation</div></a>
+      <a href="index.html"><div class="brand">Torii 0.8.1.dev360 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev336 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev360 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -459,6 +459,7 @@ The minimum Python version for Torii is now 3.11</p>
 </li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.build.plat</span></code> module now has a <code class="docutils literal notranslate"><span class="pre">PinFeature</span></code> enum which replaces the strings used to pass to the <code class="docutils literal notranslate"><span class="pre">_check_feature</span></code> calls for platform implementation.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">torii.build.plat</span></code> <code class="docutils literal notranslate"><span class="pre">get_*</span></code> functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.io.Pin</span></code> record now exposes <code class="docutils literal notranslate"><span class="pre">i_p</span></code>/<code class="docutils literal notranslate"><span class="pre">i_n</span></code> members for input <code class="docutils literal notranslate"><span class="pre">DiffPairs</span></code> and <code class="docutils literal notranslate"><span class="pre">o_p</span></code>/<code class="docutils literal notranslate"><span class="pre">o_n</span></code> members for output <code class="docutils literal notranslate"><span class="pre">DiffPairs</span></code>.</p></li>
 </ul>
 </section>
 <section id="deprecated">
@@ -509,6 +510,12 @@ The minimum Python version for Torii is now 3.11</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.DummyPort</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.rec.Layout</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.rec.Record</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid in the constructor and <code class="docutils literal notranslate"><span class="pre">like</span></code> method.</p></li>
+</ul>
+</li>
+<li><p>Fixed incorrect IOB insertion for ECP5 <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> and <code class="docutils literal notranslate"><span class="pre">DCUA</span></code> specialized pins.</p>
+<ul>
+<li><p>Adding an <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> resource now explicitly creates an <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> instance and returns the refclk output.</p></li>
+<li><p>Adding a <code class="docutils literal notranslate"><span class="pre">DCUA</span></code> resource directly forwards the IO pins as <code class="docutils literal notranslate"><span class="pre">i_p</span></code>/<code class="docutils literal notranslate"><span class="pre">i_n</span></code> for RX and <code class="docutils literal notranslate"><span class="pre">o_p</span></code>/<code class="docutils literal notranslate"><span class="pre">o_n</span></code> for TX signals.</p></li>
 </ul>
 </li>
 </ul>
@@ -1173,7 +1180,7 @@ The minimum Python version for Torii is now 3.11</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=fa3e9d2b"></script>
+</div><script src="_static/documentation_options.js?v=161e1f8e"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
