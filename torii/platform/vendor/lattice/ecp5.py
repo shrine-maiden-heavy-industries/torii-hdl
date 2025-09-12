@@ -547,13 +547,18 @@ class ECP5Platform(TemplatedPlatform):
 		# EXTREFs must be specified as DiffPairs, so `names` must be a tuple if iterables of str
 		if not isinstance(names, tuple):
 			raise NotImplementedError('Platform \'ECP5Platform\' only supports EXTREF pins specified with DiffPairs')
+
 		# Unpack the pins used
 		p_names: Iterable[str] = names[0]
 		n_names: Iterable[str] = names[1]
 
-		pairs = list(zip(p_names, n_names))[0]
-		if pairs not in pins:
-			raise ValueError(f'The DiffPairs requested ({pairs!r}) is invalid to refer to a EXTREF')
+		pairs = list(zip(p_names, n_names))
+
+		if len(pairs) > 1:
+			raise ValueError('A DiffPairs may not represent more than one EXTREF')
+
+		if pairs[0] not in pins:
+			raise ValueError(f'The DiffPairs requested ({pairs[0]!r}) is invalid to refer to a EXTREF')
 
 	def _check_dcu(
 		self, feature: PinFeature, pin: Pin, pins: list[tuple[list[tuple[str, str]], list[tuple[str, str]]]],
