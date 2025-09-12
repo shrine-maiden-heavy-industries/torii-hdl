@@ -533,7 +533,7 @@ class ECP5Platform(TemplatedPlatform):
 				elif all(name in flatten(self._special_pins_hittest['DCU']) for name in pin_names):
 					self._check_dcu(feature, pin, self._special_pins_hittest['DCU'], names)
 				else:
-					raise NotImplementedError('Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal.')
+					raise ValueError('Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal.')
 
 	def _check_extref(
 		self, feature: PinFeature, pin: Pin, pins: list[tuple[str, str]],
@@ -541,7 +541,7 @@ class ECP5Platform(TemplatedPlatform):
 	) -> None:
 		if feature != PinFeature.DIFF_INPUT:
 			raise NotImplementedError(
-				f'The ECP5 parts do not support I/O direction \'{pin.dir}\' for the EXTREF blocks'
+				f'The ECP5 parts do not support I/O type of {feature} for the EXTREF blocks'
 			)
 
 		# EXTREFs must be specified as DiffPairs, so `names` must be a tuple if iterables of str
@@ -567,23 +567,25 @@ class ECP5Platform(TemplatedPlatform):
 		n_names: Iterable[str] = names[1]
 
 		pairs = list(zip(p_names, n_names))[0]
-
 		for dcu in pins:
+			tx_pins, rx_pins = dcu
 			match feature:
 				case PinFeature.DIFF_INPUT:
-					rx_pins = dcu[1]
 					if pairs in rx_pins:
 						return
+					elif pairs in tx_pins:
+						raise ValueError(f'DCU TX pins {pairs} cannot be used as inputs')
 				case PinFeature.DIFF_OUTPUT:
-					tx_pins = dcu[0]
 					if pairs in tx_pins:
 						return
+					elif pairs in rx_pins:
+						raise ValueError(f'DCU RX pins {pairs} cannot be used as outputs')
 				case _:
 					raise NotImplementedError(
 						f'Pin types for DCU pins must either be Diff Input or Diff Output, not {feature}'
 					)
 
-		raise ValueError(f'The DiffPairs requested ({pairs!r}) is invalid to refer to a DCU channel')
+		raise ValueError(f'The DiffPairs requested {pairs} is invalid to refer to a DCU channel')
 
 	def _get_xdr_buffer(
 		self, m: Module, pin: Pin, *, i_invert: bool = False, o_invert: bool = False
