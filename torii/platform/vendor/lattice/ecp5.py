@@ -18,20 +18,29 @@ class SpecialPinsDict(TypedDict):
 	DCU: list[dict[str, dict[str, tuple[str, str]]]]
 
 class FlattenedSpecialPins(TypedDict):
-	EXTREF: tuple[str, ...]
-	DCU: tuple[tuple[str, ...], tuple[str, ...]]
+	EXTREF: list[tuple[str, str]]
+	DCU: list[tuple[list[tuple[str, str]], list[tuple[str, str]]]]
 	ALL: tuple[str, ...]
 
 def _unpack_special(special: SpecialPinsDict) -> FlattenedSpecialPins:
 	extref = special['EXTREF']
-	dcus = tuple((tuple(flatten((ch.values() for ch in dcu.values()))) for dcu in special['DCU']))
+	dcus = list[tuple[list[tuple[str, str]], list[tuple[str, str]]]]()
 
-	# XXX(aki): The `type: ignore` is fine here, as we have some data guarantees
-	return {
-		'EXTREF': extref,
-		'DCU': dcus,
-		'ALL': tuple(flatten((tuple(flatten(extref)), dcus)))
-	} # type: ignore
+	for dcu in special['DCU']:
+		tx_pins = list[tuple[str, str]]()
+		rx_pins = list[tuple[str, str]]()
+
+		for chan in dcu.values():
+			tx_pins.append(chan['TX'])
+			rx_pins.append(chan['RX'])
+
+		dcus.append((tx_pins, rx_pins))
+
+	return FlattenedSpecialPins(
+		EXTREF = extref,
+		DCU = dcus,
+		ALL = tuple(flatten((tuple(flatten(extref)), dcus))) # type: ignore
+	)
 
 class ECP5Platform(TemplatedPlatform):
 	'''
@@ -527,7 +536,7 @@ class ECP5Platform(TemplatedPlatform):
 					raise NotImplementedError('Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal.')
 
 	def _check_extref(
-		self, feature: PinFeature, pin: Pin, pins: tuple[str, ...],
+		self, feature: PinFeature, pin: Pin, pins: list[tuple[str, str]],
 		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
 	) -> None:
 		if feature != PinFeature.DIFF_INPUT:
@@ -547,7 +556,7 @@ class ECP5Platform(TemplatedPlatform):
 			raise ValueError(f'The DiffPairs requested ({pairs!r}) is invalid to refer to a EXTREF')
 
 	def _check_dcu(
-		self, feature: PinFeature, pin: Pin, pins: tuple[tuple[str, ...], tuple[str, ...]],
+		self, feature: PinFeature, pin: Pin, pins: list[tuple[list[tuple[str, str]], list[tuple[str, str]]]],
 		names: Iterable[str] | tuple[Iterable[str], Iterable[str]]
 	) -> None:
 		if not isinstance(names, tuple):
