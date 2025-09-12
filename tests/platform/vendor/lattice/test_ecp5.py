@@ -22,7 +22,106 @@ class TestExtrefElaboratable(Elaboratable):
 		extref0 = platform.request('extref', 0)
 		return m
 
+class TestDCUElaboratable(Elaboratable):
+	def elaborate(self, platform: TestPlatform) -> Module:
+		m = Module()
+		dcu = platform.request('dcu', 0)
+		return m
+
 class ECP5PlatformTestCase(TestCase):
+	def test_inst_dcu_good(self):
+		resource = Resource(
+			'dcu', 0,
+			Subsignal('tx', DiffPairs('W4', 'W5', dir = 'o')),
+			Subsignal('rx', DiffPairs('Y5', 'Y6', dir = 'i')),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		platform.prepare(TestDCUElaboratable())
+
+	def test_inst_dcu_as_pins(self) -> None:
+		resource = Resource(
+			'dcu', 0,
+			Subsignal(
+				'tx',
+				Subsignal('p', Pins('W4', dir = 'o')),
+				Subsignal('n', Pins('W5', dir = 'o'))
+			),
+			Subsignal(
+				'rx',
+				Subsignal('p', Pins('Y5', dir = 'i')),
+				Subsignal('n', Pins('Y6', dir = 'i'))
+			),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			NotImplementedError, r'^Platform \'ECP5Platform\' only supports DCU pins specified with DiffPairs$'
+		):
+			platform.prepare(TestDCUElaboratable())
+
+	def test_inst_dcu_bad_diffpair(self) -> None:
+		resource = Resource(
+			'dcu', 0,
+			Subsignal('tx', DiffPairs('W4', 'Y6', dir = 'o')),
+			Subsignal('rx', DiffPairs('Y5', 'W5', dir = 'i')),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			ValueError, r'^The DiffPairs requested \(\'W4\', \'Y6\'\) is invalid to refer to a DCU channel$'
+		):
+			platform.prepare(TestDCUElaboratable())
+
+		resource = Resource(
+			'dcu', 0,
+			Subsignal('tx', DiffPairs('W4', 'Y11', dir = 'o')),
+			Subsignal('rx', DiffPairs('Y5', 'Y6', dir = 'i')),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			ValueError, r'^Can\'t mix EXTREF, DCU, and/or normal signals within the same subsignal\.$'
+		):
+			platform.prepare(TestDCUElaboratable())
+
+	def test_inst_dcu_wrong_dir(self) -> None:
+		resource = Resource(
+			'dcu', 0,
+			Subsignal('tx', DiffPairs('W4', 'W5', dir = 'i')),
+			Subsignal('rx', DiffPairs('Y5', 'Y6', dir = 'i')),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			ValueError, r'^DCU TX pins \(\'W4\', \'W5\'\) cannot be used as inputs$'
+		):
+			platform.prepare(TestDCUElaboratable())
+
+		resource = Resource(
+			'dcu', 0,
+			Subsignal('tx', DiffPairs('W4', 'W5', dir = 'o')),
+			Subsignal('rx', DiffPairs('Y5', 'Y6', dir = 'o')),
+		)
+
+		platform = TestPlatform()
+		platform.add_resources((resource, ))
+
+		with self.assertRaisesRegex(
+			ValueError, r'^DCU RX pins \(\'Y5\', \'Y6\'\) cannot be used as outputs$'
+		):
+			platform.prepare(TestDCUElaboratable())
+
 	def test_inst_extref_good(self) -> None:
 		resource = Resource(
 			'extref', 0,
