@@ -96,6 +96,9 @@ Unreleased template stuff
   - `torii.hdl.mem.DummyPort` now properly checks that `name` is valid.
   - `torii.hdl.rec.Layout` now properly checks that `name` is valid.
   - `torii.hdl.rec.Record` now properly checks that `name` is valid in the constructor and `like` method.
+- Fixed incorrect IOB insertion for ECP5 `EXTREFB` and `DCUA` specialized pins.
+  - Adding an `EXTREFB` resource now explicitly creates an `EXTREFB` instance and returns the refclk output.
+  - Adding a `DCUA` resource directly forwards the IO pins as `i_p`/`i_n` for RX and `o_p`/`o_n` for TX signals.
 
 ## [0.8.1] - 2025-08-03
 
