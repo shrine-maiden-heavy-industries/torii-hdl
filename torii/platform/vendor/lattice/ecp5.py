@@ -894,15 +894,14 @@ class ECP5Platform(TemplatedPlatform):
 			)
 		return m
 
-	def get_extref(self, pin: Pin, port: Record, attrs: Attrs, invert: bool) -> Module:
+	def get_extref(self, pin: Pin, port: Record, attrs: Attrs, loc: int) -> Module:
 		m = Module()
 		termination = attrs.pop('RTERM', False)
 		dc_biasing = attrs.pop('DCBIAS', False)
-		loc: str = attrs.pop('LOC', 'EXTREF0')
 		for bit in range(pin.width):
 			m.submodules[f'{pin.name}_{bit}'] = Instance(
 				'EXTREFB',
-				a_LOC = loc,
+				a_LOC = f'EXTREF{loc}',
 				p_REFCK_DCBIAS_EN = Const(1 if dc_biasing else 0),
 				p_REFCK_RTERM = Const(1 if termination else 0),
 				p_REFCK_PWDNB = Const(1),
@@ -946,11 +945,11 @@ class ECP5Platform(TemplatedPlatform):
 			for block, pin_sets in special_pseudo.items():
 				match block:
 					case 'EXTREF':
-						for pins in pin_sets:
+						for loc, pins in enumerate(pin_sets):
 							for name_pair in name_pairs:
 								# If we have a match, dispatch on the block type
 								if pins == name_pair:
-									return self.get_extref(pin, port, attrs, invert)
+									return self.get_extref(pin, port, attrs, loc)
 					case 'DCU':
 						if all(name in flatten(self._special_pins_hittest['DCU']) for name in flatten(name_pairs)):
 							return self.get_dcu(pin, port, attrs, invert)
