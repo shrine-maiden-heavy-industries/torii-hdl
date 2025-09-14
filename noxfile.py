@@ -41,6 +41,7 @@ def test(session: Session) -> None:
 
 	session.install('click') # For SBY
 	session.install('-e', '.')
+	session.install('-e', '.[wasm-sim]')
 
 	if ENABLE_COVERAGE:
 		session.log('Coverage support enabled')
