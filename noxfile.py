@@ -160,7 +160,7 @@ def build_docset(session: Session) -> None:
 	torii_version: str = session.run(
 		'python', '-c', 'import torii;print(torii.__version__)',
 		silent = True
-	)
+	) # type: ignore
 
 	with session.chdir(BUILD_DIR):
 		# If the docset is already built, shred it because `doc2dash` won't overwrite it
@@ -184,7 +184,7 @@ def dist_docs(session: Session) -> None:
 	torii_version: str = session.run(
 		'python', '-c', 'import torii;print(torii.__version__)',
 		silent = True
-	)
+	) # type: ignore
 
 	with session.chdir(BUILD_DIR):
 		make_archive(f'torii-{torii_version.strip()}-docs', 'zip', BUILD_DIR, 'docs')
