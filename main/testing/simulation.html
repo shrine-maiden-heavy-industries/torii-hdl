@@ -17,7 +17,7 @@
 <link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="formal.html" rel="next" title="Formal Verification"/><link href="index.html" rel="prev" title="Testing and Verification"/>
 <link href="https://torii.shmdn.link/testing/simulation.html" rel="canonical"/>
 <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
-<title>Simulation - Torii 0.8.1.dev366 Documentation</title>
+<title>Simulation - Torii 0.8.1.dev370 Documentation</title>
 <link href="../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css"/>
 <link href="../_static/styles/furo.css?v=25af2a20" rel="stylesheet" type="text/css"/>
 <link href="../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css"/>
@@ -184,7 +184,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev366 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev370 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -206,7 +206,7 @@
 <div class="sidebar-container">
 <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../index.html">
-<span class="sidebar-brand-text">Torii 0.8.1.dev366 Documentation</span>
+<span class="sidebar-brand-text">Torii 0.8.1.dev370 Documentation</span>
 </a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
 <input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
 <input name="check_keywords" type="hidden" value="yes"/>
@@ -403,7 +403,7 @@
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.sim.Simulator">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.sim.</span></span><span class="sig-name descname"><span class="pre">Simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="pre">Elaboratable</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">BaseEngine</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pysim'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pysim'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.sim.Simulator" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.sim.</span></span><span class="sig-name descname"><span class="pre">Simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../api/hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="pre">Elaboratable</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">BaseEngine</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pysim'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wasm'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pysim'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.sim.Simulator" title="Link to this definition">¶</a></dt>
 <dd><div class="admonition-todo admonition" id="id4">
 <p class="admonition-title">Todo</p>
 <p>Document Me</p>
@@ -615,7 +615,7 @@ further than that.</p>
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=97cff857"></script>
+</div><script src="../_static/documentation_options.js?v=67cb55d7"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
