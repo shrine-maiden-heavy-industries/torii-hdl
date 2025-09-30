@@ -58,11 +58,11 @@ class GowinPlatform(TemplatedPlatform):
 
 	def parse_part(self):
 		# These regular expressions match all >900 parts of Gowin device_info.csv
-		reg_series    = r'(GW[12]{1}[AN]{1}[EFNRSZ]{0,3})-'
+		reg_series    = r'(GW[125]{1}[AN]{1}[EFNRSZ]{0,3})-'
 		reg_voltage   = r'(ZV|EV|LV|LX|UV|UX)'
-		reg_size      = r'(1|2|4|9|18|55)'
-		reg_subseries = r'(?:(B|C|S|X|P5)?)'
-		reg_package   = r'((?:PG|UG|EQ|LQ|MG|M|QN|CS|FN)(?:\d+)(?:P?)(?:A|E|M|CF|C|D|G|H|F|S|T|U|X)?)'
+		reg_size      = r'(1|2|4|9|18|25|55)'
+		reg_subseries = r'(?:(B|C|S|X|P5|A)?)'
+		reg_package   = r'((?:PG|UG|EQ|LQ|MG|M|QN|CS|FN)(?:\d+)(?:P?)(?:A|E|M|CF|C|D|G|H|F|S|T|U|X|N)?)'
 		reg_speed     = r'((?:C\d{1}/I\d{1})|ES|A\d{1}|I\d{1})'
 
 		match = re.match(
@@ -147,7 +147,8 @@ class GowinPlatform(TemplatedPlatform):
 		'GW2AN-9X': 'OSCW',
 		'GW2ANR-18C': 'OSC',
 		'GW2AR-18': 'OSC',
-		'GW2AR-18C': 'OSC'
+		'GW2AR-18C': 'OSC',
+		'GW5A-25A': 'OSCA',
 	}
 
 	@property
