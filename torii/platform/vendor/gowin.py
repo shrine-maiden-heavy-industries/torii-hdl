@@ -27,7 +27,7 @@ class GowinPlatform(TemplatedPlatform):
 		* ``gowin_pack``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_APICULA``, if present.
+	``TORII_ENV_APICULA``, if present.
 
 	Build products:
 		* ``{{name}}.fs``: binary bitstream.
@@ -38,7 +38,7 @@ class GowinPlatform(TemplatedPlatform):
 		* ``gw_sh``
 
 	The environment is populated by running the script specified in the environment variable
-	``AMARANTH_ENV_GOWIN``, if present.
+	``TORII_ENV_GOWIN``, if present.
 
 	Build products:
 		* ``{{name}}.fs``: binary bitstream.
@@ -105,6 +105,10 @@ class GowinPlatform(TemplatedPlatform):
 		# GW1NR series does not have its own chipdb file, but works with GW1N
 		if self.series == 'GW1NR':
 			return f'GW1N-{self.size}{self.subseries_f}'
+		if self.series == 'GW5A' and self.toolchain != 'Gowin':
+			raise NotImplementedError(
+				'Only the "Gowin" toolchain is supported with the GW5A series.'
+			)
 		return self.family
 
 	_dev_osc_mapping = {
@@ -176,33 +180,63 @@ class GowinPlatform(TemplatedPlatform):
 			return 240_000_000
 		elif osc == 'OSCW':
 			return 200_000_000
+		elif osc == 'OSCA':
+			# For GW5A-25A as per https://cdn.gowinsemi.com.cn/DS1103E.pdf
+			# section 3.12
+			return 210_000_000
 		else:
 			raise ValueError(
 				'Unknown oscillator, expected \'OSC\', \'OSCZ\', \'OSCO\', \'OSCF\','
-				f' \'OSCH\', or \'OSCW\', not \'{osc}\''
+				f' \'OSCH\', \'OSCW\', or \'OSCA\' not \'{osc}\''
 			)
 
 	@property
 	def _osc_div(self):
-		div_range = range(2, 130, 2)
+		div_range_stop = 130
+		support_div_by_3 = False
 		div_frac  = Fraction(self._osc_base_freq, self.osc_frequency)
+
+		if self._osc_type == 'OSCA':
+			# As per: https://cdn.gowinsemi.com.cn/UG306E.pdf section 6.2.1
+			# and https://cdn.gowinsemi.com.cn/DS1103E.pdf section 2.12
+			div_range_stop = 126
+			support_div_by_3 = True
+
+		div_range = range(2, div_range_stop, 2)
+		if support_div_by_3:
+			# Check div by 3 is within 50 ppm
+			divides_by_3 = abs(round(div_frac) - 3) < Fraction(50, 1_000_000)
+		else:
+			divides_by_3 = False
 
 		# Check that the requested frequency is within 50 ppm. This takes care of small mismatches
 		# arising due to rounding. The tolerance of a typical crystal oscillator is 50 ppm.
-		if (abs(round(div_frac) - div_frac) > Fraction(50, 1_000_000) or int(div_frac) not in div_range):
+		if (abs(round(div_frac) - div_frac) > Fraction(50, 1_000_000) or
+				(int(div_frac) not in div_range)) and (not divides_by_3 if support_div_by_3 else True):
 
-			achievable = (
+			achievable = [
 				min((frac for frac in div_range if frac > div_frac), default = None),
-				max((frac for frac in div_range if frac < div_frac), default = None)
-			)
+				max((frac for frac in div_range if frac < div_frac), default = None),
+			]
+			if support_div_by_3:
+				filt_achievable = [f for f in achievable if f]
+				for f in range(len(filt_achievable)):
+					# Only include 3 as an option if it's "nearby" as determined by whether
+					# it's a closer option than either of the existing fractions, then
+					# replace the nearest achievable div-by-two answer
+					if (3 > div_frac and 3 < filt_achievable[f]) or (3 < div_frac and 3 > filt_achievable[f]):
+						achievable[f] = 3
+						break
+
 			raise ValueError(
 				f'On-chip oscillator frequency (platform.osc_frequency) must be chosen such that '
 				f'the base frequency of {self._osc_base_freq} Hz is divided by an integer factor '
+				f'{"equal to 3 or " if support_div_by_3 else ""}'
 				f'between {div_range.start} and {div_range.stop} in steps of {div_range.step}; '
 				f'the divider for the requested frequency of {self.osc_frequency} Hz was '
 				f'calculated as ({div_frac.numerator}/{div_frac.denominator}), and the closest '
 				'achievable frequencies are '
-				f'{", ".join(str(self._osc_base_freq // frac) for frac in achievable if frac)}'
+				f'{", ".join(f"{str(self._osc_base_freq // frac)} ({frac}/1)" for frac in achievable if frac)}'
 			)
 
 		return int(div_frac)
@@ -408,6 +442,13 @@ class GowinPlatform(TemplatedPlatform):
 						p_FREQ_DIV  = self._osc_div,
 						o_OSCOUT30M = None,
 						o_OSCOUT    = clk_i
+					)
+				if self._osc_type == 'OSCA':
+					m.submodules += Instance(
+						self._osc_type,
+						p_FREQ_DIV = self._osc_div,
+						i_OSCEN    = Const(1),
+						o_OSCOUT   = clk_i
 					)
 				else:
 					m.submodules += Instance(
