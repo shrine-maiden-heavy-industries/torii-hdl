@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import re
+from enum            import Enum, auto
 from abc             import abstractmethod
 from collections.abc import Iterable
 from fractions       import Fraction
@@ -17,13 +18,14 @@ __all__ = (
 	'GowinPlatform',
 )
 
+
 class GowinPlatform(TemplatedPlatform):
 	'''
 	.. rubric:: Apicula toolchain
 
 	Required tools:
 		* ``yosys``
-		* ``nextpnr-gowin``
+		* ``nextpnr-gowin`` or ``nextpnr-himbaechel`` (newer)
 		* ``gowin_pack``
 
 	The environment is populated by running the script specified in the environment variable
@@ -44,7 +46,12 @@ class GowinPlatform(TemplatedPlatform):
 		* ``{{name}}.fs``: binary bitstream.
 	'''
 
+	class NextpnrTool(Enum):
+		gowin = auto()
+		himbaechel = auto()
+
 	toolchain = None # selected when creating platform
+	osc_frequency = None
 
 	@property
 	@abstractmethod
@@ -105,10 +112,6 @@ class GowinPlatform(TemplatedPlatform):
 		# GW1NR series does not have its own chipdb file, but works with GW1N
 		if self.series == 'GW1NR':
 			return f'GW1N-{self.size}{self.subseries_f}'
-		if self.series == 'GW5A' and self.toolchain != 'Gowin':
-			raise NotImplementedError(
-				'Only the "Gowin" toolchain is supported with the GW5A series.'
-			)
 		return self.family
 
 	_dev_osc_mapping = {
@@ -152,7 +155,7 @@ class GowinPlatform(TemplatedPlatform):
 		'GW2ANR-18C': 'OSC',
 		'GW2AR-18': 'OSC',
 		'GW2AR-18C': 'OSC',
-		'GW5A-25A': 'OSCA',
+		'GW5A-25A': 'OSCA'
 	}
 
 	@property
@@ -186,20 +189,21 @@ class GowinPlatform(TemplatedPlatform):
 			return 210_000_000
 		else:
 			raise ValueError(
-				'Unknown oscillator, expected \'OSC\', \'OSCZ\', \'OSCO\', \'OSCF\','
-				f' \'OSCH\', \'OSCW\', or \'OSCA\' not \'{osc}\''
+				f'Unknown oscillator, expected \'OSC\', \'OSCZ\', \'OSCO\', \'OSCF\', '
+				f'\'OSCH\', \'OSCW\', or \'OSCA\', not \'{osc}\''
 			)
 
 	@property
 	def _osc_div(self):
-		div_range_stop = 130
+		div_range_stop   = 130
 		support_div_by_3 = False
-		div_frac  = Fraction(self._osc_base_freq, self.osc_frequency)
+
+		div_frac = Fraction(self._osc_base_freq, self.osc_frequency)
 
 		if self._osc_type == 'OSCA':
 			# As per: https://cdn.gowinsemi.com.cn/UG306E.pdf section 6.2.1
 			# and https://cdn.gowinsemi.com.cn/DS1103E.pdf section 2.12
-			div_range_stop = 126
+			div_range_stop   = 126
 			support_div_by_3 = True
 
 		div_range = range(2, div_range_stop, 2)
@@ -211,9 +215,9 @@ class GowinPlatform(TemplatedPlatform):
 
 		# Check that the requested frequency is within 50 ppm. This takes care of small mismatches
 		# arising due to rounding. The tolerance of a typical crystal oscillator is 50 ppm.
-		if (abs(round(div_frac) - div_frac) > Fraction(50, 1_000_000) or
-				(int(div_frac) not in div_range)) and (not divides_by_3 if support_div_by_3 else True):
-
+		if (
+			abs(round(div_frac) - div_frac) > Fraction(50, 1_000_000) or (int(div_frac) not in div_range)
+		) and (not divides_by_3 if support_div_by_3 else True):
 			achievable = [
 				min((frac for frac in div_range if frac > div_frac), default = None),
 				max((frac for frac in div_range if frac < div_frac), default = None),
@@ -221,7 +225,7 @@ class GowinPlatform(TemplatedPlatform):
 			if support_div_by_3:
 				filt_achievable = [f for f in achievable if f]
 				for f in range(len(filt_achievable)):
-					# Only include 3 as an option if it's "nearby" as determined by whether
+					# Only include 3 as an option if it's 'nearby' as determined by whether
 					# it's a closer option than either of the existing fractions, then
 					# replace the nearest achievable div-by-two answer
 					if (3 > div_frac and 3 < filt_achievable[f]) or (3 < div_frac and 3 > filt_achievable[f]):
@@ -257,11 +261,8 @@ class GowinPlatform(TemplatedPlatform):
 
 	# Apicula templates
 
-	_apicula_required_tools = [
-		'yosys',
-		'nextpnr-gowin',
-		'gowin_pack'
-	]
+	_apicula_yosys_tool_name = 'yosys'
+	_apicula_gowin_pack_tool_name = 'gowin_pack'
 	_apicula_file_templates = {
 		**TemplatedPlatform.build_script_templates,
 		**_common_file_templates,
@@ -286,20 +287,33 @@ class GowinPlatform(TemplatedPlatform):
 			{% endfor %}
 			read_rtlil {{name}}.il
 			{{get_override("script_after_read")|default("# (script_after_read placeholder)")}}
-			synth_gowin {{get_override("synth_opts")|options}} -top {{name}} -json {{name}}.syn.json
+			synth_gowin {{get_override("synth_opts")|options}} \
+			-family {{platform.series}} -top {{name}} -json {{name}}.syn.json
 			{{get_override("script_after_synth")|default("# (script_after_synth placeholder)")}}
 		''',
 	}
-	_apicula_command_templates = [
-		r'''
+	_apicula_yosys_command_template = r'''
 		{{invoke_tool("yosys")}}
 			{{quiet("-q")}}
 			{{get_override("yosys_opts")|options}}
 			-l {{name}}.rpt
 			{{name}}.ys
-		''',
-		r'''
-		{{invoke_tool("nextpnr-gowin")}}
+		'''
+	_apicula_gowin_pack_command_template = r'''
+		{{invoke_tool("gowin_pack")}}
+			-d {{platform._chipdb_device}}
+			-o {{name}}.fs
+			{{get_override("gowin_pack_opts")|options}}
+			{{name}}.pnr.json
+		'''
+
+	# nextpnr choices ('-gowin' as legacy default for apicula toolchain)
+	# these are selected in the __init__ based on nextpnr_tool =  argument.
+	# '-himbaechel' is the correct choice as of nextpnr-0.8
+
+	_nextpnr_command_templates = {
+		'nextpnr-gowin': r'''
+			{{invoke_tool("nextpnr-gowin")}}
 			{{quiet("--quiet")}}
 			{{get_override("nextpnr_opts")|options}}
 			--log {{name}}.tim
@@ -309,18 +323,22 @@ class GowinPlatform(TemplatedPlatform):
 			--cst {{name}}.cst
 			--write {{name}}.pnr.json
 		''',
-		r'''
-		{{invoke_tool("gowin_pack")}}
-			-d {{platform._chipdb_device}}
-			-o {{name}}.fs
-			{{get_override("gowin_pack_opts")|options}}
-			{{name}}.pnr.json
+		'nextpnr-himbaechel': r'''
+			{{invoke_tool("nextpnr-himbaechel")}}
+			{{quiet("--quiet")}}
+			{{get_override("nextpnr_opts")|options}}
+			--log {{name}}.tim
+			--device {{platform.part}}
+			--json {{name}}.syn.json
+			--vopt cst={{name}}.cst
+			--vopt family={{platform._chipdb_device}}
+			--write {{name}}.pnr.json
 		'''
-	]
+	}
 
 	# Vendor toolchain templates
 
-	_gowin_required_tools = [ 'gw_sh' ]
+	_gowin_gw_sh_tool_name = 'gw_sh'
 	_gowin_file_templates = {
 		**TemplatedPlatform.build_script_templates,
 		**_common_file_templates,
@@ -351,19 +369,27 @@ class GowinPlatform(TemplatedPlatform):
 		{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
 		''', # noqa: E501
 	}
-	_gowin_command_templates = [
-		r'''
+	_gowin_gw_sh_command_template = r'''
 		{{invoke_tool("gw_sh")}}
 			{{name}}.tcl
 		'''
-	]
 
-	def __init__(self, *, toolchain = 'Apicula') -> None:
+	def __init__(self, *, toolchain = 'Apicula', nextpnr_tool_variant = 'gowin') -> None:
 		super().__init__()
 
 		if toolchain not in ('Apicula', 'Gowin'):
 			raise ValueError(f'Unknown toolchain \'{toolchain}\', expected \'Apicula\', or \'Gowin\'')
 		self.toolchain = toolchain
+
+		# Set required tools here to enable tweaking of tools and templates in future without
+		# breaking existing functionality on older toolchains
+		if toolchain == 'Apicula':
+			self.nextpnr_tool_name = f'nextpnr-{nextpnr_tool_variant.lower()}'
+			if self.nextpnr_tool_name not in self._nextpnr_command_templates.keys():
+				raise ValueError(
+					f'Unknown nextpnr tool variant \'{nextpnr_tool_variant}\' for use with {self.family}. '
+					f'Must be \'gowin\' or \'himbaechel\'.'
+				)
 
 		self.parse_part()
 
@@ -373,9 +399,13 @@ class GowinPlatform(TemplatedPlatform):
 			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', expected \'Apicula\', or \'Gowin\'')
 
 		if self.toolchain == 'Apicula':
-			return self._apicula_required_tools
+			return [
+				self._apicula_yosys_tool_name,
+				self.nextpnr_tool_name,
+				self._apicula_gowin_pack_tool_name,
+			]
 		elif self.toolchain == 'Gowin':
-			return self._gowin_required_tools
+			return [self._gowin_gw_sh_tool_name]
 
 	@property
 	def file_templates(self):
@@ -393,9 +423,13 @@ class GowinPlatform(TemplatedPlatform):
 			raise ValueError(f'Unknown toolchain \'{self.toolchain}\', expected \'Apicula\', or \'Gowin\'')
 
 		if self.toolchain == 'Apicula':
-			return self._apicula_command_templates
+			return [
+				self._apicula_yosys_command_template,
+				self._nextpnr_command_templates.get(self.nextpnr_tool_name),
+				self._apicula_gowin_pack_command_template,
+			]
 		elif self.toolchain == 'Gowin':
-			return self._gowin_command_templates
+			return [self._gowin_gw_sh_command_template]
 
 	def add_clock_constraint(self, clock, frequency):
 		super().add_clock_constraint(clock, frequency)
