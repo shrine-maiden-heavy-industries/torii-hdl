@@ -5,6 +5,7 @@ from enum            import Enum, auto
 from abc             import abstractmethod
 from collections.abc import Iterable
 from fractions       import Fraction
+from functools       import cached_property
 
 from ...build        import Attrs, Clock, PinFeature, TemplatedPlatform
 from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
@@ -412,7 +413,7 @@ class GowinPlatform(TemplatedPlatform):
 
 		self.parse_part()
 
-	@property
+	@cached_property
 	def nextpnr_tool_name(self) -> str:
 		'''
 		Iterate over nextpnr tools to determine which is present.
@@ -425,7 +426,7 @@ class GowinPlatform(TemplatedPlatform):
 			except ToolNotFound:
 				continue
 
-		return "nextpnr-himbaechel"
+		return 'nextpnr-himbaechel'
 
 	@property
 	def required_tools(self):
