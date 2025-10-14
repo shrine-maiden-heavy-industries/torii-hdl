@@ -73,12 +73,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.11', '3.12', '3.13', ]
+        python-version: [ '3.11', '3.12', '3.13', '3.14', ]
         allow-failure:
          - false
         include:
-          - python-version: '3.14-dev'
-            allow-failure: true
           - python-version: 'pypy3.11'
             allow-failure: true
 
