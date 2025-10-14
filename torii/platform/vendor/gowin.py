@@ -213,7 +213,7 @@ class GowinPlatform(TemplatedPlatform):
 			return 200_000_000
 		elif osc == 'OSCA':
 			# For GW5A-25A as per https://cdn.gowinsemi.com.cn/DS1103E.pdf
-			# section 3.12
+			# §2.12 On Chip Oscillator, pg 45.
 			return 210_000_000
 		else:
 			raise ValueError(
@@ -315,8 +315,7 @@ class GowinPlatform(TemplatedPlatform):
 			{% endfor %}
 			read_rtlil {{name}}.il
 			{{get_override("script_after_read")|default("# (script_after_read placeholder)")}}
-			synth_gowin {{get_override("synth_opts")|options}} \
-			-family {{platform.series}} -top {{name}} -json {{name}}.syn.json
+			synth_gowin {{get_override("synth_opts")|options}} -family {{platform.series}} -top {{name}} -json {{name}}.syn.json
 			{{get_override("script_after_synth")|default("# (script_after_synth placeholder)")}}
 		''',
 	}
@@ -416,9 +415,10 @@ class GowinPlatform(TemplatedPlatform):
 	@cached_property
 	def nextpnr_tool_name(self) -> str:
 		'''
-		Iterate over nextpnr tools to determine which is present.
+		Iterate over nextpnr tools to determine which is present of either
+		`nextpnr-gowin` or `nextpnr-himbaechel`.
 
-		Defaults to 'nextpnr-himbaechel' if none is present on the path.
+		Raises ToolNotFound if no supported tools are present.
 		'''
 		for tool in self._nextpnr_command_templates.keys():
 			try:
@@ -426,7 +426,10 @@ class GowinPlatform(TemplatedPlatform):
 			except ToolNotFound:
 				continue
 
-		return 'nextpnr-himbaechel'
+		raise ToolNotFound(
+			'No acceptable nextpnr tool could be found on the path. Supported nextpnr tools are: '
+			'\'nextpnr-gowin\' and \'nextpnr-himbaechel\'.'
+		)
 
 	@property
 	def required_tools(self):
