@@ -16,6 +16,36 @@ class ResourcesTestCase(ToriiTestCase):
 			self.assertEqual(res.name, 'test')
 			self.assertEqual(res.number, idx)
 
+	def test_split_resources_named(self):
+		resources = _SplitResources('test', pins = 'A B C D E', default_name = 'foo', dir = 'io')
+
+		self.assertEqual(len(resources), 5)
+
+		for idx, res in enumerate(resources):
+			self.assertEqual(len(res.ios), 1)
+			self.assertEqual(res.name, 'test')
+			self.assertEqual(res.number, idx)
+
+	def test_split_resources_numbered(self):
+		resources = _SplitResources(5, pins = 'A B C D E', default_name = 'test', dir = 'io')
+
+		self.assertEqual(len(resources), 5)
+
+		for idx, res in enumerate(resources, start = 5):
+			self.assertEqual(len(res.ios), 1)
+			self.assertEqual(res.name, 'test')
+			self.assertEqual(res.number, idx)
+
+	def test_split_resources_named_and_numbered(self):
+		resources = _SplitResources('test', 5, pins = 'A B C D E', default_name = 'foo', dir = 'io')
+
+		self.assertEqual(len(resources), 5)
+
+		for idx, res in enumerate(resources, start = 5):
+			self.assertEqual(len(res.ios), 1)
+			self.assertEqual(res.name, 'test')
+			self.assertEqual(res.number, idx)
+
 	def test_led_resources(self):
 		leds = LEDResources(pins = 'A B C D E F', attrs = Attrs(IO_TYPE = 'LVCMOS33'))
 
