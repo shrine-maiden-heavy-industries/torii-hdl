@@ -170,7 +170,8 @@ class ECP5Platform(TemplatedPlatform):
 			{% endfor %}
 			read_rtlil {{name}}.il
 			{{get_override("script_after_read")|default("# (script_after_read placeholder)")}}
-			synth_ecp5 {{get_override("synth_opts")|options}} -top {{name}}
+			{% if yosys_version > (0, 58, 0) -%}synth_lattice -family ecp5{%- else -%}synth_ecp5{%- endif -%}
+				{{get_override("synth_opts")|options}} -top {{name}}
 			{{get_override("script_after_synth")|default("# (script_after_synth placeholder)")}}
 			write_json {{name}}.json
 		''',
