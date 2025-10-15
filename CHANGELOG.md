@@ -38,6 +38,7 @@ Unreleased template stuff
 - Added `torii.lib.stream.simple.ConstantStreamGenerator`, which is a port of the `torii_usb.stream.generator.ConstantStreamGenerator`.
 - Added `torii.lib.stream.simple.StreamSerializer`, which is a port of the `torii_usb.stream.generator.StreamSerializer`.
 - New WASM based simulation backend [torii-sim-wasm](https://github.com/shrine-maiden-heavy-industries/torii-sim-wasm) leveraging [wasmtime](https://wasmtime.dev/) to speed up larger and longer running simulation tests in a cross-platform manner.
+- Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
 
 ### Changed
 
@@ -101,6 +102,7 @@ Unreleased template stuff
 - Fixed incorrect IOB insertion for ECP5 `EXTREFB` and `DCUA` specialized pins.
   - Adding an `EXTREFB` resource now explicitly creates an `EXTREFB` instance and returns the refclk output.
   - Adding a `DCUA` resource directly forwards the IO pins as `i_p`/`i_n` for RX and `o_p`/`o_n` for TX signals.
+- Fixed `LEDResources`/`ButtonResources`/`SwitchResources` so they now behave as expected an no longer drop the resource name or number params.
 
 ## [0.8.1] - 2025-08-03
 
