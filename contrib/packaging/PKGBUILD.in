@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: BSD-2-Clause
+# Maintainer: Aki-nyan <aur@catgirl.link>
+
+_pkgname="torii"
+pkgname="python-${_pkgname}"
+pkgver=@TORII_VERSION@
+pkgrel=1
+pkgdesc="A Python-based HDL and framework for silicon-based witchcraft"
+arch=("any")
+url="https://github.com/shrine-maiden-heavy-industries/torii-hdl"
+license=("BSD-2-Clause")
+depends=("python" "python-jinja" "python-rich" "python-platformdirs" "python-pyvcd" "python-setuptools" "yosys")
+makedepends=("git" "python-build" "python-installer" "python-setuptools" "python-setuptools-scm")
+checkdpends=("yices" "sby")
+provides=("python-torii=${pkgver}")
+source=(
+	"${_pkgname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname//-/_}/${_pkgname//-/_}-${pkgver}.tar.gz"
+)
+sha512sums=(
+	"@TORII_SRC_SHA512@"
+)
+
+build() {
+	cd "${_pkgname}-${pkgver}"
+	SETUPTOOLS_SCM_PRETEND_VERSION="${pkgver}" python -m build --wheel --no-isolation
+}
+
+package() {
+	cd "${_pkgname}-${pkgver}"
+	python -m installer --destdir="${pkgdir}" dist/*.whl
+	install -Dm 644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+check() {
+	cd "${_pkgname}-${pkgver}"
+	python -m venv --system-site-packages torii-test-env
+	torii-test-env/bin/python -m installer dist/*.whl
+	torii-test-env/bin/python -P -m unittest discover -v
+}
