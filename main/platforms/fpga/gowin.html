@@ -20,7 +20,7 @@
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
 
-<title>Gowin - Torii 0.8.1.dev372 Documentation</title>
+<title>Gowin - Torii 0.8.1.dev384 Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev372 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Torii 0.8.1.dev384 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,7 +233,7 @@
       
       <div class="sidebar-sticky">
 <a class="sidebar-brand" href="../../index.html">
-	<span class="sidebar-brand-text">Torii 0.8.1.dev372 Documentation</span>
+	<span class="sidebar-brand-text">Torii 0.8.1.dev384 Documentation</span>
 	
   </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -405,21 +405,38 @@
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">torii.platform.vendor.gowin</span></code> module provides a base platform to support Gowin FPGAs with the <a class="reference external" href="https://www.gowinsemi.com/en/support/home" rel="noreferer noopener" target="_blank">Gowin</a> and <a class="reference external" href="https://github.com/YosysHQ/apicula" rel="noreferer noopener" target="_blank">Apicula</a> toolchains.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torii.platform.vendor.gowin.GowinPlatform">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.gowin.</span></span><span class="sig-name descname"><span class="pre">GowinPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolchain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Apicula'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.platform.vendor.gowin.GowinPlatform" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.platform.vendor.gowin.</span></span><span class="sig-name descname"><span class="pre">GowinPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolchain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Apicula'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.platform.vendor.gowin.GowinPlatform" title="Link to this definition">¶</a></dt>
 <dd><p class="rubric">Apicula toolchain</p>
 <dl class="simple">
 <dt>Required tools:</dt><dd><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">yosys</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">nextpnr-gowin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextpnr-gowin</span></code> or <code class="docutils literal notranslate"><span class="pre">nextpnr-himbaechel</span></code> (newer)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gowin_pack</span></code></p></li>
 </ul>
 </dd>
 </dl>
 <p>The environment is populated by running the script specified in the environment variable
-<code class="docutils literal notranslate"><span class="pre">AMARANTH_ENV_APICULA</span></code>, if present.</p>
+<code class="docutils literal notranslate"><span class="pre">TORII_ENV_APICULA</span></code>, if present.</p>
 <dl class="simple">
+<dt>Available overrides:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gowin_pack_opts</span></code>: sets additional options for <code class="docutils literal notranslate"><span class="pre">gowin_pack</span></code> command</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextpnr_opts</span></code>: sets additional options for nextpnr command</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_verilog_opts</span></code>: sets additional options for <code class="docutils literal notranslate"><span class="pre">read_verilog</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">script_after_read</span></code>: inserts commands after <code class="docutils literal notranslate"><span class="pre">read_rtlil</span></code> in Yosys script</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">script_after_synth</span></code>: inserts commands after <code class="docutils literal notranslate"><span class="pre">synth_gowin</span></code> in Yosys script</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">synth_opts</span></code>: sets additional options for <code class="docutils literal notranslate"><span class="pre">synth_gowin</span></code> in Yosys script</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yosys_opts</span></code>: sets additional options for <code class="docutils literal notranslate"><span class="pre">yosys</span></code> command</p></li>
+</ul>
+</dd>
 <dt>Build products:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.fs</span></code>: binary bitstream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.cst</span></code>: physical constraints</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.debug.v</span></code>: debug verilog file, if <code class="docutils literal notranslate"><span class="pre">TORII_DEBUG_VERILOG</span></code> is set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.il</span></code>: Register-Transfer-Level-Intermediate-Language file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.pnr.json</span></code>: place-and-route json</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.rpt</span></code>: synthesis report (yosys log)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.syn.json</span></code>: synthesis json</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.tim</span></code>: timing data (nextpnr log)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.fs</span></code>: binary bitstream</p></li>
 </ul>
 </dd>
 </dl>
@@ -431,10 +448,21 @@
 </dd>
 </dl>
 <p>The environment is populated by running the script specified in the environment variable
-<code class="docutils literal notranslate"><span class="pre">AMARANTH_ENV_GOWIN</span></code>, if present.</p>
+<code class="docutils literal notranslate"><span class="pre">TORII_ENV_GOWIN</span></code>, if present.</p>
 <dl class="simple">
+<dt>Available overrides:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add_constraints</span></code>: stuff</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_options</span></code>: stuff</p></li>
+</ul>
+</dd>
 <dt>Build products:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.fs</span></code>: binary bitstream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.cst</span></code>: physical constraints</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.sdc</span></code>: timing constraints</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{top}}.tcl</span></code>: TCL instructions for <code class="docutils literal notranslate"><span class="pre">gw_sh</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{top}}.v</span></code>: verilog file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">impl/gwsynthesis/project*</span></code>: <code class="docutils literal notranslate"><span class="pre">gw_sh</span></code>-generated outputs for synthesis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">impl/pnr/project*</span></code>: <code class="docutils literal notranslate"><span class="pre">gw_sh</span></code>-generated outputs for place-and-route</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{name}}.fs</span></code>: binary bitstream</p></li>
 </ul>
 </dd>
 </dl>
@@ -516,7 +544,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=ae54f55f"></script>
+</div><script src="../../_static/documentation_options.js?v=9996bd02"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -177,7 +177,7 @@
 </label>
 </div>
 <div class="header-center">
-<a href="../index.html"><div class="brand">Torii 0.8.1.dev372 documentation</div></a>
+<a href="../index.html"><div class="brand">Torii 0.8.1.dev384 documentation</div></a>
 </div>
 <div class="header-right">
 <div class="theme-toggle-container theme-toggle-header">
@@ -359,7 +359,7 @@
 <p class="admonition-title">Warning</p>
 <p>Glob imports are no longer considered good practice, as they make finding where things come from much more difficult, avoid if at all possible.</p>
 </div>
-<p>Because Torii is a regular Python library, it needs to be imported before use. The root <code class="docutils literal notranslate"><span class="pre">torii</span></code> module, called <em>the prelude</em>, is carefully curated to export a small amount of the most essential names, useful in nearly every design. In source files dedicated to Torii code, it is a good practice to use a <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#tut-pkg-import-star" title="(in Python v3.13)"><span class="xref std std-ref">glob import</span></a> for readability:</p>
+<p>Because Torii is a regular Python library, it needs to be imported before use. The root <code class="docutils literal notranslate"><span class="pre">torii</span></code> module, called <em>the prelude</em>, is carefully curated to export a small amount of the most essential names, useful in nearly every design. In source files dedicated to Torii code, it is a good practice to use a <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#tut-pkg-import-star" title="(in Python v3.14)"><span class="xref std std-ref">glob import</span></a> for readability:</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torii.hdl</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
@@ -442,7 +442,7 @@
 </section>
 <section id="shapes-from-ranges">
 <h3>Shapes from ranges<a class="headerlink" href="#shapes-from-ranges" title="Link to this heading">¶</a></h3>
-<p>Casting a shape from a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">range</span></code></a> <code class="docutils literal notranslate"><span class="pre">r</span></code> produces a shape that:</p>
+<p>Casting a shape from a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">range</span></code></a> <code class="docutils literal notranslate"><span class="pre">r</span></code> produces a shape that:</p>
 <ul class="simple">
 <li><p>has a width large enough to represent both <code class="docutils literal notranslate"><span class="pre">min(r)</span></code> and <code class="docutils literal notranslate"><span class="pre">max(r)</span></code>, but not larger, and</p></li>
 <li><p>is signed if <code class="docutils literal notranslate"><span class="pre">r</span></code> contains any negative values, unsigned otherwise.</p></li>
@@ -470,7 +470,7 @@
 </section>
 <section id="shapes-from-enumerations">
 <h3>Shapes from enumerations<a class="headerlink" href="#shapes-from-enumerations" title="Link to this heading">¶</a></h3>
-<p>Casting a shape from an <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclass <code class="docutils literal notranslate"><span class="pre">E</span></code>:</p>
+<p>Casting a shape from an <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> subclass <code class="docutils literal notranslate"><span class="pre">E</span></code>:</p>
 <ul class="simple">
 <li><p>fails if any of the enumeration members have non-integer values,</p></li>
 <li><p>has a width large enough to represent both <code class="docutils literal notranslate"><span class="pre">min(m.value</span> <span class="pre">for</span> <span class="pre">m</span> <span class="pre">in</span> <span class="pre">E)</span></code> and <code class="docutils literal notranslate"><span class="pre">max(m.value</span> <span class="pre">for</span> <span class="pre">m</span> <span class="pre">in</span> <span class="pre">E)</span></code>, and</p></li>
@@ -490,7 +490,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The enumeration does not have to subclass <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a>; it only needs to have integers as values of every member. Using enumerations based on <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> rather than <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> prevents unwanted implicit conversion of enum members to integers.</p>
+<p>The enumeration does not have to subclass <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a>; it only needs to have integers as values of every member. Using enumerations based on <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a> rather than <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> prevents unwanted implicit conversion of enum members to integers.</p>
 </div>
 </section>
 </section>
@@ -508,7 +508,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
+<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
 </div>
 </section>
 <section id="values-from-enumeration-members">
@@ -520,7 +520,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
+<p>If a value subclasses <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> or its class otherwise inherits from both <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>, it is treated as an enumeration.</p>
 </div>
 </section>
 </section>
@@ -729,7 +729,7 @@
 <h3>Bitwise, shift, and rotate operators<a class="headerlink" href="#bitwise-shift-and-rotate-operators" title="Link to this heading">¶</a></h3>
 <p>All bitwise and shift operations on integers provided by Python can be used on Torii values as well.</p>
 <p>Similar to arithmetic operations, if any operand of a bitwise expression is signed, the expression itself is signed as well. A shift expression is signed if the shifted value is signed. A rotate expression is always unsigned.</p>
-<p>Rotate operations with variable rotate amounts cannot be efficiently synthesized for non-power-of-2 widths of the rotated value. Because of that, the rotate operations are only provided for constant rotate amounts, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s.</p>
+<p>Rotate operations with variable rotate amounts cannot be efficiently synthesized for non-power-of-2 widths of the rotated value. Because of that, the rotate operations are only provided for constant rotate amounts, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s.</p>
 <p>The following table lists the bitwise and shift operations provided by Torii:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -861,7 +861,7 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Because of Python <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#operator-summary" title="(in Python v3.13)"><span class="xref std std-ref">operator precedence</span></a>, logical operators bind less tightly than comparison operators whereas bitwise operators bind more tightly than comparison operators. As a result, all logical expressions in Torii <strong>must</strong> have parenthesized operands.</p>
+<p>Because of Python <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#operator-summary" title="(in Python v3.14)"><span class="xref std std-ref">operator precedence</span></a>, logical operators bind less tightly than comparison operators whereas bitwise operators bind more tightly than comparison operators. As a result, all logical expressions in Torii <strong>must</strong> have parenthesized operands.</p>
 <p>Omitting parentheses around operands in an Torii a logical expression is likely to introduce a subtle bug:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">en</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">addr</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
@@ -895,8 +895,8 @@
 </section>
 <section id="bit-sequence-operators">
 <h3>Bit sequence operators<a class="headerlink" href="#bit-sequence-operators" title="Link to this heading">¶</a></h3>
-<p>Apart from acting as numbers, Torii values can also be treated as bit <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#typesseq" title="(in Python v3.13)"><span class="xref std std-ref">sequences</span></a>, supporting slicing, concatenation, replication, and other sequence operations. Since some of the operators Python defines for sequences clash with the operators it defines for numbers, Torii gives these operators a different name. Except for the names, Torii values follow Python sequence semantics, with the least significant bit at index 0.</p>
-<p>Because every Torii value has a single fixed width, bit slicing and replication operations require the subscripts and count to be constant, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s. It is often useful to slice a value with a constant width and variable offset, but this cannot be expressed with the Python slice notation. To solve this problem, Torii provides additional <em>part select</em> operations with the necessary semantics.</p>
+<p>Apart from acting as numbers, Torii values can also be treated as bit <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#typesseq" title="(in Python v3.14)"><span class="xref std std-ref">sequences</span></a>, supporting slicing, concatenation, replication, and other sequence operations. Since some of the operators Python defines for sequences clash with the operators it defines for numbers, Torii gives these operators a different name. Except for the names, Torii values follow Python sequence semantics, with the least significant bit at index 0.</p>
+<p>Because every Torii value has a single fixed width, bit slicing and replication operations require the subscripts and count to be constant, specified as Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s. It is often useful to slice a value with a constant width and variable offset, but this cannot be expressed with the Python slice notation. To solve this problem, Torii provides additional <em>part select</em> operations with the necessary semantics.</p>
 <p>The result of any bit sequence operation is an unsigned value.</p>
 <p>The following table lists the bit sequence operations provided by Torii:</p>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -971,7 +971,7 @@
 </section>
 <section id="choice-operator">
 <h3>Choice operator<a class="headerlink" href="#choice-operator" title="Link to this heading">¶</a></h3>
-<p>The <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Mux" title="torii.hdl.ast.Mux"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mux(sel,</span> <span class="pre">val1,</span> <span class="pre">val0)</span></code></a> choice expression (similar to the <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#if-expr" title="(in Python v3.13)"><span class="xref std std-ref">conditional expression</span></a> in Python) is equal to the operand <code class="docutils literal notranslate"><span class="pre">val1</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is non-zero, and to the other operand <code class="docutils literal notranslate"><span class="pre">val0</span></code> otherwise. If any of <code class="docutils literal notranslate"><span class="pre">val1</span></code> or <code class="docutils literal notranslate"><span class="pre">val0</span></code> are signed, the expression itself is signed as well.</p>
+<p>The <a class="reference internal" href="../api/hdl/ast.html#torii.hdl.ast.Mux" title="torii.hdl.ast.Mux"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mux(sel,</span> <span class="pre">val1,</span> <span class="pre">val0)</span></code></a> choice expression (similar to the <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#if-expr" title="(in Python v3.14)"><span class="xref std std-ref">conditional expression</span></a> in Python) is equal to the operand <code class="docutils literal notranslate"><span class="pre">val1</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is non-zero, and to the other operand <code class="docutils literal notranslate"><span class="pre">val0</span></code> otherwise. If any of <code class="docutils literal notranslate"><span class="pre">val1</span></code> or <code class="docutils literal notranslate"><span class="pre">val0</span></code> are signed, the expression itself is signed as well.</p>
 </section>
 </section>
 <section id="modules">
@@ -1088,7 +1088,7 @@
 </section>
 <section id="control-structures">
 <h3>Control structures<a class="headerlink" href="#control-structures" title="Link to this heading">¶</a></h3>
-<p>Although it is possible to write any decision tree as a combination of <a class="reference internal" href="#assigning-to-signals">assignments</a> and <a class="reference internal" href="#choice-operator">choice expressions</a>, Torii provides <em>control structures</em> tailored for this task: If, Switch, and FSM. The syntax of all control structures is based on <a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#context-managers" title="(in Python v3.13)"><span class="xref std std-ref">context managers</span></a> and uses <code class="docutils literal notranslate"><span class="pre">with</span></code> blocks, for example:</p>
+<p>Although it is possible to write any decision tree as a combination of <a class="reference internal" href="#assigning-to-signals">assignments</a> and <a class="reference internal" href="#choice-operator">choice expressions</a>, Torii provides <em>control structures</em> tailored for this task: If, Switch, and FSM. The syntax of all control structures is based on <a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#context-managers" title="(in Python v3.14)"><span class="xref std std-ref">context managers</span></a> and uses <code class="docutils literal notranslate"><span class="pre">with</span></code> blocks, for example:</p>
 <!-- TODO: link to relevant subsections -->
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">If</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
@@ -1102,7 +1102,7 @@
 <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sync</span> <span class="o">+=</span> <span class="n">timer</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Mux" title="torii.hdl.ast.Mux"><span class="n">Mux</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Because all branches of a decision tree affect the generated circuit, all of the Python code inside Torii control structures is always evaluated in the order in which it appears in the program. This can be observed through Python code with side effects, such as <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a>:</p>
+<p>Because all branches of a decision tree affect the generated circuit, all of the Python code inside Torii control structures is always evaluated in the order in which it appears in the program. This can be observed through Python code with side effects, such as <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">If</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
     <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#print" title="print"><span class="nb">print</span></a><span class="p">(</span><span class="s1">'inside `If`'</span><span class="p">)</span>
@@ -1194,7 +1194,7 @@
 <aside class="footnote brackets" id="id14" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a href="#id11" role="doc-backlink">1</a>,<a href="#id12" role="doc-backlink">2</a>)</span>
-<p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#all" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">all()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">any()</span></code></a> function to the value viewed as a collection of bits.</p>
+<p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#all" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">all()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">any()</span></code></a> function to the value viewed as a collection of bits.</p>
 </aside>
 <aside class="footnote brackets" id="id15" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a href="#id13" role="doc-backlink">5</a><span class="fn-bracket">]</span></span>
@@ -1324,7 +1324,7 @@
 </div>
 </aside>
 </div>
-</div><script src="../_static/documentation_options.js?v=ae54f55f"></script>
+</div><script src="../_static/documentation_options.js?v=9996bd02"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
