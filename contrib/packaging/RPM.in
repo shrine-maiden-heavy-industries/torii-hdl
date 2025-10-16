@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: BSD-2-Clause
+# Maintainer: Aki-nyan <aur@catgirl.link>
+
+Name: python-%{srcname}
+Version: %{_version}
+Release: 1%{?dist}
+Summary: A Python-based HDL and framework for silicon-based witchcraft
+License: BSD-2-Clause
+Source0: %{pypi_source}
+BuildArch: noarch
+BuildRequires: python3-devel python3-setuptools
+Requires: python3
+
+%description
+A Python-based HDL and framework for silicon-based witchcraft

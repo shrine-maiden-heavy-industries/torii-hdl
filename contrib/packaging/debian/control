@@ -1,0 +1,10 @@
+Package: torii
+Maintainer: Aki-nyan <aur@catgirl.link>
+Section: devel
+Priority: optional
+Standards-Version: 4.7.0
+Architecture: any
+Version: @TORII_VERSION@
+Description: A Python-based HDL and framework for silicon-based witchcraft
+X-Python3-Version: >= 3.11
+Depends: python3 (>= 3.11)
