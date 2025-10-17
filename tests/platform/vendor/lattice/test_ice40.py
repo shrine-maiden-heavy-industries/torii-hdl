@@ -16,6 +16,19 @@ def synp_icecube2_toolchain_test(func):
 class iCE40ToolchainTests(ToriiToolchainTestCase[ICE40Platform]):
 	TOOLCHAINS = ('IceStorm', 'LSE-iCECube2', 'Synplify-iCECube2')
 
+	class ICE40TestPlatform(ICE40Platform):
+		device  = ''
+		package = ''
+
+		def __init__(self, *, toolchain, device, package) -> None:
+			self.device  = device
+			self.package = package
+
+			super().__init__(toolchain = toolchain)
+
+		resources = []
+		connectors = []
+
 	@ToriiToolchainTestCase.toolchain_test()
 	def test_dummy(self) -> None:
 		self.assertTrue(True)
