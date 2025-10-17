@@ -13,6 +13,19 @@ def gowin_toolchain_test(func):
 class GowinToolchainTests(ToriiToolchainTestCase[GowinPlatform]):
 	TOOLCHAINS = ('Apicula', 'Gowin')
 
+	class GowinTestPlatform(GowinPlatform):
+		part   = ''
+		family = ''
+
+		def __init__(self, *, toolchain, part, family) -> None:
+			self.part   = part
+			self.family = family
+
+			super().__init__(toolchain = toolchain)
+
+		resources = []
+		connectors = []
+
 	@ToriiToolchainTestCase.toolchain_test()
 	def test_dummy(self) -> None:
 		self.assertTrue(True)

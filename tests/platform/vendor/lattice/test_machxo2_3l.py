@@ -13,6 +13,21 @@ def diamond_toolchain_test(func):
 class MachXO2Or3LToolchainTests(ToriiToolchainTestCase[MachXO2Or3LPlatform]):
 	TOOLCHAINS = ('Trellis', 'Diamond')
 
+	class MachXO2Or3LTestPlatform(MachXO2Or3LPlatform):
+		device  = ''
+		package = ''
+		speed   = ''
+
+		def __init__(self, *, toolchain, device, package, speed) -> None:
+			self.device  = device
+			self.package = package
+			self.speed   = speed
+
+			super().__init__(toolchain = toolchain)
+
+		resources = []
+		connectors = []
+
 	@ToriiToolchainTestCase.toolchain_test()
 	def test_dummy(self) -> None:
 		self.assertTrue(True)

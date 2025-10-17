@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing import Literal
 from unittest                           import TestCase
 
 from torii.hdl                          import Instance, Elaboratable, Module
 from torii.build.res                    import Resource, Subsignal, DiffPairs, Pins, Attrs
 from torii.platform.vendor.lattice.ecp5 import ECP5Platform
 
-from ..                                 import ToriiToolchainTestCase, DUTCounter
+from ..                                 import ToriiToolchainTestCase
 
 class TestPlatform(ECP5Platform):
 	toolchain = 'Trellis'
@@ -349,6 +348,21 @@ def diamond_toolchain_test(func):
 
 class ECP5ToolchainTests(ToriiToolchainTestCase[ECP5Platform]):
 	TOOLCHAINS = ('Trellis', 'Diamond')
+
+	class ECP5TestPlatform(ECP5Platform):
+		device  = ''
+		package = ''
+		speed   = ''
+
+		def __init__(self, *, toolchain, device, package, speed) -> None:
+			self.device  = device
+			self.package = package
+			self.speed   = speed
+
+			super().__init__(toolchain = toolchain)
+
+		resources = []
+		connectors = []
 
 	@ToriiToolchainTestCase.toolchain_test()
 	def test_dummy(self) -> None:

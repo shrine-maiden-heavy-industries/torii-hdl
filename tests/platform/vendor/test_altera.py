@@ -13,6 +13,21 @@ def quartus_toolchain_test(func):
 class AlteraToolchainTests(ToriiToolchainTestCase[AlteraPlatform]):
 	TOOLCHAINS = ('Mistral', 'Quartus')
 
+	class AlteraTestPlatform(AlteraPlatform):
+		device  = ''
+		package = ''
+		speed   = ''
+
+		def __init__(self, *, toolchain, device, package, speed) -> None:
+			self.device  = device
+			self.package = package
+			self.speed   = speed
+
+			super().__init__(toolchain = toolchain)
+
+		resources = []
+		connectors = []
+
 	@ToriiToolchainTestCase.toolchain_test()
 	def test_dummy(self) -> None:
 		self.assertTrue(True)
