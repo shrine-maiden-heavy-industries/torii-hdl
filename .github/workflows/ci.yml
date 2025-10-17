@@ -77,6 +77,8 @@ jobs:
         allow-failure:
          - false
         include:
+          - python-version: '3.15-dev'
+            allow-failure: true
           - python-version: 'pypy3.11'
             allow-failure: true
 
