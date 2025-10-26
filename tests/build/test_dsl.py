@@ -295,6 +295,14 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		):
 			Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
 
+	def test_duplicated_names(self):
+		with self.assertRaisesRegex(
+			NameError,
+			r'^Attempted to add subsignal `\(subsignal bar \(pins io B\)\)` to `foo` but a subsignal with that'
+			r' name already exists.$'
+		):
+			Subsignal('foo', Subsignal('bar', Pins('A')), Subsignal('bar', Pins('B')))
+
 class ResourceTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
 		r = Resource(

@@ -238,6 +238,8 @@ class Subsignal:
 		self.attrs                 = Attrs()
 		self.clock: Clock | None   = None
 
+		_subsig_names = set[str]()
+
 		if not args:
 			raise ValueError('Missing I/O constraints')
 		for arg in args:
@@ -252,6 +254,13 @@ class Subsignal:
 
 			elif isinstance(arg, Subsignal):
 				if not self.ios or isinstance(self.ios[-1], Subsignal):
+					if arg.name in _subsig_names:
+						raise NameError(
+							f'Attempted to add subsignal `{arg!r}` to `{self.name}` but a subsignal with that name'
+							' already exists.'
+						)
+
+					_subsig_names.add(arg.name)
 					self.ios.append(arg)
 				else:
 					raise TypeError(
