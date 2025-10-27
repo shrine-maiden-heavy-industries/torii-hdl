@@ -107,10 +107,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		return [] # Connectors are very rarely used, so make declaring them optional
 
-	default_clk    = None
+	default_clk: str | None = None
 	''' .. todo:: Document Me '''
 
-	default_rst    = None
+	default_rst: str | None = None
 	''' ..todo:: Document Me '''
 
 	@property
