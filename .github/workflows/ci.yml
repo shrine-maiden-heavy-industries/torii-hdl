@@ -166,17 +166,17 @@ jobs:
           sudo apt-get install klayout magic
           python -m pip install --user --upgrade pip setuptools wheel setuptools_scm nox volare
 
+      - name: 'Checkout Torii'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: 'Checkout OpenLANE'
         uses: actions/checkout@v4
         with:
           repository: 'The-OpenROAD-Project/OpenLane'
           ref: '2023.06.22'
           path: 'openlane'
-          fetch-depth: 1
-
-      - name: 'Checkout Torii'
-        uses: actions/checkout@v4
-        with:
           fetch-depth: 1
 
       - name: 'Setup PDK / OpenLane'
