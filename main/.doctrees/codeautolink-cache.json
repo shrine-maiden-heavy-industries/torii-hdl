@@ -968,7 +968,7 @@
   "api/hdl/rec": [],
   "api/hdl/time": [
     {
-      "source": ".. code-block:: python\n        >>> 1 * GHz\n        <Frequency: 1GHz>\n        >>> GHz(5)\n        <Frequency: 5GHz>",
+      "source": ">>> 1 * GHz\n<Frequency: 1GHz>\n>>> GHz(5)\n<Frequency: 5GHz>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -978,10 +978,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * MHz\n        <Frequency: 1MHz>\n        >>> MHz(5)\n        <Frequency: 5MHz>",
+      "source": ">>> 1 * MHz\n<Frequency: 1MHz>\n>>> MHz(5)\n<Frequency: 5MHz>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -992,10 +992,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * kHz\n        <Frequency: 1kHz>\n        >>> kHz(5)\n        <Frequency: 5kHz>",
+      "source": ">>> 1 * kHz\n<Frequency: 1kHz>\n>>> kHz(5)\n<Frequency: 5kHz>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1007,10 +1007,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * Hz\n        <Frequency: 1Hz>\n        >>> Hz(5)\n        <Frequency: 5Hz>",
+      "source": ">>> 1 * Hz\n<Frequency: 1Hz>\n>>> Hz(5)\n<Frequency: 5Hz>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1023,10 +1023,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * s\n        <Period: 1s>\n        >>> s(5)\n        <Period: 5s>",
+      "source": ">>> 1 * s\n<Period: 1s>\n>>> s(5)\n<Period: 5s>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1040,10 +1040,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * ms\n        <Period: 1ms>\n        >>> ms(5)\n        <Period: 5ms>",
+      "source": ">>> 1 * ms\n<Period: 1ms>\n>>> ms(5)\n<Period: 5ms>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1058,10 +1058,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * us\n        <Period: 1us>\n        >>> us(5)\n        <Period: 5us>",
+      "source": ">>> 1 * us\n<Period: 1us>\n>>> us(5)\n<Period: 5us>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1077,10 +1077,10 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     },
     {
-      "source": ".. code-block:: python\n        >>> 1 * ns\n        <Period: 1ns>\n        >>> ns(5)\n        <Period: 5ns>",
+      "source": ">>> 1 * ns\n<Period: 1ns>\n>>> ns(5)\n<Period: 5ns>",
       "names": [],
       "example": {
         "document": "api/hdl/time",
@@ -1097,7 +1097,7 @@
           "Example"
         ]
       },
-      "doc_lineno": null
+      "doc_lineno": 8
     }
   ],
   "api/hdl/xfrm": [
