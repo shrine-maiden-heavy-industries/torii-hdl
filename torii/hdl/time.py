@@ -424,7 +424,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * EHz
 	<Frequency: 1EHz>
 	>>> EHz(5)
@@ -444,7 +445,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * PHz
 	<Frequency: 1PHz>
 	>>> PHz(5)
@@ -464,7 +466,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * THz
 	<Frequency: 1THz>
 	>>> THz(5)
@@ -480,7 +483,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * GHz
 	<Frequency: 1GHz>
 	>>> GHz(5)
@@ -496,7 +500,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * MHz
 	<Frequency: 1MHz>
 	>>> MHz(5)
@@ -512,7 +517,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * kHz
 	<Frequency: 1kHz>
 	>>> kHz(5)
@@ -528,7 +534,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * hHz
 	<Frequency: 100Hz>
 	>>> hHz(5)
@@ -539,6 +546,7 @@ Hint
 For readability, consider using the standard Hertz unit.
 
 .. code-block:: python
+
 	>>> # Not Recommended
 	>>> 1 * hHz
 	<Period: 100Hz>
@@ -560,7 +568,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * DHz
 	<Frequency: 10Hz>
 	>>> DHz(5)
@@ -570,7 +579,8 @@ Hint
 ----
 For readability, consider using the standard Hertz unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * DHz
 	<Period: 10Hz>
@@ -592,7 +602,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Hz
 	<Frequency: 1Hz>
 	>>> Hz(5)
@@ -608,7 +619,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * dHz
 	<Frequency: 10mHz>
 	>>> dHz(5)
@@ -618,7 +630,8 @@ Hint
 ----
 For readability, consider using the standard Hertz unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * dHz
 	<Period: 10mHz>
@@ -640,7 +653,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * cHz
 	<Frequency: 100mHz>
 	>>> cHz(5)
@@ -650,7 +664,8 @@ Hint
 ----
 For readability, consider using the standard Hertz unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * cHz
 	<Period: 100mHz>
@@ -672,7 +687,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * mHz
 	<Frequency: 1mHz>
 	>>> mHz(5)
@@ -692,7 +708,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * uHz
 	<Frequency: 1uHz>
 	>>> uHz(5)
@@ -712,7 +729,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * nHz
 	<Frequency: 1nHz>
 	>>> nHz(5)
@@ -732,7 +750,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * pHz
 	<Frequency: 1pHz>
 	>>> pHz(5)
@@ -752,7 +771,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * fHz
 	<Frequency: 1fHz>
 	>>> fHz(5)
@@ -772,7 +792,8 @@ more information on frequency units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * aHz
 	<Frequency: 1aHz>
 	>>> aHz(5)
@@ -794,7 +815,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Es
 	<Period: 1Es>
 	>>> Es(5)
@@ -814,7 +836,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Ps
 	<Period: 1Ps>
 	>>> Ps(5)
@@ -834,7 +857,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Ts
 	<Period: 1Ts>
 	>>> Ts(5)
@@ -854,7 +878,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Gs
 	<Period: 1Gs>
 	>>> Gs(5)
@@ -874,7 +899,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * Ms
 	<Period: 1Ms>
 	>>> Ms(5)
@@ -894,7 +920,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * ks
 	<Period: 1ks>
 	>>> ks(5)
@@ -910,7 +937,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * hs
 	<Period: 100s>
 	>>> hs(5)
@@ -920,7 +948,8 @@ Hint
 ----
 For readability, consider using the standard Second unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * hs
 	<Period: 100s>
@@ -940,10 +969,10 @@ Unit constant for Decaseconds (10^1 Seconds).
 See the documentation for :py:class:`Period <torii.hdl.time.Period>` for
 more information on period units.
 
-
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * das
 	<Period: 10s>
 	>>> das(5)
@@ -953,7 +982,8 @@ Hint
 ----
 For readability, consider using the standard Second unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * das
 	<Period: 10s>
@@ -975,7 +1005,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * s
 	<Period: 1s>
 	>>> s(5)
@@ -991,7 +1022,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * ds
 	<Period: 100ms>
 	>>> ds(5)
@@ -1001,7 +1033,8 @@ Hint
 ----
 For readability, consider using the standard Second unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * ds
 	<Period: 100ms>
@@ -1023,7 +1056,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * cs
 	<Period: 10ms>
 	>>> cs(5)
@@ -1033,7 +1067,8 @@ Hint
 ----
 For readability, consider using the standard Second unit.
 
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> # Not Recommended
 	>>> 1 * cs
 	<Period: 10ms>
@@ -1055,7 +1090,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * ms
 	<Period: 1ms>
 	>>> ms(5)
@@ -1071,7 +1107,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * us
 	<Period: 1us>
 	>>> us(5)
@@ -1087,7 +1124,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * ns
 	<Period: 1ns>
 	>>> ns(5)
@@ -1103,7 +1141,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * ps
 	<Period: 1ps>
 	>>> ps(5)
@@ -1119,7 +1158,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * fs
 	<Period: 1fs>
 	>>> fs(5)
@@ -1135,7 +1175,8 @@ more information on period units.
 
 Example
 -------
-.. code-block:: python
+.. code-block:: pycon
+
 	>>> 1 * _as
 	<Period: 1as>
 	>>> _as(5)
