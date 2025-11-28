@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+import warnings
 from collections     import OrderedDict
 
 from torii.build.dsl import (
 	Attrs, Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Resource, Subsignal,
 )
+from torii.hdl.time  import Period, Frequency, MHz
 
 from ..utils         import ToriiTestSuiteCase
 
@@ -170,28 +172,41 @@ class AttrsTestCase(ToriiTestSuiteCase):
 
 class ClockTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
-		c = Clock(1_000_000)
-		self.assertEqual(c.frequency, 1e6)
-		self.assertEqual(c.period, 1e-6)
-		self.assertEqual(repr(c), '(clock 1000000.0)')
+		c = Clock(1 * MHz)
+		self.assertEqual(c.frequency, Frequency(1e6))
+		self.assertEqual(c.period, Period(1e-6))
+		self.assertEqual(repr(c), '(clock (frequency 1MHz))')
 
+	# TODO(aki): Removed once `Clock.from_khz` is removed
 	def test_from_khz(self):
-		c = Clock.from_khz(20)
-		self.assertEqual(c.frequency, 20e3)
-		self.assertEqual(c.period, 50e-6)
-		self.assertEqual(repr(c), '(clock 20000.0)')
+		with warnings.catch_warnings():
+			warnings.simplefilter('ignore', DeprecationWarning)
 
+			c = Clock.from_khz(20)
+			self.assertEqual(c.frequency, Frequency(20e3))
+			self.assertEqual(c.period, Period(50e-6))
+			self.assertEqual(repr(c), '(clock (frequency 20kHz))')
+
+	# TODO(aki): Removed once `Clock.from_mhz` is removed
 	def test_from_mhz(self):
-		c = Clock.from_mhz(300)
-		self.assertEqual(c.frequency, 300e6)
-		self.assertAlmostEqual(c.period, 300e-11)
-		self.assertEqual(repr(c), '(clock 300000000.0)')
+		with warnings.catch_warnings():
+			warnings.simplefilter('ignore', DeprecationWarning)
 
+			c = Clock.from_mhz(300)
+			self.assertEqual(c.frequency, Frequency(300e6))
+			# HACK(aki): Because floats are stupid we need to do this hack
+			self.assertAlmostEqual(c.period._value, Period(33333e-13)._value)
+			self.assertEqual(repr(c), '(clock (frequency 300MHz))')
+
+	# TODO(aki): Removed once `Clock.from_ghz` is removed
 	def test_from_ghz(self):
-		c = Clock.from_ghz(8)
-		self.assertEqual(c.frequency, 8e9)
-		self.assertAlmostEqual(c.period, 8e-15)
-		self.assertEqual(repr(c), '(clock 8000000000.0)')
+		with warnings.catch_warnings():
+			warnings.simplefilter('ignore', DeprecationWarning)
+
+			c = Clock.from_ghz(8)
+			self.assertEqual(c.frequency, Frequency(8e9))
+			self.assertEqual(c.period, Period(125e-12))
+			self.assertEqual(repr(c), '(clock (frequency 8GHz))')
 
 class SubsignalTestCase(ToriiTestSuiteCase):
 	def test_basic_pins(self):
@@ -236,8 +251,8 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s.attrs, {'SLEW': 'FAST', 'PULLUP': '1'})
 
 	def test_clock(self):
-		s = Subsignal('a', Pins('A0'), Clock(1e6))
-		self.assertEqual(s.clock.frequency, 1e6)
+		s = Subsignal('a', Pins('A0'), Clock(1 * MHz))
+		self.assertEqual(s.clock.frequency, Frequency(1e6))
 
 	def test_wrong_empty_io(self):
 		with self.assertRaisesRegex(ValueError, r'^Missing I\/O constraints$'):
@@ -286,14 +301,14 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 				r'\(subsignal b \(pins io A0\)\)$'
 			)
 		):
-			Subsignal('a', Subsignal('b', Pins('A0')), Clock(1e6))
+			Subsignal('a', Subsignal('b', Pins('A0')), Clock(1 * MHz))
 
 	def test_wrong_clock_many(self):
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Clock constraint can be applied only once$'
 		):
-			Subsignal('a', Pins('A0'), Clock(1e6), Clock(1e7))
+			Subsignal('a', Pins('A0'), Clock(1 * MHz), Clock(10 * MHz))
 
 	def test_duplicated_names(self):
 		with self.assertRaisesRegex(

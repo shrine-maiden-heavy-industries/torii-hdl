@@ -5,6 +5,7 @@ from torii.build.dsl import Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN
 from torii.build.res import Resource, ResourceError, ResourceManager
 from torii.hdl.ast   import Signal
 from torii.hdl.rec   import Record
+from torii.hdl.time  import Frequency, MHz, kHz
 from torii.lib.io    import Pin
 
 from ..utils         import ToriiTestSuiteCase
@@ -12,8 +13,8 @@ from ..utils         import ToriiTestSuiteCase
 class ResourceManagerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
 		self.resources = [
-			Resource('clk100', 0, DiffPairs('H1', 'H2', dir = 'i'), Clock(100e6)),
-			Resource('clk50', 0, Pins('K1'), Clock(50e6)),
+			Resource('clk100', 0, DiffPairs('H1', 'H2', dir = 'i'), Clock(100 * MHz)),
+			Resource('clk50', 0, Pins('K1'), Clock(50 * MHz)),
 			Resource('user_led', 0, Pins('A0', dir = 'o')),
 			Resource(
 				'i2c', 0,
@@ -220,15 +221,15 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		clk50 = self.cm.request('clk50', 0, dir = 'i')
 		clk100_port_p, clk100_port_n, clk50_port = self.cm.iter_ports()
 		self.assertEqual(list(self.cm.iter_clock_constraints()), [
-			(clk100.i, clk100_port_p, 100e6),
-			(clk50.i, clk50_port, 50e6)
+			(clk100.i, clk100_port_p, Frequency(100e6)),
+			(clk50.i, clk50_port, Frequency(50e6))
 		])
 
 	def test_add_clock(self):
 		i2c = self.cm.request('i2c')
-		self.cm.add_clock_constraint(i2c.scl.o, 100e3)
+		self.cm.add_clock_constraint(i2c.scl.o, 100 * kHz)
 		self.assertEqual(list(self.cm.iter_clock_constraints()), [
-			(i2c.scl.o, None, 100e3)
+			(i2c.scl.o, None, Frequency(100e3))
 		])
 
 	def test_wrong_resources(self):

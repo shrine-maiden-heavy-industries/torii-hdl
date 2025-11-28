@@ -5,9 +5,10 @@ from __future__      import annotations
 from collections     import OrderedDict
 from collections.abc import Callable, Generator, Iterator, Sequence
 from typing          import TypeAlias
+from warnings        import warn
 
 from .._typing       import IODirectionOE
-from ..util.units    import GIGA, KILO, MEGA
+from ..hdl.time      import Period, Frequency, GHz, kHz, MHz
 
 __all__ = (
 	'Attrs',
@@ -154,19 +155,45 @@ class Attrs(OrderedDict[str, int | str | Callable]):
 
 class Clock:
 	'''
-	.. todo:: Document Me
+	Specify that this subsignal is a clock with a given frequency.
+
+	Attributes
+	----------
+	frequency: torii.hdl.time.Frequency
+		The frequency of this clock in Hertz.
+
+	period: torii.hdl.time.Period
+		The period of this clock in nanoseconds.
+
+	Parameters
+	----------
+	frequency: torii.hdl.time.Frequency
+		The frequency of this clock in Hertz.
 	'''
 
-	def __init__(self, frequency: float | int) -> None:
-		if not isinstance(frequency, (float, int)):
-			raise TypeError('Clock frequency must be a number')
-
-		self.frequency = float(frequency)
+	def __init__(self, frequency: Frequency | float | int) -> None:
+		if isinstance(frequency, (float, int)):
+			warn(
+				f'Please use a `torii.hdl.time.Frequency` rather than a {type(frequency)} when specifying Clocks',
+				DeprecationWarning,
+				stacklevel = 2
+			)
+			self.frequency = Frequency(float(frequency))
+		elif isinstance(frequency, Frequency):
+			self.frequency = frequency
+		else:
+			raise TypeError(
+				f'Clock frequency must be a `torii.hdl.time.Frequency`, a `float` or an `int`, not an {type(frequency)}'
+			)
 
 	@classmethod
 	def from_khz(cls: type['Clock'], frequency: float | int) -> 'Clock':
 		'''
 		Create a new Clock resource with the given frequency in kHz.
+
+		Warning
+		-------
+		This method is deprecated.
 
 		Parameters
 		----------
@@ -178,12 +205,23 @@ class Clock:
 		Clock
 			An new clock at the given frequency in kilohertz.
 		'''
-		return Clock(frequency * KILO)
+
+		warn(
+			'Please use the `Clock` constructor with a `torii.hdl.time.Frequency` over this method.',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+
+		return Clock(frequency * kHz)
 
 	@classmethod
 	def from_mhz(cls: type['Clock'], frequency: float | int) -> 'Clock':
 		'''
 		Create a new Clock resource with the given frequency in MHz.
+
+		Warning
+		-------
+		This method is deprecated.
 
 		Parameters
 		----------
@@ -195,12 +233,23 @@ class Clock:
 		Clock
 			A new clock at the given frequency in megahertz.
 		'''
-		return Clock(frequency * MEGA)
+
+		warn(
+			'Please use the `Clock` constructor with a `torii.hdl.time.Frequency` over this method.',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+
+		return Clock(frequency * MHz)
 
 	@classmethod
 	def from_ghz(cls: type['Clock'], frequency: float | int) -> 'Clock':
 		'''
 		Create a new Clock resource with the given frequency in GHz.
+
+		Warning
+		-------
+		This method is deprecated.
 
 		Parameters
 		----------
@@ -212,18 +261,25 @@ class Clock:
 		Clock
 			A new clock at the given frequency in gigahertz.
 		'''
-		return Clock(frequency * GIGA)
+
+		warn(
+			'Please use the `Clock` constructor with a `torii.hdl.time.Frequency` over this method.',
+			DeprecationWarning,
+			stacklevel = 2
+		)
+
+		return Clock(frequency * GHz)
 
 	@property
-	def period(self) -> float:
+	def period(self) -> Period:
 		'''
 		.. todo:: Document Me
 		'''
 
-		return 1 / self.frequency
+		return self.frequency.period
 
 	def __repr__(self) -> str:
-		return f'(clock {self.frequency})'
+		return f'(clock {self.frequency!r})'
 
 SubsigArgT: TypeAlias = 'Pins | DiffPairs | Subsignal | Attrs | Clock'
 
