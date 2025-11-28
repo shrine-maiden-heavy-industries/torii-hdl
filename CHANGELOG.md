@@ -107,6 +107,7 @@ Unreleased template stuff
   - Adding a `DCUA` resource directly forwards the IO pins as `i_p`/`i_n` for RX and `o_p`/`o_n` for TX signals.
 - Fixed `LEDResources`/`ButtonResources`/`SwitchResources` so they now behave as expected an no longer drop the resource name or number params.
 - Fixed undetected name collisions in `torii.build.dsl.Subsignal` when you added two or more `Subsignal`'s with the same name.
+- Fixed issue where the Lattice iCECube2 toolchain build scripts were not generating correctly meaning the environment variable override was broken and ignored.
 
 ## [0.8.1] - 2025-08-03
 
