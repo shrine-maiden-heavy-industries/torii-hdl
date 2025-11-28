@@ -202,7 +202,7 @@ class Frequency:
 			return False
 
 	def __repr__(self) -> str:
-		return f'<Frequency: {self}>'
+		return f'(frequency {self})'
 
 	def __str__(self) -> str:
 		return self.__format__('')
@@ -336,7 +336,7 @@ class Period:
 			return False
 
 	def __repr__(self) -> str:
-		return f'<Period: {self}>'
+		return f'(period {self})'
 
 	def __str__(self) -> str:
 		return self.__format__('')
@@ -427,9 +427,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * EHz
-	<Frequency: 1EHz>
+	(frequency 1EHz)
 	>>> EHz(5)
-	<Frequency: 5EHz>
+	(frequency 5EHz)
 
 Warning
 -------
@@ -448,9 +448,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * PHz
-	<Frequency: 1PHz>
+	(frequency 1PHz)
 	>>> PHz(5)
-	<Frequency: 5PHz>
+	(frequency 5PHz)
 
 Warning
 -------
@@ -469,9 +469,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * THz
-	<Frequency: 1THz>
+	(frequency 1THz)
 	>>> THz(5)
-	<Frequency: 5THz>
+	(frequency 5THz)
 '''
 
 GHz: Final = _UnitHelper(GIGA, Frequency)
@@ -486,9 +486,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * GHz
-	<Frequency: 1GHz>
+	(frequency 1GHz)
 	>>> GHz(5)
-	<Frequency: 5GHz>
+	(frequency 5GHz)
 '''
 
 MHz: Final = _UnitHelper(MEGA, Frequency)
@@ -503,9 +503,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * MHz
-	<Frequency: 1MHz>
+	(frequency 1MHz)
 	>>> MHz(5)
-	<Frequency: 5MHz>
+	(frequency 5MHz)
 '''
 
 kHz: Final = _UnitHelper(KILO, Frequency)
@@ -520,9 +520,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * kHz
-	<Frequency: 1kHz>
+	(frequency 1kHz)
 	>>> kHz(5)
-	<Frequency: 5kHz>
+	(frequency 5kHz)
 '''
 
 hHz: Final = _UnitHelper(HECTO, Frequency)
@@ -537,9 +537,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * hHz
-	<Frequency: 100Hz>
+	(frequency 100Hz)
 	>>> hHz(5)
-	<Frequency: 500Hz>
+	(frequency 500Hz)
 
 Hint
 ----
@@ -549,10 +549,10 @@ For readability, consider using the standard Hertz unit.
 
 	>>> # Not Recommended
 	>>> 1 * hHz
-	<Period: 100Hz>
+	(frequency 100Hz)
 	>>> # Use this instead
 	>>> 100 * Hz
-	<Period: 100Hz>
+	(frequency 100Hz)
 
 Warning
 -------
@@ -571,9 +571,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * DHz
-	<Frequency: 10Hz>
+	(frequency 10Hz)
 	>>> DHz(5)
-	<Frequency: 50Hz>
+	(frequency 50Hz)
 
 Hint
 ----
@@ -583,10 +583,10 @@ For readability, consider using the standard Hertz unit.
 
 	>>> # Not Recommended
 	>>> 1 * DHz
-	<Period: 10Hz>
+	(frequency 10Hz)
 	>>> # Use this instead
 	>>> 10 * Hz
-	<Period: 10Hz>
+	(frequency 10Hz)
 
 Warning
 -------
@@ -605,9 +605,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Hz
-	<Frequency: 1Hz>
+	(frequency 1Hz)
 	>>> Hz(5)
-	<Frequency: 5Hz>
+	(frequency 5Hz)
 '''
 
 dHz: Final = _UnitHelper(DECI, Frequency)
@@ -622,9 +622,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * dHz
-	<Frequency: 10mHz>
+	(frequency 10mHz)
 	>>> dHz(5)
-	<Frequency: 50mHz>
+	(frequency 50mHz)
 
 Hint
 ----
@@ -634,10 +634,10 @@ For readability, consider using the standard Hertz unit.
 
 	>>> # Not Recommended
 	>>> 1 * dHz
-	<Period: 10mHz>
+	(frequency 10mHz)
 	>>> # Use this instead
 	>>> 0.01 * Hz
-	<Period: 10mHz>
+	(frequency 10mHz)
 
 Warning
 -------
@@ -656,9 +656,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * cHz
-	<Frequency: 100mHz>
+	(frequency 100mHz)
 	>>> cHz(5)
-	<Frequency: 500mHz>
+	(frequency 500mHz)
 
 Hint
 ----
@@ -668,10 +668,10 @@ For readability, consider using the standard Hertz unit.
 
 	>>> # Not Recommended
 	>>> 1 * cHz
-	<Period: 100mHz>
+	(frequency 100mHz)
 	>>> # Use this instead
 	>>> 0.001 * Hz
-	<Period: 100mHz>
+	(frequency 100mHz)
 
 Warning
 -------
@@ -690,9 +690,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * mHz
-	<Frequency: 1mHz>
+	(frequency 1mHz)
 	>>> mHz(5)
-	<Frequency: 5mHz>
+	(frequency 5mHz)
 
 Warning
 -------
@@ -711,9 +711,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * uHz
-	<Frequency: 1uHz>
+	(frequency 1uHz)
 	>>> uHz(5)
-	<Frequency: 5uHz>
+	(frequency 5uHz)
 
 Warning
 -------
@@ -732,9 +732,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * nHz
-	<Frequency: 1nHz>
+	(frequency 1nHz)
 	>>> nHz(5)
-	<Frequency: 5nHz>
+	(frequency 5nHz)
 
 Warning
 -------
@@ -753,9 +753,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * pHz
-	<Frequency: 1pHz>
+	(frequency 1pHz)
 	>>> pHz(5)
-	<Frequency: 5pHz>
+	(frequency 5pHz)
 
 Warning
 -------
@@ -774,9 +774,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * fHz
-	<Frequency: 1fHz>
+	(frequency 1fHz)
 	>>> fHz(5)
-	<Frequency: 5fHz>
+	(frequency 5fHz)
 
 Warning
 -------
@@ -795,9 +795,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * aHz
-	<Frequency: 1aHz>
+	(frequency 1aHz)
 	>>> aHz(5)
-	<Frequency: 5aHz>
+	(frequency 5aHz)
 
 Warning
 -------
@@ -818,9 +818,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Es
-	<Period: 1Es>
+	(period 1Es)
 	>>> Es(5)
-	<Period: 5Es>
+	(period 5Es)
 
 Warning
 -------
@@ -839,9 +839,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Ps
-	<Period: 1Ps>
+	(period 1Ps)
 	>>> Ps(5)
-	<Period: 5Ps>
+	(period 5Ps)
 
 Warning
 -------
@@ -860,9 +860,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Ts
-	<Period: 1Ts>
+	(period 1Ts)
 	>>> Ts(5)
-	<Period: 5Ts>
+	(period 5Ts)
 
 Warning
 -------
@@ -881,9 +881,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Gs
-	<Period: 1Gs>
+	(period 1Gs)
 	>>> Gs(5)
-	<Period: 5Gs>
+	(period 5Gs)
 
 Warning
 -------
@@ -902,9 +902,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * Ms
-	<Period: 1Ms>
+	(period 1Ms)
 	>>> Ms(5)
-	<Period: 5Ms>
+	(period 5Ms)
 
 Warning
 -------
@@ -923,9 +923,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * ks
-	<Period: 1ks>
+	(period 1ks)
 	>>> ks(5)
-	<Period: 5ks>
+	(period 5ks)
 '''
 
 hs: Final = _UnitHelper(HECTO, Period)
@@ -940,9 +940,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * hs
-	<Period: 100s>
+	(period 100s)
 	>>> hs(5)
-	<Period: 500s>
+	(period 500s)
 
 Hint
 ----
@@ -952,10 +952,10 @@ For readability, consider using the standard Second unit.
 
 	>>> # Not Recommended
 	>>> 1 * hs
-	<Period: 100s>
+	(period 100s)
 	>>> # Use this instead
 	>>> 100 * s
-	<Period: 100s>
+	(period 100s)
 
 Warning
 -------
@@ -974,9 +974,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * das
-	<Period: 10s>
+	(period 10s)
 	>>> das(5)
-	<Period: 50s>
+	(period 50s)
 
 Hint
 ----
@@ -986,10 +986,10 @@ For readability, consider using the standard Second unit.
 
 	>>> # Not Recommended
 	>>> 1 * das
-	<Period: 10s>
+	(period 10s)
 	>>> # Use this instead
 	>>> 10 * s
-	<Period: 10s>
+	(period 10s)
 
 Warning
 -------
@@ -1008,9 +1008,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * s
-	<Period: 1s>
+	(period 1s)
 	>>> s(5)
-	<Period: 5s>
+	(period 5s)
 '''
 
 ds: Final = _UnitHelper(DECI, Period)
@@ -1025,9 +1025,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * ds
-	<Period: 100ms>
+	(period 100ms)
 	>>> ds(5)
-	<Period: 500ms>
+	(period 500ms)
 
 Hint
 ----
@@ -1037,10 +1037,10 @@ For readability, consider using the standard Second unit.
 
 	>>> # Not Recommended
 	>>> 1 * ds
-	<Period: 100ms>
+	(period 100ms)
 	>>> # Use this instead
 	>>> 0.1 * s
-	<Period: 100ms>
+	(period 100ms)
 
 Warning
 -------
@@ -1059,9 +1059,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * cs
-	<Period: 10ms>
+	(period 10ms)
 	>>> cs(5)
-	<Period: 50ms>
+	(period 50ms)
 
 Hint
 ----
@@ -1071,10 +1071,10 @@ For readability, consider using the standard Second unit.
 
 	>>> # Not Recommended
 	>>> 1 * cs
-	<Period: 10ms>
+	(period 10ms)
 	>>> # Use this instead
 	>>> 0.01 * s
-	<Period: 10ms>
+	(period 10ms)
 
 Warning
 -------
@@ -1093,9 +1093,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * ms
-	<Period: 1ms>
+	(period 1ms)
 	>>> ms(5)
-	<Period: 5ms>
+	(period 5ms)
 '''
 
 us: Final = _UnitHelper(MICRO, Period)
@@ -1110,9 +1110,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * us
-	<Period: 1us>
+	(period 1us)
 	>>> us(5)
-	<Period: 5us>
+	(period 5us)
 '''
 
 ns: Final = _UnitHelper(NANO, Period)
@@ -1127,9 +1127,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * ns
-	<Period: 1ns>
+	(period 1ns)
 	>>> ns(5)
-	<Period: 5ns>
+	(period 5ns)
 '''
 
 ps: Final = _UnitHelper(PICO, Period)
@@ -1144,9 +1144,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * ps
-	<Period: 1ps>
+	(period 1ps)
 	>>> ps(5)
-	<Period: 5ps>
+	(period 5ps)
 '''
 
 fs: Final = _UnitHelper(FEMTO, Period)
@@ -1161,9 +1161,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * fs
-	<Period: 1fs>
+	(period 1fs)
 	>>> fs(5)
-	<Period: 5fs>
+	(period 5fs)
 '''
 
 _as: Final = _UnitHelper(ATTO, Period)
@@ -1178,9 +1178,9 @@ Example
 .. code-block:: pycon
 
 	>>> 1 * _as
-	<Period: 1as>
+	(period 1as)
 	>>> _as(5)
-	<Period: 5as>
+	(period 5as)
 
 Warning
 -------
