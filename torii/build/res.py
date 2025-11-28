@@ -3,11 +3,13 @@
 from collections     import OrderedDict
 from collections.abc import Callable, Generator, Iterable
 from typing          import Literal
+from warnings        import warn
 
 from ..diagnostics   import ResourceError
 from .._typing       import IODirectionEmpty
 from ..hdl.ast       import Signal, SignalDict, Value, ValueCastable
 from ..hdl.rec       import Record
+from ..hdl.time      import Frequency
 from ..lib.io        import Pin
 from .dsl            import Attrs, Connector, DiffPairs, Pins, Resource, Subsignal
 
@@ -30,7 +32,7 @@ class ResourceManager:
 
 		# Constraint lists
 		self._ports     = list[tuple[Resource, Pin | None, Record, Attrs]]()
-		self._clocks    = SignalDict[float]()
+		self._clocks    = SignalDict[Frequency]()
 
 		self.add_resources(resources)
 		self.add_connectors(connectors)
@@ -327,26 +329,38 @@ class ResourceManager:
 				for bit, pin_name in enumerate(pin_names):
 					yield (f'{port_name}[{bit}]', pin_name, attrs)
 
-	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: Frequency | int | float) -> None:
 		'''
 		.. todo:: Document Me
 		'''
 
 		if not isinstance(clock, Signal):
 			raise TypeError(f'Object {clock!r} is not a Signal')
-		if not isinstance(frequency, (int, float)):
-			raise TypeError(f'Frequency must be a number, not {frequency!r}')
+
+		if not isinstance(frequency, (Frequency, int, float)):
+			raise TypeError(
+				f'Clock frequency must be a `torii.hdl.time.Frequency`, a `float` or an `int`, not an {type(frequency)}'
+			)
+
+		if isinstance(frequency, (float, int)):
+			warn(
+				f'Please use a `torii.hdl.time.Frequency` rather than a {type(frequency)} when specifying Clocks',
+				DeprecationWarning,
+				stacklevel = 2
+			)
+
+			frequency = Frequency(frequency)
 
 		if clock in self._clocks:
 			raise ValueError(
-				f'Cannot add clock constraint on {clock!r}, which is already constrained to {self._clocks[clock]} Hz'
+				f'Cannot add clock constraint on {clock!r}, which is already constrained to {self._clocks[clock]}'
 			)
 
 		else:
-			self._clocks[clock] = float(frequency)
+			self._clocks[clock] = frequency
 
 	def iter_clock_constraints(self) -> Generator[
-		tuple[Signal | None, Signal | None, float], None, None
+		tuple[Signal | None, Signal | None, Frequency], None, None
 	]:
 		'''
 		.. todo:: Document Me

@@ -266,11 +266,15 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_clock_signal(self):
 		with self.assertRaisesRegex(TypeError, r'^Object None is not a Signal$'):
-			self.cm.add_clock_constraint(None, 10e6)
+			self.cm.add_clock_constraint(None, 10 * MHz) # type: ignore
 
 	def test_wrong_clock_frequency(self):
-		with self.assertRaisesRegex(TypeError, r'^Frequency must be a number, not None$'):
-			self.cm.add_clock_constraint(Signal(), None)
+		with self.assertRaisesRegex(
+			TypeError,
+			r'^Clock frequency must be a `torii.hdl.time.Frequency`, a '
+			r'`float` or an `int`, not an <class \'NoneType\'>$'
+		):
+			self.cm.add_clock_constraint(Signal(), None) # type: ignore
 
 	def test_wrong_request_duplicate(self):
 		with self.assertRaisesRegex(
@@ -342,7 +346,7 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		with self.assertRaisesRegex(
 			ValueError, (
 				r'^Cannot add clock constraint on \(sig clk100_0__i\), which is already '
-				r'constrained to 100000000\.0 Hz$'
+				r'constrained to 100MHz$'
 			)
 		):
-			self.cm.add_clock_constraint(clk100.i, 1e6)
+			self.cm.add_clock_constraint(clk100.i, 1 * MHz)
