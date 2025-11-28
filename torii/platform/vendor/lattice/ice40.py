@@ -298,8 +298,14 @@ class ICE40Platform(TemplatedPlatform):
 		''',
 	}
 	_lse_icecube2_command_templates = [
-		r'''synthesis -f {{name}}_lse.prj''',
-		r'''tclsh {{name}}.tcl''',
+		r'''
+		{{invoke_tool("synthesis")}}
+			-f {{name}}_lse.prj
+		''',
+		r'''
+		{{invoke_tool("tclsh")}}
+			{{name}}.tcl
+		''',
 	]
 	_synplify_icecube2_command_templates = [
 		r'''synpwrap -prj {{name}}_syn.prj -log {{name}}_syn.log''',
