@@ -18,6 +18,7 @@ from ..hdl.cd        import ClockDomain
 from ..hdl.dsl       import Module
 from ..hdl.ir        import Elaboratable, Fragment, Instance
 from ..hdl.rec       import Record
+from ..hdl.time      import Frequency
 from ..hdl.xfrm      import DomainLowerer, SampleLowerer
 from ..lib.cdc       import ResetSynchronizer
 from ..lib.io        import Pin
@@ -140,7 +141,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		return self.lookup(self.default_clk).clock
 
 	@property
-	def default_clk_frequency(self) -> float:
+	def default_clk_frequency(self) -> Frequency:
 		'''
 		.. todo:: Document Me
 		'''
@@ -517,7 +518,7 @@ class TemplatedPlatform(Platform):
 	''' .. todo:: Document Me '''
 
 	def iter_clock_constraints(self) -> Generator[
-		tuple[str, Signal, float], None, None
+		tuple[str, Signal, Frequency], None, None
 	]:
 		'''
 		.. todo:: Document Me
