@@ -144,9 +144,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 			{% endfor %}
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
 				{% if port_signal is not none and net_signal not in platform._active_extrefs -%}
-					FREQUENCY PORT "{{port_signal.name}}" {{frequency}} HZ;
+					FREQUENCY PORT "{{port_signal.name}}" {{ '{:#Hz}'.format(frequency) }} HZ;
 				{% else -%}
-					FREQUENCY NET "{{net_signal|hierarchy(".")}}" {{frequency}} HZ;
+					FREQUENCY NET "{{net_signal|hierarchy(".")}}" {{ '{:#Hz}'.format(frequency) }} HZ;
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_preferences")|default("# (add_preferences placeholder)")}}
@@ -246,9 +246,9 @@ class MachXO2Or3LPlatform(TemplatedPlatform):
 		'{{name}}.sdc': r'''
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
 				{% if port_signal is not none -%}
-					create_clock -name {{port_signal.name|tcl_escape}} -period {{1000000000/frequency}} [get_ports {{port_signal.name|tcl_escape}}]
+					create_clock -name {{port_signal.name|tcl_escape}} -period {{frequency.period.nanoseconds}} [get_ports {{port_signal.name|tcl_escape}}]
 				{% else -%}
-					create_clock -name {{net_signal.name|tcl_escape}} -period {{1000000000/frequency}} [get_nets {{net_signal|hierarchy("/")|tcl_escape}}]
+					create_clock -name {{net_signal.name|tcl_escape}} -period {{frequency.period.nanoseconds}} [get_nets {{net_signal|hierarchy("/")|tcl_escape}}]
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
