@@ -308,8 +308,14 @@ class ICE40Platform(TemplatedPlatform):
 		''',
 	]
 	_synplify_icecube2_command_templates = [
-		r'''synpwrap -prj {{name}}_syn.prj -log {{name}}_syn.log''',
-		r'''tclsh {{name}}.tcl''',
+		r'''
+		{{invoke_tool("synpwrap")}}
+			-prj {{name}}_syn.prj -log {{name}}_syn.log
+		''',
+		r'''
+		{{invoke_tool("tclsh")}}
+			{{name}}.tcl
+		''',
 	]
 
 	# Common logic
