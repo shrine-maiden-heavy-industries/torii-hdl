@@ -132,10 +132,8 @@ class QuicklogicPlatform(TemplatedPlatform):
 			-P {{platform.package}}
 			-b {{name}}.bit
 		''',
-		# This should be `invoke_tool("symbiflow_write_openocd")`, but isn't because of a bug in
-		# the QLSymbiflow v1.3.0 toolchain release.
 		r'''
-		python3 -m quicklogic_fasm.bitstream_to_openocd
+		{{invoke_tool("symbiflow_write_openocd")}}
 			{{name}}.bit
 			{{name}}.openocd
 			--osc-freq {{platform.osc_freq}}
