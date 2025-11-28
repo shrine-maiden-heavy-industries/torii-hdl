@@ -66,6 +66,25 @@ class FrequencyTestCase(TestCase):
 		self.assertEqual(Frequency(3e15), PHz(3))
 		self.assertEqual(Frequency(2e18), EHz(2))
 
+	def test_repr(self) -> None:
+		self.assertEqual(f'{aHz(50)!r}', '(frequency 50aHz)')
+		self.assertEqual(f'{fHz(50)!r}', '(frequency 50fHz)')
+		self.assertEqual(f'{pHz(50)!r}', '(frequency 50pHz)')
+		self.assertEqual(f'{nHz(50)!r}', '(frequency 50nHz)')
+		self.assertEqual(f'{uHz(50)!r}', '(frequency 50uHz)')
+		self.assertEqual(f'{mHz(50)!r}', '(frequency 50mHz)')
+		self.assertEqual(f'{cHz(50)!r}', '(frequency 500mHz)')
+		self.assertEqual(f'{dHz(5)!r}', '(frequency 500mHz)')
+		self.assertEqual(f'{Hz(50)!r}', '(frequency 50Hz)')
+		self.assertEqual(f'{DHz(50)!r}', '(frequency 500Hz)')
+		self.assertEqual(f'{hHz(50)!r}', '(frequency 5kHz)')
+		self.assertEqual(f'{kHz(50)!r}', '(frequency 50kHz)')
+		self.assertEqual(f'{MHz(50)!r}', '(frequency 50MHz)')
+		self.assertEqual(f'{GHz(50)!r}', '(frequency 50GHz)')
+		self.assertEqual(f'{THz(50)!r}', '(frequency 50THz)')
+		self.assertEqual(f'{PHz(50)!r}', '(frequency 50PHz)')
+		self.assertEqual(f'{EHz(50)!r}', '(frequency 50EHz)')
+
 	def test_format(self) -> None:
 		self.assertEqual(f'{MHz(100)}', '100MHz')
 		self.assertEqual(f'{MHz(100):GHz}', '0.1GHz')
@@ -141,6 +160,25 @@ class PeriodTestCase(TestCase):
 		self.assertEqual(Period(4e12), Ts(4))
 		self.assertEqual(Period(3e15), Ps(3))
 		self.assertEqual(Period(2e18), Es(2))
+
+	def test_repr(self) -> None:
+		self.assertEqual(f'{_as(50)!r}', '(period 50as)')
+		self.assertEqual(f'{fs(50)!r}', '(period 50fs)')
+		self.assertEqual(f'{ps(50)!r}', '(period 50ps)')
+		self.assertEqual(f'{ns(50)!r}', '(period 50ns)')
+		self.assertEqual(f'{us(50)!r}', '(period 50us)')
+		self.assertEqual(f'{ms(50)!r}', '(period 50ms)')
+		self.assertEqual(f'{cs(50)!r}', '(period 500ms)')
+		self.assertEqual(f'{ds(5)!r}', '(period 500ms)')
+		self.assertEqual(f'{s(50)!r}', '(period 50s)')
+		self.assertEqual(f'{das(50)!r}', '(period 500s)')
+		self.assertEqual(f'{hs(50)!r}', '(period 5ks)')
+		self.assertEqual(f'{ks(50)!r}', '(period 50ks)')
+		self.assertEqual(f'{Ms(50)!r}', '(period 50Ms)')
+		self.assertEqual(f'{Gs(50)!r}', '(period 50Gs)')
+		self.assertEqual(f'{Ts(50)!r}', '(period 50Ts)')
+		self.assertEqual(f'{Ps(50)!r}', '(period 50Ps)')
+		self.assertEqual(f'{Es(50)!r}', '(period 50Es)')
 
 	def test_format(self) -> None:
 		self.assertEqual(f'{ps(100)}', '100ps')
