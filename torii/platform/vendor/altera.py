@@ -6,6 +6,7 @@ from typing          import Literal
 
 from ...build        import Attrs, Clock, PinFeature, TemplatedPlatform
 from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
+from ...hdl.time     import Frequency
 from ...lib.io       import Pin
 
 __all__ = (
@@ -152,9 +153,9 @@ class AlteraPlatform(TemplatedPlatform):
 		'{{name}}.sdc': r'''
 			{% for net_signal, port_signal, frequency in platform.iter_clock_constraints() -%}
 				{% if port_signal is not none -%}
-					create_clock -name {{port_signal.name|tcl_quote}} -period {{1000000000/frequency}} [get_ports {{port_signal.name|tcl_quote}}]
+					create_clock -name {{port_signal.name|tcl_quote}} -period {{frequency.period.nanoseconds}} [get_ports {{port_signal.name|tcl_quote}}]
 				{% else -%}
-					create_clock -name {{net_signal.name|tcl_quote}} -period {{1000000000/frequency}} [get_nets {{net_signal|hierarchy("|")|tcl_quote}}]
+					create_clock -name {{net_signal.name|tcl_quote}} -period {{frequency.period.nanoseconds}} [get_nets {{net_signal|hierarchy("|")|tcl_quote}}]
 				{% endif %}
 			{% endfor %}
 			{{get_override("add_constraints")|default("# (add_constraints placeholder)")}}
@@ -293,7 +294,7 @@ class AlteraPlatform(TemplatedPlatform):
 		if self.toolchain == 'Mistral':
 			return self.mistral_command_templates
 
-	def add_clock_constraint(self, clock: Signal, frequency: int | float) -> None:
+	def add_clock_constraint(self, clock: Signal, frequency: Frequency | int | float) -> None:
 		super().add_clock_constraint(clock, frequency)
 		clock.attrs['keep'] = 'true'
 
