@@ -339,7 +339,7 @@ class StreamSerializer(Generic[T], Elaboratable):
 			with m.State('IDLE'):
 				m.d.sync += [ stream_pos.eq(0), ]
 
-				with m.If(self.start & (self.max_length > 1)):
+				with m.If(self.start & (self.max_length > 0)):
 					m.next = 'STREAMING'
 
 			with m.State('STREAMING'):
