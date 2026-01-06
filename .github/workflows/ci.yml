@@ -68,6 +68,7 @@ jobs:
         run: |
           nox -s typecheck-mypy
           nox -s typecheck-pyright
+          nox -s typecheck-ty
 
   test-torii:
     runs-on: ubuntu-latest

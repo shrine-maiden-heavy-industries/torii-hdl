@@ -227,6 +227,18 @@ def typecheck_pyright(session: Session) -> None:
 	with (OUTPUT_DIR / 'pyright.log').open('w') as f:
 		session.run('pyright', *session.posargs, stdout = f)
 
+@nox.session(name = 'typecheck-ty', reuse_venv = True)
+def typecheck_ty(session: Session) -> None:
+	OUTPUT_DIR = BUILD_DIR / 'typing' / 'pyright'
+	OUTPUT_DIR.mkdir(parents = True, exist_ok = True)
+
+	session.install('ty')
+	session.install('types-Pygments', 'types-setuptools')
+	session.install('-e', '.')
+
+	with (OUTPUT_DIR / 'ty.log').open('w') as f:
+		session.run('ty', 'check', *session.posargs, stdout = f)
+
 @nox.session(reuse_venv = True)
 def lint(session: Session) -> None:
 	session.install('flake8')
