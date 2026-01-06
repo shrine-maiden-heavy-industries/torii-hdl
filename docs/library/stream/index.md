@@ -8,5 +8,5 @@
 ```{toctree}
 :maxdepth: 2
 
-simple
+simple/index
 ```
