@@ -265,6 +265,7 @@ jobs:
           branch: gh-pages
           folder: built_docs/
           clean: true
+          single-commit: true
 
   publish-pypi:
     name: 'Torii - Publish PyPi package'
