@@ -10,6 +10,8 @@ from sysconfig                       import get_config_vars
 # NOTE(aki): So this looks a little hokey, but should be "fine":tm:
 from setuptools._distutils.ccompiler import CCompiler, new_compiler
 
+import os
+
 __all__ = (
 	'compile_cxx',
 )
@@ -234,6 +236,11 @@ def compile_cxx(
 		# This is kinda strange and messed up the output object name computation for the object file
 		# takes the whole path and generates a weird nested structure, but it all links so until I have
 		# the spoons to fix it, we'll just deal with it.
+
+		# When we have no object files and we try to link GCC can error out on some distros. (like Fedora)
+		# To avoid this, we pass /dev/null
+		if len(obj_files) == 0:
+			obj_files.append(os.devnull)
 
 		# Generate the intermediate object files from the source files
 		cxx.compile(
