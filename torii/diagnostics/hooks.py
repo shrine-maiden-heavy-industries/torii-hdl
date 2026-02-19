@@ -254,14 +254,10 @@ def _warning_handler( # :nocov:
 		using the provided ``filename`` and ``lineno``.
 	'''
 
-	# Get the output console to write to
-	cons = _get_console(output_file)
-
-	# In the rare case the exception has a note
 	notes: list[str] | None = None
 
-	# If we want to show the source lines, make sure we can, and it's not the REPL
-	show_source = _WARNING_RENDERING_OPTIONS['use_fancy'] and filename != 'sys'
+	# Get the output console to write to
+	cons = _get_console(output_file)
 
 	# If `message` is a `Warning` itself, the category is ignored in favor of `message.__class__`
 	# and the message is the stringified object
@@ -276,29 +272,7 @@ def _warning_handler( # :nocov:
 	if category is None:
 		category = Warning
 
-	# Print out the warning message
-	cons.print(f'[yellow]{category.__name__}[/][white]:[/] {message}')
-
-	# If we can show the source context, do so, otherwise a simplified context
-	if show_source:
-		show_source = _render_fancy(cons, filename, lineno)
-	else:
-		# If the line we were given is None try to get it from the linecache
-		if line is None:
-			line = getline(filename, lineno)
-
-		cons.print(f'{filename}:{lineno}: {line}')
-
-	# If we have any notes to render, do so
-	if notes is not None and len(notes) > 0:
-		for (idx, note) in enumerate(notes):
-			cons.print(f'[bold white] = note:[/] {note}')
-
-	# TODO(aki): Do we want to walk the traceback tree?
-
-	# If we are showing the sources, give us some breathing room
-	if show_source:
-		cons.line()
+	_render_diagnostic(cons, message, category, filename, lineno, 'yellow', line, notes)
 
 def _excepthook(type: type[BaseException], value: BaseException, traceback: TracebackType | None) -> None:
 	'''
