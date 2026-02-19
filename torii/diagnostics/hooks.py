@@ -167,6 +167,41 @@ def _render_fancy(cons: Console, filename: str, lineno: int, border_style: str, 
 
 	return False
 
+def _render_diagnostic( # :nocov:
+	cons: Console, message: str, category: type[Warning | BaseException], filename: str, lineno: int,
+	accent_color: str, line: str | None = None, notes: list[str] | None = None
+) -> None:
+
+	# If we want to show the source lines, make sure we can, and it's not the REPL
+	show_source = _WARNING_RENDERING_OPTIONS['use_fancy'] and filename != 'sys'
+
+	# Clamp the width of the code block to either our wanted width or terminal width
+	# and subtract padding for the panel render
+	width = min(cons.width, _WARNING_RENDERING_OPTIONS['fancy_width']) - 4
+
+	# Print out the diagnostic type/message
+	cons.print(f' [{accent_color}]{category.__name__}[/][white]:[/] {message}')
+
+	if show_source:
+		show_source = _render_fancy(cons, filename, lineno, border_style = accent_color, width = width)
+	else:
+		# If the line we were given is None try to get it from the linecache
+		if line is None:
+			line = getline(filename, lineno)
+
+		cons.print(f'{filename}:{lineno}: {line}')
+
+	# If we have any notes to render, do so
+	if notes is not None and len(notes) > 0:
+		for (idx, note) in enumerate(notes):
+			if len(note) + 12 > width - 1:
+				note = '\n'.join(wrap(note, width - 8, subsequent_indent = '         '))
+			cons.print(f' [cyan]=[/] [bold white]note:[/] {note}', overflow = 'ignore')
+
+	# If we are showing the sources, give us some breathing room
+	if show_source:
+		cons.line()
+
 # NOTE(aki): I don't like the nocov here but it's *really* hard to test this
 def _warning_handler( # :nocov:
 	message: Warning | str, category: type[Warning] | None, filename: str, lineno: int,
