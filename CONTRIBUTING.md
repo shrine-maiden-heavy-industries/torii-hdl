@@ -252,7 +252,7 @@ The use of Generative AI when contributing or interacting with this project is *
 [`unittest` CLI]: https://docs.python.org/3/library/unittest.html#command-line-interface
 [Yosys]: https://github.com/YosysHQ/yosys
 [sby]: https://github.com/YosysHQ/sby
-[Yices2]: https://yices.csl.sri.com/
+[Yices2]: https://github.com/SRI-CSL/yices2
 [Bitwuzla]: https://bitwuzla.github.io/
 [formal verification]: https://en.wikipedia.org/wiki/Formal_verification
 [OSS CAD Suite]: https://github.com/YosysHQ/oss-cad-suite-build/tree/main

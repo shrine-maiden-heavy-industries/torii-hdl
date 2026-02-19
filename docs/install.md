@@ -437,7 +437,7 @@ Now that you've installed Torii, see the [getting started] guide for a quick int
 [surfer installation instructions]: https://gitlab.com/surfer-project/surfer#installation
 [platform]: ./platforms/index.md
 [sby]: https://github.com/YosysHQ/sby
-[yices]: https://yices.csl.sri.com/
+[yices]: https://github.com/SRI-CSL/yices2
 [bitwuzla]: https://bitwuzla.github.io/
 [simulation]: #waveform-viewer-optional
 [formal]: #formal-tools-optional
