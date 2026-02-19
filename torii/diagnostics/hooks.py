@@ -24,6 +24,7 @@ from rich.padding  import Padding
 from rich.panel    import Panel
 from rich.syntax   import Syntax
 
+from ..diagnostics import ToriiSyntaxError
 from ..hdl._unused import MustUse
 
 # Create a reference to the handlers that are installed prior to us loading
@@ -278,13 +279,57 @@ def _excepthook(type: type[BaseException], value: BaseException, traceback: Trac
 	'''
 	The Torii exception hook handler.
 
-	Currently this only disables the `UnusedElaboratale` diagnostic as having those be emitted
+	By default, this will render a stylized code block render of the context around where the warning
+	was raised, this behavior can be controlled with the following environment variables:
+
+	* ``TORII_DIAGNOSTICS_NOFANCY`` - Disables rendering of the code block, will simply print two lines giving
+	the warning and the file and line number.
+	* ``TORII_DIAGNOSTICS_CONTEXT`` - The number of lines above and below the line the warning to show in the
+	render. Defaults to ``5``
+	* ``TORII_DIAGNOSTICS_WIDTH`` - How wide to clamp the code render, will always clamp to terminal width if
+	is smaller. Defaults to ``8192``
+	* ``TORII_DIAGNOSTICS_STRIP`` - Strip the full file path from the warning render, instead only showing just
+	the file name.
+
+	On Python 3.11 and newer, :py:class:`Warning`'s can have optional notes attached to them via the
+	:py:meth:`BaseException.add_note` function.
+
+	If Torii is running on Python 3.11 or newer, and the raised :py:class:`Warning` has any attached notes
+	they will be listed after the warning message and context display.
+
+	This also explicitly disables the `UnusedElaboratable` diagnostic as having those be emitted
 	when the interpreter dies would just cause more harm than good.
+
+	Parameters
+	----------
+	type: type[BaseException]
+		The type of exception that was caught.
+
+	value: BaseException
+		The actual exception that was caught.
+
+	traceback: TracebackType | None
+		The traceback for the exception
 	'''
 
 	# We assume the interpreter crashed, snuff unused elaboratable warnings
 	MustUse._MustUse__silence = True
-	_EXCEPTHOOK_RESTORE(type, value, traceback)
+
+	# If it's a Torii SyntaxError, then we should try to emit a diagnostic
+	if isinstance(value, ToriiSyntaxError):
+		filename = value.filename
+		lineno = value.lineno
+		line = value.text
+
+		# If we don't have a filename and/or line number then there is very little we can do
+		if filename is None or lineno is None:
+			_EXCEPTHOOK_RESTORE(type, value, traceback)
+			return
+
+		cons = _get_console(stderr)
+		_render_diagnostic(cons, value.msg, type, filename, lineno, 'red', line, getattr(value, '__notes__', None))
+	else:
+		_EXCEPTHOOK_RESTORE(type, value, traceback)
 
 def install_warning_handler(*, catch_all: bool = False) -> None:
 	'''
