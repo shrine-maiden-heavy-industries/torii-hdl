@@ -41,7 +41,7 @@ _TORII_MODULES = (
 # Defaults for warning rendering
 DEFAULT_USE_FANCY: Final[bool]    = True
 DEFAULT_FANCY_CONTEXT: Final[int] = 5
-DEFAULT_FANCY_WIDTH: Final[int]   = 100
+DEFAULT_FANCY_WIDTH: Final[int]   = 8192 # Big so we will clamp to term width by default
 DEFAULT_STRIP_PATH: Final[bool]   = False
 
 class WarningRenderingOptions(TypedDict):
