@@ -14,7 +14,8 @@ import warnings
 from linecache     import getline, getlines
 from os            import getenv
 from pathlib       import Path
-from sys           import stdout
+from textwrap      import wrap
+from sys           import stderr, stdout
 from types         import TracebackType
 from typing        import Final, TextIO, TypedDict
 
