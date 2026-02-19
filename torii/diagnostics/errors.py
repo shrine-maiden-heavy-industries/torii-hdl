@@ -8,6 +8,7 @@ __all__ = (
 	'DomainError',
 	'NameError',
 	'NameNotFound',
+	'NonSynthesizableError',
 	'ResourceError',
 	'ToolError',
 	'ToolNotFound',
@@ -33,6 +34,10 @@ class NameError(ToriiError):
 
 class NameNotFound(NameError):
 	''' Unable to automatically determine name '''
+	pass
+
+class NonSynthesizableError(ToriiSyntaxError):
+	''' Attempted synthesis of a non-synthesizable Torii construct '''
 	pass
 
 class ToolError(ToriiError):

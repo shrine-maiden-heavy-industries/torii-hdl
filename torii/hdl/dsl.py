@@ -537,7 +537,15 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			# which means the branch will always match.
 			# Likewise, omit this branch if another branch with this exact set of patterns already
 			# exists (since otherwise we'd overwrite the previous branch's slot in the dict).
-			if not (patterns and not new_patterns) and new_patterns not in switch_data['cases']:
+			if not (patterns and not new_patterns):
+				if new_patterns in switch_data['cases']:
+					_, lineno = switch_data['case_src_locs'][new_patterns]
+					warnings.warn(
+						f'The case {new_patterns} was previously defined on line {lineno}, this case will '
+						'be skipped.',
+						ToriiSyntaxWarning, stacklevel = 3
+					)
+
 				switch_data['cases'][new_patterns] = self._statements
 				switch_data['case_src_locs'][new_patterns] = src_loc
 		finally:
@@ -648,10 +656,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if fsm_data is None:
 			raise ToriiSyntaxError('State outside of FSM block', tracer.get_src_loc(src_loc_at = 1))
 		if name in fsm_data['states']:
-			raise ToriiSyntaxError(
-				f'FSM state \'{name}\' is already defined',
-				tracer.get_src_loc(src_loc_at = 1)
-			)
+			err = ToriiSyntaxError(f'FSM state \'{name}\' is already defined', src_loc)
+			err.add_note(f'\'{name}\' was previously defined on line {fsm_data["state_src_locs"][name][1]}')
+			raise err
 		if name not in fsm_data['encoding']:
 			fsm_data['encoding'][name] = len(fsm_data['encoding'])
 		_outer_case = self._statements
