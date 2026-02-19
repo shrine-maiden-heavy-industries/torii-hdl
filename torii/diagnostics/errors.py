@@ -22,7 +22,10 @@ class ToriiError(Exception):
 
 class ToriiSyntaxError(SyntaxError):
 	''' Malformed or incorrect Torii code '''
-	pass
+
+	def __init__(self, message: str, src_loc: tuple[str, int]) -> None:
+		filename, lineno = src_loc
+		super().__init__(message, (filename, lineno, None, None))
 
 class NameError(ToriiError):
 	''' Invalid HDL construct name '''
