@@ -3,4 +3,4 @@
 import os
 
 # HACK(aki): Try to prevent Torii from automatically setting up the warning handler
-os.environ['TORII_WARNINGS_NOHANDLE'] = '1'
+os.environ['TORII_DIAGNOSTICS_NOHANDLE'] = '1'

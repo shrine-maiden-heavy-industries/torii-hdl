@@ -51,10 +51,10 @@ class WarningRenderingOptions(TypedDict):
 	strip_path: bool
 
 def _populate_options() -> WarningRenderingOptions:
-	use_fancy = not getenv('TORII_WARNINGS_NOFANCY', False)
+	use_fancy = not getenv('TORII_DIAGNOSTICS_NOFANCY', False)
 
 	try:
-		if (val := int(getenv('TORII_WARNINGS_CONTEXT', ''))) > 0:
+		if (val := int(getenv('TORII_DIAGNOSTICS_CONTEXT', ''))) > 0:
 			fancy_context = val
 		else:
 			fancy_context = DEFAULT_FANCY_CONTEXT
@@ -62,14 +62,14 @@ def _populate_options() -> WarningRenderingOptions:
 		fancy_context = DEFAULT_FANCY_CONTEXT
 
 	try:
-		if (val := int(getenv('TORII_WARNINGS_WIDTH', ''))) > 0:
+		if (val := int(getenv('TORII_DIAGNOSTICS_WIDTH', ''))) > 0:
 			fancy_width = val
 		else:
 			fancy_width = DEFAULT_FANCY_WIDTH
 	except Exception:
 		fancy_width = DEFAULT_FANCY_WIDTH
 
-	strip_path = bool(getenv('TORII_WARNINGS_STRIP', DEFAULT_STRIP_PATH))
+	strip_path = bool(getenv('TORII_DIAGNOSTICS_STRIP', DEFAULT_STRIP_PATH))
 
 	return WarningRenderingOptions(
 		use_fancy     = use_fancy,
@@ -182,13 +182,13 @@ def _warning_handler( # :nocov:
 	By default, this will render a stylized code block render of the context around where the warning
 	was raised, this behavior can be controlled with the following environment variables:
 
-	* ``TORII_WARNINGS_NOFANCY`` - Disables rendering of the code block, will simply print two lines giving
+	* ``TORII_DIAGNOSTICS_NOFANCY`` - Disables rendering of the code block, will simply print two lines giving
 	the warning and the file and line number.
-	* ``TORII_WARNINGS_CONTEXT`` - The number of lines above and below the line the warning to show in the
+	* ``TORII_DIAGNOSTICS_CONTEXT`` - The number of lines above and below the line the warning to show in the
 	render. Defaults to ``5``
-	* ``TORII_WARNINGS_WIDTH`` - How wide to clamp the code render, will always clamp to terminal width if
-	is smaller. Defaults to ``100``
-	* ``TORII_WARNINGS_STRIP`` - Strip the full file path from the warning render, instead only showing just
+	* ``TORII_DIAGNOSTICS_WIDTH`` - How wide to clamp the code render, will always clamp to terminal width if
+	is smaller. Defaults to ``8192``
+	* ``TORII_DIAGNOSTICS_STRIP`` - Strip the full file path from the warning render, instead only showing just
 	the file name.
 
 	On Python 3.11 and newer, :py:class:`Warning`'s can have optional notes attached to them via the
@@ -286,7 +286,7 @@ def install_warning_handler(*, catch_all: bool = False) -> None:
 	Replace the current :py:meth:`warnings.showwarning` handler with the Torii warning handler,
 	saving the original so it can be restored when calling :py:meth:`remove_warning_handler`.
 
-	If the environment variable ``TORII_WARNINGS_NOHANDLE`` is set, then this function has no effect
+	If the environment variable ``TORII_DIAGNOSTICS_NOHANDLE`` is set, then this function has no effect
 	and the current warning handler will remain installed.
 
 	Note
@@ -303,7 +303,7 @@ def install_warning_handler(*, catch_all: bool = False) -> None:
 
 	# If the environment is telling us to not handle the warnings don't,
 	# or if the handler is already installed, don't re-install it.
-	if getenv('TORII_WARNINGS_NOHANDLE') or warnings.showwarning == _warning_handler:
+	if getenv('TORII_DIAGNOSTICS_NOHANDLE') or warnings.showwarning == _warning_handler:
 		return
 
 	# Catch all warnings if requested, otherwise ensure torii's warnings get emitted at least
@@ -328,7 +328,7 @@ def remove_warning_handler() -> None:
 	'''
 
 	# If we didn't install the handler, we might restore incorrectly, so don't bother
-	if getenv('TORII_WARNINGS_NOHANDLE'):
+	if getenv('TORII_DIAGNOSTICS_NOHANDLE'):
 		return
 
 	# Restore the warning handler

@@ -17,11 +17,11 @@ from ..utils                 import ToriiTestSuiteCase
 class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 	def flush_torii_envs(self) -> None:
-		os.environ.pop('TORII_WARNINGS_NOHANDLE', None)
-		os.environ.pop('TORII_WARNINGS_NOFANCY', None)
-		os.environ.pop('TORII_WARNINGS_CONTEXT', None)
-		os.environ.pop('TORII_WARNINGS_WIDTH', None)
-		os.environ.pop('TORII_WARNINGS_STRIP', None)
+		os.environ.pop('TORII_DIAGNOSTICS_NOHANDLE', None)
+		os.environ.pop('TORII_DIAGNOSTICS_NOFANCY', None)
+		os.environ.pop('TORII_DIAGNOSTICS_CONTEXT', None)
+		os.environ.pop('TORII_DIAGNOSTICS_WIDTH', None)
+		os.environ.pop('TORII_DIAGNOSTICS_STRIP', None)
 
 	def setUp(self) -> None:
 		# Save state before we muck with it
@@ -51,7 +51,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 	def test_populate_options_set(self) -> None:
 
-		os.environ['TORII_WARNINGS_NOFANCY'] = '1'
+		os.environ['TORII_DIAGNOSTICS_NOFANCY'] = '1'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = False,
@@ -62,7 +62,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = '10'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = '10'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -73,7 +73,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_WIDTH'] = '1234'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = '1234'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -84,7 +84,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_STRIP'] = '1'
+		os.environ['TORII_DIAGNOSTICS_STRIP'] = '1'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -95,8 +95,8 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = '50'
-		os.environ['TORII_WARNINGS_WIDTH'] = '10'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = '50'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = '10'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -107,7 +107,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 	def test_populate_options_bogus(self) -> None:
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = 'meow'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = 'meow'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -118,7 +118,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_WIDTH'] = 'uwu'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = 'uwu'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -129,7 +129,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = '-10'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = '-10'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -140,7 +140,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_WIDTH'] = '-50'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = '-50'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -151,7 +151,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = '3.14159'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = '3.14159'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -162,7 +162,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_WIDTH'] = '1.3e7'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = '1.3e7'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -173,7 +173,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_CONTEXT'] = '0'
+		os.environ['TORII_DIAGNOSTICS_CONTEXT'] = '0'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -184,7 +184,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 		self.flush_torii_envs()
 
-		os.environ['TORII_WARNINGS_WIDTH'] = '0'
+		os.environ['TORII_DIAGNOSTICS_WIDTH'] = '0'
 
 		self.assertEqual(_populate_options(), WarningRenderingOptions(
 			use_fancy = DEFAULT_USE_FANCY,
@@ -215,7 +215,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 	def test_handler_install_skip(self) -> None:
 
-		os.environ['TORII_WARNINGS_NOHANDLE'] = '1'
+		os.environ['TORII_DIAGNOSTICS_NOHANDLE'] = '1'
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
@@ -274,7 +274,7 @@ class ToriiWarningHandlerTestCase(ToriiTestSuiteCase):
 
 	def test_handler_remove_not_enabled(self) -> None:
 
-		os.environ['TORII_WARNINGS_NOHANDLE'] = '1'
+		os.environ['TORII_DIAGNOSTICS_NOHANDLE'] = '1'
 
 		self.assertEqual(self.old_handler, warnings.showwarning)
 		self.assertEqual(warnings.showwarning, _WARN_HANDLER_RESTORE)
