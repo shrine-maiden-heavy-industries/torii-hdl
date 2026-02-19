@@ -145,8 +145,6 @@ def _render_fancy(cons: Console, filename: str, lineno: int, border_style: str, 
 			dedent = False,
 		)
 
-		code_render.stylize_range('uu', (lineno, 0), (lineno, width))
-
 		# Fixup the filename if we're stripping the file path
 		if _WARNING_RENDERING_OPTIONS['strip_path']:
 			filename = Path(filename).name
