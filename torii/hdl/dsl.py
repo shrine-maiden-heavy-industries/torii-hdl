@@ -78,7 +78,10 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 		if name == '_depth':
 			object.__setattr__(self, name, value)
 		elif not isinstance(value, _ModuleBuilderDomain):
-			raise AttributeError(f'Cannot assign \'d.{name}\' attribute; did you mean \'d.{name} +=\'?')
+			raise ToriiSyntaxError(
+				f'Cannot assign \'d.{name}\' attribute; did you mean \'d.{name} +=\'?',
+				tracer.get_src_loc()
+			)
 
 	def __setitem__(self, name, value):
 		return self.__setattr__(name, value)
@@ -94,10 +97,14 @@ class _ModuleBuilderRoot:
 
 	def __getattr__(self, name):
 		if name in ('comb', 'sync'):
-			raise AttributeError(
-				f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?'
+			raise ToriiSyntaxError(
+				f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?',
+				tracer.get_src_loc()
 			)
-		raise AttributeError(f'\'{type(self).__name__}\' object has no attribute \'{name}\'')
+		raise ToriiSyntaxError(
+			f'\'{type(self).__name__}\' object has no attribute \'{name}\'',
+			tracer.get_src_loc()
+		)
 
 class _ModuleBuilderSubmodules:
 	'''
@@ -124,7 +131,7 @@ class _ModuleBuilderSubmodules:
 		return self._builder._get_submodule(name)
 
 	def __getitem__(self, name):
-		return self.__getattr__(name)
+		return self._builder._get_submodule(name)
 
 class _ModuleBuilderDomainSet:
 	'''
@@ -139,15 +146,24 @@ class _ModuleBuilderDomainSet:
 	def __iadd__(self, domains: Iterable):
 		for domain in flatten([domains]):
 			if not isinstance(domain, ClockDomain):
-				raise TypeError(f'Only clock domains may be added to `m.domains`, not {domain!r}')
+				raise ToriiSyntaxError(
+					f'Only clock domains may be added to `m.domains`, not {domain!r}',
+					tracer.get_src_loc()
+				)
 			self._builder._add_domain(domain)
 		return self
 
 	def __setattr__(self, name, domain):
 		if not isinstance(domain, ClockDomain):
-			raise TypeError(f'Only clock domains may be added to `m.domains`, not {domain!r}')
+			raise ToriiSyntaxError(
+				f'Only clock domains may be added to `m.domains`, not {domain!r}',
+				tracer.get_src_loc()
+			)
 		if domain.name != name:
-			raise NameError(f'Clock domain name {domain.name!r} must match name in `m.domains.{name} += ...` syntax')
+			raise ToriiSyntaxError(
+				f'Clock domain name {domain.name!r} must match name in `m.domains.{name} += ...` syntax',
+				tracer.get_src_loc()
+			)
 		self._builder._add_domain(domain)
 
 Params = ParamSpec('Params')
@@ -167,7 +183,8 @@ class _GuardedContextManager(_GeneratorContextManager):
 
 	def __bool__(self):
 		raise ToriiSyntaxError(
-			f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`'
+			f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`',
+			tracer.get_src_loc()
 		)
 
 def _guardedcontextmanager(keyword: str):
@@ -248,7 +265,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	def __init_subclass__(cls):
 		raise ToriiSyntaxError(
 			'Instead of inheriting from `Module`, inherit from `Elaboratable` '
-			'and return a `Module` from the `elaborate(self, platform)` method'
+			'and return a `Module` from the `elaborate(self, platform)` method',
+			tracer.get_src_loc(src_loc_at = 1)
 		)
 
 	def __init__(self) -> None:
@@ -273,7 +291,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		if self._ctrl_context != context:
 			if self._ctrl_context is None:
-				raise ToriiSyntaxError(f'{construct} is not permitted outside of {context}')
+				raise ToriiSyntaxError(
+					f'{construct} is not permitted outside of {context}',
+					tracer.get_src_loc(src_loc_at = 2)
+				)
 			else:
 				if self._ctrl_context == 'Switch':
 					secondary_context = 'Case'
@@ -281,7 +302,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					secondary_context = 'State'
 				raise ToriiSyntaxError(
 					f'{construct} is not permitted directly inside of {self._ctrl_context}; '
-					f'it is permitted inside of {self._ctrl_context} {secondary_context}'
+					f'it is permitted inside of {self._ctrl_context} {secondary_context}',
+					tracer.get_src_loc(src_loc_at = 2)
 				)
 
 	def _get_ctrl(self, name: str):
@@ -372,7 +394,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			raise ToriiSyntaxError('Elif without preceding If')
+			err = ToriiSyntaxError('Elif without preceding If', tracer.get_src_loc(src_loc_at = 1))
+			if if_data is not None and if_data['depth'] < self.domain._depth:
+				err.add_note(f'There is an If defined on line {if_data["src_loc"][1]}, is the Elif over-indented?')
+			raise err
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -398,7 +423,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			raise ToriiSyntaxError('Else without preceding If/Elif')
+			err = ToriiSyntaxError('Else without preceding If/Elif', src_loc)
+			if if_data is not None and if_data['depth'] < self.domain._depth:
+				err.add_note(f'There is an If/Elif defined on line {if_data["src_loc"][1]}, is the Else over-indented?')
+			raise err
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -441,7 +469,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		'''
 
 		if not patterns:
-			raise ValueError('Empty Case() clauses have been superseded by Default()')
+			raise ToriiSyntaxError(
+				'Empty Case() clauses have been superseded by Default()',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		self._check_context('Case', context = 'Switch')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
@@ -449,7 +480,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
-			raise ToriiSyntaxError('Case outside of Switch block')
+			raise ToriiSyntaxError('Case outside of Switch block', tracer.get_src_loc(src_loc_at = 1))
 		new_patterns: SwitchCaseT = ()
 		if () in switch_data['cases']:
 			warnings.warn(
@@ -462,12 +493,14 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise ToriiSyntaxError(
 					f'Case pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
-					'include whitespace'
+					'include whitespace',
+					tracer.get_src_loc(src_loc_at = 1)
 				)
 			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(switch_data['test'])):
 				raise ToriiSyntaxError(
 					f'Case pattern \'{pattern}\' must have the same width as switch value '
-					f'(which is {len(switch_data["test"])})'
+					f'(which is {len(switch_data["test"])})',
+					tracer.get_src_loc(src_loc_at = 1)
 				)
 			if isinstance(pattern, str):
 				new_patterns = (*new_patterns, pattern)
@@ -478,7 +511,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				except TypeError as error:
 					raise ToriiSyntaxError(
 						'Case pattern must be a string or a const-castable expression, '
-						f'not {pattern!r}'
+						f'not {pattern!r}',
+						tracer.get_src_loc(src_loc_at = 1)
 					) from error
 
 				pattern_len = bits_for(pattern.value)
@@ -523,12 +557,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			raise ToriiSyntaxError(
 				'Multiple Default statements within a switch are not allowed, '
 				'as only the first Default will ever be considered.',
+				tracer.get_src_loc(src_loc_at = 1)
 			)
 
 		if TYPE_CHECKING:
 			assert switch_data is None or isinstance(switch_data, _SwitchDict)
 		if switch_data is None:
-			raise ToriiSyntaxError('Default outside of Switch block')
+			raise ToriiSyntaxError('Default outside of Switch block', tracer.get_src_loc())
 
 		_outer_case = self._statements
 		try:
@@ -551,13 +586,22 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		self._check_context('FSM', context = None)
 		if domain == 'comb':
-			raise ValueError(f'FSM may not be driven by the \'{domain}\' domain')
+			raise ToriiSyntaxError(
+				f'FSM may not be driven by the combinatorial domain \'{domain}\'',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		if name == '' or not _check_name(name):
-			raise NameError('FSM name must not be empty or contain any control or whitespace characters')
+			raise ToriiSyntaxError(
+				'FSM name must not be empty or contain any control or whitespace characters',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		if domain == '' or not _check_name(domain):
-			raise NameError('FSM domain must not be empty or contain any control or whitespace characters')
+			raise ToriiSyntaxError(
+				'FSM domain must not be empty or contain any control or whitespace characters',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		fsm_data = self._set_ctrl('FSM', {
 			'name': name,
@@ -581,7 +625,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			yield fsm
 			for state_name in fsm_data['encoding']:
 				if state_name not in fsm_data['states']:
-					raise NameError(f'FSM state \'{state_name}\' is referenced but not defined')
+					raise ToriiSyntaxError(
+						f'FSM state \'{state_name}\' is referenced but not defined',
+						tracer.get_src_loc(src_loc_at = 1)
+					)
 		finally:
 			self.domain._depth -= 1
 			self._ctrl_context = None
@@ -599,9 +646,12 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert fsm_data is None or isinstance(fsm_data, _FSMDict)
 		if fsm_data is None:
-			raise ToriiSyntaxError('State outside of FSM block')
+			raise ToriiSyntaxError('State outside of FSM block', tracer.get_src_loc(src_loc_at = 1))
 		if name in fsm_data['states']:
-			raise NameError(f'FSM state \'{name}\' is already defined')
+			raise ToriiSyntaxError(
+				f'FSM state \'{name}\' is already defined',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 		if name not in fsm_data['encoding']:
 			fsm_data['encoding'][name] = len(fsm_data['encoding'])
 		_outer_case = self._statements
@@ -622,7 +672,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		.. todo:: Document Me
 		'''
 
-		raise ToriiSyntaxError('Only assignment to `m.next` is permitted')
+		raise ToriiSyntaxError('Only assignment to `m.next` is permitted', tracer.get_src_loc())
 
 	@next.setter
 	def next(self, name):
@@ -644,7 +694,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					)
 					return
 
-		raise ToriiSyntaxError('`m.next = <...>` is only permitted inside an FSM state')
+		raise ToriiSyntaxError(
+			'`m.next = <...>` is only permitted inside an FSM state',
+			tracer.get_src_loc()
+		)
 
 	def _pop_ctrl(self):
 		'''
@@ -740,7 +793,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		for stmt in Statement.cast(assigns):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
 				raise ToriiSyntaxError(
-					f'Only assignments and property checks may be appended to d.{domain_name(domain)}'
+					f'Only assignments and property checks may be appended to d.{domain_name(domain)}',
+					tracer.get_src_loc(src_loc_at = 1)
 				)
 
 			stmt._MustUse__used = True
@@ -753,7 +807,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					cd_curr = self._driving[signal]
 					raise ToriiSyntaxError(
 						f'Driver-driver conflict: trying to drive {signal!r} from d.{domain_name(domain)}, but it is '
-						f'already driven from d.{domain_name(cd_curr)}')
+						f'already driven from d.{domain_name(cd_curr)}',
+						tracer.get_src_loc(src_loc_at = 1)
+					)
 
 			self._statements.append(stmt)
 
@@ -763,22 +819,32 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		'''
 
 		if not hasattr(submodule, 'elaborate'):
-			raise TypeError(f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule')
+			raise ToriiSyntaxError(
+				f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		match name:
 			case None:
 				self._anon_submodules.append(submodule)
 			case '':
-				raise NameError(
+				raise ToriiSyntaxError(
 					'A submodule name must not be empty if provided, to add an anonymous submodule either omit the '
-					'`name` parameter or explicitly set it to `None`'
+					'`name` parameter or explicitly set it to `None`',
+					tracer.get_src_loc(src_loc_at = 2)
 				)
 			case _:
 				if not _check_name(name):
-					raise NameError('Submodule name must not contain any control or whitespace characters')
+					raise ToriiSyntaxError(
+						'Submodule name must not contain any control or whitespace characters',
+						tracer.get_src_loc(src_loc_at = 2)
+					)
 
 				if name in self._named_submodules:
-					raise NameError(f'Submodule named \'{name}\' already exists')
+					raise ToriiSyntaxError(
+						f'Submodule named \'{name}\' already exists',
+						tracer.get_src_loc(src_loc_at = 1)
+					)
 				self._named_submodules[name] = submodule
 
 	def _get_submodule(self, name: str):
@@ -789,7 +855,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if name in self._named_submodules:
 			return self._named_submodules[name]
 		else:
-			raise AttributeError(f'No submodule named \'{name}\' exists')
+			raise ToriiSyntaxError(
+				f'No submodule named \'{name}\' exists',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 	def _add_domain(self, cd: ClockDomain):
 		'''
@@ -797,7 +866,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		'''
 
 		if cd.name in self._domains:
-			raise NameError(f'Clock domain named \'{cd.name}\' already exists')
+			raise ToriiSyntaxError(
+				f'Clock domain named \'{cd.name}\' already exists',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 		self._domains[cd.name] = cd
 
 	def _flush(self):

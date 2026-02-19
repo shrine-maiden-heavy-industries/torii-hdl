@@ -27,7 +27,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with self.assertRaisesRegex(
 			ToriiSyntaxError, (
 				r'^Instead of inheriting from `Module`, inherit from `Elaboratable` and '
-				r'return a `Module` from the `elaborate\(self, platform\)` method$'
+				r'return a `Module` from the `elaborate\(self, platform\)` method \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			class ORGate(Module):
@@ -79,7 +79,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with self.assertRaisesRegex(
 			ToriiSyntaxError, (
 				r'^Driver-driver conflict: trying to drive \(sig c1\) from d\.sync, but it '
-				r'is already driven from d\.comb$'
+				r'is already driven from d\.comb \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			m.d.comb += self.c1.eq(1)
@@ -88,8 +88,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_d_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			AttributeError,
-			r'^Cannot assign \'d\.pix\' attribute; did you mean \'d.pix \+=\'\?$'
+			ToriiSyntaxError,
+			r'^Cannot assign \'d\.pix\' attribute; did you mean \'d.pix \+=\'\? \(test_dsl\.py, line \d+\)$'
 		):
 			m.d.pix = None
 
@@ -97,31 +97,31 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only assignments and property checks may be appended to d\.sync$'
+			r'^Only assignments and property checks may be appended to d\.sync \(test_dsl\.py, line \d+\)$'
 		):
 			m.d.sync += Switch(self.s1, {})
 
 	def test_comb_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			AttributeError,
-			r'^\'Module\' object has no attribute \'comb\'; did you mean \'d\.comb\'\?$'
+			ToriiSyntaxError,
+			r'^\'Module\' object has no attribute \'comb\'; did you mean \'d\.comb\'\? \(test_dsl\.py, line \d+\)$'
 		):
 			m.comb += self.c1.eq(1)
 
 	def test_sync_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			AttributeError,
-			r'^\'Module\' object has no attribute \'sync\'; did you mean \'d\.sync\'\?$'
+			ToriiSyntaxError,
+			r'^\'Module\' object has no attribute \'sync\'; did you mean \'d\.sync\'\? \(test_dsl\.py, line \d+\)$'
 		):
 			m.sync += self.c1.eq(1)
 
 	def test_attr_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			AttributeError,
-			r'^\'Module\' object has no attribute \'nonexistentattr\'$'
+			ToriiSyntaxError,
+			r'^\'Module\' object has no attribute \'nonexistentattr\' \(test_dsl\.py, line \d+\)$'
 		):
 			m.nonexistentattr
 
@@ -283,27 +283,38 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_Elif_wrong(self):
 		m = Module()
-		with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError, r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+		):
 			with m.Elif(self.s2):
 				pass # :nocov:
 
 	def test_Elif_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
-			with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
+			with self.assertRaisesRegex(
+				ToriiSyntaxError,
+				r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+			):
 				with m.Elif(self.s2):
 					pass # :nocov:
 
 	def test_Else_wrong(self):
 		m = Module()
-		with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If\/Elif$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Else without preceding If\/Elif \(test_dsl\.py, line \d+\)$'
+		):
 			with m.Else():
 				pass # :nocov:
 
 	def test_Else_wrong_nested(self):
 		m = Module()
 		with m.If(self.s1):
-			with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If/Elif$'):
+			with self.assertRaisesRegex(
+				ToriiSyntaxError,
+				r'^Else without preceding If/Elif \(test_dsl\.py, line \d+\)$'
+			):
 				with m.Else():
 					pass # :nocov:
 
@@ -312,7 +323,10 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			pass
 		with m.Elif(self.s2):
-			with self.assertRaisesRegex(ToriiSyntaxError, r'^Elif without preceding If$'):
+			with self.assertRaisesRegex(
+				ToriiSyntaxError,
+				r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+			):
 				with m.Elif(self.s3):
 					pass # :nocov:
 
@@ -321,7 +335,10 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			pass
 		with m.Else():
-			with self.assertRaisesRegex(ToriiSyntaxError, r'^Else without preceding If/Elif$'):
+			with self.assertRaisesRegex(
+				ToriiSyntaxError,
+				r'^Else without preceding If/Elif \(test_dsl\.py, line \d+\)$'
+			):
 				with m.Else():
 					pass # :nocov:
 
@@ -371,7 +388,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.If\(\.\.\.\):` does not work; use `with m\.If\(\.\.\.\)`$'
+			r'^`if m\.If\(\.\.\.\):` does not work; use `with m\.If\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
 		):
 			if m.If(0):
 				pass # :nocov:
@@ -379,13 +396,13 @@ class DSLTestCase(ToriiTestSuiteCase):
 			pass
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.Elif\(\.\.\.\):` does not work; use `with m\.Elif\(\.\.\.\)`$'
+			r'^`if m\.Elif\(\.\.\.\):` does not work; use `with m\.Elif\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
 		):
 			if m.Elif(0):
 				pass # :nocov:
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.Else\(\.\.\.\):` does not work; use `with m\.Else\(\.\.\.\)`$'
+			r'^`if m\.Else\(\.\.\.\):` does not work; use `with m\.Else\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
 		):
 			if m.Else():
 				pass # :nocov:
@@ -413,7 +430,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_Switch_default_Case(self):
 		m = Module()
 		with self.assertRaises(
-			ValueError,
+			ToriiSyntaxError,
 			msg = 'Empty Case() clauses have been superseded by Default()'
 		):
 			with m.Switch(self.w1):
@@ -508,7 +525,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Case pattern \'--\' must have the same width as switch value \(which is 4\)$'
+				r'^Case pattern \'--\' must have the same width as switch value \(which is 4\) '
+				r'\(test_dsl\.py, line \d+\)$'
 			):
 				with m.Case('--'):
 					pass # :nocov:
@@ -555,7 +573,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError, (
 					r'^Case pattern \'abc\' must consist of 0, 1, and - \(don\'t care\) bits, '
-					r'and may include whitespace$'
+					r'and may include whitespace \(test_dsl\.py, line \d+\)$'
 				)
 			):
 				with m.Case('abc'):
@@ -566,7 +584,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Switch(self.w1):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Case pattern must be a string or a const-castable expression, not 1\.0$'
+				r'^Case pattern must be a string or a const-castable expression, not 1\.0 \(test_dsl\.py, line \d+\)$'
 			):
 				with m.Case(1.0):
 					pass # :nocov:
@@ -575,7 +593,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Case is not permitted outside of Switch$'
+			r'^Case is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Case(1):
 				pass # :nocov:
@@ -584,7 +602,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Default is not permitted outside of Switch$'
+			r'^Default is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Default():
 				pass # :nocov:
@@ -619,7 +637,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError, (
 					r'^If is not permitted directly inside of Switch; '
-					r'it is permitted inside of Switch Case$'
+					r'it is permitted inside of Switch Case \(test_dsl\.py, line \d+\)$'
 				)
 			):
 				with m.If(self.s2):
@@ -631,7 +649,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.Case(0):
 				with self.assertRaisesRegex(
 					ToriiSyntaxError,
-					r'^Case is not permitted outside of Switch$'
+					r'^Case is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
 				):
 					with m.Case(1):
 						pass # :nocov:
@@ -746,27 +764,30 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_FSM_wrong_domain(self):
 		m = Module()
-		with self.assertRaisesRegex(ValueError, r'^FSM may not be driven by the \'comb\' domain$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^FSM may not be driven by the combinatorial domain \'comb\' \(test_dsl\.py, line \d+\)$'
+		):
 			with m.FSM(domain = 'comb'):
 				pass # :nocov:
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(domain = ''):
 				pass # :nocov:
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(domain = ' '):
 				pass # :nocov:
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM domain must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(domain = '\r'):
 				pass # :nocov:
@@ -775,22 +796,22 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM name must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(name = ''):
 				pass # :nocov:
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM name must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(name = ' '):
 				pass # :nocov:
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^FSM name must not be empty or contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM(name = '\r'):
 				pass # :nocov:
@@ -798,8 +819,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_FSM_wrong_undefined(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			NameError,
-			r'^FSM state \'FOO\' is referenced but not defined$'
+			ToriiSyntaxError,
+			r'^FSM state \'FOO\' is referenced but not defined \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM() as fsm:
 				fsm.ongoing('FOO')
@@ -810,8 +831,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.State('FOO'):
 				pass
 			with self.assertRaisesRegex(
-				NameError,
-				r'^FSM state \'FOO\' is already defined$'
+				ToriiSyntaxError,
+				r'^FSM state \'FOO\' is already defined \(test_dsl\.py, line \d+\)$'
 			):
 				with m.State('FOO'):
 					pass # :nocov:
@@ -820,17 +841,17 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only assignment to `m\.next` is permitted$'
+			r'^Only assignment to `m\.next` is permitted \(test_dsl\.py, line \d+\)$'
 		):
 			m.next
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state$'
+			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state \(test_dsl\.py, line \d+\)$'
 		):
 			m.next = 'FOO'
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state$'
+			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM():
 				m.next = 'FOO'
@@ -843,7 +864,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError, (
 					r'^If is not permitted directly inside of FSM; '
-					r'it is permitted inside of FSM State$'
+					r'it is permitted inside of FSM State \(test_dsl\.py, line \d+\)$'
 				)
 			):
 				with m.If(self.s2):
@@ -853,7 +874,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^FSM State is not permitted outside of FSM'
+			r'^FSM State is not permitted outside of FSM \(test_dsl\.py, line \d+\)$'
 		):
 			with m.State('FOO'):
 				pass # :nocov:
@@ -864,7 +885,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.State('FOO'):
 				with self.assertRaisesRegex(
 					ToriiSyntaxError,
-					r'^FSM State is not permitted outside of FSM'
+					r'^FSM State is not permitted outside of FSM \(test_dsl\.py, line \d+\)$'
 				):
 					with m.State('BAR'):
 						pass # :nocov:
@@ -916,34 +937,34 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 
 		with self.assertRaisesRegex(
-			NameError,
+			ToriiSyntaxError,
 			r'^A submodule name must not be empty if provided, to add an anonymous submodule either'
-			r' omit the `name` parameter or explicitly set it to `None`$'
+			r' omit the `name` parameter or explicitly set it to `None` \(test_dsl\.py, line \d+\)$'
 		):
 			m.submodules[''] = Module()
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Submodule name must not contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Submodule name must not contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			m.submodules['\t'] = Module()
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Submodule name must not contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Submodule name must not contain any control or whitespace characters \(test_dsl\.py, line \d+\)$'
 		):
 			m.submodules['\0'] = Module()
 
 	def test_submodule_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Trying to add 1, which does not implement \.elaborate\(\), as a submodule$'
+			ToriiSyntaxError,
+			r'^Trying to add 1, which does not implement \.elaborate\(\), as a submodule \(test_dsl\.py, line \d+\)$'
 		):
 			m.submodules.foo = 1
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Trying to add 1, which does not implement \.elaborate\(\), as a submodule$'
+			ToriiSyntaxError,
+			r'^Trying to add 1, which does not implement \.elaborate\(\), as a submodule \(test_dsl\.py, line \d+\)$'
 		):
 			m.submodules += 1
 
@@ -951,7 +972,10 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m1 = Module()
 		m2 = Module()
 		m1.submodules.foo = m2
-		with self.assertRaisesRegex(NameError, r'^Submodule named \'foo\' already exists$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Submodule named \'foo\' already exists \(test_dsl\.py, line \d+\)$'
+		):
 			m1.submodules.foo = m2
 
 	def test_submodule_get(self):
@@ -970,9 +994,15 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_submodule_get_unset(self):
 		m1 = Module()
-		with self.assertRaisesRegex(AttributeError, r'^No submodule named \'foo\' exists$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^No submodule named \'foo\' exists \(test_dsl\.py, line \d+\)$'
+		):
 			m1.submodules.foo
-		with self.assertRaisesRegex(AttributeError, r'^No submodule named \'foo\' exists$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^No submodule named \'foo\' exists \(test_dsl\.py, line \d+\)$'
+		):
 			m1.submodules['foo']
 
 	def test_domain_named_implicit(self):
@@ -989,21 +1019,22 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_domain_add_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Only clock domains may be added to `m\.domains`, not 1$'
+			ToriiSyntaxError,
+			r'^Only clock domains may be added to `m\.domains`, not 1 \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains.foo = 1
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Only clock domains may be added to `m\.domains`, not 1$'
+			ToriiSyntaxError,
+			r'^Only clock domains may be added to `m\.domains`, not 1 \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains += 1
 
 	def test_domain_add_wrong_name(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name \'bar\' must match name in `m\.domains\.foo \+= \.\.\.` syntax$'
+			ToriiSyntaxError,
+			r'^Clock domain name \'bar\' must match name in `m\.domains\.foo \+= \.\.\.` syntax '
+			r'\(test_dsl\.py, line \d+\)$'
 		):
 			m.domains.foo = ClockDomain('bar')
 
@@ -1011,8 +1042,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		m.domains += ClockDomain('foo')
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain named \'foo\' already exists$'
+			ToriiSyntaxError,
+			r'^Clock domain named \'foo\' already exists \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains += ClockDomain('foo')
 
