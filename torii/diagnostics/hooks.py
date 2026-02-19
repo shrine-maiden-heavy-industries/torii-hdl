@@ -100,7 +100,7 @@ def _get_console(output_stream: TextIO | None) -> Console:
 		return Console(file = output_stream)
 
 # NOTE(aki): I don't like the nocov here but it's *really* hard to test this
-def _render_fancy(cons: Console, filename: str, lineno: int) -> bool: # :nocov:
+def _render_fancy(cons: Console, filename: str, lineno: int, border_style: str, width: int) -> bool: # :nocov:
 	'''
 	Render the fancy syntax-highlighted code context for the warning display.
 
@@ -115,6 +115,9 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> bool: # :nocov:
 	lineno : int
 		The line of ``filename`` the warning was raised from.
 
+	border_style : str
+		The border style of the panel frame.
+
 	Returns
 	-------
 	bool
@@ -128,10 +131,6 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> bool: # :nocov:
 			lineno - _WARNING_RENDERING_OPTIONS['fancy_context'],
 			lineno + _WARNING_RENDERING_OPTIONS['fancy_context']
 		)
-
-		# Clamp the width of the code block to either our wanted width or terminal width
-		# and subtract padding for the panel render
-		width = min(cons.width, _WARNING_RENDERING_OPTIONS['fancy_width']) - 4
 
 		# Render the code into a syntax highlighted block
 		code_render = Syntax(
@@ -158,8 +157,7 @@ def _render_fancy(cons: Console, filename: str, lineno: int) -> bool: # :nocov:
 		if cons.is_terminal:
 			# Stuff the code inside a fancy panel
 			display_panel = Panel.fit(
-				code_render, title = render_title,
-				border_style = 'yellow'
+				code_render, title = render_title, border_style = border_style
 			)
 
 			# Render the code a little bit off the side of the terminal
