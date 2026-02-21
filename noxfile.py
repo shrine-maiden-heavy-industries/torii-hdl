@@ -18,6 +18,7 @@ IN_CI           = getenv('GITHUB_WORKSPACE') is not None
 ENABLE_COVERAGE = IN_CI or getenv('TORII_TEST_COVERAGE') is not None
 SKIP_EXAMPLES   = getenv('TORII_TEST_NO_EXAMPLES') is not None
 SKIP_FORMAL     = getenv('TORII_TEST_NO_FORMAL') is not None
+ENABLE_ASIC     = getenv('TORII_TEST_ASIC') is not None
 
 # Default sessions to run
 nox.options.sessions = (
@@ -36,6 +37,7 @@ def test(session: Session) -> None:
 
 	BASIC_EXAMPLES  = ROOT_DIR / 'examples' / 'basic'
 	FORMAL_EXAMPLES = ROOT_DIR / 'examples' / 'formal'
+	ASIC_EXAMPLES   = ROOT_DIR / 'examples' / 'asic'
 
 	unittest_args = ('-m', 'unittest', 'discover', '-s', str(ROOT_DIR))
 
@@ -69,6 +71,10 @@ def test(session: Session) -> None:
 			session.log('Testing formal examples...')
 			for example in FORMAL_EXAMPLES.iterdir():
 				session.run('python', *coverage_args, str(example))
+
+		if ENABLE_ASIC:
+			session.log('Running ASIC tests')
+			session.run('python', *coverage_args, f'{ASIC_EXAMPLES / "alu.py"}')
 
 		if ENABLE_COVERAGE:
 			session.log('Combining Coverage data..')

@@ -90,6 +90,40 @@ Torii can be used to target any FPGA or ASIC process that accepts behavioral Ver
   </tbody>
 </table>
 
+> **Warning** ASIC Flow targets are super experimental
+> and unstable at the moment.
+> Please don't use these for production in any capacity.
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="3">ASIC</th>
+      <th colspan="2">Toolchain</th>
+    </tr>
+    <tr></tr>
+    <tr>
+      <th>FOSS</th>
+      <th>Proprietary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sky130</td>
+      <td rowspan="10">OpenLANE</td>
+      <td rowspan="10"></td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>sky90</td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>gf180mcu</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## License
 
 Torii is released under the [BSD-2-Clause], the full text of which can be found in the [`LICENSE`] file in the root of the [git repository].
