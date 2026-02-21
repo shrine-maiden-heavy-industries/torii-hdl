@@ -1,0 +1,1209 @@
+
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Changelog" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://torii.shmdn.link/changelog.html" />
+<meta property="og:site_name" content="Torii" />
+<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased:[!IMPORTANT] The minimum Py..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="https://torii.shmdn.link/_images/social_previews/summary_changelog_8a9a495c.png" />
+<meta property="og:image:alt" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased:[!IMPORTANT] The minimum Py..." />
+<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased:[!IMPORTANT] The minimum Py..." />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="License" href="license.html"><link rel="prev" title="Supplementary Libraries" href="supplementary_libraries.html">
+        <link rel="canonical" href="https://torii.shmdn.link/changelog.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+
+<title>Changelog - Torii 0.8.1.dev436 Documentation</title>
+
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-codeautolink.css?v=b2176991" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/styles.css?v=176f8baf" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #2672a8;
+  --color-brand-content: #2672a8;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement multiver">
+  <aside class="announcement-content multiver-content">
+    <strong>
+    
+    This is the bleeding-edge development documentation, for the stable <code>v0.8.1</code> docs <a href="../v0.8.1/changelog.html">Click Here</a>.
+    
+    </strong>
+  </aside>
+</div>
+<div class="announcement">
+  <aside class="announcement-content">
+     This documentation is a work in progress, and you can help us <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">improve it!</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Torii 0.8.1.dev436 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky">
+<a class="sidebar-brand" href="index.html">
+	<span class="sidebar-brand-text">Torii 0.8.1.dev436 Documentation</span>
+	
+  </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="getting_started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/external_modules.html">Including External non-Torii Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Projects Using Torii</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language, API, and Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language/index.html">Language Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/diagnostics.html">Torii Diagnostics</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/hdl/index.html">Torii HDL Reference</a><input aria-label="Toggle navigation of Torii HDL Reference" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/dsl.html">DSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/ir.html">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/time.html">Frequency and Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hdl/xfrm.html">XFRM</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utility/index.html">Torii Utility Library</a><input aria-label="Toggle navigation of Torii Utility Library" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utility/directories.html">Filesystem Paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utility/string.html">String Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utility/tracer.html">Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utility/units.html">Unit Helpers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html">Torii Tool Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="library/index.html">Standard Library</a><input aria-label="Toggle navigation of Standard Library" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/bus/index.html">Busses</a><input aria-label="Toggle navigation of Busses" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/bus/wishbone.html">Wishbone Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/coding/index.html">Encoding and Decoding</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/mem/index.html">Memory</a><input aria-label="Toggle navigation of Memory" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/mem/map.html">Memory Map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/cdc.html">Clock Domain Crossing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library/fifo.html">First-in First-out Queues</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/soc/index.html">System on Chip</a><input aria-label="Toggle navigation of System on Chip" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/soc/event.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/soc/periph.html">Peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/soc/csr/index.html">CSRs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/stdio/index.html">Industry Standard I/O</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/stream/index.html">Stream Library</a><input aria-label="Toggle navigation of Stream Library" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="library/stream/simple/index.html">Simple Streams</a><input aria-label="Toggle navigation of Simple Streams" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/stream/simple/generators.html">Generators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/vendor/index.html">FPGA Vendor Modules</a><input aria-label="Toggle navigation of FPGA Vendor Modules" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/vendor/lattice/index.html">Lattice FPGA Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="platforms/index.html">Platform Integration</a><input aria-label="Toggle navigation of Platform Integration" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="platforms/fpga/index.html">Torii FPGA Platforms</a><input aria-label="Toggle navigation of Torii FPGA Platforms" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/gowin.html">Gowin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/altera.html">Altera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/lattice-ecp5.html">Lattice ECP5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/lattice-ice40.html">Lattice iCE40</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/lattice-machxo-2-3l.html">Lattice MachXO2 and MachXO3L</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/quicklogic.html">Quicklogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/fpga/xilinx.html">Xilinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="platforms/resources/index.html">Platform Resources</a><input aria-label="Toggle navigation of Platform Resources" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms/resources/user.html">User-interaction Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="testing/index.html">Testing and Verification</a><input aria-label="Toggle navigation of Testing and Verification" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/formal.html">Formal Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="migrations/index.html">Version Migration Guides</a><input aria-label="Toggle navigation of Version Migration Guides" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="supplementary_libraries.html">Supplementary Libraries</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torii-boards.shmdn.link/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+</div>
+<div class="sidebar-tree">
+	<p class="caption" role="heading">
+		<span class="caption-text">Versions</span>
+	</p>
+	<ul>
+		<li class="toctree-l1"><a class="reference" href="../v0.8.1/changelog.html">v0.8.1</a></li>
+		<li class="toctree-l1"><a class="reference" href="../v0.8.0/changelog.html">v0.8.0</a></li>
+	</ul>
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/changelog.md?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/edit/main/docs/changelog.md" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <!-- markdownlint-disable MD041 -->
+<!-- markdownlint-disable MD024 -->
+<section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/" rel="noreferer noopener" target="_blank">Keep a Changelog</a>,
+and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html" rel="noreferer noopener" target="_blank">Semantic Versioning</a>.</p>
+<!--
+Unreleased template stuff
+
+## [Unreleased]
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+-->
+<section id="unreleased">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.1...main" rel="noreferer noopener" target="_blank">Unreleased</a><a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p>[!IMPORTANT]
+The minimum Python version for Torii is now 3.11</p>
+</div></blockquote>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Introduced a new global warning handler for Torii to allow for rendering warnings with syntax highlighted context.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">torii.back.json</span></code> backend to emit JSON netlists for designs.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">det</span></code> pin to <code class="docutils literal notranslate"><span class="pre">torii.platforms.resources.memory.SDCardResources</span></code> for hot-plug SD Card detection.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">.from_khz</span></code>, <code class="docutils literal notranslate"><span class="pre">.from_mhz</span></code>, and <code class="docutils literal notranslate"><span class="pre">from_ghz</span></code>, on the <code class="docutils literal notranslate"><span class="pre">torii.build.dsl.Clock</span></code> to create a new clock resource from more than just Hz.</p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">HDMIResource</span></code> for HDMI port resources on board platforms.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">PCIeBusResources</span></code> for PCIe x1, x2, x4, x6, x8, x12, x16, x24, and x32 busses.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">PCIBusResources</span></code> for 32-bit and 64-bit PCI busses.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">platformdirs~=4.0</span></code> dependency used for platform correct cache, temp, and config directories.</p></li>
+<li><p>Added a new <code class="docutils literal notranslate"><span class="pre">torii.util.directories</span></code> module for getting appropriate cross-platform directories for things such as cache and configuration directories.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.cdc.PulseStretcher</span></code> so smear one-cycle pulses over to multiple cycles.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple.ConstantStreamGenerator</span></code>, which is a port of the <code class="docutils literal notranslate"><span class="pre">torii_usb.stream.generator.ConstantStreamGenerator</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple.StreamSerializer</span></code>, which is a port of the <code class="docutils literal notranslate"><span class="pre">torii_usb.stream.generator.StreamSerializer</span></code>.</p></li>
+<li><p>New WASM based simulation backend <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-sim-wasm" rel="noreferer noopener" target="_blank">torii-sim-wasm</a> leveraging <a class="reference external" href="https://wasmtime.dev/" rel="noreferer noopener" target="_blank">wasmtime</a> to speed up larger and longer running simulation tests in a cross-platform manner.</p></li>
+<li><p>Added Gowin <code class="docutils literal notranslate"><span class="pre">GW5A</span></code> and <code class="docutils literal notranslate"><span class="pre">nextpnr-himbaechel</span></code> support to the <code class="docutils literal notranslate"><span class="pre">GowinPlatform</span></code></p></li>
+<li><p>Lattice machXO2 and machXO3l platform now has FOSS toolchain support.</p></li>
+<li><p>Added support for Lattice Nexus devices with both Radiant and project oxide support</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">torii.hdl.time</span></code> Module with <code class="docutils literal notranslate"><span class="pre">Frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">Period</span></code> constructs to unify how clocks are handled.</p></li>
+<li><p>New enhanced diagnostics for Torii designs.</p></li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Minimum Python version has been bumped from <code class="docutils literal notranslate"><span class="pre">3.10</span></code> to <code class="docutils literal notranslate"><span class="pre">3.11</span></code>.</p></li>
+<li><p>Altered the license for the Torii documentation going forward, all past contributions will remain under the <a class="reference external" href="https://spdx.org/licenses/BSD-2-Clause.html" rel="noreferer noopener" target="_blank">BSD-2-Clause</a> until they are re-written/superseded and all new/future contributions to the documentation will be under the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noreferer noopener" target="_blank">CC-BY-SA 4.0</a>.</p></li>
+<li><p>Switched from using the old setuptools <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> over to setuptools via <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></p></li>
+<li><p>Bumped Jinja2 version to <code class="docutils literal notranslate"><span class="pre">~=3.1</span></code></p></li>
+<li><p>Bumped rich version to <code class="docutils literal notranslate"><span class="pre">&gt;=13.7.0</span></code></p></li>
+<li><p>Re-organized <code class="docutils literal notranslate"><span class="pre">torii.platform.resources</span></code> to better categorize resources.</p>
+<ul>
+<li><p>Subdivided <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.display</span></code> into ``.</p></li>
+<li><p>Subdivided <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface</span></code> into <code class="docutils literal notranslate"><span class="pre">.bus</span></code>, <code class="docutils literal notranslate"><span class="pre">.network</span></code>, and <code class="docutils literal notranslate"><span class="pre">.serial</span></code>.</p></li>
+<li><p>Subdivided <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.memory</span></code> into <code class="docutils literal notranslate"><span class="pre">.ram</span></code> and <code class="docutils literal notranslate"><span class="pre">.flash</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HyperBusResource</span></code> now lives in <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.memory</span></code></p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.build.plat</span></code> module now has a <code class="docutils literal notranslate"><span class="pre">PinFeature</span></code> enum which replaces the strings used to pass to the <code class="docutils literal notranslate"><span class="pre">_check_feature</span></code> calls for platform implementation.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.build.plat</span></code> <code class="docutils literal notranslate"><span class="pre">get_*</span></code> functions now take in the list of pin names when generating buffers, to allow for special casing on pin sites as needed.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.io.Pin</span></code> record now exposes <code class="docutils literal notranslate"><span class="pre">i_p</span></code>/<code class="docutils literal notranslate"><span class="pre">i_n</span></code> members for input <code class="docutils literal notranslate"><span class="pre">DiffPairs</span></code> and <code class="docutils literal notranslate"><span class="pre">o_p</span></code>/<code class="docutils literal notranslate"><span class="pre">o_n</span></code> members for output <code class="docutils literal notranslate"><span class="pre">DiffPairs</span></code>.</p></li>
+</ul>
+</section>
+<section id="deprecated">
+<h3>Deprecated<a class="headerlink" href="#deprecated" title="Link to this heading">¶</a></h3>
+</section>
+<section id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed the deprecated HDL construct imports from the root <code class="docutils literal notranslate"><span class="pre">torii</span></code> module, they must now be imported from <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>, <code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code>, and <code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code> constants from <code class="docutils literal notranslate"><span class="pre">torii.hdl.rec</span></code> in favor of the <code class="docutils literal notranslate"><span class="pre">Direction</span></code> enum.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">str</span></code>/<code class="docutils literal notranslate"><span class="pre">dict</span></code> constructor argument in <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> in favor of the new <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>-based construction.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.extend</span></code> decorator, it was never used internally and was a bad idea in the first place.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.memoize</span></code> decorator in favor of <code class="docutils literal notranslate"><span class="pre">functools.cache</span></code> as the accomplish the same thing.</p></li>
+<li><p>Removed the deprecated export of <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code>, it must now be imported from <code class="docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code> directly.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> function in favor of the new and more powerful <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code> module, it has been moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.mem</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module, it has been moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">connect</span></code> method in favor of <code class="docutils literal notranslate"><span class="pre">attach</span></code> and the <code class="docutils literal notranslate"><span class="pre">payload</span></code> signal in favor of <code class="docutils literal notranslate"><span class="pre">data</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals in <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.serial.AsyncSerialRX</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">done</span></code> andd <code class="docutils literal notranslate"><span class="pre">start</span></code> respectively.</p></li>
+<li><p>Removed the dependency on the <code class="docutils literal notranslate"><span class="pre">typing_extensions</span></code> module.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">NameNotFound</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.util.tracer</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> and <code class="docutils literal notranslate"><span class="pre">YosysWarning</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.tools</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code> and <code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.hdl.ir</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> and <code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">DomainError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl.cd</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">UnusedProperty</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">UnusedMustUse</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl._unused</span></code> as <code class="docutils literal notranslate"><span class="pre">MustUseWarning</span></code>.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">ResourceError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.build.res</span></code>.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">torii.util.fs</span></code> module and replaced <code class="docutils literal notranslate"><span class="pre">working_dir</span></code> with <code class="docutils literal notranslate"><span class="pre">contextlib.chdir</span></code>.</p></li>
+</ul>
+</section>
+<section id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed several instances where HDL constructs would accept invalid names and domains resulting in the generated RTLIL to be malformed.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Signal</span></code> properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.ClockSignal</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.ResetSignal</span></code> properly check that the clock domain name is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Property</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.cd.ClockDomain</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid in it’s constructor and <code class="docutils literal notranslate"><span class="pre">rename</span></code> method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl.Module.FSM</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">domain</span></code> are valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl.Module</span></code> now properly validates the name of of submodules when added.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ir.Fragment</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">domain</span></code> is valid in <code class="docutils literal notranslate"><span class="pre">add_driver</span></code> and that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid in <code class="docutils literal notranslate"><span class="pre">add_subfragment</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ir.Instance</span></code> now properly checks that the instance type is valid as well as the the names of the <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.Memory</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.ReadPort</span></code>, <code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.WritePort</span></code>, and <code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.DummyPort</span></code> all now properly check that <code class="docutils literal notranslate"><span class="pre">domain</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.mem.DummyPort</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.rec.Layout</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.rec.Record</span></code> now properly checks that <code class="docutils literal notranslate"><span class="pre">name</span></code> is valid in the constructor and <code class="docutils literal notranslate"><span class="pre">like</span></code> method.</p></li>
+</ul>
+</li>
+<li><p>Fixed incorrect IOB insertion for ECP5 <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> and <code class="docutils literal notranslate"><span class="pre">DCUA</span></code> specialized pins.</p>
+<ul>
+<li><p>Adding an <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> resource now explicitly creates an <code class="docutils literal notranslate"><span class="pre">EXTREFB</span></code> instance and returns the refclk output.</p></li>
+<li><p>Adding a <code class="docutils literal notranslate"><span class="pre">DCUA</span></code> resource directly forwards the IO pins as <code class="docutils literal notranslate"><span class="pre">i_p</span></code>/<code class="docutils literal notranslate"><span class="pre">i_n</span></code> for RX and <code class="docutils literal notranslate"><span class="pre">o_p</span></code>/<code class="docutils literal notranslate"><span class="pre">o_n</span></code> for TX signals.</p></li>
+</ul>
+</li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">LEDResources</span></code>/<code class="docutils literal notranslate"><span class="pre">ButtonResources</span></code>/<code class="docutils literal notranslate"><span class="pre">SwitchResources</span></code> so they now behave as expected an no longer drop the resource name or number params.</p></li>
+<li><p>Fixed undetected name collisions in <code class="docutils literal notranslate"><span class="pre">torii.build.dsl.Subsignal</span></code> when you added two or more <code class="docutils literal notranslate"><span class="pre">Subsignal</span></code>’s with the same name.</p></li>
+<li><p>Fixed issue where the Lattice iCECube2 toolchain build scripts were not generating correctly meaning the environment variable override was broken and ignored.</p></li>
+<li><p>Fixed issue where the QuickLogic toolchain build scripts were not using the environment override for the <code class="docutils literal notranslate"><span class="pre">symbiflow_write_openocd</span></code> command.</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.8.0...v0.8.1" rel="noreferer noopener" target="_blank">0.8.1</a> - 2025-08-03<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>Changed<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Centralized all the Torii diagnostic machinery into <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl.SyntaxError</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl.SyntaxWarning</span></code> are now named <code class="docutils literal notranslate"><span class="pre">ToriiSyntaxError</span></code> and <code class="docutils literal notranslate"><span class="pre">ToriiSyntaxWarning</span></code> respectively, and their import from <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl</span></code> has been deprecated. See deprecated items listed below.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Deprecated<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">NameNotFound</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.util.tracer</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> and <code class="docutils literal notranslate"><span class="pre">YosysWarning</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.tools.yosys</span></code>, they now live in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">YosysError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.tools</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">DriverConflict</span></code> and <code class="docutils literal notranslate"><span class="pre">UnusedElaboratable</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.hdl.ir</span></code>, they now live in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> and <code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code> imports from <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl</span></code>, they now live in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code> as <code class="docutils literal notranslate"><span class="pre">ToriiSyntaxError</span></code> and <code class="docutils literal notranslate"><span class="pre">ToriiSyntaxWarning</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">DomainError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl.cd</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">UnusedProperty</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">UnusedMustUse</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.hdl._unused</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code> as <code class="docutils literal notranslate"><span class="pre">MustUseWarning</span></code>.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">ResourceError</span></code> import from <code class="docutils literal notranslate"><span class="pre">torii.build.res</span></code>, it now lives in <code class="docutils literal notranslate"><span class="pre">torii.diagnostics</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.7...v0.8.0" rel="noreferer noopener" target="_blank">0.8.0</a> - 2025-06-26<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="id5">
+<h3>Added<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>New library module <code class="docutils literal notranslate"><span class="pre">torii.lib.mem</span></code> for more generic-ish not SoC specific memory constructs, such as maps for busses.</p></li>
+<li><p>New library module <code class="docutils literal notranslate"><span class="pre">torii.lib.bus</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs</span></code> module for Consistent Overhead Byte Stuffing encoders.</p>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.coding.cobs.RCOBSEncoder</span></code> for Reverse Consistent Overhead Byte Stuffing, which is a streaming friendly COBS implementation that doesn’t need a full message buffer.</p></li>
+</ul>
+</li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Edge</span></code> for <code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Sample</span></code> based edge detection on either rising or falling edges.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.test.TestCase</span></code> now has an <code class="docutils literal notranslate"><span class="pre">engine</span></code> property that lets you specify the simulation backend, It’s only <code class="docutils literal notranslate"><span class="pre">pysim</span></code> for now.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">on</span></code> and <code class="docutils literal notranslate"><span class="pre">enabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">off</span></code> and <code class="docutils literal notranslate"><span class="pre">disabled</span></code> as valid values for <code class="docutils literal notranslate"><span class="pre">False</span></code> when the <code class="docutils literal notranslate"><span class="pre">type</span></code> param of <code class="docutils literal notranslate"><span class="pre">get_linter_option</span></code> is <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">torii.util.fs</span></code> module for Filesystem related utilities and abstractions, currently only has <code class="docutils literal notranslate"><span class="pre">working_dir</span></code>, which is a context manager for switching working directories for an operation.</p></li>
+<li><p>Added a new way to build C++-based native modules with <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.lib.hash.crc</span></code> module for Cyclic Redundancy Check calculation.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Changed<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.ast.Past</span></code> is now exported in the root <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code> module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_options</span></code> now inspects the whole file for “Magic Comments”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_option</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.util.get_linter_options</span></code> have been memoized to prevent expensive re-parsing of large files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> is now based on the new <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code>.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Deprecated<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.tools.yosys.YosysError</span></code> being exported from <code class="docutils literal notranslate"><span class="pre">torii.back.cxxrtl</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.back.verilog</span></code> has been deprecated and will be removed in a future release.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory</span></code> module has been deprecated and contents moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.mem</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory.MemoryMap</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.memory.ResourceInfo</span></code> are now in <code class="docutils literal notranslate"><span class="pre">torii.lib.mem.map</span></code></p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.lib.soc.wishbone</span></code> module has been deprecated and contents moved to <code class="docutils literal notranslate"><span class="pre">torii.lib.bus.wishbone</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.memoize</span></code> decorator has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">functools.cache</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.util.decorators.extend</span></code> decorator has been deprecated and is slated for removal.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.build_cxx</span></code> function is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx.compile_cxx</span></code> function replacement.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">rdy</span></code> and <code class="docutils literal notranslate"><span class="pre">ack</span></code> signals inside <code class="docutils literal notranslate"><span class="pre">torii.lib.stdio.AsyncSerialRx</span></code> have been renamed to <code class="docutils literal notranslate"><span class="pre">done</span></code> and <code class="docutils literal notranslate"><span class="pre">start</span></code> to better align with their function.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Fixed<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Lots of documentation fixes.</p></li>
+<li><p>Made sure that pullup attribute annotations on iCE40 devices are respected and conveyed through the PCF</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.6...v0.7.7" rel="noreferer noopener" target="_blank">0.7.7</a> - 2025-03-11<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<section id="id10">
+<h3>Deprecated<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.streams.simple.StreamInterface.connect</span></code> has been deprecated as it shadows the superclass method in an incompatible way.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Fixed<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added missing <code class="docutils literal notranslate"><span class="pre">connect</span></code> method on the <code class="docutils literal notranslate"><span class="pre">torii.lib.streams.simple.StreamInterface</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="id12">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.5...v0.7.6" rel="noreferer noopener" target="_blank">0.7.6</a> - 2025-03-7<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
+<section id="id13">
+<h3>Fixed<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed the omission of the extra stream fields in the <code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple.StreamInterface</span></code>’s <code class="docutils literal notranslate"><span class="pre">attach</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="id14">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.1...v0.7.5" rel="noreferer noopener" target="_blank">0.7.5</a> - 2025-03-7<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
+<section id="id15">
+<h3>Added<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added kwargs-based constructor to <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> to allow for more ergonomic usage (<code class="docutils literal notranslate"><span class="pre">DomainRenamer(sync</span> <span class="pre">=</span> <span class="pre">'pipe')</span></code>)</p></li>
+<li><p>Added new library components <code class="docutils literal notranslate"><span class="pre">torii.lib.stream</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple.StreamInterface</span></code> - A unidirectional stream interface.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.stream.simple.StreamArbiter</span></code> - A simple N:1 stream arbiter for <code class="docutils literal notranslate"><span class="pre">StreamInterface</span></code>s</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id16">
+<h3>Changed<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.hdl.cd.ClockDomain</span></code> now has a proper <code class="docutils literal notranslate"><span class="pre">__repr__</span></code></p></li>
+<li><p>Updated minimum/maximum <code class="docutils literal notranslate"><span class="pre">pyvcd</span></code> version</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">typing_extensions</span></code> dependency is now gated behind the active python version, meaning only 3.11 and older need it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Rose</span></code>/<code class="docutils literal notranslate"><span class="pre">Fell</span></code>/<code class="docutils literal notranslate"><span class="pre">Stable</span></code> now importable from the <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code> root module.</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Deprecated<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Deprecated constructing the <code class="docutils literal notranslate"><span class="pre">DomainRenamer</span></code> with a single domain as a string (<code class="docutils literal notranslate"><span class="pre">DomainRenamer('sync')</span></code>), or a literal dictionary (<code class="docutils literal notranslate"><span class="pre">DomainRenamer({'sync':</span> <span class="pre">'pipe'})</span></code>) in favor of kwargs-based construction</p></li>
+<li><p>Deprecated root-level HDL imports (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">torii</span> <span class="pre">import</span> <span class="pre">*</span></code>), all imports for torii HDL constructs should now be done via <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code> exclusively.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">DIR_NONE</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_FANIN</span></code>/<code class="docutils literal notranslate"><span class="pre">DIR_FANOUT</span></code> constants have been deprecated in favor of using the enum values from <code class="docutils literal notranslate"><span class="pre">Direction</span></code></p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Removed<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed deprecated <code class="docutils literal notranslate"><span class="pre">torii.asserts</span></code> module, it’s now only in <code class="docutils literal notranslate"><span class="pre">torii.lib.formal</span></code></p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Fixed<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>More typing fixes</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">torii.util.tracer</span></code> on pypy3.11</p></li>
+</ul>
+</section>
+</section>
+<section id="id20">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.7.0...v0.7.1" rel="noreferer noopener" target="_blank">0.7.1</a> - 2024-11-20<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<section id="id21">
+<h3>Fixed<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed a bug with typing asserts that caused resource unwinding to fail on differential pairs.</p></li>
+</ul>
+</section>
+</section>
+<section id="yanked">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.2...v0.7.0" rel="noreferer noopener" target="_blank">0.7.0</a> - 2024-11-20 [YANKED]<a class="headerlink" href="#yanked" title="Link to this heading">¶</a></h2>
+<section id="id22">
+<h3>Added<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">torii.platform.formal.FormalPlatform</span></code> for formal verification of Torii designs.</p></li>
+<li><p>Added <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/tree/main/examples/formal" rel="noreferer noopener" target="_blank">formal platform examples</a></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">Value.inc()</span></code> and <code class="docutils literal notranslate"><span class="pre">Value.dec()</span></code> calls to help deal with the <code class="docutils literal notranslate"><span class="pre">sig.eq(sig</span> <span class="pre">+</span> <span class="pre">1)</span></code> pattern that is all too common.</p></li>
+<li><p>Added explicit mention of Python 3.13 support.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">structured</span> <span class="pre">records</span></code> to allow for ease of typing <code class="docutils literal notranslate"><span class="pre">torii.hdl.rec.Record</span></code>’s</p></li>
+</ul>
+</section>
+<section id="id23">
+<h3>Changed<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Torii <code class="docutils literal notranslate"><span class="pre">Elaboratable</span></code>’s now have a new optional <code class="docutils literal notranslate"><span class="pre">formal</span></code> function for use in formal verification with the Torii <code class="docutils literal notranslate"><span class="pre">FormalPlatform</span></code>.</p></li>
+<li><p>Torii platforms now have <code class="docutils literal notranslate"><span class="pre">get_override_list</span></code> and <code class="docutils literal notranslate"><span class="pre">get_override_int</span></code> overrides for platform template support.</p></li>
+<li><p>Torii platforms now have optional <code class="docutils literal notranslate"><span class="pre">description</span></code> and <code class="docutils literal notranslate"><span class="pre">pretty_name</span></code> properties.</p></li>
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">read_ilang</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">read_rtlil</span></code> in the Gowin platform, which was the only platform that used the deprecated Yosys command.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Deprecated<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Moved the contents of <code class="docutils literal notranslate"><span class="pre">torii.asserts</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.lib.formal</span></code>.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Removed<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed deprecated <code class="docutils literal notranslate"><span class="pre">log2_int</span></code></p></li>
+<li><p>Removed deprecated <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor.intel</span></code> Module</p></li>
+<li><p>Removed deprecated parameter <code class="docutils literal notranslate"><span class="pre">run_script</span></code> from <code class="docutils literal notranslate"><span class="pre">BuildPlan.execute_local</span></code></p></li>
+</ul>
+</section>
+<section id="id26">
+<h3>Fixed<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed huge chunk of typing, lots to do but should improve useability and ergonomics.</p></li>
+<li><p>Fixed a resource layout issue within the <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface.HyperBusResource</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="id27">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.1...v0.6.2" rel="noreferer noopener" target="_blank">0.6.2</a> - 2024-10-12<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
+<section id="id28">
+<h3>Fixed<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed a bug in the definition of the <code class="docutils literal notranslate"><span class="pre">QSPIResource</span></code> in <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.memory</span></code>, again…</p></li>
+</ul>
+</section>
+</section>
+<section id="id29">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.6.0...v0.6.1" rel="noreferer noopener" target="_blank">0.6.1</a> - 2024-10-12 [YANKED]<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h2>
+<section id="id30">
+<h3>Fixed<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed a bug in the definition of the <code class="docutils literal notranslate"><span class="pre">QSPIResource</span></code> in <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.memory</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="id31">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.5.0...v0.6.0" rel="noreferer noopener" target="_blank">0.6.0</a> - 2024-05-06<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h2>
+<section id="id32">
+<h3>Added<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Rough initial type annotations to <code class="docutils literal notranslate"><span class="pre">torii.hdl.mem</span></code></p></li>
+<li><p>Added the ability to specify <code class="docutils literal notranslate"><span class="pre">tar</span></code> for the <code class="docutils literal notranslate"><span class="pre">torii.build.run.BuildPlan.archive</span></code> call.</p></li>
+<li><p>Added check inside <code class="docutils literal notranslate"><span class="pre">Record</span></code>s to ensure they’re properly constructed prior to accessing their fields.</p></li>
+<li><p>Added the ability to override a Value’s operators.</p></li>
+<li><p>Added the ability to put non-signals into <code class="docutils literal notranslate"><span class="pre">write_vcd</span></code>’s <code class="docutils literal notranslate"><span class="pre">traces</span></code> parameter.</p></li>
+<li><p>Added name disambiguation for traced signals where they share the same name.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ValueLike</span></code> and <code class="docutils literal notranslate"><span class="pre">ShapeLike</span></code>, mainly for additional typing and instance checking assistance.</p></li>
+<li><p>Added the ability for <code class="docutils literal notranslate"><span class="pre">Cat</span></code> and <code class="docutils literal notranslate"><span class="pre">Slice</span></code>, statements to be cast as a <code class="docutils literal notranslate"><span class="pre">Const</span></code> value.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">#!/bin/sh</span></code> to the top of build shell scripts.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">BuildPlan.extract</span></code> to extract files from the build plan without having to run it, this replaces the functionality that occurred when <code class="docutils literal notranslate"><span class="pre">BuildPlan.execute_local</span></code> was passed with <code class="docutils literal notranslate"><span class="pre">run_script</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">BuildPlan.execute_docker</span></code> to allow for invoking a build inside a specified docker container.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">log2_ceil</span></code> and <code class="docutils literal notranslate"><span class="pre">log2_exact</span></code> to replace <code class="docutils literal notranslate"><span class="pre">log2_int</span></code> with the <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">True</span></code> params respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ShapeCastable</span></code> objects can now be const initialized.</p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>Changed<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Improved Oscillator frequency diagnostics for <code class="docutils literal notranslate"><span class="pre">torii.vendor.GowinPlatform</span></code>.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">torii.lib.fifo</span></code> FIFOs to use the new memory semantics correctly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torii.lib.soc.csr</span></code> Multiplexer shadow registers have been re-designed.</p></li>
+<li><p>Bumped minimum Python version from 3.9 to 3.10.</p></li>
+<li><p>Renamed <code class="docutils literal notranslate"><span class="pre">IntelPlatform</span></code> to <code class="docutils literal notranslate"><span class="pre">AlteraPlatform</span></code>.</p></li>
+<li><p>FWFT mode is default for all FIFOs now.</p></li>
+<li><p>Bumped the minimum version of Yosys to 0.30.</p></li>
+<li><p>Empty <code class="docutils literal notranslate"><span class="pre">Case</span></code> blocks now throw an exception when being used in place of a <code class="docutils literal notranslate"><span class="pre">Default</span></code> block</p></li>
+<li><p>Behavioral change warning in empty <code class="docutils literal notranslate"><span class="pre">Value.matches()</span></code> where currently it returns <code class="docutils literal notranslate"><span class="pre">Const(1)</span></code> but will return <code class="docutils literal notranslate"><span class="pre">Const(0)</span></code> in the future.</p></li>
+<li><p>We now only close a VCD or GTKW file in the simulator if it was opened by the simulator.</p></li>
+<li><p>Build shell scripts will now be marked as executable on unix-like hosts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Instance</span></code> objects know collect source location information.</p></li>
+<li><p>Memories have been turned into a first-class IR representation.</p></li>
+<li><p>Out-of-range rests now error, not just warn.</p></li>
+<li><p>A warning is now generated when a <code class="docutils literal notranslate"><span class="pre">Case()</span></code> falls after a <code class="docutils literal notranslate"><span class="pre">Default()</span></code>, and an error is raised when there are multiple <code class="docutils literal notranslate"><span class="pre">Default()</span></code>’s in a <code class="docutils literal notranslate"><span class="pre">Switch</span></code></p></li>
+<li><p>Shape casting a <code class="docutils literal notranslate"><span class="pre">range(1)</span></code> now resolves to an <code class="docutils literal notranslate"><span class="pre">unsigned(0)</span></code></p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Deprecated<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">torii.vendor.intel</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.vendor.intel.IntelPlatform</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">torii.vendor.altera</span></code> and <code class="docutils literal notranslate"><span class="pre">torii.vendor.altera.AlteraPlatform</span></code>.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">execute_local()</span></code>’s <code class="docutils literal notranslate"><span class="pre">run_script</span></code> param in favor of <code class="docutils literal notranslate"><span class="pre">extract</span></code></p></li>
+<li><p>Deprecated use of <code class="docutils literal notranslate"><span class="pre">log2_int</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">log2_ceil</span></code> and <code class="docutils literal notranslate"><span class="pre">log2_exact</span></code> where appropriate.</p></li>
+</ul>
+</section>
+<section id="id35">
+<h3>Removed<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed deprecated <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor.lattice_*</span></code> modules.</p></li>
+<li><p>Removed deprecated <code class="docutils literal notranslate"><span class="pre">Repl</span></code> call in favor of <code class="docutils literal notranslate"><span class="pre">Value.replicate</span></code>.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-x</span></code> if the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> param is set for platform builds.</p></li>
+<li><p>Removed the last little bit of <code class="docutils literal notranslate"><span class="pre">$verilog_initial_trigger</span></code> traces.</p></li>
+<li><p>Removed sub-classing of <code class="docutils literal notranslate"><span class="pre">AnyValue</span></code> and <code class="docutils literal notranslate"><span class="pre">Property</span></code></p></li>
+</ul>
+</section>
+<section id="id36">
+<h3>Fixed<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.settle</span></code> to handle “0” count settles.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">torii.hdl.dsl.Module</span></code>’s constructor to properly use <code class="docutils literal notranslate"><span class="pre">super()</span></code> rather than a parent class name call.</p></li>
+<li><p>Load of typing annotation fixes.</p></li>
+<li><p>Cleaned up a load of blank <code class="docutils literal notranslate"><span class="pre">asserts</span></code>, they should now have more clear error diagnostics.</p></li>
+<li><p>Fixed a handful of typos throughout the library and documentation.</p></li>
+<li><p>Fixed tracer calls for Python 3.13</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">Array</span></code> not being indexable by a <code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code>.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">ValueCastable</span></code> not being accepted as a simulation coroutine command.</p></li>
+<li><p>Fixed handling of redundant <code class="docutils literal notranslate"><span class="pre">Case</span></code> branches.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">Value.shift_right</span></code> and <code class="docutils literal notranslate"><span class="pre">Value.as_signed</span></code> edge cases.</p></li>
+<li><p>Fixed using 0-width <code class="docutils literal notranslate"><span class="pre">Switch</span></code>’s with integer keys.</p></li>
+<li><p>Trying to use the Python <code class="docutils literal notranslate"><span class="pre">in</span></code> operator on a <code class="docutils literal notranslate"><span class="pre">Value</span></code> now raises a sensible error.</p></li>
+<li><p>When indexing or slicing a Value with another Value, it now raises an error and suggests to use <code class="docutils literal notranslate"><span class="pre">Value.bit_select</span></code> or <code class="docutils literal notranslate"><span class="pre">Value.word_select</span></code> instead.</p></li>
+<li><p>Fixed simulation look when process catches an injected exception.</p></li>
+</ul>
+</section>
+</section>
+<section id="id37">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.5...v0.5.0" rel="noreferer noopener" target="_blank">0.5.0</a> - 2023-10-11<a class="headerlink" href="#id37" title="Link to this heading">¶</a></h2>
+<section id="id38">
+<h3>Added<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added some minor comments to the <code class="docutils literal notranslate"><span class="pre">torii.sim.core</span></code> module about the function of some of the objects.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">torii.vendor.gowin.GowinPlatform</span></code>.</p></li>
+<li><p>Added support for Xilinx Artix UltraScale+ part numbers.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">env</span></code> argument to <code class="docutils literal notranslate"><span class="pre">BuildPlan.execute_local</span></code>.</p></li>
+<li><p>Allowed removing <code class="docutils literal notranslate"><span class="pre">src</span></code> attributes on RTLIL output.</p></li>
+</ul>
+</section>
+<section id="id39">
+<h3>Changed<a class="headerlink" href="#id39" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Moved the Lattice platform defs into their own submodule <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor.lattice</span></code>.</p></li>
+<li><p>Replaced the <code class="docutils literal notranslate"><span class="pre">distutils.ccompiler</span></code> with the <code class="docutils literal notranslate"><span class="pre">setuptools.command.build_ext</span></code> module for <code class="docutils literal notranslate"><span class="pre">torii.tools.cxx</span></code>.</p></li>
+<li><p>Disabled the warning emitted on <code class="docutils literal notranslate"><span class="pre">~True</span></code>/<code class="docutils literal notranslate"><span class="pre">~False</span></code> when using it as a value in Torii in Python versions older than 3.12.</p></li>
+<li><p>Relaxed the <code class="docutils literal notranslate"><span class="pre">PyVCD</span></code> dependency version to now also include <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p></li>
+<li><p>Ensured <code class="docutils literal notranslate"><span class="pre">Value.__abs__</span></code> now returns <code class="docutils literal notranslate"><span class="pre">unsigned</span></code> <code class="docutils literal notranslate"><span class="pre">Shape</span></code>.</p></li>
+<li><p>Restructured the <code class="docutils literal notranslate"><span class="pre">torii.lib.coding</span></code> module away from being a monolithic file.</p></li>
+<li><p>Prohibited absolute paths in <code class="docutils literal notranslate"><span class="pre">BuildPlan.add_file</span></code>.</p></li>
+<li><p>Added lowering of <code class="docutils literal notranslate"><span class="pre">Memory</span></code>’s directly to RTLIL <code class="docutils literal notranslate"><span class="pre">$mem_v2</span></code> cells.</p></li>
+<li><p>Ensured <code class="docutils literal notranslate"><span class="pre">Part</span></code> offsets are always unsigned.</p></li>
+<li><p>Disallowed <code class="docutils literal notranslate"><span class="pre">signed(0)</span></code> values.</p></li>
+</ul>
+</section>
+<section id="id40">
+<h3>Deprecated<a class="headerlink" href="#id40" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Old Lattice platform names have been deprecated in favor of the new platform location.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Repl</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Value.replicate</span></code>.</p></li>
+</ul>
+</section>
+<section id="id41">
+<h3>Removed<a class="headerlink" href="#id41" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">torii.cli</span></code> module</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">remote-build</span></code> category from the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> <code class="docutils literal notranslate"><span class="pre">extra_requires</span></code> due to removal of remote builds.</p></li>
+</ul>
+</section>
+<section id="id42">
+<h3>Fixed<a class="headerlink" href="#id42" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed an issue where the <code class="docutils literal notranslate"><span class="pre">IrDAResource</span></code> was not imported into the <code class="docutils literal notranslate"><span class="pre">torii.platform.resources</span></code> <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">torii.utils.tracer</span></code> module to properly handle <code class="docutils literal notranslate"><span class="pre">STORE_DEREF</span></code> and <code class="docutils literal notranslate"><span class="pre">EXTENDED_ARG</span></code>s.</p></li>
+<li><p>Fixed signed value normalization inside <code class="docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">Value.rotate_left</span></code>/<code class="docutils literal notranslate"><span class="pre">Value.rotate_right</span></code> on 0-width values.</p></li>
+<li><p>Fixed a semantic issue with range handling inside <code class="docutils literal notranslate"><span class="pre">Shape.cast</span></code>.</p></li>
+<li><p>Fixed an off-by-one issue in the validation of <code class="docutils literal notranslate"><span class="pre">Slice</span></code>es.</p></li>
+<li><p>Fixed the signedness of the resulting <code class="docutils literal notranslate"><span class="pre">Shape</span></code> when doing subtraction.</p></li>
+<li><p>Fixed handling of <code class="docutils literal notranslate"><span class="pre">ValueKey.__eq__</span></code>.</p></li>
+<li><p>Fixed source-location attribution for <code class="docutils literal notranslate"><span class="pre">Slice</span></code>es.</p></li>
+<li><p>Fixed the order of when <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code> should have been called in the <code class="docutils literal notranslate"><span class="pre">Part</span></code> and <code class="docutils literal notranslate"><span class="pre">Slice</span></code> constructors.</p></li>
+<li><p>Fixed a warning on python 3.12 with the <code class="docutils literal notranslate"><span class="pre">pyrtl</span></code> simulator warning about bitwise negations on booleans.</p></li>
+<li><p>Fixed a test case failure that would only occur on Windows due to it’s backwards path separator.</p></li>
+<li><p>Ensured <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code> is inside <code class="docutils literal notranslate"><span class="pre">Part</span></code>’s and <code class="docutils literal notranslate"><span class="pre">Slice</span></code>s constructor.</p></li>
+<li><p>Fixed  test case that was having issues on Windows paths.</p></li>
+<li><p>Removed translation of empty subfragments as that would cause unintentional blackboxing on Vivado and Yosys.</p></li>
+</ul>
+</section>
+</section>
+<section id="id43">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.4...v0.4.5" rel="noreferer noopener" target="_blank">0.4.5</a> - 2023-03-26<a class="headerlink" href="#id43" title="Link to this heading">¶</a></h2>
+<section id="id44">
+<h3>Added<a class="headerlink" href="#id44" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">-norom</span></code> and <code class="docutils literal notranslate"><span class="pre">-proc</span></code> options to verilog generation if available in Yosys.</p></li>
+<li><p>Added <a class="reference external" href="https://torii.shmdn.link/latest/tutorials/external_modules.html" rel="noreferer noopener" target="_blank">a small tutorial</a> on using <code class="docutils literal notranslate"><span class="pre">platform.add_file</span></code> with <code class="docutils literal notranslate"><span class="pre">Instance</span></code> for referencing external modules.</p></li>
+<li><p>Added conversion helpers to/from picoseconds.</p></li>
+</ul>
+</section>
+<section id="id45">
+<h3>Changed<a class="headerlink" href="#id45" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Updated the minimum Yosys version to <code class="docutils literal notranslate"><span class="pre">0.15</span></code>.</p></li>
+<li><p>Minor typing updates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Value.matches</span></code> now returns <code class="docutils literal notranslate"><span class="pre">Const(1)</span></code> when no value is supplied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Platform.build</span></code> now allows for lists of strings to be passed for argument.</p></li>
+<li><p>Invocations of <code class="docutils literal notranslate"><span class="pre">read_ilang</span></code> in Yosys scripts has been replaced with <code class="docutils literal notranslate"><span class="pre">read_rtlil</span></code> as <code class="docutils literal notranslate"><span class="pre">read_ilang</span></code> has been deprecated for a while now.</p></li>
+<li><p>Replaced <code class="docutils literal notranslate"><span class="pre">sim_case</span></code> in <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> with <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.simulation</span></code> and added two attributes for defining the simulation domain <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.comb_domain</span></code> and <code class="docutils literal notranslate"><span class="pre">ToriiTestCase.sync_domain</span></code>, the latter of which takes a <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">=</span> </code> param to specify which synchronous domain it is using.</p></li>
+<li><p>The default platform in <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">None</span></code>, rather than <code class="docutils literal notranslate"><span class="pre">MockPlatform</span></code></p></li>
+<li><p>Gated the initialization of the <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> <code class="docutils literal notranslate"><span class="pre">dut</span></code> behind a check to prevent non-simulating tests, and tests that don’t use the DUT from exploding.</p></li>
+<li><p>Made the <code class="docutils literal notranslate"><span class="pre">connectors</span></code> property on <code class="docutils literal notranslate"><span class="pre">Platform</span></code>’s optional, it now currently defaults to an empty list.</p></li>
+<li><p>Updated <a class="reference external" href="https://github.com/Textualize/rich" rel="noreferer noopener" target="_blank">rich</a> dependency version from <code class="docutils literal notranslate"><span class="pre">~=12.6.0</span></code> to <code class="docutils literal notranslate"><span class="pre">&gt;=12.6.0</span></code></p></li>
+</ul>
+</section>
+<section id="id46">
+<h3>Deprecated<a class="headerlink" href="#id46" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Deprecated the current <code class="docutils literal notranslate"><span class="pre">torii.cli.*</span></code> methods in anticipation of replacing them.</p></li>
+</ul>
+</section>
+<section id="id47">
+<h3>Removed<a class="headerlink" href="#id47" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed remote SSH build support</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">Value.__hash__</span></code></p></li>
+</ul>
+</section>
+<section id="id48">
+<h3>Fixed<a class="headerlink" href="#id48" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Corrected how environment variables were extracted making them more consistent.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">ToriiTestCase</span></code> so it’s now properly functional</p></li>
+<li><p>Clarified the usage of <code class="docutils literal notranslate"><span class="pre">Cat</span></code> in the language documentation, noting that it can take more than two arguments for concatenation.</p></li>
+<li><p>Added a warning on potential off-by-one errors when invoking <code class="docutils literal notranslate"><span class="pre">Signal</span></code> with a <code class="docutils literal notranslate"><span class="pre">range</span></code> and having the reset value be the same as the end of the range.</p></li>
+</ul>
+</section>
+</section>
+<section id="id49">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.3...v0.4.4" rel="noreferer noopener" target="_blank">0.4.4</a> - 2023-02-25<a class="headerlink" href="#id49" title="Link to this heading">¶</a></h2>
+<section id="id50">
+<h3>Added<a class="headerlink" href="#id50" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Handle <code class="docutils literal notranslate"><span class="pre">Repl</span></code>’s in <code class="docutils literal notranslate"><span class="pre">ValueKey</span></code></p></li>
+<li><p>Allow for <code class="docutils literal notranslate"><span class="pre">IntEnum</span></code>’s in <code class="docutils literal notranslate"><span class="pre">Value.cast</span></code></p></li>
+<li><p>Added proper testing for the <code class="docutils literal notranslate"><span class="pre">torii.util.units</span></code> module.</p></li>
+<li><p>Added proper testing for the <code class="docutils literal notranslate"><span class="pre">torii.util.string</span></code> module.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> </code> in property checks, such as <code class="docutils literal notranslate"><span class="pre">Assert</span></code>, etc.</p></li>
+<li><p>Added exports for <code class="docutils literal notranslate"><span class="pre">convert</span></code> and <code class="docutils literal notranslate"><span class="pre">convert_fragment</span></code> for rtlil, cxxrtl, and verilog into the root <code class="docutils literal notranslate"><span class="pre">torii.back</span></code> module.</p></li>
+</ul>
+</section>
+<section id="id51">
+<h3>Changed<a class="headerlink" href="#id51" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Updated the copyright years in the license file.</p></li>
+<li><p>Hardened the RTLIL backend against generating Yosys reserved port names.</p></li>
+<li><p>Removed warning on <code class="docutils literal notranslate"><span class="pre">IntEnum</span></code>’s in <code class="docutils literal notranslate"><span class="pre">Cat</span></code> (meow)</p></li>
+<li><p>Ensured that files are always are written with Unix <code class="docutils literal notranslate"><span class="pre">LF</span></code> line endings.</p></li>
+<li><p>Renamed the <code class="docutils literal notranslate"><span class="pre">_toolchain</span></code> module to <code class="docutils literal notranslate"><span class="pre">tools</span></code>.</p></li>
+<li><p>Moved the <code class="docutils literal notranslate"><span class="pre">tool_env_var</span></code> from <code class="docutils literal notranslate"><span class="pre">torii.tools</span></code> into <code class="docutils literal notranslate"><span class="pre">torii.util.string</span></code>.</p></li>
+<li><p>Renamed nox session names for <code class="docutils literal notranslate"><span class="pre">flake8</span></code> and <code class="docutils literal notranslate"><span class="pre">mypy</span></code> into <code class="docutils literal notranslate"><span class="pre">lint</span></code> and <code class="docutils literal notranslate"><span class="pre">typecheck</span></code></p></li>
+<li><p>Renamed nox session names for <code class="docutils literal notranslate"><span class="pre">build_dists</span></code> and <code class="docutils literal notranslate"><span class="pre">upload_dist</span></code> into <code class="docutils literal notranslate"><span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">upload</span></code></p></li>
+<li><p>Added a default help formatter for the built-in CLI stub.</p></li>
+</ul>
+</section>
+<section id="id52">
+<h3>Deprecated<a class="headerlink" href="#id52" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Deprecated the remote SSH builds.</p></li>
+<li><p>Deprecated passing non <code class="docutils literal notranslate"><span class="pre">Elaboratable</span></code> or <code class="docutils literal notranslate"><span class="pre">Fragment</span></code> objects to <code class="docutils literal notranslate"><span class="pre">Fragment.get</span></code>.</p></li>
+</ul>
+</section>
+<section id="id53">
+<h3>Removed<a class="headerlink" href="#id53" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">Shape</span></code> and <code class="docutils literal notranslate"><span class="pre">tuple</span></code> casts and comparisons.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">UserValue</span></code> and associated machinery.</p></li>
+<li><p>Removed default ports from <code class="docutils literal notranslate"><span class="pre">rtlil_convert</span></code> and <code class="docutils literal notranslate"><span class="pre">verilog_convert</span></code>.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">step</span></code> from <code class="docutils literal notranslate"><span class="pre">core.Simulator</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">advance</span></code>.</p></li>
+<li><p>Removed support for the <code class="docutils literal notranslate"><span class="pre">AMARANTH_ENV_*</span></code> environment variables.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">_BuiltinYosys</span></code> proxy object and associated bits.</p></li>
+</ul>
+</section>
+<section id="id54">
+<h3>Fixed<a class="headerlink" href="#id54" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed an issue with the <code class="docutils literal notranslate"><span class="pre">TORII_</span></code> environment variables not being recognized.</p></li>
+<li><p>Fixed missing f-strings in the <code class="docutils literal notranslate"><span class="pre">cxxrtl</span></code>, <code class="docutils literal notranslate"><span class="pre">ast</span></code>, and <code class="docutils literal notranslate"><span class="pre">intel</span></code> modules.</p></li>
+<li><p>Fixed an issue in the <code class="docutils literal notranslate"><span class="pre">LatticeECP5</span></code> platform that would have caused broken SystemVerilog inclusions.</p></li>
+<li><p>Fixed a bunch of miscellaneous spelling things.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">src</span></code> attributes would be added to generated RTLIL even if the <code class="docutils literal notranslate"><span class="pre">emit_src</span></code> attribute was <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>Fixed an issue where the tracer would encounter an unknown opcode and would return None.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">iec_size</span></code> utility method to behave a bit better with strange sizes.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">tcl_quote</span></code> string method that would leave un-escaped <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>’s causing the TCL script to fail due to invalid syntax.</p></li>
+<li><p>Fixed an issue in the <code class="docutils literal notranslate"><span class="pre">LatticeICE40</span></code> platform where the <code class="docutils literal notranslate"><span class="pre">IceStorm</span></code> toolchain environment variable was not being normalized properly.</p></li>
+</ul>
+</section>
+</section>
+<section id="id55">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.2...v0.4.3" rel="noreferer noopener" target="_blank">0.4.3</a> - 2022-12-28<a class="headerlink" href="#id55" title="Link to this heading">¶</a></h2>
+<section id="id56">
+<h3>Fixed<a class="headerlink" href="#id56" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed a small issue with the newline changes that caused synthesis to fail</p></li>
+<li><p>Fixed up the ULPI instance to properly handle the <code class="docutils literal notranslate"><span class="pre">clk</span></code> signal and constrain it</p></li>
+</ul>
+</section>
+</section>
+<section id="id57">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.1...v0.4.2" rel="noreferer noopener" target="_blank">0.4.2</a> - 2022-12-18<a class="headerlink" href="#id57" title="Link to this heading">¶</a></h2>
+<section id="id58">
+<h3>Fixed<a class="headerlink" href="#id58" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed the project URLs for the documentation and package.</p></li>
+<li><p>Fixed some minor issues in the install documentation.</p></li>
+<li><p>Fixed the line endings on generated *nix build scripts.</p></li>
+<li><p>Fixed an issue where the built-in test harness was broken with writing VCDs.</p></li>
+</ul>
+</section>
+</section>
+<section id="id59">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/v0.4.0...v0.4.1" rel="noreferer noopener" target="_blank">0.4.1</a> - 2022-12-04<a class="headerlink" href="#id59" title="Link to this heading">¶</a></h2>
+<section id="id60">
+<h3>Fixed<a class="headerlink" href="#id60" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">invoke_tool</span></code> not emitting the environment variable properly</p></li>
+</ul>
+</section>
+</section>
+<section id="id61">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-fork...v0.4.0" rel="noreferer noopener" target="_blank">0.4.0</a> - 2022-12-02 [YANKED]<a class="headerlink" href="#id61" title="Link to this heading">¶</a></h2>
+<section id="id62">
+<h3>Added<a class="headerlink" href="#id62" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Folded in <code class="docutils literal notranslate"><span class="pre">stdio</span></code> library components.</p></li>
+<li><p>Folded in <code class="docutils literal notranslate"><span class="pre">soc</span></code> library components.</p></li>
+<li><p>Folded in resources from <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-boards" rel="noreferer noopener" target="_blank">torii-boards</a> into the <code class="docutils literal notranslate"><span class="pre">torii.platform.resources</span></code> module.</p></li>
+<li><p>Added <a class="reference external" href="https://flake8.pycqa.org/en/latest/" rel="noreferer noopener" target="_blank">flake8</a> configuration file.</p></li>
+<li><p>Added <a class="reference external" href="https://mypy-lang.org/" rel="noreferer noopener" target="_blank">mypy</a> configuration file.</p></li>
+<li><p>Added <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CODE_OF_CONDUCT.md" rel="noreferer noopener" target="_blank">Code Of Conduct</a>.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">noxfile.py</span></code> for use with <a class="reference external" href="https://nox.thea.codes/en/stable/" rel="noreferer noopener" target="_blank">nox</a>.</p></li>
+<li><p>Added an updated python unittest wrapper for use with Torii.</p></li>
+<li><p>Added string utility module.</p></li>
+<li><p>Added units utility module.</p></li>
+<li><p>Added dependency <code class="docutils literal notranslate"><span class="pre">rich</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">CANResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ice40warmboot</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.lib.vendor.lattice.ice40</span></code>.</p></li>
+<li><p>Added empty <code class="docutils literal notranslate"><span class="pre">torii.lib.vendor.xilinx</span></code> module.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">VGADACResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.display</span></code>.</p></li>
+<li><p>Added preliminary support for the yosys+nextpnr-xilinx flow on the Xilinx platform.</p></li>
+<li><p>Added <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CHANGELOG.md" rel="noreferer noopener" target="_blank">Changelog</a> file.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">QSPIFlashResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.memory</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">JTAGResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">EthernetResource</span></code> to <code class="docutils literal notranslate"><span class="pre">torii.platform.resources.interface</span></code>.</p></li>
+</ul>
+</section>
+<section id="id63">
+<h3>Changed<a class="headerlink" href="#id63" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Refactored the <a class="reference external" href="https://torii.shmdn.link/" rel="noreferer noopener" target="_blank">documentation</a>.</p></li>
+<li><p>Migrated string escape functions from the <code class="docutils literal notranslate"><span class="pre">TemplatedPlatform</span></code> into the new strings utility module.</p></li>
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">log2_int</span></code> and <code class="docutils literal notranslate"><span class="pre">bits_for</span></code> into the new units utility module.</p></li>
+<li><p>Moved vendor modules into <code class="docutils literal notranslate"><span class="pre">torii.platform.vendor</span></code>.</p></li>
+<li><p>Replaced deprecated <code class="docutils literal notranslate"><span class="pre">abstractproperty</span></code>s with <code class="docutils literal notranslate"><span class="pre">property</span></code>/<code class="docutils literal notranslate"><span class="pre">abstractmethod</span></code> combo.</p></li>
+<li><p>Moved the <code class="docutils literal notranslate"><span class="pre">tracer</span></code> module into <code class="docutils literal notranslate"><span class="pre">torii.util</span></code>.</p></li>
+<li><p>Moved the <code class="docutils literal notranslate"><span class="pre">_unused</span></code> module into <code class="docutils literal notranslate"><span class="pre">torii.hdl</span></code>.</p></li>
+</ul>
+</section>
+<section id="id64">
+<h3>Removed<a class="headerlink" href="#id64" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">nMigen</span></code> compatibility layer.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">migen</span></code> compatibility layer.</p></li>
+<li><p>Removed the compatibility tests.</p></li>
+<li><p>Removed the RPC server.</p></li>
+<li><p>Removed the old FHDL test case.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">tuple</span></code> case from <code class="docutils literal notranslate"><span class="pre">Shape</span></code>.</p></li>
+<li><p>Removed the warning from <code class="docutils literal notranslate"><span class="pre">rtlil.convert</span></code> and <code class="docutils literal notranslate"><span class="pre">verilog.convert</span></code> about implicit ports.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">_ignore_deprecated</span></code> decorator.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">C</span></code> alias for <code class="docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
+</ul>
+</section>
+<section id="id65">
+<h3>Fixed<a class="headerlink" href="#id65" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fixed the package name.</p></li>
+<li><p>Fixed the package authors.</p></li>
+<li><p>Fixed the package trove classifiers.</p></li>
+<li><p>Fixed all flake8 warnings on the entire codebase.</p></li>
+<li><p>Fixed indentation.</p></li>
+<li><p>Fixed docstring formatting.</p></li>
+</ul>
+</section>
+</section>
+<section id="id66">
+<h2><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.1...amaranth-fork" rel="noreferer noopener" target="_blank">0.1.0</a> - <a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/compare/amaranth-v0.3...amaranth-fork" rel="noreferer noopener" target="_blank">0.3.0</a><a class="headerlink" href="#id66" title="Link to this heading">¶</a></h2>
+<p>No changelog is provided for these versions as they are all older tagged releases of <a class="reference external" href="https://github.com/amaranth-lang/amaranth" rel="noreferer noopener" target="_blank">Amaranth</a> from before the fork.</p>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="license.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">License</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="supplementary_libraries.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Supplementary Libraries</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026 Shrine Maiden Heavy Industries and contributors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#unreleased">Unreleased</a></li>
+<li><a class="reference internal" href="#id1">0.8.1 - 2025-08-03</a></li>
+<li><a class="reference internal" href="#id4">0.8.0 - 2025-06-26</a></li>
+<li><a class="reference internal" href="#id9">0.7.7 - 2025-03-11</a></li>
+<li><a class="reference internal" href="#id12">0.7.6 - 2025-03-7</a></li>
+<li><a class="reference internal" href="#id14">0.7.5 - 2025-03-7</a></li>
+<li><a class="reference internal" href="#id20">0.7.1 - 2024-11-20</a></li>
+<li><a class="reference internal" href="#yanked">0.7.0 - 2024-11-20 [YANKED]</a></li>
+<li><a class="reference internal" href="#id27">0.6.2 - 2024-10-12</a></li>
+<li><a class="reference internal" href="#id29">0.6.1 - 2024-10-12 [YANKED]</a></li>
+<li><a class="reference internal" href="#id31">0.6.0 - 2024-05-06</a></li>
+<li><a class="reference internal" href="#id37">0.5.0 - 2023-10-11</a></li>
+<li><a class="reference internal" href="#id43">0.4.5 - 2023-03-26</a></li>
+<li><a class="reference internal" href="#id49">0.4.4 - 2023-02-25</a></li>
+<li><a class="reference internal" href="#id55">0.4.3 - 2022-12-28</a></li>
+<li><a class="reference internal" href="#id57">0.4.2 - 2022-12-18</a></li>
+<li><a class="reference internal" href="#id59">0.4.1 - 2022-12-04</a></li>
+<li><a class="reference internal" href="#id61">0.4.0 - 2022-12-02 [YANKED]</a></li>
+<li><a class="reference internal" href="#id66">0.1.0 - 0.3.0</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=866c296d"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script src="_static/wavedrom.skin.js"></script>
+    <script src="_static/wavedrom.min.js"></script>
+    <script src="_static/js/wavedrom.min.js?v=912bf3a3"></script>
+    <script src="_static/js/wavedrom.skin.js?v=be5c2381"></script>
+    </body>
+</html>

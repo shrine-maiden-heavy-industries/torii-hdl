@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" data-content_root="../../" lang="en">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport">
+<meta content="IR" property="og:title">
+<meta content="website" property="og:type">
+<meta content="https://torii.shmdn.link/api/hdl/ir.html" property="og:url"/>
+<meta content="Torii" property="og:site_name"/>
+<meta content="1146" property="og:image:width"/>
+<meta content="600" property="og:image:height"/>
+<meta content="https://torii.shmdn.link/_images/social_previews/summary_api_hdl_ir_5bade0ae.png" property="og:image"/>
+<meta content="" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="mem.html" rel="next" title="Memory"/><link href="dsl.html" rel="prev" title="DSL"/>
+<link href="https://torii.shmdn.link/api/hdl/ir.html" rel="canonical"/>
+<!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+<title>IR - Torii 0.8.1.dev436 Documentation</title>
+<link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/furo.css?v=7bdb33bb" rel="stylesheet" type="text/css">
+<link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css">
+<link href="../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css">
+<link href="../../_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/furo-extensions.css?v=8dab3a3b" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/styles.css?v=176f8baf" rel="stylesheet" type="text/css"/>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #2672a8;
+  --color-brand-content: #2672a8;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+      }
+    }
+  }
+</style></link></link></link></link></link></meta></meta></meta></head>
+<body>
+<script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="svg-toc" viewbox="0 0 24 24">
+<title>Contents</title>
+<svg fill="currentColor" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024">
+<path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path>
+</svg>
+</symbol>
+<symbol id="svg-menu" viewbox="0 0 24 24">
+<title>Menu</title>
+<svg class="feather-menu" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<line x1="3" x2="21" y1="12" y2="12"></line>
+<line x1="3" x2="21" y1="6" y2="6"></line>
+<line x1="3" x2="21" y1="18" y2="18"></line>
+</svg>
+</symbol>
+<symbol id="svg-arrow-right" viewbox="0 0 24 24">
+<title>Expand</title>
+<svg class="feather-chevron-right" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</symbol>
+<symbol id="svg-sun" viewbox="0 0 24 24">
+<title>Light mode</title>
+<svg class="feather-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" x2="12" y1="1" y2="3"></line>
+<line x1="12" x2="12" y1="21" y2="23"></line>
+<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+<line x1="1" x2="3" y1="12" y2="12"></line>
+<line x1="21" x2="23" y1="12" y2="12"></line>
+<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+</svg>
+</symbol>
+<symbol id="svg-moon" viewbox="0 0 24 24">
+<title>Dark mode</title>
+<svg class="icon-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+</svg>
+</symbol>
+<symbol id="svg-sun-with-moon" viewbox="0 0 24 24">
+<title>Auto light/dark, in light mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z" style="opacity: 50%"></path>
+<line x1="14.5" x2="14.5" y1="3.25" y2="1.25"></line>
+<line x1="14.5" x2="14.5" y1="15.85" y2="17.85"></line>
+<line x1="10.044" x2="8.63" y1="5.094" y2="3.68"></line>
+<line x1="19" x2="20.414" y1="14.05" y2="15.464"></line>
+<line x1="8.2" x2="6.2" y1="9.55" y2="9.55"></line>
+<line x1="20.8" x2="22.8" y1="9.55" y2="9.55"></line>
+<line x1="10.044" x2="8.63" y1="14.006" y2="15.42"></line>
+<line x1="19" x2="20.414" y1="5.05" y2="3.636"></line>
+<circle cx="14.5" cy="9.55" r="3.6"></circle>
+</svg>
+</symbol>
+<symbol id="svg-moon-with-sun" viewbox="0 0 24 24">
+<title>Auto light/dark, in dark mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"></path>
+<line style="opacity: 50%" x1="18" x2="18" y1="3.705" y2="2.5"></line>
+<line style="opacity: 50%" x1="18" x2="18" y1="11.295" y2="12.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="4.816" y2="3.964"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="10.212" y2="11.063"></line>
+<line style="opacity: 50%" x1="14.205" x2="13.001" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="21.795" x2="23" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="10.184" y2="11.036"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="4.789" y2="3.937"></line>
+<circle cx="18" cy="7.5" r="2.169" style="opacity: 50%"></circle>
+</svg>
+</symbol>
+<symbol id="svg-pencil" viewbox="0 0 24 24">
+<svg class="icon-tabler-pencil-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+<path d="M13.5 6.5l4 4"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+<symbol id="svg-eye" viewbox="0 0 24 24">
+<svg class="icon-tabler-eye-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+<path d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+</svg>
+<input class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<input class="sidebar-toggle" id="__toc" name="__toc" type="checkbox"/>
+<label class="overlay sidebar-overlay" for="__navigation">
+<div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+<div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+<div class="announcement multiver">
+<aside class="announcement-content multiver-content">
+<strong>
+    
+    This is the bleeding-edge development documentation, for the stable <code>v0.8.1</code> docs <a href="../../../v0.8.1/api/hdl/ir.html">Click Here</a>.
+    
+    </strong>
+</aside>
+</div>
+<div class="announcement">
+<aside class="announcement-content">
+     This documentation is a work in progress, and you can help us <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">improve it!</a>
+</aside>
+</div>
+<div class="page">
+<header class="mobile-header">
+<div class="header-left">
+<label class="nav-overlay-icon" for="__navigation">
+<div class="visually-hidden">Toggle site navigation sidebar</div>
+<i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+</label>
+</div>
+<div class="header-center">
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev436 documentation</div></a>
+</div>
+<div class="header-right">
+<div class="theme-toggle-container theme-toggle-header">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-header-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+</header>
+<aside class="sidebar-drawer">
+<div class="sidebar-container">
+<div class="sidebar-sticky">
+<a class="sidebar-brand" href="../../index.html">
+<span class="sidebar-brand-text">Torii 0.8.1.dev436 Documentation</span>
+</a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
+<input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="simple">
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/external_modules.html">Including External non-Torii Modules</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language, API, and Library</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../backend/index.html">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Torii HDL Reference</a><input aria-label="Toggle navigation of Torii HDL Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsl.html">DSL</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">Frequency and Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xfrm.html">XFRM</a></li>
+</ul>
+</input></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../utility/index.html">Torii Utility Library</a><input aria-label="Toggle navigation of Torii Utility Library" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utility/directories.html">Filesystem Paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/string.html">String Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/tracer.html">Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/units.html">Unit Helpers</a></li>
+</ul>
+</input></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input aria-label="Toggle navigation of Standard Library" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/bus/index.html">Busses</a><input aria-label="Toggle navigation of Busses" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/bus/wishbone.html">Wishbone Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Encoding and Decoding</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/mem/index.html">Memory</a><input aria-label="Toggle navigation of Memory" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/mem/map.html">Memory Map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/cdc.html">Clock Domain Crossing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/fifo.html">First-in First-out Queues</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/soc/index.html">System on Chip</a><input aria-label="Toggle navigation of System on Chip" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/event.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/periph.html">Peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/csr/index.html">CSRs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/stdio/index.html">Industry Standard I/O</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/stream/index.html">Stream Library</a><input aria-label="Toggle navigation of Stream Library" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../library/stream/simple/index.html">Simple Streams</a><input aria-label="Toggle navigation of Simple Streams" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../library/stream/simple/generators.html">Generators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/vendor/index.html">FPGA Vendor Modules</a><input aria-label="Toggle navigation of FPGA Vendor Modules" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/lattice/index.html">Lattice FPGA Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../platforms/index.html">Platform Integration</a><input aria-label="Toggle navigation of Platform Integration" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/fpga/index.html">Torii FPGA Platforms</a><input aria-label="Toggle navigation of Torii FPGA Platforms" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/gowin.html">Gowin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/altera.html">Altera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-ecp5.html">Lattice ECP5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-ice40.html">Lattice iCE40</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-machxo-2-3l.html">Lattice MachXO2 and MachXO3L</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/quicklogic.html">Quicklogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input aria-label="Toggle navigation of Platform Resources" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input aria-label="Toggle navigation of Testing and Verification" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input aria-label="Toggle navigation of Version Migration Guides" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../supplementary_libraries.html">Supplementary Libraries</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torii-boards.shmdn.link/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+</div>
+<div class="sidebar-tree">
+<p class="caption" role="heading">
+<span class="caption-text">Versions</span>
+</p>
+<ul>
+<li class="toctree-l1"><a class="reference" href="../../../v0.8.1/api/hdl/ir.html">v0.8.1</a></li>
+<li class="toctree-l1"><a class="reference" href="../../../v0.8.0/api/hdl/ir.html">v0.8.0</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<div class="main">
+<div class="content">
+<div class="article-container">
+<a class="back-to-top muted-link" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+</svg>
+<span>Back to top</span>
+</a>
+<div class="content-icon-container">
+<div class="view-this-page">
+<a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/api/hdl/ir.md?plain=true" title="View this page">
+<svg><use href="#svg-eye"></use></svg>
+<span class="visually-hidden">View this page</span>
+</a>
+</div><div class="edit-this-page">
+<a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/edit/main/docs/api/hdl/ir.md" rel="edit" title="Edit this page">
+<svg><use href="#svg-pencil"></use></svg>
+<span class="visually-hidden">Edit this page</span>
+</a>
+</div><div class="theme-toggle-container theme-toggle-content">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-content-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+<article id="furo-main-content" role="main">
+<section id="module-torii.hdl.ir">
+<span id="ir"></span><h1>IR<a class="headerlink" href="#module-torii.hdl.ir" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Elaboratable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Elaboratable" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable.formal">
+<span class="sig-name descname"><span class="pre">formal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Elaboratable.formal" title="Link to this definition">¶</a></dt>
+<dd><p>Entry point for elaboration under formal verification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Elaboratable.elaborate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Platform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="pre">Module</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Elaboratable.elaborate" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Fragment</span></span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.get">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="pre">Elaboratable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Platform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">formal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment.get" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_ports">
+<span class="sig-name descname"><span class="pre">add_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_ports">
+<span class="sig-name descname"><span class="pre">iter_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_ports" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_driver">
+<span class="sig-name descname"><span class="pre">add_driver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="pre">Signal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ClockSignal" title="torii.hdl.ast.ClockSignal"><span class="pre">ClockSignal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="ast.html#torii.hdl.ast.ResetSignal" title="torii.hdl.ast.ResetSignal"><span class="pre">ResetSignal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_driver" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_drivers">
+<span class="sig-name descname"><span class="pre">iter_drivers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_drivers" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_comb">
+<span class="sig-name descname"><span class="pre">iter_comb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_comb" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_sync">
+<span class="sig-name descname"><span class="pre">iter_sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_sync" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id10">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_signals">
+<span class="sig-name descname"><span class="pre">iter_signals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_signals" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id11">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_domains">
+<span class="sig-name descname"><span class="pre">add_domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">domains</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id12">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.iter_domains">
+<span class="sig-name descname"><span class="pre">iter_domains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.iter_domains" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id13">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_statements">
+<span class="sig-name descname"><span class="pre">add_statements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_statements" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id14">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.add_subfragment">
+<span class="sig-name descname"><span class="pre">add_subfragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subfragment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Fragment.add_subfragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id15">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.find_subfragment">
+<span class="sig-name descname"><span class="pre">find_subfragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.find_subfragment" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id16">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.find_generated">
+<span class="sig-name descname"><span class="pre">find_generated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.find_generated" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id17">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.elaborate">
+<span class="sig-name descname"><span class="pre">elaborate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.elaborate" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id18">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torii.hdl.ir.Fragment.prepare">
+<span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ports=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">Fragment.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torii.hdl.ir.Fragment.prepare" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-todo admonition" id="id19">
+<p class="admonition-title">Todo</p>
+<p>Document Me</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="torii.hdl.ir.Instance">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torii.hdl.ir.</span></span><span class="sig-name descname"><span class="pre">Instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InstanceArgsT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SrcLoc</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ValueCastT</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#torii.hdl.ir.Instance" title="Link to this definition">¶</a></dt>
+<dd><p>Allows for the direct instantiation of external modules, cells, or primitives.</p>
+<p>It accepts the name of the object to instantiate and a collection of keyword arguments
+that define the ports, attributes, and parameters to it.</p>
+<p>It is defined by a prefix followed by the canonical name of the element the value is setting.
+For instance, if you have a cell called <code class="docutils literal notranslate"><span class="pre">dff</span></code> with ports named <code class="docutils literal notranslate"><span class="pre">CLK</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>, and <code class="docutils literal notranslate"><span class="pre">Q</span></code> you
+are able to instantiate it as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dff</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
+        <span class="s1">'dff'</span><span class="p">,</span>
+        <span class="n">i_D</span>   <span class="o">=</span> <span class="n">sig_in</span><span class="p">,</span>
+        <span class="n">i_CLK</span> <span class="o">=</span> <span class="n">clk</span><span class="p">,</span>
+        <span class="n">o_Q</span>   <span class="o">=</span> <span class="n">sig_out</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The meaning of the prefix for the arguments are as follows:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Prefix</p></th>
+<th class="head"><p>Corresponding Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a_</span></code></p></td>
+<td><p>Attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">p_</span></code></p></td>
+<td><p>Parameter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">i_</span></code></p></td>
+<td><p>Input Port/Signal</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">o_</span></code></p></td>
+<td><p>Output Port/Signal</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">io_</span></code></p></td>
+<td><p>Bi-directional Port/Signal</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name/type of object to instantiate</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+</article>
+</div>
+<footer>
+<div class="related-pages">
+<a class="next-page" href="mem.html">
+<div class="page-info">
+<div class="context">
+<span>Next</span>
+</div>
+<div class="title">Memory</div>
+</div>
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+</a>
+<a class="prev-page" href="dsl.html">
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+<div class="page-info">
+<div class="context">
+<span>Previous</span>
+</div>
+<div class="title">DSL</div>
+</div>
+</a>
+</div>
+<div class="bottom-of-page">
+<div class="left-details">
+<div class="copyright">
+                Copyright © 2026 Shrine Maiden Heavy Industries and contributors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+</div>
+<div class="right-details">
+</div>
+</div>
+</footer>
+</div>
+<aside class="toc-drawer">
+<div class="toc-sticky toc-scroll">
+<div class="toc-title-container">
+<span class="toc-title">
+            On this page
+          </span>
+</div>
+<div class="toc-tree-container">
+<div class="toc-tree">
+<ul>
+<li><a class="reference internal" href="#">IR</a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable"><code class="docutils literal notranslate"><span class="pre">Elaboratable</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable.formal"><code class="docutils literal notranslate"><span class="pre">Elaboratable.formal()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Elaboratable.elaborate"><code class="docutils literal notranslate"><span class="pre">Elaboratable.elaborate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment"><code class="docutils literal notranslate"><span class="pre">Fragment</span></code></a><ul>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.get"><code class="docutils literal notranslate"><span class="pre">Fragment.get()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_ports"><code class="docutils literal notranslate"><span class="pre">Fragment.add_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_ports"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_ports()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_driver"><code class="docutils literal notranslate"><span class="pre">Fragment.add_driver()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_drivers"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_drivers()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_comb"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_comb()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_sync"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_sync()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_signals"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_signals()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_domains"><code class="docutils literal notranslate"><span class="pre">Fragment.add_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.iter_domains"><code class="docutils literal notranslate"><span class="pre">Fragment.iter_domains()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_statements"><code class="docutils literal notranslate"><span class="pre">Fragment.add_statements()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.add_subfragment"><code class="docutils literal notranslate"><span class="pre">Fragment.add_subfragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.find_subfragment"><code class="docutils literal notranslate"><span class="pre">Fragment.find_subfragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.find_generated"><code class="docutils literal notranslate"><span class="pre">Fragment.find_generated()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.elaborate"><code class="docutils literal notranslate"><span class="pre">Fragment.elaborate()</span></code></a></li>
+<li><a class="reference internal" href="#torii.hdl.ir.Fragment.prepare"><code class="docutils literal notranslate"><span class="pre">Fragment.prepare()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torii.hdl.ir.Instance"><code class="docutils literal notranslate"><span class="pre">Instance</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div><script src="../../_static/documentation_options.js?v=866c296d"></script>
+<script src="../../_static/doctools.js?v=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+<script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="../../_static/copybutton.js?v=f281be69"></script>
+<script src="../../_static/tabs.js?v=3ee01567"></script>
+<script src="../../_static/wavedrom.skin.js"></script>
+<script src="../../_static/wavedrom.min.js"></script>
+<script src="../../_static/js/wavedrom.min.js?v=912bf3a3"></script>
+<script src="../../_static/js/wavedrom.skin.js?v=be5c2381"></script>
+</body>
+</html>

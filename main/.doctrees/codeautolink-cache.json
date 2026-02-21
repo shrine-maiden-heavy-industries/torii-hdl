@@ -1,0 +1,6763 @@
+{
+  "api/backend/index": [
+    {
+      "source": "class Blinky(Elaboratable):\n    def elaborate(self, platform) -> Module:\n        led   = Signal()\n        timer = Signal(20)\n\n        m = Module()\n        m.d.sync += timer.eq(timer + 1)\n        m.d.comb += led.eq(timer[-1])\n        return m\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "led",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "led.eq",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
+      "example": {
+        "document": "api/backend/index",
+        "ref_id": "example",
+        "headings": [
+          "Torii Backends",
+          "Example"
+        ]
+      },
+      "doc_lineno": 45
+    },
+    {
+      "source": "from torii.back.verilog import convert\n\nverilog = convert(Blinky(), name = 'blinker', ports = [])\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog"
+          ],
+          "code_str": "torii.back.verilog",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.back.verilog"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.back.verilog.convert"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.back.verilog.convert"
+        }
+      ],
+      "example": {
+        "document": "api/backend/index",
+        "ref_id": "example",
+        "headings": [
+          "Torii Backends",
+          "Example"
+        ]
+      },
+      "doc_lineno": 61
+    },
+    {
+      "source": "from torii.back.cxxrtl import convert\n\ncxxrtl = convert(Blinky(), name = 'blinker', ports = [])\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "cxxrtl"
+          ],
+          "code_str": "torii.back.cxxrtl",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.back.cxxrtl"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "cxxrtl",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.back.cxxrtl.convert"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "cxxrtl",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.back.cxxrtl.convert"
+        }
+      ],
+      "example": {
+        "document": "api/backend/index",
+        "ref_id": "example",
+        "headings": [
+          "Torii Backends",
+          "Example"
+        ]
+      },
+      "doc_lineno": 109
+    },
+    {
+      "source": "from torii.back.json import convert\n\njson = convert(Blinky(), name = 'blinker', ports = [])\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "json"
+          ],
+          "code_str": "torii.back.json",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.back.json"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "json",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.back.json.convert"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "json",
+            "convert"
+          ],
+          "code_str": "convert",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.back.json.convert"
+        }
+      ],
+      "example": {
+        "document": "api/backend/index",
+        "ref_id": "example",
+        "headings": [
+          "Torii Backends",
+          "Example"
+        ]
+      },
+      "doc_lineno": 229
+    }
+  ],
+  "api/diagnostics": [],
+  "api/hdl/ast": [
+    {
+      "source": "gpios = Array(Signal() for _ in range(10))\nwith m.If(bus.we):\n        m.d.sync += gpios[bus.addr].eq(bus.w_data)\nwith m.Else():\n        m.d.sync += bus.r_data.eq(gpios[bus.addr])",
+      "names": [
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        }
+      ],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 22
+    },
+    {
+      "source": "mult = Array(Array(x * y for y in range(10)) for x in range(10))\na = Signal.range(10)\nb = Signal.range(10)\nr = Signal(8)\nm.d.comb += r.eq(mult[a][b])",
+      "names": [
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        }
+      ],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 30
+    },
+    {
+      "source": "layout = [\n        (\"r_data\", 16),\n        (\"r_en\",   1),\n]\nbuses  = Array(Record(layout) for busno in range(4))\nmaster = Record(layout)\nm.d.comb += [\n        buses[sel].r_en.eq(master.r_en),\n        master.r_data.eq(buses[sel].r_data),\n]",
+      "names": [
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "range"
+        }
+      ],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 38
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": "len(Cat(args)) == sum(len(arg) for arg in args)",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "sum"
+          ],
+          "code_str": "sum",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "sum"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 12
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": "len(v.replicate(n)) == len(v) * n",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 6
+    },
+    {
+      "source": ">>> Signal(8).shape()\nShape(width = 8, signed = False)\n>>> Const(0xaa).shape()\nShape(width = 8, signed = False)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ast",
+        "ref_id": "module-torii.hdl.ast",
+        "headings": [
+          "Abstract Syntax Tree",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Examples",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 8
+    }
+  ],
+  "api/hdl/cd": [],
+  "api/hdl/dsl": [],
+  "api/hdl/index": [],
+  "api/hdl/ir": [
+    {
+      "source": "dff = Instance(\n        'dff',\n        i_D   = sig_in,\n        i_CLK = clk,\n        o_Q   = sig_out,\n)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/ir",
+        "ref_id": "module-torii.hdl.ir",
+        "headings": [
+          "IR",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 10
+    }
+  ],
+  "api/hdl/mem": [],
+  "api/hdl/rec": [],
+  "api/hdl/time": [
+    {
+      "source": ">>> 1 * GHz\n(frequency 1GHz)\n>>> GHz(5)\n(frequency 5GHz)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * MHz\n(frequency 1MHz)\n>>> MHz(5)\n(frequency 5MHz)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * kHz\n(frequency 1kHz)\n>>> kHz(5)\n(frequency 5kHz)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * Hz\n(frequency 1Hz)\n>>> Hz(5)\n(frequency 5Hz)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * s\n(period 1s)\n>>> s(5)\n(period 5s)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * ms\n(period 1ms)\n>>> ms(5)\n(period 5ms)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * us\n(period 1us)\n>>> us(5)\n(period 5us)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    },
+    {
+      "source": ">>> 1 * ns\n(period 1ns)\n>>> ns(5)\n(period 5ns)",
+      "names": [],
+      "example": {
+        "document": "api/hdl/time",
+        "ref_id": "module-torii.hdl.time",
+        "headings": [
+          "Frequency and Time",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 8
+    }
+  ],
+  "api/hdl/xfrm": [
+    {
+      "source": "m.submodules.timer = timer = DomainRenamer(sync = 'pci')(Timer())",
+      "names": [],
+      "example": {
+        "document": "api/hdl/xfrm",
+        "ref_id": "module-torii.hdl.xfrm",
+        "headings": [
+          "XFRM",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Example"
+        ]
+      },
+      "doc_lineno": 14
+    }
+  ],
+  "api/index": [],
+  "api/tools": [],
+  "api/utility/directories": [],
+  "api/utility/index": [],
+  "api/utility/string": [
+    {
+      "source": ">>> ascii_escape('Hello \u30cb\u30e3~!')\n'Hello_20__30cb__30e3__7e__21_'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "module-torii.util.string",
+        "headings": [
+          "String Helpers",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> tcl_escape('nya {nya} [nya] \\nya')\n'{nya \\{nya\\} [nya] \\\\nya}'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "module-torii.util.string",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> tcl_quote('Meow \"meow\"')\n'\"Meow \\\"meow\\\"\"'\n>>> tcl_quote(\"Meow 'meow'\")\n'\"Meow 'meow'\"'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "module-torii.util.string",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> tool_env_var('cat')\n'CAT'\n>>> tool_env_var('cat-girl')\n'CAT_GIRL'",
+      "names": [],
+      "example": {
+        "document": "api/utility/string",
+        "ref_id": "module-torii.util.string",
+        "headings": [
+          "String Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 13
+    }
+  ],
+  "api/utility/tracer": [
+    {
+      "source": ">>> class Nya:\n...     def __init__(self) -> None:\n...             self.src = get_src_loc()\n...\n>>> meow = Nya() # `meow.src` will be this line\n>>> meow.src\n('<python-input-4>', 1)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "util",
+            "tracer",
+            "get_src_loc"
+          ],
+          "code_str": "get_src_loc",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.util.tracer.get_src_loc"
+        }
+      ],
+      "example": {
+        "document": "api/utility/tracer",
+        "ref_id": "module-torii.util.tracer",
+        "headings": [
+          "Tracer",
+          "Example"
+        ]
+      },
+      "doc_lineno": 17
+    },
+    {
+      "source": ">>> class Nya:\n...     def __init__(self) -> None:\n...             self.name = get_var_name()\n...\n>>> meow = Nya() # `meow.name` will be `meow`\n>>> meow.name\n'meow'",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "util",
+            "tracer",
+            "get_var_name"
+          ],
+          "code_str": "get_var_name",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.util.tracer.get_var_name"
+        }
+      ],
+      "example": {
+        "document": "api/utility/tracer",
+        "ref_id": "module-torii.util.tracer",
+        "headings": [
+          "Tracer",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 13
+    }
+  ],
+  "api/utility/units": [
+    {
+      "source": ">>> bits_for(127)\n7\n>>> bits_for(127, True)\n8\n>>> bits_for(-128)\n8\n>>> bits_for(65355)\n16",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example"
+        ]
+      },
+      "doc_lineno": 13
+    },
+    {
+      "source": ">>> iec_size(92873402)\n'88.57MiB'\n>>> iec_size(4294967296, 0)\n'4GiB'",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 12
+    },
+    {
+      "source": ">>> log2_ceil(16)\n4\n>>> log2_ceil(35)\n6",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> log2_exact(8)\n3\n>>> log2_exact(19)\nTraceback (most recent call last):\nFile \"<python-input-19>\", line 1, in <module>\n        log2_exact(19)\n        ~~~~~~~~~~^^^^\nFile \"units.py\", line 168, in log2_exact\nValueError: 19 is not a power of 2",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> ms_to_sec(4000)\n4.0\n>>> ms_to_sec(500)\n0.5",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> ns_to_sec(3000000000)\n3.0\n>>> ns_to_sec(5000000)\n0.005",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> ps_to_sec(1000000000000)\n1.0\n>>> ps_to_sec(60000000)\n6e-05",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> sec_to_ms(4)\n4000.0\n>>> sec_to_ms(0.5)\n500.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> sec_to_ns(3)\n3000000000.0\n>>> sec_to_ns(0.005)\n5000000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> sec_to_ps(1)\n1000000000000.0\n>>> sec_to_ps(0.00006)\n60000000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> sec_to_us(1)\n1000000.0\n>>> sec_to_us(0.06)\n60000.0",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> us_to_sec(1000000)\n1.0\n>>> us_to_sec(60000)\n0.06",
+      "names": [],
+      "example": {
+        "document": "api/utility/units",
+        "ref_id": "module-torii.util.units",
+        "headings": [
+          "Unit Helpers",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example",
+          "Example"
+        ]
+      },
+      "doc_lineno": 9
+    }
+  ],
+  "changelog": [],
+  "getting_started/index": [
+    {
+      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass UpCounter(Elaboratable):\n    '''\n    A 16-bit up counter with a fixed limit.\n\n    Parameters\n    ----------\n    limit: int\n        The value at which the counter overflows.\n\n    Attributes\n    ----------\n    en: Signal, in\n        The counter is incremented if ``en`` is asserted, and retains\n        its value otherwise.\n\n    ovf: Signal, out\n        ``ovf`` is asserted when the counter reaches its limit.\n    '''\n    def __init__(self, limit: int) -> None:\n        self.limit = limit\n\n        # Ports\n        self.en  = Signal()\n        self.ovf = Signal()\n\n        # State\n        self.count = Signal(16)\n\n    def elaborate(self, platform) -> Module:\n        m = Module()\n\n        m.d.comb += self.ovf.eq(self.count == self.limit)\n\n        with m.If(self.en):\n            with m.If(self.ovf):\n                m.d.sync += self.count.eq(0)\n            with m.Else():\n                m.d.sync += self.count.eq(self.count + 1)\n\n        return m\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 21,
+          "end_lineno": 21,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 32,
+          "end_lineno": 32,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 32,
+          "end_lineno": 32,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
+            "If"
+          ],
+          "code_str": "m.If",
+          "lineno": 36,
+          "end_lineno": 36,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.If"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
+            "If"
+          ],
+          "code_str": "m.If",
+          "lineno": 37,
+          "end_lineno": 37,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.If"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
+            "Else"
+          ],
+          "code_str": "m.Else",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.Else"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 42,
+          "end_lineno": 42,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
+      "example": {
+        "document": "getting_started/index",
+        "ref_id": "implementing-a-counter",
+        "headings": [
+          "Getting Started",
+          "Todo",
+          "Todo",
+          "A counter",
+          "Implementing a counter"
+        ]
+      },
+      "doc_lineno": 29
+    },
+    {
+      "source": "from torii.sim import Simulator # noqa: E402\n\ndut = UpCounter(25)\ndef bench():\n    # Disabled counter should not overflow.\n    yield dut.en.eq(0)\n    for _ in range(30):\n        yield\n        assert not (yield dut.ovf)\n\n    # Once enabled, the counter should overflow in 25 cycles.\n    yield dut.en.eq(1)\n    for _ in range(25):\n        yield\n        assert not (yield dut.ovf)\n    yield\n    assert (yield dut.ovf)\n\n    # The overflow should clear in one cycle.\n    yield\n    assert not (yield dut.ovf)\n\nsim = Simulator(dut)\nsim.add_clock(1e-6) # 1 MHz\nsim.add_sync_process(bench)\nwith sim.write_vcd('up_counter.vcd'):\n    sim.run()\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "sim"
+          ],
+          "code_str": "torii.sim",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.sim"
+        },
+        {
+          "import_components": [
+            "torii",
+            "sim",
+            "Simulator"
+          ],
+          "code_str": "Simulator",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.sim.core.Simulator"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 13,
+          "end_lineno": 13,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "torii",
+            "sim",
+            "Simulator"
+          ],
+          "code_str": "Simulator",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "torii.sim.core.Simulator"
+        },
+        {
+          "import_components": [
+            "torii",
+            "sim",
+            "Simulator",
+            "()"
+          ],
+          "code_str": "sim",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "torii.sim.core.Simulator"
+        }
+      ],
+      "example": {
+        "document": "getting_started/index",
+        "ref_id": "testing-a-counter",
+        "headings": [
+          "Getting Started",
+          "Todo",
+          "Todo",
+          "A counter",
+          "Testing a counter"
+        ]
+      },
+      "doc_lineno": 48
+    },
+    {
+      "source": "from torii.back import verilog # noqa: E402\n\ntop = UpCounter(25)\nwith open('up_counter.v', 'w') as f:\n    f.write(verilog.convert(top, ports = [top.en, top.ovf]))\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog"
+          ],
+          "code_str": "verilog",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.back.verilog"
+        },
+        {
+          "import_components": [
+            "open"
+          ],
+          "code_str": "open",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "open"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog",
+            "convert"
+          ],
+          "code_str": "verilog.convert",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.back.verilog.convert"
+        }
+      ],
+      "example": {
+        "document": "getting_started/index",
+        "ref_id": "converting-a-counter",
+        "headings": [
+          "Getting Started",
+          "Todo",
+          "Todo",
+          "A counter",
+          "Converting a counter"
+        ]
+      },
+      "doc_lineno": 68
+    },
+    {
+      "source": "from torii.hdl import Elaboratable, Module, Signal\n\nclass LEDBlinker(Elaboratable):\n    def elaborate(self, platform):\n        m = Module()\n\n        led = platform.request('led')\n\n        half_freq = int(platform.default_clk_frequency // 2)\n        timer = Signal(range(half_freq + 1))\n\n        with m.If(timer == half_freq):\n            m.d.sync += led.eq(~led)\n            m.d.sync += timer.eq(0)\n        with m.Else():\n            m.d.sync += timer.eq(timer + 1)\n\n        return m\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
+            "If"
+          ],
+          "code_str": "m.If",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.If"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()",
+            "Else"
+          ],
+          "code_str": "m.Else",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module.Else"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 18,
+          "end_lineno": 18,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
+      "example": {
+        "document": "getting_started/index",
+        "ref_id": "a-blinking-led",
+        "headings": [
+          "Getting Started",
+          "Todo",
+          "Todo",
+          "A blinking LED"
+        ]
+      },
+      "doc_lineno": 94
+    },
+    {
+      "source": "from torii_boards.lattice.ice40 import ICEStickPlatform # noqa: E402\n\nICEStickPlatform().build(LEDBlinker(), do_program = True)\n",
+      "names": [],
+      "example": {
+        "document": "getting_started/index",
+        "ref_id": "a-blinking-led",
+        "headings": [
+          "Getting Started",
+          "Todo",
+          "Todo",
+          "A blinking LED",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 111
+    }
+  ],
+  "index": [],
+  "install": [],
+  "intro": [],
+  "language/index": [
+    {
+      "source": "from torii.hdl import *\n",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "the-prelude",
+        "headings": [
+          "Language Guide",
+          "The prelude"
+        ]
+      },
+      "doc_lineno": 19
+    },
+    {
+      "source": "import torii.hdl as tr\n",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "the-prelude",
+        "headings": [
+          "Language Guide",
+          "The prelude"
+        ]
+      },
+      "doc_lineno": 25
+    },
+    {
+      "source": ">>> Shape(width = 5, signed = False)\nunsigned(5)\n>>> Shape(width = 12, signed = True)\nsigned(12)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape"
+          ],
+          "code_str": "Shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape"
+          ],
+          "code_str": "Shape",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes",
+        "headings": [
+          "Language Guide",
+          "Shapes"
+        ]
+      },
+      "doc_lineno": 39
+    },
+    {
+      "source": ">>> unsigned(5) == Shape(width = 5, signed = False)\nTrue\n>>> signed(12) == Shape(width = 12, signed = True)\nTrue",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "unsigned"
+          ],
+          "code_str": "unsigned",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.unsigned"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape"
+          ],
+          "code_str": "Shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "signed"
+          ],
+          "code_str": "signed",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.signed"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape"
+          ],
+          "code_str": "Shape",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes",
+        "headings": [
+          "Language Guide",
+          "Shapes"
+        ]
+      },
+      "doc_lineno": 48
+    },
+    {
+      "source": ">>> Const(5).shape()\nunsigned(3)\n>>> len(Const(5))\n3",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-of-values",
+        "headings": [
+          "Language Guide",
+          "Shapes of values"
+        ]
+      },
+      "doc_lineno": 59
+    },
+    {
+      "source": ">>> ten = Const(10)\n>>> minus_two = Const(-2)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()"
+          ],
+          "code_str": "ten",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()"
+          ],
+          "code_str": "minus_two",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "constants",
+        "headings": [
+          "Language Guide",
+          "Constants"
+        ]
+      },
+      "doc_lineno": 77
+    },
+    {
+      "source": ">>> ten.shape()\nunsigned(4)\n>>> minus_two.shape()\nsigned(2)\n>>> Const(0).shape()\nunsigned(1)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "ten.shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "minus_two.shape",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "constants",
+        "headings": [
+          "Language Guide",
+          "Constants"
+        ]
+      },
+      "doc_lineno": 84
+    },
+    {
+      "source": ">>> Const(360, unsigned(8)).value\n104\n>>> Const(129, signed(8)).value\n-127\n>>> Const(1, unsigned(0)).value\n0",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "unsigned"
+          ],
+          "code_str": "unsigned",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.unsigned"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "signed"
+          ],
+          "code_str": "signed",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.signed"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "unsigned"
+          ],
+          "code_str": "unsigned",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.unsigned"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "constants",
+        "headings": [
+          "Language Guide",
+          "Constants"
+        ]
+      },
+      "doc_lineno": 95
+    },
+    {
+      "source": ">>> Shape.cast(5)\nunsigned(5)\n>>> Const(0, 3).shape()\nunsigned(3)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape",
+            "cast"
+          ],
+          "code_str": "Shape.cast",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape.cast"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-from-integers",
+        "headings": [
+          "Language Guide",
+          "Shape casting",
+          "Shapes from integers"
+        ]
+      },
+      "doc_lineno": 114
+    },
+    {
+      "source": ">>> Const(0, range(100)).shape()\nunsigned(7)\n>>> items = [1, 2, 3]\n>>> Const(1, range(len(items))).shape()\nunsigned(2)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-from-ranges",
+        "headings": [
+          "Language Guide",
+          "Shape casting",
+          "Shapes from ranges"
+        ]
+      },
+      "doc_lineno": 130
+    },
+    {
+      "source": ">>> fencepost = Const(256, range(256))\n>>> fencepost.shape()\nunsigned(8)\n>>> fencepost.value\n0",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()"
+          ],
+          "code_str": "fencepost",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "()",
+            "shape"
+          ],
+          "code_str": "fencepost.shape",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const.shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-from-ranges",
+        "headings": [
+          "Language Guide",
+          "Shape casting",
+          "Shapes from ranges"
+        ]
+      },
+      "doc_lineno": 141
+    },
+    {
+      "source": "class Direction(enum.Enum):\n      TOP    = 0\n      LEFT   = 1\n      BOTTOM = 2\n      RIGHT  = 3",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-from-enumerations",
+        "headings": [
+          "Language Guide",
+          "Shape casting",
+          "Shapes from enumerations"
+        ]
+      },
+      "doc_lineno": 167
+    },
+    {
+      "source": ">>> Shape.cast(Direction)\nunsigned(2)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Shape",
+            "cast"
+          ],
+          "code_str": "Shape.cast",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Shape.cast"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "shapes-from-enumerations",
+        "headings": [
+          "Language Guide",
+          "Shape casting",
+          "Shapes from enumerations"
+        ]
+      },
+      "doc_lineno": 178
+    },
+    {
+      "source": ">>> Value.cast(5)\n(const 3'd5)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Value",
+            "cast"
+          ],
+          "code_str": "Value.cast",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.cast"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "values-from-integers",
+        "headings": [
+          "Language Guide",
+          "Value casting",
+          "Values from integers"
+        ]
+      },
+      "doc_lineno": 200
+    },
+    {
+      "source": ">>> Value.cast(Direction.LEFT)\n(const 2'd1)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Value",
+            "cast"
+          ],
+          "code_str": "Value.cast",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.cast"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "values-from-enumeration-members",
+        "headings": [
+          "Language Guide",
+          "Value casting",
+          "Values from enumeration members"
+        ]
+      },
+      "doc_lineno": 213
+    },
+    {
+      "source": ">>> Const.cast(Cat(Direction.TOP, Direction.LEFT))\n(const 4'd4)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const",
+            "cast"
+          ],
+          "code_str": "Const.cast",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const.cast"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "constant-casting",
+        "headings": [
+          "Language Guide",
+          "Constant casting"
+        ]
+      },
+      "doc_lineno": 230
+    },
+    {
+      "source": ">>> Signal().shape()\nunsigned(1)\n>>> Signal(4).shape()\nunsigned(4)\n>>> Signal(range(-8, 7)).shape()\nsigned(4)\n>>> Signal(Direction).shape()\nunsigned(2)\n>>> Signal(0).shape()\nunsigned(0)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Signal.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Signal.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Signal.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Signal.shape"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "shape"
+          ],
+          "code_str": "shape",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Signal.shape"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "signal-shapes",
+        "headings": [
+          "Language Guide",
+          "Signals",
+          "Signal shapes"
+        ]
+      },
+      "doc_lineno": 252
+    },
+    {
+      "source": ">>> foo = Signal()\n>>> foo.name\n'foo'\n>>> self.bar = Signal()\n>>> self.bar.name\n'bar'",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "foo",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "signal-names",
+        "headings": [
+          "Language Guide",
+          "Signals",
+          "Signal names"
+        ]
+      },
+      "doc_lineno": 276
+    },
+    {
+      "source": ">>> foo2 = Signal(name = 'second_foo')\n>>> foo2.name\n'second_foo'",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "foo2",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "signal-names",
+        "headings": [
+          "Language Guide",
+          "Signals",
+          "Signal names"
+        ]
+      },
+      "doc_lineno": 287
+    },
+    {
+      "source": ">>> Signal(4).reset\n0\n>>> Signal(4, reset = 5).reset\n5\n>>> Signal(Direction, reset = Direction.LEFT).reset\n1",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "initial-signal-values",
+        "headings": [
+          "Language Guide",
+          "Signals",
+          "Initial signal values"
+        ]
+      },
+      "doc_lineno": 303
+    },
+    {
+      "source": ">>> Signal().reset_less\nFalse\n>>> Signal(reset_less = True).reset_less\nTrue",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "reset-less-signals",
+        "headings": [
+          "Language Guide",
+          "Signals",
+          "Reset-less signals"
+        ]
+      },
+      "doc_lineno": 320
+    },
+    {
+      "source": ">>> a = 5\n>>> a + 1\n6",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "performing-or-describing-computations",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Performing or describing computations?"
+        ]
+      },
+      "doc_lineno": 335
+    },
+    {
+      "source": ">>> a = Signal(8, reset = 5)\n>>> a + 1\n(+ (sig a) (const 1'd1))",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "performing-or-describing-computations",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Performing or describing computations?"
+        ]
+      },
+      "doc_lineno": 343
+    },
+    {
+      "source": ">>> if a == 0:\n...     print('Zero!')\nTraceback (most recent call last):\n   ...\nTypeError: Attempted to convert Torii value to Python boolean",
+      "names": [
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "print"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "performing-or-describing-computations",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Performing or describing computations?"
+        ]
+      },
+      "doc_lineno": 351
+    },
+    {
+      "source": ">>> a = Signal(8)\n>>> (a + 1).shape() # needs to represent 1 to 256\nunsigned(9)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "arithmetic-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Arithmetic operators"
+        ]
+      },
+      "doc_lineno": 371
+    },
+    {
+      "source": ">>> a = Signal(unsigned(8))\n>>> b = Signal(signed(8))\n>>> (a + b).shape() # needs to represent -128 to 382\nsigned(10)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "unsigned"
+          ],
+          "code_str": "unsigned",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.unsigned"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "signed"
+          ],
+          "code_str": "signed",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.signed"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "arithmetic-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Arithmetic operators"
+        ]
+      },
+      "doc_lineno": 379
+    },
+    {
+      "source": ">>> (1 << Const(0, 32)).shape()\nunsigned(4294967296)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "bitwise-shift-and-rotate-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Bitwise, shift, and rotate operators"
+        ]
+      },
+      "doc_lineno": 449
+    },
+    {
+      "source": ">>> en = Signal()\n>>> addr = Signal(8)\n>>> en & (addr == 0) # correct\n(& (sig en) (== (sig addr) (const 1'd0)))\n>>> en & addr == 0 # WRONG! addr is truncated to 1 bit\n(== (& (sig en) (sig addr)) (const 1'd0))",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "en",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "addr",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "en",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "addr",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "en",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "addr",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "logical-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Logical operators"
+        ]
+      },
+      "doc_lineno": 500
+    },
+    {
+      "source": ">>> ~False\n-1\n>>> ~True\n-2",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "logical-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Logical operators"
+        ]
+      },
+      "doc_lineno": 514
+    },
+    {
+      "source": ">>> stb = Signal()\n>>> use_stb = True\n>>> (not use_stb) | stb # correct\n(| (const 1'd0) (sig stb))\n>>> ~use_stb | stb # WRONG! MSB of 2-bit wide OR expression is always 1\n(| (const 2'sd-2) (sig stb))",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "stb",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "stb",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "stb",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "logical-operators",
+        "headings": [
+          "Language Guide",
+          "Operators",
+          "Logical operators"
+        ]
+      },
+      "doc_lineno": 523
+    },
+    {
+      "source": ">>> m = Module()",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "modules",
+        "headings": [
+          "Language Guide",
+          "Modules"
+        ]
+      },
+      "doc_lineno": 599
+    },
+    {
+      "source": ">>> s = Signal()\n>>> s.eq(1)\n(eq (sig s) (const 1'd1))",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "s",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "s.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assigning-to-signals",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assigning to signals"
+        ]
+      },
+      "doc_lineno": 619
+    },
+    {
+      "source": ">>> a = Signal(8)\n>>> b = Signal(4)\n>>> Cat(a, b).eq(0)\n(eq (cat (sig a) (sig b)) (const 1'd0))\n>>> a[:4].eq(b)\n(eq (slice (sig a) 0:4) (sig b))\n>>> Cat(a, a).bit_select(b, 2).eq(0b11)\n(eq (part (cat (sig a) (sig a)) (sig b) 2 1) (const 2'd3))",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat",
+            "()",
+            "eq"
+          ],
+          "code_str": "eq",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat",
+            "()",
+            "bit_select"
+          ],
+          "code_str": "bit_select",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Value.bit_select"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat",
+            "()",
+            "bit_select",
+            "()",
+            "eq"
+          ],
+          "code_str": "eq",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "after_call",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-targets",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment targets"
+        ]
+      },
+      "doc_lineno": 633
+    },
+    {
+      "source": "a = Signal()\nb = Signal()\nc = Signal()\nm.d.comb += a.eq(1)\nm.d.sync += [\n      b.eq(c),\n      c.eq(b),\n]\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "c",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "a.eq",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "b.eq",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "c",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "c.eq",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-domains",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment domains"
+        ]
+      },
+      "doc_lineno": 651
+    },
+    {
+      "source": "def add_toggle(num):\n      t = Signal()\n      m.d[f'sync_{num}'] += t.eq(~t)\nadd_toggle(2)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "t",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "t.eq",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "t",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-domains",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment domains"
+        ]
+      },
+      "doc_lineno": 667
+    },
+    {
+      "source": ">>> d = Signal()\n>>> m.d.comb += d.eq(1)\n>>> m.d.sync += d.eq(0)\nTraceback (most recent call last):\n   ...\ntorii.hdl.dsl.SyntaxError: Driver-driver conflict: trying to drive (sig d) from d.sync, but it is already driven from d.comb",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "d",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "d.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "d.eq",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-domains",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment domains"
+        ]
+      },
+      "doc_lineno": 676
+    },
+    {
+      "source": "e = Signal(2)\nm.d.comb += e[0].eq(0)\nm.d.sync += e[1].eq(1)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "e",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "e",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "e",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-domains",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment domains"
+        ]
+      },
+      "doc_lineno": 691
+    },
+    {
+      "source": "a = Signal(8)\nm.d.comb += [\n      a[0:4].eq(Const(1, 4)),\n      a[4:8].eq(Const(2, 4)),\n]\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-order",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment order"
+        ]
+      },
+      "doc_lineno": 709
+    },
+    {
+      "source": "a = Signal(8)\nm.d.comb += a.eq(Cat(Const(1, 4), Const(2, 4)))\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "a.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-order",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment order"
+        ]
+      },
+      "doc_lineno": 720
+    },
+    {
+      "source": "b = Signal(9)\nm.d.comb += [\n   b[0:9].eq(Cat(Const(1, 3), Const(2, 3), Const(3, 3))),\n   b[0:6].eq(Cat(Const(4, 3), Const(5, 3))),\n   b[3:6].eq(Const(6, 3)),\n]\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-order",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment order"
+        ]
+      },
+      "doc_lineno": 730
+    },
+    {
+      "source": "b = Signal(9)\nm.d.comb += b.eq(Cat(Const(4, 3), Const(6, 3), Const(3, 3)))\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "b",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "b.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Cat"
+          ],
+          "code_str": "Cat",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Cat"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Const"
+          ],
+          "code_str": "Const",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Const"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "assignment-order",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Assignment order"
+        ]
+      },
+      "doc_lineno": 742
+    },
+    {
+      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n      m.d.sync += timer.eq(10)\nwith m.Else():\n      m.d.sync += timer.eq(timer - 1)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "control-structures",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Control structures"
+        ]
+      },
+      "doc_lineno": 758
+    },
+    {
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Mux"
+          ],
+          "code_str": "Mux",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Mux"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "control-structures",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Control structures"
+        ]
+      },
+      "doc_lineno": 771
+    },
+    {
+      "source": "timer = Signal(8)\nwith m.If(timer == 0):\n      print('inside `If`')\n      m.d.sync += timer.eq(10)\nwith m.Else():\n      print('inside `Else`')\n      m.d.sync += timer.eq(timer - 1)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "print"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "print"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "control-structures",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Control structures"
+        ]
+      },
+      "doc_lineno": 781
+    },
+    {
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(timer - 1)\nwith m.If(timer == 0):\n      m.d.sync += timer.eq(10)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "active-and-inactive-assignments",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Active and inactive assignments"
+        ]
+      },
+      "doc_lineno": 805
+    },
+    {
+      "source": "m.d.sync += timer.eq(timer - 1)\nm.d.sync += timer.eq(10)\n",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "active-and-inactive-assignments",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Active and inactive assignments"
+        ]
+      },
+      "doc_lineno": 814
+    },
+    {
+      "source": "m.d.sync += timer.eq(10)\n",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "active-and-inactive-assignments",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Active and inactive assignments"
+        ]
+      },
+      "doc_lineno": 821
+    },
+    {
+      "source": "m.d.sync += timer.eq(timer - 1)\n",
+      "names": [],
+      "example": {
+        "document": "language/index",
+        "ref_id": "active-and-inactive-assignments",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Active and inactive assignments"
+        ]
+      },
+      "doc_lineno": 827
+    },
+    {
+      "source": "timer = Signal(8)\nm.d.sync += timer.eq(Mux(timer == 0, 10, timer - 1))\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "timer.eq",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Mux"
+          ],
+          "code_str": "Mux",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Mux"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "timer",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "active-and-inactive-assignments",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Active and inactive assignments"
+        ]
+      },
+      "doc_lineno": 836
+    },
+    {
+      "source": "a = Signal(8, reset=1)\nwith m.If(en):\n      m.d.comb += a.eq(b + 1)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()"
+          ],
+          "code_str": "a",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal",
+            "()",
+            "eq"
+          ],
+          "code_str": "a.eq",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Value.eq"
+        }
+      ],
+      "example": {
+        "document": "language/index",
+        "ref_id": "combinatorial-evaluation",
+        "headings": [
+          "Language Guide",
+          "Modules",
+          "Combinatorial evaluation"
+        ]
+      },
+      "doc_lineno": 850
+    }
+  ],
+  "library/bus/index": [],
+  "library/bus/wishbone": [],
+  "library/cdc": [],
+  "library/coding/index": [],
+  "library/fifo": [],
+  "library/index": [],
+  "library/mem/index": [],
+  "library/mem/map": [],
+  "library/soc/csr/index": [],
+  "library/soc/event": [],
+  "library/soc/index": [],
+  "library/soc/periph": [
+    {
+      "source": ">>> ConstantMap(RX_FIFO_DEPTH = 16)\nConstantMap([('RX_FIFO_DEPTH', ConstantInt(16, width = 5, signed = False))])",
+      "names": [],
+      "example": {
+        "document": "library/soc/periph",
+        "ref_id": "module-torii.lib.soc.periph",
+        "headings": [
+          "Peripherals",
+          "Examples"
+        ]
+      },
+      "doc_lineno": 11
+    }
+  ],
+  "library/stdio/index": [],
+  "library/stream/index": [],
+  "library/stream/simple/generators": [],
+  "library/stream/simple/index": [
+    {
+      "source": "self.data  -> stream.data\nself.valid -> stream.valid\nself.first -> stream.first\nself.last  -> stream.last\nself.ready <- stream.ready",
+      "names": [],
+      "example": {
+        "document": "library/stream/simple/index",
+        "ref_id": "module-torii.lib.stream.simple",
+        "headings": [
+          "Simple Streams",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": "self.data  <- stream.data\nself.valid <- stream.valid\nself.first <- stream.first\nself.last  <- stream.last\nself.ready -> stream.ready",
+      "names": [],
+      "example": {
+        "document": "library/stream/simple/index",
+        "ref_id": "module-torii.lib.stream.simple",
+        "headings": [
+          "Simple Streams",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": "stream.attach(self, ...)",
+      "names": [],
+      "example": {
+        "document": "library/stream/simple/index",
+        "ref_id": "module-torii.lib.stream.simple",
+        "headings": [
+          "Simple Streams",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 20
+    },
+    {
+      "source": "self.data  -> stream.data\nself.valid -> stream.valid\nself.first -> stream.first\nself.last  -> stream.last\nself.ready -> stream.ready",
+      "names": [],
+      "example": {
+        "document": "library/stream/simple/index",
+        "ref_id": "module-torii.lib.stream.simple",
+        "headings": [
+          "Simple Streams",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 5
+    }
+  ],
+  "library/vendor/index": [],
+  "library/vendor/lattice/index": [],
+  "library/vendor/xilinx/index": [],
+  "license": [],
+  "migrations/index": [],
+  "migrations/v0_to_v1": [
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii import *\n\n# NEW (>=1.0.0)\nfrom torii.hdl import *\n",
+      "names": [],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "hdl-constructs-imported-from-root-torii-namespace",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "HDL Constructs Imported From Root torii Namespace"
+        ]
+      },
+      "doc_lineno": 15
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.back.cxxrtl import YosysError\n# -- OR --\nfrom torii.back.verilog import YosysError\n\n# NEW (>=1.0.0)\nfrom torii.tools.yosys import YosysError\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "cxxrtl"
+          ],
+          "code_str": "torii.back.cxxrtl",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_from",
+          "resolved_location": "torii.back.cxxrtl"
+        },
+        {
+          "import_components": [
+            "torii",
+            "back",
+            "verilog"
+          ],
+          "code_str": "torii.back.verilog",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "torii.back.verilog"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "yosys"
+          ],
+          "code_str": "torii.tools.yosys",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "torii.tools.yosys"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "yosys",
+            "YosysError"
+          ],
+          "code_str": "YosysError",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "torii.diagnostics.errors.YosysError"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "importing-yosyserror-from-torii-back-cxxrtl-and-torii-back-verilog",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "Importing YosysError from torii.back.cxxrtl and torii.back.verilog"
+        ]
+      },
+      "doc_lineno": 29
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.hdl.rec import DIR_FANIN, DIR_FANOUT, DIR_NONE\n\nrec = Record([\n\t('a', 1, DIR_FANIN),\n\t('b', 1, DIR_FANOUT),\n\t('c', 1, DIR_NONE),\n])\n\n# NEW (>=1.0.0)\nfrom torii.hdl.rec import Direction\n\nrec = Record([\n\t('a', 1, Direction.FANIN),\n\t('b', 1, Direction.FANOUT),\n\t('c', 1, Direction.NONE),\n])\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec"
+          ],
+          "code_str": "torii.hdl.rec",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_from",
+          "resolved_location": "torii.hdl.rec"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec"
+          ],
+          "code_str": "torii.hdl.rec",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "import_from",
+          "resolved_location": "torii.hdl.rec"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec",
+            "Direction"
+          ],
+          "code_str": "Direction",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.rec.Direction"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec",
+            "Direction",
+            "FANIN"
+          ],
+          "code_str": "Direction.FANIN",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "torii.hdl.rec.Direction.FANIN"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec",
+            "Direction",
+            "FANOUT"
+          ],
+          "code_str": "Direction.FANOUT",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "torii.hdl.rec.Direction.FANOUT"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "rec",
+            "Direction",
+            "NONE"
+          ],
+          "code_str": "Direction.NONE",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.hdl.rec.Direction.NONE"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "dir-fanin-dir-fanout-dir-none-from-torii-hdl-rec",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "DIR_FANIN/DIR_FANOUT/DIR_NONE from torii.hdl.rec"
+        ]
+      },
+      "doc_lineno": 43
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.tools.cxx import build_cxx\n\nbuild_dir, output_file = build_cxx(\n\tcxx_sources = {\n\t\t'foo.cc': '/* Source Code for foo */'\n\t},\n\toutput_name  = 'foo',\n\tinclude_dirs = [],\n\tmacros       = []\n)\n\n# NEW (>=1.0.0)\nfrom torii.tools.cxx import compile_cxx\n\noutput_file = compile_cxx(\n\t'foo',\n\tbuild_dir,\n\tNone,\n\tsource_listings = {\n\t\t'foo.cc': '/* Source for foo */'\n\t}\n)\n\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx"
+          ],
+          "code_str": "torii.tools.cxx",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_from",
+          "resolved_location": "torii.tools.cxx"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx"
+          ],
+          "code_str": "torii.tools.cxx",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "import_from",
+          "resolved_location": "torii.tools.cxx"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx",
+            "compile_cxx"
+          ],
+          "code_str": "compile_cxx",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "import_target",
+          "resolved_location": "torii.tools.cxx.compile_cxx"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx",
+            "compile_cxx"
+          ],
+          "code_str": "compile_cxx",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.tools.cxx.compile_cxx"
+        },
+        {
+          "import_components": [
+            "torii",
+            "tools",
+            "cxx",
+            "compile_cxx",
+            "()"
+          ],
+          "code_str": "output_file",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "build-cxx-from-torii-tools-cxx",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "build_cxx from torii.tools.cxx"
+        ]
+      },
+      "doc_lineno": 69
+    },
+    {
+      "source": "def build_cxx(\n\tcxx_sources: dict[str, str], output_name: str, include_dirs: list[str], macros: list[str]\n)  -> tuple[TemporaryDirectory[str], str]:\n\n\tbuild_dir  = TemporaryDirectory(prefix = 'torii_cxx_')\n\toutput_dir = Path(build_dir.name)\n\n\toutput_file = compile_cxx(\n\t\toutput_name, output_dir, None, include_paths = include_dirs, defines = {\n\t\t\tk: v for (k, v) in (macro.strip().split('=', 2) for macro in macros)\n\t\t},\n\t\tsource_listings = cxx_sources\n\t)\n\n\treturn (build_dir, output_file.name)\n",
+      "names": [
+        {
+          "import_components": [
+            "tuple"
+          ],
+          "code_str": "tuple",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "tuple"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "dict"
+          ],
+          "code_str": "dict",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "dict"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "str"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "build-cxx-from-torii-tools-cxx",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "build_cxx from torii.tools.cxx"
+        ]
+      },
+      "doc_lineno": 100
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.util.decorators import memoize\n\n@memoize\ndef foo(bar: int, baz: int) -> int:\n\t...\n\n# NEW (>=1.0.0)\nfrom functools import cache\n\n@cache\ndef foo(bar: int, baz: int) -> int:\n\t...\n",
+      "names": [
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "functools"
+          ],
+          "code_str": "functools",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "import_from",
+          "resolved_location": "functools"
+        },
+        {
+          "import_components": [
+            "functools",
+            "cache"
+          ],
+          "code_str": "cache",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "import_target",
+          "resolved_location": "functools.cache"
+        },
+        {
+          "import_components": [
+            "functools",
+            "cache"
+          ],
+          "code_str": "cache",
+          "lineno": 11,
+          "end_lineno": 11,
+          "context": "none",
+          "resolved_location": "functools.cache"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "int"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "memoize-from-torii-util-decorators",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "General",
+          "@memoize from torii.util.decorators"
+        ]
+      },
+      "doc_lineno": 126
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.memory import MemoryMap, ResourceInfo\n\n# NEW (>=1.0.0)\nfrom torii.lib.mem.map import MemoryMap, ResourceInfo\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "mem",
+            "map"
+          ],
+          "code_str": "torii.lib.mem.map",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_from",
+          "resolved_location": "torii.lib.mem.map"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "mem",
+            "map",
+            "MemoryMap"
+          ],
+          "code_str": "MemoryMap",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_target",
+          "resolved_location": "torii.lib.mem.map.MemoryMap"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "mem",
+            "map",
+            "ResourceInfo"
+          ],
+          "code_str": "ResourceInfo",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_target",
+          "resolved_location": "torii.lib.mem.map.ResourceInfo"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "torii-lib-soc-memory",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Library Changes",
+          "torii.lib.soc.memory"
+        ]
+      },
+      "doc_lineno": 150
+    },
+    {
+      "source": "# OLD (<1.0.0)\nfrom torii.lib.soc.wishbone import Arbiter, Interface\n\n# -- OR --\nfrom torii.lib.soc.wishbone.bus import Arbiter, Interface\n\n# NEW (>=1.0.0)\nfrom torii.lib.bus.wishbone import Arbiter, Interface\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "bus",
+            "wishbone"
+          ],
+          "code_str": "torii.lib.bus.wishbone",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "torii.lib.bus.wishbone"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "bus",
+            "wishbone",
+            "Arbiter"
+          ],
+          "code_str": "Arbiter",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "torii.lib.bus.wishbone.Arbiter"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "bus",
+            "wishbone",
+            "Interface"
+          ],
+          "code_str": "Interface",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "torii.lib.bus.wishbone.Interface"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "torii-lib-soc-wishbone",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Library Changes",
+          "torii.lib.soc.wishbone"
+        ]
+      },
+      "doc_lineno": 162
+    },
+    {
+      "source": "from torii.hdl import DomainRenamer\n\n# OLD (<1.0.0)\n\na = DomainRenamer('meow')(elab)\n# -- OR --\na = DomainRenamer({'sync': 'meow'})(elab)\n\n# NEW (>=1.0.0)\na = DomainRenamer(sync = 'meow')(elab)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "domainrenamer-from-torii-hdl-xfrm",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "DomainRenamer from torii.hdl.xfrm"
+        ]
+      },
+      "doc_lineno": 181
+    },
+    {
+      "source": "from torii.hdl import DomainRenamer\n\ndomain_map = {\n\t'sync': 'meow',\n\t# ...\n}\n\n# OLD (<1.0.0)\na = DomainRenamer(domain_map)(elab)\n\n# NEW (>=1.0.0)\na = DomainRenamer(**domain_map)(elab)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "DomainRenamer"
+          ],
+          "code_str": "DomainRenamer",
+          "lineno": 12,
+          "end_lineno": 12,
+          "context": "none",
+          "resolved_location": "torii.hdl.xfrm.DomainRenamer"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "domainrenamer-from-torii-hdl-xfrm",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "DomainRenamer from torii.hdl.xfrm"
+        ]
+      },
+      "doc_lineno": 196
+    },
+    {
+      "source": "from torii.lib.stream.simple import StreamInterface\n\nfoo      = Signal(8)\n\nstream_a = StreamInterface()\nstream_b = StreamInterface()\n\n# OLD (<1.0.0)\nstream_a.connect(stream_b)\n\n# ...\n\nm.d.comb += [\n\tfoo.eq(stream_a.payload),\n]\n\n# NEW (>=1.0.0)\nstream_a.attach(stream_a)\n\n# ...\n\nm.d.comb += [\n\tfoo.eq(stream_a.data),\n]\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple"
+          ],
+          "code_str": "torii.lib.stream.simple",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.lib.stream.simple"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_a",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface"
+          ],
+          "code_str": "StreamInterface",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_b",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()",
+            "connect"
+          ],
+          "code_str": "stream_a.connect",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.hdl.rec.Record.connect"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_b",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()",
+            "attach"
+          ],
+          "code_str": "stream_a.attach",
+          "lineno": 18,
+          "end_lineno": 18,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface.attach"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stream",
+            "simple",
+            "StreamInterface",
+            "()"
+          ],
+          "code_str": "stream_a",
+          "lineno": 18,
+          "end_lineno": 18,
+          "context": "none",
+          "resolved_location": "torii.lib.stream.simple.StreamInterface"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "streaminterface-from-torii-lib-stream-simple",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "StreamInterface from torii.lib.stream.simple"
+        ]
+      },
+      "doc_lineno": 215
+    },
+    {
+      "source": "from torii.lib.stdio.serial import AsyncSerialRX\n\nuart_rx = AsyncSerialRX(...)\n\n# OLD (<1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.ack.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.rdy):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n\n# NEW (>=1.0.0)\n\nwith m.FSM(name = 'rx') as fsm:\n\tm.d.comb += [ uart_rx.start.eq(fsm.ongoing('IDLE')), ]\n\n\twith m.State('IDLE'):\n\t\twith m.If(uart_rx.done):\n\t\t\tm.d.sync += [ data_rx.eq(uart_rx.data), ]\n\t\t\tm.next = 'CMD'\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial"
+          ],
+          "code_str": "torii.lib.stdio.serial",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "torii.lib.stdio.serial"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX"
+          ],
+          "code_str": "AsyncSerialRX",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX"
+          ],
+          "code_str": "AsyncSerialRX",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        },
+        {
+          "import_components": [
+            "torii",
+            "lib",
+            "stdio",
+            "serial",
+            "AsyncSerialRX",
+            "()"
+          ],
+          "code_str": "uart_rx",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "none",
+          "resolved_location": "torii.lib.stdio.serial.AsyncSerialRX"
+        }
+      ],
+      "example": {
+        "document": "migrations/v0_to_v1",
+        "ref_id": "asyncserialrx-from-torii-lib-stdio-serial",
+        "headings": [
+          "Torii v0.X to v1.0 Migration Guide",
+          "Todo",
+          "Module Changes",
+          "AsyncSerialRX from torii.lib.stdio.serial"
+        ]
+      },
+      "doc_lineno": 248
+    }
+  ],
+  "platforms/fpga/altera": [],
+  "platforms/fpga/gowin": [],
+  "platforms/fpga/index": [],
+  "platforms/fpga/lattice-ecp5": [
+    {
+      "source": "@echo off\nset PATH = C:\\lscc\\diamond\\%DIAMOND_VERSION%\\bin\\nt64;%PATH%",
+      "names": [],
+      "example": {
+        "document": "platforms/fpga/lattice-ecp5",
+        "ref_id": "lattice-ecp5",
+        "headings": [
+          "Lattice ECP5"
+        ]
+      },
+      "doc_lineno": 41
+    }
+  ],
+  "platforms/fpga/lattice-ice40": [],
+  "platforms/fpga/lattice-machxo-2-3l": [
+    {
+      "source": "@echo off\nset PATH=C:\\lscc\\diamond\\%DIAMOND_VERSION%\\bin\\nt64;%PATH%",
+      "names": [],
+      "example": {
+        "document": "platforms/fpga/lattice-machxo-2-3l",
+        "ref_id": "lattice-machxo2-and-machxo3l",
+        "headings": [
+          "Lattice MachXO2 and MachXO3L"
+        ]
+      },
+      "doc_lineno": 41
+    }
+  ],
+  "platforms/fpga/quicklogic": [],
+  "platforms/fpga/xilinx": [],
+  "platforms/index": [],
+  "platforms/resources/display": [],
+  "platforms/resources/extensions": [],
+  "platforms/resources/index": [],
+  "platforms/resources/interface": [
+    {
+      "source": "pcie = PCIeBusResouces('pcie', 0, ...) # Signals up to x16\npcie[0] # pcie_x1\npcie[1] # pcie_x2\npcie[2] # pcie_x4\npcie[3] # pcie_x6\npcie[4] # pcie_x8\npcie[5] # pcie_x12\npcie[6] # pcie_x16",
+      "names": [],
+      "example": {
+        "document": "platforms/resources/interface",
+        "ref_id": "module-torii.platform.resources.interface",
+        "headings": [
+          "IO Interface Resources",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 21
+    }
+  ],
+  "platforms/resources/memory": [],
+  "platforms/resources/user": [],
+  "projects": [],
+  "supplementary_libraries": [],
+  "testing/formal": [],
+  "testing/index": [],
+  "testing/simulation": [
+    {
+      "source": "sim = Simulator(frag)\nsim.add_clock(1e-6)\nwith sim.write_vcd('dump.vcd\", \"dump.gtkw'):\n        sim.run_until(1e-3)",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "sim",
+            "Simulator"
+          ],
+          "code_str": "Simulator",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.sim.core.Simulator"
+        },
+        {
+          "import_components": [
+            "torii",
+            "sim",
+            "Simulator",
+            "()"
+          ],
+          "code_str": "sim",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.sim.core.Simulator"
+        }
+      ],
+      "example": {
+        "document": "testing/simulation",
+        "ref_id": "module-torii.sim",
+        "headings": [
+          "Simulation",
+          "Todo",
+          "Todo",
+          "Todo",
+          "Todo"
+        ]
+      },
+      "doc_lineno": 6
+    }
+  ],
+  "tutorials/external_modules": [
+    {
+      "source": "Instance(\n    'MyInverter',\n    i_src = input_signal,\n    o_dst = output_signal\n)\n",
+      "names": [
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Instance"
+          ],
+          "code_str": "Instance",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Instance"
+        }
+      ],
+      "example": {
+        "document": "tutorials/external_modules",
+        "ref_id": "torii-instance",
+        "headings": [
+          "Including External non-Torii Modules",
+          "Torii Instance"
+        ]
+      },
+      "doc_lineno": 16
+    },
+    {
+      "source": "from pathlib   import Path\nfrom torii.hdl import Elaboratable, Module, Signal, Instance\n\nclass MyInverter(Elaboratable):\n    def __init__(self) -> None:\n        self.input = Signal()\n        self.output = Signal()\n        self.extern_module = Path('./my_inverter.v').resolve()\n\n    def elaborate(self, platform) -> Module:\n        # Add the file to the platform\n        if platform is not None:\n            with self.extern_module.open('r') as f:\n                platform.add_file(self.extern_module.name, f)\n\n        m = Module()\n\n        # Add the\n        m.submodules += Instance(\n            'MyInverter',\n            i_src = self.input,\n            i_dst = self.output\n        )\n\n        return m\n",
+      "names": [
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Instance"
+          ],
+          "code_str": "Instance",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "torii.hdl.ir.Instance"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Elaboratable"
+          ],
+          "code_str": "Elaboratable",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Elaboratable"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Signal"
+          ],
+          "code_str": "Signal",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "torii.hdl.ast.Signal"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()",
+            "resolve"
+          ],
+          "code_str": "resolve",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "after_call",
+          "resolved_location": "pathlib.Path.resolve"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module"
+          ],
+          "code_str": "Module",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Instance"
+          ],
+          "code_str": "Instance",
+          "lineno": 19,
+          "end_lineno": 19,
+          "context": "none",
+          "resolved_location": "torii.hdl.ir.Instance"
+        },
+        {
+          "import_components": [
+            "torii",
+            "hdl",
+            "Module",
+            "()"
+          ],
+          "code_str": "m",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "torii.hdl.dsl.Module"
+        }
+      ],
+      "example": {
+        "document": "tutorials/external_modules",
+        "ref_id": "including-external-sources",
+        "headings": [
+          "Including External non-Torii Modules",
+          "Including External Sources"
+        ]
+      },
+      "doc_lineno": 40
+    }
+  ],
+  "tutorials/index": []
+}

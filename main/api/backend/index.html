@@ -1,0 +1,1008 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" data-content_root="../../" lang="en">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport">
+<meta content="Torii Backends" property="og:title">
+<meta content="website" property="og:type">
+<meta content="https://torii.shmdn.link/api/backend/index.html" property="og:url"/>
+<meta content="Torii" property="og:site_name"/>
+<meta content="Torii has 3 primary backends, RTLIL, Verilog, and CXXRTL, each takes a Torii Fragment or Elaboratable and produces an RTL netlist in the given output format. There is also the JSON backend for gene..." property="og:description"/>
+<meta content="1146" property="og:image:width"/>
+<meta content="600" property="og:image:height"/>
+<meta content="https://torii.shmdn.link/_images/social_previews/summary_api_backend_index_04d54a5f.png" property="og:image"/>
+<meta content="Torii has 3 primary backends, RTLIL, Verilog, and CXXRTL, each takes a Torii Fragment or Elaboratable and produces an RTL netlist in the given output format. There is also the JSON backend for gene..." property="og:image:alt"/>
+<meta content="Torii has 3 primary backends, RTLIL, Verilog, and CXXRTL, each takes a Torii Fragment or Elaboratable and produces an RTL netlist in the given output format. There is also the JSON backend for gene..." name="description"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../genindex.html" rel="index" title="Index"/><link href="../../search.html" rel="search" title="Search"/><link href="../diagnostics.html" rel="next" title="Torii Diagnostics"/><link href="../index.html" rel="prev" title="API Reference"/>
+<link href="https://torii.shmdn.link/api/backend/index.html" rel="canonical"/>
+<!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+<title>Torii Backends - Torii 0.8.1.dev436 Documentation</title>
+<link href="../../_static/pygments.css?v=b86133f3" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/furo.css?v=7bdb33bb" rel="stylesheet" type="text/css">
+<link href="../../_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css">
+<link href="../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css">
+<link href="../../_static/tabs.css?v=4c969af8" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/furo-extensions.css?v=8dab3a3b" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/styles.css?v=176f8baf" rel="stylesheet" type="text/css"/>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #2672a8;
+  --color-brand-content: #2672a8;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #85C2FE;
+  --color-brand-content: #85C2FE;
+  --color-announcement-background: #ffab87;
+  --color-announcement-text: #494453;
+  
+      }
+    }
+  }
+</style></link></link></link></link></link></meta></meta></meta></head>
+<body>
+<script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="svg-toc" viewbox="0 0 24 24">
+<title>Contents</title>
+<svg fill="currentColor" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024">
+<path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path>
+</svg>
+</symbol>
+<symbol id="svg-menu" viewbox="0 0 24 24">
+<title>Menu</title>
+<svg class="feather-menu" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<line x1="3" x2="21" y1="12" y2="12"></line>
+<line x1="3" x2="21" y1="6" y2="6"></line>
+<line x1="3" x2="21" y1="18" y2="18"></line>
+</svg>
+</symbol>
+<symbol id="svg-arrow-right" viewbox="0 0 24 24">
+<title>Expand</title>
+<svg class="feather-chevron-right" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</symbol>
+<symbol id="svg-sun" viewbox="0 0 24 24">
+<title>Light mode</title>
+<svg class="feather-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" x2="12" y1="1" y2="3"></line>
+<line x1="12" x2="12" y1="21" y2="23"></line>
+<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+<line x1="1" x2="3" y1="12" y2="12"></line>
+<line x1="21" x2="23" y1="12" y2="12"></line>
+<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+</svg>
+</symbol>
+<symbol id="svg-moon" viewbox="0 0 24 24">
+<title>Dark mode</title>
+<svg class="icon-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+</svg>
+</symbol>
+<symbol id="svg-sun-with-moon" viewbox="0 0 24 24">
+<title>Auto light/dark, in light mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z" style="opacity: 50%"></path>
+<line x1="14.5" x2="14.5" y1="3.25" y2="1.25"></line>
+<line x1="14.5" x2="14.5" y1="15.85" y2="17.85"></line>
+<line x1="10.044" x2="8.63" y1="5.094" y2="3.68"></line>
+<line x1="19" x2="20.414" y1="14.05" y2="15.464"></line>
+<line x1="8.2" x2="6.2" y1="9.55" y2="9.55"></line>
+<line x1="20.8" x2="22.8" y1="9.55" y2="9.55"></line>
+<line x1="10.044" x2="8.63" y1="14.006" y2="15.42"></line>
+<line x1="19" x2="20.414" y1="5.05" y2="3.636"></line>
+<circle cx="14.5" cy="9.55" r="3.6"></circle>
+</svg>
+</symbol>
+<symbol id="svg-moon-with-sun" viewbox="0 0 24 24">
+<title>Auto light/dark, in dark mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"></path>
+<line style="opacity: 50%" x1="18" x2="18" y1="3.705" y2="2.5"></line>
+<line style="opacity: 50%" x1="18" x2="18" y1="11.295" y2="12.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="4.816" y2="3.964"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="10.212" y2="11.063"></line>
+<line style="opacity: 50%" x1="14.205" x2="13.001" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="21.795" x2="23" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="10.184" y2="11.036"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="4.789" y2="3.937"></line>
+<circle cx="18" cy="7.5" r="2.169" style="opacity: 50%"></circle>
+</svg>
+</symbol>
+<symbol id="svg-pencil" viewbox="0 0 24 24">
+<svg class="icon-tabler-pencil-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+<path d="M13.5 6.5l4 4"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+<symbol id="svg-eye" viewbox="0 0 24 24">
+<svg class="icon-tabler-eye-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+<path d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+</svg>
+<input class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<input class="sidebar-toggle" id="__toc" name="__toc" type="checkbox"/>
+<label class="overlay sidebar-overlay" for="__navigation">
+<div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+<div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+<div class="announcement multiver">
+<aside class="announcement-content multiver-content">
+<strong>
+    
+    This is the bleeding-edge development documentation, for the stable <code>v0.8.1</code> docs <a href="../../../v0.8.1/api/backend/index.html">Click Here</a>.
+    
+    </strong>
+</aside>
+</div>
+<div class="announcement">
+<aside class="announcement-content">
+     This documentation is a work in progress, and you can help us <a href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">improve it!</a>
+</aside>
+</div>
+<div class="page">
+<header class="mobile-header">
+<div class="header-left">
+<label class="nav-overlay-icon" for="__navigation">
+<div class="visually-hidden">Toggle site navigation sidebar</div>
+<i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+</label>
+</div>
+<div class="header-center">
+<a href="../../index.html"><div class="brand">Torii 0.8.1.dev436 documentation</div></a>
+</div>
+<div class="header-right">
+<div class="theme-toggle-container theme-toggle-header">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-header-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+</header>
+<aside class="sidebar-drawer">
+<div class="sidebar-container">
+<div class="sidebar-sticky">
+<a class="sidebar-brand" href="../../index.html">
+<span class="sidebar-brand-text">Torii 0.8.1.dev436 Documentation</span>
+</a><form action="../../search.html" class="sidebar-search-container" method="get" role="search">
+<input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="simple">
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/external_modules.html">Including External non-Torii Modules</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Projects Using Torii</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language, API, and Library</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../language/index.html">Language Guide</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Torii Backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics.html">Torii Diagnostics</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hdl/index.html">Torii HDL Reference</a><input aria-label="Toggle navigation of Torii HDL Reference" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ast.html">Abstract Syntax Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/cd.html">Clock Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/dsl.html">DSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/ir.html">IR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/mem.html">Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/rec.html">Records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/time.html">Frequency and Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hdl/xfrm.html">XFRM</a></li>
+</ul>
+</input></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../utility/index.html">Torii Utility Library</a><input aria-label="Toggle navigation of Torii Utility Library" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utility/directories.html">Filesystem Paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/string.html">String Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/tracer.html">Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utility/units.html">Unit Helpers</a></li>
+</ul>
+</input></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools.html">Torii Tool Interface</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library/index.html">Standard Library</a><input aria-label="Toggle navigation of Standard Library" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/bus/index.html">Busses</a><input aria-label="Toggle navigation of Busses" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/bus/wishbone.html">Wishbone Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/coding/index.html">Encoding and Decoding</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/mem/index.html">Memory</a><input aria-label="Toggle navigation of Memory" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/mem/map.html">Memory Map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/cdc.html">Clock Domain Crossing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/fifo.html">First-in First-out Queues</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/soc/index.html">System on Chip</a><input aria-label="Toggle navigation of System on Chip" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/event.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/periph.html">Peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/soc/csr/index.html">CSRs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/stdio/index.html">Industry Standard I/O</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/stream/index.html">Stream Library</a><input aria-label="Toggle navigation of Stream Library" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../library/stream/simple/index.html">Simple Streams</a><input aria-label="Toggle navigation of Simple Streams" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../library/stream/simple/generators.html">Generators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../library/vendor/index.html">FPGA Vendor Modules</a><input aria-label="Toggle navigation of FPGA Vendor Modules" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/lattice/index.html">Lattice FPGA Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../library/vendor/xilinx/index.html">Xilinx FPGA Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../platforms/index.html">Platform Integration</a><input aria-label="Toggle navigation of Platform Integration" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/fpga/index.html">Torii FPGA Platforms</a><input aria-label="Toggle navigation of Torii FPGA Platforms" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/gowin.html">Gowin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/altera.html">Altera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-ecp5.html">Lattice ECP5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-ice40.html">Lattice iCE40</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/lattice-machxo-2-3l.html">Lattice MachXO2 and MachXO3L</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/quicklogic.html">Quicklogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/fpga/xilinx.html">Xilinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../platforms/resources/index.html">Platform Resources</a><input aria-label="Toggle navigation of Platform Resources" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/display.html">Display Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/extensions.html">Extension Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/interface.html">IO Interface Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/memory.html">Memory Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../platforms/resources/user.html">User-interaction Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../testing/index.html">Testing and Verification</a><input aria-label="Toggle navigation of Testing and Verification" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/formal.html">Formal Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../migrations/index.html">Version Migration Guides</a><input aria-label="Toggle navigation of Version Migration Guides" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../migrations/v0_to_v1.html">Torii v0.X to v1.0 Migration Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../supplementary_libraries.html">Supplementary Libraries</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torii-boards.shmdn.link/">Torii Boards</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/CONTRIBUTING.md">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+</div>
+<div class="sidebar-tree">
+<p class="caption" role="heading">
+<span class="caption-text">Versions</span>
+</p>
+<ul>
+<li class="toctree-l1"><a class="reference" href="../../../v0.8.1/api/backend/index.html">v0.8.1</a></li>
+<li class="toctree-l1"><a class="reference" href="../../../v0.8.0/api/backend/index.html">v0.8.0</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<div class="main">
+<div class="content">
+<div class="article-container">
+<a class="back-to-top muted-link" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+</svg>
+<span>Back to top</span>
+</a>
+<div class="content-icon-container">
+<div class="view-this-page">
+<a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/blob/main/docs/api/backend/index.md?plain=true" title="View this page">
+<svg><use href="#svg-eye"></use></svg>
+<span class="visually-hidden">View this page</span>
+</a>
+</div><div class="edit-this-page">
+<a class="muted-link" href="https://github.com/shrine-maiden-heavy-industries/torii-hdl/edit/main/docs/api/backend/index.md" rel="edit" title="Edit this page">
+<svg><use href="#svg-pencil"></use></svg>
+<span class="visually-hidden">Edit this page</span>
+</a>
+</div><div class="theme-toggle-container theme-toggle-content">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-content-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+<article id="furo-main-content" role="main">
+<section id="torii-backends">
+<h1>Torii Backends<a class="headerlink" href="#torii-backends" title="Link to this heading">¶</a></h1>
+<p>Torii has 3 primary backends, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html" rel="noreferer noopener" target="_blank">RTLIL</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-verilog-write-design-to-verilog-file" rel="noreferer noopener" target="_blank">Verilog</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-cxxrtl-convert-design-to-c-rtl-simulation" rel="noreferer noopener" target="_blank">CXXRTL</a>, each takes a Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> or <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></a> and produces an RTL netlist in the given output format. There is also the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-json-write-design-to-a-json-file" rel="noreferer noopener" target="_blank">JSON</a> backend for generic netlist output.</p>
+<p>The primary lingua franca of the Torii backends is <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/appendix/rtlil_text.html" rel="noreferer noopener" target="_blank">RTLIL</a>, the <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-verilog-write-design-to-verilog-file" rel="noreferer noopener" target="_blank">Verilog</a>, <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-cxxrtl-convert-design-to-c-rtl-simulation" rel="noreferer noopener" target="_blank">CXXRTL</a>, and <a class="reference external" href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/index_backends.html#write-json-write-design-to-a-json-file" rel="noreferer noopener" target="_blank">JSON</a> backends first convert the IR into it, and then use <a class="reference external" href="https://github.com/YosysHQ/yosys" rel="noreferer noopener" target="_blank">Yosys</a> to convert the RTLIL netlist into their respective output formats</p>
+<section id="module-torii.back.rtlil">
+<span id="rtlil-backend"></span><h2>RTLIL Backend<a class="headerlink" href="#module-torii.back.rtlil" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.rtlil.convert_fragment">
+<span class="sig-prename descclassname"><span class="pre">torii.back.rtlil.</span></span><span class="sig-name descname"><span class="pre">convert_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><span class="pre">SignalDict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.back.rtlil.convert_fragment" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively lower the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> into RTLIL text and
+a signal map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><em>torii.hdl.ir.Fragment</em></a>) – The Torii fragment hierarchy to lower.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the root fragment module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the resulting RTLIL text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The RTLIL text and signal dictionary of the lowered fragment.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.rtlil.convert">
+<span class="sig-prename descclassname"><span class="pre">torii.back.rtlil.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.back.rtlil.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></a> into RTLIL text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elaboratable</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><em>torii.hdl.ir.Elaboratable</em></a>) – The Elaboratable to lower into RTLIL.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the resulting RTLIL module.</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the final RTLIL text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting RTLIL.</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-torii.back.verilog">
+<span id="verilog-backend"></span><h2>Verilog Backend<a class="headerlink" href="#module-torii.back.verilog" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.verilog.convert_fragment">
+<span class="sig-prename descclassname"><span class="pre">torii.back.verilog.</span></span><span class="sig-name descname"><span class="pre">convert_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_internal_attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><span class="pre">SignalDict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.back.verilog.convert_fragment" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively lower the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> into Verilog text and
+a signal map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><em>torii.hdl.ir.Fragment</em></a>) – The Torii fragment hierarchy to lower.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the root fragment module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the resulting Verilog text.</p></li>
+<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The Verilog text and signal dictionary of the lowered fragment.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.verilog.convert">
+<span class="sig-prename descclassname"><span class="pre">torii.back.verilog.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable:</span> <span class="pre">~torii.hdl.ir.Fragment</span> <span class="pre">|</span> <span class="pre">~torii.hdl.ir.Elaboratable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_internal_attrs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.back.verilog.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></a> into Verilog text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elaboratable</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><em>torii.hdl.ir.Elaboratable</em></a>) – The Elaboratable to lower into Verilog.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the resulting Verilog module.</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the final Verilog text.</p></li>
+<li><p><strong>strip_internal_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Remove Torii-specific attributes that were emitted into the resulting Verilog text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting Verilog.</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-torii.back.cxxrtl">
+<span id="cxxrtl-backend"></span><h2>CXXRTL Backend<a class="headerlink" href="#module-torii.back.cxxrtl" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.cxxrtl.convert_fragment">
+<span class="sig-prename descclassname"><span class="pre">torii.back.cxxrtl.</span></span><span class="sig-name descname"><span class="pre">convert_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">black_boxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><span class="pre">SignalDict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.back.cxxrtl.convert_fragment" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively lower the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> into CXXRTL text and
+a signal map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><em>torii.hdl.ir.Fragment</em></a>) – The Torii fragment hierarchy to lower.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the root fragment module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the resulting CXXRTL text.</p></li>
+<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The CXXRTL text and signal dictionary of the lowered fragment.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.cxxrtl.convert">
+<span class="sig-prename descclassname"><span class="pre">torii.back.cxxrtl.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable:</span> <span class="pre">~torii.hdl.ir.Elaboratable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">black_boxes:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.back.cxxrtl.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></a> into CXXRTL text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elaboratable</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><em>torii.hdl.ir.Elaboratable</em></a>) – The Elaboratable to lower into CXXRTL.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the resulting CXXRTL module.</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the final CXXRTL text.</p></li>
+<li><p><strong>black_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – A map of CXXRTL blackboxes to use in the resulting design.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting CXXRTL.</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-torii.back.json">
+<span id="json-backend"></span><h2>JSON Backend<a class="headerlink" href="#module-torii.back.json" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.json.convert_fragment">
+<span class="sig-prename descclassname"><span class="pre">torii.back.json.</span></span><span class="sig-name descname"><span class="pre">convert_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><span class="pre">Fragment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><span class="pre">SignalDict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#torii.back.json.convert_fragment" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively lower the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> into a JSON netlist and
+a signal map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Fragment" title="torii.hdl.ir.Fragment"><em>torii.hdl.ir.Fragment</em></a>) – The Torii fragment hierarchy to lower.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the root fragment module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the resulting JSON.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="../hdl/ast.html#torii.hdl.ast.SignalDict" title="torii.hdl.ast.SignalDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalDict</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[str, torii.hdl.ast.SignalDict]</em> – The JSON netlist and signal dictionary of the lowered fragment.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="torii.back.json.convert">
+<span class="sig-prename descclassname"><span class="pre">torii.back.json.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elaboratable:</span> <span class="pre">~torii.hdl.ir.Fragment</span> <span class="pre">|</span> <span class="pre">~torii.hdl.ir.Elaboratable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ports</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emit_src:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_internal_attrs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_domain=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#torii.back.json.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the given Torii <a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></a> into a JSON netlist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elaboratable</strong> (<a class="reference internal" href="../hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><em>torii.hdl.ir.Elaboratable</em></a>) – The Elaboratable to write the JSON netlist for.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the resulting JSON netlist.</p></li>
+<li><p><strong>platform</strong> (<em>torii.build.plat.Platform</em>) – The platform to use for Elaboratable evaluation.</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>]</em>) – The list of ports on the top-level module.</p></li>
+<li><p><strong>emit_src</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Emit source line attributes in the final JSON netlist.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The resulting JSON netlist.</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>Lets say you have the following Torii design:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Blinky</span><span class="p">(</span><a class="sphinx-codeautolink-a" href="../../api/hdl/ir.html#torii.hdl.ir.Elaboratable" title="torii.hdl.ir.Elaboratable"><span class="n">Elaboratable</span></a><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span> <span class="o">-&gt;</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">Module</span></a><span class="p">:</span>
+        <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">led</span></a>   <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">()</span>
+        <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">Signal</span></a><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+        <a class="sphinx-codeautolink-a" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">m</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">Module</span></a><span class="p">()</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sync</span> <span class="o">+=</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Value.eq" title="torii.hdl.ast.Value.eq"><span class="n">timer</span><span class="o">.</span><span class="n">eq</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Value.eq" title="torii.hdl.ast.Value.eq"><span class="n">led</span><span class="o">.</span><span class="n">eq</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="../../api/hdl/ast.html#torii.hdl.ast.Signal" title="torii.hdl.ast.Signal"><span class="n">timer</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <a class="sphinx-codeautolink-a" href="../../api/hdl/dsl.html#torii.hdl.dsl.Module" title="torii.hdl.dsl.Module"><span class="n">m</span></a>
+</pre></div>
+</div>
+<p>To convert it to the wanted format, call <code class="docutils literal notranslate"><span class="pre">convert</span></code> from the wanted backend and pass in the instance of the elaboratable.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--1">Verilog</label><div class="tab-content docutils">
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../../api/backend/index.html#module-torii.back.verilog" title="torii.back.verilog"><span class="nn">torii.back.verilog</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.verilog.convert" title="torii.back.verilog.convert"><span class="n">convert</span></a>
+
+<span class="n">verilog</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.verilog.convert" title="torii.back.verilog.convert"><span class="n">convert</span></a><span class="p">(</span><span class="n">Blinky</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'blinker'</span><span class="p">,</span> <span class="n">ports</span> <span class="o">=</span> <span class="p">[])</span>
+</pre></div>
+</div>
+<p>Will result in:</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mh">1</span><span class="w">  </span><span class="o">*</span><span class="p">)</span>
+<span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">generator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Torii 0.8.0"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="k">module</span><span class="w"> </span><span class="n">blinker</span><span class="p">(</span><span class="n">rst</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">reg</span><span class="w"> </span><span class="n">\$auto$verilog_backend.cc:2373:dump_module$1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:9"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">20</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">\$1</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:9"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="mh">20</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">\$2</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"torii/back/verilog.py:77"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">clk</span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:5"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">led</span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"torii/back/verilog.py:77"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">rst</span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:6"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">reg</span><span class="w"> </span><span class="p">[</span><span class="mh">19</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">20'h00000</span><span class="p">;</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:6"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">  </span><span class="kt">reg</span><span class="w"> </span><span class="p">[</span><span class="mh">19</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">\timer$next</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">\$2</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;python-input-0&gt;:9"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="mh">1'h1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span>
+<span class="w">    </span><span class="n">timer</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">\timer$next</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@</span><span class="o">*</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">\$auto$verilog_backend.cc:2373:dump_module$1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="k">end</span>
+<span class="w">    </span><span class="n">\timer$next</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">\$2</span><span class="w"> </span><span class="p">[</span><span class="mh">19</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="w">    </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"torii/hdl/xfrm.py:556"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rst</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">\timer$next</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">20'h00000</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">\$1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">\$2</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timer</span><span class="p">[</span><span class="mh">19</span><span class="p">];</span>
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--2">CXXRTL</label><div class="tab-content docutils">
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../../api/backend/index.html#module-torii.back.cxxrtl" title="torii.back.cxxrtl"><span class="nn">torii.back.cxxrtl</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.cxxrtl.convert" title="torii.back.cxxrtl.convert"><span class="n">convert</span></a>
+
+<span class="n">cxxrtl</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.cxxrtl.convert" title="torii.back.cxxrtl.convert"><span class="n">convert</span></a><span class="p">(</span><span class="n">Blinky</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'blinker'</span><span class="p">,</span> <span class="n">ports</span> <span class="o">=</span> <span class="p">[])</span>
+</pre></div>
+</div>
+<p>Will result in:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cxxrtl/cxxrtl.h&gt;</span>
+
+<span class="cp">#if defined(CXXRTL_INCLUDE_CAPI_IMPL) || \</span>
+<span class="cp">    defined(CXXRTL_INCLUDE_VCD_CAPI_IMPL)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cxxrtl/capi/cxxrtl_capi.cc&gt;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if defined(CXXRTL_INCLUDE_VCD_CAPI_IMPL)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cxxrtl/capi/cxxrtl_capi_vcd.cc&gt;</span>
+<span class="cp">#endif</span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">cxxrtl_yosys</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">cxxrtl_design</span><span class="w"> </span><span class="p">{</span>
+
+<span class="c1">// \top: 1</span>
+<span class="c1">// \generator: Torii 0.8.0</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">p_blinker</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="k">module</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// \src: &lt;python-input-0&gt;:6</span>
+<span class="w">        </span><span class="c1">// \init: 0</span>
+<span class="w">        </span><span class="n">wire</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p_timer</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// \src: torii/back/cxxrtl.py:68</span>
+<span class="w">        </span><span class="cm">/*input*/</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p_rst</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// \src: torii/back/cxxrtl.py:68</span>
+<span class="w">        </span><span class="cm">/*input*/</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p_clk</span><span class="p">;</span>
+<span class="w">        </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">prev_p_clk</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="nf">posedge_p_clk</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="n">prev_p_clk</span><span class="p">.</span><span class="n">slice</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">().</span><span class="n">val</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">p_clk</span><span class="p">.</span><span class="n">slice</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">().</span><span class="n">val</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// \src: &lt;python-input-0&gt;:5</span>
+<span class="w">        </span><span class="cm">/*outline*/</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p_led</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// \src: &lt;python-input-0&gt;:6</span>
+<span class="w">        </span><span class="cm">/*outline*/</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p_timer_24_next</span><span class="p">;</span>
+<span class="w">        </span><span class="n">p_blinker</span><span class="p">(</span><span class="n">interior</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">        </span><span class="n">p_blinker</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">reset</span><span class="p">();</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="nf">reset</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="nf">eval</span><span class="p">(</span><span class="n">performer</span><span class="w"> </span><span class="o">*</span><span class="n">performer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">ObserverT</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">commit</span><span class="p">(</span><span class="n">ObserverT</span><span class="w"> </span><span class="o">&amp;</span><span class="n">observer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">bool</span><span class="w"> </span><span class="n">changed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p_timer</span><span class="p">.</span><span class="n">commit</span><span class="p">(</span><span class="n">observer</span><span class="p">))</span><span class="w"> </span><span class="n">changed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">                </span><span class="n">prev_p_clk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_clk</span><span class="p">;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">changed</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">commit</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">observer</span><span class="w"> </span><span class="n">observer</span><span class="p">;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">commit</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="n">debug_eval</span><span class="p">();</span>
+<span class="w">        </span><span class="n">debug_outline</span><span class="w"> </span><span class="n">debug_eval_outline</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p_blinker</span><span class="o">::</span><span class="n">debug_eval</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="nf">debug_info</span><span class="p">(</span><span class="n">debug_items</span><span class="w"> </span><span class="o">*</span><span class="n">items</span><span class="p">,</span><span class="w"> </span><span class="n">debug_scopes</span><span class="w"> </span><span class="o">*</span><span class="n">scopes</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">metadata_map</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="n">cell_attrs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+<span class="p">};</span><span class="w"> </span><span class="c1">// struct p_blinker</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">p_blinker::reset</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">p_timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wire</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0u</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">p_blinker::eval</span><span class="p">(</span><span class="n">performer</span><span class="w"> </span><span class="o">*</span><span class="n">performer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">converged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">posedge_p_clk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">posedge_p_clk</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// cells $4 $procmux$1 $3</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">posedge_p_clk</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">p_timer</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">p_rst</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0u</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_uu</span><span class="o">&lt;</span><span class="mi">21</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p_timer</span><span class="p">.</span><span class="n">curr</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">{</span><span class="mh">0x1u</span><span class="p">}).</span><span class="n">slice</span><span class="o">&lt;</span><span class="mi">19</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">().</span><span class="n">val</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">converged</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">p_blinker::debug_eval</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// cells $procmux$1 $3</span>
+<span class="w">        </span><span class="n">p_timer_24_next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">p_rst</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0u</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_uu</span><span class="o">&lt;</span><span class="mi">21</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p_timer</span><span class="p">.</span><span class="n">curr</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">{</span><span class="mh">0x1u</span><span class="p">}).</span><span class="n">slice</span><span class="o">&lt;</span><span class="mi">19</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">().</span><span class="n">val</span><span class="p">());</span>
+<span class="w">        </span><span class="c1">// connection</span>
+<span class="w">        </span><span class="n">p_led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_timer</span><span class="p">.</span><span class="n">curr</span><span class="p">.</span><span class="n">slice</span><span class="o">&lt;</span><span class="mi">19</span><span class="o">&gt;</span><span class="p">().</span><span class="n">val</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">CXXRTL_EXTREMELY_COLD</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">p_blinker</span><span class="o">::</span><span class="n">debug_info</span><span class="p">(</span><span class="n">debug_items</span><span class="w"> </span><span class="o">*</span><span class="n">items</span><span class="p">,</span><span class="w"> </span><span class="n">debug_scopes</span><span class="w"> </span><span class="o">*</span><span class="n">scopes</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">metadata_map</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="n">cell_attrs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">path</span><span class="p">[</span><span class="n">path</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">' '</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scopes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">scopes</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="s">"blinker"</span><span class="p">,</span><span class="w"> </span><span class="n">metadata_map</span><span class="p">({</span>
+<span class="w">                        </span><span class="p">{</span><span class="w"> </span><span class="s">"top"</span><span class="p">,</span><span class="w"> </span><span class="n">UINT64_C</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
+<span class="w">                        </span><span class="p">{</span><span class="w"> </span><span class="s">"generator"</span><span class="p">,</span><span class="w"> </span><span class="s">"Torii 0.8.0"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">                </span><span class="p">}),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">cell_attrs</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"led"</span><span class="p">,</span><span class="w"> </span><span class="s">"src</span><span class="se">\000</span><span class="s">s&lt;python-input-0&gt;:5</span><span class="se">\000</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">debug_eval_outline</span><span class="p">,</span><span class="w"> </span><span class="n">p_led</span><span class="p">);</span>
+<span class="w">                </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"timer$next"</span><span class="p">,</span><span class="w"> </span><span class="s">"src</span><span class="se">\000</span><span class="s">s&lt;python-input-0&gt;:6</span><span class="se">\000</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">debug_eval_outline</span><span class="p">,</span><span class="w"> </span><span class="n">p_timer_24_next</span><span class="p">);</span>
+<span class="w">                </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"timer"</span><span class="p">,</span><span class="w"> </span><span class="s">"src</span><span class="se">\000</span><span class="s">s&lt;python-input-0&gt;:6</span><span class="se">\000</span><span class="s">init</span><span class="se">\000</span><span class="s">u</span><span class="se">\000\000\000\000\000\000\000\000</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">p_timer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">debug_item</span><span class="o">::</span><span class="n">DRIVEN_SYNC</span><span class="p">);</span>
+<span class="w">                </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"rst"</span><span class="p">,</span><span class="w"> </span><span class="s">"src</span><span class="se">\000</span><span class="s">s/torii/back/cxxrtl.py:68</span><span class="se">\000</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">p_rst</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">debug_item</span><span class="o">::</span><span class="n">INPUT</span><span class="o">|</span><span class="n">debug_item</span><span class="o">::</span><span class="n">UNDRIVEN</span><span class="p">);</span>
+<span class="w">                </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"clk"</span><span class="p">,</span><span class="w"> </span><span class="s">"src</span><span class="se">\000</span><span class="s">s/torii/back/cxxrtl.py:68</span><span class="se">\000</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">p_clk</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">debug_item</span><span class="o">::</span><span class="n">INPUT</span><span class="o">|</span><span class="n">debug_item</span><span class="o">::</span><span class="n">UNDRIVEN</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">}</span><span class="w"> </span><span class="c1">// namespace cxxrtl_design</span>
+
+<span class="k">extern</span><span class="w"> </span><span class="s">"C"</span>
+<span class="n">cxxrtl_toplevel</span><span class="w"> </span><span class="n">cxxrtl_design_create</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">_cxxrtl_toplevel</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">cxxrtl_design</span><span class="o">::</span><span class="n">p_blinker</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">cxxrtl_design</span><span class="o">::</span><span class="n">p_blinker</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--3">JSON</label><div class="tab-content docutils">
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="../../api/backend/index.html#module-torii.back.json" title="torii.back.json"><span class="nn">torii.back.json</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.json.convert" title="torii.back.json.convert"><span class="n">convert</span></a>
+
+<span class="n">json</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/backend/index.html#torii.back.json.convert" title="torii.back.json.convert"><span class="n">convert</span></a><span class="p">(</span><span class="n">Blinky</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'blinker'</span><span class="p">,</span> <span class="n">ports</span> <span class="o">=</span> <span class="p">[])</span>
+</pre></div>
+</div>
+<p>Will result in:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"creator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Yosys 0.55"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"modules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"blinker"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"top"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000000001"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"generator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Torii 0.8.0"</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"ports"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"rst"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"clk"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"cells"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"$3"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$add"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"A_SIGNED"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000000000"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"A_WIDTH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000010100"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"B_SIGNED"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000000000"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"B_WIDTH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000000001"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"Y_WIDTH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000010101"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:9"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"port_directions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"A"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"B"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"Y"</span><span class="p">:</span><span class="w"> </span><span class="s2">"output"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"connections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"A"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"B"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"1"</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"Y"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">37</span><span class="p">,</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"$4"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$dff"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"CLK_POLARITY"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000000001"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"WIDTH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000010100"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"port_directions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"CLK"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"D"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"Q"</span><span class="p">:</span><span class="w"> </span><span class="s2">"output"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"connections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"CLK"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"D"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w"> </span><span class="mi">59</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"Q"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"$procmux$1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$mux"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"WIDTH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000000000010100"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"torii/hdl/xfrm.py:556"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"port_directions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"A"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"B"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"S"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"Y"</span><span class="p">:</span><span class="w"> </span><span class="s2">"output"</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">"connections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"A"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">37</span><span class="p">,</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">43</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"B"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"S"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"Y"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w"> </span><span class="mi">59</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"netnames"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"$1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">37</span><span class="p">,</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:9"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"$2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">37</span><span class="p">,</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:9"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"$procmux$1_Y"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w"> </span><span class="mi">59</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"$procmux$2_CMP"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"clk"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"torii/back/json.py:55"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"led"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:5"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"rst"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"torii/back/json.py:55"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"timer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"init"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000000000000000"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:6"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"timer$next"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"hide_name"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"bits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span><span class="w"> </span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="mi">49</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">,</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">,</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">58</span><span class="p">,</span><span class="w"> </span><span class="mi">59</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;python-input-0&gt;:6"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+</article>
+</div>
+<footer>
+<div class="related-pages">
+<a class="next-page" href="../diagnostics.html">
+<div class="page-info">
+<div class="context">
+<span>Next</span>
+</div>
+<div class="title">Torii Diagnostics</div>
+</div>
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+</a>
+<a class="prev-page" href="../index.html">
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+<div class="page-info">
+<div class="context">
+<span>Previous</span>
+</div>
+<div class="title">API Reference</div>
+</div>
+</a>
+</div>
+<div class="bottom-of-page">
+<div class="left-details">
+<div class="copyright">
+                Copyright © 2026 Shrine Maiden Heavy Industries and contributors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+</div>
+<div class="right-details">
+</div>
+</div>
+</footer>
+</div>
+<aside class="toc-drawer">
+<div class="toc-sticky toc-scroll">
+<div class="toc-title-container">
+<span class="toc-title">
+            On this page
+          </span>
+</div>
+<div class="toc-tree-container">
+<div class="toc-tree">
+<ul>
+<li><a class="reference internal" href="#">Torii Backends</a><ul>
+<li><a class="reference internal" href="#module-torii.back.rtlil">RTLIL Backend</a><ul>
+<li><a class="reference internal" href="#torii.back.rtlil.convert_fragment"><code class="docutils literal notranslate"><span class="pre">convert_fragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.back.rtlil.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-torii.back.verilog">Verilog Backend</a><ul>
+<li><a class="reference internal" href="#torii.back.verilog.convert_fragment"><code class="docutils literal notranslate"><span class="pre">convert_fragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.back.verilog.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-torii.back.cxxrtl">CXXRTL Backend</a><ul>
+<li><a class="reference internal" href="#torii.back.cxxrtl.convert_fragment"><code class="docutils literal notranslate"><span class="pre">convert_fragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.back.cxxrtl.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-torii.back.json">JSON Backend</a><ul>
+<li><a class="reference internal" href="#torii.back.json.convert_fragment"><code class="docutils literal notranslate"><span class="pre">convert_fragment()</span></code></a></li>
+<li><a class="reference internal" href="#torii.back.json.convert"><code class="docutils literal notranslate"><span class="pre">convert()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div><script src="../../_static/documentation_options.js?v=866c296d"></script>
+<script src="../../_static/doctools.js?v=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+<script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="../../_static/copybutton.js?v=f281be69"></script>
+<script src="../../_static/tabs.js?v=3ee01567"></script>
+<script src="../../_static/wavedrom.skin.js"></script>
+<script src="../../_static/wavedrom.min.js"></script>
+<script src="../../_static/js/wavedrom.min.js?v=912bf3a3"></script>
+<script src="../../_static/js/wavedrom.skin.js?v=be5c2381"></script>
+</body>
+</html>
