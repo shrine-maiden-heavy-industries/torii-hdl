@@ -6,7 +6,7 @@ from typing          import Literal
 
 from ...build        import Attrs, Clock, PinFeature, TemplatedPlatform
 from ...hdl          import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
-from ...hdl.time     import Frequency
+from ...hdl.time     import Frequency, MHz
 from ...lib.io       import Pin
 
 __all__ = (
@@ -308,7 +308,7 @@ class AlteraPlatform(TemplatedPlatform):
 			if not self.device.startswith('5C'):
 				raise ValueError(f'Device {self.device} does not support the \'cyclonev_oscillator\' as a clock source')
 
-			return Clock(100e6)
+			return Clock(100 * MHz)
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 
