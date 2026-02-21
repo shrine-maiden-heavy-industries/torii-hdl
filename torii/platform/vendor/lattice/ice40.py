@@ -6,6 +6,7 @@ from typing          import Literal
 
 from ....build       import Attrs, Clock, Subsignal, PinFeature, TemplatedPlatform
 from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, ResetSignal, Signal
+from ....hdl.time    import Hz, kHz
 from ....lib.cdc     import ResetSynchronizer
 from ....lib.io      import Pin
 
@@ -397,10 +398,11 @@ class ICE40Platform(TemplatedPlatform):
 	def default_clk_constraint(self) -> Clock:
 		# Internal high-speed oscillator: 48 MHz / (2 ^ div)
 		if self.default_clk == 'SB_HFOSC':
-			return Clock(48e6 / 2 ** self.hfosc_div)
+			# TODO(aki): Rewrite into `MHz(48) / 2 ** self.hfosc_div` when #115 is resolved
+			return Clock((48e6 / 2 ** self.hfosc_div) * Hz)
 		# Internal low-speed oscillator: 10 KHz
 		elif self.default_clk == 'SB_LFOSC':
-			return Clock(10e3)
+			return Clock(10 * kHz)
 		# Otherwise, use the defined Clock resource.
 		return super().default_clk_constraint
 

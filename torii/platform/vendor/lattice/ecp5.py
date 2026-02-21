@@ -7,6 +7,7 @@ from typing          import Literal, TypedDict
 from ....build       import Attrs, Clock, Subsignal, PinFeature, TemplatedPlatform
 from ....hdl         import ClockDomain, ClockSignal, Const, Instance, Module, Record, Signal
 from ....hdl.ast     import SignalSet
+from ....hdl.time    import Hz
 from ....lib.io      import Pin
 from ....util        import flatten
 
@@ -443,7 +444,8 @@ class ECP5Platform(TemplatedPlatform):
 	@property
 	def default_clk_constraint(self) -> Clock:
 		if self.default_clk == 'OSCG':
-			return Clock(310e6 / self.oscg_div)
+			# TODO(aki): Rewrite into `MHz(310) / self.oscg_div` when #115 is resolved
+			return Clock((310e6 / self.oscg_div) * Hz)
 		return super().default_clk_constraint
 
 	def create_missing_domain(self, name: str) -> Module | None:
