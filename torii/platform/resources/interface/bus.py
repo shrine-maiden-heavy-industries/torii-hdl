@@ -5,6 +5,7 @@ from warnings      import warn
 
 from ...._typing   import IODirection
 from ....build.dsl import Attrs, Clock, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
+from ....hdl.time  import MHz
 
 __all__ = (
 	'DirectUSBResource',
@@ -680,7 +681,7 @@ def ULPIResource(
 	clk_subsig = Subsignal('clk', Pins(clk, dir = clk_dir, conn = conn, assert_width = 1))
 	# If the clock is an input, we must constrain it to be 60MHz.
 	if clk_dir == 'i':
-		clk_subsig.clock = Clock(60e6)
+		clk_subsig.clock = Clock(60 * MHz)
 	if clk_attrs is not None:
 		clk_subsig.attrs.update(clk_attrs)
 
