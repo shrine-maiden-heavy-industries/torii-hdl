@@ -193,6 +193,8 @@ Unreleased template stuff
   - `torii.lib.stream.simple.StreamInterface` - A unidirectional stream interface.
   - `torii.lib.stream.simple.StreamArbiter` - A simple N:1 stream arbiter for `StreamInterface`s
 
+- Added `torii.vendor.asic` OpenLANE ASIC flow support
+
 ### Changed
 
 - `torii.hdl.cd.ClockDomain` now has a proper `__repr__`
