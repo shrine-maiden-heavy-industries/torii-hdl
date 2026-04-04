@@ -124,8 +124,11 @@ class FIFOModel(Elaboratable, FIFOInterface):
 			self.r_level.eq(self.level),
 			self.w_level.eq(self.level),
 		]
-		m.d.comb += Assert(ResetSignal(self.r_domain) == ResetSignal(self.w_domain))
 
+		return m
+
+	def formal(self, m: Module) -> Module:
+		m.d.comb += Assert(ResetSignal(self.r_domain) == ResetSignal(self.w_domain))
 		return m
 
 class FIFOModelEquivalenceSpec(Elaboratable):
@@ -202,6 +205,7 @@ class FIFOContractSpec(Elaboratable):
 		entry_2 = AnyConst(fifo.width)
 
 		with m.FSM(domain = self.w_domain) as write_fsm:
+			self.write_fsm = write_fsm
 			with m.State('WRITE-1'):
 				with m.If(fifo.w_rdy):
 					m.d.comb += [
@@ -220,6 +224,7 @@ class FIFOContractSpec(Elaboratable):
 				pass
 
 		with m.FSM(domain = self.r_domain) as read_fsm:
+			self.read_fsm = read_fsm
 			read_1 = Signal(fifo.width)
 			read_2 = Signal(fifo.width)
 			with m.State('READ'):
@@ -237,15 +242,17 @@ class FIFOContractSpec(Elaboratable):
 					m.next = 'DONE'
 			with m.State('DONE'):
 				pass
+		return m
 
+	def formal(self, m: Module) -> Module:
 		with m.If(Initial()):
-			m.d.comb += Assume(write_fsm.ongoing('WRITE-1'))
-			m.d.comb += Assume(read_fsm.ongoing('READ'))
+			m.d.comb += Assume(self.write_fsm.ongoing('WRITE-1'))
+			m.d.comb += Assume(self.read_fsm.ongoing('READ'))
 		with m.If(Past(Initial(), self.bound - 1)):
-			m.d.comb += Assert(read_fsm.ongoing('DONE'))
+			m.d.comb += Assert(self.read_fsm.ongoing('DONE'))
 
 		with m.If(ResetSignal(domain = self.w_domain)):
-			m.d.comb += Assert(~fifo.r_rdy)
+			m.d.comb += Assert(~self.fifo.r_rdy)
 
 		if self.w_domain != 'sync' or self.r_domain != 'sync':
 			m.d.comb += Assume(
