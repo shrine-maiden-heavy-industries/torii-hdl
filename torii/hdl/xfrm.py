@@ -747,11 +747,14 @@ class SampleDomainInjector(ValueTransformer, StatementTransformer):
 	.. todo:: Document Me
 	'''
 
-	def __init__(self, domain) -> None:
+	def __init__(self, domain, first_drivers: dict[str, tuple[str, int]]) -> None:
 		self.domain = domain
+		self.first_drivers = first_drivers
 
 	def on_Sample(self, value):
 		if value.domain is not None:
+			if value.domain not in self.first_drivers:
+				self.first_drivers[value.domain] = value.src_loc
 			return value
 		return Sample(value.value, value.clocks, self.domain)
 
