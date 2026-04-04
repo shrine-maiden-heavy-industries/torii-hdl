@@ -19,13 +19,29 @@ __all__ = (
 
 class ToriiError(Exception):
 	''' The base class for all Torii errors '''
-	pass
+
+	def __init__(
+		self, *args: object, src_loc: tuple[str, int] | None = None, notes: list[str] | None = None
+	) -> None:
+		if src_loc is not None:
+			self.src_loc = src_loc
+
+		if notes is not None:
+			self.__notes__ = notes
+
+		super().__init__(*args)
 
 class ToriiSyntaxError(SyntaxError):
 	''' Malformed or incorrect Torii code '''
 
-	def __init__(self, message: str, src_loc: tuple[str, int]) -> None:
+	def __init__(
+		self, message: str, src_loc: tuple[str, int], *, notes: list[str] | None = None
+	) -> None:
 		filename, lineno = src_loc
+
+		if notes is not None:
+			self.__notes__ = notes
+
 		super().__init__(message, (filename, lineno, None, None))
 
 class NameError(ToriiError):
