@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from __future__   import annotations
+from __future__    import annotations
 
 import io
 import re
-from collections  import OrderedDict
-from contextlib   import contextmanager
-from typing       import Literal
+from collections   import OrderedDict
+from contextlib    import contextmanager
+from typing        import Literal
 
-from ..           import __version__
-from ..hdl        import ast, cd, ir, mem, xfrm
-from ..util       import flatten
-from ..util.units import bits_for
+from ..            import __version__
+from ..diagnostics import NonSynthesizableError
+from ..hdl         import ast, cd, ir, mem, xfrm
+from ..util        import flatten
+from ..util.units  import bits_for
 
 __all__ = (
 	'convert_fragment',
@@ -735,6 +736,17 @@ class _StatementCompiler(xfrm.StatementVisitor):
 			self._case.assign(self.lhs_compiler(stmt.lhs), rhs_sigspec)
 
 	def on_Property(self, stmt):
+		if not self.state.formal:
+			err = NonSynthesizableError(
+				f'Use of non-synthesizable property \'{stmt.kind.value}\' in a synthesis context',
+				stmt.src_loc
+			)
+			err.add_note(
+				'Properties, such as \'Assert\', \'Assume\', and \'Cover\' are only valid in the formal verification '
+				'context.\nYou likely want to place this code in the \'formal\' call of the elaboratable.'
+			)
+			raise err
+
 		self(stmt._check.eq(stmt.test))
 		self(stmt._en.eq(1))
 
