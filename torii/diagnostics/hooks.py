@@ -171,7 +171,8 @@ def _render_fancy(cons: Console, filename: str, lineno: int, border_style: str, 
 
 def _render_diagnostic( # :nocov:
 	cons: Console, message: str, category: type[Warning | BaseException], filename: str, lineno: int,
-	accent_color: str, line: str | None = None, notes: list[str] | None = None
+	accent_color: str, line: str | None = None, notes: list[str] | None = None,
+	additional_ctx: tuple[str, tuple[str, int]] | None = None
 ) -> None:
 
 	# If we want to show the source lines, make sure we can, and it's not the REPL
@@ -192,6 +193,20 @@ def _render_diagnostic( # :nocov:
 			line = getline(filename, lineno)
 
 		cons.print(f'{filename}:{lineno}: {line}')
+
+	if additional_ctx is not None:
+		msg, src_loc = additional_ctx
+		filename, lineno = src_loc
+
+		cons.print(' ' + msg)
+
+		if show_source:
+			show_source = _render_fancy(cons, filename, lineno, border_style = accent_color, width = width)
+		else:
+			if line is None:
+				line = getline(filename, lineno)
+
+			cons.print(f'{filename}:{lineno}: {line}')
 
 	# If we have any notes to render, do so
 	if notes is not None and len(notes) > 0:
@@ -328,7 +343,10 @@ def _excepthook(type: type[BaseException], value: BaseException, traceback: Trac
 			return
 
 		cons = _get_console(stderr)
-		_render_diagnostic(cons, value.msg, type, filename, lineno, 'red', line, getattr(value, '__notes__', None))
+		_render_diagnostic(
+			cons, value.msg, type, filename, lineno, 'red', line, getattr(value, '__notes__', None),
+			getattr(value, 'additional_ctx', None)
+		)
 	else:
 		_EXCEPTHOOK_RESTORE(type, value, traceback)
 
