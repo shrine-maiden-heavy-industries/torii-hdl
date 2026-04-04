@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
-from enum          import Enum, EnumMeta
-from sys           import version_info
+from enum              import Enum, EnumMeta
+from sys               import version_info
 
-from torii.hdl.ast import (
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.ast     import (
 	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, Property, ResetSignal, Rose, Sample,
 	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
 	signed, unsigned,
 )
-from torii.hdl.cd  import ClockDomain
-from torii.hdl.dsl import Module
-from torii.hdl.ir  import Elaboratable
-from torii.sim     import Delay, Simulator, Tick
+from torii.hdl.cd      import ClockDomain
+from torii.hdl.dsl     import Module
+from torii.hdl.ir      import Elaboratable
+from torii.sim         import Delay, Simulator, Tick
 
-from ..utils       import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class UnsignedEnum(Enum):
 	FOO = 1
@@ -1766,24 +1767,24 @@ class SampleTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_value_operator(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Sampled value must be a signal or a constant, not '
-				r'\(\+ \(sig \$signal\) \(const 1\'d1\)\)$'
+			ToriiSyntaxError, (
+				r'^Value being sampled must be a signal or a constant, not a '
+				r'\(\+ \(sig \$signal\) \(const 1\'d1\)\) \(test_ast\.py, line \d+\)$'
 			)
 		):
 			Sample(Signal() + 1, 1, 'sync')
 
 	def test_wrong_clocks_neg(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Cannot sample a value 1 cycles in the future$'
+			ToriiSyntaxError,
+			r'^Cannot sample a value 1 cycles into the future \(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), -1, 'sync')
 
 	def test_wrong_domain(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Domain name must be a string or None, not 0$'
+			ToriiSyntaxError,
+			r'^The value \'0\' is not a valid clock domain \(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, 0)
 
@@ -2033,20 +2034,23 @@ class SampleTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = '\x15')
 

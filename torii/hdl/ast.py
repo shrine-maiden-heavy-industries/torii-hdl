@@ -17,7 +17,7 @@ from typing            import (
 	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec, SupportsIndex, TypeAlias, TypeVar, TypeVarTuple,
 )
 
-from ..diagnostics     import UnusedProperty
+from ..diagnostics     import ToriiSyntaxError, UnusedProperty
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import _check_name, flatten, tracer, union
 from ..util.decorators import final
@@ -1968,19 +1968,41 @@ class Sample(Value):
 	'''
 
 	def __init__(self, expr: ValueCastT, clocks: int, domain: str | None, *, src_loc_at: int = 0) -> None:
-		super().__init__(src_loc_at = 1 + src_loc_at)
+		super().__init__(src_loc_at = src_loc_at)
 		self.value  = Value.cast(expr)
 		self.clocks = int(clocks)
 		self.domain = domain
+
 		if not isinstance(self.value, (Const, Signal, ClockSignal, ResetSignal, Initial)):
-			raise TypeError(f'Sampled value must be a signal or a constant, not {self.value!r}')
+			raise ToriiSyntaxError(
+				f'Value being sampled must be a signal or a constant, not a {self.value!r}',
+				src_loc = self.src_loc
+			)
+
 		if self.clocks < 0:
-			raise ValueError(f'Cannot sample a value {-self.clocks} cycles in the future')
+			raise ToriiSyntaxError(
+				f'Cannot sample a value {-self.clocks} cycles into the future',
+				src_loc = self.src_loc,
+				notes = [
+					'You might have accidentally specified a negative number to sample that many cycles into the past. '
+					'If so, ensure the \'clocks\' value is positive'
+				]
+			)
+
 		if not (self.domain is None or isinstance(self.domain, str)):
-			raise TypeError(f'Domain name must be a string or None, not {self.domain!r}')
+			raise ToriiSyntaxError(
+				f'The value \'{self.domain!r}\' is not a valid clock domain',
+				src_loc = self.src_loc,
+				notes = [
+					'The \'domain\' value must be a string specifying the clock domain to sample on or \'None\''
+				]
+			)
 
 		if self.domain is not None and (self.domain == '' or not _check_name(self.domain)):
-			raise NameError('Sample domain name must not be empty or contain any control or whitespace characters')
+			raise ToriiSyntaxError(
+				'Sample domain name must not be empty or contain any control or whitespace characters',
+				src_loc = self.src_loc
+			)
 
 	def shape(self) -> Shape:
 		return self.value.shape()
@@ -2032,7 +2054,7 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 		The sample value.
 	'''
 
-	return Sample(expr, clocks, domain)
+	return Sample(expr, clocks, domain, src_loc_at = 1)
 
 # NOTE(aki): For Stable, Rose, Fell, and Edge, mypy can't see through the operators
 def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
@@ -2064,7 +2086,7 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 		If the sample is stable over ``clocks + 1`` samples.
 	'''
 
-	op = Sample(expr, clocks + 1, domain) == Sample(expr, clocks, domain)
+	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) == Sample(expr, clocks, domain, src_loc_at = 1)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
@@ -2100,7 +2122,7 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 		If the sample rose between ``clocks`` and ``clocks + 1``
 	'''
 
-	op = ~Sample(expr, clocks + 1, domain) & Sample(expr, clocks, domain)
+	op = ~Sample(expr, clocks + 1, domain, src_loc_at = 1) & Sample(expr, clocks, domain, src_loc_at = 1)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
@@ -2136,7 +2158,7 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 		If the sample fell between ``clocks`` and ``clocks + 1``
 	'''
 
-	op = Sample(expr, clocks + 1, domain) & ~Sample(expr, clocks, domain)
+	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) & ~Sample(expr, clocks, domain, src_loc_at = 1)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
@@ -2172,7 +2194,7 @@ def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 		If the sample rose or fell between ``clocks`` and ``clocks + 1``
 	'''
 
-	op = Sample(expr, clocks + 1, domain) != Sample(expr, clocks, domain)
+	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) != Sample(expr, clocks, domain, src_loc_at = 1)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
