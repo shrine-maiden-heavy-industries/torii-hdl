@@ -95,6 +95,7 @@ class Fragment:
 	def __init__(self) -> None:
 		self.ports = SignalDict()
 		self.drivers = OrderedDict[str | None, SignalSet]()
+		self.first_drivers = dict[str, SrcLoc]()
 		self.statements: list[Statement] = []
 		self.domains = OrderedDict[str, ClockDomain]()
 		self.subfragments = list[tuple[Fragment, str | None]]()
@@ -268,6 +269,7 @@ class Fragment:
 		# Flattening is done after clock domain propagation, so we can assume the domains
 		# are already the same in every involved fragment in the first place.
 		self.ports.update(subfragment.ports)
+		self.first_drivers.update(subfragment.first_drivers)
 		for domain, signal in subfragment.iter_drivers():
 			self.add_driver(signal, domain)
 		self.statements += subfragment.statements
@@ -425,6 +427,7 @@ class Fragment:
 
 		# Finally, collect the (now unique) subfragment domains, and merge them into our domains.
 		for subfrag, name in self.subfragments:
+			self.first_drivers.update(subfrag.first_drivers)
 			for domain_name, domain in subfrag.domains.items():
 				if domain.local:
 					continue
@@ -437,6 +440,7 @@ class Fragment:
 
 		# For each domain defined in this fragment, ensure it also exists in all subfragments.
 		for subfrag, name in self.subfragments:
+			subfrag.first_drivers.update(self.first_drivers)
 			for domain in self.iter_domains():
 				if domain in subfrag.domains:
 					if self.domains[domain] is not subfrag.domains[domain]:

@@ -279,6 +279,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._ctrl_stack: list[tuple[str, _CtrlEntry]] = []
 
 		self._driving      = SignalDict[str]()
+		self._driving_locs = dict[str, SrcLoc]()
 		self._named_submodules = {}
 		self._anon_submodules  = []
 		self._domains      = {}
@@ -789,6 +790,11 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		.. todo:: Document Me
 		'''
 
+		src_loc = tracer.get_src_loc(src_loc_at = 1)
+		# Store the very first driving reference
+		if domain not in self._driving_locs:
+			self._driving_locs[domain] = src_loc
+
 		def domain_name(domain):
 			if domain is None:
 				return 'comb'
@@ -802,7 +808,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
 				raise ToriiSyntaxError(
 					f'Only assignments and property checks may be appended to d.{domain_name(domain)}',
-					tracer.get_src_loc(src_loc_at = 1)
+					src_loc
 				)
 
 			stmt._MustUse__used = True
@@ -817,7 +823,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 						f'Driver-driver conflict: trying to drive {signal!r} from clock domain '
 						f'\'{domain_name(domain)}\', but it is already driven from the clock domain '
 						f'\'{domain_name(cd_curr)}\'',
-						tracer.get_src_loc(src_loc_at = 1)
+						src_loc
 					)
 
 			self._statements.append(stmt)
@@ -904,5 +910,6 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		for signal, domain in self._driving.items():
 			fragment.add_driver(signal, domain)
 		fragment.add_domains(self._domains.values())
+		fragment.first_drivers = self._driving_locs
 		fragment.generated.update(self._generated)
 		return fragment

@@ -434,6 +434,7 @@ class FragmentTransformer:
 			new_fragment = Fragment()
 			new_fragment._formal = fragment._formal
 			new_fragment.flatten = fragment.flatten
+			new_fragment.first_drivers = fragment.first_drivers
 		new_fragment.attrs = OrderedDict(fragment.attrs)
 		self.map_ports(fragment, new_fragment)
 		self.map_subfragments(fragment, new_fragment)
