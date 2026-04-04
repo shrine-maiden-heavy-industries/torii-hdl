@@ -651,7 +651,7 @@ class Fragment:
 
 		from .xfrm import DomainLowerer, SampleLowerer
 
-		fragment = SampleLowerer()(self)
+		fragment = SampleLowerer(formal = self._formal)(self)
 		new_domains = fragment._propagate_domains(missing_domain)
 		fragment = DomainLowerer()(fragment)
 		if ports is None:

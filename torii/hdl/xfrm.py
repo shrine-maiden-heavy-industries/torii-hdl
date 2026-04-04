@@ -762,10 +762,11 @@ class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 	.. todo:: Document Me
 	'''
 
-	def __init__(self) -> None:
-		self.initial = None
+	def __init__(self, *, formal: bool = False) -> None:
+		self.initial      = None
 		self.sample_cache = None
 		self.sample_stmts = None
+		self._formal      = formal
 
 	def _name_reset(self, value):
 		'''
