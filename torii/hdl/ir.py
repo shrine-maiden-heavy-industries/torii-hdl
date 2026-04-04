@@ -484,12 +484,9 @@ class Fragment:
 				else:
 					msg = f'The clock domain \'{domain_name}\' was used but not defined'
 
-				# There may be some cases where we can't get where the first driver is for a clock domain
-				src_loc = self.first_drivers.get(domain_name)
-				if src_loc is None:
-					src_loc = (None, None)
-
-				raise ToriiSyntaxError(msg, src_loc, additional_ctx = additional_ctx)
+				raise ToriiSyntaxError(
+					msg, self.first_drivers.get(domain_name), additional_ctx = additional_ctx
+				)
 
 			if type(value) is ClockDomain:
 				self.add_domains(value)

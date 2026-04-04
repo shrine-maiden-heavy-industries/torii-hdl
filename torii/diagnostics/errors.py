@@ -39,10 +39,14 @@ class ToriiSyntaxError(SyntaxError):
 	''' Malformed or incorrect Torii code '''
 
 	def __init__(
-		self, message: str, src_loc: tuple[str, int], *, notes: list[str] | None = None,
+		self, message: str, src_loc: tuple[str, int] | None, *, notes: list[str] | None = None,
 		additional_ctx: tuple[str, tuple[str, int]] | None = None
 	) -> None:
-		filename, lineno = src_loc
+		if src_loc is None:
+			filename = None
+			lineno = None
+		else:
+			filename, lineno = src_loc
 
 		if notes is not None:
 			self.__notes__ = notes
