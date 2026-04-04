@@ -177,8 +177,8 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		w_port = storage.write_port()
 		r_port = storage.read_port(
 			domain = 'comb' if self.fwft else 'sync', transparent = self.fwft)
-		produce = Signal(range(self.depth))
-		consume = Signal(range(self.depth))
+		self._produce = produce = Signal(range(self.depth))
+		self._consume = consume = Signal(range(self.depth))
 
 		m.d.comb += [
 			w_port.addr.eq(produce),
@@ -202,31 +202,31 @@ class SyncFIFO(Elaboratable, FIFOInterface):
 		with m.If(do_read & ~do_write):
 			m.d.sync += self.level.eq(self.level - 1)
 
-		if platform == 'formal':
-			# TODO: move this logic to SymbiYosys
-			with m.If(Initial()):
-				m.d.comb += [
-					Assume(produce < self.depth),
-					Assume(consume < self.depth),
-				]
-				with m.If(produce == consume):
-					m.d.comb += Assume((self.level == 0) | (self.level == self.depth))
-				with m.If(produce > consume):
-					m.d.comb += Assume(self.level == (produce - consume))
-				with m.If(produce < consume):
-					m.d.comb += Assume(self.level == (self.depth + produce - consume))
-			with m.Else():
-				m.d.comb += [
-					Assert(produce < self.depth),
-					Assert(consume < self.depth),
-				]
-				with m.If(produce == consume):
-					m.d.comb += Assert((self.level == 0) | (self.level == self.depth))
-				with m.If(produce > consume):
-					m.d.comb += Assert(self.level == (produce - consume))
-				with m.If(produce < consume):
-					m.d.comb += Assert(self.level == (self.depth + produce - consume))
+		return m
 
+	def formal(self, m: Module) -> Module:
+		with m.If(Initial()):
+			m.d.comb += [
+				Assume(self._produce < self.depth),
+				Assume(self._consume < self.depth),
+			]
+			with m.If(self._produce == self._consume):
+				m.d.comb += Assume((self.level == 0) | (self.level == self.depth))
+			with m.If(self._produce > self._consume):
+				m.d.comb += Assume(self.level == (self._produce - self._consume))
+			with m.If(self._produce < self._consume):
+				m.d.comb += Assume(self.level == (self.depth + self._produce - self._consume))
+		with m.Else():
+			m.d.comb += [
+				Assert(self._produce < self.depth),
+				Assert(self._consume < self.depth),
+			]
+			with m.If(self._produce == self._consume):
+				m.d.comb += Assert((self.level == 0) | (self.level == self.depth))
+			with m.If(self._produce > self._consume):
+				m.d.comb += Assert(self.level == (self._produce - self._consume))
+			with m.If(self._produce < self._consume):
+				m.d.comb += Assert(self.level == (self.depth + self._produce - self._consume))
 		return m
 
 class SyncFIFOBuffered(Elaboratable, FIFOInterface):
@@ -388,18 +388,18 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		do_read  = self.r_rdy & self.r_en
 
 		# TODO: extract this pattern into lib.cdc.GrayCounter
-		produce_w_bin = Signal(self._ctr_bits)
+		self._produce_w_bin = produce_w_bin = Signal(self._ctr_bits)
 		produce_w_nxt = Signal(self._ctr_bits)
 		m.d.comb += produce_w_nxt.eq(produce_w_bin + do_write)
 		m.d[self._w_domain] += produce_w_bin.eq(produce_w_nxt)
 
 		# Note: Both read-domain counters must be reset_less (see comments below)
-		consume_r_bin = Signal(self._ctr_bits, reset_less = True)
+		self._consume_r_bin = consume_r_bin = Signal(self._ctr_bits, reset_less = True)
 		consume_r_nxt = Signal(self._ctr_bits)
 		m.d.comb += consume_r_nxt.eq(consume_r_bin + do_read)
 		m.d[self._r_domain] += consume_r_bin.eq(consume_r_nxt)
 
-		produce_w_gry = Signal(self._ctr_bits)
+		self._produce_w_gry = produce_w_gry = Signal(self._ctr_bits)
 		produce_r_gry = Signal(self._ctr_bits)
 		produce_enc = m.submodules.produce_enc = Encoder(self._ctr_bits)
 		produce_cdc = m.submodules.produce_cdc = FFSynchronizer(  # noqa: F841
@@ -408,7 +408,7 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		m.d.comb += produce_enc.i.eq(produce_w_nxt),
 		m.d[self._w_domain] += produce_w_gry.eq(produce_enc.o)
 
-		consume_r_gry = Signal(self._ctr_bits, reset_less = True)
+		self._consume_r_gry = consume_r_gry = Signal(self._ctr_bits, reset_less = True)
 		consume_w_gry = Signal(self._ctr_bits)
 		consume_enc = m.submodules.consume_enc = Encoder(self._ctr_bits)
 		consume_cdc = m.submodules.consume_cdc = FFSynchronizer(  # noqa: F841
@@ -488,10 +488,12 @@ class AsyncFIFO(Elaboratable, FIFOInterface):
 		with m.Else():
 			m.d[self._r_domain] += self.r_rst.eq(0)
 
-		if platform == 'formal':
-			with m.If(Initial()):
-				m.d.comb += Assume(produce_w_gry == (produce_w_bin ^ produce_w_bin[1:]))
-				m.d.comb += Assume(consume_r_gry == (consume_r_bin ^ consume_r_bin[1:]))
+		return m
+
+	def formal(self, m: Module) -> Module:
+		with m.If(Initial()):
+			m.d.comb += Assume(self._produce_w_gry == (self._produce_w_bin ^ self._produce_w_bin[1:]))
+			m.d.comb += Assume(self._consume_r_gry == (self._consume_r_bin ^ self._consume_r_bin[1:]))
 
 		return m
 
