@@ -75,7 +75,7 @@ class ToriiTestSuiteCase(ToriiTestCase):
 		{script}
 
 		[file top.il]
-		{rtlil.convert_fragment(Fragment.get(spec, platform = 'formal').prepare())[0]}
+		{rtlil.convert_fragment(Fragment.get(spec, platform = 'formal', formal = True).prepare())[0]}
 		''')
 
 		try:
