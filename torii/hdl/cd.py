@@ -59,8 +59,11 @@ class ClockDomain:
 
 	def __init__(
 		self, name: str | None = None, *, clk_edge: Literal['pos', 'neg'] = 'pos',
-		reset_less: bool = False, async_reset: bool = False, local: bool = False
+		reset_less: bool = False, async_reset: bool = False, local: bool = False,
+		src_loc_at: int = 0
 	) -> None:
+		self.src_loc = tracer.get_src_loc(src_loc_at)
+
 		if name is None:
 			try:
 				name = tracer.get_var_name()
