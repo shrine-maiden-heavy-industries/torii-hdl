@@ -8,9 +8,10 @@ from collections   import OrderedDict, defaultdict
 from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
-from ..diagnostics import DomainError, DriverConflict, UnusedElaboratable
+from ..diagnostics import DomainError, DriverConflict, ToriiSyntaxError, UnusedElaboratable
 from .._typing     import IODirectionIO, SrcLoc
 from ..util        import _check_name, flatten
+from ..util.string import _get_best_matching
 from ..util.tracer import get_src_loc
 from ._unused      import MustUse
 from .ast          import (
@@ -469,7 +470,22 @@ class Fragment:
 				continue
 			value = missing_domain(domain_name)
 			if value is None:
-				raise DomainError(f'Domain \'{domain_name}\' is used but not defined')
+				matches = _get_best_matching(domain_name, collector.defined_domains | { 'sync', 'comb' })
+				additional_ctx = None
+
+				if len(matches) > 0:
+					match = matches[0]
+					msg = f'The clock domain \'{domain_name}\' was used but not defined, did you mean \'{match}\'?'
+					if match not in ('sync', 'comb'):
+						additional_ctx = (
+							f'The clock domain \'{match}\' was defined here:',
+							self.domains[match].src_loc
+						)
+				else:
+					msg = f'The clock domain \'{domain_name}\' was used but not defined'
+
+				raise ToriiSyntaxError(msg, self.first_drivers[domain_name], additional_ctx = additional_ctx)
+
 			if type(value) is ClockDomain:
 				self.add_domains(value)
 				# And expose ports on the newly added clock domain, since it is added directly

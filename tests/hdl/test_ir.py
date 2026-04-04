@@ -3,7 +3,7 @@
 
 from collections           import OrderedDict
 
-from torii.diagnostics     import DomainError
+from torii.diagnostics     import DomainError, ToriiSyntaxError
 from torii.hdl.ast         import Cat, ClockSignal, Const, ResetSignal, Signal, SignalDict, SignalKey, SignalSet
 from torii.hdl.cd          import ClockDomain
 from torii.hdl.dsl         import Module
@@ -536,11 +536,12 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 	def test_propagate_missing(self):
 		s1 = Signal()
 		f1 = Fragment()
-		f1.add_driver(s1, 'sync')
+		f1.add_driver(s1, 'test')
+		f1.first_drivers['test'] = ('test_ir.py', 540)
 
 		with self.assertRaisesRegex(
-			DomainError,
-			r'^Domain \'sync\' is used but not defined$'
+			ToriiSyntaxError,
+			r'^The clock domain \'test\' was used but not defined \(test_ir\.py, line 540\)$'
 		):
 			f1._propagate_domains(missing_domain = lambda name: None)
 
