@@ -78,8 +78,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError, (
-				r'^Driver-driver conflict: trying to drive \(sig c1\) from d\.sync, but it '
-				r'is already driven from d\.comb \(test_dsl\.py, line \d+\)$'
+				r'^Driver-driver conflict: trying to drive \(sig c1\) from clock domain \'sync\', but it '
+				r'is already driven from the clock domain \'comb\' \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			m.d.comb += self.c1.eq(1)

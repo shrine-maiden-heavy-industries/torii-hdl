@@ -814,8 +814,9 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				elif self._driving[signal] != domain:
 					cd_curr = self._driving[signal]
 					raise ToriiSyntaxError(
-						f'Driver-driver conflict: trying to drive {signal!r} from d.{domain_name(domain)}, but it is '
-						f'already driven from d.{domain_name(cd_curr)}',
+						f'Driver-driver conflict: trying to drive {signal!r} from clock domain '
+						f'\'{domain_name(domain)}\', but it is already driven from the clock domain '
+						f'\'{domain_name(cd_curr)}\'',
 						tracer.get_src_loc(src_loc_at = 1)
 					)
 
