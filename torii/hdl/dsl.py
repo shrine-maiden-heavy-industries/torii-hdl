@@ -697,9 +697,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					if name not in ctrl_data['encoding']:
 						ctrl_data['encoding'][name] = len(ctrl_data['encoding'])
 					self._add_statement(
-						assigns = [ ctrl_data['signal'].eq(ctrl_data['encoding'][name]) ],
-						domain  = ctrl_data['domain'],
-						depth   = len(self._ctrl_stack)
+						assigns    = [ ctrl_data['signal'].eq(ctrl_data['encoding'][name]) ],
+						domain     = ctrl_data['domain'],
+						depth      = len(self._ctrl_stack),
+						domain_loc = ctrl_data['src_loc']
 					)
 					return
 
@@ -785,15 +786,17 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				)
 			)
 
-	def _add_statement(self, assigns, domain: str, depth, compat_mode = False):
+	def _add_statement(
+		self, assigns, domain: str, depth, compat_mode = False, domain_loc: tuple[str, int] | None = None
+	):
 		'''
 		.. todo:: Document Me
 		'''
 
-		src_loc = tracer.get_src_loc(src_loc_at = 1)
+		src_loc = tracer.get_src_loc(1)
 		# Store the very first driving reference
 		if domain not in self._driving_locs:
-			self._driving_locs[domain] = src_loc
+			self._driving_locs[domain] = src_loc if domain_loc is None else domain_loc
 
 		def domain_name(domain):
 			if domain is None:
