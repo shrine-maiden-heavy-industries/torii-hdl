@@ -875,10 +875,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		'''
 
 		if cd.name in self._domains:
-			raise ToriiSyntaxError(
-				f'Clock domain named \'{cd.name}\' already exists',
-				tracer.get_src_loc(src_loc_at = 1)
-			)
+			raise ToriiSyntaxError(f'Clock domain named \'{cd.name}\' already exists', cd.src_loc)
+
 		self._domains[cd.name] = cd
 
 	def _flush(self):
