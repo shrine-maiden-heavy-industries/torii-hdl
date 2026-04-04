@@ -5,7 +5,7 @@ from collections     import OrderedDict
 from collections.abc import Iterable
 from copy            import copy
 
-from ..diagnostics   import DomainError
+from ..diagnostics   import DomainError, NonSynthesizableError
 from ..util          import flatten, tracer
 from .ast            import (
 	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const, Initial, Mux, Operator, Part, Property, ResetSignal, Sample,
@@ -811,6 +811,18 @@ class SampleLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		return sample
 
 	def on_Initial(self, value):
+		if not self._formal:
+			err = NonSynthesizableError(
+				'Use of non-synthesizable sample \'Initial\' in a synthesis context',
+				value.src_loc
+			)
+			err.add_note(
+				'While the \'Rose\', \'Fell\', \'Edge\', and \'Stable\' samples are able to be synthesized,\n'
+				'the \'Initial\' sample is only allowed in formal verification contexts.\n'
+				'You likely want to place this code in the \'formal\' method of the elaboratable.'
+			)
+			raise err
+
 		if self.initial is None:
 			self.initial = Signal(name = 'init')
 		return self.initial
