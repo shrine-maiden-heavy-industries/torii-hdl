@@ -283,6 +283,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		self._anon_submodules  = []
 		self._domains      = {}
 		self._generated    = {}
+		self._formal       = False
 
 	def _check_context(self, construct, context):
 		'''

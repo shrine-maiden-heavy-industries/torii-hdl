@@ -67,12 +67,17 @@ class Fragment:
 		code = None
 		while True:
 			if isinstance(obj, Fragment):
+				obj._formal = formal
 				return obj
 			elif isinstance(obj, Elaboratable):
 				code = obj.elaborate.__code__
 				UnusedElaboratable._MustUse__silence = False
 				obj._MustUse__used = True
 				new_obj = obj.elaborate(platform)
+
+				if new_obj is not None:
+					new_obj._formal = formal
+
 				if formal:
 					new_obj = obj.formal(new_obj)
 			else:
@@ -96,6 +101,7 @@ class Fragment:
 		self.attrs = OrderedDict()
 		self.generated = OrderedDict()
 		self.flatten = False
+		self._formal = False
 
 	def add_ports(self, *ports, dir):
 		'''

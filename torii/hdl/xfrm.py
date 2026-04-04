@@ -432,6 +432,7 @@ class FragmentTransformer:
 			self.map_named_ports(fragment, new_fragment)
 		else:
 			new_fragment = Fragment()
+			new_fragment._formal = fragment._formal
 			new_fragment.flatten = fragment.flatten
 		new_fragment.attrs = OrderedDict(fragment.attrs)
 		self.map_ports(fragment, new_fragment)
@@ -439,6 +440,7 @@ class FragmentTransformer:
 		self.map_domains(fragment, new_fragment)
 		self.map_statements(fragment, new_fragment)
 		self.map_drivers(fragment, new_fragment)
+
 		return new_fragment
 
 	def __call__(self, value, *, src_loc_at = 0):

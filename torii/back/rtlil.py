@@ -296,14 +296,14 @@ class _LegalizeValue(Exception):
 		self.src_loc  = src_loc
 
 class _ValueCompilerState:
-	def __init__(self, rtlil) -> None:
-		self.rtlil  = rtlil
-		self.wires  = ast.SignalDict()
-		self.driven = ast.SignalDict()
-		self.ports  = ast.SignalDict()
-		self.anys   = ast.ValueDict()
-
+	def __init__(self, rtlil, *, formal: bool = False) -> None:
+		self.rtlil      = rtlil
+		self.wires      = ast.SignalDict()
+		self.driven     = ast.SignalDict()
+		self.ports      = ast.SignalDict()
+		self.anys       = ast.ValueDict()
 		self.expansions = ast.ValueDict()
+		self.formal     = formal
 
 	def add_driven(self, signal, sync) -> None:
 		self.driven[signal] = sync
@@ -898,8 +898,13 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 	if len(hierarchy) == 1:
 		module_attrs['top'] = 1
 
+	if isinstance(fragment, ir.Fragment):
+		is_formal = fragment._formal
+	else:
+		is_formal = False
+
 	with builder.module(module_name, attrs = module_attrs) as module:
-		compiler_state = _ValueCompilerState(module)
+		compiler_state = _ValueCompilerState(module, formal = is_formal)
 		rhs_compiler   = _RHSValueCompiler(compiler_state)
 		lhs_compiler   = _LHSValueCompiler(compiler_state)
 		stmt_compiler  = _StatementCompiler(compiler_state, rhs_compiler, lhs_compiler)
