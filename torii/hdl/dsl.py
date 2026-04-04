@@ -884,7 +884,14 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		'''
 
 		if cd.name in self._domains:
-			raise ToriiSyntaxError(f'Clock domain named \'{cd.name}\' already exists', cd.src_loc)
+			raise ToriiSyntaxError(
+				f'Clock domain named \'{cd.name}\' already exists',
+				cd.src_loc,
+				additional_ctx = (
+					f'The domain \'{cd.name}\' was previously defined here:',
+					self._domains[cd.name].src_loc
+				)
+			)
 
 		self._domains[cd.name] = cd
 
