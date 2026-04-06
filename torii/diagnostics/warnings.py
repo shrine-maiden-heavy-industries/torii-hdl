@@ -5,9 +5,11 @@
 '''
 
 __all__ = (
+	'ConstraintWarning',
 	'DriverConflict',
 	'MustUseWarning',
 	'NameWarning',
+	'PlatformWarning',
 	'ResourceWarning',
 	'ToolWarning',
 	'ToriiSyntaxWarning',
@@ -26,8 +28,15 @@ class ToriiSyntaxWarning(SyntaxWarning):
 	''' Inadvisable or potentially unwanted behavior from Torii code '''
 	pass
 
+class ConstraintWarning(ToriiWarning):
+	''' A constraint warning '''
+
 class NameWarning(ToriiWarning):
 	''' Inadvisable HDL construct name '''
+	pass
+
+class PlatformWarning(ToriiWarning):
+	''' A warning related to Torii platform functionality '''
 	pass
 
 class ToolWarning(ToriiWarning):
