@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import warnings
-from collections     import OrderedDict
+from collections       import OrderedDict
 
-from torii.build.dsl import (
+from torii.build.dsl   import (
 	Attrs, Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Resource, Subsignal,
 )
-from torii.hdl.time  import Period, Frequency, MHz
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.time    import Period, Frequency, MHz
 
-from ..utils         import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class PinsTestCase(ToriiTestSuiteCase):
 	def test_basic(self):
@@ -53,23 +54,25 @@ class PinsTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_names(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Names must be a whitespace-separated string, not \[\'A0\', \'A1\', \'A2\'\]$'
+			ToriiSyntaxError,
+			r'^Names must be a whitespace-separated string, not \[\'A0\', \'A1\', \'A2\'\]'
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			Pins(['A0', 'A1', 'A2'])
 
 	def test_wrong_dir(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not \'wrong\'$'
+			ToriiSyntaxError,
+			r'^Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not \'wrong\''
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			Pins('A0 A1', dir = 'wrong')
 
 	def test_wrong_conn(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Connector must be None or a pair of string \(connector name\) and '
-				r'integer\/string \(connector number\), not \(\'foo\', None\)$'
+				r'integer\/string \(connector number\), not \(\'foo\', None\) \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Pins('A0 A1', conn = ('foo', None))
@@ -80,17 +83,17 @@ class PinsTestCase(ToriiTestSuiteCase):
 			'pmod_0:0': 'A0',
 		}
 		with self.assertRaisesRegex(
-			NameError, (
+			ToriiSyntaxError, (
 				r'^Resource \(pins io pmod_0:0 pmod_0:1 pmod_0:2\) refers to nonexistent '
-				r'connector pin pmod_0:1$'
+				r'connector pin pmod_0:1 \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			p.map_names(mapping, p)
 
 	def test_wrong_assert_width(self):
 		with self.assertRaisesRegex(
-			AssertionError,
-			r'^3 names are specified \(0 1 2\), but 4 names are expected$'
+			ToriiSyntaxError,
+			r'^3 pin\(s\) are specified \(0 1 2\), but 4 pin\(s\) are expected \(test_dsl\.py, line \d+\)$'
 		):
 			Pins('0 1 2', assert_width = 4)
 
@@ -130,17 +133,17 @@ class DiffPairsTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_width(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Positive and negative pins must have the same width, but \(pins io A0\) '
-				r'and \(pins io B0 B1\) do not$'
+			ToriiSyntaxError, (
+				r'^Differential pairs must have a symmetric set of positive and negative pins, however '
+				r'fewer positive than negative pins were specified \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			DiffPairs('A0', 'B0 B1')
 
 	def test_wrong_assert_width(self):
 		with self.assertRaisesRegex(
-			AssertionError,
-			r'^3 names are specified \(0 1 2\), but 4 names are expected$'
+			ToriiSyntaxError,
+			r'^3 pin\(s\) are specified \(0 1 2\), but 4 pin\(s\) are expected \(test_dsl\.py, line \d+\)$'
 		):
 			DiffPairs('0 1 2', '3 4 5', assert_width = 4)
 
@@ -165,8 +168,8 @@ class AttrsTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_value(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Value of attribute FOO must be None, int, str, or callable, not 1\.0$'
+			ToriiSyntaxError,
+			r'^Value of attribute FOO must be None, int, str, or callable, not 1\.0 \(test_dsl\.py, line \d+\)$'
 		):
 			Attrs(FOO = 1.0)
 
@@ -255,66 +258,70 @@ class SubsignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s.clock.frequency, Frequency(1e6))
 
 	def test_wrong_empty_io(self):
-		with self.assertRaisesRegex(ValueError, r'^Missing I\/O constraints$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError, r'^Missing I\/O constraints \(test_dsl\.py, line \d+\)$'
+		):
 			Subsignal('a')
 
 	def test_wrong_io(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, '
-				r'not \'wrong\'$'
+				r'not \'wrong\' \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Subsignal('a', 'wrong')
 
 	def test_wrong_pins(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
-				r'constraints, but \(pins io A1\) appears after \(pins io A0\)$'
+				r'constraints, but \(pins io A1\) appears after \(pins io A0\) \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Subsignal('a', Pins('A0'), Pins('A1'))
 
 	def test_wrong_diffpairs(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
-				r'constraints, but \(pins io A1\) appears after \(diffpairs io \(p A0\) \(n B0\)\)$'
+				r'constraints, but \(pins io A1\) appears after \(diffpairs io \(p A0\) \(n B0\)\)'
+				r' \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Subsignal('a', DiffPairs('A0', 'B0'), Pins('A1'))
 
 	def test_wrong_subsignals(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Pins and DiffPairs are incompatible with other location or subsignal '
-				r'constraints, but \(pins io B0\) appears after \(subsignal b \(pins io A0\)\)$'
+				r'constraints, but \(pins io B0\) appears after \(subsignal b \(pins io A0\)\)'
+				r' \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Subsignal('a', Subsignal('b', Pins('A0')), Pins('B0'))
 
 	def test_wrong_clock(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Clock constraint can only be applied to Pins or DiffPairs, not '
-				r'\(subsignal b \(pins io A0\)\)$'
+				r'\(subsignal b \(pins io A0\)\) \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Subsignal('a', Subsignal('b', Pins('A0')), Clock(1 * MHz))
 
 	def test_wrong_clock_many(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Clock constraint can be applied only once$'
+			ToriiSyntaxError,
+			r'^Clock constraint can be applied only once \(test_dsl\.py, line \d+\)$'
 		):
 			Subsignal('a', Pins('A0'), Clock(1 * MHz), Clock(10 * MHz))
 
 	def test_duplicated_names(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Attempted to add subsignal `\(subsignal bar \(pins io B\)\)` to `foo` but a subsignal with that'
-			r' name already exists.$'
+			ToriiSyntaxError,
+			r'^Attempted to add subsignal `bar` to `foo` but a subsignal with that'
+			r' name already exists\. \(test_dsl\.py, line \d+\)$'
 		):
 			Subsignal('foo', Subsignal('bar', Pins('A')), Subsignal('bar', Pins('B')))
 
@@ -336,8 +343,8 @@ class ResourceTestCase(ToriiTestSuiteCase):
 
 	def test_number_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Resource number must be an integer, not \(pins o 1\)$'
+			ToriiSyntaxError,
+			r'^Resource number must be an integer, not \(pins o 1\) \(test_dsl\.py, line \d+\)$'
 		):
 			# number omitted by accident
 			Resource('led', Pins('1', dir = 'o'))
@@ -416,28 +423,28 @@ class ConnectorTestCase(ToriiTestSuiteCase):
 
 	def test_conn_wrong_name(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Connector must be None or a pair of string \(connector name\) and '
-				r'integer\/string \(connector number\), not \(\'foo\', None\)$'
+				r'integer\/string \(connector number\), not \(\'foo\', None\) \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			Connector('ext', 'A', '0 1 2', conn = ('foo', None))
 
 	def test_wrong_io(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Connector I\/Os must be a dictionary or a string, not \[\]$'
+			ToriiSyntaxError,
+			r'^Connector I\/Os must be a dictionary or a string, not \[\] \(test_dsl\.py, line \d+\)$'
 		):
 			Connector('pmod', 0, [])
 
 	def test_wrong_dict_key_value(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Connector pin name must be a string, not 0$'
+			ToriiSyntaxError,
+			r'^Connector pin name must be a string, not 0 \(test_dsl\.py, line \d+\)$'
 		):
 			Connector('pmod', 0, {0: 'A'})
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Platform pin name must be a string, not 0$'
+			ToriiSyntaxError,
+			r'^Platform pin name must be a string, not 0 \(test_dsl\.py, line \d+\)$'
 		):
 			Connector('pmod', 0, {'A': 0})

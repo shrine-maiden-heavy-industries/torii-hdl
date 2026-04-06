@@ -8,7 +8,9 @@ from typing          import TypeAlias
 from warnings        import warn
 
 from .._typing       import IODirectionOE
+from ..diagnostics   import ToriiSyntaxError
 from ..hdl.time      import Period, Frequency, GHz, kHz, MHz
+from ..util.tracer   import get_src_loc
 
 __all__ = (
 	'Attrs',
@@ -31,28 +33,38 @@ class Pins:
 
 	def __init__(
 		self, pins: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
-		assert_width: int | None = None
+		assert_width: int | None = None, src_loc_at: int = 0
 	) -> None:
+		self.src_loc = get_src_loc(src_loc_at)
+
 		if not isinstance(pins, str):
-			raise TypeError(f'Names must be a whitespace-separated string, not {pins!r}')
+			raise ToriiSyntaxError(
+				f'Names must be a whitespace-separated string, not {pins!r}',
+				src_loc = self.src_loc
+			)
 
 		names: list[str] = pins.split()
 
 		if conn is not None:
 			conn_name, conn_number = conn
 			if not (isinstance(conn_name, str) and isinstance(conn_number, (int, str))):
-				raise TypeError(
+				raise ToriiSyntaxError(
 					'Connector must be None or a pair of string (connector name) and '
-					f'integer/string (connector number), not {conn!r}'
+					f'integer/string (connector number), not {conn!r}',
+					src_loc = self.src_loc
 				)
 			names = [ f'{conn_name}_{conn_number}:{name}' for name in names ]
 
 		if dir not in ('i', 'o', 'io', 'oe'):
-			raise TypeError(f'Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not {dir!r}')
+			raise ToriiSyntaxError(
+				f'Direction must be one of \'i\', \'o\', \'oe\', or \'io\', not {dir!r}',
+				src_loc = self.src_loc
+			)
 
 		if assert_width is not None and len(names) != assert_width:
-			raise AssertionError(
-				f'{len(names)} names are specified ({" ".join(names)}), but {assert_width} names are expected'
+			raise ToriiSyntaxError(
+				f'{len(names)} pin(s) are specified ({" ".join(names)}), but {assert_width} pin(s) are expected',
+				src_loc = self.src_loc
 			)
 
 		self.names  = names
@@ -74,7 +86,11 @@ class Pins:
 		for name in self.names:
 			while ':' in name:
 				if name not in mapping:
-					raise NameError(f'Resource {resource!r} refers to nonexistent connector pin {name}')
+					# TODO(aki): ensure `resource` is always a `Resource`, then we can clean this up
+					raise ToriiSyntaxError(
+						f'Resource {resource!r} refers to nonexistent connector pin {name}',
+						src_loc = self.src_loc
+					)
 				name = mapping[name]
 			mapped_names.append(name)
 		return mapped_names
@@ -83,13 +99,16 @@ class Pins:
 		return f'(pins{"-n" if self.invert else ""} {self.dir} {" ".join(self.names)})'
 
 def PinsN(
-	names: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
+	names: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None,
+	src_loc_at: int = 0
 ) -> Pins:
 	'''
 	.. todo:: Document Me
 	'''
 
-	return Pins(names, dir = dir, invert = True, conn = conn, assert_width = assert_width)
+	return Pins(
+		names, dir = dir, invert = True, conn = conn, assert_width = assert_width, src_loc_at = src_loc_at + 1
+	)
 
 class DiffPairs:
 	'''
@@ -98,14 +117,24 @@ class DiffPairs:
 
 	def __init__(
 		self, p: str, n: str, *, dir: IODirectionOE = 'io', invert: bool = False, conn: ResourceConn | None = None,
-		assert_width: int | None = None
+		assert_width: int | None = None, src_loc_at: int = 0
 	) -> None:
-		self.p = Pins(p, dir = dir, conn = conn, assert_width = assert_width)
-		self.n = Pins(n, dir = dir, conn = conn, assert_width = assert_width)
+		self.src_loc = get_src_loc(src_loc_at)
+
+		self.p = Pins(p, dir = dir, conn = conn, assert_width = assert_width, src_loc_at = src_loc_at + 1)
+		self.n = Pins(n, dir = dir, conn = conn, assert_width = assert_width, src_loc_at = src_loc_at + 1)
 
 		if len(self.p.names) != len(self.n.names):
-			raise TypeError(
-				f'Positive and negative pins must have the same width, but {self.p!r} and {self.n!r} do not'
+			more_or_fewer = 'more' if len(self.p.names) > len(self.n.names) else 'fewer'
+
+			raise ToriiSyntaxError(
+				'Differential pairs must have a symmetric set of positive and negative pins, however '
+				f'{more_or_fewer} positive than negative pins were specified',
+				src_loc = self.src_loc,
+				notes = [
+					f'The following positive pins were specified: {", ".join(self.p.names)}',
+					f'The following negative pins were specified: {", ".join(self.n.names)}',
+				]
 			)
 
 		self.dir    = dir
@@ -124,23 +153,31 @@ class DiffPairs:
 		)
 
 def DiffPairsN(
-	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None
+	p: str, n: str, *, dir: IODirectionOE = 'io', conn: ResourceConn | None = None, assert_width: int | None = None,
+	src_loc_at: int = 0
 ) -> DiffPairs:
 	'''
 	.. todo:: Document Me
 	'''
 
-	return DiffPairs(p = p, n = n, dir = dir, invert = True, conn = conn, assert_width = assert_width)
+	return DiffPairs(
+		p = p, n = n, dir = dir, invert = True, conn = conn, assert_width = assert_width, src_loc_at = src_loc_at + 1
+	)
 
 class Attrs(OrderedDict[str, int | str | Callable]):
 	'''
 	.. todo:: Document Me
 	'''
 
-	def __init__(self, **attrs: int | str | Callable) -> None:
+	def __init__(self, *, src_loc_at: int = 0, **attrs: int | str | Callable) -> None:
+		self.src_loc = get_src_loc(src_loc_at)
+
 		for key, value in attrs.items():
 			if not (value is None or isinstance(value, (str, int)) or hasattr(value, '__call__')):
-				raise TypeError(f'Value of attribute {key} must be None, int, str, or callable, not {value!r}')
+				raise ToriiSyntaxError(
+					f'Value of attribute {key} must be None, int, str, or callable, not {value!r}',
+					src_loc = self.src_loc
+				)
 
 		super().__init__(**attrs)
 
@@ -171,7 +208,9 @@ class Clock:
 		The frequency of this clock in Hertz.
 	'''
 
-	def __init__(self, frequency: Frequency | float | int) -> None:
+	def __init__(self, frequency: Frequency | float | int, *, src_loc_at: int = 0) -> None:
+		self.src_loc = get_src_loc(src_loc_at)
+
 		if isinstance(frequency, (float, int)):
 			warn(
 				f'Please use a `torii.hdl.time.Frequency` rather than a {type(frequency)} when specifying Clocks',
@@ -182,7 +221,7 @@ class Clock:
 		elif isinstance(frequency, Frequency):
 			self.frequency = frequency
 		else:
-			raise TypeError(
+			raise ToriiSyntaxError(
 				f'Clock frequency must be a `torii.hdl.time.Frequency`, a `float` or an `int`, not an {type(frequency)}'
 			)
 
@@ -212,7 +251,7 @@ class Clock:
 			stacklevel = 2
 		)
 
-		return Clock(frequency * kHz)
+		return Clock(frequency * kHz, src_loc_at = 1)
 
 	@classmethod
 	def from_mhz(cls: type['Clock'], frequency: float | int) -> 'Clock':
@@ -240,7 +279,7 @@ class Clock:
 			stacklevel = 2
 		)
 
-		return Clock(frequency * MHz)
+		return Clock(frequency * MHz, src_loc_at = 1)
 
 	@classmethod
 	def from_ghz(cls: type['Clock'], frequency: float | int) -> 'Clock':
@@ -268,7 +307,7 @@ class Clock:
 			stacklevel = 2
 		)
 
-		return Clock(frequency * GHz)
+		return Clock(frequency * GHz, src_loc_at = 1)
 
 	@property
 	def period(self) -> Period:
@@ -288,7 +327,9 @@ class Subsignal:
 	.. todo:: Document Me
 	'''
 
-	def __init__(self, name: str, *args: SubsigArgT) -> None:
+	def __init__(self, name: str, *args: SubsigArgT, src_loc_at: int = 0) -> None:
+		self.src_loc = get_src_loc(src_loc_at)
+
 		self.name                  = name
 		self.ios: list[SubsigArgT] = []
 		self.attrs                 = Attrs()
@@ -297,31 +338,39 @@ class Subsignal:
 		_subsig_names = set[str]()
 
 		if not args:
-			raise ValueError('Missing I/O constraints')
+			raise ToriiSyntaxError(
+				'Missing I/O constraints', src_loc = self.src_loc
+			)
 		for arg in args:
 			if isinstance(arg, (Pins, DiffPairs)):
 				if not self.ios:
 					self.ios.append(arg)
 				else:
-					raise TypeError(
+					# TODO(aki): Figure out how to clean up this message and make it better
+					raise ToriiSyntaxError(
 						'Pins and DiffPairs are incompatible with other location or '
-						f'subsignal constraints, but {arg!r} appears after {self.ios[-1]!r}'
+						f'subsignal constraints, but {arg!r} appears after {self.ios[-1]!r}',
+						src_loc = self.src_loc
 					)
 
 			elif isinstance(arg, Subsignal):
 				if not self.ios or isinstance(self.ios[-1], Subsignal):
 					if arg.name in _subsig_names:
-						raise NameError(
-							f'Attempted to add subsignal `{arg!r}` to `{self.name}` but a subsignal with that name'
-							' already exists.'
+						# TODO(aki): Do we want to track src locs here? I don't think so
+						raise ToriiSyntaxError(
+							f'Attempted to add subsignal `{arg.name}` to `{self.name}` but a subsignal with that name'
+							' already exists.',
+							src_loc = self.src_loc,
 						)
 
 					_subsig_names.add(arg.name)
 					self.ios.append(arg)
 				else:
-					raise TypeError(
+					# TODO(aki): Figure out how to clean up this message and make it better
+					raise ToriiSyntaxError(
 						'Subsignal is incompatible with location constraints, but '
-						f'{arg!r} appears after {self.ios[-1]!r}'
+						f'{arg!r} appears after {self.ios[-1]!r}',
+						src_loc = self.src_loc
 					)
 			elif isinstance(arg, Attrs):
 				self.attrs.update(arg)
@@ -330,11 +379,19 @@ class Subsignal:
 					if self.clock is None:
 						self.clock = arg
 					else:
-						raise ValueError('Clock constraint can be applied only once')
+						raise ToriiSyntaxError(
+							'Clock constraint can be applied only once', src_loc = self.src_loc
+						)
 				else:
-					raise TypeError(f'Clock constraint can only be applied to Pins or DiffPairs, not {self.ios[-1]!r}')
+					raise ToriiSyntaxError(
+						f'Clock constraint can only be applied to Pins or DiffPairs, not {self.ios[-1]!r}',
+						src_loc = self.src_loc
+					)
 			else:
-				raise TypeError(f'Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, not {arg!r}')
+				raise ToriiSyntaxError(
+					f'Constraint must be one of Pins, DiffPairs, Subsignal, Attrs, or Clock, not {arg!r}',
+					src_loc = self.src_loc
+				)
 
 	def _content_repr(self) -> str:
 		parts: list[str] = []
@@ -359,7 +416,8 @@ class Resource(Subsignal):
 	def family(
 		cls: type[Resource],
 		name_or_number: str | int, number: int | None = None, *,
-		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = ''
+		ios: Sequence[SubsigArgT], default_name: str, name_suffix: str = '',
+		src_loc_at: int = 0
 	) -> Resource:
 		'''
 		.. todo:: Document Me
@@ -380,15 +438,20 @@ class Resource(Subsignal):
 		# NOTE(aki): The type ignores here are silly but unless we do extra work to coerce the
 		#            `name_or_number` type due to the silly call then mypy will forever complain
 		if number is None: # name_or_number is number
-			return cls(default_name + name_suffix, name_or_number, *ios) # type: ignore
+			return cls(default_name + name_suffix, name_or_number, *ios, src_loc_at = 1 + src_loc_at) # type: ignore
 		else: # name_or_number is name
-			return cls(name_or_number + name_suffix, number, *ios) # type: ignore
+			return cls(name_or_number + name_suffix, number, *ios, src_loc_at = 1 + src_loc_at) # type: ignore
 
-	def __init__(self, name: str, number: int, *args: SubsigArgT) -> None:
+	def __init__(self, name: str, number: int, *args: SubsigArgT, src_loc_at: int = 0) -> None:
+		self.src_loc = get_src_loc(src_loc_at)
+
 		if not isinstance(number, int):
-			raise TypeError(f'Resource number must be an integer, not {number!r}')
+			raise ToriiSyntaxError(
+				f'Resource number must be an integer, not {number!r}',
+				src_loc = self.src_loc
+			)
 
-		super().__init__(name, *args)
+		super().__init__(name, *args, src_loc_at = src_loc_at + 1)
 		self.number = number
 
 	def __repr__(self) -> str:
@@ -399,17 +462,27 @@ class Connector:
 	.. todo:: Document Me
 	'''
 
-	def __init__(self, name: str, number: int, io: str | dict[str, str], *, conn: ResourceConn | None = None) -> None:
-		self.name   = name
-		self.number = number
-		mapping     = OrderedDict[str, str]()
+	def __init__(
+		self, name: str, number: int, io: str | dict[str, str], *, conn: ResourceConn | None = None,
+		src_loc_at: int = 0
+	) -> None:
+		self.name    = name
+		self.number  = number
+		self.src_loc = get_src_loc(src_loc_at)
+		mapping      = OrderedDict[str, str]()
 
 		if isinstance(io, dict):
 			for (conn_pin, plat_pin) in io.items():
 				if not isinstance(conn_pin, str):
-					raise TypeError(f'Connector pin name must be a string, not {conn_pin!r}')
+					raise ToriiSyntaxError(
+						f'Connector pin name must be a string, not {conn_pin!r}',
+						src_loc = self.src_loc
+					)
 				if not isinstance(plat_pin, str):
-					raise TypeError(f'Platform pin name must be a string, not {plat_pin!r}')
+					raise ToriiSyntaxError(
+						f'Platform pin name must be a string, not {plat_pin!r}',
+						src_loc = self.src_loc
+					)
 				mapping[conn_pin] = plat_pin
 
 		elif isinstance(io, str):
@@ -420,14 +493,18 @@ class Connector:
 
 				mapping[str(conn_pin)] = plat_pin
 		else:
-			raise TypeError(f'Connector I/Os must be a dictionary or a string, not {io!r}')
+			raise ToriiSyntaxError(
+				f'Connector I/Os must be a dictionary or a string, not {io!r}',
+				src_loc = self.src_loc
+			)
 
 		if conn is not None:
 			conn_name, conn_number = conn
 			if not (isinstance(conn_name, str) and isinstance(conn_number, (int, str))):
-				raise TypeError(
+				raise ToriiSyntaxError(
 					'Connector must be None or a pair of string (connector name) and integer/string '
-					f'(connector number), not {conn!r}'
+					f'(connector number), not {conn!r}',
+					src_loc = self.src_loc
 				)
 
 			for conn_pin, plat_pin in mapping.items():
