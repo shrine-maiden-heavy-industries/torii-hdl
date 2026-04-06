@@ -7,10 +7,12 @@ from .._typing import SrcLoc
 '''
 
 __all__ = (
+	'ConstraintError',
 	'DomainError',
 	'NameError',
 	'NameNotFound',
 	'NonSynthesizableError',
+	'PlatformError',
 	'ResourceError',
 	'ToolError',
 	'ToolNotFound',
@@ -69,6 +71,10 @@ class ToriiSyntaxError(SyntaxError):
 
 		super().__init__(message, (filename, lineno, None, None))
 
+class ConstraintError(ToriiError):
+	''' An invalid constraint '''
+	pass
+
 class NameError(ToriiError):
 	''' Invalid HDL construct name '''
 	pass
@@ -79,6 +85,10 @@ class NameNotFound(NameError):
 
 class NonSynthesizableError(ToriiSyntaxError):
 	''' Attempted synthesis of a non-synthesizable Torii construct '''
+	pass
+
+class PlatformError(ToriiError):
+	''' An error relating to some functionality of a Torii platform '''
 	pass
 
 class ToolError(ToriiError):
