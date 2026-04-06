@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from .._typing import SrcLoc
+
 '''
 
 '''
@@ -21,11 +23,19 @@ class ToriiError(Exception):
 	''' The base class for all Torii errors '''
 
 	def __init__(
-		self, *args: object, src_loc: tuple[str, int] | None = None, notes: list[str] | None = None,
-		additional_ctx: tuple[str, tuple[str, int]] | None = None
+		self, *args: object, message: str | None = None, src_loc: SrcLoc | None = None,
+		notes: list[str] | None = None, additional_ctx: tuple[str, SrcLoc] | None = None
 	) -> None:
-		if src_loc is not None:
-			self.src_loc = src_loc
+		self.msg = message
+
+		if src_loc is None:
+			filename = None
+			lineno = None
+		else:
+			filename, lineno = src_loc
+
+		self.filename = filename
+		self.lineno = lineno
 
 		if notes is not None:
 			self.__notes__ = notes
@@ -33,14 +43,17 @@ class ToriiError(Exception):
 		if additional_ctx is not None:
 			self.additional_ctx = additional_ctx
 
-		super().__init__(*args)
+		if len(args) == 0 and message is not None:
+			super().__init__(message)
+		else:
+			super().__init__(*args)
 
 class ToriiSyntaxError(SyntaxError):
 	''' Malformed or incorrect Torii code '''
 
 	def __init__(
-		self, message: str, src_loc: tuple[str, int] | None, *, notes: list[str] | None = None,
-		additional_ctx: tuple[str, tuple[str, int]] | None = None
+		self, message: str, src_loc: SrcLoc | None, *, notes: list[str] | None = None,
+		additional_ctx: tuple[str, SrcLoc] | None = None
 	) -> None:
 		if src_loc is None:
 			filename = None
