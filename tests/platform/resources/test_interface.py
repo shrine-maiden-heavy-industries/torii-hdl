@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+from torii.diagnostics                  import ResourceWarning
 from torii.platform.resources.interface import PCIBusResources, PCIeBusResources
 from torii.test                         import ToriiTestCase
 
