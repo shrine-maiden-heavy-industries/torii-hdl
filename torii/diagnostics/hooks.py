@@ -25,7 +25,7 @@ from rich.padding  import Padding
 from rich.panel    import Panel
 from rich.syntax   import Syntax
 
-from ..diagnostics import ToriiSyntaxError
+from ..diagnostics import ToriiError, ToriiSyntaxError
 from ..hdl._unused import MustUse
 
 # Create a reference to the handlers that are installed prior to us loading
@@ -332,19 +332,20 @@ def _excepthook(type: type[BaseException], value: BaseException, traceback: Trac
 	MustUse._MustUse__silence = True
 
 	# If it's a Torii SyntaxError, then we should try to emit a diagnostic
-	if isinstance(value, ToriiSyntaxError):
-		filename = value.filename
-		lineno = value.lineno
-		line = value.text
+	if isinstance(value, (ToriiError, ToriiSyntaxError)):
+		filename = getattr(value, 'filename', None)
+		lineno = getattr(value, 'lineno', None)
+		line = getattr(value, 'text', None)
+		msg = getattr(value, 'msg', None)
 
 		# If we don't have a filename and/or line number then there is very little we can do
-		if filename is None or lineno is None:
+		if filename is None or lineno is None or msg is None:
 			_EXCEPTHOOK_RESTORE(type, value, traceback)
 			return
 
 		cons = _get_console(stderr)
 		_render_diagnostic(
-			cons, value.msg, type, filename, lineno, 'red', line, getattr(value, '__notes__', None),
+			cons, msg, type, filename, lineno, 'red', line, getattr(value, '__notes__', None),
 			getattr(value, 'additional_ctx', None)
 		)
 	else:
