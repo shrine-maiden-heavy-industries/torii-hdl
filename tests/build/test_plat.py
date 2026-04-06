@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.build.plat import Platform
+from torii.build.plat  import Platform
+from torii.diagnostics import ToriiError
 
-from ..utils          import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class MockPlatform(Platform):
 	resources  = []
@@ -37,21 +38,21 @@ class PlatformTestCase(ToriiTestSuiteCase):
 
 	def test_add_file_wrong_filename(self):
 		with self.assertRaisesRegex(
-			TypeError,
+			ToriiError,
 			r'^File name must be a string, not 1$'
 		):
 			self.platform.add_file(1, '')
 
 	def test_add_file_wrong_contents(self):
 		with self.assertRaisesRegex(
-			TypeError,
+			ToriiError,
 			r'^File contents must be str, bytes, or a file-like object, not 1$'
 		):
 			self.platform.add_file('foo', 1)
 
 	def test_add_file_wrong_duplicate(self):
 		self.platform.add_file('foo', '')
-		with self.assertRaisesRegex(ValueError, r'^File \'foo\' already exists$'):
+		with self.assertRaisesRegex(ToriiError, r'^File \'foo\' already exists$'):
 			self.platform.add_file('foo', 'bar')
 
 	def test_iter_files(self):

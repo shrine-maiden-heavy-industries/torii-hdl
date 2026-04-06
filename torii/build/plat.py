@@ -13,6 +13,7 @@ import jinja2
 
 from ..              import __version__
 from ..back          import rtlil, verilog
+from ..diagnostics   import PlatformError, ToriiError, ToriiSyntaxError
 from ..hdl.ast       import ClockSignal, Const, Signal
 from ..hdl.cd        import ClockDomain
 from ..hdl.dsl       import Module
@@ -25,6 +26,7 @@ from ..lib.io        import Pin
 from ..tools         import has_tool, require_tool
 from ..tools.yosys   import YosysBinary
 from ..util.string   import ascii_escape, tcl_escape, tcl_quote, tool_env_var
+from ..util.tracer   import get_src_loc
 from .dsl            import Attrs, Clock
 from .res            import ResourceManager
 from .run            import BuildPlan, BuildProducts
@@ -122,11 +124,11 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		raise NotImplementedError('Platform must implement this property')
 
-	def __init__(self) -> None:
+	def __init__(self, *, src_loc_at: int = 0) -> None:
 		super().__init__(self.resources, self.connectors)
 
+		self.src_loc     = get_src_loc(src_loc_at)
 		self.extra_files = OrderedDict()
-
 		self._prepared   = False
 
 	@property
@@ -136,7 +138,11 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		'''
 
 		if self.default_clk is None:
-			raise AttributeError(f'Platform \'{type(self).__name__}\' does not define a default clock')
+			plat_name = getattr(self, 'pretty_name', type(self).__name__)
+			raise PlatformError(
+				message = f'Platform \'{plat_name}\' does not define a default clock',
+				src_loc = get_src_loc()
+			)
 
 		return self.lookup(self.default_clk).clock
 
@@ -148,7 +154,11 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		constraint = self.default_clk_constraint
 		if constraint is None:
-			raise AttributeError(f'Platform \'{type(self).__name__}\' does not constrain its default clock')
+			plat_name = getattr(self, 'pretty_name', type(self).__name__)
+			raise PlatformError(
+				message = f'Platform \'{plat_name}\' does not constrain its default clock',
+				src_loc = get_src_loc()
+			)
 
 		return constraint.frequency
 
@@ -158,15 +168,24 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		'''
 
 		if not isinstance(filename, str):
-			raise TypeError(f'File name must be a string, not {filename!r}')
+			raise ToriiError(
+				message = f'File name must be a string, not {filename!r}',
+				src_loc = get_src_loc()
+			)
 		if hasattr(content, 'read'):
 			content = content.read()
 		elif not isinstance(content, (str, bytes)):
-			raise TypeError(f'File contents must be str, bytes, or a file-like object, not {content!r}')
+			raise ToriiError(
+				message = f'File contents must be str, bytes, or a file-like object, not {content!r}',
+				src_loc = get_src_loc()
+			)
 
 		if filename in self.extra_files:
 			if self.extra_files[filename] != content:
-				raise ValueError(f'File {filename!r} already exists')
+				raise ToriiError(
+					message = f'File {filename!r} already exists',
+					src_loc = get_src_loc()
+				)
 		else:
 			self.extra_files[filename] = content
 
@@ -265,7 +284,8 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		'''
 
 		if self._prepared:
-			raise RuntimeError(f'Design \'{name}\' is already prepared!')
+			# TODO(aki): We currently have limited src loc tracking for elaboratables/fragments
+			raise ToriiError(message = f'Design \'{name}\' is already prepared!')
 
 		self._prepared = True
 
@@ -309,13 +329,19 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		Convert the ``fragment`` and constraints recorded in this :py:class:`Platform` into
 		a :py:class:`BuildPlan`.
 		'''
+
 		raise NotImplementedError # :nocov:
 
 	def toolchain_program(self, products: BuildProducts, name: str, **kwargs) -> None:
 		'''
 		Extract bitstream for fragment ``name`` from ``products`` and download it to a target.
 		'''
-		raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support programming')
+
+		plat_name = getattr(self, 'pretty_name', type(self).__name__)
+		raise PlatformError(
+			message = f'Platform \'{plat_name}\' does not support programming',
+			src_loc = get_src_loc()
+		)
 
 	def _check_feature(
 		self, feature: PinFeature, pin: Pin, attrs: Attrs, valid_xdrs: tuple[int, ...], valid_attrs: str | None,
@@ -326,15 +352,25 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		'''
 
 		if len(valid_xdrs) == 0:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support {feature!s}')
+			plat_name = getattr(self, 'pretty_name', type(self).__name__)
+			raise PlatformError(
+				message = f'Platform \'{plat_name}\' does not support {feature!s}',
+				src_loc = pin.src_loc
+			)
 
 		elif pin.xdr not in valid_xdrs:
-			raise NotImplementedError(
-				f'Platform \'{type(self).__name__}\' does not support {feature!s} for XDR {pin.xdr}'
+			plat_name = getattr(self, 'pretty_name', type(self).__name__)
+			raise PlatformError(
+				message = f'Platform \'{plat_name}\' does not support {feature!s} for XDR {pin.xdr}',
+				src_loc = pin.src_loc
 			)
 
 		if not valid_attrs and attrs:
-			raise NotImplementedError(f'Platform \'{type(self).__name__}\' does not support attributes for {feature!s}')
+			plat_name = getattr(self, 'pretty_name', type(self).__name__)
+			raise PlatformError(
+				message = f'Platform \'{plat_name}\' does not support attributes for {feature!s}',
+				src_loc = attrs.src_loc
+			)
 
 	@staticmethod
 	def _invert_if(invert: bool, value):
@@ -431,7 +467,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
-		raise NotImplementedError('This platform does not support differential inputs')
+		raise PlatformError(
+			message = 'This platform does not support differential inputs',
+			src_loc = get_src_loc()
+		)
 
 	def get_diff_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
@@ -444,7 +483,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_OUTPUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
-		raise NotImplementedError('This platform does not support differential outputs')
+		raise PlatformError(
+			message = 'This platform does not support differential outputs',
+			src_loc = get_src_loc()
+		)
 
 	def get_diff_tristate(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
@@ -457,7 +499,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_TRISTATE, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
-		raise NotImplementedError('This platform does not implement differential tristate')
+		raise PlatformError(
+			message = 'This platform does not implement differential tristate',
+			src_loc = get_src_loc()
+		)
 
 	def get_diff_input_output(
 		self, pin: Pin, port: Record, attrs: Attrs, invert: bool, names: tuple[Iterable[str], Iterable[str]]
@@ -470,7 +515,10 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 			PinFeature.DIFF_INOUT, pin, attrs, valid_xdrs = (), valid_attrs = None, names = names
 		)
 
-		raise NotImplementedError('This platform does not implement differential inputs/outputs')
+		raise PlatformError(
+			message = 'This platform does not implement differential inputs/outputs',
+			src_loc = get_src_loc()
+		)
 
 class TemplatedPlatform(Platform):
 	@property
@@ -544,9 +592,10 @@ class TemplatedPlatform(Platform):
 		# in the first place.
 		invalid_char = re.match(r'[^A-Za-z0-9_]', name)
 		if invalid_char:
-			raise ValueError(
+			raise ToriiSyntaxError(
 				f'Design name {name!r} contains invalid character {invalid_char.group(0)!r}; only alphanumeric '
-				'characters are valid in design names'
+				'characters are valid in design names',
+				src_loc = get_src_loc()
 			)
 
 		# This notice serves a dual purpose: to explain that the file is autogenerated,
