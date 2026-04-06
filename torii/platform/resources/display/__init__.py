@@ -23,22 +23,54 @@ def Display7SegResource(
 
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('a', Pins(a, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('b', Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('c', Pins(c, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('d', Pins(d, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('e', Pins(e, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('f', Pins(f, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('g', Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
+	ios.append(Subsignal(
+		'a',
+		Pins(a, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'b',
+		Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'c',
+		Pins(c, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'd',
+		Pins(d, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'e',
+		Pins(e, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'f',
+		Pins(f, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'g',
+		Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
 
 	if dp is not None:
 		ios.append(Subsignal(
-			'dp', Pins(dp, dir = 'o', invert = invert, conn = conn, assert_width = 1)
+			'dp',
+			Pins(dp, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
 		))
 
 	if attrs is not None:
 		ios.append(attrs)
-	return Resource.family(name_or_number, number, default_name = 'display_7seg', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'display_7seg', ios = ios, src_loc_at = 1
+	)
 
 def HDMIResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -64,16 +96,48 @@ def HDMIResource(
 			dir_in = 'io'
 			dir_out = 'io'
 
-	ios.append(Subsignal('clk', DiffPairs(clk_p, clk_n, dir = dir_in, conn = conn, assert_width = 1), diff_attrs))
-	ios.append(Subsignal('d', DiffPairs(d_p, d_n, dir = dir_in, conn = conn, assert_width = 3), diff_attrs))
+	ios.append(Subsignal(
+		'clk',
+		DiffPairs(clk_p, clk_n, dir = dir_in, conn = conn, assert_width = 1, src_loc_at = 1),
+		diff_attrs,
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'd',
+		DiffPairs(d_p, d_n, dir = dir_in, conn = conn, assert_width = 3, src_loc_at = 1),
+		diff_attrs,
+		src_loc_at = 1
+	))
 	if cec:
-		ios.append(Subsignal('cec', Pins(cec, dir = 'io', conn = conn, assert_width = 1), attrs))
+		ios.append(Subsignal(
+			'cec',
+			Pins(cec, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
+		))
 	if hpd:
-		ios.append(Subsignal('hpd', Pins(hpd, dir = dir_out, conn = conn, assert_width = 1), attrs))
-	ios.append(Subsignal('sda', Pins(sda, dir = 'io', conn = conn, assert_width = 1), attrs))
-	ios.append(Subsignal('scl', Pins(scl, dir = 'io', conn = conn, assert_width = 1), attrs))
+		ios.append(Subsignal(
+			'hpd',
+			Pins(hpd, dir = dir_out, conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
+		))
+	ios.append(Subsignal(
+		'sda',
+		Pins(sda, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1),
+		attrs,
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'scl',
+		Pins(scl, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1),
+		attrs,
+		src_loc_at = 1
+	))
 
-	return Resource.family(name_or_number, number, default_name = 'hdmi', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'hdmi', ios = ios, src_loc_at = 1
+	)
 
 def VGADACResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -87,15 +151,35 @@ def VGADACResource(
 
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
-	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
-	ios.append(Subsignal('b', Pins(b, dir = 'o', conn = conn)))
 	ios.append(Subsignal(
-		'hs', Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+		'clk',
+		Pins(clk, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
 	))
 	ios.append(Subsignal(
-		'vs', Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+		'r',
+		Pins(r, dir = 'o', conn = conn, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'g',
+		Pins(g, dir = 'o', conn = conn, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'b',
+		Pins(b, dir = 'o', conn = conn, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'hs',
+		Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'vs',
+		Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
 	))
 	for extra in extras:
 		ios.append(extra)
@@ -103,7 +187,9 @@ def VGADACResource(
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'vgadac', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'vgadac', ios = ios, src_loc_at = 1
+	)
 
 def VGAResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -117,17 +203,29 @@ def VGAResource(
 
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('r', Pins(r, dir = 'o', conn = conn)))
-	ios.append(Subsignal('g', Pins(g, dir = 'o', conn = conn)))
-	ios.append(Subsignal('b', Pins(b, dir = 'o', conn = conn)))
 	ios.append(Subsignal(
-		'hs', Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+		'r', Pins(r, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
 	))
 	ios.append(Subsignal(
-		'vs', Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1)
+		'g', Pins(g, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'b', Pins(b, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'hs',
+		Pins(hs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'vs',
+		Pins(vs, dir = 'o', invert = invert_sync, conn = conn, assert_width = 1, src_loc_at = 1),
+		src_loc_at = 1
 	))
 
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'vga', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'vga', ios = ios, src_loc_at = 1
+	)
