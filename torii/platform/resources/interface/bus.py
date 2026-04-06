@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from typing        import TYPE_CHECKING
-from warnings      import warn
+from typing          import TYPE_CHECKING
+from warnings        import warn
 
-from ...._typing   import IODirection
-from ....build.dsl import Attrs, Clock, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
-from ....hdl.time  import MHz
+from ...._typing     import IODirection
+from ....build.dsl   import Attrs, Clock, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
+from ....diagnostics import ResourceError, ResourceWarning
+from ....hdl.time    import MHz
+from ....util.tracer import get_src_loc
 
 __all__ = (
 	'DirectUSBResource',
@@ -25,19 +27,29 @@ def DirectUSBResource(
 
 	io: list[SubsigArgT] = []
 
-	io.append(Subsignal('d_p', Pins(d_p, dir = 'io', conn = conn, assert_width = 1)))
-	io.append(Subsignal('d_n', Pins(d_n, dir = 'io', conn = conn, assert_width = 1)))
+	io.append(Subsignal(
+		'd_p', Pins(d_p, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'd_n', Pins(d_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if pullup:
-		io.append(Subsignal('pullup', Pins(pullup, dir = 'o', conn = conn, assert_width = 1)))
+		io.append(Subsignal(
+			'pullup', Pins(pullup, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	if vbus_valid:
-		io.append(Subsignal('vbus_valid', Pins(vbus_valid, dir = 'i', conn = conn, assert_width = 1)))
+		io.append(Subsignal(
+			'vbus_valid',
+			Pins(vbus_valid, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		))
 
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'usb', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'usb', ios = io, src_loc_at = 1)
 
 def PCIeBusResources(
 	name_or_number: str | int, number: int | None = None, *,
@@ -116,25 +128,40 @@ def PCIeBusResources(
 	io_common: list[Subsignal] = []
 
 	io_common.append(Subsignal(
-		'perst', PinsN(perst_n, dir = 'i', conn = conn, assert_width = 1), attrs
+		'perst',
+		PinsN(perst_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+		attrs,
+		src_loc_at = 1
 	))
 	io_common.append(Subsignal(
-		'refclk', DiffPairs(refclk_p, refclk_n, dir = 'i', conn = conn, assert_width = 1), refclk_attrs
+		'refclk',
+		DiffPairs(refclk_p, refclk_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+		refclk_attrs,
+		src_loc_at = 1
 	))
 
 	jtag_sigs = (tck, tdi, tdo, tms, trst_n,) # type: ignore
 
 	if wake_n is not None:
 		io_common.append(Subsignal(
-			'wake', PinsN(wake_n, dir = 'i', conn = conn, assert_width = 1), attrs
+			'wake',
+			PinsN(wake_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 
 	if smbclk is not None and smbdat is not None:
 		io_common.append(Subsignal(
-			'smbclk', Pins(smbclk, dir = 'io', conn = conn, assert_width = 1), attrs
+			'smbclk',
+			Pins(smbclk, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 		io_common.append(Subsignal(
-			'smbdat', Pins(smbdat, dir = 'io', conn = conn, assert_width = 1), attrs
+			'smbdat',
+			Pins(smbdat, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 	elif any((smbclk, smbdat,)):
 		warn(
@@ -148,36 +175,60 @@ def PCIeBusResources(
 			jtag_sigs: tuple[str, ...] = jtag_sigs
 
 		io_common.append(Subsignal(
-			'tck', Pins(jtag_sigs[0], dir = 'i', conn = conn, assert_width = 1), attrs
+			'tck',
+			Pins(jtag_sigs[0], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 		io_common.append(Subsignal(
-			'tdi', Pins(jtag_sigs[1], dir = 'i', conn = conn, assert_width = 1), attrs
+			'tdi',
+			Pins(jtag_sigs[1], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 		io_common.append(Subsignal(
-			'tdo', Pins(jtag_sigs[2], dir = 'o', conn = conn, assert_width = 1), attrs
+			'tdo',
+			Pins(jtag_sigs[2], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 		io_common.append(Subsignal(
-			'tms', Pins(jtag_sigs[3], dir = 'i', conn = conn, assert_width = 1), attrs
+			'tms',
+			Pins(jtag_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 		io_common.append(Subsignal(
-			'trst', PinsN(jtag_sigs[4], dir = 'i', conn = conn, assert_width = 1), attrs
+			'trst',
+			PinsN(jtag_sigs[4], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 
 	if clkreq_n is not None:
 		io_common.append(Subsignal(
-			'clkreq', PinsN(clkreq_n, dir = 'o', conn = conn, assert_width = 1), attrs
+			'clkreq',
+			PinsN(clkreq_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+			attrs,
+			src_loc_at = 1
 		))
 
 	io_x1 = list(io_common)
 	io_x1.append(Subsignal(
-		'pet0', DiffPairs(pet0_p, pet0_n, dir = 'o', conn = conn, assert_width = 1), lane_attrs
+		'pet0',
+		DiffPairs(pet0_p, pet0_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+		lane_attrs,
+		src_loc_at = 1
 	))
 	io_x1.append(Subsignal(
-		'per0', DiffPairs(per0_p, per0_n, dir = 'i', conn = conn, assert_width = 1), lane_attrs
+		'per0',
+		DiffPairs(per0_p, per0_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+		lane_attrs,
+		src_loc_at = 1
 	))
 
 	resources.append(Resource.family(
-		name_or_number, number, default_name = 'pcie', ios = io_x1, name_suffix = 'x1'
+		name_or_number, number, default_name = 'pcie', ios = io_x1, name_suffix = 'x1', src_loc_at = 1
 	))
 
 	io_x2: list[Subsignal] | None = None
@@ -231,14 +282,20 @@ def PCIeBusResources(
 			x2_sigs: tuple[str, ...] = x2_sigs
 
 		io_x2.append(Subsignal(
-			'pet1', DiffPairs(x2_sigs[0], x2_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+			'pet1',
+			DiffPairs(x2_sigs[0], x2_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+			lane_attrs,
+			src_loc_at = 1
 		))
 		io_x2.append(Subsignal(
-			'per1', DiffPairs(x2_sigs[2], x2_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+			'per1',
+			DiffPairs(x2_sigs[2], x2_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+			lane_attrs,
+			src_loc_at = 1
 		))
 
 		resources.append(Resource.family(
-			name_or_number, number, default_name = 'pcie', ios = io_x2, name_suffix = 'x2'
+			name_or_number, number, default_name = 'pcie', ios = io_x2, name_suffix = 'x2', src_loc_at = 1
 		))
 	elif any(x2_sigs):
 		warn(
@@ -257,23 +314,39 @@ def PCIeBusResources(
 				x4_sigs: tuple[str, ...] = x4_sigs
 
 			io_x4.append(Subsignal(
-				'pet2', DiffPairs(x4_sigs[0], x4_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet2',
+				DiffPairs(x4_sigs[0], x4_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x4.append(Subsignal(
-				'per2', DiffPairs(x4_sigs[2], x4_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per2',
+				DiffPairs(x4_sigs[2], x4_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x4.append(Subsignal(
-				'pet3', DiffPairs(x4_sigs[4], x4_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet3',
+				DiffPairs(x4_sigs[4], x4_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x4.append(Subsignal(
-				'per3', DiffPairs(x4_sigs[6], x4_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per3',
+				DiffPairs(x4_sigs[6], x4_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			if pwrbrk_n is not None:
-				io_x4.append(Subsignal('pwrbrk', PinsN(pwrbrk_n, dir = 'o', conn = conn, assert_width = 1)))
+				io_x4.append(Subsignal(
+					'pwrbrk',
+					PinsN(pwrbrk_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+					src_loc_at = 1
+				))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x4, name_suffix = 'x4'
+				name_or_number, number, default_name = 'pcie', ios = io_x4, name_suffix = 'x4', src_loc_at = 1
 			))
 		elif any(x4_sigs):
 			warn(
@@ -291,20 +364,32 @@ def PCIeBusResources(
 				x6_sigs: tuple[str, ...] = x6_sigs
 
 			io_x6.append(Subsignal(
-				'pet4', DiffPairs(x6_sigs[0], x6_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet4',
+				DiffPairs(x6_sigs[0], x6_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x6.append(Subsignal(
-				'per4', DiffPairs(x6_sigs[2], x6_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per4',
+				DiffPairs(x6_sigs[2], x6_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x6.append(Subsignal(
-				'pet5', DiffPairs(x6_sigs[4], x6_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet5',
+				DiffPairs(x6_sigs[4], x6_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x6.append(Subsignal(
-				'per5', DiffPairs(x6_sigs[6], x6_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per5',
+				DiffPairs(x6_sigs[6], x6_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x6, name_suffix = 'x6'
+				name_or_number, number, default_name = 'pcie', ios = io_x6, name_suffix = 'x6', src_loc_at = 1
 			))
 		elif any(x6_sigs):
 			warn(
@@ -323,20 +408,32 @@ def PCIeBusResources(
 				x8_sigs: tuple[str, ...] = x8_sigs
 
 			io_x8.append(Subsignal(
-				'pet6', DiffPairs(x8_sigs[0], x8_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet6',
+				DiffPairs(x8_sigs[0], x8_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x8.append(Subsignal(
-				'per6', DiffPairs(x8_sigs[2], x8_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per6',
+				DiffPairs(x8_sigs[2], x8_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x8.append(Subsignal(
-				'pet7', DiffPairs(x8_sigs[4], x8_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet7',
+				DiffPairs(x8_sigs[4], x8_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x8.append(Subsignal(
-				'per7', DiffPairs(x8_sigs[6], x8_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per7',
+				DiffPairs(x8_sigs[6], x8_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x8, name_suffix = 'x8'
+				name_or_number, number, default_name = 'pcie', ios = io_x8, name_suffix = 'x8', src_loc_at = 1
 			))
 		elif any(x8_sigs):
 			warn(
@@ -354,32 +451,56 @@ def PCIeBusResources(
 				x12_sigs: tuple[str, ...] = x12_sigs
 
 			io_x12.append(Subsignal(
-				'pet8', DiffPairs(x12_sigs[0], x12_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet8',
+				DiffPairs(x12_sigs[0], x12_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'per8', DiffPairs(x12_sigs[2], x12_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per8',
+				DiffPairs(x12_sigs[2], x12_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'pet9', DiffPairs(x12_sigs[4], x12_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet9',
+				DiffPairs(x12_sigs[4], x12_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'per9', DiffPairs(x12_sigs[6], x12_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per9',
+				DiffPairs(x12_sigs[6], x12_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'pet10', DiffPairs(x12_sigs[8], x12_sigs[9], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet10',
+				DiffPairs(x12_sigs[8], x12_sigs[9], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'per10', DiffPairs(x12_sigs[10], x12_sigs[11], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per10',
+				DiffPairs(x12_sigs[10], x12_sigs[11], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'pet11', DiffPairs(x12_sigs[12], x12_sigs[13], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet11',
+				DiffPairs(x12_sigs[12], x12_sigs[13], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x12.append(Subsignal(
-				'per11', DiffPairs(x12_sigs[14], x12_sigs[15], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per11',
+				DiffPairs(x12_sigs[14], x12_sigs[15], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x12, name_suffix = 'x12'
+				name_or_number, number, default_name = 'pcie', ios = io_x12, name_suffix = 'x12', src_loc_at = 1
 			))
 		elif any(x12_sigs):
 			warn(
@@ -398,32 +519,56 @@ def PCIeBusResources(
 				x16_sigs: tuple[str, ...] = x16_sigs
 
 			io_x16.append(Subsignal(
-				'pet12', DiffPairs(x16_sigs[0], x16_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet12',
+				DiffPairs(x16_sigs[0], x16_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'per12', DiffPairs(x16_sigs[2], x16_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per12',
+				DiffPairs(x16_sigs[2], x16_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'pet13', DiffPairs(x16_sigs[4], x16_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet13',
+				DiffPairs(x16_sigs[4], x16_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'per13', DiffPairs(x16_sigs[6], x16_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per13',
+				DiffPairs(x16_sigs[6], x16_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'pet14', DiffPairs(x16_sigs[8], x16_sigs[9], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet14',
+				DiffPairs(x16_sigs[8], x16_sigs[9], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'per14', DiffPairs(x16_sigs[10], x16_sigs[11], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per14',
+				DiffPairs(x16_sigs[10], x16_sigs[11], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'pet15', DiffPairs(x16_sigs[12], x16_sigs[13], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet15',
+				DiffPairs(x16_sigs[12], x16_sigs[13], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x16.append(Subsignal(
-				'per15', DiffPairs(x16_sigs[14], x16_sigs[15], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per15',
+				DiffPairs(x16_sigs[14], x16_sigs[15], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x16, name_suffix = 'x16'
+				name_or_number, number, default_name = 'pcie', ios = io_x16, name_suffix = 'x16', src_loc_at = 1
 			))
 		elif any(x16_sigs):
 			warn(
@@ -441,56 +586,104 @@ def PCIeBusResources(
 				x24_sigs: tuple[str, ...] = x24_sigs
 
 			io_x24.append(Subsignal(
-				'pet16', DiffPairs(x24_sigs[0], x24_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet16',
+				DiffPairs(x24_sigs[0], x24_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per16', DiffPairs(x24_sigs[2], x24_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per16',
+				DiffPairs(x24_sigs[2], x24_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet17', DiffPairs(x24_sigs[4], x24_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet17',
+				DiffPairs(x24_sigs[4], x24_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per17', DiffPairs(x24_sigs[6], x24_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per17',
+				DiffPairs(x24_sigs[6], x24_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet18', DiffPairs(x24_sigs[8], x24_sigs[9], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet18',
+				DiffPairs(x24_sigs[8], x24_sigs[9], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per18', DiffPairs(x24_sigs[10], x24_sigs[11], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per18',
+				DiffPairs(x24_sigs[10], x24_sigs[11], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet19', DiffPairs(x24_sigs[12], x24_sigs[13], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet19',
+				DiffPairs(x24_sigs[12], x24_sigs[13], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per19', DiffPairs(x24_sigs[14], x24_sigs[15], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per19',
+				DiffPairs(x24_sigs[14], x24_sigs[15], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet20', DiffPairs(x24_sigs[16], x24_sigs[17], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet20',
+				DiffPairs(x24_sigs[16], x24_sigs[17], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per20', DiffPairs(x24_sigs[18], x24_sigs[19], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per20',
+				DiffPairs(x24_sigs[18], x24_sigs[19], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet21', DiffPairs(x24_sigs[20], x24_sigs[21], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet21',
+				DiffPairs(x24_sigs[20], x24_sigs[21], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per21', DiffPairs(x24_sigs[22], x24_sigs[23], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per21',
+				DiffPairs(x24_sigs[22], x24_sigs[23], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet22', DiffPairs(x24_sigs[24], x24_sigs[25], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet22',
+				DiffPairs(x24_sigs[24], x24_sigs[25], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per22', DiffPairs(x24_sigs[26], x24_sigs[27], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per22',
+				DiffPairs(x24_sigs[26], x24_sigs[27], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'pet23', DiffPairs(x24_sigs[28], x24_sigs[29], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet23',
+				DiffPairs(x24_sigs[28], x24_sigs[29], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x24.append(Subsignal(
-				'per23', DiffPairs(x24_sigs[30], x24_sigs[31], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per23',
+				DiffPairs(x24_sigs[30], x24_sigs[31], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x24, name_suffix = 'x24'
+				name_or_number, number, default_name = 'pcie', ios = io_x24, name_suffix = 'x24', src_loc_at = 1
 			))
 		elif any(x24_sigs):
 			warn(
@@ -508,56 +701,104 @@ def PCIeBusResources(
 				x32_sigs: tuple[str, ...] = x32_sigs
 
 			io_x32.append(Subsignal(
-				'pet24', DiffPairs(x32_sigs[0], x32_sigs[1], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet24',
+				DiffPairs(x32_sigs[0], x32_sigs[1], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per24', DiffPairs(x32_sigs[2], x32_sigs[3], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per24',
+				DiffPairs(x32_sigs[2], x32_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet25', DiffPairs(x32_sigs[4], x32_sigs[5], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet25',
+				DiffPairs(x32_sigs[4], x32_sigs[5], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per25', DiffPairs(x32_sigs[6], x32_sigs[7], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per25',
+				DiffPairs(x32_sigs[6], x32_sigs[7], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet26', DiffPairs(x32_sigs[8], x32_sigs[9], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet26',
+				DiffPairs(x32_sigs[8], x32_sigs[9], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per26', DiffPairs(x32_sigs[10], x32_sigs[11], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per26',
+				DiffPairs(x32_sigs[10], x32_sigs[11], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet27', DiffPairs(x32_sigs[12], x32_sigs[13], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet27',
+				DiffPairs(x32_sigs[12], x32_sigs[13], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per27', DiffPairs(x32_sigs[14], x32_sigs[15], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per27',
+				DiffPairs(x32_sigs[14], x32_sigs[15], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet28', DiffPairs(x32_sigs[16], x32_sigs[17], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet28',
+				DiffPairs(x32_sigs[16], x32_sigs[17], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per28', DiffPairs(x32_sigs[18], x32_sigs[19], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per28',
+				DiffPairs(x32_sigs[18], x32_sigs[19], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet29', DiffPairs(x32_sigs[20], x32_sigs[21], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet29',
+				DiffPairs(x32_sigs[20], x32_sigs[21], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per29', DiffPairs(x32_sigs[22], x32_sigs[23], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per29',
+				DiffPairs(x32_sigs[22], x32_sigs[23], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet30', DiffPairs(x32_sigs[24], x32_sigs[25], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet30',
+				DiffPairs(x32_sigs[24], x32_sigs[25], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per30', DiffPairs(x32_sigs[26], x32_sigs[27], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per30',
+				DiffPairs(x32_sigs[26], x32_sigs[27], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'pet31', DiffPairs(x32_sigs[28], x32_sigs[29], dir = 'o', conn = conn, assert_width = 1), lane_attrs
+				'pet31',
+				DiffPairs(x32_sigs[28], x32_sigs[29], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 			io_x32.append(Subsignal(
-				'per31', DiffPairs(x32_sigs[30], x32_sigs[31], dir = 'i', conn = conn, assert_width = 1), lane_attrs
+				'per31',
+				DiffPairs(x32_sigs[30], x32_sigs[31], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
+				lane_attrs,
+				src_loc_at = 1
 			))
 
 			resources.append(Resource.family(
-				name_or_number, number, default_name = 'pcie', ios = io_x32, name_suffix = 'x32'
+				name_or_number, number, default_name = 'pcie', ios = io_x32, name_suffix = 'x32', src_loc_at = 1
 			))
 		elif any(x32_sigs):
 			warn(
@@ -593,34 +834,78 @@ def PCIBusResources(
 	resources: list[Resource]   = []
 	io_common: list[SubsigArgT] = []
 
-	io_common.append(Subsignal('inta', PinsN(inta_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('intb', PinsN(intb_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('intc', PinsN(intc_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('intd', PinsN(intd_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('rst', PinsN(rst_n, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('gnt', PinsN(gnt_n, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('req', PinsN(req_n, dir = 'o', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('idsel', Pins(idsel, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('frame', PinsN(frame_n, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('irdy', PinsN(irdy_n, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('trdy', PinsN(trdy_n, dir = 'o', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('devsel', PinsN(devsel_n, dir = 'o', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('stop', PinsN(stop_n, dir = 'o', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('lock', PinsN(lock_n, dir = 'i', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('perr', PinsN(perr_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('serr', PinsN(serr_n, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('smbclk', Pins(smbclk, dir = 'io', conn = conn, assert_width = 1)))
-	io_common.append(Subsignal('smbdat', Pins(smbdat, dir = 'io', conn = conn, assert_width = 1)))
+	io_common.append(Subsignal(
+		'inta', PinsN(inta_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'intb', PinsN(intb_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'intc', PinsN(intc_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'intd', PinsN(intd_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'rst', PinsN(rst_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'gnt', PinsN(gnt_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'req', PinsN(req_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'idsel', Pins(idsel, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'frame', PinsN(frame_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'irdy', PinsN(irdy_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'trdy', PinsN(trdy_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'devsel', PinsN(devsel_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'stop', PinsN(stop_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'lock', PinsN(lock_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'perr', PinsN(perr_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'serr', PinsN(serr_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'smbclk', Pins(smbclk, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io_common.append(Subsignal(
+		'smbdat', Pins(smbdat, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if pme_n is not None:
-		io_common.append(Subsignal('pme', PinsN(pme_n, dir = 'io', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal(
+			'pme', PinsN(pme_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	if pcixcap is not None:
-		io_common.append(Subsignal('pcixcap', Pins(pcixcap, dir = 'i', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal(
+			'pcixcap', Pins(pcixcap, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	if m66en is not None:
-		io_common.append(Subsignal('m66en', Pins(m66en, dir = 'i', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal(
+			'm66en', Pins(m66en, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	jtag_sigs = (tck, tdi, tdo, tms,) # type: ignore
 
@@ -629,22 +914,36 @@ def PCIBusResources(
 		if TYPE_CHECKING:
 			jtag_sigs: tuple[str, ...] = jtag_sigs
 
-		io_common.append(Subsignal('tck', Pins(jtag_sigs[0], dir = 'i', conn = conn, assert_width = 1)))
-		io_common.append(Subsignal('tdi', Pins(jtag_sigs[1], dir = 'i', conn = conn, assert_width = 1)))
-		io_common.append(Subsignal('tdo', Pins(jtag_sigs[2], dir = 'o', conn = conn, assert_width = 1)))
-		io_common.append(Subsignal('tms', Pins(jtag_sigs[3], dir = 'i', conn = conn, assert_width = 1)))
+		io_common.append(Subsignal(
+			'tck', Pins(jtag_sigs[0], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
+		io_common.append(Subsignal(
+			'tdi', Pins(jtag_sigs[1], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
+		io_common.append(Subsignal(
+			'tdo', Pins(jtag_sigs[2], dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
+		io_common.append(Subsignal(
+			'tms', Pins(jtag_sigs[3], dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	if attrs is not None:
 		io_common.append(attrs)
 
 	io_32 = list(io_common)
 
-	io_32.append(Subsignal('ad_low', Pins(ad_lower, dir = 'io', conn = conn, assert_width = 32)))
-	io_32.append(Subsignal('cbe32', PinsN(cbe32_n, dir = 'io', conn = conn, assert_width = 4)))
-	io_32.append(Subsignal('par32', Pins(par32, dir = 'io', conn = conn, assert_width = 1)))
+	io_32.append(Subsignal(
+		'ad_low', Pins(ad_lower, dir = 'io', conn = conn, assert_width = 32, src_loc_at = 1), src_loc_at = 1
+	))
+	io_32.append(Subsignal(
+		'cbe32', PinsN(cbe32_n, dir = 'io', conn = conn, assert_width = 4, src_loc_at = 1), src_loc_at = 1
+	))
+	io_32.append(Subsignal(
+		'par32', Pins(par32, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	resources.append(Resource.family(
-		name_or_number, number, default_name = 'pci', ios = io_32, name_suffix = '32'
+		name_or_number, number, default_name = 'pci', ios = io_32, name_suffix = '32', src_loc_at = 1
 	))
 
 	if (
@@ -653,14 +952,24 @@ def PCIBusResources(
 	):
 		io_64 = list(io_32)
 
-		io_64.append(Subsignal('ad_high', Pins(ad_upper, dir = 'io', conn = conn, assert_width = 32)))
-		io_64.append(Subsignal('cbe64', PinsN(cbe64_n, dir = 'io', conn = conn, assert_width = 4)))
-		io_64.append(Subsignal('par64', Pins(par64, dir = 'io', conn = conn, assert_width = 1)))
-		io_64.append(Subsignal('ack64', Pins(ack64_n, dir = 'io', conn = conn, assert_width = 1)))
-		io_64.append(Subsignal('req64', Pins(req64_n, dir = 'io', conn = conn, assert_width = 1)))
+		io_64.append(Subsignal(
+			'ad_high', Pins(ad_upper, dir = 'io', conn = conn, assert_width = 32, src_loc_at = 1), src_loc_at = 1
+		))
+		io_64.append(Subsignal(
+			'cbe64', PinsN(cbe64_n, dir = 'io', conn = conn, assert_width = 4, src_loc_at = 1), src_loc_at = 1
+		))
+		io_64.append(Subsignal(
+			'par64', Pins(par64, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
+		io_64.append(Subsignal(
+			'ack64', Pins(ack64_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
+		io_64.append(Subsignal(
+			'req64', Pins(req64_n, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 		resources.append(Resource.family(
-			name_or_number, number, default_name = 'pci', ios = io_64, name_suffix = '64'
+			name_or_number, number, default_name = 'pci', ios = io_64, name_suffix = '64', src_loc_at = 1
 		))
 
 	return resources
@@ -676,29 +985,44 @@ def ULPIResource(
 	'''
 
 	if clk_dir not in ('i', 'o'):
-		raise ValueError(f'clk_dir should be \'i\' or \'o\' not {clk_dir!r}')
+		raise ResourceError(
+			message = f'clk_dir should be \'i\' or \'o\' not {clk_dir!r}',
+			src_loc = get_src_loc()
+		)
 
-	clk_subsig = Subsignal('clk', Pins(clk, dir = clk_dir, conn = conn, assert_width = 1))
+	clk_subsig = Subsignal(
+		'clk', Pins(clk, dir = clk_dir, conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	)
 	# If the clock is an input, we must constrain it to be 60MHz.
 	if clk_dir == 'i':
-		clk_subsig.clock = Clock(60 * MHz)
+		clk_subsig.clock = Clock(60 * MHz, src_loc_at = 1)
 	if clk_attrs is not None:
 		clk_subsig.attrs.update(clk_attrs)
 
 	io: list[SubsigArgT] = []
 
-	io.append(Subsignal('data', Pins(data, dir = 'io', conn = conn, assert_width = 8)))
+	io.append(Subsignal(
+		'data', Pins(data, dir = 'io', conn = conn, assert_width = 8, src_loc_at = 1), src_loc_at = 1
+	))
 	io.append(clk_subsig)
-	io.append(Subsignal('dir', Pins(dir, dir = 'i', conn = conn, assert_width = 1)))
-	io.append(Subsignal('nxt', Pins(nxt, dir = 'i', conn = conn, assert_width = 1)))
-	io.append(Subsignal('stp', Pins(stp, dir = 'o', conn = conn, assert_width = 1)))
+	io.append(Subsignal(
+		'dir', Pins(dir, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'nxt', Pins(nxt, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'stp', Pins(stp, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if rst is not None:
 		io.append(Subsignal(
-			'rst', Pins(rst, dir = 'o', invert = rst_invert, conn = conn, assert_width = 1)
+			'rst',
+			Pins(rst, dir = 'o', invert = rst_invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
 		))
 
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'usb', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'usb', ios = io, src_loc_at = 1)
