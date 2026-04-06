@@ -7,12 +7,14 @@ from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Generator, Iterable
 from enum            import Enum, auto, unique
-from typing          import IO, Literal, TypeVar
+from io              import BufferedIOBase, FileIO, TextIOBase
+from typing          import Literal, TypeVar
 
 import jinja2
 
 from ..              import __version__
 from ..back          import rtlil, verilog
+from ..build.dsl     import Connector, Resource
 from ..diagnostics   import PlatformError, ToriiError, ToriiSyntaxError
 from ..hdl.ast       import ClockSignal, Const, Signal, SignalDict
 from ..hdl.cd        import ClockDomain
@@ -78,49 +80,26 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	@property
 	@abstractmethod
-	def resources(self):
-		'''
-		.. todo:: Document Me
-		'''
+	def resources(self) -> list[Resource]:
+		''' List of resources this platform provides  '''
 
 		raise NotImplementedError('Platform must implement this property')
 
-	@property
-	def description(self):
-		'''
-		.. todo:: Document Me
-		'''
-
-		return None
-
-	@property
-	def pretty_name(self):
-		'''
-		.. todo:: Document Me
-		'''
-
-		return None
-
-	@property
-	def connectors(self):
-		'''
-		.. todo:: Document Me
-		'''
-
-		return [] # Connectors are very rarely used, so make declaring them optional
-
-	default_clk    = None
-	''' .. todo:: Document Me '''
-
-	default_rst    = None
-	''' ..todo:: Document Me '''
+	description:  str | None = None
+	''' A short description of this platform  '''
+	pretty_name: str | None = None
+	''' The pretty display name of this platform '''
+	connectors: list[Connector] = []
+	''' Any connectors this platform provides '''
+	default_clk: str | None = None
+	''' The default clock source for this platform '''
+	default_rst: str | None = None
+	''' The default reset signal for this platform '''
 
 	@property
 	@abstractmethod
-	def required_tools(self):
-		'''
-		.. todo:: Document Me
-		'''
+	def required_tools(self) -> list[str]:
+		''' List of required tools for this platform '''
 
 		raise NotImplementedError('Platform must implement this property')
 
@@ -164,7 +143,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		return constraint.frequency
 
-	def add_file(self, filename: str, content: str | bytes | IO) -> None:
+	def add_file(self, filename: str, content: str | bytes | BufferedIOBase | FileIO | TextIOBase) -> None:
 		'''
 		.. todo:: Document Me
 		'''
@@ -174,7 +153,7 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 				message = f'File name must be a string, not {filename!r}',
 				src_loc = get_src_loc()
 			)
-		if hasattr(content, 'read'):
+		if isinstance(content, (BufferedIOBase, FileIO, TextIOBase)):
 			content = content.read()
 		elif not isinstance(content, (str, bytes)):
 			raise ToriiError(
