@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.build.dsl import Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Subsignal
-from torii.build.res import Resource, ResourceError, ResourceManager
-from torii.hdl.ast   import Signal
-from torii.hdl.rec   import Record
-from torii.hdl.time  import Frequency, MHz, kHz
-from torii.lib.io    import Pin
+from torii.build.dsl   import Clock, Connector, DiffPairs, DiffPairsN, Pins, PinsN, Subsignal
+from torii.build.res   import Resource, ResourceManager
+from torii.diagnostics import ConstraintError, ResourceError, ToriiSyntaxError
+from torii.hdl.ast     import Signal
+from torii.hdl.rec     import Record
+from torii.hdl.time    import Frequency, MHz, kHz
+from torii.lib.io      import Pin
 
-from ..utils         import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class ResourceManagerTestCase(ToriiTestSuiteCase):
 	def setUp(self):
@@ -233,27 +234,33 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 		])
 
 	def test_wrong_resources(self):
-		with self.assertRaisesRegex(TypeError, r'^Object \'wrong\' is not a Resource$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Object \'wrong\' is not a Resource \(test_res\.py, line \d+\)$'
+		):
 			self.cm.add_resources(['wrong'])
 
 	def test_wrong_resources_duplicate(self):
 		with self.assertRaisesRegex(
-			NameError, (
-				r'^Trying to add \(resource user_led 0 \(pins o A1\)\), but '
-				r'\(resource user_led 0 \(pins o A0\)\) has the same name and number$'
+			ResourceError, (
+				r'^Trying to add the resource user_led#0, but there is a previously added resource that has the same '
+				r'name and number$'
 			)
 		):
 			self.cm.add_resources([Resource('user_led', 0, Pins('A1', dir = 'o'))])
 
 	def test_wrong_connectors(self):
-		with self.assertRaisesRegex(TypeError, r'^Object \'wrong\' is not a Connector$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Object \'wrong\' is not a Connector \(test_res\.py, line \d+\)$'
+		):
 			self.cm.add_connectors(['wrong'])
 
 	def test_wrong_connectors_duplicate(self):
 		with self.assertRaisesRegex(
-			NameError, (
-				r'^Trying to add \(connector pmod 0 1=>1 2=>2\), but '
-				r'\(connector pmod 0 1=>B0 2=>B1 3=>B2 4=>B3\) has the same name and number$'
+			ResourceError, (
+				r'^Trying to add the connector pmod#0, but there is a previously added connector that has the same '
+				r'name and number$'
 			)
 		):
 			self.cm.add_connectors([Connector('pmod', 0, '1 2')])
@@ -261,26 +268,29 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 	def test_wrong_lookup(self):
 		with self.assertRaisesRegex(
 			ResourceError,
-			r'^Resource user_led#1 does not exist$'
+			r'^The resource user_led#1 was requested but does not exist, did you mean user_led#0\?$'
 		):
 			self.cm.lookup('user_led', 1)
 
 	def test_wrong_clock_signal(self):
-		with self.assertRaisesRegex(TypeError, r'^Object None is not a Signal$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Object None is not a Signal \(test_res\.py, line \d+\)$'
+		):
 			self.cm.add_clock_constraint(None, 10 * MHz) # type: ignore
 
 	def test_wrong_clock_frequency(self):
 		with self.assertRaisesRegex(
-			TypeError,
+			ToriiSyntaxError,
 			r'^Clock frequency must be a `torii.hdl.time.Frequency`, a '
-			r'`float` or an `int`, not an <class \'NoneType\'>$'
+			r'`float` or an `int`, not an <class \'NoneType\'> \(test_res\.py, line \d+\)$'
 		):
 			self.cm.add_clock_constraint(Signal(), None) # type: ignore
 
 	def test_wrong_request_duplicate(self):
 		with self.assertRaisesRegex(
 			ResourceError,
-			r'^Resource user_led#0 has already been requested$'
+			r'^The resource user_led#0 has previously been requested$'
 		):
 			self.cm.request('user_led', 0)
 			self.cm.request('user_led', 0)
@@ -299,54 +309,50 @@ class ResourceManagerTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_request_with_dir(self):
 		with self.assertRaisesRegex(
-			TypeError, (
+			ToriiSyntaxError, (
 				r'^Direction must be one of \'i\', \'o\', \'oe\', \'io\', or \'-\', '
-				r'not \'wrong\'$'
+				r'not \'wrong\' \(test_res\.py, line \d+\)$'
 			)
 		):
 			self.cm.request('user_led', 0, dir = 'wrong')
 
 	def test_wrong_request_with_dir_io(self):
 		with self.assertRaisesRegex(
-			ValueError, (
+			ToriiSyntaxError, (
 				r'^Direction of \(pins o A0\) cannot be changed from \'o\' to \'i\'; direction '
 				r'can be changed from \'io\' to \'i\', \'o\', or \'oe\', or from anything '
-				r'to \'-\'$'
+				r'to \'-\' \(test_res\.py, line \d+\)$'
 			)
 		):
 			self.cm.request('user_led', 0, dir = 'i')
 
 	def test_wrong_request_with_dir_dict(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Directions must be a dict, not \'i\', because \(resource i2c 0 \(subsignal scl '
-				r'\(pins o N10\)\) \(subsignal sda \(pins io N11\)\)\) '
-				r'has subsignals$'
+			ResourceError, (
+				r'^Directions must be a dict, not \'i\', because i2c has 2 subsignals$'
 			)
 		):
 			self.cm.request('i2c', 0, dir = 'i')
 
 	def test_wrong_request_with_wrong_xdr(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Data rate of \(pins o A0\) must be a non-negative integer, not -1$'
+			ToriiSyntaxError,
+			r'^Data rate of \(pins o A0\) must be a non-negative integer, not -1 \(test_res\.py, line \d+\)$'
 		):
 			self.cm.request('user_led', 0, xdr = -1)
 
 	def test_wrong_request_with_xdr_dict(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Data rate must be a dict, not 2, because \(resource i2c 0 \(subsignal scl '
-			r'\(pins o N10\)\) \(subsignal sda \(pins io N11\)\)\) '
-			r'has subsignals$'
+			ResourceError,
+			r'^Data rate must be a dict, not 2, because i2c has 2 subsignals$'
 		):
 			self.cm.request('i2c', 0, xdr = 2)
 
 	def test_wrong_clock_constraint_twice(self):
 		clk100 = self.cm.request('clk100')
 		with self.assertRaisesRegex(
-			ValueError, (
-				r'^Cannot add clock constraint on \(sig clk100_0__i\), which is already '
+			ConstraintError, (
+				r'^Cannot add clock constraint of 1MHz to \(sig clk100_0__i\), which is already '
 				r'constrained to 100MHz$'
 			)
 		):
