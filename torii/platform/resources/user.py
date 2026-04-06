@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from ..._typing   import IODirectionIO
-from ...build.dsl import Attrs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
+from ..._typing     import IODirectionIO
+from ...build.dsl   import Attrs, Pins, Resource, ResourceConn, SubsigArgT, Subsignal
+from ...diagnostics import ToriiSyntaxError
+from ...util.tracer import get_src_loc
 
 __all__ = (
 	'ButtonResources',
@@ -13,7 +15,7 @@ __all__ = (
 def _SplitResources(
 	name_or_number: str | int | None = None, number: int | None = None, *, default_name: str, dir: IODirectionIO,
 	pins: str | list[str] | dict[int, str], invert: bool = False, conn: ResourceConn | None = None,
-	attrs: Attrs | None = None,
+	attrs: Attrs | None = None, src_loc_at: int = 0
 ) -> list[Resource]:
 	'''
 	Create an array of simple named resources from a collection of pins.
@@ -62,7 +64,10 @@ def _SplitResources(
 	'''
 
 	if not isinstance(pins, (str, list, dict)):
-		raise TypeError(f'pins is expected to be a \'str\', \'list\', or \'dict\' not {pins!r}')
+		raise ToriiSyntaxError(
+			f'pins is expected to be a \'str\', \'list\', or \'dict\' not {pins!r}',
+			src_loc = get_src_loc(src_loc_at + 1)
+		)
 
 	if isinstance(pins, str):
 		pins = pins.split()
@@ -84,7 +89,9 @@ def _SplitResources(
 		number = 0
 
 	for idx, pin in pins.items():  # type: ignore
-		ios: list[Pins | Attrs] = [ Pins(pin, dir = dir, invert = invert, conn = conn) ]
+		ios: list[Pins | Attrs] = [
+			Pins(pin, dir = dir, invert = invert, conn = conn, src_loc_at = src_loc_at + 1)
+		]
 		if attrs is not None:
 			ios.append(attrs)
 		# NOTE(aki): This is likely problematic, but
@@ -92,7 +99,7 @@ def _SplitResources(
 		resources.append(Resource.family(
 			res_index if name is None else name,
 			res_index if name is not None else None,
-			default_name = default_name, ios = ios
+			default_name = default_name, ios = ios, src_loc_at = src_loc_at + 1
 		))
 
 	return resources
@@ -136,7 +143,7 @@ def ButtonResources(
 
 	return _SplitResources(
 		name_or_number, number, default_name = 'button', dir = 'i', pins = pins, invert = invert,
-		conn = conn, attrs = attrs
+		conn = conn, attrs = attrs, src_loc_at = 1
 	)
 
 def LEDResources(
@@ -178,7 +185,7 @@ def LEDResources(
 
 	return _SplitResources(
 		name_or_number, number, default_name = 'led', dir = 'o', pins = pins, invert = invert,
-		conn = conn, attrs = attrs
+		conn = conn, attrs = attrs, src_loc_at = 1
 	)
 
 def RGBLEDResource(
@@ -228,14 +235,22 @@ def RGBLEDResource(
 
 	ios: list[SubsigArgT] = []
 
-	ios.append(Subsignal('r', Pins(r, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('g', Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
-	ios.append(Subsignal('b', Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1)))
+	ios.append(Subsignal(
+		'r', Pins(r, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'g', Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'b', Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'rgb_led', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'rgb_led', ios = ios, src_loc_at = 1
+	)
 
 def SwitchResources(
 	name_or_number: str | int | None = None, number: int | None = None, *,
@@ -276,5 +291,5 @@ def SwitchResources(
 
 	return _SplitResources(
 		name_or_number, number, default_name = 'switch', dir = 'i', pins = pins, invert = invert,
-		conn = conn, attrs = attrs
+		conn = conn, attrs = attrs, src_loc_at = 1
 	)
