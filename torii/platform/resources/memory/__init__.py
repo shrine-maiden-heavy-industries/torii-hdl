@@ -35,46 +35,93 @@ def HyperBusResource(
 	'''
 
 	ios: list[SubsigArgT] = [
-		Subsignal('cs', PinsN(cs_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1)),
-		Subsignal('dq', Pins(dq, dir = 'io', conn = conn, assert_width = 8)),
-		Subsignal('rwds', Pins(rwds, dir = 'io', conn = conn, assert_width = 1)),
+		Subsignal(
+			'cs',
+			PinsN(
+				cs_n,
+				dir = 'o' if bus_type == 'controller' else 'i',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'dq', Pins(dq, dir = 'io', conn = conn, assert_width = 8, src_loc_at = 1), src_loc_at = 1
+		),
+		Subsignal(
+			'rwds', Pins(rwds, dir = 'io', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		),
 	]
 
 	if clk_n is None:
-		ios.append(
-			Subsignal('clk', Pins(
-				clk_p, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
-			))
-		)
+		ios.append(Subsignal(
+			'clk',
+			Pins(
+				clk_p,
+				dir = 'o' if bus_type == 'controller' else 'i',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			src_loc_at = 1
+		))
 	else:
-		ios.append(
-			Subsignal('clk', DiffPairs(
-				clk_p, clk_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
-			), diff_attrs)
-		)
+		ios.append(Subsignal(
+			'clk',
+			DiffPairs(
+				clk_p, clk_n,
+				dir = 'o' if bus_type == 'controller' else 'i',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			diff_attrs,
+			src_loc_at = 1
+		))
 
 	if rst_n is not None:
-		ios.append(
-			Subsignal('rst', PinsN(
-				rst_n, dir = 'o' if bus_type == 'controller' else 'i', conn = conn, assert_width = 1
-			))
-		)
+		ios.append(Subsignal(
+			'rst',
+			PinsN(
+				rst_n,
+				dir = 'o' if bus_type == 'controller' else 'i',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			src_loc_at = 1
+		))
 
 	if rsto_n is not None:
-		ios.append(
-			Subsignal('rsto', PinsN(
-				rsto_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
-			))
-		)
+		ios.append(Subsignal(
+			'rsto',
+			PinsN(
+				rsto_n,
+				dir = 'i' if bus_type == 'controller' else 'o',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			src_loc_at = 1
+		))
 
 	if int_n is not None:
-		ios.append(
-			Subsignal('int', PinsN(
-				int_n, dir = 'i' if bus_type == 'controller' else 'o', conn = conn, assert_width = 1
-			))
-		)
+		ios.append(Subsignal(
+			'int',
+			PinsN(
+				int_n,
+				dir = 'i' if bus_type == 'controller' else 'o',
+				conn = conn,
+				assert_width = 1,
+				src_loc_at = 1
+			),
+			src_loc_at = 1
+		))
 
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'hyperbus', ios = ios)
+	return Resource.family(
+		name_or_number, number, default_name = 'hyperbus', ios = ios, src_loc_at = 1
+	)
