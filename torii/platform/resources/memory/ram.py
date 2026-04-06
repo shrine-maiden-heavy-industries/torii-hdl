@@ -24,25 +24,57 @@ def DDR3Resource(
 	ios: list[SubsigArgT] = []
 
 	if rst_n is not None:
-		ios.append(Subsignal('rst', PinsN(rst_n, dir = 'o', conn = conn, assert_width = 1)))
+		ios.append(Subsignal(
+			'rst', PinsN(rst_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
-	ios.append(Subsignal('clk', DiffPairs(clk_p, clk_n, dir = 'o', conn = conn, assert_width = 1), diff_attrs))
-	ios.append(Subsignal('clk_en', Pins(clk_en, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('we', PinsN(we_n, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('ras', PinsN(ras_n, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('cas', PinsN(cas_n, dir = 'o', conn = conn, assert_width = 1)))
-	ios.append(Subsignal('a', Pins(a, dir = 'o', conn = conn)))
-	ios.append(Subsignal('ba', Pins(ba, dir = 'o', conn = conn)))
-	ios.append(Subsignal('dqs', DiffPairs(dqs_p, dqs_n, dir = 'io', conn = conn), diff_attrs))
-	ios.append(Subsignal('dq', Pins(dq, dir = 'io', conn = conn)))
-	ios.append(Subsignal('dm', Pins(dm, dir = 'o', conn = conn)))
-	ios.append(Subsignal('odt', Pins(odt, dir = 'o', conn = conn, assert_width = 1)))
+	ios.append(Subsignal(
+		'clk',
+		DiffPairs(clk_p, clk_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1),
+		diff_attrs,
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'clk_en', Pins(clk_en, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'we', PinsN(we_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'ras', PinsN(ras_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'cas', PinsN(cas_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'a', Pins(a, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'ba', Pins(ba, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'dqs',
+		DiffPairs(dqs_p, dqs_n, dir = 'io', conn = conn, src_loc_at = 1),
+		diff_attrs,
+		src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'dq', Pins(dq, dir = 'io', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'dm', Pins(dm, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	ios.append(Subsignal(
+		'odt', Pins(odt, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if attrs is not None:
 		ios.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'ddr3', ios = ios)
+	return Resource.family(name_or_number, number, default_name = 'ddr3', ios = ios, src_loc_at = 1)
 
 def SDRAMResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -57,27 +89,47 @@ def SDRAMResource(
 
 	io: list[SubsigArgT] = []
 
-	io.append(Subsignal('clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1)))
+	io.append(Subsignal(
+		'clk', Pins(clk, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 	if cke is not None:
-		io.append(Subsignal('clk_en', Pins(cke, dir = 'o', conn = conn, assert_width = 1)))
+		io.append(Subsignal(
+			'clk_en', Pins(cke, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
 	if cs_n is not None:
-		io.append(Subsignal('cs', PinsN(cs_n,  dir = 'o', conn = conn, assert_width = 1)))
+		io.append(Subsignal(
+			'cs', PinsN(cs_n,  dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
-	io.append(Subsignal('we',  PinsN(we_n,  dir = 'o', conn = conn, assert_width = 1)))
-	io.append(Subsignal('ras', PinsN(ras_n, dir = 'o', conn = conn, assert_width = 1)))
-	io.append(Subsignal('cas', PinsN(cas_n, dir = 'o', conn = conn, assert_width = 1)))
-	io.append(Subsignal('ba', Pins(ba, dir = 'o', conn = conn)))
-	io.append(Subsignal('a',  Pins(a,  dir = 'o', conn = conn)))
-	io.append(Subsignal('dq', Pins(dq, dir = 'io', conn = conn)))
+	io.append(Subsignal(
+		'we',  PinsN(we_n,  dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'ras', PinsN(ras_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'cas', PinsN(cas_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'ba', Pins(ba, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'a',  Pins(a,  dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'dq', Pins(dq, dir = 'io', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if dqm is not None:
-		io.append(Subsignal('dqm', Pins(dqm, dir = 'o', conn = conn))) # dqm = 'LDQM# UDQM#'
+		io.append(Subsignal(
+			'dqm', Pins(dqm, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+		)) # dqm = 'LDQM# UDQM#'
 
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'sdram', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'sdram', ios = io, src_loc_at = 1)
 
 def SRAMResource(
 	name_or_number: str | int, number: int | None = None, *,
@@ -91,20 +143,32 @@ def SRAMResource(
 
 	io: list[SubsigArgT] = []
 
-	io.append(Subsignal('cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1)))
+	io.append(Subsignal(
+		'cs', PinsN(cs_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if oe_n is not None:
 		# Asserted WE# deactivates the D output buffers, so WE# can be used to replace OE#.
-		io.append(Subsignal('oe', PinsN(oe_n, dir = 'o', conn = conn, assert_width = 1)))
+		io.append(Subsignal(
+			'oe', PinsN(oe_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+		))
 
-	io.append(Subsignal('we', PinsN(we_n, dir = 'o', conn = conn, assert_width = 1)))
-	io.append(Subsignal('a', Pins(a, dir = 'o', conn = conn)))
-	io.append(Subsignal('d', Pins(d, dir = 'io', conn = conn)))
+	io.append(Subsignal(
+		'we', PinsN(we_n, dir = 'o', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'a', Pins(a, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
+	io.append(Subsignal(
+		'd', Pins(d, dir = 'io', conn = conn, src_loc_at = 1), src_loc_at = 1
+	))
 
 	if dm_n is not None:
-		io.append(Subsignal('dm', PinsN(dm_n, dir = 'o', conn = conn))) # dm = 'LB# UB#'
+		io.append(Subsignal(
+			'dm', PinsN(dm_n, dir = 'o', conn = conn, src_loc_at = 1), src_loc_at = 1
+		)) # dm = 'LB# UB#'
 
 	if attrs is not None:
 		io.append(attrs)
 
-	return Resource.family(name_or_number, number, default_name = 'sram', ios = io)
+	return Resource.family(name_or_number, number, default_name = 'sram', ios = io, src_loc_at = 1)
