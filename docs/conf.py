@@ -167,8 +167,8 @@ linkcheck_ignore  = [
 	'https://creativecommons.org/licenses/by-sa/4.0/',
 	# SSL Expired
 	'https://opencores.org/howto/wishbone',
-	# SSL Timeout from GitHub actions
-	'https://aur.archlinux.org',
+	# Gowin's website dislikes GH Actions
+	'https://www.gowinsemi.com/en/support/home',
 ]
 linkcheck_anchors_ignore_for_url = [
 	r'^https://web\.libera\.chat/',
