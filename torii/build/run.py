@@ -2,19 +2,20 @@
 
 from __future__      import annotations
 
-import hashlib
 import os
-import subprocess
-import sys
-import tarfile
-import zipfile
 from abc             import ABCMeta, abstractmethod
 from collections     import OrderedDict
 from collections.abc import Generator
 from contextlib      import contextmanager
+from hashlib         import blake2b
 from pathlib         import Path
+from subprocess      import check_call
+from sys             import platform
+from tarfile         import TarFile, TarInfo
 from tempfile        import NamedTemporaryFile, _TemporaryFileWrapper
 from typing          import Literal
+from warnings        import warn
+from zipfile         import ZipFile, ZipInfo
 
 __all__ = (
 	'BuildPlan',
@@ -62,7 +63,7 @@ class BuildPlan:
 			The :py:class:`blake2b <hashlib.blake2b>` digest of this build plan.
 		'''
 
-		hasher = hashlib.blake2b(digest_size = size)
+		hasher = blake2b(digest_size = size)
 		for filename in sorted(self.files):
 			hasher.update(filename.encode('utf-8'))
 			content = self.files[filename]
@@ -86,8 +87,8 @@ class BuildPlan:
 		'''
 
 		_archive_types = {
-			'zip': (zipfile.ZipFile, zipfile.ZipInfo, 'w',    '.zip'   ),
-			'tar': (tarfile.TarFile, tarfile.TarInfo, 'w:xz', '.tar.xz')
+			'zip': (ZipFile, ZipInfo, 'w',    '.zip'   ),
+			'tar': (TarFile, TarInfo, 'w:xz', '.tar.xz')
 		}
 
 		if archive_type not in ('tar', 'zip'):
@@ -142,7 +143,7 @@ class BuildPlan:
 					f.write(content)
 
 				# If we're on unix-like and we're emitting the shell script, set it as +x
-				if not sys.platform.startswith('win32') and file.suffix == '.sh':
+				if not platform.startswith('win32') and file.suffix == '.sh':
 					file.chmod(0o755) # rwxr-xr-x
 			return root
 		finally:
@@ -167,17 +168,17 @@ class BuildPlan:
 		script_env = dict(os.environ)
 		if env is not None:
 			script_env.update(env)
-		if sys.platform.startswith('win32'):
+		if platform.startswith('win32'):
 			# Without "call", "cmd /c {}.bat" will return 0.
 			# See https://stackoverflow.com/a/30736987 for a detailed explanation of why.
 			# Running the script manually from a command prompt is unaffected.
-			subprocess.check_call(
+			check_call(
 				[ 'cmd', '/c', f'call {self.script}.bat' ],
 				env = script_env,
 				cwd = build_dir
 			)
 		else:
-			subprocess.check_call(
+			check_call(
 				[ 'sh', f'{self.script}.sh' ],
 				env = script_env,
 				cwd = build_dir
@@ -192,6 +193,57 @@ class BuildPlan:
 		'''
 
 		return self.execute_local()
+
+	def execute_container(
+			self, image: str, root: str | Path = 'build', engine: Literal['docker'] | Literal['podman'] = 'podman',
+			mount: str = '/torii', args: list[str] = list(), env: dict[str, str] = dict()
+	) -> LocalBuildProducts:
+		'''
+		Execute this build plan inside of an ephemeral container.
+
+		Currently two container engines are supported, ``docker`` and ``podman``.
+
+		This works by mounting the Torii build root inside of the container and then
+		executing the build script inside of the container.
+
+		Arguments
+		---------
+		image: str
+			The container image to use
+
+		root: str | Path
+			The Torii build root to use
+
+		engine: Literal['docker'] | Literal['podman']
+			The container engine to use
+
+		mount: str
+			The mount point inside of the Torii build root inside the container
+
+		args: list[str]
+			Additional arguments to pass to the container engine
+
+		env: dict[str, str]
+			Additional environment variables to set inside of the container
+
+		Returns
+		-------
+		LocalBuildProduct
+			The results of the build
+		'''
+
+		build_dir = self.extract(root)
+
+		env_vars: list[str] = [ f'-e=\'{var}={val}\'' for (var, val) in env.items() ]
+
+		check_call([
+			engine, 'run', *args, *env_vars, '--rm',
+			'-v', f'"{build_dir}:{mount}"', '--workdir', mount,
+			image,
+			'sh', f'{self.script}.sh'
+		])
+
+		return LocalBuildProducts(build_dir)
 
 	def execute_docker(
 		self, image: str, root: str | Path = 'root', docker_mount: str = '/build', docker_args: list[str] = []
@@ -224,17 +276,15 @@ class BuildPlan:
 
 		'''
 
-		build_dir = self.extract(root)
+		warn(
+			'The \'execute_docker\' method has been deprecated, please use \'execute_container\' instead',
+			DeprecationWarning,
+			stacklevel = 2
+		)
 
-		subprocess.check_call([
-			'docker', 'run', *docker_args,
-			'--rm', '-v', f'"{build_dir}":{docker_mount}',
-			'--workdir', f'{docker_mount}',
-			image,
-			'sh', f'{self.script}.sh'
-		])
-
-		return LocalBuildProducts(build_dir)
+		return self.execute_container(
+			image, root, 'docker', docker_mount, docker_args
+		)
 
 class BuildProducts(metaclass = ABCMeta):
 	'''
