@@ -923,3 +923,25 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		fragment.first_drivers = self._driving_locs
 		fragment.generated.update(self._generated)
 		return fragment
+
+	def has_submodule(self, name: str) -> bool:
+		'''
+		Check to see if a submodule with the given name has been added to this module.
+
+		Important
+		---------
+		This should be used over trying to use :py:meth:`hasattr` on ``m.submodules`` as it will not
+		have the expected results.
+
+		Parameters
+		----------
+		name: str
+			The name of the submodule to look for.
+
+		Returns
+		-------
+		bool
+			If a submodule with the given name exists or not
+		'''
+
+		return name in self._named_submodules

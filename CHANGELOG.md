@@ -43,6 +43,7 @@ Unreleased template stuff
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 - New enhanced diagnostics for Torii designs.
+- New `has_submodule` call on `Module`s to check if the current module has a named submodule.
 
 ### Changed
 

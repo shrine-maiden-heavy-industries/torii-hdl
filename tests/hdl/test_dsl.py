@@ -1078,3 +1078,11 @@ class DSLTestCase(ToriiTestSuiteCase):
 			'sync': SignalSet((self.c3,))
 		})
 		self.assertEqual(len(f2.subfragments), 0)
+
+	def test_has_submodule(self):
+		m1 = Module()
+		m2 = Module()
+		m1.submodules.nya = m2
+
+		self.assertTrue(m1.has_submodule('nya'))
+		self.assertFalse(m1.has_submodule('kon'))
