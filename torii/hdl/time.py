@@ -187,6 +187,9 @@ class Frequency:
 		''' This frequency in Hertz '''
 		return self._value
 
+	def __hash__(self) -> int:
+		return hash(self._value)
+
 	def __rtruediv__(self, rep: int | float) -> 'Period':
 		if rep == 1:
 			warn('Consider using the `.period` attribute to get this Frequency as a Period', Warning, stacklevel = 2)
@@ -320,6 +323,9 @@ class Period:
 	def picoseconds(self) -> float:
 		''' This period in Picoseconds (10^-12 Seconds) '''
 		return self._value / PICO
+
+	def __hash__(self) -> int:
+		return hash(self._value)
 
 	def __rtruediv__(self, rep: int | float) -> 'Frequency':
 		if rep == 1:
