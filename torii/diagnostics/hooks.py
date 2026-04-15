@@ -25,7 +25,8 @@ from rich.padding  import Padding
 from rich.panel    import Panel
 from rich.syntax   import Syntax
 
-from ..diagnostics import ToriiError, ToriiSyntaxError
+from .._typing     import SrcLoc
+from ..diagnostics import ToriiError, ToriiWarning, ToriiSyntaxError
 from ..hdl._unused import MustUse
 
 # Create a reference to the handlers that are installed prior to us loading
@@ -172,7 +173,7 @@ def _render_fancy(cons: Console, filename: str, lineno: int, border_style: str, 
 def _render_diagnostic( # :nocov:
 	cons: Console, message: str, category: type[Warning | BaseException], filename: str, lineno: int,
 	accent_color: str, line: str | None = None, notes: list[str] | None = None,
-	additional_ctx: tuple[str, tuple[str, int]] | None = None
+	additional_ctx: tuple[str, SrcLoc] | None = None
 ) -> None:
 
 	# If we want to show the source lines, make sure we can, and it's not the REPL
