@@ -273,24 +273,31 @@ def _warning_handler( # :nocov:
 	'''
 
 	notes: list[str] | None = None
+	additional_ctx: tuple[str, SrcLoc] | None = None
 
 	# Get the output console to write to
 	cons = _get_console(output_file)
 
 	# If `message` is a `Warning` itself, the category is ignored in favor of `message.__class__`
 	# and the message is the stringified object
-	if isinstance(message, Warning):
+	# If the message is a `ToriiWarning` object, then we can treat is specially
+	if isinstance(message, (ToriiWarning, Warning)):
+		# Use the object class as the warning category
 		category = message.__class__
-
-		# If we are in Python 3.11 or newer, then we can have attached notes
 		notes = getattr(message, '__notes__', None)
+
+		if isinstance(message, ToriiWarning):
+			# Pull out the additional context if there is any
+			additional_ctx = getattr(message, 'additional_ctx', None)
+
+		# Stringify the warning to get the message
 		message  = str(message)
 
 	# If the category is `None`, then we need to just say it's a generic warning
 	if category is None:
 		category = Warning
 
-	_render_diagnostic(cons, message, category, filename, lineno, 'yellow', line, notes)
+	_render_diagnostic(cons, message, category, filename, lineno, 'yellow', line, notes, additional_ctx)
 
 def _excepthook(type: type[BaseException], value: BaseException, traceback: TracebackType | None) -> None:
 	'''
