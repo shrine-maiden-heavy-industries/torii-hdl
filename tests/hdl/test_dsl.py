@@ -856,6 +856,29 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.FSM():
 				m.next = 'FOO'
 
+	def test_FSM_unknown_reset(self):
+		m = Module()
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError, (
+				r'^The specified reset state \'IDEL\' did not match any existing states in the FSM '
+				r'\'fsm\', did you mean \'IDLE\'\? \(test_dsl\.py, line \d+\)$'
+			)
+		):
+			with m.FSM(reset = 'IDEL'):
+				with m.State('IDLE'):
+					pass
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError, (
+				r'^The specified reset state \'INVALID\' does not exist inside the FSM \'fsm\' '
+				r'\(test_dsl\.py, line \d+\)$'
+			)
+		):
+			with m.FSM(reset = 'INVALID'):
+				with m.State('IDLE'):
+					pass
+
 	def test_If_inside_FSM_wrong(self):
 		m = Module()
 		with m.FSM():

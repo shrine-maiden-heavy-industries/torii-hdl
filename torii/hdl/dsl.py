@@ -13,6 +13,7 @@ from typing          import TYPE_CHECKING, Any, ParamSpec, TypedDict
 from ..diagnostics   import ToriiSyntaxError, ToriiSyntaxWarning
 from .._typing       import SrcLoc, SwitchCaseT
 from ..util          import _check_name, flatten, tracer
+from ..util.string   import _get_best_matching
 from ..util.units    import bits_for
 from .ast            import (
 	Assign, Cat, Const, Operator, Property, Signal, SignalDict, Statement, Switch, Value, ValueCastT, _StatementList,
@@ -758,6 +759,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if name == 'FSM':
 			if TYPE_CHECKING:
 				assert isinstance(data, _FSMDict)
+			fsm_name = data['name']
 			fsm_signal = data['signal']
 			fsm_reset = data['reset']
 			fsm_encoding = data['encoding']
@@ -769,8 +771,32 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			fsm_signal.width = bits_for(len(fsm_encoding) - 1)
 			if fsm_reset is None:
 				fsm_signal.reset = fsm_encoding[next(iter(fsm_states))]
-			else:
+			elif fsm_reset in fsm_encoding:
 				fsm_signal.reset = fsm_encoding[fsm_reset]
+				# Make sure we remove this state from the unvisited states, as it's our reset state now
+				fsm_unvisited_states -= { fsm_reset }
+			else:
+				src_loc = data['src_loc']
+				matches = _get_best_matching(fsm_reset, fsm_states.keys())
+				additional_ctx = None
+
+				if len(matches) > 0:
+					match = matches[0]
+					message = (
+						f'The specified reset state \'{fsm_reset}\' did not match any existing states in the FSM '
+						f'\'{fsm_name}\', did you mean \'{match}\'?'
+					)
+
+					additional_ctx = (
+						f'The state \'{match}\' was defined here:',
+						fsm_state_src_locs[match]
+					)
+				else:
+					message = f'The specified reset state \'{fsm_reset}\' does not exist inside the FSM \'{fsm_name}\''
+
+				raise ToriiSyntaxError(
+					message = message, src_loc = src_loc, additional_ctx = additional_ctx
+				)
 			# The FSM is encoded such that the state with encoding 0 is always the reset state.
 			fsm_decoding.update((n, s) for s, n in fsm_encoding.items())
 			fsm_signal.decoder = lambda n: f'{fsm_decoding[n]}/{n}'
