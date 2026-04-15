@@ -254,6 +254,7 @@ class _FSMDict(TypedDict):
 	states: OrderedDict[str, _StatementList]
 	src_loc: SrcLoc
 	state_src_locs: dict[str, SrcLoc]
+	state_visit_map: dict[str, bool]
 
 _CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 
@@ -624,6 +625,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			'states': OrderedDict(),
 			'src_loc': tracer.get_src_loc(src_loc_at = 1),
 			'state_src_locs': {},
+			'state_visit_map': {},
 		})
 		if TYPE_CHECKING:
 			assert isinstance(fsm_data, _FSMDict)
@@ -670,6 +672,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			self._ctrl_context = None
 			yield
 			self._flush_ctrl()
+			if len(fsm_data['states']) == 0 and fsm_data['reset'] is None:
+				# If we are the first state in this FSM /and/ the reset state is not specified then
+				# we are the reset state and are by-default visited
+				fsm_data['state_visit_map'][name] = True
 			fsm_data['states'][name] = self._statements
 			fsm_data['state_src_locs'][name] = src_loc
 		finally:
@@ -697,6 +703,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 						assert isinstance(ctrl_data, _FSMDict)
 					if name not in ctrl_data['encoding']:
 						ctrl_data['encoding'][name] = len(ctrl_data['encoding'])
+					ctrl_data['state_visit_map'][name] = True
 					self._add_statement(
 						assigns    = [ ctrl_data['signal'].eq(ctrl_data['encoding'][name]) ],
 						domain     = ctrl_data['domain'],
@@ -766,6 +773,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			fsm_decoding = data['decoding']
 			fsm_states = data['states']
 			fsm_state_src_locs = data['state_src_locs']
+			fsm_unvisited_states = set(fsm_states.keys()) - set(data['state_visit_map'].keys())
 			if not fsm_states:
 				return
 			fsm_signal.width = bits_for(len(fsm_encoding) - 1)
@@ -811,6 +819,21 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					}
 				)
 			)
+
+			if len(fsm_unvisited_states) > 0:
+				unvisited = ', '.join(map(lambda s: f'\'{s}\'', fsm_unvisited_states))
+
+				warning = ToriiSyntaxWarning(
+					f'The FSM named \'{fsm_name}\' has the following unvisited states: {unvisited}'
+				)
+
+				for state in fsm_unvisited_states:
+					src_loc = fsm_state_src_locs[state]
+					warning.add_note(
+						f'The state \'{state}\' was defined on line {src_loc[1]}'
+					)
+
+				warnings.warn(warning, stacklevel = 4)
 
 	def _add_statement(
 		self, assigns, domain: str, depth, compat_mode = False, domain_loc: tuple[str, int] | None = None

@@ -731,13 +731,16 @@ class DSLTestCase(ToriiTestSuiteCase):
 		a = Signal()
 		b = Signal()
 		m = Module()
-		with m.FSM() as fsm:
-			m.d.comb += b.eq(fsm.ongoing('SECOND'))
-			with m.State('FIRST'):
-				pass
-			m.d.comb += a.eq(fsm.ongoing('FIRST'))
-			with m.State('SECOND'):
-				pass
+		with warnings.catch_warnings():
+			warnings.simplefilter('ignore')
+
+			with m.FSM() as fsm:
+				m.d.comb += b.eq(fsm.ongoing('SECOND'))
+				with m.State('FIRST'):
+					pass
+				m.d.comb += a.eq(fsm.ongoing('FIRST'))
+				with m.State('SECOND'):
+					pass
 		m._flush()
 		self.assertEqual(m._generated['fsm'].state.reset, 1)
 		self.maxDiff = 10000
@@ -855,6 +858,22 @@ class DSLTestCase(ToriiTestSuiteCase):
 		):
 			with m.FSM():
 				m.next = 'FOO'
+
+	def test_FSM_unvisited_state(self):
+		m = Module()
+
+		with self.assertWarnsRegex(
+			ToriiSyntaxWarning, (
+				r'^The FSM named \'fsm\' has the following unvisited states: \'UNVISITED\'$'
+			)
+		):
+			with m.FSM():
+				with m.State('IDLE'):
+					m.next = 'VISITED'
+				with m.State('UNVISITED'):
+					pass
+				with m.State('VISITED'):
+					pass
 
 	def test_FSM_unknown_reset(self):
 		m = Module()
