@@ -72,6 +72,104 @@ def Display7SegResource(
 		name_or_number, number, default_name = 'display_7seg', ios = ios, src_loc_at = 1
 	)
 
+def Display14SegResource(
+	name_or_number: str | int, number: int | None = None, *,
+	a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str, j: str, k: str, l: str, m: str, # noqa: E741
+	n: str, dp: str | None = None,
+	invert: bool = False, conn: ResourceConn | None = None,
+	attrs: Attrs | None = None
+) -> Resource:
+	'''
+	A 14-segment LED display resource.
+	'''
+
+	ios: list[SubsigArgT] = [
+		Subsignal(
+			'a',
+			Pins(a, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'b',
+			Pins(b, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'c',
+			Pins(c, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'd',
+			Pins(d, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'e',
+			Pins(e, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'f',
+			Pins(f, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'g',
+			Pins(g, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'h',
+			Pins(h, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'i',
+			Pins(i, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'j',
+			Pins(j, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'k',
+			Pins(k, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'l',
+			Pins(l, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'm',
+			Pins(m, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+		Subsignal(
+			'n',
+			Pins(n, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		),
+	]
+
+	if dp is not None:
+		ios.append(Subsignal(
+			'dp',
+			Pins(dp, dir = 'o', invert = invert, conn = conn, assert_width = 1, src_loc_at = 1),
+			src_loc_at = 1
+		))
+
+	if attrs is not None:
+		ios.append(attrs)
+
+	return Resource.family(
+		name_or_number, number, default_name = 'display_14seg', ios = ios, src_loc_at = 1
+	)
+
 def HDMIResource(
 	name_or_number: str | int, number: int | None = None, *,
 	clk_p: str, clk_n: str, d_p: str, d_n: str, scl: str, sda: str,
