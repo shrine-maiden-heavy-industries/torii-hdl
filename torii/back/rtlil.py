@@ -971,7 +971,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 			if isinstance(subfragment, ir.Instance):
 				src = _src(subfragment.src_loc)
-			if isinstance(subfragment, mem.MemoryInstance):
+			elif isinstance(subfragment, mem.MemoryInstance):
 				src = _src(subfragment.memory.src_loc)
 			else:
 				src = ''
