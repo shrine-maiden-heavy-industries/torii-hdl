@@ -51,7 +51,9 @@ class _ModuleBuilderDomain(_ModuleBuilderProxy):
 		self._domain = domain
 
 	def __iadd__(self, assigns):
-		self._builder._add_statement(assigns, domain = self._domain, depth = self._depth)
+		self._builder._add_statement(
+			assigns, domain = self._domain, depth = self._depth, src_loc_at = 1
+		)
 		return self
 
 class _ModuleBuilderDomains(_ModuleBuilderProxy):
@@ -836,16 +838,18 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				warnings.warn(warning, stacklevel = 4)
 
 	def _add_statement(
-		self, assigns, domain: str, depth, compat_mode = False, domain_loc: tuple[str, int] | None = None
+		self, assigns, domain: str, depth, compat_mode = False, domain_loc: tuple[str, int] | None = None,
+		src_loc_at: int = 0
 	):
 		'''
 		.. todo:: Document Me
 		'''
 
-		src_loc = tracer.get_src_loc(1)
 		# Store the very first driving reference
 		if domain not in self._driving_locs:
-			self._driving_locs[domain] = src_loc if domain_loc is None else domain_loc
+			self._driving_locs[domain] = (
+				tracer.get_src_loc(src_loc_at = 1) if domain_loc is None else domain_loc
+			)
 
 		def domain_name(domain):
 			if domain is None:
@@ -856,11 +860,11 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while len(self._ctrl_stack) > self.domain._depth:
 			self._pop_ctrl()
 
-		for stmt in Statement.cast(assigns):
+		for stmt in Statement.cast(assigns, src_loc_at = src_loc_at + 1):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
 				raise ToriiSyntaxError(
 					f'Only assignments and property checks may be appended to d.{domain_name(domain)}',
-					src_loc
+					tracer.get_src_loc(src_loc_at = 1)
 				)
 
 			stmt._MustUse__used = True
@@ -875,7 +879,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 						f'Driver-driver conflict: trying to drive {signal!r} from clock domain '
 						f'\'{domain_name(domain)}\', but it is already driven from the clock domain '
 						f'\'{domain_name(cd_curr)}\'',
-						src_loc
+						tracer.get_src_loc(src_loc_at = 1)
 					)
 
 			self._statements.append(stmt)

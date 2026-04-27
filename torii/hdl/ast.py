@@ -2239,18 +2239,24 @@ class Statement:
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
 	@staticmethod
-	def cast(obj: Iterable | Statement):
+	def cast(obj: Iterable | Statement, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
 
-		if isinstance(obj, Iterable):
-			return _StatementList(list(chain.from_iterable(map(Statement.cast, obj))))
+		# Make sure we guard against infinite recursion if we hit a string,
+		if isinstance(obj, Iterable) and not isinstance(obj, str):
+			return _StatementList(
+				list(chain.from_iterable(map(lambda stmt: Statement.cast(stmt, src_loc_at + 2), obj)))
+			)
 		else:
 			if isinstance(obj, Statement):
 				return _StatementList([obj])
 			else:
-				raise TypeError(f'Object {obj!r} is not an Torii statement')
+				raise ToriiSyntaxError(
+					f'The object {obj!r} is not a Torii statement',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
 
 @final
 class Assign(Statement):
