@@ -196,7 +196,8 @@ class BuildPlan:
 
 	def execute_container(
 			self, image: str, root: str | Path = 'build', engine: Literal['docker'] | Literal['podman'] = 'podman',
-			mount: str = '/torii', args: list[str] = list(), env: dict[str, str] = dict()
+			mount: str = '/build', args: list[str] = list(), env: dict[str, str] = dict(),
+			volumes: dict[str, str] = dict(),
 	) -> LocalBuildProducts:
 		'''
 		Execute this build plan inside of an ephemeral container.
@@ -260,6 +261,26 @@ class BuildPlan:
 						'XAUTHORITY': '/tmp/.Xauthority'
 					}
 				)
+
+		volumes: dict[str, str]
+			Additional volumes to mount inside the container
+
+			If you wish to explicitly make the volume read-only, then add ':ro' to the destination
+			mount for the volume, for example:
+
+			.. code-block:: python
+
+				plan.execute_container(
+					image = 'lattice:diamond-3.14',
+					env = {
+						'DISPLAY': ':0',
+						'XAUTHORITY': '/tmp/.Xauthority'
+					},
+					volumes = {
+						'/tmp/.X11-unix': '/tmp/.X11-unix:ro'
+					}
+				)
+
 		Returns
 		-------
 		LocalBuildProduct
@@ -268,11 +289,15 @@ class BuildPlan:
 
 		build_dir = self.extract(root)
 
-		env_vars: list[str] = [ f'-e=\'{var}={val}\'' for (var, val) in env.items() ]
+		env_vars: list[str] = [ f'-e={var}={val}' for (var, val) in env.items() ]
+		ext_volumes: list[str] = [ f'-v={src}:{dst}' for (src, dst) in volumes.items() ]
 
 		check_call([
-			engine, 'run', *args, *env_vars, '--rm',
-			'-v', f'"{build_dir}:{mount}"', '--workdir', mount,
+			engine, 'run', '--rm', f'-w={mount}',
+			*args,
+			*env_vars,
+			'-v', f'{build_dir}:{mount}',
+			*ext_volumes,
 			image,
 			# XXX(aki):
 			# Some container images might explicitly override where things end up due to having a
