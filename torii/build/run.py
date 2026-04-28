@@ -274,7 +274,12 @@ class BuildPlan:
 			engine, 'run', *args, *env_vars, '--rm',
 			'-v', f'"{build_dir}:{mount}"', '--workdir', mount,
 			image,
-			'sh', f'{self.script}.sh'
+			# XXX(aki):
+			# Some container images might explicitly override where things end up due to having a
+			# `cd` inside an entrypoint wrapper script, in this case we can't guarantee that we will
+			# end up with our cwd set to be the specified working dir, so by explicitly invoking the
+			# command `cd $MOUNT && sh $BUILD_SCRIPT.sh` we ensure we are in the proper location
+			'sh', '-c', f'cd {mount} && sh {self.script}.sh'
 		])
 
 		return LocalBuildProducts(build_dir)
