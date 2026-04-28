@@ -206,6 +206,29 @@ class BuildPlan:
 		This works by mounting the Torii build root inside of the container and then
 		executing the build script inside of the container.
 
+		Example
+		-------
+		.. code-block:: python
+
+			plan = XilinxPlatform().build(my_module, do_build = False)
+
+			plan.execute_container(
+				image = 'xilinx:vivado-2025.1',
+				engine = 'podman',
+				args = [
+					'--network', 'none'
+				],
+			)
+
+		Important
+		---------
+		When passing ``do_build = False`` to a :py:class:`Platform <torii.build.plat.Platform>`'s
+		:py:meth:`build <torii.build.plat.Platform>` method, all initial runtime checks for tools are skipped, as the
+		tooling is likely not on the host system.
+
+		This also however, means, we can not, and do not validate that the given container has all the required tooling
+		for the platform, meaning the feedback delay between invoking the build and it erroring out is increased.
+
 		Arguments
 		---------
 		image: str
@@ -226,6 +249,17 @@ class BuildPlan:
 		env: dict[str, str]
 			Additional environment variables to set inside of the container
 
+			For example:
+
+			.. code-block:: python
+
+				plan.execute_container(
+					image = 'lattice:diamond-3.14',
+					env = {
+						'DISPLAY': ':0',
+						'XAUTHORITY': '/tmp/.Xauthority'
+					}
+				)
 		Returns
 		-------
 		LocalBuildProduct
