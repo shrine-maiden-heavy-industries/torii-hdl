@@ -14,7 +14,7 @@ import jinja2
 from ..              import __version__
 from ..back          import rtlil, verilog
 from ..diagnostics   import PlatformError, ToriiError, ToriiSyntaxError
-from ..hdl.ast       import ClockSignal, Const, Signal
+from ..hdl.ast       import ClockSignal, Const, Signal, SignalDict
 from ..hdl.cd        import ClockDomain
 from ..hdl.dsl       import Module
 from ..hdl.ir        import Elaboratable, Fragment, Instance
@@ -130,6 +130,8 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		self.src_loc     = get_src_loc(src_loc_at)
 		self.extra_files = OrderedDict()
 		self._prepared   = False
+
+		self._name_map: SignalDict[tuple[str, ...]] = SignalDict()
 
 	@property
 	def default_clk_constraint(self) -> Clock:
