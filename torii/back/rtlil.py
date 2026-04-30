@@ -1098,7 +1098,7 @@ def _convert_fragment(builder, fragment, name_map, hierarchy):
 
 def convert_fragment(
 	fragment: ir.Fragment, name: str = 'top', *, emit_src: bool = True
-) -> tuple[str, ast.SignalDict]:
+) -> tuple[str, ast.SignalDict[tuple[str, ...]]]:
 	'''
 	Recursively lower the given Torii :py:class:`Fragment <torii.hdl.ir.Fragment>` into RTLIL text and
 	a signal map.
@@ -1116,14 +1116,14 @@ def convert_fragment(
 
 	Returns
 	-------
-	tuple[str, torii.hdl.ast.SignalDict]
+	tuple[str, torii.hdl.ast.SignalDict[tuple[str, ...]]]
 		The RTLIL text and signal dictionary of the lowered fragment.
 	'''
 
 	if not isinstance(fragment, ir.Fragment):
 		raise ValueError(f'Expected an ir.Fragment not a {fragment!r}')
 	builder = _Builder(emit_src = emit_src)
-	name_map = ast.SignalDict()
+	name_map = ast.SignalDict[tuple[str, ...]]()
 	_convert_fragment(builder, fragment, name_map, hierarchy = (name,))
 	return (str(builder), name_map)
 
