@@ -2,7 +2,7 @@
 
 from typing        import Literal
 
-from ..diagnostics import NameNotFound
+from ..diagnostics import NameNotFound, ToriiSyntaxError
 from ..util        import _check_name, tracer
 from .ast          import Signal
 
@@ -68,18 +68,41 @@ class ClockDomain:
 			try:
 				name = tracer.get_var_name()
 			except NameNotFound:
-				raise ValueError('Clock domain name must be specified explicitly')
+				raise ToriiSyntaxError(
+					'The name for this clock domain could not be automatically determined and no name was explicitly '
+					'specified',
+					self.src_loc,
+				)
 
 		if name == '' or not _check_name(name):
-			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The name specified for this clock domain must not be empty or contain any control/whitespace '
+				'characters',
+				self.src_loc,
+			)
+
+			if name == '':
+				err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs, Zl, Zp'
+				)
+
+			raise err
 
 		if name.startswith('cd_'):
 			name = name[3:]
 		if name == 'comb':
-			raise ValueError(f'Domain \'{name}\' may not be clocked')
+			raise ToriiSyntaxError(
+				'The combinatorial logic domain \'comb\' may not be clocked',
+				self.src_loc
+			)
 
 		if clk_edge not in ('pos', 'neg'):
-			raise ValueError(f'Domain clock edge must be one of \'pos\' or \'neg\', not {clk_edge!r}')
+			raise ToriiSyntaxError(
+				f'Domain clock edge must be one of \'pos\' or \'neg\', not {clk_edge!r}',
+				self.src_loc
+			)
 
 		self.name = name
 
@@ -101,7 +124,20 @@ class ClockDomain:
 		'''
 
 		if new_name == '' or not _check_name(new_name):
-			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The name specified for this clock domain must not be empty or contain any control/whitespace '
+				'characters',
+				self.src_loc,
+			)
+
+			if new_name == '':
+				err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs, Zl, Zp'
+				)
+
+			raise err
 
 		self.name = new_name
 		self.clk.name = self._name_for(new_name, 'clk')

@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl.cd import ClockDomain
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.cd      import ClockDomain
 
-from ..utils      import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class ClockDomainTestCase(ToriiTestSuiteCase):
 	def test_name(self):
@@ -20,8 +21,9 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 		dom = [ClockDomain('foo')][0]
 		self.assertEqual(dom.name, 'foo')
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Clock domain name must be specified explicitly$'
+			ToriiSyntaxError,
+			r'^The name for this clock domain could not be automatically determined and no name was'
+			r' explicitly specified \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain()
 		cd_reset = ClockDomain(local = True)
@@ -29,39 +31,45 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain(' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('\x14')
 
 	def test_rename_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('meow').rename('')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('meow').rename(' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name specified for this clock domain must not be empty or contain any control/whitespace'
+			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('meow').rename('\x7F')
 
@@ -75,8 +83,8 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 
 	def test_edge_wrong(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Domain clock edge must be one of \'pos\' or \'neg\', not \'xxx\'$'
+			ToriiSyntaxError,
+			r'^Domain clock edge must be one of \'pos\' or \'neg\', not \'xxx\' \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('sync', clk_edge = 'xxx')
 
@@ -118,7 +126,7 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_name_comb(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Domain \'comb\' may not be clocked$'
+			ToriiSyntaxError,
+			r'^The combinatorial logic domain \'comb\' may not be clocked \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain(name = 'comb')
