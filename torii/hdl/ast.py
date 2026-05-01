@@ -17,7 +17,7 @@ from typing            import (
 	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec, SupportsIndex, TypeAlias, TypeVar, TypeVarTuple,
 )
 
-from ..diagnostics     import ToriiSyntaxError, UnusedProperty
+from ..diagnostics     import ToriiSyntaxError, ToriiSyntaxWarning, UnusedProperty
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import _check_name, flatten, tracer, union
 from ..util.decorators import final
@@ -709,7 +709,7 @@ class Value(metaclass = ABCMeta):
 					warnings.warn(
 						f'Match pattern \'{pattern}\' ({pattern_len}\'{new_pattern.value:b}) is wider than '
 						f'match value (which has width {len(self)}); comparison will never be true',
-						SyntaxWarning, stacklevel = 2
+						ToriiSyntaxWarning, stacklevel = 2
 					)
 					continue
 				matches.append(self == new_pattern)
@@ -717,7 +717,7 @@ class Value(metaclass = ABCMeta):
 		if not matches:
 			warnings.warn(
 				'Value.matches() with an empty patterns clause will return `Const(0)` in a future release.',
-				SyntaxWarning, stacklevel = 2
+				ToriiSyntaxWarning, stacklevel = 2
 			)
 			return Const(1)
 		elif len(matches) == 1:
@@ -1032,7 +1032,7 @@ class Const(Value, metaclass = _ConstMeta):
 				warnings.warn(
 					f'Value {self.value!r} equals the non-inclusive end of the constant '
 					f'shape {shape!r}; this is likely an off-by-one error',
-					category = SyntaxWarning,
+					category = ToriiSyntaxWarning,
 					stacklevel = 3
 				)
 			shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
@@ -1287,7 +1287,7 @@ class Cat(Value):
 					f'Argument #{index + 1} of \'Cat()\' is an enumerated value {arg!r} without '
 					'a defined shape used in a bit vector context; use \'Const\' to specify '
 					'the shape.',
-					SyntaxWarning, stacklevel = 2 + src_loc_at
+					ToriiSyntaxWarning, stacklevel = 2 + src_loc_at
 				)
 
 			if isinstance(arg, int) and not isinstance(arg, Enum) and arg not in [0, 1]:
@@ -1295,7 +1295,7 @@ class Cat(Value):
 					f'Argument #{index + 1} of \'Cat()\' is a bare integer {arg} used in bit vector '
 					f'context; consider specifying the width explicitly using \'Const({arg}, {bits_for(arg)})\' '
 					'instead',
-					SyntaxWarning, stacklevel = 2 + src_loc_at
+					ToriiSyntaxWarning, stacklevel = 2 + src_loc_at
 				)
 
 			# NOTE(aki): Type inference is scrambled by the check above, so as painful as it is we ignore it
@@ -1423,7 +1423,7 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 			if reset_val.shape().signed and not self.signed:
 				warnings.warn(
 					message = f'Reset value {reset!r} is signed, but the signal shape is {shape!r}',
-					category = SyntaxWarning,
+					category = ToriiSyntaxWarning,
 					stacklevel = 2
 				)
 			elif (
@@ -1433,7 +1433,7 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 			):
 				warnings.warn(
 					message = f'Reset value {reset!r} will be truncated to the signal shape {shape!r}',
-					category = SyntaxWarning,
+					category = ToriiSyntaxWarning,
 					stacklevel = 2
 				)
 		self.reset = reset_val.value

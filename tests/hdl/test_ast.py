@@ -4,7 +4,7 @@ import warnings
 from enum              import Enum, EnumMeta
 from sys               import version_info
 
-from torii.diagnostics import ToriiSyntaxError
+from torii.diagnostics import ToriiSyntaxError, ToriiSyntaxWarning
 from torii.hdl.ast     import (
 	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, Property, ResetSignal, Rose, Sample,
 	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
@@ -609,7 +609,7 @@ class ConstTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_fencepost(self):
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Value 10 equals the non-inclusive end of the constant shape '
 			r'range\(0, 10\); this is likely an off-by-one error$'
 		):
@@ -876,7 +876,7 @@ class OperatorTestCase(ToriiTestSuiteCase):
 	def test_matches(self):
 		s = Signal(4)
 		with self.assertWarns(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			msg = 'Value.matches() with an empty patterns clause will return `Const(0)` in a future release.'
 		):
 			self.assertRepr(s.matches(), '(const 1\'d1)')
@@ -913,7 +913,7 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		):
 			s.matches('--')
 		with self.assertWarnsRegex(
-			SyntaxWarning, (
+			ToriiSyntaxWarning, (
 				r'^Match pattern \'22\' \(5\'10110\) is wider than match value \(which has width 4\); '
 				r'comparison will never be true$'
 			)
@@ -921,7 +921,7 @@ class OperatorTestCase(ToriiTestSuiteCase):
 			s.matches(0b10110)
 
 		with self.assertWarns(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			msg = 'Match pattern \'(cat (const 1\'d0) (const 4\'d11))\' (5\'10110) is wider than match value (which has width 4); comparison will never be true' # noqa: E501
 		):
 			s.matches(Cat(0, Const(0b1011, 4)))
@@ -1137,7 +1137,7 @@ class CatTestCase(ToriiTestSuiteCase):
 
 	def test_int_01(self):
 		with warnings.catch_warnings():
-			warnings.filterwarnings(action = 'error', category = SyntaxWarning)
+			warnings.filterwarnings(action = 'error', category = ToriiSyntaxWarning)
 			Cat(0, 1, 1, 0)
 
 	def test_enum_wrong(self):
@@ -1146,7 +1146,7 @@ class CatTestCase(ToriiTestSuiteCase):
 			BLUE = 2
 
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Argument #1 of \'Cat\(\)\' is an enumerated value <Color\.RED: 1> without '
 			r'a defined shape used in a bit vector context; use \'Const\' to specify '
 			r'the shape\.$',
@@ -1160,7 +1160,7 @@ class CatTestCase(ToriiTestSuiteCase):
 			BLUE = 2
 
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Argument #1 of \'Cat\(\)\' is an enumerated value <Color\.RED: 1> '
 			r'without a defined shape used in a bit vector context; use \'Const\' to specify '
 			r'the shape\.$'
@@ -1171,7 +1171,7 @@ class CatTestCase(ToriiTestSuiteCase):
 
 	def test_int_wrong(self):
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Argument #1 of \'Cat\(\)\' is a bare integer 2 used in bit vector context; '
 			r'consider specifying the width explicitly using \'Const\(2, 2\)\' instead$'
 		):
@@ -1381,24 +1381,24 @@ class SignalTestCase(ToriiTestSuiteCase):
 
 	def test_reset_signed_mismatch(self):
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Reset value -2 is signed, but the signal shape is unsigned\(2\)$'
 		):
 			Signal(unsigned(2), reset = -2)
 
 	def test_reset_wrong_too_wide(self):
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^^Reset value 2 will be truncated to the signal shape unsigned\(1\)$'
 		):
 			Signal(unsigned(1), reset = 2)
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Reset value 1 will be truncated to the signal shape signed\(1\)$'
 		):
 			Signal(signed(1), reset = 1)
 		with self.assertWarnsRegex(
-			SyntaxWarning,
+			ToriiSyntaxWarning,
 			r'^Reset value -2 will be truncated to the signal shape signed\(1\)$'
 		):
 			Signal(signed(1), reset = -2)
