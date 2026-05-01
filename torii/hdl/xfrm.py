@@ -465,8 +465,13 @@ class TransformedElaboratable(Elaboratable):
 
 	def __init__(self, elaboratable, *, src_loc_at = 0) -> None:
 		if not hasattr(elaboratable, 'elaborate'):
-			raise TypeError(
-				f'Unable to elaborate object of type \'{type(elaboratable)}\' which has no \'elaborate\' method'
+			raise ToriiSyntaxError(
+				f'Objects of type \'{type(elaboratable)}\' can not be elaborated',
+				tracer.get_src_loc(src_loc_at = src_loc_at),
+				notes = [
+					'Only Torii objects of type \'Elaboratable\', \'Fragment\', and \'Module\', or objects which'
+					' have them as a superclass may be elaborated'
+				]
 			)
 
 		# Fields prefixed and suffixed with underscore to avoid as many conflicts with the inner
