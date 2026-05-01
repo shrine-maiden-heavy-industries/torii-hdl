@@ -148,13 +148,24 @@ class Shape:
 
 	'''  # noqa: E101
 
-	def __init__(self, width: int = 1, signed: bool = False) -> None:
+	def __init__(self, width: int = 1, signed: bool = False, *, src_loc_at: int = 0) -> None:
 		if not isinstance(width, int):
-			raise TypeError(f'Width must be an integer, not {width!r}')
+			raise ToriiSyntaxError(
+				f'The width of a value must be an integer, not {width!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if not signed and width < 0:
-			raise ValueError(f'Width of an unsigned value must be zero or a positive integer, not {width}')
+			raise ToriiSyntaxError(
+				f'The width of an unsigned value must be zero or a positive integer, not {width}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if signed and width <= 0:
-			raise ValueError(f'Width of a signed value must be a positive integer, not {width}')
+			raise ToriiSyntaxError(
+				f'The width of a signed value must be a non-zero positive integer, not {width}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
 		self.width = width
 		self.signed = signed
@@ -162,7 +173,7 @@ class Shape:
 	# This implements an algorithm for inferring shape from standard Python enumerations
 	# for `Shape.cast()`.
 	@staticmethod
-	def _cast_plain_enum(obj: EnumMeta) -> Shape:
+	def _cast_plain_enum(obj: EnumMeta, src_loc_at: int) -> Shape:
 		'''
 		.. todo:: Document Me
 		'''
@@ -176,10 +187,16 @@ class Shape:
 			try:
 				member_shape = Const.cast(member.value).shape() # type: ignore
 			except TypeError:
-				raise TypeError(
+				raise ToriiSyntaxError(
 					'Only enumerations whose members have constant-castable '
-					'values can be used in Torii code'
+					'values can be used in Torii code',
+					tracer.get_src_loc(src_loc_at = src_loc_at),
+					notes = [
+						f'The enum entry \'{member.name}\' has the {type(member.value).__name__} value '
+						f'\'{member.value}\', which is not Torii const-castable'
+					]
 				)
+
 			if not signed and member_shape.signed:
 				signed = True
 				width  = max(width + 1, member_shape.width)
@@ -187,6 +204,7 @@ class Shape:
 				width  = max(width, member_shape.width + 1)
 			else:
 				width  = max(width, member_shape.width)
+
 		return Shape(width, signed)
 
 	@staticmethod
@@ -201,7 +219,7 @@ class Shape:
 			elif isinstance(obj, ShapeCastable):
 				new_obj = obj.as_shape()
 			elif isinstance(obj, int):
-				return Shape(obj)
+				return Shape(obj, src_loc_at = 1 + src_loc_at)
 			elif isinstance(obj, range):
 				if len(obj) == 0:
 					return Shape(0)
@@ -212,13 +230,21 @@ class Shape:
 				)
 				if obj[0] == obj[-1] == 0:
 					width = 0
-				return Shape(width, signed)
+				return Shape(width, signed, src_loc_at = 1 + src_loc_at)
 			elif isinstance(obj, type) and issubclass(obj, Enum):
-				return Shape._cast_plain_enum(obj)
+				return Shape._cast_plain_enum(obj, src_loc_at = 1 + src_loc_at)
 			else:
-				raise TypeError(f'Object {obj!r} cannot be converted to a Torii shape')
+				raise ToriiSyntaxError(
+					f'Object {obj!r} cannot be converted to a Torii shape',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
 			if new_obj is obj:
-				raise RecursionError(f'Shape-castable object {obj!r} casts to itself')
+				raise ToriiSyntaxError(
+					f'Shape-castable object {obj!r} casts to itself',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
 			obj = new_obj
 
 	def __repr__(self) -> str:
@@ -230,9 +256,12 @@ class Shape:
 	def __eq__(self, other: object) -> bool:
 		if not isinstance(other, Shape):
 			try:
-				other = self.__class__.cast(other)
-			except TypeError as e:
-				raise TypeError(f'Shapes may be compared with shape-castable objects, not {other!r}') from e
+				other = self.__class__.cast(other, src_loc_at = 1)
+			except ToriiSyntaxError as e:
+				raise ToriiSyntaxError(
+					f'Shapes may be compared with shape-castable objects, not {other!r}',
+					tracer.get_src_loc()
+				) from e
 
 		return self.width == other.width and self.signed == other.signed
 
@@ -287,11 +316,11 @@ class ShapeLike(metaclass = _ShapeLikeMeta):
 
 def unsigned(width: int) -> Shape:
 	''' Shorthand for ``Shape(width, signed = False)``. '''
-	return Shape(width, signed = False)
+	return Shape(width, signed = False, src_loc_at = 1)
 
 def signed(width: int) -> Shape:
 	''' Shorthand for ``Shape(width, signed = True)``. '''
-	return Shape(width, signed = True)
+	return Shape(width, signed = True, src_loc_at = 1)
 
 def _overridable_by_swapping(method_name: str):
 	'''
@@ -351,7 +380,7 @@ class Value(metaclass = ABCMeta):
 	''' .. todo:: Document Me '''
 
 	@staticmethod
-	def cast(obj: ValueCastT) -> Value:
+	def cast(obj: ValueCastT, *, src_loc_at: int = 0) -> Value:
 		'''
 		Converts ``obj`` to an Torii value.
 
@@ -367,7 +396,7 @@ class Value(metaclass = ABCMeta):
 				# NOTE(aki): See TODO on `ValueCastable.__init_subclass__`
 				new_obj = obj.as_value() # type: ignore
 			elif isinstance(obj, Enum):
-				return Const(obj.value, Shape.cast(type(obj)))
+				return Const(obj.value, Shape.cast(type(obj), src_loc_at = 1 + src_loc_at))
 			elif isinstance(obj, int):
 				return Const(obj)
 			else:
@@ -1024,9 +1053,9 @@ class Const(Value, metaclass = _ConstMeta):
 		# We deliberately do not call Value.__init__ here.
 		self.value = int(operator.index(value))
 		if shape is None:
-			shape = Shape(bits_for(self.value), signed = self.value < 0)
+			shape = Shape(bits_for(self.value), signed = self.value < 0, src_loc_at = 1 + src_loc_at)
 		elif isinstance(shape, int):
-			shape = Shape(shape, signed = self.value < 0)
+			shape = Shape(shape, signed = self.value < 0, src_loc_at = 1 + src_loc_at)
 		else:
 			if isinstance(shape, range) and self.value == shape.stop:
 				warnings.warn(
@@ -1413,7 +1442,7 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 		else:
 			try:
 				reset_val = Const.cast(reset or 0)
-			except TypeError:
+			except ToriiSyntaxError:
 				raise TypeError(
 					f'Reset value must be a constant-castable expression, not {reset!r}'
 				)

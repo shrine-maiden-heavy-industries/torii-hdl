@@ -53,32 +53,32 @@ class ShapeTestCase(ToriiTestSuiteCase):
 
 	def test_make_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Width must be an integer, not \'a\'$'
+			ToriiSyntaxError,
+			r'^The width of a value must be an integer, not \'a\' \(test_ast\.py, line \d+\)$'
 		):
 			Shape('a')
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Width of an unsigned value must be zero or a positive integer, not -1$'
+			ToriiSyntaxError,
+			r'^The width of an unsigned value must be zero or a positive integer, not -1 \(test_ast\.py, line \d+\)$'
 		):
 			Shape(-1, signed = False)
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Width of a signed value must be a positive integer, not 0$'
+			ToriiSyntaxError,
+			r'^The width of a signed value must be a non-zero positive integer, not 0 \(test_ast\.py, line \d+\)$'
 		):
 			Shape(0, signed = True)
 
 	def test_compare_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Shapes may be compared with shape-castable objects, not \'hi\'$'
+			ToriiSyntaxError,
+			r'^Shapes may be compared with shape-castable objects, not \'hi\' \(test_ast\.py, line \d+\)$'
 		):
 			Shape(1, True) == 'hi'
 
 	def test_compare_tuple_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Shapes may be compared with shape-castable objects, not \(2, 3\)$'
+			ToriiSyntaxError,
+			r'^Shapes may be compared with shape-castable objects, not \(2, 3\) \(test_ast\.py, line \d+\)$'
 		):
 			Shape(1, True) == (2, 3)
 
@@ -120,15 +120,15 @@ class ShapeTestCase(ToriiTestSuiteCase):
 
 	def test_cast_int_wrong(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Width of an unsigned value must be zero or a positive integer, not -1$'
+			ToriiSyntaxError,
+			r'^The width of an unsigned value must be zero or a positive integer, not -1 \(test_ast\.py, line \d+\)$'
 		):
 			Shape.cast(-1)
 
 	def test_cast_tuple_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Object \(-1, True\) cannot be converted to a Torii shape$'
+			ToriiSyntaxError,
+			r'^Object \(-1, True\) cannot be converted to a Torii shape \(test_ast\.py, line \d+\)$'
 		):
 			Shape.cast((-1, True))
 
@@ -171,15 +171,16 @@ class ShapeTestCase(ToriiTestSuiteCase):
 
 	def test_cast_enum_bad(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Only enumerations whose members have constant-castable values can be used in Torii code$'
+			ToriiSyntaxError,
+			r'^Only enumerations whose members have constant-castable values can be used in Torii code'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Shape.cast(StringEnum)
 
 	def test_cast_bad(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Object \'foo\' cannot be converted to a Torii shape$'
+			ToriiSyntaxError,
+			r'^Object \'foo\' cannot be converted to a Torii shape \(test_ast\.py, line \d+\)$'
 		):
 			Shape.cast('foo')
 
@@ -218,8 +219,8 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 		sc = MockShapeCastable(None)
 		sc.dest = sc
 		with self.assertRaisesRegex(
-			RecursionError,
-			r'^Shape-castable object <.+> casts to itself$'
+			ToriiSyntaxError,
+			r'^Shape-castable object <.+> casts to itself \(test_ast\.py, line \d+\)$'
 		):
 			Shape.cast(sc)
 
@@ -294,8 +295,9 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_cast_enum_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Only enumerations whose members have constant-castable values can be used in Torii code$'
+			ToriiSyntaxError,
+			r'^Only enumerations whose members have constant-castable values can be used in Torii code'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Value.cast(StringEnum.FOO)
 
@@ -602,8 +604,8 @@ class ConstTestCase(ToriiTestSuiteCase):
 
 	def test_shape_wrong(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Width of an unsigned value must be zero or a positive integer, not -1$'
+			ToriiSyntaxError,
+			r'^The width of an unsigned value must be zero or a positive integer, not -1 \(test_ast\.py, line \d+\)$'
 		):
 			Const(1, -1)
 
@@ -1313,8 +1315,8 @@ class SignalTestCase(ToriiTestSuiteCase):
 
 	def test_shape_wrong(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Width of an unsigned value must be zero or a positive integer, not -10$'
+			ToriiSyntaxError,
+			r'^The width of an unsigned value must be zero or a positive integer, not -10 \(test_ast\.py, line \d+\)$'
 		):
 			Signal(-10)
 
