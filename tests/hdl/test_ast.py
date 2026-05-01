@@ -1536,8 +1536,8 @@ class ResetSignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.domain, 'pix')
 
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Clock domain name must be a string, not 1$'
+			ToriiSyntaxError,
+			r'^The domain name for this reset signal must be a string, not 1 \(test_ast\.py, line \d+\)$'
 		):
 			ResetSignal(1)
 
@@ -1552,27 +1552,30 @@ class ResetSignalTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_name_comb(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Domain \'comb\' does not have a reset$'
+			ToriiSyntaxError,
+			r'^The combinatorial logic domain \'comb\' does not have a reset \(test_ast\.py, line \d+\)$'
 		):
 			ResetSignal('comb')
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this reset signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ResetSignal('')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this reset signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ResetSignal(' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this reset signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ResetSignal('\u0006')
 
