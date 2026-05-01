@@ -1488,8 +1488,8 @@ class ClockSignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.domain, 'pix')
 
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Clock domain name must be a string, not 1$'
+			ToriiSyntaxError,
+			r'^The domain name for this clock signal must be a string, not 1 \(test_ast\.py, line \d+\)$'
 		):
 			ClockSignal(1)
 
@@ -1504,27 +1504,30 @@ class ClockSignalTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_name_comb(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Domain \'comb\' does not have a clock$'
+			ToriiSyntaxError,
+			r'^The combinatorial logic domain \'comb\' does not have a clock \(test_ast\.py, line \d+\)$'
 		):
 			ClockSignal('comb')
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this clock signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ClockSignal('')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this clock signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ClockSignal(' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Clock domain name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The domain name for this clock signal must not be empty or contain any control or whitespace'
+			r' characters \(test_ast\.py, line \d+\)$'
 		):
 			ClockSignal('\u0006')
 

@@ -1536,13 +1536,34 @@ class ClockSignal(Value):
 	def __init__(self, domain: str = 'sync', *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		if not isinstance(domain, str):
-			raise TypeError(f'Clock domain name must be a string, not {domain!r}')
+			raise ToriiSyntaxError(
+				f'The domain name for this clock signal must be a string, not {domain!r}',
+				self.src_loc,
+			)
 
 		if domain == '' or not _check_name(domain):
-			raise NameError('Clock domain name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The domain name for this clock signal must not be empty or contain any control or whitespace '
+				'characters',
+				self.src_loc,
+			)
+
+			if domain == '':
+				err.add_note('An empty string was provided to the `domain` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the domain name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+					'Zs, Zl, Zp'
+				)
+
+			raise err
 
 		if domain == 'comb':
-			raise ValueError(f'Domain \'{domain}\' does not have a clock')
+			raise ToriiSyntaxError(
+				'The combinatorial logic domain \'comb\' does not have a clock',
+				self.src_loc,
+			)
+
 		self.domain = domain
 
 	def shape(self) -> Shape:
