@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.diagnostics import DomainError
+from torii.diagnostics import DomainError, ToriiSyntaxError
 from torii.hdl.ast     import Cat, ClockSignal, ResetSignal, Sample, Signal, SignalSet, Switch
 from torii.hdl.cd      import ClockDomain
 from torii.hdl.dsl     import Module
@@ -132,15 +132,17 @@ class DomainRenamerTestCase(ToriiTestSuiteCase):
 
 	def test_rename_wrong_to_comb(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Domains may not be renamed to the combinatorial domain \'comb\'$'
+			ToriiSyntaxError,
+			r'^Synchronous logic domains may not be renamed to the combinatorial logic domain \'comb\''
+			r' \(test_xfrm\.py, line \d+\)$'
 		):
 			DomainRenamer(sync = 'comb')
 
 	def test_rename_wrong_from_comb(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^The combinatorial domain \'comb\' may not be renamed to \'sync\'$'
+			ToriiSyntaxError,
+			r'^The combinatorial logic domain \'comb\' may not be renamed to the domain \'sync\''
+			r' \(test_xfrm\.py, line \d+\)$'
 		):
 			DomainRenamer(comb = 'sync')
 

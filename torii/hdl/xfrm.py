@@ -5,7 +5,7 @@ from collections     import OrderedDict
 from collections.abc import Iterable
 from copy            import copy
 
-from ..diagnostics   import DomainError, NonSynthesizableError
+from ..diagnostics   import DomainError, NonSynthesizableError, ToriiSyntaxError
 from ..util          import flatten, tracer
 from .ast            import (
 	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const, Initial, Mux, Operator, Part, Property, ResetSignal, Sample,
@@ -631,11 +631,22 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		When trying to rename a domain to/from ``comb`` to any other domain.
 	'''
 
-	def __init__(self, **kwargs: str) -> None:
+	def __init__(self, src_loc_at: int = 0, **kwargs: str) -> None:
 		if 'comb' in kwargs.keys():
-			raise ValueError(f'The combinatorial domain \'comb\' may not be renamed to \'{kwargs["comb"]}\'')
+			raise ToriiSyntaxError(
+				f'The combinatorial logic domain \'comb\' may not be renamed to the domain \'{kwargs["comb"]}\'',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if 'comb' in kwargs.values():
-			raise ValueError('Domains may not be renamed to the combinatorial domain \'comb\'')
+			to_comb = ', '.join(map(lambda p: p[0], filter(lambda p: p[1] == 'comb', kwargs.items())))
+			raise ToriiSyntaxError(
+				'Synchronous logic domains may not be renamed to the combinatorial logic domain \'comb\'',
+				tracer.get_src_loc(src_loc_at = src_loc_at),
+				notes = [
+					f'The following domains were being re-assigned: {to_comb}'
+				]
+			)
 
 		self.domain_map = OrderedDict(**kwargs)
 
