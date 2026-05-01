@@ -456,7 +456,14 @@ class FragmentTransformer:
 			value._transforms_.append(self)
 			return value
 		else:
-			raise AttributeError(f'Object {value!r} cannot be elaborated')
+			raise ToriiSyntaxError(
+				f'Objects of type \'{type(value)}\' can not be elaborated',
+				tracer.get_src_loc(src_loc_at = 1 + src_loc_at),
+				notes = [
+					'Only Torii objects of type \'Elaboratable\', \'Fragment\', and \'Module\', or objects which'
+					' have them as a superclass may be elaborated'
+				]
+			)
 
 class TransformedElaboratable(Elaboratable):
 	'''
