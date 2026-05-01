@@ -217,7 +217,7 @@ class DomainLowererTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaisesRegex(
 			DomainError,
-			r'^Signal \(clk xxx\) refers to nonexistent domain \'xxx\'$'
+			r'^The signal \(clk xxx\) refers to nonexistent domain \'xxx\'$'
 		):
 			DomainLowerer()(f)
 

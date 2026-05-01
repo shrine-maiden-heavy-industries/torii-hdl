@@ -7,6 +7,7 @@ from copy            import copy
 
 from ..diagnostics   import DomainError, NonSynthesizableError, ToriiSyntaxError
 from ..util          import flatten, tracer
+from ..util.string   import _get_best_matching
 from .ast            import (
 	AnyValue, ArrayProxy, Assign, Cat, ClockSignal, Const, Initial, Mux, Operator, Part, Property, ResetSignal, Sample,
 	Signal, SignalDict, SignalSet, Slice, Statement, Switch, Value, ValueDict, _StatementList,
@@ -707,7 +708,28 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		'''
 
 		if domain not in self.domains:
-			raise DomainError(f'Signal {context!r} refers to nonexistent domain \'{domain}\'')
+			matches = _get_best_matching(domain, self.domains.keys())
+			additional_ctx = None
+
+			if len(matches) > 0:
+				match = matches[0]
+				message = (
+					f'The signal {context!r} refers to a nonexistent clock domain \'{domain}\', did you mean'
+					f' \'{match}\'?'
+				)
+
+				additional_ctx = (
+					f'The clock domain \'{match}\' was defined here:',
+					self.domains[match].src_loc
+				)
+
+			else:
+				message = f'The signal {context!r} refers to nonexistent domain \'{domain}\''
+
+			raise DomainError(
+				message = message, src_loc = context.src_loc, additional_ctx = additional_ctx
+			)
+
 		return self.domains[domain]
 
 	def map_drivers(self, fragment, new_fragment):
@@ -727,7 +749,10 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 			if value.allow_reset_less:
 				return Const(0)
 			else:
-				raise DomainError(f'Signal {value!r} refers to reset of reset-less domain \'{value.domain}\'')
+				raise DomainError(
+					message = f'Signal {value!r} refers to reset of reset-less domain \'{value.domain}\'',
+					src_loc = value.src_loc
+				)
 		return domain.rst
 
 	def _insert_resets(self, fragment):
