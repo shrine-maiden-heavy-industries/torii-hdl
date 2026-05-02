@@ -514,7 +514,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				orig_pattern = pattern
 				try:
 					pattern = Const.cast(pattern)
-				except TypeError as error:
+				except ToriiSyntaxError as error:
 					raise ToriiSyntaxError(
 						'Case pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}',
