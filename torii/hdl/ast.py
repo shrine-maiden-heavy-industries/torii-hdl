@@ -18,6 +18,7 @@ from typing            import (
 )
 
 from ..diagnostics     import ToriiSyntaxError, ToriiSyntaxWarning, UnusedProperty
+from ..diagnostics     import IndexError as ToriiIndexError
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import _check_name, flatten, tracer, union
 from ..util.decorators import final
@@ -352,7 +353,7 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 	n = len(value)
 	if isinstance(key, int):
 		if key not in range(-n, n):
-			raise ToriiSyntaxError(
+			raise ToriiIndexError(
 				f'Index {key} is out of bounds for a {n}-bit value',
 				tracer.get_src_loc(src_loc_at = 1)
 			)
