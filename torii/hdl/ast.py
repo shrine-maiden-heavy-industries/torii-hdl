@@ -3246,7 +3246,10 @@ class SignalSet(_MappedKeySet[SignalLikeT | None, SignalKey]):
 
 	def _map_key(self, key: SignalLikeT | None) -> SignalKey:
 		if key is None:
-			raise TypeError('Key to SignalSet must not be None')
+			raise ToriiSyntaxError(
+				'SignalSet key must not be None',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		return SignalKey(key)
 
