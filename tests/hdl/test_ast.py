@@ -1148,7 +1148,10 @@ class BitSelectTestCase(ToriiTestSuiteCase):
 		self.assertRepr(s1, '(slice (const 8\'d0) 1:3)')
 
 	def test_width_wrong(self):
-		with self.assertRaises(TypeError):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Part width must be a non-negative integer, not -1 \(test_ast\.py, line \d+\)$'
+		):
 			self.c.bit_select(self.s, -1)
 
 	def test_repr(self):
@@ -1156,7 +1159,10 @@ class BitSelectTestCase(ToriiTestSuiteCase):
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 1)')
 
 	def test_offset_wrong(self):
-		with self.assertRaisesRegex(TypeError, r'^Part offset must be unsigned$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Part offset must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			self.c.bit_select(self.s.as_signed(), 1)
 
 class WordSelectTestCase(ToriiTestSuiteCase):
@@ -1181,9 +1187,16 @@ class WordSelectTestCase(ToriiTestSuiteCase):
 		self.assertRepr(s1, '(slice (const 8\'d0) 2:4)')
 
 	def test_width_wrong(self):
-		with self.assertRaises(TypeError):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Part stride must be a positive non-zero integer, not 0 \(test_ast\.py, line \d+\)$'
+		):
 			self.c.word_select(self.s, 0)
-		with self.assertRaises(TypeError):
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Part width must be a non-negative integer, not -1 \(test_ast\.py, line \d+\)$'
+		):
 			self.c.word_select(self.s, -1)
 
 	def test_repr(self):
@@ -1191,7 +1204,10 @@ class WordSelectTestCase(ToriiTestSuiteCase):
 		self.assertEqual(repr(s), '(part (const 8\'d0) (sig s) 2 2)')
 
 	def test_offset_wrong(self):
-		with self.assertRaisesRegex(TypeError, r'^Part offset must be unsigned$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Part offset must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			self.c.word_select(self.s.as_signed(), 1)
 
 class CatTestCase(ToriiTestSuiteCase):

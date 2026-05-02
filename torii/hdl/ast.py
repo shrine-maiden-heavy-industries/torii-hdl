@@ -1438,14 +1438,25 @@ class Part(Value):
 		src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
-			raise TypeError(f'Part width must be a non-negative integer, not {width!r}')
-		if not isinstance(stride, int) or stride <= 0:
-			raise TypeError(f'Part stride must be a positive integer, not {stride!r}')
+			raise ToriiSyntaxError(
+				f'Part width must be a non-negative integer, not {width!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
-		value  = Value.cast(value)
-		offset = Value.cast(offset)
+		if not isinstance(stride, int) or stride <= 0:
+			raise ToriiSyntaxError(
+				f'Part stride must be a positive non-zero integer, not {stride!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
+		value  = Value.cast(value, src_loc_at = 1 + src_loc_at)
+		offset = Value.cast(offset, src_loc_at = 1 + src_loc_at)
+
 		if offset.shape().signed:
-			raise TypeError('Part offset must be unsigned')
+			raise ToriiSyntaxError(
+				'Part offset must be unsigned',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
 		super().__init__(src_loc_at = src_loc_at)
 		self.value  = value
