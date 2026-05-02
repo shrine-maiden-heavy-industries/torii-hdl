@@ -1170,12 +1170,16 @@ class Const(Value, metaclass = _ConstMeta):
 			shape = Shape(shape, signed = self.value < 0, src_loc_at = 1 + src_loc_at)
 		else:
 			if isinstance(shape, range) and self.value == shape.stop:
-				warnings.warn(
-					f'Value {self.value!r} equals the non-inclusive end of the constant '
-					f'shape {shape!r}; this is likely an off-by-one error',
-					category = ToriiSyntaxWarning,
-					stacklevel = 2 + src_loc_at
+				warning = ToriiSyntaxWarning(
+					f'The value {self.value!r} is equal to the non-inclusive end of the constants width;'
+					' this is very likely an off-by-one error'
 				)
+
+				warning.add_note(
+					f'The constant is {shape.stop - 1} bit(s) wide: [{shape.start}:{shape.stop - 1}]'
+				)
+
+				warnings.warn(warning, stacklevel = 2 + src_loc_at)
 			shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 		self.width  = shape.width
 		self.signed = shape.signed

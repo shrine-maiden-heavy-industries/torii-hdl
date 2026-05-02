@@ -626,8 +626,8 @@ class ConstTestCase(ToriiTestSuiteCase):
 	def test_wrong_fencepost(self):
 		with self.assertWarnsRegex(
 			ToriiSyntaxWarning,
-			r'^Value 10 equals the non-inclusive end of the constant shape '
-			r'range\(0, 10\); this is likely an off-by-one error$'
+			r'^The value 10 is equal to the non-inclusive end of the constants width; this is very likely an off-by-one'
+			r' error$'
 		):
 			Const(10, range(10))
 
