@@ -772,26 +772,31 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		matches: list[Value] = []
+		src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		# This code should accept exactly the same patterns as `with m.Case(...):`.
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
 				raise ToriiSyntaxError(
 					f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
 					'include whitespace',
-					tracer.get_src_loc(src_loc_at = src_loc_at)
+					src_loc
 				)
 
 			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(self)):
 				raise ToriiSyntaxError(
 					f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)})',
-					tracer.get_src_loc(src_loc_at = src_loc_at)
+					src_loc
 				)
 
 			if isinstance(pattern, str):
 				pattern = ''.join(pattern.split()) # remove whitespace
 				mask    = int(pattern.replace('0', '1').replace('-', '0'), 2)
 				pattern = int(pattern.replace('-', '0'), 2)
-				matches.append((self & mask) == pattern)
+				match_op = (self & mask) == pattern
+				# Fix up the source locality from the intermediate expression
+				match_op.src_loc = src_loc
+				matches.append(match_op)
 			else:
 				try:
 					# NOTE(aki): mypy has issues with this re-assignment, but it's fine
@@ -800,7 +805,7 @@ class Value(metaclass = ABCMeta):
 					raise ToriiSyntaxError(
 						'Match pattern must be a string or a const-castable expression, '
 						f'not {pattern!r}',
-						tracer.get_src_loc(src_loc_at = src_loc_at)
+						src_loc
 					) from error
 
 				pattern_len = bits_for(new_pattern.value)
@@ -820,10 +825,7 @@ class Value(metaclass = ABCMeta):
 			)
 			return Const(1, src_loc_at = 1 + src_loc_at)
 		elif len(matches) == 1:
-			mtch = matches[0]
-			# Fixup source locality
-			mtch.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
-			return mtch
+			return matches[0]
 		else:
 			return Cat(*matches).any(src_loc_at = 1 + src_loc_at)
 
