@@ -352,24 +352,34 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 	n = len(value)
 	if isinstance(key, int):
 		if key not in range(-n, n):
-			raise IndexError(f'Index {key} is out of bounds for a {n}-bit value')
+			raise ToriiSyntaxError(
+				f'Index {key} is out of bounds for a {n}-bit value',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 		if key < 0:
 			key += n
 		return Slice(value, key, key + 1, src_loc_at = 1)
 	elif isinstance(key, slice):
 		if isinstance(key.start, Value) or isinstance(key.stop, Value):
-			raise SyntaxError(
+			raise ToriiSyntaxError(
 				'Slicing a value with a Value is unsupported, '
-				'use `Value.bit_select()` or `Value.word_select()` instead.'
+				'use `Value.bit_select()` or `Value.word_select()` instead.',
+				tracer.get_src_loc(src_loc_at = 1)
 			)
 		start, stop, step = key.indices(n)
 		if step != 1:
 			return Cat(*(value[i] for i in range(start, stop, step)))
 		return Slice(value, start, stop, src_loc_at = 1)
 	elif isinstance(key, Value):
-		raise SyntaxError('Indexing a value with another value is not supported, use `Value.bit_select()` instead.')
+		raise ToriiSyntaxError(
+			'Indexing a value with another value is not supported, use `Value.bit_select()` instead.',
+			tracer.get_src_loc(src_loc_at = 1)
+		)
 	else:
-		raise TypeError(f'Cannot index value with {key!r}')
+		raise ToriiSyntaxError(
+			f'Cannot index value with {key!r}',
+			tracer.get_src_loc(src_loc_at = 1)
+		)
 
 class Value(metaclass = ABCMeta):
 	'''

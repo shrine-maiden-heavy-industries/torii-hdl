@@ -322,8 +322,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.start, 3)
 		self.assertEqual(s2.stop, 4)
 		with self.assertRaisesRegex(
-			IndexError,
-			r'^Index 5 is out of bounds for a 4-bit value$'
+			ToriiSyntaxError,
+			r'^Index 5 is out of bounds for a 4-bit value \(test_ast\.py, line \d+\)$'
 		):
 			Const(10)[5]
 
@@ -350,21 +350,23 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_getitem_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Cannot index value with \'str\'$'
+			ToriiSyntaxError,
+			r'^Cannot index value with \'str\' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31)['str']
 
-		with self.assertRaises(
-			SyntaxError,
-			msg = 'Slicing a value with a Value is unsupported, use `Value.bit_select()` or `Value.word_select()` instead.' # noqa: E501
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Indexing a value with another value is not supported, use `Value\.bit_select\(\)` instead\.'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31)[Signal(3)]
 
 		s = Signal(3)
-		with self.assertRaises(
-			SyntaxError,
-			msg = 'Indexing a value with another value is not supported, use `Value.bit_select()` instead.'
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Slicing a value with a Value is unsupported, use `Value\.bit_select\(\)` or `Value\.word_select\(\)` '
+			r'instead\. \(test_ast\.py, line \d+\)$'
 		):
 			Const(31)[s:s + 3]
 
