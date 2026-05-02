@@ -9,6 +9,7 @@ from .._typing import SrcLoc
 __all__ = (
 	'ConstraintError',
 	'DomainError',
+	'IndexError',
 	'NameError',
 	'NameNotFound',
 	'NonSynthesizableError',
@@ -109,4 +110,8 @@ class ResourceError(ToriiError):
 
 class YosysError(ToolError):
 	''' An error when invoking Yosys '''
+	pass
+
+class IndexError(ToriiSyntaxError, IndexError):
+	'''  '''
 	pass
