@@ -1308,18 +1308,23 @@ class ArrayTestCase(ToriiTestSuiteCase):
 		a[s1]
 		a[s2]
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Array can no longer be mutated after it was indexed with a value at '
+			ToriiSyntaxError,
+			r'^Array mutation is no longer safe in Python code after access by a Torii value'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			a[1] = 2
+
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Array can no longer be mutated after it was indexed with a value at '
+			ToriiSyntaxError,
+			r'^Array mutation is no longer safe in Python code after access by a Torii value'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			del a[1]
+
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Array can no longer be mutated after it was indexed with a value at '
+			ToriiSyntaxError,
+			r'^Array mutation is no longer safe in Python code after access by a Torii value'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			a.insert(1, 2)
 

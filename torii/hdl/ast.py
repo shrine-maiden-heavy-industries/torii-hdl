@@ -2020,9 +2020,11 @@ class Array(MutableSequence[Value]):
 
 	'''
 
+	src_loc: SrcLoc
 	_proxy_at: SrcLoc | None
 
-	def __init__(self, iterable: Sequence[Value] = ()) -> None:
+	def __init__(self, iterable: Sequence[Value] = (), *, src_loc_at: int = 0) -> None:
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 		self._inner    = list(iterable)
 		self._proxy_at = None
 		self._mutable  = True
@@ -2030,7 +2032,7 @@ class Array(MutableSequence[Value]):
 	# NOTE(aki): We overload this method, so we need to shush the type checker
 	def __getitem__(self, index: Value | ValueCastable | int) -> Value | ArrayProxy: # type: ignore
 		if isinstance(index, ValueCastable):
-			index = Value.cast(index)
+			index = Value.cast(index, src_loc_at = 1)
 
 		if isinstance(index, Value):
 			if self._mutable:
@@ -2043,14 +2045,21 @@ class Array(MutableSequence[Value]):
 	def __len__(self) -> int:
 		return len(self._inner)
 
-	def _check_mutability(self) -> None:
+	def _check_mutability(self, src_loc_at: int = 1) -> None:
 		if not self._mutable:
 			if self._proxy_at is None:
-				raise AttributeError('Array is not mutable, however no proxy location has been specified')
+				raise ToriiSyntaxError(
+					'Array is not mutable, however there is no known ArrayProxy',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
 
-			filename, lineno = self._proxy_at
-			raise ValueError(
-				f'Array can no longer be mutated after it was indexed with a value at {filename}:{lineno}'
+			raise ToriiSyntaxError(
+				'Array mutation is no longer safe in Python code after access by a Torii value',
+				tracer.get_src_loc(src_loc_at = src_loc_at),
+				additional_ctx = (
+					'The array was accessed with a Torii value here, creating an ArrayProxy:',
+					self._proxy_at
+				)
 			)
 
 	# NOTE(aki): The ignore on the type is because we're once again, overloading this method
