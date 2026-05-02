@@ -313,7 +313,10 @@ class ShapeLike(metaclass = _ShapeLikeMeta):
 	'''
 
 	def __new__(cls, *args, **kwargs):
-		raise TypeError('ShapeLike is an abstract class and cannot be constructed')
+		raise ToriiError(
+			message = 'The class \'ShapeLike\' is an abstract class and cannot be directly constructed',
+			src_loc = tracer.get_src_loc()
+		)
 
 def unsigned(width: int, *, src_loc_at: int = 0) -> Shape:
 	''' Shorthand for ``Shape(width, signed = False)``. '''

@@ -230,7 +230,10 @@ class ShapeCastableTestCase(ToriiTestSuiteCase):
 
 class ShapeLikeTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
-		with self.assertRaises(TypeError):
+		with self.assertRaisesRegex(
+			ToriiError,
+			r'^The class \'ShapeLike\' is an abstract class and cannot be directly constructed$'
+		):
 			ShapeLike()
 
 	def test_subclass(self):
