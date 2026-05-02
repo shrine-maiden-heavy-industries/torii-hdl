@@ -1207,69 +1207,93 @@ class Operator(Value):
 	def __init__(self, operator: OperatorsT, operands: Sequence[ValueCastT], *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.operator = operator
-		self.operands = [ Value.cast(op) for op in operands ]
+		self.operands = [ Value.cast(op, src_loc_at = 1 + src_loc_at) for op in operands ]
 
 	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		def _bitwise_binary_shape(a_shape: Shape, b_shape: Shape) -> Shape:
 			if not a_shape.signed and not b_shape.signed:
 				# both operands unsigned
-				return unsigned(max(a_shape.width, b_shape.width))
+				return unsigned(max(a_shape.width, b_shape.width), src_loc_at = 2 + src_loc_at)
 			elif a_shape.signed and b_shape.signed:
 				# both operands signed
-				return signed(max(a_shape.width, b_shape.width))
+				return signed(max(a_shape.width, b_shape.width), src_loc_at = 2 + src_loc_at)
 			elif not a_shape.signed and b_shape.signed:
 				# first operand unsigned (add sign bit), second operand signed
-				return signed(max(a_shape.width + 1, b_shape.width))
+				return signed(max(a_shape.width + 1, b_shape.width), src_loc_at = 2 + src_loc_at)
 			else:
 				# first signed, second operand unsigned (add sign bit)
-				return signed(max(a_shape.width, b_shape.width + 1))
+				return signed(max(a_shape.width, b_shape.width + 1), src_loc_at = 2 + src_loc_at)
 
 		op_shapes = list(map(lambda x: x.shape(), self.operands))
-		if len(op_shapes) == 1:
+		op_count = len(op_shapes)
+
+		if op_count == 1:
 			a_shape, = op_shapes
 			if self.operator in ('+', '~'):
-				return Shape(a_shape.width, a_shape.signed)
+				return Shape(a_shape.width, a_shape.signed, src_loc_at = 1 + src_loc_at)
 			if self.operator == '-':
-				return Shape(a_shape.width + 1, True)
+				return Shape(a_shape.width + 1, True, src_loc_at = 1 + src_loc_at)
 			if self.operator in ('b', 'r|', 'r&', 'r^'):
-				return Shape(1, False)
+				return Shape(1, False, src_loc_at = 1 + src_loc_at)
 			if self.operator == 'u':
-				return Shape(a_shape.width, False)
+				return Shape(a_shape.width, False, src_loc_at = 1 + src_loc_at)
 			if self.operator == 's':
-				return Shape(a_shape.width, True)
-		elif len(op_shapes) == 2:
+				return Shape(a_shape.width, True, src_loc_at = 1 + src_loc_at)
+		elif op_count == 2:
 			a_shape, b_shape = op_shapes
 			if self.operator == '+':
 				o_shape = _bitwise_binary_shape(*op_shapes)
-				return Shape(o_shape.width + 1, o_shape.signed)
+				return Shape(o_shape.width + 1, o_shape.signed, src_loc_at = 1 + src_loc_at)
 			if self.operator == '-':
 				o_shape = _bitwise_binary_shape(*op_shapes)
-				return Shape(o_shape.width + 1, True)
+				return Shape(o_shape.width + 1, True, src_loc_at = 1 + src_loc_at)
 			if self.operator == '*':
-				return Shape(a_shape.width + b_shape.width, a_shape.signed or b_shape.signed)
+				return Shape(
+					a_shape.width + b_shape.width,
+					a_shape.signed or b_shape.signed,
+					src_loc_at = 1 + src_loc_at
+				)
 			if self.operator == '//':
-				return Shape(a_shape.width + b_shape.signed, a_shape.signed or b_shape.signed)
+				return Shape(
+					a_shape.width + b_shape.signed,
+					a_shape.signed or b_shape.signed,
+					src_loc_at = 1 + src_loc_at
+				)
 			if self.operator == '%':
-				return Shape(b_shape.width, b_shape.signed)
+				return Shape(b_shape.width, b_shape.signed, src_loc_at = 1 + src_loc_at)
 			if self.operator in ('<', '<=', '==', '!=', '>', '>='):
-				return Shape(1, False)
+				return Shape(1, False, src_loc_at = 1 + src_loc_at)
 			if self.operator in ('&', '^', '|'):
 				return _bitwise_binary_shape(*op_shapes)
 			if self.operator == '<<':
 				if b_shape.signed:
-					raise TypeError('Operator << operand must be unsigned!')
+					raise ToriiSyntaxError(
+						'The shift amount operand for the << operator must be unsigned',
+						tracer.get_src_loc(src_loc_at = src_loc_at)
+					)
 
-				return Shape(a_shape.width + 2 ** b_shape.width - 1, a_shape.signed)
+				return Shape(
+					a_shape.width + 2 ** b_shape.width - 1,
+					a_shape.signed,
+					src_loc_at = 1 + src_loc_at
+				)
 			if self.operator == '>>':
 				if b_shape.signed:
-					raise TypeError('Operator >> operand must be unsigned!')
+					raise ToriiSyntaxError(
+						'The shift amount operand for the >> operator must be unsigned',
+						tracer.get_src_loc(src_loc_at = src_loc_at)
+					)
 
-				return Shape(a_shape.width, a_shape.signed)
-		elif len(op_shapes) == 3:
+				return Shape(a_shape.width, a_shape.signed, src_loc_at = 1 + src_loc_at)
+		elif op_count == 3:
 			if self.operator == 'm':
 				s_shape, a_shape, b_shape = op_shapes
 				return _bitwise_binary_shape(a_shape, b_shape)
-		raise NotImplementedError(f'Operator {self.operator}/{len(op_shapes)} not implemented') # :nocov:
+
+		raise ToriiSyntaxError(
+			f'The operator \'{self.operator}\' with {op_count} operands does not exist',
+			tracer.get_src_loc(src_loc_at = src_loc_at)
+		)
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
 		if self.operator in ('u', 's'):

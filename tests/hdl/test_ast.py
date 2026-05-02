@@ -6,7 +6,7 @@ from sys               import version_info
 
 from torii.diagnostics import ToriiSyntaxError, ToriiSyntaxWarning
 from torii.hdl.ast     import (
-	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Part, Past, Property, ResetSignal, Rose, Sample,
+	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Operator, Part, Past, Property, ResetSignal, Rose, Sample,
 	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
 	signed, unsigned,
 )
@@ -849,6 +849,13 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		):
 			Const(1, unsigned(4)) << -1
 
+	def test_shl_wrong_impl(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The shift amount operand for the << operator must be unsigned \(test_ast\.py, line \d+\)$',
+		):
+			Operator('<<', (Const(5), Const(1, signed(1)))).shape()
+
 	def test_shr(self):
 		v1 = Const(1, 4) >> Const(4)
 		self.assertEqual(repr(v1), '(>> (const 4\'d1) (const 3\'d4))')
@@ -866,6 +873,13 @@ class OperatorTestCase(ToriiTestSuiteCase):
 			r'^Shift amount must be unsigned \(test_ast\.py, line \d+\)$'
 		):
 			Const(1, unsigned(4)) << -1
+
+	def test_shr_wrong_impl(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The shift amount operand for the >> operator must be unsigned \(test_ast\.py, line \d+\)$',
+		):
+			Operator('>>', (Const(5), Const(1, signed(1)))).shape()
 
 	def test_lt(self):
 		v = Const(0, 4) < Const(0, 6)
@@ -1021,6 +1035,13 @@ class OperatorTestCase(ToriiTestSuiteCase):
 			r'^The python `in` operator is not supported on Torii values \(test_ast\.py, line \d+\)$',
 		):
 			1 in Signal(3)
+
+	def test_nonexistent_operator(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The operator \'#\' with 1 operands does not exist \(test_ast\.py, line \d+\)$'
+		):
+			Operator('#', Const(0)).shape()
 
 class SliceTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
