@@ -275,8 +275,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 		c = Const(0)
 		self.assertIs(Value.cast(c), c)
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Object \'str\' cannot be converted to a Torii value$'
+			ToriiSyntaxError,
+			r'^Object \'str\' cannot be converted to a Torii value \(test_ast\.py, line \d+\)$'
 		):
 			Value.cast('str')
 
@@ -303,8 +303,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_bool(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Attempted to convert Torii value to Python boolean$'
+			ToriiSyntaxError,
+			r'^Attempted to convert Torii value to Python boolean \(test_ast\.py, line \d+\)$'
 		):
 			if Const(0):
 				pass
@@ -416,8 +416,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_shift_left_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Shift amount must be an integer, not \'str\'$'
+			ToriiSyntaxError,
+			r'^Shift amount must be an integer, not \'str\' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31).shift_left('str')
 
@@ -483,8 +483,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_shift_right_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Shift amount must be an integer, not \'str\'$'
+			ToriiSyntaxError,
+			r'^Shift amount must be an integer, not \'str\' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31).shift_left('str')
 
@@ -516,8 +516,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_rotate_left_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Rotate amount must be an integer, not \'str\'$'
+			ToriiSyntaxError,
+			r'^Rotate amount must be an integer, not \'str\' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31).rotate_left('str')
 
@@ -549,8 +549,8 @@ class ValueTestCase(ToriiTestSuiteCase):
 
 	def test_rotate_right_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Rotate amount must be an integer, not \'str\'$'
+			ToriiSyntaxError,
+			r'^Rotate amount must be an integer, not \'str\' \(test_ast\.py, line \d+\)$'
 		):
 			Const(31).rotate_right('str')
 
@@ -562,9 +562,16 @@ class ValueTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.shape(), unsigned(0))
 
 	def test_replicate_count_wrong(self):
-		with self.assertRaises(TypeError):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Replication count must be a non-zero positive integer, not -1 \(test_ast\.py, line \d+\)$'
+		):
 			Const(10).replicate(-1)
-		with self.assertRaises(TypeError):
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Replication count must be a non-zero positive integer, not \'str\' \(test_ast\.py, line \d+\)$'
+		):
 			Const(10).replicate('str')
 
 	def test_replicate_repr(self):
@@ -685,12 +692,17 @@ class OperatorTestCase(ToriiTestSuiteCase):
 
 	def test_as_signed_wrong(self):
 		with self.assertRaisesRegex(
-			ValueError, r'^Cannot create a 0-width signed value$'
+			ToriiSyntaxError,
+			r'^Cannot create a 0-width signed value \(test_ast\.py, line \d+\)$'
 		):
 			Const(0, 0).as_signed()
 
 	def test_pos(self):
-		self.assertRepr(+Const(10), '(const 4\'d10)')
+		with self.assertWarns(
+			ToriiSyntaxWarning,
+			msg = 'The unary + operator has no effect on Torii values'
+		):
+			self.assertRepr(+Const(10), '(const 4\'d10)')
 
 	def test_neg(self):
 		v1 = -Const(0, unsigned(4))
@@ -761,6 +773,25 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		v5 = 10 // Const(0, 4)
 		self.assertEqual(v5.shape(), unsigned(4))
 
+	def test_trudiv(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only flooring/integer division \(\'//\'\) is supported on Torii values \(test_ast\.py, line \d+\)$'
+		):
+			_ = Const(0) / Const(1)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only flooring/integer division \(\'//\'\) is supported on Torii values \(test_ast\.py, line \d+\)$'
+		):
+			_ = 1 / Const(1)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only flooring/integer division \(\'//\'\) is supported on Torii values \(test_ast\.py, line \d+\)$'
+		):
+			_ = Const(0) / 1
+
 	def test_and(self):
 		v1 = Const(0, unsigned(4)) & Const(0, unsigned(6))
 		self.assertEqual(repr(v1), '(& (const 4\'d0) (const 6\'d0))')
@@ -806,9 +837,16 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		self.assertEqual(v1.shape(), unsigned(11))
 
 	def test_shl_wrong(self):
-		with self.assertRaisesRegex(TypeError, r'^Shift amount must be unsigned$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Shift amount must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			1 << Const(0, signed(6))
-		with self.assertRaisesRegex(TypeError, r'^Shift amount must be unsigned$'):
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Shift amount must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			Const(1, unsigned(4)) << -1
 
 	def test_shr(self):
@@ -817,9 +855,16 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		self.assertEqual(v1.shape(), unsigned(4))
 
 	def test_shr_wrong(self):
-		with self.assertRaisesRegex(TypeError, r'^Shift amount must be unsigned$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Shift amount must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			1 << Const(0, signed(6))
-		with self.assertRaisesRegex(TypeError, r'^Shift amount must be unsigned$'):
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Shift amount must be unsigned \(test_ast\.py, line \d+\)$'
+		):
 			Const(1, unsigned(4)) << -1
 
 	def test_lt(self):
@@ -971,7 +1016,10 @@ class OperatorTestCase(ToriiTestSuiteCase):
 		self.assertEqual(abs(s).shape(), unsigned(4))
 
 	def test_contains(self):
-		with self.assertRaises(TypeError, msg = 'The python `in` operator is not supported on Torii values'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The python `in` operator is not supported on Torii values \(test_ast\.py, line \d+\)$',
+		):
 			1 in Signal(3)
 
 class SliceTestCase(ToriiTestSuiteCase):
@@ -1142,8 +1190,8 @@ class CatTestCase(ToriiTestSuiteCase):
 
 	def test_str_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Object \'foo\' cannot be converted to a Torii value$'
+			ToriiSyntaxError,
+			r'^Object \'foo\' cannot be converted to a Torii value \(test_ast\.py, line \d+\)$'
 		):
 			Cat('foo')
 
@@ -1687,8 +1735,8 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 		vc = MockValueCastable(None)
 		vc.dest = vc
 		with self.assertRaisesRegex(
-			RecursionError,
-			r'^Value-castable object <.+> casts to itself$'
+			ToriiSyntaxError,
+			r'^Value-castable object <.+> casts to itself \(test_ast\.py, line \d+\)$'
 		):
 			Value.cast(vc)
 

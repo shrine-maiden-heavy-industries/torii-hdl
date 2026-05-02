@@ -187,7 +187,7 @@ class Shape:
 		for member in obj: # type: ignore
 			try:
 				member_shape = Const.cast(member.value).shape() # type: ignore
-			except TypeError:
+			except ToriiSyntaxError:
 				raise ToriiSyntaxError(
 					'Only enumerations whose members have constant-castable '
 					'values can be used in Torii code',
@@ -400,6 +400,7 @@ class Value(metaclass = ABCMeta):
 		:py:class:`ValueCastable` objects are recursively cast to an Torii value.
 
 		'''
+
 		while True:
 			if isinstance(obj, Value):
 				return obj
@@ -407,23 +408,46 @@ class Value(metaclass = ABCMeta):
 				# NOTE(aki): See TODO on `ValueCastable.__init_subclass__`
 				new_obj = obj.as_value() # type: ignore
 			elif isinstance(obj, Enum):
-				return Const(obj.value, Shape.cast(type(obj), src_loc_at = 1 + src_loc_at))
+				return Const(
+					obj.value, Shape.cast(type(obj), src_loc_at = 1 + src_loc_at),
+					src_loc_at = 1 + src_loc_at
+				)
 			elif isinstance(obj, int):
-				return Const(obj)
+				return Const(obj, src_loc_at = 1 + src_loc_at)
 			else:
-				raise TypeError(f'Object {obj!r} cannot be converted to a Torii value')
+				raise ToriiSyntaxError(
+					f'Object {obj!r} cannot be converted to a Torii value',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
 			if new_obj is obj:
-				raise RecursionError(f'Value-castable object {obj!r} casts to itself')
+				raise ToriiSyntaxError(
+					f'Value-castable object {obj!r} casts to itself',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
 			obj = new_obj
 
 	def __init__(self, *, src_loc_at: int = 0) -> None:
 		super().__init__()
+		# NOTE:
+		# This may look incorrect, but `Value`'s are very rarely directly constructed,
+		# but rather the `__init__` is called from subclasses, therefore we offset the
+		# callstack count by one to account for this
 		self.src_loc = tracer.get_src_loc(1 + src_loc_at)
 
 	def __bool__(self) -> None:
-		raise TypeError('Attempted to convert Torii value to Python boolean')
+		raise ToriiSyntaxError(
+			'Attempted to convert Torii value to Python boolean',
+			tracer.get_src_loc()
+		)
 
 	def __pos__(self) -> Value:
+		warnings.warn(
+			'The unary + operator has no effect on Torii values',
+			ToriiSyntaxWarning,
+			stacklevel = 2
+		)
+
 		return self
 
 	def __invert__(self) -> Operator:
@@ -467,17 +491,33 @@ class Value(metaclass = ABCMeta):
 	def __rfloordiv__(self, other: ValueCastT) -> Operator:
 		return Operator('//', (other, self))
 
-	def __check_shamt(self) -> None:
+	@_overridable_by_swapping('__rtruediv__')
+	def __truediv__(self, other: ValueCastT):
+		raise ToriiSyntaxError(
+			'Only flooring/integer division (\'//\') is supported on Torii values',
+			tracer.get_src_loc(src_loc_at = 1)
+		)
+
+	def __rtruediv__(self, other: ValueCastT):
+		raise ToriiSyntaxError(
+			'Only flooring/integer division (\'//\') is supported on Torii values',
+			tracer.get_src_loc()
+		)
+
+	def __check_shamt(self, src_loc_at: int = 0) -> None:
 		if self.shape().signed:
 			# Neither Python nor HDLs implement shifts by negative values; prohibit any shifts
 			# by a signed value to make sure the shift amount can always be interpreted as
 			# an unsigned value.
-			raise TypeError('Shift amount must be unsigned')
+			raise ToriiSyntaxError(
+				'Shift amount must be unsigned',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
 	@_overridable_by_swapping('__rlshift__')
 	def __lshift__(self, other: ValueCastT) -> Operator:
-		other = Value.cast(other)
-		other.__check_shamt()
+		other = Value.cast(other, src_loc_at = 1)
+		other.__check_shamt(src_loc_at = 1)
 		return Operator('<<', (self, other), src_loc_at = 1)
 
 	def __rlshift__(self, other: ValueCastT) -> Operator:
@@ -486,8 +526,8 @@ class Value(metaclass = ABCMeta):
 
 	@_overridable_by_swapping('__rrshift__')
 	def __rshift__(self, other: ValueCastT) -> Operator:
-		other = Value.cast(other)
-		other.__check_shamt()
+		other = Value.cast(other, src_loc_at = 1)
+		other.__check_shamt(src_loc_at = 1)
 		return Operator('>>', (self, other), src_loc_at = 1)
 
 	def __rrshift__(self, other: ValueCastT) -> Operator:
@@ -541,7 +581,8 @@ class Value(metaclass = ABCMeta):
 
 	def __abs__(self) -> Value:
 		if self.shape().signed:
-			return Mux(self >= 0, self, -self)[:len(self)]
+			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
+			return _index_valuelike(Mux(self >= 0, self, -self), slice(len(self)))
 		else:
 			return self
 
@@ -552,9 +593,12 @@ class Value(metaclass = ABCMeta):
 		return _index_valuelike(self, key)
 
 	def __contains__(self, _):
-		raise TypeError('The python `in` operator is not supported on Torii values')
+		raise ToriiSyntaxError(
+			'The python `in` operator is not supported on Torii values',
+			tracer.get_src_loc()
+		)
 
-	def as_unsigned(self)  -> Operator:
+	def as_unsigned(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Conversion to unsigned.
 
@@ -564,9 +608,9 @@ class Value(metaclass = ABCMeta):
 			This ``Value`` reinterpreted as a unsigned integer.
 		'''
 
-		return Operator('u', (self,))
+		return Operator('u', (self,), src_loc_at = src_loc_at)
 
-	def as_signed(self)  -> Operator:
+	def as_signed(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Conversion to signed.
 
@@ -577,10 +621,17 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if len(self) == 0:
-			raise ValueError('Cannot create a 0-width signed value')
-		return Operator('s', (self,))
+			raise ToriiSyntaxError(
+				'Cannot create a 0-width signed value',
+				tracer.get_src_loc(src_loc_at = src_loc_at),
+				notes = [
+					'Torii values are stored in 2\'s-complement, therefore at least one bit must be present'
+					' to indicate signedness'
+				]
+			)
+		return Operator('s', (self,), src_loc_at = src_loc_at)
 
-	def bool(self)  -> Operator:
+	def bool(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Conversion to boolean.
 
@@ -590,9 +641,9 @@ class Value(metaclass = ABCMeta):
 			``1`` if any bits are set, ``0`` otherwise.
 		'''
 
-		return Operator('b', (self,))
+		return Operator('b', (self,), src_loc_at = src_loc_at)
 
-	def any(self)  -> Operator:
+	def any(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Check if any bits are ``1``.
 
@@ -602,9 +653,9 @@ class Value(metaclass = ABCMeta):
 			``1`` if any bits are set, ``0`` otherwise.
 		'''
 
-		return Operator('r|', (self,))
+		return Operator('r|', (self,), src_loc_at = src_loc_at)
 
-	def all(self)  -> Operator:
+	def all(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Check if all bits are ``1``.
 
@@ -614,9 +665,9 @@ class Value(metaclass = ABCMeta):
 			``1`` if all bits are set, ``0`` otherwise.
 		'''
 
-		return Operator('r&', (self,))
+		return Operator('r&', (self,), src_loc_at = src_loc_at)
 
-	def xor(self)  -> Operator:
+	def xor(self, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Compute pairwise exclusive-or of every bit.
 
@@ -626,9 +677,9 @@ class Value(metaclass = ABCMeta):
 			``1`` if an odd number of bits are set, ``0`` if an even number of bits are set.
 		'''
 
-		return Operator('r^', (self,))
+		return Operator('r^', (self,), src_loc_at = src_loc_at)
 
-	def implies(premise, conclusion: ValueCastT)  -> Operator:
+	def implies(premise, conclusion: ValueCastT, *, src_loc_at: int = 0)  -> Operator:
 		'''
 		Implication.
 
@@ -643,9 +694,12 @@ class Value(metaclass = ABCMeta):
 		if TYPE_CHECKING:
 			assert isinstance(op, Operator)
 
+		# Fixup the source locality information for op
+		op.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		return op
 
-	def bit_select(self, offset: Value | int, width: int) -> Value:
+	def bit_select(self, offset: Value | int, width: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Part-select with bit granularity.
 
@@ -666,12 +720,13 @@ class Value(metaclass = ABCMeta):
 			Selected part of the ``Value``
 		'''
 
-		offset = Value.cast(offset)
+		offset = Value.cast(offset, src_loc_at = 1 + src_loc_at)
 		if type(offset) is Const and isinstance(width, int):
-			return self[offset.value:offset.value + width]
-		return Part(self, offset, width, stride = 1, src_loc_at = 1)
+			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
+			return _index_valuelike(self, slice(offset.value, offset.value + width))
+		return Part(self, offset, width, stride = 1, src_loc_at = 1 + src_loc_at)
 
-	def word_select(self, offset: Value | int, width: int) -> Value:
+	def word_select(self, offset: Value | int, width: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Part-select with word granularity.
 
@@ -692,12 +747,13 @@ class Value(metaclass = ABCMeta):
 			Selected part of the ``Value``
 		'''
 
-		offset = Value.cast(offset)
+		offset = Value.cast(offset, src_loc_at = 1 + src_loc_at)
 		if type(offset) is Const and isinstance(width, int):
-			return self[offset.value * width:(offset.value + 1) * width]
-		return Part(self, offset, width, stride = width, src_loc_at = 1)
+			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
+			return _index_valuelike(self, slice(offset.value * width, (offset.value + 1) * width))
+		return Part(self, offset, width, stride = width, src_loc_at = 1 + src_loc_at)
 
-	def matches(self, *patterns: int | str | EnumMeta) -> Value:
+	def matches(self, *patterns: int | str | EnumMeta, src_loc_at: int = 0) -> Value:
 		'''
 		Pattern matching.
 
@@ -719,14 +775,16 @@ class Value(metaclass = ABCMeta):
 		# This code should accept exactly the same patterns as `with m.Case(...):`.
 		for pattern in patterns:
 			if isinstance(pattern, str) and any(bit not in '01- \t' for bit in pattern):
-				raise SyntaxError(
+				raise ToriiSyntaxError(
 					f'Match pattern \'{pattern}\' must consist of 0, 1, and - (don\'t care) bits, and may '
-					'include whitespace'
+					'include whitespace',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			if (isinstance(pattern, str) and len(''.join(pattern.split())) != len(self)):
-				raise SyntaxError(
-					f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)})'
+				raise ToriiSyntaxError(
+					f'Match pattern \'{pattern}\' must have the same width as match value (which is {len(self)})',
+					tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			if isinstance(pattern, str):
@@ -738,10 +796,11 @@ class Value(metaclass = ABCMeta):
 				try:
 					# NOTE(aki): mypy has issues with this re-assignment, but it's fine
 					new_pattern: Const = Const.cast(pattern)
-				except TypeError as error:
-					raise SyntaxError(
+				except ToriiSyntaxError as error:
+					raise ToriiSyntaxError(
 						'Match pattern must be a string or a const-castable expression, '
-						f'not {pattern!r}'
+						f'not {pattern!r}',
+						tracer.get_src_loc(src_loc_at = src_loc_at)
 					) from error
 
 				pattern_len = bits_for(new_pattern.value)
@@ -759,13 +818,16 @@ class Value(metaclass = ABCMeta):
 				'Value.matches() with an empty patterns clause will return `Const(0)` in a future release.',
 				ToriiSyntaxWarning, stacklevel = 2
 			)
-			return Const(1)
+			return Const(1, src_loc_at = 1 + src_loc_at)
 		elif len(matches) == 1:
-			return matches[0]
+			mtch = matches[0]
+			# Fixup source locality
+			mtch.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+			return mtch
 		else:
-			return Cat(*matches).any()
+			return Cat(*matches).any(src_loc_at = 1 + src_loc_at)
 
-	def shift_left(self, amount: int) -> Value:
+	def shift_left(self, amount: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Shift left by constant amount.
 
@@ -781,15 +843,20 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if not isinstance(amount, int):
-			raise TypeError(f'Shift amount must be an integer, not {amount!r}')
-		if amount < 0:
-			return self.shift_right(-amount)
-		if self.shape().signed:
-			return Cat(Const(0, amount), self).as_signed()
-		else:
-			return Cat(Const(0, amount), self) # unsigned
+			raise ToriiSyntaxError(
+				f'Shift amount must be an integer, not {amount!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
-	def shift_right(self, amount: int) -> Value:
+		if amount < 0:
+			return self.shift_right(-amount, src_loc_at = 1 + src_loc_at)
+
+		if self.shape().signed:
+			return Cat(Const(0, amount), self).as_signed(src_loc_at = 1 + src_loc_at)
+		else:
+			return Cat(Const(0, amount), self, src_loc_at = 1 + src_loc_at) # unsigned
+
+	def shift_right(self, amount: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Shift right by constant amount.
 
@@ -805,17 +872,23 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if not isinstance(amount, int):
-			raise TypeError(f'Shift amount must be an integer, not {amount!r}')
+			raise ToriiSyntaxError(
+				f'Shift amount must be an integer, not {amount!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if amount < 0:
-			return self.shift_left(-amount)
+			return self.shift_left(-amount, src_loc_at = 1 + src_loc_at)
+
 		if self.shape().signed:
 			if amount >= len(self):
 				amount = len(self) - 1
-			return self[amount:].as_signed()
+			return self[amount:].as_signed(src_loc_at = 1 + src_loc_at)
 		else:
-			return self[amount:] # unsigned
+			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
+			return _index_valuelike(self, slice(amount, None)) # unsigned
 
-	def rotate_left(self, amount: int) -> Value:
+	def rotate_left(self, amount: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Rotate left by constant amount.
 
@@ -831,12 +904,17 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if not isinstance(amount, int):
-			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
+			raise ToriiSyntaxError(
+				f'Rotate amount must be an integer, not {amount!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if len(self) != 0:
 			amount %= len(self)
-		return Cat(self[-amount:], self[:-amount]) # meow :3
 
-	def rotate_right(self, amount: int) -> Value:
+		return Cat(self[-amount:], self[:-amount], src_loc_at = 1 + src_loc_at) # meow :3
+
+	def rotate_right(self, amount: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Rotate right by constant amount.
 
@@ -852,12 +930,17 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if not isinstance(amount, int):
-			raise TypeError(f'Rotate amount must be an integer, not {amount!r}')
+			raise ToriiSyntaxError(
+				f'Rotate amount must be an integer, not {amount!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		if len(self) != 0:
 			amount %= len(self)
-		return Cat(self[amount:], self[:amount])
 
-	def replicate(self, count: int) -> Value:
+		return Cat(self[amount:], self[:amount], src_loc_at = 1 + src_loc_at)
+
+	def replicate(self, count: int, *, src_loc_at: int = 0) -> Value:
 		'''
 		Replication.
 
@@ -878,10 +961,14 @@ class Value(metaclass = ABCMeta):
 		'''
 
 		if not isinstance(count, int) or count < 0:
-			raise TypeError(f'Replication count must be a non-negative integer, not {count!r}')
-		return Cat(*(self for _ in range(count)))
+			raise ToriiSyntaxError(
+				f'Replication count must be a non-zero positive integer, not {count!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
-	def eq(self, value: ValueCastT) -> Assign:
+		return Cat(*(self for _ in range(count)), src_loc_at = 1 + src_loc_at)
+
+	def eq(self, value: ValueCastT, *, src_loc_at: int = 0) -> Assign:
 		'''
 		Assignment.
 
@@ -896,9 +983,9 @@ class Value(metaclass = ABCMeta):
 			Assignment statement that can be used in combinatorial or synchronous context.
 		'''
 
-		return Assign(self, value, src_loc_at = 1)
+		return Assign(self, value, src_loc_at = 1 + src_loc_at)
 
-	def inc(self, value: ValueCastT = 1) -> Assign:
+	def inc(self, value: ValueCastT = 1, *, src_loc_at: int = 0) -> Assign:
 		'''
 		Increment value.
 
@@ -915,9 +1002,9 @@ class Value(metaclass = ABCMeta):
 			Assignment statement that can be used in combinatorial or synchronous context.
 		'''
 
-		return Assign(self, self + value, src_loc_at = 1)
+		return Assign(self, self + value, src_loc_at = 1 + src_loc_at)
 
-	def dec(self, value: ValueCastT = 1) -> Assign:
+	def dec(self, value: ValueCastT = 1, *, src_loc_at: int = 0) -> Assign:
 		'''
 		Decrement value.
 
@@ -934,7 +1021,7 @@ class Value(metaclass = ABCMeta):
 			Assignment statement that can be used in combinatorial or synchronous context.
 		'''
 
-		return Assign(self, self - value, src_loc_at = 1)
+		return Assign(self, self - value, src_loc_at = 1 + src_loc_at)
 
 	@abstractmethod
 	def shape(self) -> Shape:
@@ -963,7 +1050,10 @@ class Value(metaclass = ABCMeta):
 		.. todo:: Document Me
 		'''
 
-		raise TypeError(f'Value {self!r} cannot be used in assignments')
+		raise ToriiSyntaxError(
+			f'Value {self!r} cannot be used in assignments',
+			tracer.get_src_loc()
+		)
 
 	@abstractmethod
 	def _rhs_signals(self) -> SignalSet | ValueSet:
@@ -1033,7 +1123,7 @@ class Const(Value, metaclass = _ConstMeta):
 		Otherwise, :py:exc:`TypeError` is raised.
 		'''
 
-		obj = Value.cast(obj)
+		obj = Value.cast(obj, src_loc_at = 1 + src_loc_at)
 		if type(obj) is Const:
 			return obj
 		elif type(obj) is Cat:
