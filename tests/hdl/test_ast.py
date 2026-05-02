@@ -4,7 +4,7 @@ import warnings
 from enum              import Enum, EnumMeta
 from sys               import version_info
 
-from torii.diagnostics import ToriiSyntaxError, ToriiSyntaxWarning
+from torii.diagnostics import ToriiError, ToriiSyntaxError, ToriiSyntaxWarning
 from torii.hdl.ast     import (
 	Array, Cat, ClockSignal, Const, Edge, Fell, Initial, Mux, Operator, Part, Past, Property, ResetSignal, Rose, Sample,
 	Shape, ShapeCastable, ShapeLike, Signal, Slice, Stable, Switch, Value, ValueCastable, ValueLike,
@@ -1741,9 +1741,10 @@ class MockValueCastableCustomGetattr(ValueCastable):
 class ValueCastableTestCase(ToriiTestSuiteCase):
 	def test_not_decorated(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Class \'MockValueCastableNotDecorated\' deriving from `ValueCastable` must '
-			r'decorate the `as_value` method with the `ValueCastable.lowermethod` decorator$'
+			ToriiError,
+			r'^The class \'MockValueCastableNotDecorated\' which derives from \'ValueCastable\' must'
+			r' decorate the overridden \'ValueCastable\.as_value\' method with the \'ValueCastable\.lowermethod\''
+			r' decorator$'
 		):
 			class MockValueCastableNotDecorated(ValueCastable):
 				def __init__(self) -> None:
@@ -1757,18 +1758,18 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 
 	def test_no_override(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Class \'MockValueCastableNoOverrideAsValue\' deriving from `ValueCastable` must '
-			r'override the `as_value` method$'
+			ToriiError,
+			r'^The class \'MockValueCastableNoOverrideAsValue\' which derives from \'ValueCastable\' must'
+			r' provide an override for the \'ValueCastable\.as_value\' method'
 		):
 			class MockValueCastableNoOverrideAsValue(ValueCastable):
 				def __init__(self) -> None:
 					pass # :nocov:
 
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Class \'MockValueCastableNoOverrideShape\' deriving from `ValueCastable` must '
-			r'override the `shape` method$'
+			ToriiError,
+			r'^The class \'MockValueCastableNoOverrideShape\' which derives from \'ValueCastable\' must'
+			r' provide an override for the \'ValueCastable\.shape\' method$'
 		):
 			class MockValueCastableNoOverrideShape(ValueCastable):
 				def __init__(self) -> None:

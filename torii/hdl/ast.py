@@ -17,7 +17,7 @@ from typing            import (
 	TYPE_CHECKING, Generic, Literal, NoReturn, ParamSpec, SupportsIndex, TypeAlias, TypeVar, TypeVarTuple,
 )
 
-from ..diagnostics     import ToriiSyntaxError, ToriiSyntaxWarning, UnusedProperty
+from ..diagnostics     import ToriiError, ToriiSyntaxError, ToriiSyntaxWarning, UnusedProperty
 from ..diagnostics     import IndexError as ToriiIndexError
 from .._typing         import SrcLoc, SwitchCaseT
 from ..util            import _check_name, flatten, tracer, union
@@ -2171,17 +2171,28 @@ class ValueCastable:
 	#            a sane way to keep that check but also let us properly type as_value and as_shape
 	def __init_subclass__(cls, **kwargs):
 		if not hasattr(cls, 'as_value'):
-			raise TypeError(
-				f'Class \'{cls.__name__}\' deriving from `ValueCastable` must override the `as_value` method'
+			raise ToriiError(
+				message = (
+					f'The class \'{cls.__name__}\' which derives from \'ValueCastable\' must provide an override'
+					' for the \'ValueCastable.as_value\' method'
+				),
+				src_loc = tracer.get_src_loc()
 			)
 		if not hasattr(cls, 'shape'):
-			raise TypeError(
-				f'Class \'{cls.__name__}\' deriving from `ValueCastable` must override the `shape` method'
+			raise ToriiError(
+				message = (
+					f'The class \'{cls.__name__}\' which derives from \'ValueCastable\' must provide an override'
+					' for the \'ValueCastable.shape\' method'
+				),
+				src_loc = tracer.get_src_loc()
 			)
 		if not hasattr(cls.as_value, '_ValueCastable__memoized'):
-			raise TypeError(
-				f'Class \'{cls.__name__}\' deriving from `ValueCastable` must decorate '
-				'the `as_value` method with the `ValueCastable.lowermethod` decorator'
+			raise ToriiError(
+				message = (
+					f'The class \'{cls.__name__}\' which derives from \'ValueCastable\' must decorate'
+					' the overridden \'ValueCastable.as_value\' method with the \'ValueCastable.lowermethod\' decorator'
+				),
+				src_loc = tracer.get_src_loc()
 			)
 
 	@staticmethod
