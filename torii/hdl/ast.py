@@ -2315,7 +2315,7 @@ class Sample(Value):
 
 	def __init__(self, expr: ValueCastT, clocks: int, domain: str | None, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
-		self.value  = Value.cast(expr)
+		self.value  = Value.cast(expr, src_loc_at = 1 + src_loc_at)
 		self.clocks = int(clocks)
 		self.domain = domain
 
@@ -2359,7 +2359,7 @@ class Sample(Value):
 	def __repr__(self) -> str:
 		return f'(sample {self.value!r} @ {"<default>" if self.domain is None else self.domain}[{self.clocks}])'
 
-def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
+def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None, *, src_loc_at: int = 0) -> Value:
 	'''
 	Get a value from the past.
 
@@ -2400,10 +2400,10 @@ def Past(expr: ValueCastT, clocks: int = 1, domain: str | None = None) -> Value:
 		The sample value.
 	'''
 
-	return Sample(expr, clocks, domain, src_loc_at = 1)
+	return Sample(expr, clocks, domain, src_loc_at = 1 + src_loc_at)
 
 # NOTE(aki): For Stable, Rose, Fell, and Edge, mypy can't see through the operators
-def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None, *, src_loc_at: int = 0) -> Operator:
 	'''
 	Check if a Signal is stable over the given ``clocks + 1`` cycles in the past.
 
@@ -2434,12 +2434,15 @@ def Stable(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Oper
 
 	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) == Sample(expr, clocks, domain, src_loc_at = 1)
 
+	# Fixup the source locality information for op
+	op.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
 
 	return op
 
-def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None, *, src_loc_at: int = 0) -> Operator:
 	'''
 	Check if the given Signal rose in the past ``clocks + 1`` clock cycles.
 
@@ -2470,12 +2473,15 @@ def Rose(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	op = ~Sample(expr, clocks + 1, domain, src_loc_at = 1) & Sample(expr, clocks, domain, src_loc_at = 1)
 
+	# Fixup the source locality information for op
+	op.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
 
 	return op
 
-def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None, *, src_loc_at: int = 0) -> Operator:
 	'''
 	Check if the given Signal fell in the past ``clocks + 1`` clock cycles.
 
@@ -2506,12 +2512,15 @@ def Fell(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 
 	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) & ~Sample(expr, clocks, domain, src_loc_at = 1)
 
+	# Fixup the source locality information for op
+	op.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
 
 	return op
 
-def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operator:
+def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None, *, src_loc_at: int = 0) -> Operator:
 	'''
 	Check if the given Signal rose or fell in the past ``clocks + 1`` clock cycles.
 
@@ -2541,6 +2550,9 @@ def Edge(expr: ValueCastT, clocks: int = 0, domain: str | None = None) -> Operat
 	'''
 
 	op = Sample(expr, clocks + 1, domain, src_loc_at = 1) != Sample(expr, clocks, domain, src_loc_at = 1)
+
+	# Fixup the source locality information for op
+	op.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 	if TYPE_CHECKING:
 		assert isinstance(op, Operator)
