@@ -1024,7 +1024,7 @@ class Const(Value, metaclass = _ConstMeta):
 		return value
 
 	@staticmethod
-	def cast(obj: ValueCastT) -> Const:
+	def cast(obj: ValueCastT, *, src_loc_at: int = 0) -> Const:
 		'''
 		Converts ``obj`` to an Torii constant.
 
