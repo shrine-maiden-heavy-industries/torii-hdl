@@ -1136,22 +1136,25 @@ class Const(Value, metaclass = _ConstMeta):
 			value = 0
 			width = 0
 			for part in obj.parts:
-				const  = Const.cast(part)
-				part_value = Const(const.value, unsigned(const.width)).value
+				const  = Const.cast(part, src_loc_at = 1 + src_loc_at)
+				part_value = Const(const.value, unsigned(const.width), src_loc_at = 1 + src_loc_at).value
 				value |= part_value << width
 				width += len(const)
-			return Const(value, width)
+			return Const(value, width, src_loc_at = 1 + src_loc_at)
 		elif type(obj) is Slice:
 			# NOTE(aki): mypy leaks type of `value` from above `elif`
-			value = Const.cast(obj.value) # type: ignore
+			value = Const.cast(obj.value, src_loc_at = 1 + src_loc_at) # type: ignore
 
 			# Do type coercion
 			if TYPE_CHECKING:
 				assert isinstance(value, Const)
 
-			return Const(value.value >> obj.start, unsigned(obj.stop - obj.start))
+			return Const(value.value >> obj.start, unsigned(obj.stop - obj.start), src_loc_at = 1 + src_loc_at)
 		else:
-			raise TypeError(f'Value {obj!r} cannot be converted to an Torii constant')
+			raise ToriiSyntaxError(
+				f'Value {obj!r} cannot be converted to a Torii constant',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
 	def __init__(
 		self, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, *,
@@ -1171,7 +1174,7 @@ class Const(Value, metaclass = _ConstMeta):
 					f'Value {self.value!r} equals the non-inclusive end of the constant '
 					f'shape {shape!r}; this is likely an off-by-one error',
 					category = ToriiSyntaxWarning,
-					stacklevel = 3
+					stacklevel = 2 + src_loc_at
 				)
 			shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 		self.width  = shape.width
@@ -1179,7 +1182,7 @@ class Const(Value, metaclass = _ConstMeta):
 		self.value  = self.normalize(self.value, shape)
 
 	def shape(self) -> Shape:
-		return Shape(self.width, self.signed)
+		return Shape(self.width, self.signed, src_loc_at = 1)
 
 	def _rhs_signals(self) -> SignalSet:
 		'''

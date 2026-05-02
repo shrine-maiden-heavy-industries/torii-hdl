@@ -1537,7 +1537,10 @@ class SignalTestCase(ToriiTestSuiteCase):
 
 	def test_const_wrong(self):
 		s1 = Signal()
-		with self.assertRaises(TypeError, msg = 'Value (sig s1) cannot be converted to a Torii constant'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Value \(sig s1\) cannot be converted to a Torii constant \(test_ast\.py, line \d+\)$'
+		):
 			Const.cast(s1)
 
 class ClockSignalTestCase(ToriiTestSuiteCase):
