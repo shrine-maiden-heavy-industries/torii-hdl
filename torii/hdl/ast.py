@@ -2091,7 +2091,7 @@ class ArrayProxy(Value):
 	def __init__(self, elems, index: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = 1 + src_loc_at)
 		self.elems = elems
-		self.index = Value.cast(index)
+		self.index = Value.cast(index, src_loc_at = 1 + src_loc_at)
 
 	def __getattr__(self, attr) -> ArrayProxy:
 		return ArrayProxy([getattr(elem, attr) for elem in self.elems], self.index)
@@ -2099,13 +2099,13 @@ class ArrayProxy(Value):
 	def __getitem__(self, index) -> ArrayProxy:
 		return ArrayProxy([        elem[index] for elem in self.elems], self.index)
 
-	def _iter_as_values(self):
-		return (Value.cast(elem) for elem in self.elems)
+	def _iter_as_values(self, src_loc_at: int = 1):
+		return (Value.cast(elem, src_loc_at = src_loc_at) for elem in self.elems)
 
 	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		unsigned_width = signed_width = 0
 		has_unsigned = has_signed = False
-		for elem_shape in (elem.shape() for elem in self._iter_as_values()):
+		for elem_shape in (elem.shape() for elem in self._iter_as_values(src_loc_at = src_loc_at)):
 			if elem_shape.signed:
 				has_signed = True
 				signed_width = max(signed_width, elem_shape.width)
@@ -2119,11 +2119,11 @@ class ArrayProxy(Value):
 		if has_signed and has_unsigned and unsigned_width >= signed_width:
 			# Array contains both signed and unsigned values, and at least one of the unsigned
 			# values won't be zero-extended otherwise.
-			return signed(unsigned_width + 1)
+			return signed(unsigned_width + 1, src_loc_at = 1 + src_loc_at)
 		else:
 			# Array contains values of the same signedness, or else all of the unsigned values
 			# are zero-extended.
-			return Shape(max(unsigned_width, signed_width), has_signed)
+			return Shape(max(unsigned_width, signed_width), has_signed, src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
 		signals = union((elem._lhs_signals() for elem in self._iter_as_values()), start = SignalSet())
