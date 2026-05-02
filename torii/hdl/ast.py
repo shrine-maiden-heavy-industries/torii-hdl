@@ -1083,7 +1083,7 @@ class _ConstMeta(ABCMeta):
 		):
 		if isinstance(shape, ShapeCastable):
 			return shape.const(value)
-		return super().__call__(value, shape, **kwargs, src_loc_at = src_loc_at + 1)
+		return super().__call__(value, shape, **kwargs, src_loc_at = 1 + src_loc_at)
 
 @final
 class Const(Value, metaclass = _ConstMeta):
@@ -1943,7 +1943,7 @@ class AnyValue(Value, DUID):
 		super().__init__(src_loc_at = src_loc_at)
 
 		self.kind   = self.Kind(kind)
-		self._shape = Shape.cast(shape, src_loc_at = src_loc_at + 1)
+		self._shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 		self.width  = self._shape.width
 		self.signed = self._shape.signed
 
@@ -1961,14 +1961,14 @@ def AnyConst(shape, *, src_loc_at: int = 0) -> AnyValue:
 	.. todo:: Document Me
 	'''
 
-	return AnyValue('anyconst', shape, src_loc_at = src_loc_at + 1)
+	return AnyValue('anyconst', shape, src_loc_at = 1 + src_loc_at)
 
 def AnySeq(shape, *, src_loc_at: int = 0) -> AnyValue:
 	'''
 	.. todo:: Document Me
 	'''
 
-	return AnyValue('anyseq', shape, src_loc_at = src_loc_at + 1)
+	return AnyValue('anyseq', shape, src_loc_at = 1 + src_loc_at)
 
 class Array(MutableSequence[Value]):
 	'''
@@ -2708,21 +2708,21 @@ def Assert(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) ->
 	.. todo:: Document Me
 	'''
 
-	return Property('assert', test, name = name, src_loc_at = src_loc_at + 1)
+	return Property('assert', test, name = name, src_loc_at = 1 + src_loc_at)
 
 def Assume(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	'''
 	.. todo:: Document Me
 	'''
 
-	return Property('assume', test, name = name, src_loc_at = src_loc_at + 1)
+	return Property('assume', test, name = name, src_loc_at = 1 + src_loc_at)
 
 def Cover(test: ValueCastT, *, name: str | None = None, src_loc_at: int = 0) -> Property:
 	'''
 	.. todo:: Document Me
 	'''
 
-	return Property('cover', test, name = name, src_loc_at = src_loc_at + 1)
+	return Property('cover', test, name = name, src_loc_at = 1 + src_loc_at)
 
 # @final
 class Switch(Statement):
