@@ -9,6 +9,7 @@ from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
 
+from ..diagnostics   import ToriiSyntaxError
 from ..util          import _check_name, tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
@@ -352,7 +353,15 @@ def _valueproxy(name):
 
 	@wraps(value_func)
 	def _wrapper(self, *args, **kwargs):
-		return value_func(Value.cast(self), *args, **kwargs)
+		try:
+			return value_func(Value.cast(self), *args, **kwargs)
+		except ToriiSyntaxError as err:
+			# Fixup the source locality information due to the value proxy call
+			src_loc = tracer.get_src_loc()
+			err.filename = src_loc[0]
+			err.lineno = src_loc[1]
+
+			raise err
 
 	return _wrapper
 

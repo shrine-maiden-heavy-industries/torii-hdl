@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from enum          import Enum
+from enum              import Enum
 
-from torii.hdl.ast import Shape, Signal, signed, unsigned
-from torii.hdl.rec import Direction, Layout, Record
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.ast     import Shape, Signal, signed, unsigned
+from torii.hdl.rec     import Direction, Layout, Record
 
-from ..utils       import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class UnsignedEnum(Enum):
 	FOO = 1
@@ -282,8 +283,8 @@ class RecordTestCase(ToriiTestSuiteCase):
 
 		# __bool__
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Attempted to convert Torii value to Python boolean$'
+			ToriiSyntaxError,
+			r'^Attempted to convert Torii value to Python boolean \(test_rec\.py, line \d+\)$'
 		):
 			not r1
 
