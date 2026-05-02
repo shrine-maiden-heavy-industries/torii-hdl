@@ -3197,7 +3197,13 @@ class SignalKey:
 		elif type(signal) is ResetSignal:
 			self._intern = (2, signal.domain)
 		else:
-			raise TypeError(f'Object {signal!r} is not an Torii signal')
+			raise ToriiSyntaxError(
+				f'Objects of type {type(signal).__name__} can not be used as a key in Torii signal collections',
+				tracer.get_src_loc(),
+				notes = [
+					'Only Torii signal types can be used, they are: Signal, ClockSignal, and ResetSignal'
+				]
+			)
 
 	def __hash__(self) -> int:
 		return hash(self._intern)
@@ -3209,7 +3215,11 @@ class SignalKey:
 
 	def __lt__(self, other: object) -> bool:
 		if type(other) is not SignalKey:
-			raise TypeError(f'Object {other!r} cannot be compared to a SignalKey')
+			raise ToriiSyntaxError(
+				f'Objects of type {type(other).__name__} cannot be compared to a SignalKey',
+				tracer.get_src_loc()
+			)
+
 		# NOTE(aki): This comparison works fine, but typing is having a hard time seeing through it
 		return self._intern < other._intern # type: ignore
 
