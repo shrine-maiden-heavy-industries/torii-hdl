@@ -2168,21 +2168,21 @@ class SampleTestCase(ToriiTestSuiteCase):
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'^Sample domain names may not be empty or contain any control or whitespace characters '
 			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = '')
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'^Sample domain names may not be empty or contain any control or whitespace characters '
 			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = ' ')
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Sample domain name must not be empty or contain any control or whitespace characters '
+			r'^Sample domain names may not be empty or contain any control or whitespace characters '
 			r'\(test_ast\.py, line \d+\)$'
 		):
 			Sample(Signal(), 1, domain = '\x15')

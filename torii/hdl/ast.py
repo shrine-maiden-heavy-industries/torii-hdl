@@ -2351,10 +2351,20 @@ class Sample(Value):
 			)
 
 		if self.domain is not None and (self.domain == '' or not _check_name(self.domain)):
-			raise ToriiSyntaxError(
-				'Sample domain name must not be empty or contain any control or whitespace characters',
-				src_loc = self.src_loc
+			err = ToriiSyntaxError(
+				'Sample domain names may not be empty or contain any control or whitespace characters',
+				self.src_loc,
 			)
+
+			if self.domain == '':
+				err.add_note('An empty string was provided to the `domain` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs,'
+					' Zl, Zp'
+				)
+
+			raise err
 
 	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		return self.value.shape(src_loc_at = 1 + src_loc_at)
