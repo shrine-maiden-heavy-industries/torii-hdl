@@ -6,13 +6,14 @@ import shutil
 import subprocess
 import textwrap
 import traceback
-from pathlib       import Path
+from pathlib           import Path
 
-from torii.back    import rtlil
-from torii.hdl.ast import Statement
-from torii.hdl.ir  import Fragment
-from torii.test    import ToriiTestCase
-from torii.tools   import ToolNotFound, require_tool
+from torii.back        import rtlil
+from torii.hdl.ast     import Statement
+from torii.hdl.ir      import Fragment
+from torii.test        import ToriiTestCase
+from torii.tools       import ToolNotFound, require_tool
+from torii.util.tracer import get_src_loc
 
 __all__ = (
 	'ToriiTestSuiteCase',
@@ -106,3 +107,11 @@ class ToriiTestSuiteCase(ToriiTestCase):
 			stdout, stderr = proc.communicate(config)
 			if proc.returncode != 0:
 				self.fail('Formal verification failed:\n' + stdout)
+
+	def assertSrcLoc(self, obj):
+		'''
+		Assert that the given objects `src_loc` matches the call-site for this assert
+		'''
+
+		src_loc = get_src_loc(src_loc_at = 0)
+		self.assertEqual(src_loc, obj.src_loc)
