@@ -2265,7 +2265,10 @@ class ValueLike(metaclass = _ValueLikeMeta):
 	'''
 
 	def __new__(cls, *args, **kwargs):
-		raise TypeError('ValueLike is an abstract class and cannot be constructed')
+		raise ToriiError(
+			message = 'The class \'ValueLike\' is an abstract class and cannot be directly constructed',
+			src_loc = tracer.get_src_loc()
+		)
 
 @final
 class Sample(Value):

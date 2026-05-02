@@ -1810,7 +1810,10 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 
 class ValueLikeTestCase(ToriiTestSuiteCase):
 	def test_construct(self):
-		with self.assertRaises(TypeError):
+		with self.assertRaisesRegex(
+			ToriiError,
+			r'^The class \'ValueLike\' is an abstract class and cannot be directly constructed$'
+		):
 			ValueLike()
 
 	def test_subclass(self):
