@@ -3231,7 +3231,10 @@ class SignalDict(_MappedKeyDict[SignalLikeT, Val, SignalKey]):
 
 	def _map_key(self, key: SignalLikeT | None) -> SignalKey:
 		if key is None:
-			raise TypeError('Key to SignalDict must not be None')
+			raise ToriiSyntaxError(
+				'SignalDict key must not be None',
+				tracer.get_src_loc(src_loc_at = 1)
+			)
 
 		return SignalKey(key)
 
