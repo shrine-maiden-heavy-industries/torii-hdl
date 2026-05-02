@@ -345,7 +345,7 @@ def _overridable_by_swapping(method_name: str):
 		return wrapper
 	return decorator
 
-def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
+def _index_valuelike(value: Value | ValueCastable, key: object, src_loc_at: int = 0) -> Value:
 	'''
 	.. todo:: Document Me
 	'''
@@ -355,31 +355,31 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 		if key not in range(-n, n):
 			raise ToriiIndexError(
 				f'Index {key} is out of bounds for a {n}-bit value',
-				tracer.get_src_loc(src_loc_at = 1)
+				tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
 			)
 		if key < 0:
 			key += n
-		return Slice(value, key, key + 1, src_loc_at = 2)
+		return Slice(value, key, key + 1, src_loc_at = 2 + src_loc_at)
 	elif isinstance(key, slice):
 		if isinstance(key.start, Value) or isinstance(key.stop, Value):
 			raise ToriiSyntaxError(
 				'Slicing a value with a Value is unsupported, '
 				'use `Value.bit_select()` or `Value.word_select()` instead.',
-				tracer.get_src_loc(src_loc_at = 1)
+				tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
 			)
 		start, stop, step = key.indices(n)
 		if step != 1:
-			return Cat(*(value[i] for i in range(start, stop, step)), src_loc_at = 2)
-		return Slice(value, start, stop, src_loc_at = 2)
+			return Cat(*(value[i] for i in range(start, stop, step)), src_loc_at = 2 + src_loc_at)
+		return Slice(value, start, stop, src_loc_at = 2 + src_loc_at)
 	elif isinstance(key, Value):
 		raise ToriiSyntaxError(
 			'Indexing a value with another value is not supported, use `Value.bit_select()` instead.',
-			tracer.get_src_loc(src_loc_at = 1)
+			tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
 		)
 	else:
 		raise ToriiSyntaxError(
 			f'Cannot index value with {key!r}',
-			tracer.get_src_loc(src_loc_at = 1)
+			tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
 		)
 
 class Value(metaclass = ABCMeta):
@@ -723,7 +723,7 @@ class Value(metaclass = ABCMeta):
 		offset = Value.cast(offset, src_loc_at = 1 + src_loc_at)
 		if type(offset) is Const and isinstance(width, int):
 			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
-			return _index_valuelike(self, slice(offset.value, offset.value + width))
+			return _index_valuelike(self, slice(offset.value, offset.value + width), src_loc_at = src_loc_at)
 		return Part(self, offset, width, stride = 1, src_loc_at = 1 + src_loc_at)
 
 	def word_select(self, offset: Value | int, width: int, *, src_loc_at: int = 0) -> Value:
@@ -750,7 +750,11 @@ class Value(metaclass = ABCMeta):
 		offset = Value.cast(offset, src_loc_at = 1 + src_loc_at)
 		if type(offset) is Const and isinstance(width, int):
 			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
-			return _index_valuelike(self, slice(offset.value * width, (offset.value + 1) * width))
+			return _index_valuelike(
+				self,
+				slice(offset.value * width, (offset.value + 1) * width),
+				src_loc_at = src_loc_at
+			)
 		return Part(self, offset, width, stride = width, src_loc_at = 1 + src_loc_at)
 
 	def matches(self, *patterns: int | str | EnumMeta, src_loc_at: int = 0) -> Value:
@@ -888,7 +892,7 @@ class Value(metaclass = ABCMeta):
 			return self[amount:].as_signed(src_loc_at = 1 + src_loc_at)
 		else:
 			# NOTE: We use `_index_valuelike` rather than `self[...]` to ensure source locality is correct
-			return _index_valuelike(self, slice(amount, None)) # unsigned
+			return _index_valuelike(self, slice(amount, None), src_loc_at = src_loc_at) # unsigned
 
 	def rotate_left(self, amount: int, *, src_loc_at: int = 0) -> Value:
 		'''
