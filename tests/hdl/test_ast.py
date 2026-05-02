@@ -965,8 +965,8 @@ class OperatorTestCase(ToriiTestSuiteCase):
 	def test_matches_width_wrong(self):
 		s = Signal(4)
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Match pattern \'--\' must have the same width as match value \(which is 4\)$'
+			ToriiSyntaxError,
+			r'^Match pattern \'--\' must have the same width as match value \(which is 4\) \(test_ast\.py, line \d+\)$'
 		):
 			s.matches('--')
 		with self.assertWarnsRegex(
@@ -986,9 +986,9 @@ class OperatorTestCase(ToriiTestSuiteCase):
 	def test_matches_bits_wrong(self):
 		s = Signal(4)
 		with self.assertRaisesRegex(
-			SyntaxError, (
+			ToriiSyntaxError, (
 				r'^Match pattern \'abc\' must consist of 0, 1, and - \(don\'t care\) bits, '
-				r'and may include whitespace$'
+				r'and may include whitespace \(test_ast\.py, line \d+\)$'
 			)
 		):
 			s.matches('abc')
@@ -996,8 +996,8 @@ class OperatorTestCase(ToriiTestSuiteCase):
 	def test_matches_pattern_wrong(self):
 		s = Signal(4)
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Match pattern must be a string or a const-castable expression, not 1\.0$'
+			ToriiSyntaxError,
+			r'^Match pattern must be a string or a const-castable expression, not 1\.0 \(test_ast\.py, line \d+\)$'
 		):
 			s.matches(1.0)
 

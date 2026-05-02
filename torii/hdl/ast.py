@@ -511,7 +511,7 @@ class Value(metaclass = ABCMeta):
 			# an unsigned value.
 			raise ToriiSyntaxError(
 				'Shift amount must be unsigned',
-				tracer.get_src_loc(src_loc_at = src_loc_at)
+				tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
 			)
 
 	@_overridable_by_swapping('__rlshift__')
