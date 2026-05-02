@@ -1427,24 +1427,30 @@ class SignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s2.name, 'sig')
 
 	def test_name_wrong(self):
-		with self.assertRaisesRegex(TypeError, r'^Name must be a string, not 1$'):
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Signal names must be a string, not 1 \(test_ast\.py, line \d+\)$'
+		):
 			Signal(name = 1)
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Signal name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Signal names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Signal(name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Signal name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Signal names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Signal(name = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Signal name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Signal names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Signal(name = '\u0006')
 
@@ -1457,9 +1463,9 @@ class SignalTestCase(ToriiTestSuiteCase):
 		s1 = Signal(2, reset = UnsignedEnum.BAR)
 		self.assertEqual(s1.reset, 2)
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Reset value must be a constant-castable expression, '
-			r'not <StringEnum\.FOO: \'a\'>$'
+			ToriiSyntaxError,
+			r'^The reset value for the signal \'\$signal\' must be a constant-castable expression, not'
+			r' <StringEnum\.FOO: \'a\'> \(test_ast\.py, line \d+\)$'
 		):
 			Signal(1, reset = StringEnum.FOO)
 
@@ -1475,61 +1481,65 @@ class SignalTestCase(ToriiTestSuiteCase):
 		self.assertEqual(s1.reset, 0xaa)
 
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Constant returned by <.+?CastableFromHex.+?>\.const\(\) must have the shape '
-			r'that it casts to, unsigned\(8\), and not unsigned\(1\)$'
+			ToriiSyntaxError,
+			r'^The reset value for the signal \'\$signal\' has different const and non-const shapes'
+			r' \(test_ast\.py, line \d+\)$'
 		):
-			Signal(CastableFromHex(), reset="01")
+			Signal(CastableFromHex(), reset = '01')
 
 	def test_reset_signed_mismatch(self):
 		with self.assertWarnsRegex(
 			ToriiSyntaxWarning,
-			r'^Reset value -2 is signed, but the signal shape is unsigned\(2\)$'
+			r'^The reset value for \'\$signal\' is signed while the signal itself is unsigned$'
 		):
 			Signal(unsigned(2), reset = -2)
 
 	def test_reset_wrong_too_wide(self):
 		with self.assertWarnsRegex(
 			ToriiSyntaxWarning,
-			r'^^Reset value 2 will be truncated to the signal shape unsigned\(1\)$'
+			r'^The reset value for the signal \'\$signal\' will be truncated to match its width$'
 		):
 			Signal(unsigned(1), reset = 2)
+
 		with self.assertWarnsRegex(
 			ToriiSyntaxWarning,
-			r'^Reset value 1 will be truncated to the signal shape signed\(1\)$'
+			r'^The reset value for the signal \'\$signal\' will be truncated to match its width$'
 		):
 			Signal(signed(1), reset = 1)
+
 		with self.assertWarnsRegex(
 			ToriiSyntaxWarning,
-			r'^Reset value -2 will be truncated to the signal shape signed\(1\)$'
+			r'^The reset value for the signal \'\$signal\' will be truncated to match its width$'
 		):
 			Signal(signed(1), reset = -2)
 
 	def test_reset_wrong_fencepost(self):
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Reset value 10 equals the non-inclusive end of the signal shape '
-			r'range\(0, 10\); this is likely an off-by-one error$'
+			ToriiSyntaxError,
+			r'^The reset value 10 for the signal \'\$signal\' is equal to the non-inclusive end of the signal width;'
+			r' this is very likely an off-by-one error \(test_ast\.py, line \d+\)$'
 		):
 			Signal(range(0, 10), reset = 10)
 
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Reset value 0 equals the non-inclusive end of the signal shape '
-			r'range\(0, 0\); this is likely an off-by-one error$'
+			ToriiSyntaxError,
+			r'^The reset value 0 for the signal \'\$signal\' is equal to the non-inclusive end of the signal width;'
+			r' this is very likely an off-by-one error \(test_ast\.py, line \d+\)$'
 		):
 			Signal(range(0), reset = 0)
 
 	def test_reset_wrong_range(self):
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Reset value 11 is not within the signal shape range\(0, 10\)$'
+			ToriiSyntaxError,
+			r'^The reset value 11 falls outside the valid range for the signal \'\$signal\' \[0:9\]'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Signal(range(0, 10), reset = 11)
 
 		with self.assertRaisesRegex(
-			SyntaxError,
-			r'^Reset value 0 is not within the signal shape range\(1, 10\)$'
+			ToriiSyntaxError,
+			r'^The reset value 0 falls outside the valid range for the signal \'\$signal\' \[1:9\]'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Signal(range(1, 10), reset = 0)
 

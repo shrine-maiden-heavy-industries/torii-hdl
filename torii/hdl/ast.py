@@ -1615,15 +1615,32 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 
 		if name is not None:
 			if not isinstance(name, str):
-				raise TypeError(f'Name must be a string, not {name!r}')
+				raise ToriiSyntaxError(
+					f'Signal names must be a string, not {name!r}',
+					self.src_loc
+				)
+
 			if name == '' or not _check_name(name):
-				raise NameError('Signal name must not be empty or contain any control or whitespace characters')
+				err = ToriiSyntaxError(
+					'Signal names may not be empty or contain any control or whitespace characters',
+					self.src_loc,
+				)
+
+				if name == '':
+					err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+				else:
+					err.add_note(
+						'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs,'
+						' Zl, Zp'
+					)
+
+				raise err
 
 		self.name = name or tracer.get_var_name(depth = 2 + src_loc_at, default = '$signal')
 
 		orig_shape = shape
 		if shape is None:
-			shape = unsigned(1)
+			shape = unsigned(1, src_loc_at = 1 + src_loc_at)
 		else:
 			shape = Shape.cast(shape, src_loc_at = 1 + src_loc_at)
 		self.width  = shape.width
@@ -1632,53 +1649,84 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 		if isinstance(orig_shape, ShapeCastable):
 			try:
 				reset_val = Const.cast(orig_shape.const(reset))
-			except Exception:
-				raise TypeError(
-					f'Reset value must be a constant initializer of {orig_shape!r}'
-				)
+			except Exception as e:
+				raise ToriiSyntaxError(
+					f'The reset value for the signal \'{self.name}\' must be a constant initializer of shape'
+					f' {orig_shape!r}',
+					self.src_loc
+				) from e
 
 			if reset_val.shape() != Shape.cast(orig_shape):
-				raise ValueError(
-					f'Constant returned by {orig_shape!r}.const() must have the shape that it casts '
-					f'to, {Shape.cast(orig_shape)!r}, and not {reset_val.shape()!r}'
+				raise ToriiSyntaxError(
+					f'The reset value for the signal \'{self.name}\' has different const and non-const shapes',
+					self.src_loc,
+					notes = [
+						f'The constant version of {orig_shape!r} turns into {reset_val.shape()!r}, not the'
+						f' expected {Shape.cast(orig_shape)!r}'
+					]
 				)
 		else:
 			try:
 				reset_val = Const.cast(reset or 0)
-			except ToriiSyntaxError:
-				raise TypeError(
-					f'Reset value must be a constant-castable expression, not {reset!r}'
-				)
+			except ToriiSyntaxError as e:
+				raise ToriiSyntaxError(
+					f'The reset value for the signal \'{self.name}\' must be a constant-castable expression, not '
+					f'{reset!r}',
+					self.src_loc
+				) from e
 
 		# Avoid false positives for all-zeroes and all-ones
 		if reset not in (None, 0, -1):
-			if reset_val.shape().signed and not self.signed:
+			reset_shape = reset_val.shape(src_loc_at = 1 + src_loc_at)
+			if reset_shape.signed and not self.signed:
 				warnings.warn(
-					message = f'Reset value {reset!r} is signed, but the signal shape is {shape!r}',
+					message = f'The reset value for \'{self.name}\' is signed while the signal itself is unsigned',
 					category = ToriiSyntaxWarning,
-					stacklevel = 2
+					stacklevel = 2 + src_loc_at,
 				)
 			elif (
-				reset_val.shape().width > self.width or
-				reset_val.shape().width == self.width and
-				self.signed and not reset_val.shape().signed
+				reset_shape.width > self.width or
+				reset_shape.width == self.width and
+				self.signed and not reset_shape.signed
 			):
-				warnings.warn(
-					message = f'Reset value {reset!r} will be truncated to the signal shape {shape!r}',
-					category = ToriiSyntaxWarning,
-					stacklevel = 2
+				warning = ToriiSyntaxWarning(
+					f'The reset value for the signal \'{self.name}\' will be truncated to match its width'
 				)
+
+				if reset_shape.width > self.width:
+					warning.add_note(
+						f'The signal \'{self.name}\' is {self.width} bit(s) wide where as the reset value is'
+						f' {reset_shape.width} bit(s) wide, causing a truncation of'
+						f' {reset_shape.width - self.width} bit(s)'
+					)
+
+				if self.signed and not reset_shape.signed:
+					warning.add_note(
+						f'The signal \'{self.name}\' is signed where as the reset value for it is unsigned'
+					)
+
+				warnings.warn(warning, stacklevel = 2 + src_loc_at)
+
 		self.reset = reset_val.value
 		self.reset_less = bool(reset_less)
 
 		if isinstance(orig_shape, range) and reset is not None and reset not in orig_shape:
 			if reset == orig_shape.stop:
-				raise SyntaxError(
-					f'Reset value {reset!r} equals the non-inclusive end of the signal '
-					f'shape {orig_shape!r}; this is likely an off-by-one error',
+				raise ToriiSyntaxError(
+					f'The reset value {reset} for the signal \'{self.name}\' is equal to the non-inclusive'
+					' end of the signal width; this is very likely an off-by-one error',
+					self.src_loc,
+					notes = [
+						f'The signal \'{self.name}\' is {orig_shape.stop - 1} bit(s) wide:'
+						f' [{orig_shape.start}:{orig_shape.stop - 1}]'
+					]
 				)
 			else:
-				raise SyntaxError(f'Reset value {reset!r} is not within the signal shape {orig_shape!r}')
+				raise ToriiSyntaxError(
+					f'The reset value {reset} falls outside the valid range for the signal \'{self.name}\''
+					f' [{orig_shape.start}:{orig_shape.stop - 1}]',
+					self.src_loc
+				)
 
 		self.attrs = OrderedDict(() if attrs is None else attrs)
 
