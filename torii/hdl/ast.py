@@ -2630,8 +2630,8 @@ class Assign(Statement):
 
 	def __init__(self, lhs: ValueCastT, rhs: ValueCastT, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
-		self.lhs = Value.cast(lhs)
-		self.rhs = Value.cast(rhs)
+		self.lhs = Value.cast(lhs, src_loc_at = 1 + src_loc_at)
+		self.rhs = Value.cast(rhs, src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> ValueSet | SignalSet:
 		return self.lhs._lhs_signals()
