@@ -1066,13 +1066,14 @@ class SliceTestCase(ToriiTestSuiteCase):
 
 	def test_start_end_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Slice start must be an integer, not \'x\'$'
+			ToriiSyntaxError,
+			r'^The start index of a Slice must be an integer, not \'x\' \(test_ast\.py, line \d+\)$'
 		):
 			Slice(0, 'x', 1)
+
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Slice stop must be an integer, not \'x\'$'
+			ToriiSyntaxError,
+			r'^The stop index of a Slice must be an integer, not \'x\' \(test_ast\.py, line \d+\)$'
 		):
 			Slice(0, 1, 'x')
 
@@ -1080,27 +1081,31 @@ class SliceTestCase(ToriiTestSuiteCase):
 		c = Const(0, 8)
 		with self.assertRaisesRegex(
 			IndexError,
-			r'^Cannot start slice 10 bits into 8-bit value$'
+			r'^Cannot start slice 10 bits into a\(n\) 8-bit value \(test_ast\.py, line \d+\)$'
 		):
 			Slice(c, 10, 12)
+
 		with self.assertRaisesRegex(
 			IndexError,
-			r'^Cannot stop slice 12 bits into 8-bit value$'
+			r'^Cannot stop slice 12 bits into a\(n\) 8-bit value \(test_ast\.py, line \d+\)$'
 		):
 			Slice(c, 0, 12)
+
 		with self.assertRaisesRegex(
 			IndexError,
-			r'^Slice start 4 must be less than slice stop 2$'
+			r'^Slice start 4 must be less than slice stop 2 \(test_ast\.py, line \d+\)$'
 		):
 			Slice(c, 4, 2)
+
 		with self.assertRaisesRegex(
 			IndexError,
-			r'^Cannot start slice -9 bits into 8-bit value$'
+			r'^Cannot start slice -9 bits into a\(n\) 8-bit value \(test_ast\.py, line \d+\)$'
 		):
 			Slice(c, -9, -5)
+
 		with self.assertRaisesRegex(
 			IndexError,
-			r'^Cannot stop slice 9 bits into 8-bit value$'
+			r'^Cannot stop slice 9 bits into a\(n\) 8-bit value \(test_ast\.py, line \d+\)$'
 		):
 			Slice(c, 5, 9)
 

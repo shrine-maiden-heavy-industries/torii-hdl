@@ -1337,22 +1337,78 @@ class Slice(Value):
 		self, value: ValueCastT, start: int, stop: int, *, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(start, int):
-			raise TypeError(f'Slice start must be an integer, not {start!r}')
-		if not isinstance(stop, int):
-			raise TypeError(f'Slice stop must be an integer, not {stop!r}')
+			raise ToriiSyntaxError(
+				f'The start index of a Slice must be an integer, not {start!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
-		value = Value.cast(value)
+		if not isinstance(stop, int):
+			raise ToriiSyntaxError(
+				f'The stop index of a Slice must be an integer, not {stop!r}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
+		value = Value.cast(value, src_loc_at = 1 + src_loc_at)
 		n = len(value)
 		if start not in range(-n, n + 1):
-			raise IndexError(f'Cannot start slice {start} bits into {n}-bit value')
+			err = ToriiIndexError(
+				f'Cannot start slice {start} bits into a(n) {n}-bit value',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
+			if start < -n:
+				err.add_note(
+					f'The start value {start} wants to access the {n - start}-th bit past the minimum start index'
+					f' of -{n}'
+				)
+			elif start > n + 1:
+				err.add_note(
+					f'The start value {start} wants to access the {start - (n + 1)}-th bit past the maximum start'
+					f' index of {n + 1}'
+				)
+
+			err.add_note(
+				'The start index of a Torii slice only wraps once in either direction, this may be changed'
+				' in the future.'
+			)
+
+			raise err
+
 		if start < 0:
 			start += n
+
 		if stop not in range(-n, n + 1):
-			raise IndexError(f'Cannot stop slice {stop} bits into {n}-bit value')
+			err = ToriiIndexError(
+				f'Cannot stop slice {stop} bits into a(n) {n}-bit value',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
+			if stop < -n:
+				err.add_note(
+					f'The start value {stop} wants to access the {n - stop}-th bit past the minimum stop index'
+					f' of -{n}'
+				)
+			elif stop > n + 1:
+				err.add_note(
+					f'The stop value {stop} wants to access the {stop - (n + 1)}-th bit past the maximum stop'
+					f' index of {n + 1}'
+				)
+
+			err.add_note(
+				'The stop index of a Torii slice only wraps once in either direction, this may be changed'
+				' in the future.'
+			)
+
+			raise err
+
 		if stop < 0:
 			stop += n
+
 		if start > stop:
-			raise IndexError(f'Slice start {start} must be less than slice stop {stop}')
+			raise ToriiIndexError(
+				f'Slice start {start} must be less than slice stop {stop}',
+				tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
 
 		super().__init__(src_loc_at = src_loc_at)
 		self.value = value
