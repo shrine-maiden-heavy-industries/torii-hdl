@@ -206,7 +206,7 @@ class Shape:
 			else:
 				width  = max(width, member_shape.width)
 
-		return Shape(width, signed)
+		return Shape(width, signed, src_loc_at = 1 + src_loc_at)
 
 	@staticmethod
 	def cast(obj: object, *, src_loc_at: int = 0) -> Shape:
