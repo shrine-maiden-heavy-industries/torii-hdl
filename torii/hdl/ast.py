@@ -2680,15 +2680,31 @@ class Property(Statement, MustUse):
 	) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 		self.kind   = self.Kind(kind)
-		self.test   = Value.cast(test)
+		self.test   = Value.cast(test, src_loc_at = 1 + src_loc_at)
 
 		self.name   = name
 
 		if not isinstance(self.name, str) and self.name is not None:
-			raise TypeError(f'Property name must be a string of None, not {self.name!r}')
+			raise ToriiSyntaxError(
+				f'Property names must be a string or None, not {self.name!r}',
+				self.src_loc
+			)
 
 		if self.name is not None and (self.name == '' or not _check_name(self.name)):
-			raise NameError('Property name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'Property names may not be empty or contain any control or whitespace characters',
+				self.src_loc,
+			)
+
+			if name == '':
+				err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs,'
+					' Zl, Zp'
+				)
+
+			raise err
 
 		if _check is None:
 			self._check: Signal = Signal(reset_less = True, name = f'${self.kind.value}$check')

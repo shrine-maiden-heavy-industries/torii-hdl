@@ -2234,19 +2234,28 @@ class PropertyTestCase(ToriiTestSuiteCase):
 		Property._MustUse__silence = True
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Property name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Property names must be a string or None, not 0 \(test_ast\.py, line \d+\)$'
+		):
+			Property('assert', Signal(), name = 0)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Property names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Property('assert', Signal(), name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Property name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Property names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Property('assert', Signal(), name = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Property name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Property names may not be empty or contain any control or whitespace characters'
+			r' \(test_ast\.py, line \d+\)$'
 		):
 			Property('assert', Signal(), name = '\x18')
