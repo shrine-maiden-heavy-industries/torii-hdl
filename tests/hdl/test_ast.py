@@ -1649,7 +1649,7 @@ class MockValueCastable(ValueCastable):
 	def __init__(self, dest) -> None:
 		self.dest = dest
 
-	def shape(self):
+	def shape(self, *, src_loc_at: int = 0):
 		return Value.cast(self.dest).shape()
 
 	@ValueCastable.lowermethod
@@ -1660,7 +1660,7 @@ class MockValueCastableChanges(ValueCastable):
 	def __init__(self, width = 0) -> None:
 		self.width = width
 
-	def shape(self):
+	def shape(self, *, src_loc_at: int = 0):
 		return unsigned(self.width)
 
 	@ValueCastable.lowermethod
@@ -1671,7 +1671,7 @@ class MockValueCastableCustomGetattr(ValueCastable):
 	def __init__(self) -> None:
 		pass
 
-	def shape(self):
+	def shape(self, *, src_loc_at: int = 0):
 		raise AssertionError(False)
 
 	@ValueCastable.lowermethod
@@ -1692,7 +1692,7 @@ class ValueCastableTestCase(ToriiTestSuiteCase):
 				def __init__(self) -> None:
 					pass # :nocov:
 
-				def shape(self):
+				def shape(self, *, src_loc_at: int = 0):
 					pass # :nocov:
 
 				def as_value(self):

@@ -291,8 +291,8 @@ class Record(ValueCastable):
 			name = '<unnamed>'
 		return f'(rec {name} {" ".join(fields)})'
 
-	def shape(self):
-		return self.as_value().shape()
+	def shape(self, *, src_loc_at: int = 0):
+		return self.as_value().shape(src_loc_at = 1 + src_loc_at)
 
 	def connect(self, *subordinates, include = None, exclude = None):
 		'''

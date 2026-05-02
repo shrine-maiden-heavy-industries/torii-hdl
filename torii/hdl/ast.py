@@ -1030,7 +1030,7 @@ class Value(metaclass = ABCMeta):
 		return Assign(self, self - value, src_loc_at = 1 + src_loc_at)
 
 	@abstractmethod
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		'''
 		Bit width and signedness of a value.
 
@@ -1181,8 +1181,8 @@ class Const(Value, metaclass = _ConstMeta):
 		self.signed = shape.signed
 		self.value  = self.normalize(self.value, shape)
 
-	def shape(self) -> Shape:
-		return Shape(self.width, self.signed, src_loc_at = 1)
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return Shape(self.width, self.signed, src_loc_at = 1 + src_loc_at)
 
 	def _rhs_signals(self) -> SignalSet:
 		'''
@@ -1209,7 +1209,7 @@ class Operator(Value):
 		self.operator = operator
 		self.operands = [ Value.cast(op) for op in operands ]
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		def _bitwise_binary_shape(a_shape: Shape, b_shape: Shape) -> Shape:
 			if not a_shape.signed and not b_shape.signed:
 				# both operands unsigned
@@ -1335,8 +1335,8 @@ class Slice(Value):
 		self.start = int(operator.index(start))
 		self.stop  = int(operator.index(stop))
 
-	def shape(self) -> Shape:
-		return Shape(self.stop - self.start)
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return Shape(self.stop - self.start, src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return self.value._lhs_signals()
@@ -1373,8 +1373,8 @@ class Part(Value):
 		self.width  = width
 		self.stride = stride
 
-	def shape(self) -> Shape:
-		return Shape(self.width)
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return Shape(self.width, src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return self.value._lhs_signals()
@@ -1442,8 +1442,8 @@ class Cat(Value):
 			# NOTE(aki): Type inference is scrambled by the check above, so as painful as it is we ignore it
 			self.parts.append(Value.cast(arg, src_loc_at = 1 + src_loc_at)) # type: ignore
 
-	def shape(self) -> Shape:
-		return Shape(sum(len(part) for part in self.parts))
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return Shape(sum(len(part) for part in self.parts), src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> SignalSet | ValueSet:
 		return union((part._lhs_signals() for part in self.parts), start = SignalSet())
@@ -1647,8 +1647,8 @@ class Signal(Value, DUID, Generic[*_SigParams]):
 		# NOTE(aki): mypy will complain about this due to the param expansion
 		return Signal(**kw, src_loc_at = 1 + src_loc_at) # type: ignore
 
-	def shape(self) -> Shape:
-		return Shape(self.width, self.signed)
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return Shape(self.width, self.signed, src_loc_at = 1 + src_loc_at)
 
 	def _lhs_signals(self) -> SignalSet:
 		return SignalSet((self,))
@@ -1707,7 +1707,7 @@ class ClockSignal(Value):
 
 		self.domain = domain
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		return Shape(1)
 
 	def _lhs_signals(self) -> SignalSet:
@@ -1771,7 +1771,7 @@ class ResetSignal(Value):
 		self.domain = domain
 		self.allow_reset_less = allow_reset_less
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		return Shape(1)
 
 	def _lhs_signals(self) -> SignalSet:
@@ -1801,7 +1801,7 @@ class AnyValue(Value, DUID):
 		self.width  = self._shape.width
 		self.signed = self._shape.signed
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		return self._shape
 
 	def _rhs_signals(self) -> SignalSet:
@@ -1950,7 +1950,7 @@ class ArrayProxy(Value):
 	def _iter_as_values(self):
 		return (Value.cast(elem) for elem in self.elems)
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		unsigned_width = signed_width = 0
 		has_unsigned = has_signed = False
 		for elem_shape in (elem.shape() for elem in self._iter_as_values()):
@@ -2187,8 +2187,8 @@ class Sample(Value):
 				src_loc = self.src_loc
 			)
 
-	def shape(self) -> Shape:
-		return self.value.shape()
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
+		return self.value.shape(src_loc_at = 1 + src_loc_at)
 
 	def _rhs_signals(self) -> ValueSet:
 		return ValueSet((self,))
@@ -2396,7 +2396,7 @@ class Initial(Value):
 	def __init__(self, *, src_loc_at: int = 0) -> None:
 		super().__init__(src_loc_at = src_loc_at)
 
-	def shape(self) -> Shape:
+	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		return Shape(1)
 
 	def _rhs_signals(self) -> ValueSet:
