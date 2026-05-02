@@ -315,13 +315,13 @@ class ShapeLike(metaclass = _ShapeLikeMeta):
 	def __new__(cls, *args, **kwargs):
 		raise TypeError('ShapeLike is an abstract class and cannot be constructed')
 
-def unsigned(width: int) -> Shape:
+def unsigned(width: int, *, src_loc_at: int = 0) -> Shape:
 	''' Shorthand for ``Shape(width, signed = False)``. '''
-	return Shape(width, signed = False, src_loc_at = 1)
+	return Shape(width, signed = False, src_loc_at = 1 + src_loc_at)
 
-def signed(width: int) -> Shape:
+def signed(width: int, *, src_loc_at: int = 0) -> Shape:
 	''' Shorthand for ``Shape(width, signed = True)``. '''
-	return Shape(width, signed = True, src_loc_at = 1)
+	return Shape(width, signed = True, src_loc_at = 1 + src_loc_at)
 
 def _overridable_by_swapping(method_name: str):
 	'''
