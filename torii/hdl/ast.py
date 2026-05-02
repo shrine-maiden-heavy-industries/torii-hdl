@@ -1061,6 +1061,8 @@ class Const(Value, metaclass = _ConstMeta):
 		self, value: int, shape: Shape | int | range | type | ShapeCastable | None = None, *,
 		src_loc_at: int = 0
 	) -> None:
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		# We deliberately do not call Value.__init__ here.
 		self.value = int(operator.index(value))
 		if shape is None:

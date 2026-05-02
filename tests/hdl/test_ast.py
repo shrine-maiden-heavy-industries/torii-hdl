@@ -659,6 +659,9 @@ class ConstTestCase(ToriiTestSuiteCase):
 		self.assertIsInstance(s, MockConstValue)
 		self.assertEqual(s.value, 10)
 
+	def test_source_locality(self) -> None:
+		self.assertSrcLoc(Const(0))
+
 class OperatorTestCase(ToriiTestSuiteCase):
 	def test_bool(self):
 		v = Const(0, 4).bool()
