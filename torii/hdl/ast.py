@@ -1306,7 +1306,7 @@ class Operator(Value):
 	def __repr__(self) -> str:
 		return f'({self.operator} {" ".join(map(repr, self.operands))})'
 
-def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
+def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT, *, src_loc_at: int = 0) -> Operator:
 	'''
 	Choose between two values.
 
@@ -1325,7 +1325,7 @@ def Mux(sel: ValueCastT, val1: ValueCastT, val0: ValueCastT) -> Operator:
 		Output ``Value``. If ``sel`` is asserted, the Mux returns ``val1``, else ``val0``.
 	'''
 
-	return Operator('m', (sel, val1, val0))
+	return Operator('m', (sel, val1, val0), src_loc_at = src_loc_at)
 
 @final
 class Slice(Value):
