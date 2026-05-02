@@ -2986,7 +2986,7 @@ class ValueKey:
 	'''
 
 	def __init__(self, value: ValueCastT) -> None:
-		self.value = Value.cast(value)
+		self.value = Value.cast(value, src_loc_at = 1)
 		if isinstance(self.value, Const):
 			self._hash = hash(self.value.value)
 		elif isinstance(self.value, (Signal, AnyValue)):
@@ -3017,7 +3017,14 @@ class ValueKey:
 		elif isinstance(self.value, Initial):
 			self._hash = 0
 		else: # :nocov:
-			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
+			raise ToriiSyntaxError(
+				f'Object of type {type(self.value).__name__} cannot be used as a key in Torii value collections',
+				tracer.get_src_loc(),
+				notes = [
+					'The following types of objects are supported as Value keys: Const, Signal, AnyValue, ClockSignal,'
+					' ResetSignal, Operator, Slice, Part, Cat, ArrayProxy, Sample, Initial'
+				]
+			)
 
 	def __hash__(self) -> int:
 		return self._hash
@@ -3102,7 +3109,14 @@ class ValueKey:
 
 			return True
 		else: # :nocov:
-			raise TypeError(f'Object {self.value!r} cannot be used as a key in value collections')
+			raise ToriiSyntaxError(
+				f'Object of type {type(self.value).__name__} cannot be used as a key in Torii value collections',
+				tracer.get_src_loc(),
+				notes = [
+					'The following types of objects are supported as Value keys: Const, Signal, AnyValue, ClockSignal,'
+					' ResetSignal, Operator, Slice, Part, Cat, ArrayProxy, Sample, Initial'
+				]
+			)
 
 	def __lt__(self, other: ValueKey) -> bool | Operator:
 		if not isinstance(other, ValueKey):
@@ -3126,7 +3140,14 @@ class ValueKey:
 				self.value.stop < other.value.stop
 			)
 		else: # :nocov:
-			raise TypeError(f'Object {other!r} cannot be used as a key in value collections')
+			raise ToriiSyntaxError(
+				f'Object of type {type(self.value).__name__} cannot be used as a key in Torii value collections',
+				tracer.get_src_loc(),
+				notes = [
+					'The following types of objects are supported as Value keys: Const, Signal, AnyValue, ClockSignal,'
+					' ResetSignal, Operator, Slice, Part, Cat, ArrayProxy, Sample, Initial'
+				]
+			)
 
 	def __repr__(self) -> str:
 		return f'<{__name__}.ValueKey {self.value!r}>'
