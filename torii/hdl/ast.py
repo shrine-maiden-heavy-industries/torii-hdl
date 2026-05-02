@@ -2770,7 +2770,10 @@ class Switch(Statement):
 		# be automatically traced, so whatever constructs a Switch may optionally provide it.
 		self.case_src_locs: dict[tuple[str, ...], SrcLoc] = {}
 
-		self.test  = Value.cast(test)
+		# XXX(aki):
+		# As per the note above, this might cause issues with diagnostics reporting if the test value
+		# casting throws a wobbly and we bubble it up the stack...
+		self.test  = Value.cast(test, src_loc_at = 1 + src_loc_at)
 		self.cases = OrderedDict[tuple[str, ...], _StatementList]()
 		for orig_keys, stmts in cases.items():
 			# Map: None -> (); key -> (key,); (key...) -> (key...)
@@ -2795,15 +2798,27 @@ class Switch(Statement):
 					if key_mask == 0:
 						new_key = ''
 				else:
-					raise TypeError(f'Object {key!r} cannot be used as a switch key')
-				if len(new_key) != len(self.test):
-					raise ValueError(
-						f'Length mismatch between switch key and test value {len(new_key)} != {len(self.test)}'
+					raise ToriiSyntaxError(
+						'Only strings, integers, integer backed enums, and tuples thereof can be used as switch keys,'
+						f' not objects of type {type(key).__name__}',
+						self.src_loc
 					)
+
+				if len(new_key) != len(self.test):
+					raise ToriiSyntaxError(
+						'The width of the test value and the switch keys must be the same',
+						self.src_loc,
+						notes = [
+							f'The test value has a width of {len(self.test)} where as the switch key \'{new_key}\''
+							f' has the width of {len(new_key)}'
+						]
+					)
+
 				new_keys = (*new_keys, new_key)
 			if not isinstance(stmts, Iterable):
 				stmts = [stmts]
-			self.cases[new_keys] = Statement.cast(stmts)
+			# XXX(aki): See note on `self.test` assignment
+			self.cases[new_keys] = Statement.cast(stmts, src_loc_at = 1 + src_loc_at)
 			if orig_keys in case_src_locs:
 				self.case_src_locs[new_keys] = case_src_locs[orig_keys]
 

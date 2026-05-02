@@ -2228,6 +2228,26 @@ class SwitchTestCase(ToriiTestSuiteCase):
 		s = Switch(Const(0, 8), {('00001111', 123): []})
 		self.assertEqual(s.cases, {('00001111', '01111011'): []})
 
+	def test_switch_key_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only strings, integers, integer backed enums, and tuples thereof can be used as switch keys,'
+			r' not objects of type bytes \(test_ast\.py, line \d+\)$'
+		):
+			Switch(Const(0, 2), {b'': []})
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The width of the test value and the switch keys must be the same \(test_ast\.py, line \d+\)$'
+		):
+			Switch(Const(0, 2), {'00000': []})
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The width of the test value and the switch keys must be the same \(test_ast\.py, line \d+\)$'
+		):
+			Switch(Const(0, 2), {'00': [], '000': []})
+
 class PropertyTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
