@@ -1431,7 +1431,7 @@ class Cat(Value):
 				)
 
 			# NOTE(aki): Type inference is scrambled by the check above, so as painful as it is we ignore it
-			self.parts.append(Value.cast(arg)) # type: ignore
+			self.parts.append(Value.cast(arg, src_loc_at = 1 + src_loc_at)) # type: ignore
 
 	def shape(self) -> Shape:
 		return Shape(sum(len(part) for part in self.parts))
