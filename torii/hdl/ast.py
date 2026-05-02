@@ -359,7 +359,7 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 			)
 		if key < 0:
 			key += n
-		return Slice(value, key, key + 1, src_loc_at = 1)
+		return Slice(value, key, key + 1, src_loc_at = 2)
 	elif isinstance(key, slice):
 		if isinstance(key.start, Value) or isinstance(key.stop, Value):
 			raise ToriiSyntaxError(
@@ -369,8 +369,8 @@ def _index_valuelike(value: Value | ValueCastable, key: object) -> Value:
 			)
 		start, stop, step = key.indices(n)
 		if step != 1:
-			return Cat(*(value[i] for i in range(start, stop, step)))
-		return Slice(value, start, stop, src_loc_at = 1)
+			return Cat(*(value[i] for i in range(start, stop, step)), src_loc_at = 2)
+		return Slice(value, start, stop, src_loc_at = 2)
 	elif isinstance(key, Value):
 		raise ToriiSyntaxError(
 			'Indexing a value with another value is not supported, use `Value.bit_select()` instead.',

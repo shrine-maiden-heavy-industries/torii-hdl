@@ -591,6 +591,11 @@ class ValueTestCase(ToriiTestSuiteCase):
 			'(eq (const 1\'d1) (- (const 1\'d1) (const 3\'d4)))'
 		)
 
+	def test_source_locality(self) -> None:
+		self.assertSrcLoc(Const(10)[0])
+		self.assertSrcLoc(Const(10)[0:5])
+		self.assertSrcLoc(Const(10)[0:2:8])
+
 class ConstTestCase(ToriiTestSuiteCase):
 	def test_shape(self):
 		self.assertEqual(Const(0).shape(),   unsigned(1))
