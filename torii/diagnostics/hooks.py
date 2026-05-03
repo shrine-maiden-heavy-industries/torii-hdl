@@ -184,16 +184,25 @@ def _render_diagnostic( # :nocov:
 	width = min(cons.width, _WARNING_RENDERING_OPTIONS['fancy_width']) - 4
 
 	# Print out the diagnostic type/message
+	if len(message) + 12 > width - 1:
+		# The number of characters we need to indent/pad line continuations to have them not flow under the diagnostic
+		# name, taking into account the two spaces at the start and end and the `:`
+		diag_name_pad = (3 + len(category.__name__))
+		message = '\n'.join(wrap(message, width - (diag_name_pad - 1), subsequent_indent = ' ' * diag_name_pad))
+
 	cons.print(f' [{accent_color}]{category.__name__}[/][white]:[/] {message}')
 
 	if show_source:
 		show_source = _render_fancy(cons, filename, lineno, border_style = accent_color, width = width)
 	else:
+		# In the case where we're not doing a fancy render, we need to pad out the context line
+		cons.print()
+
 		# If the line we were given is None try to get it from the linecache
 		if line is None:
 			line = getline(filename, lineno)
 
-		cons.print(f'{filename}:{lineno}: {line}')
+		cons.print(f' {filename}:{lineno}: {line}')
 
 	if additional_ctx is not None:
 		msg, src_loc = additional_ctx
