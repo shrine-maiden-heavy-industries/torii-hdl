@@ -756,10 +756,45 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			yield fsm
 			for state_name in fsm_data['encoding']:
 				if state_name not in fsm_data['states']:
+					matches = _get_best_matching(state_name, fsm_data['states'].keys())
+					notes = None
+					additional_ctx = None
+
+					if len(matches) > 0:
+						match = matches.pop()
+						message = (
+							f'The FSM state \'{state_name}\' did not match any existing states in the FSM'
+							f' \'{fsm_data["name"]}\', did you mean \'{match}\'?'
+						)
+
+						if len(matches) > 0:
+							additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+							notes = [
+								f'Additional possible matches for \'{state_name}\' are: {additional_matches}'
+							]
+
+						additional_ctx = (
+							f'The state \'{match}\' was defined here:',
+							fsm_data['state_src_locs'][match]
+						)
+					else:
+						message = (
+							f'The specified FSM state \'{state_name}\' was not found in the FSM'
+							f' \'{fsm_data["name"]}\''
+						)
+
+					if state_name in fsm_data['state_visit_map']:
+						src_loc = fsm_data['state_visit_map'][state_name][1]
+					else:
+						src_loc = tracer.get_src_loc(src_loc_at = 1)
+
 					raise ToriiSyntaxError(
-						f'FSM state \'{state_name}\' is referenced but not defined',
-						tracer.get_src_loc(src_loc_at = 1)
+						message = message,
+						src_loc = src_loc,
+						notes = notes,
+						additional_ctx = additional_ctx
 					)
+
 		finally:
 			self.domain._depth -= 1
 			self._ctrl_context = None

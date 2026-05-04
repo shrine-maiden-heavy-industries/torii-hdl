@@ -870,7 +870,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^FSM state \'FOO\' is referenced but not defined \(test_dsl\.py, line \d+\)$'
+			r'^The specified FSM state \'FOO\' was not found in the FSM \'fsm\' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM() as fsm:
 				fsm.ongoing('FOO')
