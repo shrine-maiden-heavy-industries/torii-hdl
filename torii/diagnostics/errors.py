@@ -10,6 +10,7 @@ __all__ = (
 	'AttributeError',
 	'ConstraintError',
 	'DomainError',
+	'DriverConflictError',
 	'IndexError',
 	'NameError',
 	'NameNotFound',
@@ -124,4 +125,8 @@ class AttributeError(ToriiError, AttributeError):
 	This is used for where we wish to maintain proper functionality with things such as the
 	python :py:meth:`hasattr` call, but also if not caught emit a pretty Torii diagnostic
 	'''
+	pass
+
+class DriverConflictError(ToriiError):
+	''' A driver-driver conflict '''
 	pass
