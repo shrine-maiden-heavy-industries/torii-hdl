@@ -904,14 +904,21 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			else:
 				src_loc = data['src_loc']
 				matches = _get_best_matching(fsm_reset, fsm_states.keys())
+				notes = None
 				additional_ctx = None
 
 				if len(matches) > 0:
-					match = matches[0]
+					match = matches.pop()
 					message = (
 						f'The specified reset state \'{fsm_reset}\' did not match any existing states in the FSM '
 						f'\'{fsm_name}\', did you mean \'{match}\'?'
 					)
+
+					if len(matches) > 0:
+						additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+						notes = [
+							f'Additional possible matches for \'{fsm_reset}\' are: {additional_matches}'
+						]
 
 					additional_ctx = (
 						f'The state \'{match}\' was defined here:',
@@ -921,7 +928,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					message = f'The specified reset state \'{fsm_reset}\' does not exist inside the FSM \'{fsm_name}\''
 
 				raise ToriiSyntaxError(
-					message = message, src_loc = src_loc, additional_ctx = additional_ctx
+					message = message, src_loc = src_loc, notes = notes, additional_ctx = additional_ctx
 				)
 			# The FSM is encoded such that the state with encoding 0 is always the reset state.
 			fsm_decoding.update((n, s) for s, n in fsm_encoding.items())
