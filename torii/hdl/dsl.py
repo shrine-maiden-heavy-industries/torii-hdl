@@ -62,16 +62,18 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 	'''
 
 	def __getattr__(self, name: str):
-		if name == 'submodules':
-			warnings.warn(
-				f'Using \'<module>.d.{name}\' would add statements to clock domain {name!r}; '
-				f'did you mean <module>.{name} instead?',
-				ToriiSyntaxWarning, stacklevel = 2
+		if name in ('submodule', 'submodules'):
+			raise ToriiSyntaxError(
+				f'The clock domain \'{name}\' does not exist and is explicitly disallowed;'
+				f' you likely meant \'<module>.submodules\' instead of \'<module>.d.{name}\'',
+				tracer.get_src_loc()
 			)
+
 		if name == 'comb':
 			domain = None
 		else:
 			domain = name
+
 		return _ModuleBuilderDomain(self._builder, self._depth, domain)
 
 	def __getitem__(self, name):

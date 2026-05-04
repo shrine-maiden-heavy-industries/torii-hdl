@@ -127,13 +127,22 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_d_suspicious(self):
 		m = Module()
-		with self.assertWarnsRegex(
-			ToriiSyntaxWarning, (
-				r'^Using \'<module>\.d\.submodules\' would add statements to clock domain '
-				r'\'submodules\'; did you mean <module>\.submodules instead\?$'
-			)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The clock domain \'submodules\' does not exist and is explicitly disallowed;'
+			r' you likely meant \'<module>.submodules\' instead of \'<module>.d.submodules\''
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			m.d.submodules += []
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The clock domain \'submodule\' does not exist and is explicitly disallowed;'
+			r' you likely meant \'<module>.submodules\' instead of \'<module>.d.submodule\''
+			r' \(test_dsl\.py, line \d+\)$'
+		):
+			m.d.submodule += []
 
 	def test_clock_signal(self):
 		m = Module()
