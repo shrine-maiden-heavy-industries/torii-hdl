@@ -894,17 +894,20 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only assignment to `m\.next` is permitted \(test_dsl\.py, line \d+\)$'
+			r'^The \'m\.next\' attribute is only assignable, and may only be used in the context of an FSM state'
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			m.next
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state \(test_dsl\.py, line \d+\)$'
+			r'^Assignment to \'m\.next\' is only permitted from within the context of an FSM state'
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			m.next = 'FOO'
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`m\.next = <\.\.\.>` is only permitted inside an FSM state \(test_dsl\.py, line \d+\)$'
+			r'^Assignment to \'m\.next\' is only permitted from within the context of an FSM state'
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.FSM():
 				m.next = 'FOO'

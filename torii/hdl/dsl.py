@@ -875,7 +875,10 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		.. todo:: Document Me
 		'''
 
-		raise ToriiSyntaxError('Only assignment to `m.next` is permitted', tracer.get_src_loc())
+		raise ToriiSyntaxError(
+			'The \'m.next\' attribute is only assignable, and may only be used in the context of an FSM state',
+			tracer.get_src_loc()
+		)
 
 	@next.setter
 	def next(self, name):
@@ -900,7 +903,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					return
 
 		raise ToriiSyntaxError(
-			'`m.next = <...>` is only permitted inside an FSM state',
+			'Assignment to \'m.next\' is only permitted from within the context of an FSM state',
 			tracer.get_src_loc()
 		)
 
