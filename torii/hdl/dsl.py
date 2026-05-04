@@ -492,10 +492,21 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			err = ToriiSyntaxError('Elif without preceding If', tracer.get_src_loc(src_loc_at = 1))
+			err = ToriiSyntaxError('\'Elif\' without a preceding \'If\'', src_loc)
 			if if_data is not None and if_data['depth'] < self.domain._depth:
-				err.add_note(f'There is an If defined on line {if_data["src_loc"][1]}, is the Elif over-indented?')
+				# If the `m.If` is within 5 lines, we don't need to add a new context window
+				if abs(src_loc[1] - if_data['src_loc'][1]) <= 5:
+					err.add_note(
+						f'There is an \'If\' defined on line {if_data["src_loc"][1]}, is this \'Elif\' over-indented?'
+					)
+				else:
+					err.additional_ctx = (
+						'There is an \'If\' defined in the scope above this one, is this \'Elif\' over-indented?',
+						if_data["src_loc"]
+					)
+
 			raise err
+
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])
@@ -521,10 +532,23 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if TYPE_CHECKING:
 			assert if_data is None or isinstance(if_data, _IfDict)
 		if if_data is None or if_data['depth'] != self.domain._depth:
-			err = ToriiSyntaxError('Else without preceding If/Elif', src_loc)
+			err = ToriiSyntaxError('\'Else\' without a preceding \'If\' or \'Elif\'', src_loc)
 			if if_data is not None and if_data['depth'] < self.domain._depth:
-				err.add_note(f'There is an If/Elif defined on line {if_data["src_loc"][1]}, is the Else over-indented?')
+				# If the `m.If` is within 5 lines, we don't need to add a new context window
+				if abs(src_loc[1] - if_data['src_loc'][1]) <= 5:
+					err.add_note(
+						f'There is an \'If\' or \'Elif\' defined on line {if_data["src_loc"][1]},'
+						' is this \'Else\' over-indented?'
+					)
+				else:
+					err.additional_ctx = (
+						'There is an \'If\' or \'Elif\' defined in the scope above this one, is this'
+						' \'Elif\' over-indented?',
+						if_data["src_loc"]
+					)
+
 			raise err
+
 		_outer_case = self._statements
 		try:
 			self._statements = Statement.cast([])

@@ -327,7 +327,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_Elif_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
-			ToriiSyntaxError, r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+			ToriiSyntaxError,
+			r'^\'Elif\' without a preceding \'If\' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Elif(self.s2):
 				pass # :nocov:
@@ -337,7 +338,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+				r'^\'Elif\' without a preceding \'If\' \(test_dsl\.py, line \d+\)$'
 			):
 				with m.Elif(self.s2):
 					pass # :nocov:
@@ -346,7 +347,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Else without preceding If\/Elif \(test_dsl\.py, line \d+\)$'
+			r'^\'Else\' without a preceding \'If\' or \'Elif\' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Else():
 				pass # :nocov:
@@ -356,7 +357,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.If(self.s1):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Else without preceding If/Elif \(test_dsl\.py, line \d+\)$'
+				r'^\'Else\' without a preceding \'If\' or \'Elif\' \(test_dsl\.py, line \d+\)$'
 			):
 				with m.Else():
 					pass # :nocov:
@@ -368,7 +369,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Elif(self.s2):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Elif without preceding If \(test_dsl\.py, line \d+\)$'
+				r'^\'Elif\' without a preceding \'If\' \(test_dsl\.py, line \d+\)$'
 			):
 				with m.Elif(self.s3):
 					pass # :nocov:
@@ -380,7 +381,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Else():
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^Else without preceding If/Elif \(test_dsl\.py, line \d+\)$'
+				r'^\'Else\' without a preceding \'If\' or \'Elif\' \(test_dsl\.py, line \d+\)$'
 			):
 				with m.Else():
 					pass # :nocov:
