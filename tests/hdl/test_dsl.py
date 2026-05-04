@@ -885,7 +885,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 				pass
 			with self.assertRaisesRegex(
 				ToriiSyntaxError,
-				r'^FSM state \'FOO\' is already defined \(test_dsl\.py, line \d+\)$'
+				r'^The FSM state \'FOO\' has already been defined previously \(test_dsl\.py, line \d+\)$'
 			):
 				with m.State('FOO'):
 					pass # :nocov:

@@ -834,8 +834,22 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if fsm_data is None:
 			raise ToriiSyntaxError('State outside of FSM block', tracer.get_src_loc(src_loc_at = 1))
 		if name in fsm_data['states']:
-			err = ToriiSyntaxError(f'FSM state \'{name}\' is already defined', src_loc)
-			err.add_note(f'\'{name}\' was previously defined on line {fsm_data["state_src_locs"][name][1]}')
+			err = ToriiSyntaxError(
+				f'The FSM state \'{name}\' has already been defined previously',
+				src_loc
+			)
+
+			# If the state is within 5 lines wwe don't need a new context window
+			if abs(src_loc[1] - fsm_data['src_loc'][1]) <= 5:
+				err.add_note(
+					f'The state \'{name}\' was previously defined on line {fsm_data["state_src_locs"][name][1]}'
+				)
+			else:
+				err.additional_ctx = (
+					f'The state \'{name}\' was previously defined here:',
+					fsm_data['state_src_locs'][name]
+				)
+
 			raise err
 		if name not in fsm_data['encoding']:
 			fsm_data['encoding'][name] = len(fsm_data['encoding'])
