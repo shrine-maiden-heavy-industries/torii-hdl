@@ -1124,12 +1124,14 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only clock domains may be added to `m\.domains`, not 1 \(test_dsl\.py, line \d+\)$'
+			r'^Only Torii \'ClockDomain\'s may be added to the module domain list, not objects'
+			r' of type int \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains.foo = 1
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only clock domains may be added to `m\.domains`, not 1 \(test_dsl\.py, line \d+\)$'
+			r'^Only Torii \'ClockDomain\'s may be added to the module domain list, not objects'
+			r' of type int \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains += 1
 
@@ -1137,8 +1139,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Clock domain name \'bar\' must match name in `m\.domains\.foo \+= \.\.\.` syntax '
-			r'\(test_dsl\.py, line \d+\)$'
+			r'^The name of the clock domain must match the name for the domain in the module when it is'
+			r' explicitly specified \(test_dsl\.py, line \d+\)$'
 		):
 			m.domains.foo = ClockDomain('bar')
 

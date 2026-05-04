@@ -201,23 +201,33 @@ class _ModuleBuilderDomainSet:
 		for domain in flatten([domains]):
 			if not isinstance(domain, ClockDomain):
 				raise ToriiSyntaxError(
-					f'Only clock domains may be added to `m.domains`, not {domain!r}',
+					'Only Torii \'ClockDomain\'s may be added to the module domain list, not objects of type'
+					f' {type(domain).__name__}',
 					tracer.get_src_loc()
 				)
+
 			self._builder._add_domain(domain)
 		return self
 
 	def __setattr__(self, name, domain):
 		if not isinstance(domain, ClockDomain):
 			raise ToriiSyntaxError(
-				f'Only clock domains may be added to `m.domains`, not {domain!r}',
+				'Only Torii \'ClockDomain\'s may be added to the module domain list, not objects of type'
+				f' {type(domain).__name__}',
 				tracer.get_src_loc()
 			)
+
 		if domain.name != name:
 			raise ToriiSyntaxError(
-				f'Clock domain name {domain.name!r} must match name in `m.domains.{name} += ...` syntax',
-				tracer.get_src_loc()
+				'The name of the clock domain must match the name for the domain in the module when it is'
+				' explicitly specified',
+				tracer.get_src_loc(),
+				notes = [
+					f'The clock domain is named \'{domain.name}\', where as the destination domain is called'
+					f' {name}'
+				]
 			)
+
 		self._builder._add_domain(domain)
 
 Params = ParamSpec('Params')
