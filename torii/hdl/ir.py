@@ -194,7 +194,14 @@ class Fragment:
 				raise TypeError(f'Domain must be a \'ClockDomain\', not a \'{domain!r}\'')
 
 			if domain.name in self.domains:
-				raise ValueError(f'Domain \'{domain.name}\' already in the list of domains')
+				raise ToriiSyntaxError(
+					f'Clock domain named \'{domain.name}\' already exists',
+					domain.src_loc,
+					additional_ctx = (
+						f'The domain \'{domain.name}\' was previously defined here:',
+						self.domains[domain.name].src_loc
+					)
+				)
 
 			self.domains[domain.name] = domain
 
