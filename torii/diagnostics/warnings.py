@@ -6,7 +6,7 @@
 
 __all__ = (
 	'ConstraintWarning',
-	'DriverConflict',
+	'DriverConflictWarning',
 	'MustUseWarning',
 	'NameWarning',
 	'PlatformWarning',
@@ -43,7 +43,7 @@ class ToolWarning(ToriiWarning):
 	''' A warning from the execution of a tool '''
 	pass
 
-class DriverConflict(ToriiWarning):
+class DriverConflictWarning(ToriiWarning):
 	''' A Multiple-driver conflict '''
 	pass
 

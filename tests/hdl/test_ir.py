@@ -3,11 +3,11 @@
 
 from collections           import OrderedDict
 
-from torii.diagnostics     import DomainError, ToriiSyntaxError
+from torii.diagnostics     import DomainError, DriverConflictWarning, DriverConflictError, ToriiSyntaxError
 from torii.hdl.ast         import Cat, ClockSignal, Const, ResetSignal, Signal, SignalDict, SignalKey, SignalSet
 from torii.hdl.cd          import ClockDomain
 from torii.hdl.dsl         import Module
-from torii.hdl.ir          import DriverConflict, Elaboratable, Fragment, Instance
+from torii.hdl.ir          import Elaboratable, Fragment, Instance
 from torii.platform.formal import FormalPlatform
 from torii.tools           import ToolNotFound
 
@@ -682,7 +682,7 @@ class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 		self.setUp_self_sub()
 
 		with self.assertRaisesRegex(
-			DriverConflict,
+			DriverConflictError,
 			r'^Signal \'\(sig s1\)\' is driven from multiple fragments: top, top.<unnamed #1>$'
 		):
 			self.f1._resolve_hierarchy_conflicts(mode = 'error')
@@ -691,7 +691,7 @@ class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 		self.setUp_self_sub()
 
 		with self.assertWarnsRegex(
-			DriverConflict, (
+			DriverConflictWarning, (
 				r'^Signal \'\(sig s1\)\' is driven from multiple fragments: top, top.<unnamed #1>; '
 				r'hierarchy will be flattened$'
 			)

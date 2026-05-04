@@ -6,8 +6,8 @@ from .errors   import (
 	YosysError,
 )
 from .warnings import (
-	ConstraintWarning, DriverConflict, MustUseWarning, NameWarning, PlatformWarning, ResourceWarning, ToolWarning,
-	ToriiSyntaxWarning, ToriiWarning, UnusedElaboratable, UnusedProperty, YosysWarning,
+	ConstraintWarning, DriverConflictWarning, MustUseWarning, NameWarning, PlatformWarning, ResourceWarning,
+	ToolWarning, ToriiSyntaxWarning, ToriiWarning, UnusedElaboratable, UnusedProperty, YosysWarning,
 )
 
 __all__ = (
@@ -15,8 +15,8 @@ __all__ = (
 	'ConstraintError',
 	'ConstraintWarning',
 	'DomainError',
-	'DriverConflict',
 	'DriverConflictError',
+	'DriverConflictWarning',
 	'IndexError',
 	'MustUseWarning',
 	'NameError',

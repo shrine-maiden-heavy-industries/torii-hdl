@@ -8,7 +8,9 @@ from collections   import OrderedDict, defaultdict
 from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
-from ..diagnostics import DomainError, DriverConflict, ToriiSyntaxError, UnusedElaboratable
+from ..diagnostics import (
+	DomainError, DriverConflictWarning, DriverConflictError, ToriiSyntaxError, UnusedElaboratable
+)
 from .._typing     import IODirectionIO, SrcLoc
 from ..util        import _check_name, flatten
 from ..util.string import _get_best_matching
@@ -361,10 +363,10 @@ class Fragment:
 			# While we're at it, show a message.
 			message = (f'Signal \'{signal}\' is driven from multiple fragments: {", ".join(subfrag_names)}')
 			if mode == 'error':
-				raise DriverConflict(message)
+				raise DriverConflictError(message)
 			elif mode == 'warn':
 				message += '; hierarchy will be flattened'
-				warnings.warn_explicit(message, DriverConflict, *signal.src_loc)
+				warnings.warn_explicit(message, DriverConflictWarning, *signal.src_loc)
 
 		# Flatten hierarchy.
 		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):
