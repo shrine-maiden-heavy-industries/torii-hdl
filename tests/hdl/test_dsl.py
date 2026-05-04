@@ -109,6 +109,12 @@ class DSLTestCase(ToriiTestSuiteCase):
 		):
 			m.d.sync += Switch(self.s1, {})
 
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The object 1 is not a Torii statement \(test_dsl\.py, line \d+\)$'
+		):
+			m.d.sync += 1
+
 	def test_comb_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(
