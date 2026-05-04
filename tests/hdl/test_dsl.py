@@ -407,7 +407,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.If\(\.\.\.\):` does not work; use `with m\.If\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
+			r'^The Torii \'If\' cannot be used in a traditional Python \'if\' expression;'
+			r' use it as a context manager instead\. \(test_dsl\.py, line \d+\)$'
 		):
 			if m.If(0):
 				pass # :nocov:
@@ -415,13 +416,15 @@ class DSLTestCase(ToriiTestSuiteCase):
 			pass
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.Elif\(\.\.\.\):` does not work; use `with m\.Elif\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
+			r'^The Torii \'Elif\' cannot be used in a traditional Python \'if\' expression;'
+			r' use it as a context manager instead\. \(test_dsl\.py, line \d+\)$'
 		):
 			if m.Elif(0):
 				pass # :nocov:
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^`if m\.Else\(\.\.\.\):` does not work; use `with m\.Else\(\.\.\.\)` \(test_dsl\.py, line \d+\)$'
+			r'^The Torii \'Else\' cannot be used in a traditional Python \'if\' expression;'
+			r' use it as a context manager instead\. \(test_dsl\.py, line \d+\)$'
 		):
 			if m.Else():
 				pass # :nocov:

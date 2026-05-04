@@ -234,8 +234,12 @@ class _GuardedContextManager(_GeneratorContextManager):
 
 	def __bool__(self):
 		raise ToriiSyntaxError(
-			f'`if m.{self.keyword}(...):` does not work; use `with m.{self.keyword}(...)`',
-			tracer.get_src_loc()
+			f'The Torii \'{self.keyword}\' cannot be used in a traditional Python \'if\' expression;'
+			f' use it as a context manager instead.',
+			tracer.get_src_loc(),
+			notes = [
+				f'Rather than \'if m.{self.keyword}(...):\', use \'with m.{self.keyword}(...):\''
+			]
 		)
 
 def _guardedcontextmanager(keyword: str):
