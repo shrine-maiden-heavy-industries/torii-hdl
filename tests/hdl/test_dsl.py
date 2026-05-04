@@ -106,6 +106,13 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
+			r'^Direct assignment to \'d.pix\' is not supported, you likely meant to use \'\+=\' to'
+			r' add logic statements to the \'pix\' domain \(test_dsl\.py, line \d+\)$'
+		):
+			m.d['pix'] = None
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
 			r'^Clock domains can not be created through the \'m\.d\' accessor alias, use \'m\.domains\''
 			r' instead\. \(test_dsl\.py, line \d+\)$'
 		):

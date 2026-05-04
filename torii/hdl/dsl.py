@@ -80,10 +80,16 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 		return self.__getattr__(name)
 
 	def __setattr__(self, name, value):
+		return self._setattr_proxy(name, value)
+
+	def __setitem__(self, name, value):
+		return self._setattr_proxy(name, value)
+
+	def _setattr_proxy(self, name, value, *, src_loc_at: int = 1):
 		if name == '_depth':
 			object.__setattr__(self, name, value)
 		elif not isinstance(value, _ModuleBuilderDomain):
-			src_loc = tracer.get_src_loc()
+			src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 			if isinstance(value, ClockDomain):
 				raise ToriiSyntaxError(
@@ -101,9 +107,6 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 				f' add logic statements to the \'{name}\' domain',
 				src_loc
 			)
-
-	def __setitem__(self, name, value):
-		return self.__setattr__(name, value)
 
 class _ModuleBuilderRoot:
 	'''
