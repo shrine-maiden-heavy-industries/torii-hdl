@@ -10,7 +10,7 @@ from functools       import wraps
 from sys             import version_info
 from typing          import TYPE_CHECKING, Any, ParamSpec, TypedDict
 
-from ..diagnostics   import ToriiSyntaxError, ToriiSyntaxWarning
+from ..diagnostics   import DriverConflictError, ToriiSyntaxError, ToriiSyntaxWarning
 from .._typing       import SrcLoc, SwitchCaseT
 from ..util          import _check_name, flatten, tracer
 from ..util.string   import _get_best_matching
@@ -927,11 +927,37 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					self._driving[signal] = domain
 				elif self._driving[signal] != domain:
 					cd_curr = self._driving[signal]
-					raise ToriiSyntaxError(
-						f'Driver-driver conflict: trying to drive {signal!r} from clock domain '
-						f'\'{domain_name(domain)}\', but it is already driven from the clock domain '
-						f'\'{domain_name(cd_curr)}\'',
-						tracer.get_src_loc(src_loc_at = src_loc_at)
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
+					new_driver = domain_name(domain)
+					old_driver = domain_name(cd_curr)
+
+					if 'comb' in (new_driver, old_driver):
+						sync_name = new_driver if old_driver == 'comb' else old_driver
+
+						message = (
+							f'The signal \'{signal.name}\' was attempted to be driven from both the combinatorial logic'
+							f' domain \'comb\' and the synchronous logic domain \'{sync_name}\' which is forbidden'
+						)
+						notes = [
+							'It is nonsensical to drive a synchronous signal from the combinatorial domain,'
+							' was this logic supposed to be in the synchronous domain?'
+						]
+					else:
+						message = (
+							f'The signal \'{signal.name}\' was attempted to be driven from the clock domain'
+							f' \'{new_driver}\', however it was initially driven by the clock domain \'{old_driver}\''
+						)
+						notes = [
+							'You may not drive a signal from multiple clock domains at once, consider using'
+							' a synchronizer from \'torii.lib.cdc\' to cross clock domains where appropriate'
+						]
+
+					raise DriverConflictError(
+						message = message, src_loc = src_loc, notes = notes, additional_ctx = (
+							f'The signal \'{signal.name}\' was first driven by the domain \'{old_driver}\' here:',
+							self._driving_locs[cd_curr]
+						)
 					)
 
 			self._statements.append(stmt)

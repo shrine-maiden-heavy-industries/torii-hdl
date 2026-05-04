@@ -6,7 +6,7 @@ from collections       import OrderedDict
 from enum              import Enum
 from sys               import version_info
 
-from torii.diagnostics import ToriiSyntaxError, ToriiSyntaxWarning
+from torii.diagnostics import DriverConflictError, ToriiSyntaxError, ToriiSyntaxWarning
 from torii.hdl.ast     import Cat, ClockSignal, Past, ResetSignal, Signal, SignalSet, Switch
 from torii.hdl.cd      import ClockDomain
 from torii.hdl.dsl     import Module
@@ -18,6 +18,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		self.s1 = Signal()
 		self.s2 = Signal()
 		self.s3 = Signal()
+		self.c0 = Signal()
 		self.c1 = Signal()
 		self.c2 = Signal()
 		self.c3 = Signal()
@@ -76,13 +77,22 @@ class DSLTestCase(ToriiTestSuiteCase):
 
 	def test_d_conflict(self):
 		m = Module()
+		m.domains.phy = ClockDomain()
+
 		with self.assertRaisesRegex(
-			ToriiSyntaxError, (
-				r'^Driver-driver conflict: trying to drive \(sig c1\) from clock domain \'sync\', but it '
-				r'is already driven from the clock domain \'comb\' \(test_dsl\.py, line \d+\)$'
-			)
+			DriverConflictError,
+			r'^The signal \'c0\' was attempted to be driven from both the combinatorial logic domain \'comb\''
+			r' and the synchronous logic domain \'sync\' which is forbidden$'
 		):
-			m.d.comb += self.c1.eq(1)
+			m.d.comb += self.c0.eq(1)
+			m.d.sync += self.c0.eq(1)
+
+		with self.assertRaisesRegex(
+			DriverConflictError,
+			r'^The signal \'c1\' was attempted to be driven from the clock domain \'sync\', however it was'
+			r' initially driven by the clock domain \'phy\'$'
+		):
+			m.d.phy += self.c1.eq(1)
 			m.d.sync += self.c1.eq(1)
 
 	def test_d_wrong(self):
