@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from .errors   import (
-	ConstraintError, DomainError, IndexError, NameError, NameNotFound, NonSynthesizableError, PlatformError,
-	ResourceError, ToolError, ToolNotFound, ToriiError, ToriiSyntaxError, YosysError,
+	AttributeError, ConstraintError, DomainError, IndexError, NameError, NameNotFound, NonSynthesizableError,
+	PlatformError, ResourceError, ToolError, ToolNotFound, ToriiError, ToriiSyntaxError, YosysError,
 )
 from .warnings import (
 	ConstraintWarning, DriverConflict, MustUseWarning, NameWarning, PlatformWarning, ResourceWarning, ToolWarning,
@@ -10,6 +10,7 @@ from .warnings import (
 )
 
 __all__ = (
+	'AttributeError',
 	'ConstraintError',
 	'ConstraintWarning',
 	'DomainError',

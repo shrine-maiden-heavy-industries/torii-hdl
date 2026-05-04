@@ -7,6 +7,7 @@ from .._typing import SrcLoc
 '''
 
 __all__ = (
+	'AttributeError',
 	'ConstraintError',
 	'DomainError',
 	'IndexError',
@@ -114,4 +115,13 @@ class YosysError(ToolError):
 
 class IndexError(ToriiSyntaxError, IndexError):
 	'''  '''
+	pass
+
+class AttributeError(ToriiError, AttributeError):
+	'''
+	A hybrid between the Python :py:class:`AttributeError` and :py:class:`ToriiError`.
+
+	This is used for where we wish to maintain proper functionality with things such as the
+	python :py:meth:`hasattr` call, but also if not caught emit a pretty Torii diagnostic
+	'''
 	pass
