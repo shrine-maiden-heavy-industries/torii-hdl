@@ -400,17 +400,21 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if self._ctrl_context != context:
 			if self._ctrl_context is None:
 				raise ToriiSyntaxError(
-					f'{construct} is not permitted outside of {context}',
+					f'You are not allowed to use an \'m.{construct}(...)\' outside of an \'m.{context}(...)\'',
 					tracer.get_src_loc(src_loc_at = 2)
 				)
 			else:
-				if self._ctrl_context == 'Switch':
-					secondary_context = 'Case'
-				if self._ctrl_context == 'FSM':
-					secondary_context = 'State'
+				match self._ctrl_context:
+					case 'Switch':
+						secondary_context = 'Case'
+					case 'FSM':
+						secondary_context = 'State'
+					case _:
+						secondary_context = 'Unknown'
+
 				raise ToriiSyntaxError(
-					f'{construct} is not permitted directly inside of {self._ctrl_context}; '
-					f'it is permitted inside of {self._ctrl_context} {secondary_context}',
+					f'An \'m.{construct}(...)\' is not permitted directly inside of an \'m.{self._ctrl_context}(...)\';'
+					f' it is only permitted inside of a(n) {self._ctrl_context}s \'m.{secondary_context}(...)\'',
 					tracer.get_src_loc(src_loc_at = 2)
 				)
 
@@ -816,7 +820,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		.. todo:: Document Me
 		'''
 
-		self._check_context('FSM State', context = 'FSM')
+		self._check_context('State', context = 'FSM')
 		src_loc = tracer.get_src_loc(src_loc_at = 1)
 		fsm_data = self._get_ctrl('FSM')
 		if TYPE_CHECKING:

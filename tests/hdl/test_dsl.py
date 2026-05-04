@@ -640,7 +640,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Case is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
+			r'^You are not allowed to use an \'m\.Case\(\.\.\.\)\' outside of an \'m\.Switch\(\.\.\.\)\''
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Case(1):
 				pass # :nocov:
@@ -649,7 +650,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Default is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
+			r'^You are not allowed to use an \'m\.Default\(\.\.\.\)\' outside of an \'m\.Switch\(\.\.\.\)\''
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.Default():
 				pass # :nocov:
@@ -683,8 +685,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		with m.Switch(self.s1):
 			with self.assertRaisesRegex(
 				ToriiSyntaxError, (
-					r'^If is not permitted directly inside of Switch; '
-					r'it is permitted inside of Switch Case \(test_dsl\.py, line \d+\)$'
+					r'^An \'m\.If\(\.\.\.\)\' is not permitted directly inside of an \'m\.Switch\(\.\.\.\)\';'
+					r' it is only permitted inside of a\(n\) Switchs \'m\.Case\(\.\.\.\)\' \(test_dsl\.py, line \d+\)$'
 				)
 			):
 				with m.If(self.s2):
@@ -696,7 +698,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.Case(0):
 				with self.assertRaisesRegex(
 					ToriiSyntaxError,
-					r'^Case is not permitted outside of Switch \(test_dsl\.py, line \d+\)$'
+					r'^You are not allowed to use an \'m\.Case\(\.\.\.\)\' outside of an \'m\.Switch\(\.\.\.\)\''
+					r' \(test_dsl\.py, line \d+\)$'
 				):
 					with m.Case(1):
 						pass # :nocov:
@@ -952,8 +955,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 				pass
 			with self.assertRaisesRegex(
 				ToriiSyntaxError, (
-					r'^If is not permitted directly inside of FSM; '
-					r'it is permitted inside of FSM State \(test_dsl\.py, line \d+\)$'
+					r'^An \'m\.If\(\.\.\.\)\' is not permitted directly inside of an \'m\.FSM\(\.\.\.\)\';'
+					r' it is only permitted inside of a\(n\) FSMs \'m\.State\(\.\.\.\)\' \(test_dsl\.py, line \d+\)$'
 				)
 			):
 				with m.If(self.s2):
@@ -963,7 +966,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^FSM State is not permitted outside of FSM \(test_dsl\.py, line \d+\)$'
+			r'^You are not allowed to use an \'m\.State\(\.\.\.\)\' outside of an \'m\.FSM\(\.\.\.\)\''
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			with m.State('FOO'):
 				pass # :nocov:
@@ -974,7 +978,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 			with m.State('FOO'):
 				with self.assertRaisesRegex(
 					ToriiSyntaxError,
-					r'^FSM State is not permitted outside of FSM \(test_dsl\.py, line \d+\)$'
+					r'^You are not allowed to use an \'m\.State\(\.\.\.\)\' outside of an \'m\.FSM\(\.\.\.\)\''
+					r' \(test_dsl\.py, line \d+\)$'
 				):
 					with m.State('BAR'):
 						pass # :nocov:
