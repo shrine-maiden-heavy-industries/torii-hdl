@@ -117,12 +117,44 @@ class _ModuleBuilderRoot:
 	def __getattr__(self, name):
 		if name in ('comb', 'sync'):
 			raise ToriiSyntaxError(
-				f'\'{type(self).__name__}\' object has no attribute \'{name}\'; did you mean \'d.{name}\'?',
-				tracer.get_src_loc()
+				'Access to the combinatorial logic domain \'comb\' and clock domains like \'sync\' must be done'
+				' through the \'d\' attribute on the module',
+				tracer.get_src_loc(),
+				notes = [
+					f'It appears like you meant to do \'m.d.{name}\' rather than \'m.{name}\''
+				]
 			)
+
+		# NOTE(aki): We don't have `d` in here because it throws off the heuristics
+		matches = _get_best_matching(name, [
+			'Case', 'Default', 'domain', 'domains', 'Elif', 'Else', 'FSM', 'has_submodules', 'If',
+			'next', 'State', 'submodules', 'Switch', *self._builder._named_submodules.keys()
+		])
+
+		if len(matches) > 0:
+			match = matches.pop(0)
+
+			if match in self._builder._named_submodules:
+				message = (
+					f'Module has no attribute named \'{name}\', however there is a named submodule called'
+					f' \'{match}\', did you mean to do \'m.submodules.{match}\'?'
+				)
+			else:
+				message = f'Module has no attribute named \'{name}\', did you mean \'{match}\'?'
+
+			if len(matches) > 0:
+				additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+				notes = [
+					f'Additional possible matches for \'{name}\' are: {additional_matches}'
+				]
+			else:
+				notes = []
+		else:
+			message = f'Module has no attribute named \'{name}\''
+			notes = []
+
 		raise ToriiSyntaxError(
-			f'\'{type(self).__name__}\' object has no attribute \'{name}\'',
-			tracer.get_src_loc()
+			message = message, src_loc = tracer.get_src_loc(), notes = notes
 		)
 
 class _ModuleBuilderSubmodules:

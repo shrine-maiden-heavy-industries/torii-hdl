@@ -113,7 +113,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^\'Module\' object has no attribute \'comb\'; did you mean \'d\.comb\'\? \(test_dsl\.py, line \d+\)$'
+			r'^Access to the combinatorial logic domain \'comb\' and clock domains like \'sync\' must be done'
+			r' through the \'d\' attribute on the module \(test_dsl\.py, line \d+\)$'
 		):
 			m.comb += self.c1.eq(1)
 
@@ -121,7 +122,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^\'Module\' object has no attribute \'sync\'; did you mean \'d\.sync\'\? \(test_dsl\.py, line \d+\)$'
+			r'^Access to the combinatorial logic domain \'comb\' and clock domains like \'sync\' must be done'
+			r' through the \'d\' attribute on the module \(test_dsl\.py, line \d+\)$'
 		):
 			m.sync += self.c1.eq(1)
 
@@ -129,7 +131,7 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^\'Module\' object has no attribute \'nonexistentattr\' \(test_dsl\.py, line \d+\)$'
+			r'^Module has no attribute named \'nonexistentattr\' \(test_dsl\.py, line \d+\)$'
 		):
 			m.nonexistentattr
 
