@@ -311,7 +311,7 @@ class _FSMDict(TypedDict):
 	states: OrderedDict[str, _StatementList]
 	src_loc: SrcLoc
 	state_src_locs: dict[str, SrcLoc]
-	state_visit_map: dict[str, bool]
+	state_visit_map: dict[str, tuple[bool, SrcLoc]]
 
 _CtrlEntry = _IfDict | _SwitchDict | _FSMDict
 
@@ -793,7 +793,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			if len(fsm_data['states']) == 0 and fsm_data['reset'] is None:
 				# If we are the first state in this FSM /and/ the reset state is not specified then
 				# we are the reset state and are by-default visited
-				fsm_data['state_visit_map'][name] = True
+				fsm_data['state_visit_map'][name] = (True, src_loc)
 			fsm_data['states'][name] = self._statements
 			fsm_data['state_src_locs'][name] = src_loc
 		finally:
@@ -821,7 +821,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 						assert isinstance(ctrl_data, _FSMDict)
 					if name not in ctrl_data['encoding']:
 						ctrl_data['encoding'][name] = len(ctrl_data['encoding'])
-					ctrl_data['state_visit_map'][name] = True
+					ctrl_data['state_visit_map'][name] = (True, tracer.get_src_loc(src_loc_at = 1))
 					self._add_statement(
 						assigns    = [ ctrl_data['signal'].eq(ctrl_data['encoding'][name]) ],
 						domain     = ctrl_data['domain'],
