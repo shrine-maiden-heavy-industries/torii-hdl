@@ -891,7 +891,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 	def _add_statement(
 		self, assigns, domain: str, depth, compat_mode = False, domain_loc: tuple[str, int] | None = None,
-		src_loc_at: int = 0
+		*, src_loc_at: int = 1
 	):
 		'''
 		.. todo:: Document Me
@@ -900,7 +900,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		# Store the very first driving reference
 		if domain not in self._driving_locs:
 			self._driving_locs[domain] = (
-				tracer.get_src_loc(src_loc_at = 1) if domain_loc is None else domain_loc
+				tracer.get_src_loc(src_loc_at = src_loc_at) if domain_loc is None else domain_loc
 			)
 
 		def domain_name(domain):
@@ -912,11 +912,11 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		while len(self._ctrl_stack) > self.domain._depth:
 			self._pop_ctrl()
 
-		for stmt in Statement.cast(assigns, src_loc_at = src_loc_at + 1):
+		for stmt in Statement.cast(assigns, src_loc_at = 1 + src_loc_at):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
 				raise ToriiSyntaxError(
 					f'Only assignments and property checks may be appended to d.{domain_name(domain)}',
-					tracer.get_src_loc(src_loc_at = 1)
+					tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			stmt._MustUse__used = True
@@ -931,7 +931,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 						f'Driver-driver conflict: trying to drive {signal!r} from clock domain '
 						f'\'{domain_name(domain)}\', but it is already driven from the clock domain '
 						f'\'{domain_name(cd_curr)}\'',
-						tracer.get_src_loc(src_loc_at = 1)
+						tracer.get_src_loc(src_loc_at = src_loc_at)
 					)
 
 			self._statements.append(stmt)
