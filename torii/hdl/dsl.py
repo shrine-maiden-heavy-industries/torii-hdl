@@ -914,8 +914,11 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		for stmt in Statement.cast(assigns, src_loc_at = 1 + src_loc_at):
 			if not compat_mode and not isinstance(stmt, (Assign, Property)):
+				# TODO(aki):
+				# We should figure out what type of statement was and offer suggestions on how to transform
+				# said statement into valid Torii code
 				raise ToriiSyntaxError(
-					f'Only assignments and property checks may be appended to d.{domain_name(domain)}',
+					'Only Torii assignment and property check statements may be added to a logic domain',
 					tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 

@@ -115,7 +115,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Only assignments and property checks may be appended to d\.sync \(test_dsl\.py, line \d+\)$'
+			r'^Only Torii assignment and property check statements may be added to a logic domain'
+			r' \(test_dsl\.py, line \d+\)$'
 		):
 			m.d.sync += Switch(self.s1, {})
 
