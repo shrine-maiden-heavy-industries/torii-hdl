@@ -175,8 +175,8 @@ class _ModuleBuilderSubmodules:
 	def __setattr__(self, name, submodule):
 		self._builder._add_submodule(submodule, name)
 
-	def __setitem__(self, name, value):
-		return self.__setattr__(name, value)
+	def __setitem__(self, name, submodule):
+		self._builder._add_submodule(submodule, name)
 
 	def __getattr__(self, name):
 		return self._builder._get_submodule(name)
@@ -965,7 +965,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 			self._statements.append(stmt)
 
-	def _add_submodule(self, submodule, name = None):
+	def _add_submodule(self, submodule, name = None, *, src_loc_at: int = 1):
 		'''
 		.. todo:: Document Me
 		'''
@@ -973,7 +973,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if not hasattr(submodule, 'elaborate'):
 			raise ToriiSyntaxError(
 				f'Trying to add {submodule!r}, which does not implement .elaborate(), as a submodule',
-				tracer.get_src_loc(src_loc_at = 1)
+				tracer.get_src_loc(src_loc_at = src_loc_at)
 			)
 
 		match name:
@@ -983,12 +983,12 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				raise ToriiSyntaxError(
 					'A submodule name must not be empty if provided, to add an anonymous submodule either omit the '
 					'`name` parameter or explicitly set it to `None`',
-					tracer.get_src_loc(src_loc_at = 2)
+					tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 			case 'submodule' | 'submodules':
 				raise ToriiSyntaxError(
 					f'Using the name \'{name}\' for a submodule is forbidden',
-					tracer.get_src_loc(src_loc_at = 2),
+					tracer.get_src_loc(src_loc_at = src_loc_at),
 					notes = [
 						f'Due to introducing confusion, usage of the name \'{name}\' for submodules is explicitly'
 						f' forbidden. Consider use the snake_case name for \'{type(submodule).__name__}\' instead.'
@@ -998,13 +998,13 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 				if not _check_name(name):
 					raise ToriiSyntaxError(
 						'Submodule name must not contain any control or whitespace characters',
-						tracer.get_src_loc(src_loc_at = 2)
+						tracer.get_src_loc(src_loc_at = src_loc_at)
 					)
 
 				if name in self._named_submodules:
 					raise ToriiSyntaxError(
 						f'Submodule named \'{name}\' already exists',
-						tracer.get_src_loc(src_loc_at = 1)
+						tracer.get_src_loc(src_loc_at = src_loc_at)
 					)
 				self._named_submodules[name] = submodule
 
