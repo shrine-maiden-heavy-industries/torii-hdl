@@ -27,8 +27,8 @@ class DSLTestCase(ToriiTestSuiteCase):
 	def test_cant_inherit(self):
 		with self.assertRaisesRegex(
 			ToriiSyntaxError, (
-				r'^Instead of inheriting from `Module`, inherit from `Elaboratable` and '
-				r'return a `Module` from the `elaborate\(self, platform\)` method \(test_dsl\.py, line \d+\)$'
+				r'^Instead of inheriting from \'Module\', inherit from \'Elaboratable\' and return'
+				r' a \'Module\' from the \'elaborate\(self, platform\)\' method \(test_dsl\.py, line \d+\)$'
 			)
 		):
 			class ORGate(Module):

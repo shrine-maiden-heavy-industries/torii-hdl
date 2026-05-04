@@ -333,8 +333,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 	@classmethod
 	def __init_subclass__(cls):
 		raise ToriiSyntaxError(
-			'Instead of inheriting from `Module`, inherit from `Elaboratable` '
-			'and return a `Module` from the `elaborate(self, platform)` method',
+			'Instead of inheriting from \'Module\', inherit from \'Elaboratable\''
+			' and return a \'Module\' from the \'elaborate(self, platform)\' method',
 			tracer.get_src_loc(src_loc_at = 1)
 		)
 
