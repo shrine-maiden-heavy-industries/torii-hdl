@@ -51,6 +51,19 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 		):
 			ClockDomain('\x14')
 
+	def test_name_forbidden(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodule\' for a clock domain is forbidden \(test_cd\.py, line \d+\)$'
+		):
+			ClockDomain('submodule')
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodules\' for a clock domain is forbidden \(test_cd\.py, line \d+\)$'
+		):
+			ClockDomain('submodules')
+
 	def test_rename_wrong(self):
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
@@ -72,6 +85,19 @@ class ClockDomainTestCase(ToriiTestSuiteCase):
 			r' characters \(test_cd\.py, line \d+\)$'
 		):
 			ClockDomain('meow').rename('\x7F')
+
+	def test_rename_forbidden(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodule\' for a clock domain is forbidden \(test_cd\.py, line \d+\)$'
+		):
+			ClockDomain('meow').rename('submodule')
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodules\' for a clock domain is forbidden \(test_cd\.py, line \d+\)$'
+		):
+			ClockDomain('meow').rename('submodules')
 
 	def test_edge(self):
 		sync = ClockDomain()

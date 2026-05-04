@@ -92,10 +92,21 @@ class ClockDomain:
 
 		if name.startswith('cd_'):
 			name = name[3:]
+
 		if name == 'comb':
 			raise ToriiSyntaxError(
 				'The combinatorial logic domain \'comb\' may not be clocked',
 				self.src_loc
+			)
+
+		if name in ('submodules', 'submodule'):
+			raise ToriiSyntaxError(
+				f'Using the name \'{name}\' for a clock domain is forbidden',
+				self.src_loc,
+				notes = [
+					f'Usage of \'{name}\' as a clock domain name introduces a potential confusion when dealing'
+					' with Torii submodules, as such it is explicitly forbidden'
+				]
 			)
 
 		if clk_edge not in ('pos', 'neg'):
@@ -138,6 +149,16 @@ class ClockDomain:
 				)
 
 			raise err
+
+		if new_name == 'submodules' or new_name == 'submodule':
+			raise ToriiSyntaxError(
+				f'Using the name \'{new_name}\' for a clock domain is forbidden',
+				self.src_loc,
+				notes = [
+					f'Usage of \'{new_name}\' as a clock domain name introduces a potential confusion when dealing'
+					' with Torii submodules, as such it is explicitly forbidden'
+				]
+			)
 
 		self.name = new_name
 		self.clk.name = self._name_for(new_name, 'clk')
