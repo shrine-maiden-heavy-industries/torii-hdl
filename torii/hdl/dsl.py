@@ -83,9 +83,23 @@ class _ModuleBuilderDomains(_ModuleBuilderProxy):
 		if name == '_depth':
 			object.__setattr__(self, name, value)
 		elif not isinstance(value, _ModuleBuilderDomain):
+			src_loc = tracer.get_src_loc()
+
+			if isinstance(value, ClockDomain):
+				raise ToriiSyntaxError(
+					'Clock domains can not be created through the \'m.d\' accessor alias, use \'m.domains\''
+					' instead.',
+					src_loc,
+					notes = [
+						f'Rather than writing \'m.d.{name} = ClockDomain()\' use the full '
+						f'\'m.domains.{name} = ClockDomain()\' syntax',
+					]
+				)
+
 			raise ToriiSyntaxError(
-				f'Cannot assign \'d.{name}\' attribute; did you mean \'d.{name} +=\'?',
-				tracer.get_src_loc()
+				f'Direct assignment to \'d.{name}\' is not supported, you likely meant to use \'+=\' to'
+				f' add logic statements to the \'{name}\' domain',
+				src_loc
 			)
 
 	def __setitem__(self, name, value):
