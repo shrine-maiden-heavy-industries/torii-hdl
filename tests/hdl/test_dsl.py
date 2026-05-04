@@ -997,6 +997,21 @@ class DSLTestCase(ToriiTestSuiteCase):
 		):
 			m.submodules['\0'] = Module()
 
+	def test_submodule_name_forbidden(self) -> None:
+		m = Module()
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodule\' for a submodule is forbidden \(test_dsl\.py, line \d+\)$'
+		):
+			m.submodules['submodule'] = Module()
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Using the name \'submodules\' for a submodule is forbidden \(test_dsl\.py, line \d+\)$'
+		):
+			m.submodules['submodules'] = Module()
+
 	def test_submodule_wrong(self):
 		m = Module()
 		with self.assertRaisesRegex(

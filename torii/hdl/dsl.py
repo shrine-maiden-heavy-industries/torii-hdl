@@ -904,6 +904,15 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					'`name` parameter or explicitly set it to `None`',
 					tracer.get_src_loc(src_loc_at = 2)
 				)
+			case 'submodule' | 'submodules':
+				raise ToriiSyntaxError(
+					f'Using the name \'{name}\' for a submodule is forbidden',
+					tracer.get_src_loc(src_loc_at = 2),
+					notes = [
+						f'Due to introducing confusion, usage of the name \'{name}\' for submodules is explicitly'
+						f' forbidden. Consider use the snake_case name for \'{type(submodule).__name__}\' instead.'
+					]
+				)
 			case _:
 				if not _check_name(name):
 					raise ToriiSyntaxError(
