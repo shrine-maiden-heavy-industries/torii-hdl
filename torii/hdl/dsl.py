@@ -1011,7 +1011,7 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 					)
 				self._named_submodules[name] = submodule
 
-	def _get_submodule(self, name: str):
+	def _get_submodule(self, name: str, *, src_loc_at: int = 1):
 		'''
 		.. todo:: Document Me
 		'''
@@ -1019,9 +1019,32 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 		if name in self._named_submodules:
 			return self._named_submodules[name]
 		else:
+			matches = _get_best_matching(name, self._named_submodules.keys())
+			if len(matches) > 0:
+				match = matches.pop(0)
+				message = (
+					f'The submodule named \'{name}\' does not exist in the current module, did you mean'
+					f' \'{match}\'?'
+				)
+				notes = []
+
+				if len(matches) > 0:
+					additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+					notes.append(
+						f'Additional possible matches for \'{name}\' are: {additional_matches}'
+					)
+
+				notes.append(
+					'If not, did you accidentally add it as an anonymous submodule? (e.g \'m.submodules += ...\')'
+				)
+			else:
+				message = f'The submodule named \'{name}\' does not exist in the current module'
+				notes = [
+					'Did you accidentally add it as an anonymous submodule? (e.g \'m.submodules += ...\')'
+				]
+
 			raise ToriiSyntaxError(
-				f'No submodule named \'{name}\' exists',
-				tracer.get_src_loc(src_loc_at = 1)
+				message = message, src_loc = tracer.get_src_loc(src_loc_at = src_loc_at), notes = notes
 			)
 
 	def _add_domain(self, cd: ClockDomain):

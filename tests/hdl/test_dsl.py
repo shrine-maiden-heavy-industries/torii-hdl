@@ -1099,12 +1099,12 @@ class DSLTestCase(ToriiTestSuiteCase):
 		m1 = Module()
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^No submodule named \'foo\' exists \(test_dsl\.py, line \d+\)$'
+			r'^The submodule named \'foo\' does not exist in the current module \(test_dsl\.py, line \d+\)$'
 		):
 			m1.submodules.foo
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^No submodule named \'foo\' exists \(test_dsl\.py, line \d+\)$'
+			r'^The submodule named \'foo\' does not exist in the current module \(test_dsl\.py, line \d+\)$'
 		):
 			m1.submodules['foo']
 
