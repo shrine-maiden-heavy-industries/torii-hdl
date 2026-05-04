@@ -606,7 +606,8 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 
 		if not patterns:
 			raise ToriiSyntaxError(
-				'Empty Case() clauses have been superseded by Default()',
+				'Empty\'m.Case()\' clauses are forbidden, use \'m.Default()\' instead for default/catch-all'
+				' cases',
 				tracer.get_src_loc(src_loc_at = 1)
 			)
 
@@ -619,10 +620,15 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			raise ToriiSyntaxError('Case outside of Switch block', tracer.get_src_loc(src_loc_at = 1))
 		new_patterns: SwitchCaseT = ()
 		if () in switch_data['cases']:
-			warnings.warn(
-				'Case statements are order-dependant, any Case after a Default will be ignored',
-				ToriiSyntaxWarning, stacklevel = 3
+			warning = ToriiSyntaxWarning(
+				'Any \'m.Case(...)\' statements after an \'m.Default()\' will be ignored'
 			)
+
+			warning.add_note(
+				'Unlike other languages, in Torii case statements are evaluated strictly in-order'
+			)
+
+			warnings.warn(warning, stacklevel = 3)
 
 		# This code should accept exactly the same patterns as `v.matches(...)`.
 		for pattern in patterns:
