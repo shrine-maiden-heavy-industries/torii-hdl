@@ -328,6 +328,43 @@ class Module(_ModuleBuilderRoot, Elaboratable):
 			tracer.get_src_loc(src_loc_at = 1)
 		)
 
+	def __setattr__(self, name: str, value: Any) -> None:
+		if name == 'domains' and not isinstance(value, _ModuleBuilderDomainSet):
+			err = ToriiSyntaxError(
+				'The value of \'m.domains\' may not be changed',
+				tracer.get_src_loc()
+			)
+
+			if isinstance(value, ClockDomain):
+				err.add_note(
+					f'Did you mean to do "m.domains += ClockDomain(\'{value.name}\')"?'
+				)
+
+			raise err
+
+		if name == 'submodules' and not isinstance(value, _ModuleBuilderSubmodules):
+			err = ToriiSyntaxError(
+				'The value of \'m.submodules\' may not be changed',
+				tracer.get_src_loc()
+			)
+
+			if isinstance(value, (Fragment, Elaboratable, Module)):
+				err.add_note(
+					f'Did you mean to do \'m.submodules += {type(value).__name__}(...)\'?'
+				)
+
+			raise err
+
+		try:
+			object.__setattr__(self, name, value)
+		except Exception as err:
+			# If we have a syntax error from below, re-adjust the source locality information
+			if isinstance(err, (ToriiSyntaxError)):
+				src_loc = tracer.get_src_loc()
+				err.filename = src_loc[0]
+				err.lineno = src_loc[1]
+			raise err
+
 	def __init__(self) -> None:
 		super().__init__(builder = self, depth = 0)
 		self.submodules    = _ModuleBuilderSubmodules(self)
