@@ -11,6 +11,7 @@ __all__ = (
 	'ConstraintError',
 	'DomainError',
 	'DriverConflictError',
+	'ElaborationError',
 	'IndexError',
 	'NameError',
 	'NameNotFound',
@@ -129,4 +130,8 @@ class AttributeError(ToriiError, AttributeError):
 
 class DriverConflictError(ToriiError):
 	''' A driver-driver conflict '''
+	pass
+
+class ElaborationError(ToriiError):
+	''' An uncategorized error that occurred during elaboration '''
 	pass

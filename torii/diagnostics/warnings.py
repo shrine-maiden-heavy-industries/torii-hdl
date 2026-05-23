@@ -7,6 +7,7 @@
 __all__ = (
 	'ConstraintWarning',
 	'DriverConflictWarning',
+	'ElaborationWarning',
 	'MustUseWarning',
 	'NameWarning',
 	'PlatformWarning',
@@ -69,4 +70,8 @@ class UnusedProperty(MustUseWarning):
 
 class YosysWarning(ToriiWarning):
 	''' A warning emitted by Yosys '''
+	pass
+
+class ElaborationWarning(ToriiWarning):
+	''' An uncategorized warning that occurred during elaboration '''
 	pass
