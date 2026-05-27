@@ -76,19 +76,35 @@ class MemoryTestCase(ToriiTestSuiteCase):
 
 	def test_init_wrong_count(self):
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Memory initialization value count exceed memory depth \(8 > 4\)$'
+			ParametrizationError,
+			r'^The initialization value for the memory \'\$memory\' exceeds memory depth \(8 > 4\)'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = 4, init = range(8))
 
+		with self.assertRaisesRegex(
+			ParametrizationError,
+			r'^The initialization value for the memory \'m\' exceeds memory depth \(8 > 4\)'
+			r' \(test_mem\.py, line \d+\)$'
+		):
+			m = Memory(width = 8, depth = 4, init = range(4))
+			m.init = range(8)
+
 	def test_init_wrong_type(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Memory initialization value at address 1: '
-				r'\'str\' object cannot be interpreted as an integer$'
-			)
+			ParametrizationError,
+			r'^Initialization of memory \'\$memory\' at address 0x1 failed:'
+			r' \'str\' object cannot be interpreted as an integer \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = 4, init = [1, '0'])
+
+		with self.assertRaisesRegex(
+			ParametrizationError,
+			r'^Initialization of memory \'m\' at address 0x1 failed:'
+			r' \'str\' object cannot be interpreted as an integer \(test_mem\.py, line \d+\)$'
+		):
+			m = Memory(width = 8, depth = 4, init = range(4))
+			m.init = [1, '0']
 
 	def test_attrs(self):
 		m1 = Memory(width = 8, depth = 4)

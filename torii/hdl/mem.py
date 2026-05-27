@@ -116,9 +116,29 @@ class Memory(Elaboratable):
 			for addr in range(self.depth):
 				self._array.append(Signal(self.width, name = f'{name or "memory"}({addr})'))
 
-		self.init = init
+		self._set_init(init, src_loc_at = src_loc_at)
 		self._read_ports: list[ReadPort] = []
 		self._write_ports: list[WritePort] = []
+
+	def _set_init(self, new_value, src_loc_at: int = 0):
+		self._init = [] if new_value is None else list(new_value)
+		if len(self.init) > self.depth:
+			raise ParametrizationError(
+				f'The initialization value for the memory \'{self.name}\' exceeds memory depth'
+				f' ({len(self.init)} > {self.depth})',
+				src_loc = tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
+			)
+		try:
+			for addr in range(len(self._array)):
+				if addr < len(self._init):
+					self._array[addr].reset = operator.index(self._init[addr])
+				else:
+					self._array[addr].reset = 0
+		except TypeError as e:
+			raise ParametrizationError(
+				f'Initialization of memory \'{self.name}\' at address 0x{addr:x} failed: {e}',
+				src_loc = tracer.get_src_loc(src_loc_at = 1 + src_loc_at)
+			) from None
 
 	@property
 	def init(self):
@@ -134,18 +154,7 @@ class Memory(Elaboratable):
 		.. todo:: Document Me
 		'''
 
-		self._init = [] if new_init is None else list(new_init)
-		if len(self.init) > self.depth:
-			raise ValueError(f'Memory initialization value count exceed memory depth ({len(self.init)} > {self.depth})')
-
-		try:
-			for addr in range(len(self._array)):
-				if addr < len(self._init):
-					self._array[addr].reset = operator.index(self._init[addr])
-				else:
-					self._array[addr].reset = 0
-		except TypeError as e:
-			raise TypeError(f'Memory initialization value at address {addr:x}: {e}') from None
+		self._set_init(new_value = new_init)
 
 	def read_port(self, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0) -> ReadPort:
 		'''
