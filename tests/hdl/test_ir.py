@@ -369,22 +369,24 @@ class FragmentPortsTestCase(ToriiTestSuiteCase):
 	def test_port_wrong(self):
 		f = Fragment()
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Only signals may be added as ports, not \(const 1\'d1\)$'
+			ToriiSyntaxError,
+			r'^Only Torii signals may be added as ports, not objects of type \'Const\' \(test_ir\.py, line \d+\)$'
 		):
 			f.prepare(ports = (Const(1),))
 
 	def test_port_not_iterable(self):
 		f = Fragment()
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^`ports` must be either a list or a tuple, not 1$'
+			ToriiSyntaxError,
+			r'^The \'ports\' parameter must be a list or a tuple of signals, not an object of type \'int\''
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			f.prepare(ports = 1)
+
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^`ports` must be either a list or a tuple, not \(const 1\'d1\)'
-				r' \(did you mean `ports = \(<signal>,\)`, rather than `ports = <signal>`\?\)$'
+			ToriiSyntaxError, (
+				r'^The \'ports\' parameter must be a list or a tuple of signals, not an object of type \'Const\''
+				r' \(test_ir\.py, line \d+\)$'
 			)
 		):
 			f.prepare(ports = Const(1))

@@ -816,17 +816,33 @@ class Fragment:
 		if ports is None:
 			fragment._propagate_ports(ports = (), all_undef_as_ports = True, src_loc_at = 1 + src_loc_at)
 		else:
+			# TODO(aki): Maybe ports should be an `Iterable[Signal]`?
 			if not isinstance(ports, tuple) and not isinstance(ports, list):
-				msg = f'`ports` must be either a list or a tuple, not {ports!r}'
+				err = ToriiSyntaxError(
+					'The \'ports\' parameter must be a list or a tuple of signals, not an object of type'
+					f' \'{type(ports).__name__}\'',
+					src_loc = get_src_loc(src_loc_at = src_loc_at)
+				)
+
 				if isinstance(ports, Value):
-					msg += ' (did you mean `ports = (<signal>,)`, rather than `ports = <signal>`?)'
-				raise TypeError(msg)
+					err.add_note(
+						'It looks as if you did \'ports = <signal>\' rather than \'ports = (<signal>,)\','
+						' was this intentional?'
+					)
+
+				raise err
 			mapped_ports = []
 			# Lower late bound signals like ClockSignal() to ports.
 			port_lowerer = DomainLowerer(fragment.domains)
 			for port in ports:
 				if not isinstance(port, (Signal, ClockSignal, ResetSignal)):
-					raise TypeError(f'Only signals may be added as ports, not {port!r}')
+					raise ToriiSyntaxError(
+						f'Only Torii signals may be added as ports, not objects of type \'{type(port).__name__}\'',
+						src_loc = get_src_loc(src_loc_at = src_loc_at),
+						notes = [
+							'The valid signal types are \'Signal\', \'ClockSignal\', and \'ResetSignal\''
+						]
+					)
 				mapped_ports.append(port_lowerer.on_value(port))
 			# Add ports for all newly created missing clock domains, since not doing so defeats
 			# the purpose of domain auto-creation. (It's possible to refer to these ports before
