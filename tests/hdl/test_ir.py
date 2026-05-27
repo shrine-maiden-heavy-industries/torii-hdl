@@ -3,7 +3,10 @@
 
 from collections           import OrderedDict
 
-from torii.diagnostics     import DomainError, DriverConflictWarning, DriverConflictError, ToriiSyntaxError
+from torii.diagnostics     import (
+	DomainError, DriverConflictWarning, DriverConflictError, ElaborationError, ElaborationWarning, ToriiSyntaxError,
+	NameError
+)
 from torii.hdl.ast         import Cat, ClockSignal, Const, ResetSignal, Signal, SignalDict, SignalKey, SignalSet
 from torii.hdl.cd          import ClockDomain
 from torii.hdl.dsl         import Module

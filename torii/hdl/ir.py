@@ -9,7 +9,8 @@ from functools     import cache, reduce
 from typing        import TYPE_CHECKING, Literal, TypeAlias
 
 from ..diagnostics import (
-	DomainError, DriverConflictWarning, DriverConflictError, ToriiSyntaxError, UnusedElaboratable
+	DomainError, DriverConflictWarning, DriverConflictError, ElaborationError, ElaborationWarning, ToriiSyntaxError,
+	UnusedElaboratable, NameError
 )
 from .._typing     import IODirectionIO, SrcLoc
 from ..util        import _check_name, flatten
