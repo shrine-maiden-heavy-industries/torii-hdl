@@ -9,7 +9,7 @@ from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
 
-from ..diagnostics   import ToriiSyntaxError
+from ..diagnostics   import ToriiSyntaxError, IndexError
 from ..util          import _check_name, tracer, union
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
@@ -52,9 +52,19 @@ class Layout:
 		self.fields = OrderedDict[str, tuple['Layout | ShapeCastT', Direction]]()
 		for field in fields:
 			if not isinstance(field, tuple) or len(field) not in (2, 3):
-				raise TypeError(
-					f'Field {field!r} has invalid layout: should be either (name, shape) or (name, shape, direction)'
-				)
+				if not isinstance(field, tuple):
+					message = (
+						f'Layout field {field!r} is invalid, it must be a tuple of (name, shape) or'
+						f' (name, shape, direction), not an object of type \'{type(field).__name__}\''
+					)
+				else:
+					message = (
+						f'Layout field {field!r} is invalid, it must be a tuple of (name, shape) or'
+						f' (name, shape, direction)'
+					)
+
+				raise ToriiSyntaxError(message, src_loc = tracer.get_src_loc(src_loc_at = src_loc_at))
+
 			if len(field) == 2:
 				name, layout = field
 				direction = Direction.NONE
@@ -65,29 +75,67 @@ class Layout:
 			else:
 				name, shape, direction = field
 				if not isinstance(direction, Direction):
-					raise TypeError(
-						f'Field {field!r} has invalid direction: should be a Direction instance like Direction.FANIN'
+					raise ToriiSyntaxError(
+						f'Layout field {field!r} has invalid direction, it must be a Torii \'Direction\' not'
+						f' an object of type \'{type(direction).__name__}\'',
+						src_loc = tracer.get_src_loc(src_loc_at = src_loc_at),
+						notes = [
+							'Valid directions for layout fields are \'NONE\', \'FANIN\', and \'FANOUT\''
+						]
 					)
+
 			if not isinstance(name, str):
-				raise TypeError(f'Field {field!r} has invalid name: should be a string')
+				raise ToriiSyntaxError(
+					f'Layout field {field!r} has an invalid name, it must be a string, not an object of type'
+					f' \'{type(name).__name__}\'',
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
 			if name == '' or not _check_name(name):
-				raise NameError('Field name must not be empty or contain any control or whitespace characters')
+				err = ToriiSyntaxError(
+					f'Layout field {field!r} name may not be empty or contain any control or whitespace characters',
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
+				if name == '':
+					err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+				else:
+					err.add_note(
+						'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+						'Zs, Zl, Zp'
+					)
+
+				raise err
+
 			if not isinstance(shape, Layout):
 				try:
 					# Check provided shape by calling Shape.cast and checking for exception
 					Shape.cast(shape, src_loc_at = 1 + src_loc_at)
-				except Exception:
-					raise TypeError(
-						f'Field {field!r} has invalid shape: should be castable to Shape or a list of '
-						'fields of a nested record'
+				except ToriiSyntaxError as e:
+					raise ToriiSyntaxError(
+						f'Layout field {field!r} has an invalid shape: {e.msg}',
+						src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 					)
+
 			if name in self.fields:
-				raise NameError(f'Field {field!r} has a name that is already present in the layout')
+				raise ToriiSyntaxError(
+					f'Layout field {field!r} has a name that is already present in the layout',
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at),
+					notes = [
+						f'The existing layout is {self.fields[name]}'
+					]
+				)
 			self.fields[name] = (shape, direction)
 
 	def __getitem__(self, item: object) -> LayoutFieldT:
 		if not isinstance(item, (str, Iterable)):
-			raise TypeError()
+			raise IndexError(
+				message = (
+					'Layout slice must be one or more strings, not an object of type'
+					f' \'{type(item).__name__}\''
+				),
+				src_loc = tracer.get_src_loc()
+			)
 
 		if not isinstance(item, str):
 			return Layout([

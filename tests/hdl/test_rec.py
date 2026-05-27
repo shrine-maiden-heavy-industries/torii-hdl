@@ -2,7 +2,7 @@
 
 from enum              import Enum
 
-from torii.diagnostics import ToriiSyntaxError
+from torii.diagnostics import ToriiSyntaxError, IndexError
 from torii.hdl.ast     import Shape, Signal, signed, unsigned
 from torii.hdl.rec     import Direction, Layout, Record
 
@@ -66,6 +66,18 @@ class LayoutTestCase(ToriiTestSuiteCase):
 		])
 		self.assertEqual(layout['a', 'c'], expect)
 
+	def test_slice_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			IndexError,
+			r'^Layout slice must be one or more strings, not an object of type \'int\''
+			r' \(test_rec\.py, line \d+\)$'
+		):
+			Layout.cast([
+				('a', 1),
+				('b', 2),
+				('c', 3)
+			])[1]
+
 	def test_repr(self):
 		self.assertEqual(
 			repr(Layout([('a', unsigned(1)), ('b', signed(2))])),
@@ -79,60 +91,61 @@ class LayoutTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_field(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Field \(1,\) has invalid layout: should be either \(name, shape\) or '
-				r'\(name, shape, direction\)$'
-			)
+			ToriiSyntaxError,
+			r'^Layout field \(1,\) is invalid, it must be a tuple of \(name, shape\) or'
+			r' \(name, shape, direction\) \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([(1,)])
 
 	def test_wrong_name(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Field \(1, 1\) has invalid name: should be a string$'
+			ToriiSyntaxError,
+			r'^Layout field \(1, 1\) has an invalid name, it must be a string, not an object of type'
+			r' \'int\' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([(1, 1)])
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Field name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Layout field \(\'\', 1\) name may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('', 1)])
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Field name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Layout field \(\'\\x07\', 1\) name may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('\a', 1)])
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Field name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Layout field \(\'\\n\', 1\) name may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('\n', 1)])
 
 	def test_wrong_name_duplicate(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Field \(\'a\', 2\) has a name that is already present in the layout$'
+			ToriiSyntaxError,
+			r'^Layout field \(\'a\', 2\) has a name that is already present in the layout \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('a', 1), ('a', 2)])
 
 	def test_wrong_direction(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Field \(\'a\', 1, 0\) has invalid direction: should be a Direction '
-				r'instance like Direction.FANIN$'
-			)
+			ToriiSyntaxError,
+			r'^Layout field \(\'a\', 1, 0\) has invalid direction, it must be a Torii \'Direction\''
+			r' not an object of type \'int\' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('a', 1, 0)])
 
 	def test_wrong_shape(self):
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Field \(\'a\', \'x\'\) has invalid shape: should be castable to Shape or '
-				r'a list of fields of a nested record$'
-			)
+			ToriiSyntaxError,
+			r'^Layout field \(\'a\', \'x\'\) has an invalid shape: Object \'x\' cannot be converted to a Torii shape'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Layout.cast([('a', 'x')])
 
