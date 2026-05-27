@@ -288,7 +288,7 @@ class ReadPort(Elaboratable):
 
 	Raises
 	------
-	ValueError
+	ParametrizationError
 		If the read port is simultaneously asynchronous and non-transparent.
 	'''
 
@@ -297,10 +297,27 @@ class ReadPort(Elaboratable):
 		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 		if domain == 'comb' and not transparent:
-			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
+			raise ParametrizationError(
+				'A Torii memory \'ReadPort\' can not be simultaneously asynchronous and non-transparent',
+				src_loc = self.src_loc
+			)
 
 		if domain == '' or not _check_name(domain):
-			raise NameError('ReadPort domain must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The name for the domain the \'ReadPort\' operates on must not be empty or contain any control or '
+				'whitespace characters',
+				src_loc = self.src_loc
+			)
+
+			if domain == '':
+				err.add_note('An empty string was provided to the \'domain\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the domain name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn,'
+					' Zs, Zl, Zp'
+				)
+
+			raise err
 
 		self.memory      = memory
 		self.domain      = domain

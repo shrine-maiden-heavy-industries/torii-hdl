@@ -147,8 +147,9 @@ class MemoryTestCase(ToriiTestSuiteCase):
 	def test_read_port_wrong(self):
 		mem = Memory(width = 8, depth = 4)
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Read port cannot be simultaneously asynchronous and non-transparent$'
+			ParametrizationError,
+			r'^A Torii memory \'ReadPort\' can not be simultaneously asynchronous and non-transparent'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			mem.read_port(domain = 'comb', transparent = False)
 
@@ -156,20 +157,23 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		mem = Memory(width = 8, depth = 4)
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'The name for the domain the \'ReadPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.read_port(domain = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'The name for the domain the \'ReadPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.read_port(domain = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^ReadPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'The name for the domain the \'ReadPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.read_port(domain = '\u202E')
 
