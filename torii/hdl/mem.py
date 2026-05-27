@@ -105,9 +105,7 @@ class Memory(Elaboratable):
 
 			raise err
 
-
-		self.name    = name or tracer.get_var_name(depth = 2, default = '$memory')
-
+		self.name  = name or tracer.get_var_name(depth = 2, default = '$memory')
 		self.width = width
 		self.depth = depth
 		self.attrs = OrderedDict(() if attrs is None else attrs)
