@@ -379,6 +379,7 @@ class Fragment:
 		.. todo:: Document Me
 		'''
 
+		# TODO(aki): I don't think `silent` should ever be used, seems a bit ridiculous
 		if mode not in ('silent', 'warn', 'error'):
 			raise ValueError(f'Expected mode to be one of \'silent\', \'warn\', or \'error\', not \'{mode!r}\'')
 
@@ -440,12 +441,20 @@ class Fragment:
 				continue
 
 			# While we're at it, show a message.
-			message = (f'Signal \'{signal}\' is driven from multiple fragments: {", ".join(subfrag_names)}')
+			message = f'Signal \'{signal}\' is driven from multiple fragments: {", ".join(subfrag_names)}'
 			if mode == 'error':
-				raise DriverConflictError(message)
+				raise DriverConflictError(
+					message = message,
+					src_loc = signal.src_loc
+				)
 			elif mode == 'warn':
 				message += '; hierarchy will be flattened'
-				warnings.warn_explicit(message, DriverConflictWarning, *signal.src_loc)
+				warnings.warn_explicit(
+					message,
+					DriverConflictWarning,
+					filename = signal.src_loc[0],
+					lineno   = signal.src_loc[1]
+				)
 
 		# Flatten hierarchy.
 		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):

@@ -561,11 +561,18 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 		s1 = Signal()
 		f1 = Fragment()
 		f1.add_driver(s1, 'test')
-		f1.first_drivers['test'] = ('test_ir.py', 540)
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^The clock domain \'test\' was used but not defined \(test_ir\.py, line 540\)$'
+			r'^The clock domain \'test\' was used but not defined$'
+		):
+			f1._propagate_domains(missing_domain = lambda name: None)
+
+		f1.first_drivers['test'] = ('test_ir.py', 573) # XXX(aki): I know I know...
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The clock domain \'test\' was used but not defined \(test_ir\.py, line \d+\)$'
 		):
 			f1._propagate_domains(missing_domain = lambda name: None)
 
