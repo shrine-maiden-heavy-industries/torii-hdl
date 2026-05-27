@@ -199,19 +199,31 @@ class MemoryTestCase(ToriiTestSuiteCase):
 
 	def test_write_port_granularity_wrong(self):
 		mem = Memory(width = 8, depth = 4)
+
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Write port granularity must be a non-negative integer, not -1$'
+			ParametrizationError,
+			r'^Granularity for a \'WritePort\' must be non-negative, got -1 \(test_mem\.py, line \d+\)$'
 		):
 			mem.write_port(granularity = -1)
+
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Write port granularity must not be greater than memory width \(10 > 8\)$'
+			ParametrizationError,
+			r'^Granularity for a \'WritePort\' must be a non-negative integer, not an object of type \'str\''
+			r' \(test_mem\.py, line \d+\)$'
+		):
+			mem.write_port(granularity = 'meow')
+
+		with self.assertRaisesRegex(
+			ParametrizationError,
+			r'^Granularity for a \'WritePort\' can not be wider than the storage width for the memory \'mem\''
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			mem.write_port(granularity = 10)
+
 		with self.assertRaisesRegex(
-			ValueError,
-			r'^Write port granularity must divide memory width evenly$'
+			ParametrizationError,
+			r'^Granularity for a \'WritePort\' must evenly divide into the width of the memory \'mem\''
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			mem.write_port(granularity = 3)
 
@@ -219,20 +231,23 @@ class MemoryTestCase(ToriiTestSuiteCase):
 		mem = Memory(width = 8, depth = 4)
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'WritePort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.write_port(domain = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'WritePort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.write_port(domain = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^WritePort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'WritePort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			mem.write_port(domain = '\u202E')
 

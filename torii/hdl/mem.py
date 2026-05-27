@@ -386,7 +386,7 @@ class WritePort(Elaboratable):
 
 	Raises
 	------
-	ValueError
+	ParametrizationError
 		If the write port granularity is greater than memory width, or does not
 		divide memory width evenly.
 	'''
@@ -399,17 +399,55 @@ class WritePort(Elaboratable):
 
 		if granularity is None:
 			granularity = memory.width
+
 		if not isinstance(granularity, int) or granularity < 0:
-			raise TypeError(f'Write port granularity must be a non-negative integer, not {granularity!r}')
+			if not isinstance(granularity, int):
+				message = (
+					'Granularity for a \'WritePort\' must be a non-negative integer, not an object'
+					f' of type \'{type(granularity).__name__}\''
+				)
+			else:
+				message = f'Granularity for a \'WritePort\' must be non-negative, got {granularity}'
+
+			raise ParametrizationError(message, src_loc = self.src_loc)
+
 		if granularity > memory.width:
-			raise ValueError(
-				f'Write port granularity must not be greater than memory width ({granularity} > {memory.width})'
+			raise ParametrizationError(
+				'Granularity for a \'WritePort\' can not be wider than the storage width for the memory'
+				f' \'{memory.name}\'',
+				src_loc = self.src_loc,
+				notes = [
+					f'The granularity of {granularity} is wider than the memory with {memory.width}',
+				]
 			)
+
 		if memory.width // granularity * granularity != memory.width:
-			raise ValueError('Write port granularity must divide memory width evenly')
+			raise ParametrizationError(
+				'Granularity for a \'WritePort\' must evenly divide into the width of the memory'
+				f' \'{memory.name}\'',
+				src_loc = self.src_loc,
+				notes = [
+					f'The granularity of {granularity} divides over {memory.width} by '
+					f'{memory.width // granularity * granularity}',
+				]
+			)
 
 		if domain == '' or not _check_name(domain):
-			raise NameError('WritePort domain must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The name for the domain the \'WritePort\' operates on must not be empty or contain any control or '
+				'whitespace characters',
+				src_loc = self.src_loc
+			)
+
+			if domain == '':
+				err.add_note('An empty string was provided to the \'domain\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the domain name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn,'
+					' Zs, Zl, Zp'
+				)
+
+			raise err
 
 		self.memory       = memory
 		self.domain       = domain
