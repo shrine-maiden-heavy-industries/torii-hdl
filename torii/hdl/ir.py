@@ -506,21 +506,30 @@ class Fragment:
 			if not all(names):
 				names = sorted(f'<unnamed #{i}>' if n is None else f'\'{n}\'' for f, n, i in subfrags)
 				raise DomainError(
-					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
-					f'\'{".".join(hierarchy)}\'; it is necessary to either rename subfragment domains '
-					'explicitly, or give names to subfragments'
+					message = (
+						f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
+						f'\'{".".join(hierarchy)}\'; it is necessary to either rename subfragment domains '
+						'explicitly, or give names to subfragments'
+					),
+					src_loc = get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			if len(names) != len(set(names)):
 				names = sorted(f'#{i}' for f, n, i in subfrags)
 				raise DomainError(
-					f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
-					f'\'{".".join(hierarchy)}\', some of which have identical names; it is necessary to either '
-					'rename subfragment domains explicitly, or give distinct names to subfragments'
+					message = (
+						f'Domain \'{domain_name}\' is defined by subfragments {", ".join(names)} of fragment '
+						f'\'{".".join(hierarchy)}\', some of which have identical names; it is necessary to either '
+						'rename subfragment domains explicitly, or give distinct names to subfragments'
+					),
+					src_loc = get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			for subfrag, name, i in subfrags:
 				domain_name_map = { domain_name: f'{name}_{domain_name}' }
+				# XXX(aki):
+				# I suspect this will cause some weird source locality offsetting, i've not found
+				# any so far, but I have a strong suspicion that it will eventually.
 				self.subfragments[i] = (DomainRenamer(**domain_name_map)(subfrag), name)
 
 		# Finally, collect the (now unique) subfragment domains, and merge them into our domains.
