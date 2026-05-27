@@ -62,7 +62,7 @@ class Fragment:
 	@staticmethod
 	def get(
 		obj: Fragment | Elaboratable, platform: Platform | None,
-		*, formal: bool = False
+		*, formal: bool = False, src_loc_at: int = 0
 	) -> Fragment:
 		'''
 		.. todo:: Document Me
@@ -108,7 +108,7 @@ class Fragment:
 		self.flatten = False
 		self._formal = False
 
-	def add_ports(self, *ports, dir):
+	def add_ports(self, *ports, dir: IODirectionIO, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -131,7 +131,7 @@ class Fragment:
 				if port_dir == dir:
 					yield port
 
-	def add_driver(self, signal: SignalLikeT | None, domain: str | None = None):
+	def add_driver(self, signal: SignalLikeT | None, domain: str | None = None, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -187,7 +187,7 @@ class Fragment:
 			signals |= domain_signals
 		return signals
 
-	def add_domains(self, *domains):
+	def add_domains(self, *domains, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -215,16 +215,16 @@ class Fragment:
 
 		yield from self.domains
 
-	def add_statements(self, *stmts):
+	def add_statements(self, *stmts, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
 
-		for stmt in Statement.cast(stmts):
+		for stmt in Statement.cast(stmts, src_loc_at = 1 + src_loc_at):
 			stmt._MustUse__used = True
 			self.statements.append(stmt)
 
-	def add_subfragment(self, subfragment, name: str | None = None) -> None:
+	def add_subfragment(self, subfragment, name: str | None = None, src_loc_at: int = 0) -> None:
 		'''
 		.. todo:: Document Me
 		'''
@@ -236,7 +236,7 @@ class Fragment:
 			raise TypeError(f'Unable to add subfragment that is of type \'{type(subfragment)}\', not \'Fragment\'')
 		self.subfragments.append((subfragment, name))
 
-	def find_subfragment(self, name_or_index):
+	def find_subfragment(self, name_or_index, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -252,14 +252,20 @@ class Fragment:
 					return subfragment
 			raise NameError(f'No subfragment with name \'{name_or_index}\'')
 
-	def find_generated(self, *path):
+	def find_generated(self, *path, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
 
 		if len(path) > 1:
 			path_component, *path = path
-			return self.find_subfragment(path_component).find_generated(*path)
+			return self.find_subfragment(
+					path_component,
+					src_loc_at = 1 + src_loc_at
+				).find_generated(
+					*path,
+					src_loc_at = 1 + src_loc_at
+				)
 		else:
 			item, = path
 			return self.generated[item]
@@ -271,7 +277,7 @@ class Fragment:
 
 		return self
 
-	def _merge_subfragment(self, subfragment):
+	def _merge_subfragment(self, subfragment, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -282,7 +288,7 @@ class Fragment:
 		self.ports.update(subfragment.ports)
 		self.first_drivers.update(subfragment.first_drivers)
 		for domain, signal in subfragment.iter_drivers():
-			self.add_driver(signal, domain)
+			self.add_driver(signal, domain, src_loc_at = 1 + src_loc_at)
 		self.statements += subfragment.statements
 		self.subfragments += subfragment.subfragments
 
@@ -296,7 +302,7 @@ class Fragment:
 		if not found:
 			raise RuntimeError('Unable to find merged subfragment!')
 
-	def _resolve_hierarchy_conflicts(self, hierarchy = ('top',), mode = 'warn'):
+	def _resolve_hierarchy_conflicts(self, hierarchy = ('top',), mode = 'warn', *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -341,7 +347,7 @@ class Fragment:
 
 			# First, recurse into subfragments and let them detect driver conflicts as well.
 			subfrag_drivers = subfrag._resolve_hierarchy_conflicts(
-				subfrag_hierarchy, mode
+				subfrag_hierarchy, mode, src_loc_at = 1 + src_loc_at
 			)
 
 			# Second, classify subfragments by signals they drive.
@@ -371,7 +377,7 @@ class Fragment:
 
 		# Flatten hierarchy.
 		for subfrag, subfrag_hierarchy in sorted(flatten_subfrags, key = lambda x: x[1]):
-			self._merge_subfragment(subfrag)
+			self._merge_subfragment(subfrag, src_loc_at = 1 + src_loc_at)
 
 		# If we flattened anything, we might be in a situation where we have a driver conflict
 		# again, e.g. if we had a tree of fragments like A --- B --- C where only fragments
@@ -381,12 +387,12 @@ class Fragment:
 		# has another conflict.
 		if any(flatten_subfrags):
 			# Try flattening again.
-			return self._resolve_hierarchy_conflicts(hierarchy, mode)
+			return self._resolve_hierarchy_conflicts(hierarchy, mode, src_loc_at = 1 + src_loc_at)
 
 		# Nothing was flattened, we're done!
 		return SignalSet(driver_subfrags.keys())
 
-	def _propagate_domains_up(self, hierarchy = ('top',)):
+	def _propagate_domains_up(self, hierarchy = ('top',), *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -401,7 +407,7 @@ class Fragment:
 			hier_name = name
 			if hier_name is None:
 				hier_name = f'<unnamed #{i}>'
-			subfrag._propagate_domains_up(hierarchy + (hier_name,))
+			subfrag._propagate_domains_up(hierarchy + (hier_name,), src_loc_at = 1 + src_loc_at)
 
 			# Second, classify subfragments by domains they define.
 			for domain_name, domain in subfrag.domains.items():
@@ -442,9 +448,9 @@ class Fragment:
 			for domain_name, domain in subfrag.domains.items():
 				if domain.local:
 					continue
-				self.add_domains(domain)
+				self.add_domains(domain, src_loc_at = 1 + src_loc_at)
 
-	def _propagate_domains_down(self):
+	def _propagate_domains_down(self, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -460,11 +466,11 @@ class Fragment:
 							f'{self.domains[domain]!r} is not {subfrag.domains[domain]!r}'
 						)
 				else:
-					subfrag.add_domains(self.domains[domain])
+					subfrag.add_domains(self.domains[domain], src_loc_at = 1 + src_loc_at)
 
-			subfrag._propagate_domains_down()
+			subfrag._propagate_domains_down(src_loc_at = 1 + src_loc_at)
 
-	def _create_missing_domains(self, missing_domain, *, platform = None):
+	def _create_missing_domains(self, missing_domain, *, platform = None, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -499,7 +505,7 @@ class Fragment:
 				)
 
 			if type(value) is ClockDomain:
-				self.add_domains(value)
+				self.add_domains(value, src_loc_at = 1 + src_loc_at)
 				# And expose ports on the newly added clock domain, since it is added directly
 				# and there was no chance to add any logic driving it.
 				new_domains.append(value)
@@ -510,23 +516,23 @@ class Fragment:
 					raise DomainError(
 						'Fragment returned by missing domain callback does not define '
 						f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).')
-				self.add_subfragment(new_fragment, f'cd_{domain_name}')
-				self.add_domains(new_fragment.domains.values())
+				self.add_subfragment(new_fragment, f'cd_{domain_name}', src_loc_at = 1 + src_loc_at)
+				self.add_domains(new_fragment.domains.values(), src_loc_at = 1 + src_loc_at)
 		return new_domains
 
-	def _propagate_domains(self, missing_domain, *, platform = None):
+	def _propagate_domains(self, missing_domain, *, platform = None, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
 
-		self._propagate_domains_up()
-		self._propagate_domains_down()
-		self._resolve_hierarchy_conflicts()
-		new_domains = self._create_missing_domains(missing_domain, platform = platform)
-		self._propagate_domains_down()
+		self._propagate_domains_up(src_loc_at = 1 + src_loc_at)
+		self._propagate_domains_down(src_loc_at = 1 + src_loc_at)
+		self._resolve_hierarchy_conflicts(src_loc_at = 1 + src_loc_at)
+		new_domains = self._create_missing_domains(missing_domain, platform = platform, src_loc_at = 1 + src_loc_at)
+		self._propagate_domains_down(src_loc_at = 1 + src_loc_at)
 		return new_domains
 
-	def _prepare_use_def_graph(self, parent, level, uses, defs, ios, top):
+	def _prepare_use_def_graph(self, parent, level, uses, defs, ios, top, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -582,9 +588,9 @@ class Fragment:
 				parent[subfrag] = self
 				level[subfrag]  = level[self] + 1
 
-				subfrag._prepare_use_def_graph(parent, level, uses, defs, ios, top)
+				subfrag._prepare_use_def_graph(parent, level, uses, defs, ios, top, src_loc_at = 1 + src_loc_at)
 
-	def _propagate_ports(self, ports, all_undef_as_ports):
+	def _propagate_ports(self, ports, all_undef_as_ports, *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -612,7 +618,7 @@ class Fragment:
 		uses   = SignalDict()
 		defs   = SignalDict()
 		ios    = SignalDict()
-		self._prepare_use_def_graph(parent, level, uses, defs, ios, self)
+		self._prepare_use_def_graph(parent, level, uses, defs, ios, self, src_loc_at = 1 + src_loc_at)
 
 		ports = SignalSet(ports)
 		if all_undef_as_ports:
@@ -653,30 +659,30 @@ class Fragment:
 				if sig in defs and frag is defs[sig]:
 					continue
 				while frag != lca:
-					frag.add_ports(sig, dir = 'i')
+					frag.add_ports(sig, dir = 'i', src_loc_at = 1 + src_loc_at)
 					frag = parent[frag]
 
 			if sig in defs:
 				frag = defs[sig]
 				while frag != lca:
-					frag.add_ports(sig, dir = 'o')
+					frag.add_ports(sig, dir = 'o', src_loc_at = 1 + src_loc_at)
 					frag = parent[frag]
 
 		for sig in ios:
 			frag = ios[sig]
 			while frag is not None:
-				frag.add_ports(sig, dir = 'io')
+				frag.add_ports(sig, dir = 'io', src_loc_at = 1 + src_loc_at)
 				frag = parent[frag]
 
 		for sig in ports:
 			if sig in ios:
 				continue
 			if sig in defs:
-				self.add_ports(sig, dir = 'o')
+				self.add_ports(sig, dir = 'o', src_loc_at = 1 + src_loc_at)
 			else:
-				self.add_ports(sig, dir = 'i')
+				self.add_ports(sig, dir = 'i', src_loc_at = 1 + src_loc_at)
 
-	def prepare(self, ports = None, missing_domain = lambda name: ClockDomain(name)):
+	def prepare(self, ports = None, missing_domain = lambda name: ClockDomain(name), *, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -684,10 +690,10 @@ class Fragment:
 		from .xfrm import DomainLowerer, SampleLowerer
 
 		fragment = SampleLowerer(formal = self._formal)(self)
-		new_domains = fragment._propagate_domains(missing_domain)
+		new_domains = fragment._propagate_domains(missing_domain, src_loc_at = 1 + src_loc_at)
 		fragment = DomainLowerer()(fragment)
 		if ports is None:
-			fragment._propagate_ports(ports = (), all_undef_as_ports = True)
+			fragment._propagate_ports(ports = (), all_undef_as_ports = True, src_loc_at = 1 + src_loc_at)
 		else:
 			if not isinstance(ports, tuple) and not isinstance(ports, list):
 				msg = f'`ports` must be either a list or a tuple, not {ports!r}'
@@ -708,10 +714,10 @@ class Fragment:
 				mapped_ports.append(cd.clk)
 				if cd.rst is not None:
 					mapped_ports.append(cd.rst)
-			fragment._propagate_ports(ports = mapped_ports, all_undef_as_ports = False)
+			fragment._propagate_ports(ports = mapped_ports, all_undef_as_ports = False, src_loc_at = 1 + src_loc_at)
 		return fragment
 
-	def _assign_names_to_signals(self) -> SignalDict[str]:
+	def _assign_names_to_signals(self, *, src_loc_at: int = 0) -> SignalDict[str]:
 		'''
 		Assign names to signals used in this fragment.
 
@@ -754,7 +760,8 @@ class Fragment:
 		return signal_names
 
 	def _assign_names_to_fragments(
-		self, hierarchy: tuple[str, ...] = ('top',), *, _names: dict[Fragment, tuple[str, ...]] | None = None
+		self, hierarchy: tuple[str, ...] = ('top',), *, _names: dict[Fragment, tuple[str, ...]] | None = None,
+		src_loc_at: int = 0
 	):
 		'''
 		Assign names to this fragment and its subfragments.
@@ -781,7 +788,7 @@ class Fragment:
 			_names = dict[Fragment, tuple[str, ...]]()
 		_names[self] = hierarchy
 
-		signal_names = set(self._assign_names_to_signals().values())
+		signal_names = set(self._assign_names_to_signals(src_loc_at = 1 + src_loc_at).values())
 		for subfragment_index, (subfragment, subfragment_name) in enumerate(self.subfragments):
 			if subfragment_name is None:
 				subfragment_name = f'U${subfragment_index}'
@@ -789,7 +796,7 @@ class Fragment:
 				subfragment_name = f'{subfragment_name}$U${subfragment_index}'
 			assert subfragment_name not in signal_names
 			subfragment._assign_names_to_fragments(
-				hierarchy = (*hierarchy, subfragment_name), _names = _names
+				hierarchy = (*hierarchy, subfragment_name), _names = _names, src_loc_at = 1 + src_loc_at
 			)
 
 		return _names
