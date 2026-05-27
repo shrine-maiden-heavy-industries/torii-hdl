@@ -262,39 +262,45 @@ class DummyPortTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The \'DummyPort\' name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			DummyPort(data_width = 8, addr_width = 4, name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The \'DummyPort\' name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			DummyPort(data_width = 8, addr_width = 4, name = ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The \'DummyPort\' name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			DummyPort(data_width = 8, addr_width = 4, name = '\u200C')
 
 	def test_domain_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'DummyPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			DummyPort(data_width = 8, addr_width = 4, domain = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'DummyPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			DummyPort(data_width = 8, addr_width = 4, domain = '\v')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^DummyPort domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain the \'DummyPort\' operates on must not be empty or contain any control or'
+			r' whitespace characters \(test_mem\.py, line \d+\)$',
 		):
 			DummyPort(data_width = 8, addr_width = 4, domain = '\u200D')
 

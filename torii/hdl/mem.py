@@ -522,19 +522,44 @@ class DummyPort:
 		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 		if domain == '' or not _check_name(domain):
-			raise NameError('DummyPort domain must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The name for the domain the \'DummyPort\' operates on must not be empty or contain any control or '
+				'whitespace characters',
+				src_loc = self.src_loc
+			)
+
+			if domain == '':
+				err.add_note('An empty string was provided to the \'domain\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the domain name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn,'
+					' Zs, Zl, Zp'
+				)
+
+			raise err
 
 		self.domain = domain
 
 		if granularity is None:
 			granularity = data_width
 
-		if name is None:
-			name = tracer.get_var_name(depth = 2, default = 'dummy')
-		else:
-			if name == '' or not _check_name(name):
-				raise NameError('DummyPort name must not be empty or contain any control or whitespace characters')
+		if name is not None and (name == '' or not _check_name(name)):
+			err = ToriiSyntaxError(
+				'The \'DummyPort\' name may not be empty or contain any control or whitespace characters',
+				src_loc = tracer.get_src_loc(),
+			)
 
+			if name == '':
+				err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+					'Zs, Zl, Zp'
+				)
+
+			raise err
+
+		name = name or tracer.get_var_name(depth = 2, default = 'dummy')
 		self.addr = Signal(addr_width, name = f'{name}_addr', src_loc_at = 1)
 		self.data = Signal(data_width, name = f'{name}_data', src_loc_at = 1)
 		self.en   = Signal(data_width // granularity, name = f'{name}_en', src_loc_at = 1)
