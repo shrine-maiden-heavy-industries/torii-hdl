@@ -18,6 +18,7 @@ __all__ = (
 	'NameError',
 	'NameNotFound',
 	'NonSynthesizableError',
+	'ParametrizationError',
 	'PlatformError',
 	'ResourceError',
 	'ToolError',
@@ -140,4 +141,8 @@ class DriverConflictError(ToriiError):
 
 class ElaborationError(ToriiError):
 	''' An uncategorized error that occurred during elaboration '''
+	pass
+
+class ParametrizationError(ToriiSyntaxError):
+	''' An error with the parameterization of a Torii elaboratable '''
 	pass

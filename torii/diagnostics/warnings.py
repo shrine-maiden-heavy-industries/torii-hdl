@@ -10,6 +10,7 @@ __all__ = (
 	'ElaborationWarning',
 	'MustUseWarning',
 	'NameWarning',
+	'ParametrizationWarning',
 	'PlatformWarning',
 	'ResourceWarning',
 	'ToolWarning',
@@ -74,4 +75,8 @@ class YosysWarning(ToriiWarning):
 
 class ElaborationWarning(ToriiWarning):
 	''' An uncategorized warning that occurred during elaboration '''
+	pass
+
+class ParametrizationWarning(ToriiSyntaxWarning):
+	'''  A warning about the parameterization of a Torii elaboratable  '''
 	pass

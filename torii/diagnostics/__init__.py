@@ -2,12 +2,13 @@
 
 from .errors   import (
 	AttributeError, ConstraintError, DomainError, DriverConflictError, ElaborationError, IndexError, NameError,
-	NameNotFound, NonSynthesizableError, PlatformError, ResourceError, ToolError, ToolNotFound, ToriiError,
-	ToriiSyntaxError, YosysError,
+	NameNotFound, NonSynthesizableError, ParametrizationError, PlatformError, ResourceError, ToolError, ToolNotFound,
+	ToriiError, ToriiSyntaxError, YosysError,
 )
 from .warnings import (
-	ConstraintWarning, DriverConflictWarning, ElaborationWarning, MustUseWarning, NameWarning, PlatformWarning,
-	ResourceWarning, ToolWarning, ToriiSyntaxWarning, ToriiWarning, UnusedElaboratable, UnusedProperty, YosysWarning,
+	ConstraintWarning, DriverConflictWarning, ElaborationWarning, MustUseWarning, NameWarning, ParametrizationWarning,
+	PlatformWarning, ResourceWarning, ToolWarning, ToriiSyntaxWarning, ToriiWarning, UnusedElaboratable, UnusedProperty,
+	YosysWarning,
 )
 
 __all__ = (
@@ -25,6 +26,8 @@ __all__ = (
 	'NameNotFound',
 	'NameWarning',
 	'NonSynthesizableError',
+	'ParametrizationError',
+	'ParametrizationWarning',
 	'PlatformError',
 	'PlatformWarning',
 	'ResourceError',
