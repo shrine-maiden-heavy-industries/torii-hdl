@@ -625,20 +625,23 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 		f1 = Fragment()
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain driving the signal must not be empty or contain any control or whitespace '
+			r'characters \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_driver(Signal(), '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain driving the signal must not be empty or contain any control or whitespace '
+			r'characters \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_driver(Signal(), '\t')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Domain must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The name for the domain driving the signal must not be empty or contain any control or whitespace '
+			r'characters \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_driver(Signal(), '\u2069')
 

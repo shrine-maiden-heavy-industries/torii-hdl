@@ -160,7 +160,23 @@ class Fragment:
 		'''
 
 		if domain is not None and (domain == '' or not _check_name(domain)):
-			raise NameError('Domain must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				message = (
+					'The name for the domain driving the signal must not be empty or contain any control or whitespace '
+					'characters'
+				),
+				src_loc = get_src_loc(),
+			)
+
+			if domain == '':
+				err.add_note('An empty string was provided to the `domain` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the domain name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+					'Zs, Zl, Zp'
+				)
+
+			raise err
 
 		if domain not in self.drivers:
 			self.drivers[domain] = SignalSet()
