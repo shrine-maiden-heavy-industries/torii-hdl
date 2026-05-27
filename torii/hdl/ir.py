@@ -978,12 +978,12 @@ class Instance(Fragment):
 
 	Parameters
 	----------
-	type: str
+	inst_type: str
 		The name/type of object to instantiate
 	'''
 
 	def __init__(
-		self, type: str, *args: InstanceArgsT, src_loc: SrcLoc | None = None, src_loc_at: int = 0,
+		self, inst_type: str, *args: InstanceArgsT, src_loc: SrcLoc | None = None, src_loc_at: int = 0,
 		**kwargs: ValueCastT | str
 	) -> None:
 		super().__init__()
