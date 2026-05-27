@@ -594,7 +594,24 @@ class Fragment:
 					msg = f'The clock domain \'{domain_name}\' was used but not defined'
 
 				raise ToriiSyntaxError(
-					msg, self.first_drivers.get(domain_name), additional_ctx = additional_ctx
+					msg,
+					# BUG(aki):
+					# In the case where the domain is not defined, this will return `None`,
+					# which causes our diagnostics to be weird, there are possibly two ways
+					# to fix this:
+					#  1. Add tracking to where the first `add_driver` for the domain was called
+					#     so we have source locality information for at least that
+					#  2. Use `src_loc_at` up the chain to at least raise this error where call that
+					#     caused this to explode was.
+					#
+					# I've opted for option number 2 for now, but I think maybe option 1 would be
+					# "better", for some definition of better.
+					src_loc = self.first_drivers.get(domain_name),
+					notes = [
+						'The platform function that is used to generate missing domains did not generate a'
+						f' domain called \'{domain_name}\''
+					],
+					additional_ctx = additional_ctx
 				)
 
 			if type(value) is ClockDomain:
@@ -606,9 +623,20 @@ class Fragment:
 				new_fragment = Fragment.get(value, platform = platform)
 				if domain_name not in new_fragment.domains:
 					defined = new_fragment.domains.keys()
+
+					if code := missing_domain.__code__:
+						missing_domain_src_loc = (code.co_filename, code.co_firstlineno)
+					else:
+						missing_domain_src_loc = None
+
 					raise DomainError(
-						'Fragment returned by missing domain callback does not define '
-						f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).')
+						message = (
+							'Fragment returned by missing domain callback does not define '
+							f'requested domain \'{domain_name}\' (defines {", ".join(f"`{n}`" for n in defined)}).'
+						),
+						src_loc = missing_domain_src_loc
+					)
+
 				self.add_subfragment(new_fragment, f'cd_{domain_name}', src_loc_at = 1 + src_loc_at)
 				self.add_domains(new_fragment.domains.values(), src_loc_at = 1 + src_loc_at)
 		return new_domains
