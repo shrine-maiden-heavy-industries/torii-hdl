@@ -128,6 +128,14 @@ class FragmentPortsTestCase(ToriiTestSuiteCase):
 		f._propagate_ports(ports = (), all_undef_as_ports = True)
 		self.assertEqual(f.ports, SignalDict([]))
 
+	def test_bad_dir(self) -> None:
+		f = Fragment()
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Expected port direction to be \'i\', \'o\', or \'io\', not \'x\' \(test_ir\.py, line \d+\)$'
+		):
+			f.add_ports(self.s1, dir = 'x')
+
 	def test_iter_signals(self):
 		f = Fragment()
 		f.add_ports(self.s1, self.s2, dir = 'io')

@@ -134,7 +134,10 @@ class Fragment:
 		'''
 
 		if dir not in ('i', 'o', 'io'):
-			raise ValueError(f'Expected dir to be \'i\', \'o\', or \'io\', not \'{dir}\'')
+			raise ToriiSyntaxError(
+				f'Expected port direction to be \'i\', \'o\', or \'io\', not \'{dir}\'',
+				src_loc = get_src_loc(src_loc_at = src_loc_at)
+			)
 
 		for port in flatten(ports):
 			self.ports[port] = dir
