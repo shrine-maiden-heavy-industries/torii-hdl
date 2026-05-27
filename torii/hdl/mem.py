@@ -59,7 +59,7 @@ class Memory(Elaboratable):
 
 	def __init__(
 		self, *, width: int, depth: int, init: Sequence[int] | None = None, name: str | None = None,
-		attrs: OrderedDict | None = None, simulate: bool = True
+		attrs: OrderedDict | None = None, simulate: bool = True, src_loc_at: int = 0
 	) -> None:
 		if not isinstance(width, int) or width < 0:
 			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')
@@ -84,7 +84,7 @@ class Memory(Elaboratable):
 
 
 		self.name    = name or tracer.get_var_name(depth = 2, default = '$memory')
-		self.src_loc = tracer.get_src_loc()
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 		self.width = width
 		self.depth = depth
