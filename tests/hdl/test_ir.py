@@ -27,25 +27,25 @@ class ElaboratesToSelf(Elaboratable):
 class FragmentGetTestCase(ToriiTestSuiteCase):
 	def test_get_wrong_none(self):
 		with self.assertRaisesRegex(
-			AttributeError,
-			r'^Object None cannot be elaborated$'
+			ElaborationError,
+			r'^Objects of type \'NoneType\' can not be elaborated$'
 		):
 			Fragment.get(None, platform = None)
 
 		with self.assertWarnsRegex(
-			UserWarning,
-			r'^\.elaborate\(\) returned None; missing return statement\?$'
+			ElaborationWarning,
+			r'^\'elaborate\(\)\' method returned None; are you missing a return statement\?$'
 		):
 			with self.assertRaisesRegex(
-				AttributeError,
-				r'^Object None cannot be elaborated$'
+				ElaborationError,
+				r'^Objects of type \'NoneType\' can not be elaborated$'
 			):
 				Fragment.get(ElaboratesToNone(), platform = None)
 
 	def test_get_wrong_self(self):
 		with self.assertRaisesRegex(
-			RecursionError,
-			r'^Object <.+?ElaboratesToSelf.+?> elaborates to itself$'
+			ElaborationError,
+			r'^The object <.+?ElaboratesToSelf.+?> recursively elaborates to itself$'
 		):
 			Fragment.get(ElaboratesToSelf(), platform = None)
 

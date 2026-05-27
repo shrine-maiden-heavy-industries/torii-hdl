@@ -85,15 +85,35 @@ class Fragment:
 				if formal:
 					new_obj = obj.formal(new_obj)
 			else:
-				raise AttributeError(f'Object {obj!r} cannot be elaborated')
+				raise ElaborationError(
+					message = f'Objects of type \'{type(obj).__name__}\' can not be elaborated',
+					src_loc = get_src_loc(src_loc_at = 1 + src_loc_at),
+					notes = [
+						'Only Torii \'Elaboratable\'s and objects that derive from them can be elaborated',
+					]
+				)
+
 			if new_obj is obj:
-				raise RecursionError(f'Object {obj!r} elaborates to itself')
+				raise ElaborationError(
+					message = f'The object {obj!r} recursively elaborates to itself',
+					# NOTE(aki):
+					# We use this rather than `get_src_loc` because having the diagnostic report from the
+					# object location itself rather than the call to `Fragment.get` or wherever up the chain
+					# it was makes more sense.
+					src_loc = (code.co_filename, code.co_firstlineno),
+					notes = [
+						'This can occur if the \'elaborate\'  or \'formal\' methods return \'self\' or another instance'
+						f'of {type(obj).__name__}.'
+					]
+				)
+
 			if new_obj is None and code is not None:
 				warnings.warn_explicit(
-					'.elaborate() returned None; missing return statement?',
-					category = UserWarning,
+					'\'elaborate()\' method returned None; are you missing a return statement?',
+					category = ElaborationWarning,
 					filename = code.co_filename,
-					lineno = code.co_firstlineno)
+					lineno = code.co_firstlineno
+				)
 			obj = new_obj
 
 	def __init__(self) -> None:
