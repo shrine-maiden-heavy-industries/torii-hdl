@@ -309,12 +309,20 @@ class Fragment:
 			if name_or_index < len(self.subfragments):
 				subfragment, name = self.subfragments[name_or_index]
 				return subfragment
-			raise NameError(f'No subfragment at index #{name_or_index}')
+
+			raise NameError(
+				message = f'No subfragment at index #{name_or_index}',
+				src_loc = get_src_loc(src_loc_at = src_loc_at)
+			)
 		else:
 			for subfragment, name in self.subfragments:
 				if name == name_or_index:
 					return subfragment
-			raise NameError(f'No subfragment with name \'{name_or_index}\'')
+
+			raise NameError(
+				message = f'No subfragment with name \'{name_or_index}\'',
+				src_loc = get_src_loc(src_loc_at = src_loc_at)
+			)
 
 	def find_generated(self, *path, src_loc_at: int = 0):
 		'''
