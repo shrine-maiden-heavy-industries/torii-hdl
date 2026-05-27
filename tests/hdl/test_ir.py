@@ -890,40 +890,56 @@ class InstanceTestCase(ToriiTestSuiteCase):
 
 	def test_wrong_construct_arg(self):
 		s = Signal()
+
 		with self.assertRaisesRegex(
-			NameError, (
-				r'^Instance argument \(\'\', \'s1\', \(sig s\)\) should be a tuple '
-				r'\(kind, name, value\) where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\'$'
-			)
+			ToriiSyntaxError,
+			r'^Instance type must be a string, not an object of type \'NoneType\' \(test_ir\.py, line \d+\)$'
+		):
+			Instance(None, ('', 's1', s))
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Instance argument \(\'\', \'s1\', \(sig s\)\) should be a tuple '
+			r'\(kind, name, value\) where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\''
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			Instance('foo', ('', 's1', s))
 
 	def test_wrong_construct_kwarg(self):
 		s = Signal()
 		with self.assertRaisesRegex(
-			NameError, (
-				r'^Instance keyword argument x_s1 = \(sig s\) does not start with one of '
-				r'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\'$'
-			)
+			ToriiSyntaxError,
+			r'^Instance keyword argument x_s1 = \(sig s\) does not start with one of '
+			r'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\' \(test_ir\.py, line \d+\)$'
 		):
 			Instance('foo', x_s1 = s)
 
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^The argument for \'io_\' parameters to an \'Instance\' must be a valid Value castable type,'
+			r' not \'str\' \(test_ir\.py, line \d+\)$'
+		):
+			Instance('foo', io_FOO = 'meow')
+
 	def test_instance_type_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Instance type must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Instance type may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			Instance('', a_NYA = 'meow')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Instance type must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Instance type may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			Instance('\t', a_NYA = 'meow')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Instance type must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Instance type may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			Instance('\u0085', a_NYA = 'meow')
 
@@ -1064,15 +1080,17 @@ class InstanceTestCase(ToriiTestSuiteCase):
 
 	def test_instance_kwargs_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Instance parameter must not contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Instance parameter must not contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			params = { 'a_\tNYA': 'MEOW' }
 			Instance('NYA', **params)
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Instance parameter must not contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Instance parameter must not contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			params = { 'a_N\u202AYA': 'MEOW' }
 			Instance('NYA', **params)

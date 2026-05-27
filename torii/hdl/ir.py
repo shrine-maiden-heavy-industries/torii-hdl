@@ -988,13 +988,33 @@ class Instance(Fragment):
 	) -> None:
 		super().__init__()
 
-		if type == '' or not _check_name(type):
-			raise NameError('Instance type must not be empty or contain any control or whitespace characters')
+		self.src_loc = src_loc or get_src_loc(src_loc_at = src_loc_at)
 
-		self.type        = type
+		if not isinstance(inst_type, str):
+			raise ToriiSyntaxError(
+				f'Instance type must be a string, not an object of type \'{type(inst_type).__name__}\'',
+				src_loc = self.src_loc,
+			)
+
+		if inst_type == '' or not _check_name(inst_type):
+			err = ToriiSyntaxError(
+				'Instance type may not be empty or contain any control or whitespace characters',
+				src_loc = self.src_loc,
+			)
+
+			if inst_type == '':
+				err.add_note('An empty string was provided to the \'type\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the type was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs,'
+					' Zl, Zp'
+				)
+
+			raise err
+
+		self.type        = inst_type
 		self.parameters  = OrderedDict[str, 'ValueCastT | str']()
 		self.named_ports = OrderedDict[str, tuple[Value, IODirectionIO]]()
-		self.src_loc     = src_loc or get_src_loc(src_loc_at)
 
 		for (kind, name, value) in args:
 			if kind == 'a':
@@ -1002,21 +1022,26 @@ class Instance(Fragment):
 			elif kind == 'p':
 				self.parameters[name] = value
 			elif kind in ('i', 'o', 'io'):
-				self.named_ports[name] = (Value.cast(value), kind)
+				self.named_ports[name] = (Value.cast(value, src_loc_at = 1 + src_loc_at), kind)
 			else:
-				raise NameError(
+				raise ToriiSyntaxError(
 					f'Instance argument {(kind, name, value)!r} should be a tuple (kind, name, value) '
-					'where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\''
+					'where kind is one of \'a\', \'p\', \'i\', \'o\', or \'io\'',
+					src_loc = self.src_loc
 				)
 
 		for kw, arg in kwargs.items():
 			if not _check_name(kw):
-				raise NameError('Instance parameter must not contain any control or whitespace characters')
+				raise ToriiSyntaxError(
+					'Instance parameter must not contain any control or whitespace characters',
+					src_loc = self.src_loc
+				)
 
 			if kw.startswith(('i_', 'o_', 'io_')) and isinstance(arg, str):
-				raise TypeError(
-					'The argument for \'i_\', \'o_\', or \'io_\', parameters to an'
-					f'Instance must be a valid Value castable type, not \'{arg!r}\''
+				raise ToriiSyntaxError(
+					f'The argument for \'{kw.split("_")[0]}_\' parameters to an '
+					f'\'Instance\' must be a valid Value castable type, not \'{type(arg).__name__}\'',
+					src_loc = self.src_loc
 				)
 
 			if kw.startswith('a_'):
@@ -1025,15 +1050,16 @@ class Instance(Fragment):
 				self.parameters[kw[2:]] = arg
 			elif kw.startswith('i_'):
 				assert not isinstance(arg, str)
-				self.named_ports[kw[2:]] = (Value.cast(arg), 'i')
+				self.named_ports[kw[2:]] = (Value.cast(arg, src_loc_at = 1 + src_loc_at), 'i')
 			elif kw.startswith('o_'):
 				assert not isinstance(arg, str)
-				self.named_ports[kw[2:]] = (Value.cast(arg), 'o')
+				self.named_ports[kw[2:]] = (Value.cast(arg, src_loc_at = 1 + src_loc_at), 'o')
 			elif kw.startswith('io_'):
 				assert not isinstance(arg, str)
-				self.named_ports[kw[3:]] = (Value.cast(arg), 'io')
+				self.named_ports[kw[3:]] = (Value.cast(arg, src_loc_at = 1 + src_loc_at), 'io')
 			else:
-				raise NameError(
+				raise ToriiSyntaxError(
 					f'Instance keyword argument {kw} = {arg!r} does not start with one of '
-					'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\''
+					'\'a_\', \'p_\', \'i_\', \'o_\', or \'io_\'',
+					src_loc = self.src_loc
 				)
