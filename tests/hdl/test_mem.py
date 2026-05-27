@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.diagnostics import ToriiSyntaxError
+from torii.diagnostics import ParametrizationError, ToriiSyntaxError
 from torii.hdl.ast     import Const, Signal
 from torii.hdl.mem     import DummyPort, Memory
 
@@ -45,15 +45,30 @@ class MemoryTestCase(ToriiTestSuiteCase):
 
 	def test_geometry_wrong(self):
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Memory width must be a non-negative integer, not -1$'
+			ParametrizationError,
+			r'^The width for a Torii \'Memory\' must be non-negative, got -1 \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = -1, depth = 4)
+
 		with self.assertRaisesRegex(
-			TypeError,
-			r'^Memory depth must be a non-negative integer, not -1$'
+			ParametrizationError,
+			r'^The width for a Torii \'Memory\' must be a non-negative integer not an object of type'
+			r' \'str\' \(test_mem\.py, line \d+\)$'
+		):
+			Memory(width = 'meow', depth = 4)
+
+		with self.assertRaisesRegex(
+			ParametrizationError,
+			r'^The depth for a Torii \'Memory\' must be non-negative, got -1 \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = -1)
+
+		with self.assertRaisesRegex(
+			ParametrizationError,
+			r'^The depth for a Torii \'Memory\' must be a non-negative integer not an object of type'
+			r' \'str\' \(test_mem\.py, line \d+\)$'
+		):
+			Memory(width = 8, depth = 'meow')
 
 	def test_init(self):
 		m = Memory(width = 8, depth = 4, init = range(4))

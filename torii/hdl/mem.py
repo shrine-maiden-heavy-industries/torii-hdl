@@ -6,7 +6,7 @@ import operator
 from collections     import OrderedDict
 from collections.abc import Sequence
 
-from ..diagnostics   import ToriiSyntaxError
+from ..diagnostics   import ParametrizationError, ToriiSyntaxError
 from ..util          import _check_name, tracer
 from .ast            import Array, Cat, Const, Mux, Signal, Switch
 from .ir             import Elaboratable, Fragment
@@ -64,10 +64,30 @@ class Memory(Elaboratable):
 
 		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
+		# XXX(aki):
+		# Do we want `width`/`depth` to be `SupportsIndex`? that way most number-shaped
+		# things could possibly work.
 		if not isinstance(width, int) or width < 0:
-			raise TypeError(f'Memory width must be a non-negative integer, not {width!r}')
+			if not isinstance(width, int):
+				message = (
+					'The width for a Torii \'Memory\' must be a non-negative integer'
+					f' not an object of type \'{type(width).__name__}\''
+				)
+			else:
+				message = f'The width for a Torii \'Memory\' must be non-negative, got {width}'
+
+			raise ParametrizationError(message, src_loc = self.src_loc)
+
 		if not isinstance(depth, int) or depth < 0:
-			raise TypeError(f'Memory depth must be a non-negative integer, not {depth!r}')
+			if not isinstance(depth, int):
+				message = (
+					'The depth for a Torii \'Memory\' must be a non-negative integer'
+					f' not an object of type \'{type(depth).__name__}\''
+				)
+			else:
+				message = f'The depth for a Torii \'Memory\' must be non-negative, got {depth}'
+
+			raise ParametrizationError(message, src_loc = self.src_loc)
 
 		if name is not None and (name == '' or not _check_name(name)):
 			err = ToriiSyntaxError(
