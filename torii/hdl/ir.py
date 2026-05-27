@@ -276,10 +276,28 @@ class Fragment:
 		'''
 
 		if name is not None and (name == '' or not _check_name(name)):
-			raise NameError('Subfragment name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'Subfragment names may not be empty or contain any control or whitespace characters',
+				src_loc = get_src_loc(src_loc_at = src_loc_at),
+			)
+
+			if name == '':
+				err.add_note('An empty string was provided to the \'type\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the type was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, Zs,'
+					' Zl, Zp'
+				)
+
+			raise err
 
 		if not isinstance(subfragment, Fragment):
-			raise TypeError(f'Unable to add subfragment that is of type \'{type(subfragment)}\', not \'Fragment\'')
+			raise ToriiSyntaxError(
+				'Only Torii \'Fragment\'s may be added as a subfragment, not objects of type'
+				f' \'{type(subfragment).__name__}\'',
+				src_loc = get_src_loc(src_loc_at = src_loc_at)
+			)
+
 		self.subfragments.append((subfragment, name))
 
 	def find_subfragment(self, name_or_index, *, src_loc_at: int = 0):

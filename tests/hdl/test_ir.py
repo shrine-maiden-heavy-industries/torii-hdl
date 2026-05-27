@@ -78,22 +78,35 @@ class FragmentGeneratedTestCase(ToriiTestSuiteCase):
 		f1 = Fragment()
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Subfragment names may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_subfragment(Fragment(), '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Subfragment names may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_subfragment(Fragment(), ' ')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Subfragment name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Subfragment names may not be empty or contain any control or whitespace characters'
+			r' \(test_ir\.py, line \d+\)$'
 		):
 			f1.add_subfragment(Fragment(), '\u000C')
+
+	def test_subfragment_add_wrong(self) -> None:
+		f1 = Fragment()
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only Torii \'Fragment\'s may be added as a subfragment, not objects of type'
+			r' \'NoneType\' \(test_ir\.py, line \d+\)$',
+		):
+			f1.add_subfragment(None, 'NYA')
 
 	def test_find_generated(self):
 		f1 = Fragment()
