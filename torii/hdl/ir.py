@@ -551,9 +551,12 @@ class Fragment:
 			for domain in self.iter_domains():
 				if domain in subfrag.domains:
 					if self.domains[domain] is not subfrag.domains[domain]:
-						raise RuntimeError(
-							f'Subfragment domain propagation failure, mismatching domains: '
-							f'{self.domains[domain]!r} is not {subfrag.domains[domain]!r}'
+						raise ElaborationError(
+							message = (
+								f'Subfragment domain propagation failure, mismatching domains: '
+								f'{self.domains[domain]!r} is not {subfrag.domains[domain]!r}'
+							),
+							src_loc = get_src_loc(src_loc_at = src_loc_at)
 						)
 				else:
 					subfrag.add_domains(self.domains[domain], src_loc_at = 1 + src_loc_at)
