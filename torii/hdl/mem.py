@@ -6,6 +6,7 @@ import operator
 from collections     import OrderedDict
 from collections.abc import Sequence
 
+from ..diagnostics   import ToriiSyntaxError
 from ..util          import _check_name, tracer
 from .ast            import Array, Cat, Const, Mux, Signal, Switch
 from .ir             import Elaboratable, Fragment
@@ -66,7 +67,21 @@ class Memory(Elaboratable):
 			raise TypeError(f'Memory depth must be a non-negative integer, not {depth!r}')
 
 		if name is not None and (name == '' or not _check_name(name)):
-			raise NameError('Memory name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'The Memory name may not be empty or contain any control or whitespace characters',
+				src_loc = tracer.get_src_loc(),
+			)
+
+			if name == '':
+				err.add_note('An empty string was provided to the `name` parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the name was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+					'Zs, Zl, Zp'
+				)
+
+			raise err
+
 
 		self.name    = name or tracer.get_var_name(depth = 2, default = '$memory')
 		self.src_loc = tracer.get_src_loc()

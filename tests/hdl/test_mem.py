@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 # torii: UnusedElaboratable=no
 
-from torii.hdl.ast import Const, Signal
-from torii.hdl.mem import DummyPort, Memory
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.ast     import Const, Signal
+from torii.hdl.mem     import DummyPort, Memory
 
-from ..utils       import ToriiTestSuiteCase
+from ..utils           import ToriiTestSuiteCase
 
 class MemoryTestCase(ToriiTestSuiteCase):
 	def test_name(self):
@@ -17,20 +18,23 @@ class MemoryTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Memory name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The Memory name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = 4, name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Memory name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The Memory name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = 4, name = '\t')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Memory name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^The Memory name may not be empty or contain any control or whitespace characters'
+			r' \(test_mem\.py, line \d+\)$'
 		):
 			Memory(width = 8, depth = 4, name = '\u061C')
 
