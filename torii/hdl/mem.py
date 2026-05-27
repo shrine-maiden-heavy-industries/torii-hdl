@@ -293,6 +293,9 @@ class ReadPort(Elaboratable):
 	'''
 
 	def __init__(self, memory: Memory, *, domain: str = 'sync', transparent: bool = True, src_loc_at: int = 0) -> None:
+
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		if domain == 'comb' and not transparent:
 			raise ValueError('Read port cannot be simultaneously asynchronous and non-transparent')
 
@@ -374,6 +377,9 @@ class WritePort(Elaboratable):
 	def __init__(
 		self, memory: Memory, *, domain: str = 'sync', granularity: int | None = None, src_loc_at: int = 0
 	) -> None:
+
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		if granularity is None:
 			granularity = memory.width
 		if not isinstance(granularity, int) or granularity < 0:
@@ -455,8 +461,11 @@ class DummyPort:
 
 	def __init__(
 		self, *, data_width: int, addr_width: int, domain: str = 'sync', name: str | None = None,
-		granularity: int | None = None
+		granularity: int | None = None, src_loc_at: int = 0
 	) -> None:
+
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		if domain == '' or not _check_name(domain):
 			raise NameError('DummyPort domain must not be empty or contain any control or whitespace characters')
 
