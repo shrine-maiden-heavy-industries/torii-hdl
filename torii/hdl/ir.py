@@ -233,16 +233,23 @@ class Fragment:
 
 		for domain in flatten(domains):
 			if not isinstance(domain, ClockDomain):
-				raise TypeError(f'Domain must be a \'ClockDomain\', not a \'{domain!r}\'')
+				raise ToriiSyntaxError(
+					'Only Torii \'ClockDomain\'s can be added to a fragment, not objects of type'
+					f' \'{type(domain).__name__}\'',
+					src_loc = get_src_loc(src_loc_at = src_loc_at)
+				)
 
 			if domain.name in self.domains:
 				raise ToriiSyntaxError(
-					f'Clock domain named \'{domain.name}\' already exists',
+					f'A clock domain named \'{domain.name}\' already exists within this fragment',
 					domain.src_loc,
 					additional_ctx = (
 						f'The domain \'{domain.name}\' was previously defined here:',
 						self.domains[domain.name].src_loc
-					)
+					),
+					notes = [
+						'Consider possibly using a \'DomainRenamer\' to rename the colliding domain'
+					]
 				)
 
 			self.domains[domain.name] = domain

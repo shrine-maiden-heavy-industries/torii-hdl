@@ -645,6 +645,24 @@ class FragmentDomainsTestCase(ToriiTestSuiteCase):
 		):
 			f1.add_driver(Signal(), '\u2069')
 
+	def test_domain_add_wrong(self) -> None:
+		f1 = Fragment()
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Only Torii \'ClockDomain\'s can be added to a fragment, not objects of type'
+			r' \'NoneType\' \(test_ir\.py, line \d+\)$'
+		):
+			f1.add_domains(None)
+
+		f1.add_domains(ClockDomain('meow'))
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^A clock domain named \'meow\' already exists within this fragment \(test_ir\.py, line \d+\)$',
+		):
+			f1.add_domains(ClockDomain('meow'))
+
 
 class FragmentHierarchyConflictTestCase(ToriiTestSuiteCase):
 	def setUp_self_sub(self):
