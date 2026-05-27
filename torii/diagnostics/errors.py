@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
+import builtins
+
 from .._typing import SrcLoc
 
 '''
@@ -115,13 +117,17 @@ class YosysError(ToolError):
 	''' An error when invoking Yosys '''
 	pass
 
-class IndexError(ToriiSyntaxError, IndexError):
-	'''  '''
+class IndexError(ToriiSyntaxError, builtins.IndexError):
+	'''
+	A hybrid between the Python :py:class:`IndexError <builtins.IndexError>` and
+	the Torii :py:class:`ToriiSyntaxError <torii.diagnostics.errors.ToriiSyntaxError>`.
+	'''
 	pass
 
-class AttributeError(ToriiError, AttributeError):
+class AttributeError(ToriiError, builtins.AttributeError):
 	'''
-	A hybrid between the Python :py:class:`AttributeError` and :py:class:`ToriiError`.
+	A hybrid between the Python :py:class:`AttributeError <builtins.AttributeError>` and
+	the Torii :py:class:`ToriiError <torii.diagnostics.errors.ToriiError>`.
 
 	This is used for where we wish to maintain proper functionality with things such as the
 	python :py:meth:`hasattr` call, but also if not caught emit a pretty Torii diagnostic
