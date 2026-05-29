@@ -449,20 +449,23 @@ class RecordTestCase(ToriiTestSuiteCase):
 
 	def test_name_wrong(self):
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record([('nya', 1)], name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record([('nya', 1)], name = '\0')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record([('nya', 1)], name = '\v')
 

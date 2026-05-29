@@ -226,13 +226,13 @@ class Record(ValueCastable):
 		super().__init_subclass__(**kwargs)
 		cls._annotations = get_annotations(cls)
 
-	def _extract_layout(self, annotations: dict[str, Any]) -> LayoutFieldT:
+	def _extract_layout(self, annotations: dict[str, Any], src_loc_at: int = 1) -> LayoutFieldT:
 		layout = list[tuple[str, LayoutFieldT] | tuple[str, Layout, Direction]]()
 		for name, typ in annotations.items():
 			# We have nested records
 			if isclass(typ) and issubclass(typ, Record):
 				layout.append(
-					(name, self._extract_layout(get_annotations(typ)))
+					(name, self._extract_layout(get_annotations(typ), src_loc_at = 1 + src_loc_at))
 				)
 			elif isinstance(get_origin(typ), type(Signal)):
 				params = get_args(typ)
@@ -253,10 +253,23 @@ class Record(ValueCastable):
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 		else:
 			if name == '' or not _check_name(name):
-				raise NameError('Record name must not be empty or contain any control or whitespace characters')
+				err = ToriiSyntaxError(
+					'Record names may not be empty or contain any control or whitespace characters',
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+				)
+
+				if name == '':
+					err.add_note('An empty string was provided to the \'name\' parameter, was this intentional?')
+				else:
+					err.add_note(
+						'A character in the \'name\' was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+						'Zs, Zl, Zp'
+					)
+
+				raise err
 
 		self.name    = name
-		self.src_loc = tracer.get_src_loc(src_loc_at)
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 
 		def concat(a: str | None, b: str) -> str:
 			if a is None:
@@ -267,7 +280,10 @@ class Record(ValueCastable):
 			if len(self._annotations) > 0:
 				layout = self._extract_layout(self._annotations)
 			else:
-				raise ValueError('No layout specified and unable to construct one from type annotations')
+				raise ToriiSyntaxError(
+					'No layout specified and unable to construct one from type annotations',
+					src_loc = self.src_loc
+				)
 
 		self.layout = Layout.cast(layout, src_loc_at = 1 + src_loc_at)
 		self.fields = OrderedDict[str, Record | Signal]()
