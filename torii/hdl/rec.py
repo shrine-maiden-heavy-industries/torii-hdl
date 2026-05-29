@@ -311,29 +311,24 @@ class Record(ValueCastable):
 						src_loc_at = 1 + src_loc_at
 					)
 
-	def _invalid_record_item(self, item: object, src_loc_at: int = 0) -> AttributeError:
-		if not isinstance(item, str):
-			item = str(item)
-
-		if self.name is None:
-			reference = 'The unnamed record'
-		else:
-			reference = f'The record called \'{self.name}\''
-
-		matches = _get_best_matching(item, self.fields.keys())
+	# TODO(aki):
+	# This should eventually be abstracted away into `ToriiError` and `ToriiSyntaxError`
+	# so we can automatically stamp out "best-matching" errors as they occur often enough
+	# and it's largely all the same boilerplate.
+	def _invalid_record_item(
+		self, wanted: str, available: Iterable[str], message: str, src_loc_at: int = 0
+	) -> AttributeError:
+		matches = _get_best_matching(wanted, available)
 		notes = []
 		if len(matches) > 0:
 			match = matches.pop(0)
-			message = f'{reference} does not have a field called \'{item}\' did you mean \'{match}\'?'
+			message = f'{message}, did you mean \'{match}\'?'
 
 			if len(matches) > 0:
 				additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
 				notes.append(
-					f'Additional possible matches for \'{item}\' are: {additional_matches}'
+					f'Additional possible matches for \'{wanted}\' are: {additional_matches}'
 				)
-
-		else:
-			message = f'{reference} does not have a field called \'{item}\''
 
 		return AttributeError(
 			message = message,
@@ -346,7 +341,17 @@ class Record(ValueCastable):
 			try:
 				return self.fields[item]
 			except PythonKeyError:
-				raise self._invalid_record_item(item, src_loc_at = src_loc_at)
+				if self.name is None:
+					reference = 'The unnamed record'
+				else:
+					reference = f'The record called \'{self.name}\''
+
+				raise self._invalid_record_item(
+					wanted = item,
+					available = self.fields.keys(),
+					message = f'{reference} does not have a field called \'{item}\'',
+					src_loc_at = src_loc_at
+				)
 
 		elif isinstance(item, tuple):
 			return Record(self.layout[item], fields = {
@@ -358,7 +363,17 @@ class Record(ValueCastable):
 			try:
 				return super().__getitem__(item)
 			except PythonKeyError:
-				raise self._invalid_record_item(item, src_loc_at = src_loc_at)
+				if self.name is None:
+					reference = 'The unnamed record'
+				else:
+					reference = f'The record called \'{self.name}\''
+
+				raise self._invalid_record_item(
+					wanted = str(item),
+					available = self.fields.keys(),
+					message = f'{reference} does not have a field called \'{item}\'',
+					src_loc_at = src_loc_at
+				)
 
 	def __getattr__(self, name: str):
 		# TODO: Add tests for this!
