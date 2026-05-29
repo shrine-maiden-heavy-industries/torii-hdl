@@ -15,6 +15,7 @@ __all__ = (
 	'DriverConflictError',
 	'ElaborationError',
 	'IndexError',
+	'KeyError',
 	'NameError',
 	'NameNotFound',
 	'NonSynthesizableError',
@@ -145,4 +146,14 @@ class ElaborationError(ToriiError):
 
 class ParametrizationError(ToriiSyntaxError):
 	''' An error with the parameterization of a Torii elaboratable '''
+	pass
+
+class KeyError(ToriiSyntaxError, builtins.KeyError):
+	'''
+	A hybrid between the Python :py:class:`KeyError <builtins.KeyError>` and
+	the Torii :py:class:`ToriiSyntaxError <torii.diagnostics.errors.ToriiSyntaxError>`.
+
+	This is used for where we wish to maintain proper functionality with things such as the
+	python :py:meth:`hasattr` call, but also if not caught emit a pretty Torii diagnostic
+	'''
 	pass
