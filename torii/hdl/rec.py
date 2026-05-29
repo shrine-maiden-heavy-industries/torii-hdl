@@ -485,6 +485,10 @@ class Record(ValueCastable):
 
 		return stmts
 
+# TODO(aki):
+# Un-magic this and just manually lay out all the needed value methods in the array below
+# as "low-effort" as this is, it causes a lot of pain with type checking, so it's better to
+# just be explicit about it
 def _valueproxy(name):
 	value_func = getattr(Value, name)
 
