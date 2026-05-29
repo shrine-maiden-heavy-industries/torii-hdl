@@ -688,7 +688,7 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 					cd.rename(self.domain_map[domain])
 				else:
 					if cd.name != self.domain_map[domain]:
-						raise ValueError(f'Clock domain mismatch! \'{cd.name}\' != \'{self.domain_map[domain]}\'')
+						raise DomainError(f'Clock domain mismatch! \'{cd.name}\' != \'{self.domain_map[domain]}\'')
 			new_fragment.add_domains(cd)
 
 	def map_drivers(self, fragment, new_fragment):
