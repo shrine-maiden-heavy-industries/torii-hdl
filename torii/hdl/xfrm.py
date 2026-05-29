@@ -918,7 +918,7 @@ class SwitchCleaner(StatementVisitor):
 	def on_Switch(self, stmt):
 		cases = OrderedDict((k, self.on_statement(s)) for k, s in stmt.cases.items())
 		if any(len(s) for s in cases.values()):
-			return Switch(stmt.test, cases)
+			return Switch(stmt.test, cases, src_loc = stmt.src_loc)
 
 	def on_statements(self, stmts):
 		stmts = flatten(self.on_statement(stmt) for stmt in stmts)
