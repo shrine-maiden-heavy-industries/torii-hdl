@@ -248,20 +248,23 @@ class RecordTestCase(ToriiTestSuiteCase):
 		r1 = Record([('a', 1), ('b', 2)])
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record.like(r1, name = '')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record.like(r1, name = '\0')
 
 		with self.assertRaisesRegex(
-			NameError,
-			r'^Record name must not be empty or contain any control or whitespace characters$'
+			ToriiSyntaxError,
+			r'^Record names may not be empty or contain any control or whitespace characters'
+			r' \(test_rec\.py, line \d+\)$'
 		):
 			Record.like(r1, name = '\v')
 

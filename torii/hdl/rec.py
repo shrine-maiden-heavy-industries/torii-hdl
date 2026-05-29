@@ -172,7 +172,7 @@ class Record(ValueCastable):
 	_annotations: dict[str, Any]
 
 	@staticmethod
-	def like(other: Record, *, name = None, name_suffix = None, src_loc_at = 0) -> Record:
+	def like(other: Record, *, name = None, name_suffix = None, src_loc_at: int = 0) -> Record:
 		'''
 		.. todo:: Document Me
 		'''
@@ -185,7 +185,20 @@ class Record(ValueCastable):
 			new_name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 
 		if new_name == '' or not _check_name(new_name):
-			raise NameError('Record name must not be empty or contain any control or whitespace characters')
+			err = ToriiSyntaxError(
+				'Record names may not be empty or contain any control or whitespace characters',
+				src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+			)
+
+			if name == '':
+				err.add_note('An empty string was provided to the \'name\' parameter, was this intentional?')
+			else:
+				err.add_note(
+					'A character in the \'name\' was in one of the following Unicode groups: Cc, Cf, Cs, Co, Cn, '
+					'Zs, Zl, Zp'
+				)
+
+			raise err
 
 		def concat(a: str | None, b: str) -> str:
 			if a is None:
