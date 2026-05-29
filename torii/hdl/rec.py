@@ -412,7 +412,7 @@ class Record(ValueCastable):
 	def shape(self, *, src_loc_at: int = 0):
 		return self.as_value().shape(src_loc_at = 1 + src_loc_at)
 
-	def connect(self, *subordinates, include = None, exclude = None):
+	def connect(self, *subordinates, include = None, exclude = None, src_loc_at: int = 0):
 		'''
 		.. todo:: Document Me
 		'''
@@ -425,11 +425,21 @@ class Record(ValueCastable):
 
 		for field in include or {}:
 			if field not in self.fields:
-				raise AttributeError(f'Cannot include field \'{field}\' because it is not present in {rec_name(self)}')
+				raise self._invalid_record_item(
+					wanted = field,
+					available = self.fields.keys(),
+					message = f'Cannot include field \'{field}\' as it is not present in {rec_name(self)}',
+					src_loc_at = src_loc_at
+				)
 
 		for field in exclude or {}:
 			if field not in self.fields:
-				raise AttributeError(f'Cannot exclude field \'{field}\' because it is not present in {rec_name(self)}')
+				raise self._invalid_record_item(
+					wanted = field,
+					available = self.fields.keys(),
+					message = f'Cannot exclude field \'{field}\' as it is not present in {rec_name(self)}',
+					src_loc_at = src_loc_at
+				)
 
 		stmts = []
 		for field in self.fields:
@@ -440,24 +450,33 @@ class Record(ValueCastable):
 
 			shape, direction = self.layout[field]
 			if not isinstance(shape, Layout) and direction == Direction.NONE:
-				raise TypeError(
-					f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction'
+				raise AttributeError(
+					message = f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction',
+					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 
 			item = self.fields[field]
 			subord_items = []
 			for subord in subordinates:
 				if field not in subord.fields:
-					raise AttributeError(
-						f'Cannot connect field \'{field}\' of {rec_name(self)} to subordinate '
-						f'{rec_name(subord)} because the subordinate record does not have this field'
+					raise self._invalid_record_item(
+						wanted = field,
+						available = subord.fields.keys(),
+						message = (
+							f'Unable to connect field \'{field}\' of {rec_name(self)} to subordinate'
+							f' {rec_name(subord)} as it is missing from the subordinate'
+						),
+						src_loc_at = src_loc_at
 					)
+
 				subord_items.append(subord.fields[field])
 
 			if isinstance(shape, Layout):
 				sub_include = include[field] if include and field in include else None
 				sub_exclude = exclude[field] if exclude and field in exclude else None
-				stmts += item.connect(*subord_items, include = sub_include, exclude = sub_exclude)
+				stmts += item.connect(
+					*subord_items, include = sub_include, exclude = sub_exclude, src_loc_at = 1 + src_loc_at
+				)
 			else:
 				if direction == Direction.FANOUT:
 					stmts += [ sub_item.eq(item) for sub_item in subord_items ]

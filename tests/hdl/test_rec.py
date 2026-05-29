@@ -565,13 +565,13 @@ class ConnectTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaisesRegex(
 			AttributeError,
-			r'^Cannot include field \'foo\' because it is not present in record \'core\'$'
+			r'^Cannot include field \'foo\' as it is not present in record \'core\'$'
 		):
 			core.connect(periph, include = {'foo': True})
 
 		with self.assertRaisesRegex(
 			AttributeError,
-			r'^Cannot exclude field \'foo\' because it is not present in record \'core\'$'
+			r'^Cannot exclude field \'foo\' as it is not present in record \'core\'$'
 		):
 			core.connect(periph, exclude = {'foo': True})
 
@@ -579,10 +579,8 @@ class ConnectTestCase(ToriiTestSuiteCase):
 		recs = [Record([('x', 1)]) for _ in range(2)]
 
 		with self.assertRaisesRegex(
-			TypeError, (
-				r'^Cannot connect field \'x\' of unnamed record because it does not have '
-				r'a direction$'
-			)
+			AttributeError,
+			r'^Cannot connect field \'x\' of unnamed record because it does not have a direction$'
 		):
 			recs[0].connect(recs[1])
 
@@ -592,8 +590,8 @@ class ConnectTestCase(ToriiTestSuiteCase):
 
 		with self.assertRaisesRegex(
 			AttributeError, (
-				r'^Cannot connect field \'addr\' of record \'core\' to subordinate record \'periph\' '
-				r'because the subordinate record does not have this field$'
+				r'^Unable to connect field \'addr\' of record \'core\' to subordinate record \'periph\''
+				r' as it is missing from the subordinate$'
 			)
 		):
 			core.connect(periph)
