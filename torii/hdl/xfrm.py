@@ -645,17 +645,20 @@ class DomainRenamer(FragmentTransformer, ValueTransformer, StatementTransformer)
 	'''
 
 	def __init__(self, src_loc_at: int = 0, **kwargs: str) -> None:
+
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		if 'comb' in kwargs.keys():
 			raise ToriiSyntaxError(
 				f'The combinatorial logic domain \'comb\' may not be renamed to the domain \'{kwargs["comb"]}\'',
-				tracer.get_src_loc(src_loc_at = src_loc_at)
+				src_loc = self.src_loc
 			)
 
 		if 'comb' in kwargs.values():
 			to_comb = ', '.join(map(lambda p: p[0], filter(lambda p: p[1] == 'comb', kwargs.items())))
 			raise ToriiSyntaxError(
 				'Synchronous logic domains may not be renamed to the combinatorial logic domain \'comb\'',
-				tracer.get_src_loc(src_loc_at = src_loc_at),
+				src_loc = self.src_loc,
 				notes = [
 					f'The following domains were being re-assigned: {to_comb}'
 				]
