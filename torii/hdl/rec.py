@@ -249,13 +249,16 @@ class Record(ValueCastable):
 	def __init__(
 		self, layout: LayoutFieldT | None = None, *, name: str | None = None, fields = None, src_loc_at: int = 0
 	) -> None:
+
+		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+
 		if name is None:
 			name = tracer.get_var_name(depth = 2 + src_loc_at, default = None)
 		else:
 			if name == '' or not _check_name(name):
 				err = ToriiSyntaxError(
 					'Record names may not be empty or contain any control or whitespace characters',
-					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+					src_loc = self.src_loc
 				)
 
 				if name == '':
@@ -268,8 +271,7 @@ class Record(ValueCastable):
 
 				raise err
 
-		self.name    = name
-		self.src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
+		self.name = name
 
 		def concat(a: str | None, b: str) -> str:
 			if a is None:
