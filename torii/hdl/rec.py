@@ -2,6 +2,7 @@
 
 from __future__      import annotations
 
+from builtins        import KeyError as PythonKeyError
 from collections     import OrderedDict
 from collections.abc import Generator, Iterable
 from enum            import Enum, EnumMeta, auto, unique
@@ -9,8 +10,9 @@ from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
 
-from ..diagnostics   import ToriiSyntaxError, IndexError
+from ..diagnostics   import AttributeError, IndexError, KeyError, ToriiSyntaxError
 from ..util          import _check_name, tracer, union
+from ..util.string   import _get_best_matching
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
 
 __all__ = (
@@ -309,24 +311,43 @@ class Record(ValueCastable):
 						src_loc_at = 1 + src_loc_at
 					)
 
-	def __getattr__(self, name: str):
-		# TODO: Add tests for this!
-		if name == 'fields' and name not in self.__dict__:
-			raise AssertionError('Record has not been properly constructed and does not have any fields')
-		return self[name]
+	def _invalid_record_item(self, item: object, src_loc_at: int = 0) -> AttributeError:
+		if not isinstance(item, str):
+			item = str(item)
 
-	def __getitem__(self, item: object) -> ValueCastable | Value:
+		if self.name is None:
+			reference = 'The unnamed record'
+		else:
+			reference = f'The record called \'{self.name}\''
+
+		matches = _get_best_matching(item, self.fields.keys())
+		notes = []
+		if len(matches) > 0:
+			match = matches.pop(0)
+			message = f'{reference} does not have a field called \'{item}\' did you mean \'{match}\'?'
+
+			if len(matches) > 0:
+				additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+				notes.append(
+					f'Additional possible matches for \'{item}\' are: {additional_matches}'
+				)
+
+		else:
+			message = f'{reference} does not have a field called \'{item}\''
+
+		return AttributeError(
+			message = message,
+			src_loc = tracer.get_src_loc(src_loc_at = 1 + src_loc_at),
+			notes   = notes
+		)
+
+	def _get_record_item(self, item: object, src_loc_at: int = 1):
 		if isinstance(item, str):
 			try:
 				return self.fields[item]
-			except KeyError:
-				if self.name is None:
-					reference = 'Unnamed record'
-				else:
-					reference = f'Record \'{self.name}\''
-				raise AttributeError(
-					f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?'
-				) from None
+			except PythonKeyError:
+				raise self._invalid_record_item(item, src_loc_at = src_loc_at)
+
 		elif isinstance(item, tuple):
 			return Record(self.layout[item], fields = {
 				field_name: field_value
@@ -336,14 +357,17 @@ class Record(ValueCastable):
 		else:
 			try:
 				return super().__getitem__(item)
-			except KeyError:
-				if self.name is None:
-					reference = 'Unnamed record'
-				else:
-					reference = f'Record \'{self.name}\''
-				raise AttributeError(
-					f'{reference} does not have a field \'{item}\'. Did you mean one of: {", ".join(self.fields)}?'
-				) from None
+			except PythonKeyError:
+				raise self._invalid_record_item(item, src_loc_at = src_loc_at)
+
+	def __getattr__(self, name: str):
+		# TODO: Add tests for this!
+		if name == 'fields' and name not in self.__dict__:
+			raise AssertionError('Record has not been properly constructed and does not have any fields')
+		return self._get_record_item(name)
+
+	def __getitem__(self, item: object) -> ValueCastable | Value:
+		return self._get_record_item(item)
 
 	@ValueCastable.lowermethod
 	def as_value(self) -> Cat:

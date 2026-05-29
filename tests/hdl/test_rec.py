@@ -2,7 +2,7 @@
 
 from enum              import Enum
 
-from torii.diagnostics import ToriiSyntaxError, IndexError
+from torii.diagnostics import AttributeError, IndexError, ToriiSyntaxError
 from torii.hdl.ast     import Shape, Signal, signed, unsigned
 from torii.hdl.rec     import Direction, Layout, Record
 
@@ -193,12 +193,13 @@ class RecordTestCase(ToriiTestSuiteCase):
 		])
 		with self.assertRaisesRegex(
 			AttributeError,
-			r'^Record \'r\' does not have a field \'en\'\. Did you mean one of: stb, ack\?$'
+			r'^The record called \'r\' does not have a field called \'en\'$'
 		):
 			r['en']
+
 		with self.assertRaisesRegex(
 			AttributeError,
-			r'^Record \'r\' does not have a field \'en\'\. Did you mean one of: stb, ack\?$'
+			r'^The record called \'r\' does not have a field called \'en\'$'
 		):
 			r.en
 
@@ -207,9 +208,10 @@ class RecordTestCase(ToriiTestSuiteCase):
 			('stb', 1),
 			('ack', 1),
 		])][0]
+
 		with self.assertRaisesRegex(
 			AttributeError,
-			r'^Unnamed record does not have a field \'en\'\. Did you mean one of: stb, ack\?$'
+			r'^The unnamed record does not have a field called \'en\'$'
 		):
 			r.en
 
