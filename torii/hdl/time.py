@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from math         import floor, log, pow
-from typing       import Final, TypeVar, Generic
-from warnings     import warn
+from math          import floor, log, pow
+from typing        import Final, TypeVar, Generic
+from warnings      import warn
 
-from ..util.units import (
+from ..diagnostics import ToriiSyntaxWarning
+from ..util.units  import (
 	EXA, PETA, TERA, GIGA, MEGA, KILO, HECTO, DECA, DECI, CENTI, MILLI, MICRO, NANO, PICO, FEMTO, ATTO
 )
 
@@ -192,7 +193,11 @@ class Frequency:
 
 	def __rtruediv__(self, rep: int | float) -> 'Period':
 		if rep == 1:
-			warn('Consider using the `.period` attribute to get this Frequency as a Period', Warning, stacklevel = 2)
+			warn(
+				'Consider using the `.period` attribute to get this Frequency as a Period',
+				ToriiSyntaxWarning,
+				stacklevel = 2
+			)
 		return Period(rep / self._value)
 
 	def __eq__(self, other: object) -> bool:
@@ -329,7 +334,11 @@ class Period:
 
 	def __rtruediv__(self, rep: int | float) -> 'Frequency':
 		if rep == 1:
-			warn('Consider using the `.frequency` attribute to get this Period as a Frequency', Warning, stacklevel = 2)
+			warn(
+				'Consider using the `.frequency` attribute to get this Period as a Frequency',
+				ToriiSyntaxWarning,
+				stacklevel = 2
+			)
 		return Frequency(rep / self._value)
 
 	def __eq__(self, other: object) -> bool:
