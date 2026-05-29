@@ -725,9 +725,9 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 		if domain not in self.domains:
 			matches = _get_best_matching(domain, self.domains.keys())
 			additional_ctx = None
-
+			notes = []
 			if len(matches) > 0:
-				match = matches[0]
+				match = matches.pop(0)
 				message = (
 					f'The signal {context!r} refers to a nonexistent clock domain \'{domain}\', did you mean'
 					f' \'{match}\'?'
@@ -738,11 +738,17 @@ class DomainLowerer(FragmentTransformer, ValueTransformer, StatementTransformer)
 					self.domains[match].src_loc
 				)
 
+				if len(matches) > 0:
+					additional_matches = ', '.join(map(lambda m: f'\'{m}\'', matches))
+					notes.append(
+						f'Additional possible matches for \'{domain}\' are: {additional_matches}'
+					)
+
 			else:
 				message = f'The signal {context!r} refers to nonexistent domain \'{domain}\''
 
 			raise DomainError(
-				message = message, src_loc = context.src_loc, additional_ctx = additional_ctx
+				message = message, src_loc = context.src_loc, notes = notes, additional_ctx = additional_ctx
 			)
 
 		return self.domains[domain]
