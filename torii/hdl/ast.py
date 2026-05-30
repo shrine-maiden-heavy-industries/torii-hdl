@@ -1032,6 +1032,28 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, self - value, src_loc_at = 1 + src_loc_at)
 
+	def shl(self, amount: int, *, src_loc_at: int = 0) -> Assign:
+		'''
+		In-place Value left shift.
+
+		This is shorthand for the following Torii statement:
+		.. code-block: python
+
+			a.eq(a.shift_left(amount))
+
+		Parameters
+		----------
+		amount: int
+			The number of bits to shift by
+
+		Returns
+		-------
+		Assign
+			The Torii Assignment statement for the operation.
+		'''
+
+		return Assign(self, self.shift_left(amount, src_loc_at = 1 + src_loc_at), src_loc_at = 1 + src_loc_at)
+
 	@abstractmethod
 	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		'''
