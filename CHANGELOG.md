@@ -45,6 +45,7 @@ Unreleased template stuff
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 - New enhanced diagnostics for Torii designs.
 - New `has_submodule` call on `Module`s to check if the current module has a named submodule.
+- Added `Value.shl`/`Value.shr`/`Value.rol`/`Value.ror` operations for in-place rotates/shifts of Values/Signals.
 
 ### Changed
 
