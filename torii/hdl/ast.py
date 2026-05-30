@@ -1098,6 +1098,28 @@ class Value(metaclass = ABCMeta):
 
 		return Assign(self, self.rotate_left(amount, src_loc_at = 1 + src_loc_at), src_loc_at = 1 + src_loc_at)
 
+	def ror(self, amount: int, *, src_loc_at: int = 0) -> Assign:
+		'''
+		In-place Value rotate right.
+
+		This is shorthand for the following Torii statement:
+		.. code-block: python
+
+			a.eq(a.rotate_right(amount))
+
+		Parameters
+		----------
+		amount: int
+			The number of bits to rotate by
+
+		Returns
+		-------
+		Assign
+			The Torii Assignment statement for the operation.
+		'''
+
+		return Assign(self, self.rotate_right(amount, src_loc_at = 1 + src_loc_at), src_loc_at = 1 + src_loc_at)
+
 	@abstractmethod
 	def shape(self, *, src_loc_at: int = 0) -> Shape:
 		'''
