@@ -607,6 +607,12 @@ class ValueTestCase(ToriiTestSuiteCase):
 			'(eq (const 9\'d256) (cat (const 1\'d0) (const 9\'d256)))'
 		)
 
+	def test_shr_value(self) -> None:
+		self.assertRepr(
+			Const(256).shr(1),
+			'(eq (const 9\'d256) (slice (const 9\'d256) 1:9))'
+		)
+
 	def test_source_locality(self) -> None:
 		self.assertSrcLoc(Const(10)[0])
 		self.assertSrcLoc(Const(10)[0:5])
