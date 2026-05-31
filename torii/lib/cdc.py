@@ -334,26 +334,48 @@ class PulseSynchronizer(Elaboratable):
 
 class PulseStretcher(Elaboratable):
 	'''
-	Stretch a pulse to the given number of cycles.
+	Stretch a single-cycle input pulse out to a given number of clock cycles.
+
+
+	Note
+	----
+	If you wish to stretch a pulse between two clock domains there are two possible solutions. The first
+	is to put a :py:class:`PulseSynchronizer` before the :py:class:`PulseStretcher` so cross the clock domain boundary
+	prior to stretching:
+
+	.. code-block: python
+
+		pulse = Signal()
+		m.submodule.psync = PulseSynchronizer(input_pulse, 'phy', pulse, 'sync')
+		m.submodule.pstre = PulseStretcher(pulse, output_signal, domain = 'sync')
+		...
+
+	The other method is to put an :py:class:`FFSynchronizer` after this :py:class:`PulseStretcher` to have
+	the stretched output signal cross over the clock domain boundary:
+
+	.. code-block: python
+
+		stretched = Signal()
+		m.submodule.pstre = PulseStretcher(input_pulse, stretched, domain = 'phy')
+		m.submodule.ffsync = FFSynchronizer(stretched, output_signal, o_domain = 'sync')
+		...
 
 	Parameters
 	----------
+	i: Signal
+		The input pulse to stretch
+
+	o: Signal
+		The resulting stretched pulse
+
 	cycles: int
 		The number of cycles to stretch the pulse.
 
 	domain: str
 		The domain that this pulse stretcher runs on.
-
-	Attributes
-	----------
-	i: Signal
-		The input pulse to stretch.
-
-	o: Signal
-		The stretched pulse.
 	'''
 
-	def __init__(self, cycles: int = 1, domain: str = 'sync') -> None:
+	def __init__(self, i: Signal, o: Signal, *, cycles: int = 1, domain: str = 'sync') -> None:
 
 		if cycles <= 0:
 			raise ValueError(f'Cycle count must be one or greater, not {cycles}')
@@ -361,8 +383,8 @@ class PulseStretcher(Elaboratable):
 		self._cycles = cycles
 		self._domain = domain
 
-		self.i = Signal()
-		self.o = Signal()
+		self.i = i
+		self.o = o
 
 	def elaborate(self, platform: Platform | None) -> Module:
 		m = Module()

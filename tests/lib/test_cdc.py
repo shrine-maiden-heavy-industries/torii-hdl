@@ -300,56 +300,60 @@ class PulseStretcherTestCase(ToriiTestSuiteCase):
 			ValueError,
 			r'^Cycle count must be one or greater, not 0$'
 		):
-			PulseStretcher(cycles = 0)
+			PulseStretcher(Signal(), Signal(), cycles = 0)
 
 	def test_sim_multi_cycle(self):
 		m = Module()
+		i = Signal()
+		o = Signal()
 		m.domains += ClockDomain('sync')
-		ps = m.submodules.dut = PulseStretcher(cycles = 5)
+		m.submodules.dut = PulseStretcher(i, o, cycles = 5)
 
 		sim = Simulator(m)
 		sim.add_clock(1e-6)
 
 		def process():
-			yield ps.i.eq(1)
-			self.assertEqual((yield ps.o), 0)
+			yield i.eq(1)
+			self.assertEqual((yield o), 0)
 			yield Tick()
-			yield ps.i.eq(0)
-			self.assertEqual((yield ps.o), 1)
+			yield i.eq(0)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 1)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 1)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 1)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 1)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 0)
+			self.assertEqual((yield o), 0)
 			yield Tick()
-			self.assertEqual((yield ps.o), 0)
+			self.assertEqual((yield o), 0)
 			yield Tick()
-			self.assertEqual((yield ps.o), 0)
+			self.assertEqual((yield o), 0)
 
 		sim.add_process(process)
 		sim.run()
 
 	def test_sim_single_cycle(self):
 		m = Module()
+		i = Signal()
+		o = Signal()
 		m.domains += ClockDomain('sync')
-		ps = m.submodules.dut = PulseStretcher()
+		m.submodules.dut = PulseStretcher(i, o)
 
 		sim = Simulator(m)
 		sim.add_clock(1e-6)
 
 		def process():
-			yield ps.i.eq(1)
-			self.assertEqual((yield ps.o), 0)
+			yield i.eq(1)
+			self.assertEqual((yield o), 0)
 			yield Tick()
-			yield ps.i.eq(0)
-			self.assertEqual((yield ps.o), 1)
+			yield i.eq(0)
+			self.assertEqual((yield o), 1)
 			yield Tick()
-			self.assertEqual((yield ps.o), 0)
+			self.assertEqual((yield o), 0)
 
 		sim.add_process(process)
 		sim.run()
