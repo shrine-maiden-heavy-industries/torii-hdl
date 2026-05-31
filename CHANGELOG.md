@@ -41,6 +41,7 @@ Unreleased template stuff
 - Added Gowin `GW5A` and `nextpnr-himbaechel` support to the `GowinPlatform`
 - Lattice machXO2 and machXO3l platform now has FOSS toolchain support.
 - Added support for Lattice Nexus devices with both Radiant and project oxide support
+- Platform templates now have access to the current Yosys version via the `yosys_version` variable.
 - New `torii.hdl.time` Module with `Frequency` and `Period` constructs to unify how clocks are handled.
 - New enhanced diagnostics for Torii designs.
 - New `has_submodule` call on `Module`s to check if the current module has a named submodule.
