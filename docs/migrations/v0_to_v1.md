@@ -270,3 +270,42 @@ with m.FSM(name = 'rx') as fsm:
 			m.d.sync += [ data_rx.eq(uart_rx.data), ]
 			m.next = 'CMD'
 ```
+
+### `PulseSynchronizer` and `PulseStretcher` from `torii.lib.cdc`
+
+The {py:class}`PulseSynchronizer <torii.lib.cdc.PulseSynchronizer>` and {py:class}`PulseStretcher <torii.lib.cdc.PulseStretcher>` from {py:mod}`torii.lib.cdc` have had their APIs changed to better match the existing APIs of the other synchronizers in that module. Namely the {py:class}`FFSynchronizer <torii.lib.cdc.FFSynchronizer>` and {py:class}`AsyncFFSynchronizer <torii.lib.cdc.AsyncFFSynchronizer>`.
+
+This means that rather than manually hooking up the input and output signals from the module, you pass in the input and output signals.
+
+```python
+from torii.lib.cdc import PulseSynchronizer, PulseStretcher
+
+# PulseSynchronizer OLD (<1.0.0)
+
+m.submodules.psync = psync = PulseSynchronizer('r', 'w', stages = 2)
+
+m.d.comb += [
+	psync.i.eq(pulse_input),
+	pulse_output.eq(psync.o)
+]
+
+# PulseSynchronizer NEW (>=1.0.0)
+
+m.submodules.psync = PulseSynchronizer(
+	pulse_input, 'r', pulse_output, 'w', stages = 2
+)
+
+# PulseStretcher OLD (<1.0.0)
+
+m.submodules.pstretch = pstretch = PulseStretcher(cycles = 5)
+
+m.d.comb += [
+	pstretch.i.eq(pulse_input),
+	pulse_output.eq(pstretch.o)
+]
+
+# PulseStretcher NEW (>=1.0.0)
+
+m.submodules.pstretch = PulseStretcher(pulse_input, pulse_output, cycles = 5)
+
+```
