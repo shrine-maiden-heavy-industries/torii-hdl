@@ -258,36 +258,38 @@ class PulseSynchronizerTestCase(ToriiTestSuiteCase):
 			TypeError,
 			r'^Synchronization stage count must be a positive integer, not 0$'
 		):
-			PulseSynchronizer('w', 'r', stages = 0)
+			PulseSynchronizer(Signal(), 'w', Signal(), 'r', stages = 0)
 		with self.assertRaisesRegex(
 			ValueError,
 			r'^Synchronization stage count may not safely be less than 2$'
 		):
-			PulseSynchronizer('w', 'r', stages = 1)
+			PulseSynchronizer(Signal(), 'w', Signal(), 'r', stages = 1)
 
 	def test_smoke(self):
 		m = Module()
+		i = Signal()
+		o = Signal()
 		m.domains += ClockDomain('sync')
-		ps = m.submodules.dut = PulseSynchronizer('sync', 'sync')
+		m.submodules.dut = PulseSynchronizer(i, 'sync', o, 'sync')
 
 		sim = Simulator(m)
 		sim.add_clock(1e-6)
 
 		def process():
-			yield ps.i.eq(0)
+			yield i.eq(0)
 			# TODO: think about reset
 			for n in range(5):
 				yield Tick()
 			# Make sure no pulses are generated in quiescent state
 			for n in range(3):
 				yield Tick()
-				self.assertEqual((yield ps.o), 0)
+				self.assertEqual((yield o), 0)
 			# Check conservation of pulses
 			accum = 0
 			for n in range(10):
-				yield ps.i.eq(1 if n < 4 else 0)
+				yield i.eq(1 if n < 4 else 0)
 				yield Tick()
-				accum += yield ps.o
+				accum += yield o
 			self.assertEqual(accum, 4)
 		sim.add_process(process)
 		sim.run()

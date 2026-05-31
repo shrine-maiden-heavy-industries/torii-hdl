@@ -268,31 +268,49 @@ class ResetSynchronizer(Elaboratable):
 
 class PulseSynchronizer(Elaboratable):
 	'''
-	A one-clock pulse on the input produces a one-clock pulse on the output.
+	Resynchronize a one-clock pulse between clock domains.
 
-	If the output clock is faster than the input clock, then the input may be safely asserted at
-	100% duty cycle. Otherwise, if the clock ratio is ``n``:1, the input may be asserted at most
-	once in every ``n`` input clocks, else pulses may be dropped. Other than this there is
-	no constraint on the ratio of input and output clock frequency.
+	This ensures that a one-clock pulse on the input signal produces a one-clock pulse on the output signal
+	across clock domains.
+
+	Important
+	---------
+	If the output clock domain is faster than the input clock domain, then the input signal may
+	be asserted safely at 100% duty cycle.
+
+	However, if the ratio between input and output clock domains is ``n:1``, then the input signal
+	may only be asserted at most once every ``n`` clock cycles on the input domain, otherwise pulses
+	have the possibility of being lost.
+
+	Other than this restriction, there is no constraint on the ratio between the input and output
+	clock domain frequencies.
 
 	Parameters
 	----------
+	i: Signal
+		The input signal to synchronize
+
 	i_domain: str
-		Name of input clock domain.
+		Name of input clock domain
+
+	o: Signal
+		The synchronized output signal
 
 	o_domain: str
-		Name of output clock domain.
+		Name of output clock domain
 
 	stages: int, >=2
 		Number of synchronization stages between input and output. The lowest safe number is 2,
 		with higher numbers reducing MTBF further, at the cost of increased de-assertion latency.
 	'''
 
-	def __init__(self, i_domain: str, o_domain: str, *, stages: int = 2) -> None:
+	def __init__(
+		self, i: Signal, i_domain: str, o: Signal, o_domain: str = 'sync', *, stages: int = 2
+	) -> None:
 		_check_stages(stages)
 
-		self.i = Signal()
-		self.o = Signal()
+		self.i = i
+		self.o = o
 
 		self._i_domain = i_domain
 		self._o_domain = o_domain
