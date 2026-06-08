@@ -158,3 +158,94 @@ def get_src_loc(src_loc_at: int = 0) -> SrcLoc:
 	# n-2th frame: caller of caller (usually user code)
 	frame = _getframe(2 + src_loc_at)
 	return (frame.f_code.co_filename, frame.f_lineno)
+
+def was_yielded(*, frame_loc_at: int = 0) -> bool:
+	'''
+	Attempt to determine if the caller for this method was used in a generator context.
+
+	Warning
+	-------
+	This place is not a place of honor, no highly esteemed deed is commemorated here,
+	nothing valued is here.
+
+	The danger is still present, in your time, as it was in ours.
+
+	The form of the danger is implementation details.
+	'''
+
+	frame = _getframe(2 + frame_loc_at)
+	code = frame.f_code.co_code
+	call_index = frame.f_lasti
+
+	# Align  our last instruction index to find the `CALL` that should have been for us
+	while call_index > 0 and opname[code[call_index]] == 'CACHE':
+		call_index -= 2
+
+	# Skip passed extended args
+	while True:
+		call_opc = opname[code[call_index]]
+		if call_index in ('EXTENDED_ARG',):
+			call_index += 2
+		else:
+			break
+
+	# If the opcode we landed on is /not/ a `CALL`, then, for one, how did we end up here, but two
+	# just assume we've not been called from a `yield`/`yield from`
+	if call_opc not in (
+		'CALL_FUNCTION', 'CALL_FUNCTION_KW', 'CALL_FUNCTION_EX', 'CALL_METHOD', 'CALL_METHOD_KW',
+		'CALL', 'CALL_KW'
+	):
+		return False
+
+	# Advance passed the `CALL` op
+	index = call_index + 2
+
+	# If we found the call site for and we have a name due to an assignment, check to see if the
+	# result of this function is yielded at any point in time in the frame.
+	if (name := get_var_name(depth = 3 + frame_loc_at, default = '')) != '':
+		frame_code = frame.f_code
+
+		# Check to see where the result of the call is stored so we can figure out which load ops
+		# we need to check for
+		if name in frame_code.co_names:
+			load_opcodes = ('LOAD_NAME', 'LOAD_ATTR',)
+			name_table = frame_code.co_names
+		elif name in frame_code.co_varnames:
+			load_opcodes = ('LOAD_FAST', 'LOAD_FAST_BORROW', )
+			name_table = frame_code.co_varnames
+		elif name in frame_code.co_freevars:
+			load_opcodes = ('LOAD_DEREF',)
+			name_table = frame_code.co_freevars
+		else:
+			# In the case that for some reason we can't find which var map we're stored in, then
+			# just assume that we will not be yielded.
+			return False
+
+		# Chew through the rest of the bytecode to find our load points
+		while index < len(code):
+			opcode = opname[code[index]]
+			if opcode in load_opcodes:
+				# If we found a load op, the next byte should be the name index
+				arg = code[index + 1]
+				if name_table[arg] == name:
+					# If the /very next/ op is a `YIELD` then we've been yielded
+					if opname[code[index + 2]] == 'YIELD_VALUE':
+						return True
+					else:
+						return False
+				else:
+					index += 2
+			else:
+				index += 2
+		return False
+	else:
+		# If we don't have a name due to an assignment, then we look for a `GET_YIELD_FROM_ITER` right
+		# after the call site.
+		while True:
+			opcode = opname[code[index]]
+			if opcode == 'GET_YIELD_FROM_ITER':
+				return True
+			elif opcode in ('CACHE',):
+				index += 2
+			else:
+				return False
