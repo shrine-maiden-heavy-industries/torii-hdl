@@ -98,6 +98,13 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 	@property
 	@abstractmethod
+	def toolchain(self) -> str | None:
+		''' The name of the toolchain used to synthesize for this platform '''
+
+		raise NotImplementedError('Platform must implement this property')
+
+	@property
+	@abstractmethod
 	def required_tools(self) -> list[str]:
 		''' List of required tools for this platform '''
 
@@ -502,15 +509,6 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 		)
 
 class TemplatedPlatform(Platform):
-	@property
-	@abstractmethod
-	def toolchain(self) -> str | None:
-		'''
-		.. todo:: Document Me
-		'''
-
-		raise NotImplementedError('Platform must implement this property')
-
 	@property
 	@abstractmethod
 	def file_templates(self) -> dict[str, str]:
