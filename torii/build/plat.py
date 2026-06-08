@@ -277,6 +277,12 @@ class Platform(ResourceManager, metaclass = ABCMeta):
 
 		self._prepared = True
 
+		# NOTE(aki):
+		# The input to, and thus the output from `SampleLowerer`/`DomainLowerer` are always
+		# a `Fragment`, so the type error on `self.toolchain_prepare(fragment, ...)` is erroneous.
+		#
+		# However, we do need to fix the typing for most of the things in `torii.hdl.xfrm`
+		# most notably here `FragmentTransformer` so the type info can propagate correctly
 		fragment = Fragment.get(elaboratable, self)
 		fragment = SampleLowerer()(fragment)
 		fragment._propagate_domains(self.create_missing_domain, platform = self)
