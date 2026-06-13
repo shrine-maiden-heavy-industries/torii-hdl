@@ -6,7 +6,7 @@ from warnings        import warn
 from ...._typing     import IODirection
 from ....build.dsl   import Attrs, Clock, DiffPairs, Pins, PinsN, Resource, ResourceConn, SubsigArgT, Subsignal
 from ....diagnostics import ResourceError, ResourceWarning
-from ....hdl.time    import MHz
+from ....hdl.time    import Frequency, MHz
 from ....util.tracer import get_src_loc
 
 __all__ = (
@@ -89,7 +89,7 @@ def PCIeBusResources(
 	wake_n: str | None = None, clkreq_n: str | None = None, pwrbrk_n: str | None = None, smbclk: str | None = None,
 	smbdat: str | None = None, tck: str | None = None, tdi: str | None = None, tdo: str | None = None,
 	tms: str | None = None, trst_n: str | None = None, conn: ResourceConn | None = None, attrs: Attrs = Attrs(),
-	refclk_attrs: Attrs = Attrs(), lane_attrs: Attrs = Attrs()
+	refclk_attrs: Attrs = Attrs(), refclk_freq: Frequency | None = None, lane_attrs: Attrs = Attrs(),
 ) -> list[Resource]:
 	'''
 	Create a PCIe bus resource.
@@ -133,12 +133,18 @@ def PCIeBusResources(
 		attrs,
 		src_loc_at = 1
 	))
-	io_common.append(Subsignal(
+
+	refclk_sig = Subsignal(
 		'refclk',
 		DiffPairs(refclk_p, refclk_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1),
 		refclk_attrs,
 		src_loc_at = 1
-	))
+	)
+
+	if refclk_freq is not None:
+		refclk_sig.clock = Clock(refclk_freq, src_loc_at = 1)
+
+	io_common.append(refclk_sig)
 
 	jtag_sigs = (tck, tdi, tdo, tms, trst_n,) # type: ignore
 
@@ -825,7 +831,7 @@ def PCIBusResources(
 	ack64_n: str | None = None, req64_n: str | None = None,
 	pme_n: str | None = None, pcixcap: str | None = None, m66en: str | None = None,
 	tck: str | None = None, tdi: str | None = None, tdo: str | None = None, tms: str | None = None,
-	conn: ResourceConn | None = None, attrs: Attrs | None = None
+	conn: ResourceConn | None = None, attrs: Attrs | None = None, clk_freq: Frequency | None = None,
 ) -> list[Resource]:
 	'''
 	.. todo:: Document Me
@@ -849,9 +855,16 @@ def PCIBusResources(
 	io_common.append(Subsignal(
 		'rst', PinsN(rst_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
 	))
-	io_common.append(Subsignal(
+
+	clk_sig = Subsignal(
 		'clk', Pins(clk, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
-	))
+	)
+
+	if clk_freq is not None:
+		clk_sig.clock = Clock(clk_freq, src_loc_at = 1)
+
+	io_common.append(clk_sig)
+
 	io_common.append(Subsignal(
 		'gnt', PinsN(gnt_n, dir = 'i', conn = conn, assert_width = 1, src_loc_at = 1), src_loc_at = 1
 	))

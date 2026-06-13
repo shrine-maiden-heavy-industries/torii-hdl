@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from torii.diagnostics                  import ResourceWarning
+from torii.hdl.time                     import MHz
 from torii.platform.resources.interface import PCIBusResources, PCIeBusResources
 from torii.test                         import ToriiTestCase
 
@@ -22,6 +23,26 @@ class PCIBusResourcesTestCase(ToriiTestCase):
 		self.assertEqual(resources[0].name, 'pci_32')
 		self.assertEqual(resources[0].number, 0)
 		self.assertEqual(len(resources[0].ios), 22)
+
+	def test_clk_constraint(self) -> None:
+		resources = PCIBusResources(
+			0,
+			inta_n = 'X', intb_n = 'X', intc_n = 'X', intd_n = 'X',
+			rst_n = 'X', clk = 'X', gnt_n = 'X', req_n = 'X', idsel = 'X',
+			frame_n = 'X', irdy_n = 'X', trdy_n = 'X', devsel_n = 'X', stop_n = 'X',
+			lock_n = 'X', perr_n = 'X', serr_n = 'X', smbclk = 'X', smbdat = 'X',
+			ad_lower = 'X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X',
+			cbe32_n = 'X X X X', par32 = 'X', clk_freq = 120 * MHz
+		)
+
+		self.assertEqual(len(resources), 1)
+
+		self.assertEqual(resources[0].name, 'pci_32')
+		self.assertEqual(resources[0].number, 0)
+		self.assertEqual(len(resources[0].ios), 22)
+		# XXX(aki): There really isn't a super stable way to get the clock IO, sadly
+		self.assertIsNotNone(resources[0].ios[5].clock)
+		self.assertEqual(f'{resources[0].ios[5].clock}', '(clock (frequency 120MHz))')
 
 	def test_sub_busses(self):
 		resources = PCIBusResources(
@@ -84,6 +105,35 @@ class PCIeBusResourcesTestCase(ToriiTestCase):
 		self.assertEqual(x1_bus.name, 'pcie_x1')
 		self.assertEqual(x1_bus.number, 5)
 		self.assertEqual(len(x1_bus.ios), 4)
+
+	def test_refclk_constraint(self) -> None:
+		resources = PCIeBusResources(
+			0,
+			perst_n = 'A', refclk_p = 'B', refclk_n = 'C',
+			pet0_p = 'D', pet0_n = 'E', per0_p = 'F', per0_n = 'G',
+			refclk_freq = 200 * MHz
+		)
+
+		self.assertEqual(len(resources), 1)
+
+		x1_bus = resources[0]
+
+		self.assertEqual(x1_bus.name, 'pcie_x1')
+		self.assertEqual(x1_bus.number, 0)
+		self.assertEqual(len(x1_bus.ios), 4)
+
+		x1_bus = PCIeBusResources(
+			'test', 0,
+			perst_n = 'A', refclk_p = 'B', refclk_n = 'C',
+			pet0_p = 'D', pet0_n = 'E', per0_p = 'F', per0_n = 'G'
+		)[0]
+
+		self.assertEqual(x1_bus.name, 'test_x1')
+		self.assertEqual(x1_bus.number, 0)
+		self.assertEqual(len(x1_bus.ios), 4)
+		# XXX(aki): There really isn't a super stable way to get the clock IO, sadly
+		self.assertIsNotNone(resources[0].ios[1].clock)
+		self.assertEqual(f'{resources[0].ios[1].clock}', '(clock (frequency 200MHz))')
 
 	def test_optional(self):
 		resources = PCIeBusResources(
