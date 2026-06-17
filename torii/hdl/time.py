@@ -29,6 +29,36 @@ def _operator_error(self: 'Frequency | Period', other: object, op: str, src_loc_
 		src_loc = get_src_loc(src_loc_at = 1 + src_loc_at)
 	)
 
+def _reciprocal_error(self: 'Frequency | Period', other: int | float, op: str, src_loc_at: int = 0) -> NoReturn:
+	if isinstance(self, Frequency):
+		reciprocal = 'period'
+		obj = 'Frequency'
+	else:
+		reciprocal = 'frequency'
+		obj = 'Period'
+
+	if self._name != '':
+		value = self._name
+	else:
+		(scale, num) = _auto_scale(self._value, self._unit_scale, 0)
+		value = f'{scale}({num})'
+
+	if int(other) == 1:
+		notes = [
+			f'The expression \'{value}.{reciprocal}\' is the correct equivalent to \'1 {op} {value}\''
+		]
+	else:
+		notes = [
+			f'The expression \'{value}.{reciprocal} {op} {int(other)}\' is the correct equivalent to'
+			f' \'{int(other)} {op} {value}\''
+		]
+
+	raise ToriiSyntaxError(
+		message = f'To get the {reciprocal} of a Torii {obj} use the \'.{reciprocal}\' attribute',
+		src_loc = get_src_loc(src_loc_at = 1 + src_loc_at),
+		notes = notes
+	)
+
 def _truncate(value: float, dig: int) -> int | float:
 	'''
 	Apply truncation to the given value, clamping it to ``dig`` number of trailing digits if any are present
