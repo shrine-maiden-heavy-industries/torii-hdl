@@ -5,7 +5,7 @@ from typing        import Final, NoReturn, TypeVar, Generic
 from warnings      import warn
 
 from ..diagnostics import ToriiSyntaxError
-from ..util.tracer import get_src_loc
+from ..util.tracer import get_src_loc, get_var_name
 from ..util.units  import (
 	EXA, PETA, TERA, GIGA, MEGA, KILO, HECTO, DECA, DECI, CENTI, MILLI, MICRO, NANO, PICO, FEMTO, ATTO
 )
@@ -170,8 +170,9 @@ class Frequency:
 		'EHz',
 	)
 
-	def __init__(self, value: float) -> None:
+	def __init__(self, value: float, *, src_loc_at: int = 0) -> None:
 		self._value = value
+		self._name  = get_var_name(depth = 2 + src_loc_at, default = '')
 
 	@property
 	def period(self) -> 'Period':
@@ -348,8 +349,9 @@ class Period:
 		'Es',
 	)
 
-	def __init__(self, value: float) -> None:
+	def __init__(self, value: float, *, src_loc_at: int = 0) -> None:
 		self._value = value
+		self._name  = get_var_name(depth = 2 + src_loc_at, default = '')
 
 	@property
 	def frequency(self) -> 'Frequency':
