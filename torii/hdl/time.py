@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from math          import floor, log, pow
-from typing        import Final, NoReturn, TypeVar, Generic, Literal
+from typing        import Final, NoReturn, TypeVar, Generic
 from warnings      import warn
 
 from ..diagnostics import ToriiSyntaxError
@@ -18,12 +18,7 @@ __all__ = (
 	's', 'ms', 'us', 'ns',
 )
 
-def _operator_error(
-	self: 'Frequency | Period',
-	other: object,
-	op: Literal['>', '>=', '<', '<=', '==', '!=', '+', '-', '*', '/', '//', '%'],
-	src_loc_at: int = 0
-) -> NoReturn:
+def _operator_error(self: 'Frequency | Period', other: object, op: str, src_loc_at: int = 0) -> NoReturn:
 	''' Generate an error message for an invalid comparison '''
 
 	raise ToriiSyntaxError(
