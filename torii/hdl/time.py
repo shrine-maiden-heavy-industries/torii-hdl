@@ -2,7 +2,6 @@
 
 from math          import floor, log, pow
 from typing        import Final, NoReturn, TypeVar, Generic
-from warnings      import warn
 
 from ..diagnostics import ToriiSyntaxError
 from ..util.tracer import get_src_loc, get_var_name
@@ -494,14 +493,87 @@ class Period:
 	def __hash__(self) -> int:
 		return hash(self._value)
 
-	def __rtruediv__(self, rep: int | float) -> 'Frequency':
-		if rep == 1:
-			warn(
-				'Consider using the `.frequency` attribute to get this Period as a Frequency',
-				ToriiSyntaxWarning,
-				stacklevel = 2
-			)
-		return Frequency(rep / self._value)
+	def __add__(self, other: object) -> 'Period':
+		if isinstance(other, Period):
+			return Period(self._value + other._value, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '+')
+
+	def __sub__(self, other: object) -> 'Period':
+		if isinstance(other, Period):
+			return Period(self._value - other._value, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '-')
+
+	def __mul__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			return Period(self._value * other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '*')
+
+	def __truediv__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			return Period(self._value / other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '/')
+
+	# TODO(aki): See note on `Frequency.__floordiv__`
+	def __floordiv__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			return Period(self._value // other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '//')
+
+	# NOTE(aki):
+	# We specify the reflected `/` and `//` operators so we can catch the case where the user
+	# is trying to convert to a Frequency
+	def __rtruediv__(self, other: object) -> NoReturn:
+		if isinstance(other, (int, float)):
+			_reciprocal_error(self, other, '/')
+		else:
+			_operator_error(self, other, '/')
+
+	def __rfloordiv__(self, other) -> NoReturn:
+		if isinstance(other, (int, float)):
+			_reciprocal_error(self, other, '//')
+		else:
+			_operator_error(self, other, '//')
+
+	def __iadd__(self, other: object) -> 'Period':
+		if isinstance(other, Period):
+			self._value += other._value
+			return self
+		else:
+			_operator_error(self, other, '+=')
+
+	def __isub__(self, other: object) -> 'Period':
+		if isinstance(other, Period):
+			self._value -= other._value
+			return self
+		else:
+			_operator_error(self, other, '-=')
+
+	def __imul__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			self._value *= other
+			return self
+		else:
+			_operator_error(self, other, '*=')
+
+	def __itruediv__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			self._value /= other
+			return self
+		else:
+			_operator_error(self, other, '/=')
+
+	# TODO(aki): See note on `Frequency.__floordiv__`
+	def __ifloordiv__(self, other: object) -> 'Period':
+		if isinstance(other, (int, float)):
+			self._value //= other
+			return self
+		else:
+			_operator_error(self, other, '//=')
 
 	def __lt__(self, other: object) -> bool:
 		if isinstance(other, Period):

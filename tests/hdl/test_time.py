@@ -719,3 +719,174 @@ class PeriodTestCase(TestCase):
 			r' \(test_time\.py, line \d+\)$'
 		):
 			_ = ns(10) < 1.0
+
+	def test_add(self) -> None:
+		self.assertEqual(ns(10) + ns(15), ns(25))
+
+	def test_add_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\+\' between a Torii Period and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = ns(1) + 5
+
+	def test_sub(self) -> None:
+		self.assertEqual(us(1) - ns(10), ns(990))
+
+	def test_sub_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'-\' between a Torii Period and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = ns(10) - 1
+
+	def test_mul(self) -> None:
+		self.assertEqual(us(1) * 1000, ms(1))
+
+	def test_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\*\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = s(1) * fs(5)
+
+	def test_truediv(self) -> None:
+		self.assertAlmostEqual((s(1) / 10000)._value, us(100)._value)  # XXX(aki): Precision issues
+
+	def test_truediv_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = Gs(10) / _as(8)
+
+	def test_floordiv(self) -> None:
+		# self.assertAlmostEqual((ms(80) // 2)._value, ms(40)._value) # XXX(aki): Precision issues
+		pass
+
+	def test_floordiv_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = ms(10) // us(2)
+
+	def test_rtruediv(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the frequency of a Torii Period use the \'\.frequency\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 1 / ns(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the frequency of a Torii Period use the \'\.frequency\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 5 / ns(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/\' between a Torii Period and an object of the type \'object\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = object() / ns(10)
+
+	def test_rfloordiv(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the frequency of a Torii Period use the \'\.frequency\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 1 // ns(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the frequency of a Torii Period use the \'\.frequency\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 5 // ns(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//\' between a Torii Period and an object of the type \'object\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = object() // ns(10)
+
+	def test_iadd(self) -> None:
+		val = us(10)
+		self.assertEqual(val, us(10))
+		val += us(8)
+		self.assertAlmostEqual(val._value, us(18)._value)  # XXX(aki): Precision issues
+
+	def test_iadd_wrong(self) -> None:
+		val = ns(100)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\+=\' between a Torii Period and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val += 11
+
+	def test_isub(self) -> None:
+		val = ns(150)
+		self.assertEqual(val, ns(150))
+		val -= ps(100)
+		self.assertEqual(val, ns(149.9))
+
+	def test_isub_wrong(self) -> None:
+		val = ps(1)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'-=\' between a Torii Period and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val -= 80
+
+	def test_imul(self) -> None:
+		val = ms(1)
+		self.assertEqual(val, ms(1))
+		val *= 10
+		self.assertEqual(val, ms(10))
+
+	def test_imul_wrong(self) -> None:
+		val = us(10)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\*=\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val *= us(2)
+
+	def test_itruediv(self) -> None:
+		val = ps(50)
+		self.assertEqual(val, ps(50))
+		val /= 2
+		self.assertEqual(val, ps(25))
+
+	def test_itruediv_wrong(self) -> None:
+		val = Ts(2)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/=\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val /= s(25)
+
+	def test_ifloordiv(self) -> None:
+		val = ms(30)
+		self.assertEqual(val, ms(30))
+		val //= 4
+		# self.assertAlmostEqual(val._value, ms(7.5)._value) # XXX(aki): Precision issues
+
+	def test_ifloordiv_wrong(self) -> None:
+		val = _as(158)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//=\' between a Torii Period and an object of the type \'Period\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val //= fs(2)
