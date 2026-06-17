@@ -268,14 +268,14 @@ class FrequencyTestCase(TestCase):
 	def test_comparison_wrong(self) -> None:
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Comparison using \'>\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r'^Use of the operator \'>\' between a Torii Frequency and an object of the type \'int\' is not supported'
 			r' \(test_time\.py, line \d+\)$'
 		):
 			_ = MHz(10) > 1
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Comparison using \'<\' between a Torii Frequency and an object of the type \'float\' is not supported'
+			r'^Use of the operator \'<\' between a Torii Frequency and an object of the type \'float\' is not supported'
 			r' \(test_time\.py, line \d+\)$'
 		):
 			_ = kHz(10) < 1.0
@@ -538,14 +538,14 @@ class PeriodTestCase(TestCase):
 	def test_comparison_wrong(self) -> None:
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Comparison using \'>\' between a Torii Period and an object of the type \'int\' is not supported'
+			r'^Use of the operator \'>\' between a Torii Period and an object of the type \'int\' is not supported'
 			r' \(test_time\.py, line \d+\)$'
 		):
 			_ = s(10) > 1
 
 		with self.assertRaisesRegex(
 			ToriiSyntaxError,
-			r'^Comparison using \'<\' between a Torii Period and an object of the type \'float\' is not supported'
+			r'^Use of the operator \'<\' between a Torii Period and an object of the type \'float\' is not supported'
 			r' \(test_time\.py, line \d+\)$'
 		):
 			_ = ns(10) < 1.0

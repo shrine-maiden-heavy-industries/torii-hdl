@@ -18,14 +18,17 @@ __all__ = (
 	's', 'ms', 'us', 'ns',
 )
 
-def _comparison_error(
-	self: 'Frequency | Period', other: object, op: Literal['>', '>=', '<', '<=', '==', '!='], src_loc_at: int = 0
+def _operator_error(
+	self: 'Frequency | Period',
+	other: object,
+	op: Literal['>', '>=', '<', '<=', '==', '!=', '+', '-', '*', '/', '//', '%'],
+	src_loc_at: int = 0
 ) -> NoReturn:
 	''' Generate an error message for an invalid comparison '''
 
 	raise ToriiSyntaxError(
 		message = (
-			f'Comparison using \'{op}\' between a Torii {type(self).__name__} and an object of the type'
+			f'Use of the operator \'{op}\' between a Torii {type(self).__name__} and an object of the type'
 			f' \'{type(other).__name__}\' is not supported'
 		),
 		src_loc = get_src_loc(src_loc_at = 1 + src_loc_at)
@@ -221,7 +224,7 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period < other
 		else:
-			_comparison_error(self, other, '<')
+			_operator_error(self, other, '<')
 
 	def __le__(self, other: object) -> bool:
 		if isinstance(other, Frequency):
@@ -230,7 +233,7 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period <= other
 		else:
-			_comparison_error(self, other, '<=')
+			_operator_error(self, other, '<=')
 
 	def __eq__(self, other: object) -> bool:
 		if isinstance(other, Frequency):
@@ -239,13 +242,13 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period == other
 		else:
-			_comparison_error(self, other, '==')
+			_operator_error(self, other, '==')
 
 	def __ne__(self, other: object) -> bool:
 		if isinstance(other, (Frequency, Period)):
 			return not self.__eq__(other)
 		else:
-			_comparison_error(self, other, '!=')
+			_operator_error(self, other, '!=')
 
 	def __gt__(self, other: object) -> bool:
 		if isinstance(other, Frequency):
@@ -254,7 +257,7 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period > other
 		else:
-			_comparison_error(self, other, '>')
+			_operator_error(self, other, '>')
 
 	def __ge__(self, other: object) -> bool:
 		if isinstance(other, Frequency):
@@ -263,7 +266,7 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period >= other
 		else:
-			_comparison_error(self, other, '>=')
+			_operator_error(self, other, '>=')
 
 	def __repr__(self) -> str:
 		return f'(frequency {self})'
@@ -403,7 +406,7 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency < other
 		else:
-			_comparison_error(self, other, '<')
+			_operator_error(self, other, '<')
 
 	def __le__(self, other: object) -> bool:
 		if isinstance(other, Period):
@@ -411,7 +414,7 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency <= other
 		else:
-			_comparison_error(self, other, '<=')
+			_operator_error(self, other, '<=')
 
 	def __eq__(self, other: object) -> bool:
 		if isinstance(other, Period):
@@ -420,13 +423,13 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency == other
 		else:
-			_comparison_error(self, other, '==')
+			_operator_error(self, other, '==')
 
 	def __ne__(self, other: object) -> bool:
 		if isinstance(other, (Frequency, Period)):
 			return not self.__eq__(other)
 		else:
-			_comparison_error(self, other, '!=')
+			_operator_error(self, other, '!=')
 
 	def __gt__(self, other: object) -> bool:
 		if isinstance(other, Period):
@@ -434,7 +437,7 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency > other
 		else:
-			_comparison_error(self, other, '>')
+			_operator_error(self, other, '>')
 
 	def __ge__(self, other: object) -> bool:
 		if isinstance(other, Period):
@@ -442,7 +445,7 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency >= other
 		else:
-			_comparison_error(self, other, '>=')
+			_operator_error(self, other, '>=')
 
 	def __repr__(self) -> str:
 		return f'(period {self})'
