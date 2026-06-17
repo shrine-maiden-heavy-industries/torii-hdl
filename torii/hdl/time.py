@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from math          import floor, log, pow
-from typing        import Final, TypeVar, Generic
+from typing        import Final, NoReturn, TypeVar, Generic, Literal
 from warnings      import warn
 
-from ..diagnostics import ToriiSyntaxWarning
+from ..diagnostics import ToriiSyntaxError
+from ..util.tracer import get_src_loc
 from ..util.units  import (
 	EXA, PETA, TERA, GIGA, MEGA, KILO, HECTO, DECA, DECI, CENTI, MILLI, MICRO, NANO, PICO, FEMTO, ATTO
 )
@@ -16,6 +17,19 @@ __all__ = (
 	'Period',
 	's', 'ms', 'us', 'ns',
 )
+
+def _comparison_error(
+	self: 'Frequency | Period', other: object, op: Literal['>', '>=', '<', '<=', '==', '!='], src_loc_at: int = 0
+) -> NoReturn:
+	''' Generate an error message for an invalid comparison '''
+
+	raise ToriiSyntaxError(
+		message = (
+			f'Comparison using \'{op}\' between a Torii {type(self).__name__} and an object of the type'
+			f' \'{type(other).__name__}\' is not supported'
+		),
+		src_loc = get_src_loc(src_loc_at = 1 + src_loc_at)
+	)
 
 def _truncate(value: float, dig: int) -> int | float:
 	'''
@@ -200,6 +214,24 @@ class Frequency:
 			)
 		return Period(rep / self._value)
 
+	def __lt__(self, other: object) -> bool:
+		if isinstance(other, Frequency):
+			# TODO(aki): Need some reasonable Ɛ here
+			return self._value < other._value
+		elif isinstance(other, Period):
+			return self.period < other
+		else:
+			_comparison_error(self, other, '<')
+
+	def __le__(self, other: object) -> bool:
+		if isinstance(other, Frequency):
+			# TODO(aki): Need some reasonable Ɛ here
+			return self._value <= other._value
+		elif isinstance(other, Period):
+			return self.period <= other
+		else:
+			_comparison_error(self, other, '<=')
+
 	def __eq__(self, other: object) -> bool:
 		if isinstance(other, Frequency):
 			# TODO(aki): Need some reasonable Ɛ here
@@ -207,7 +239,31 @@ class Frequency:
 		elif isinstance(other, Period):
 			return self.period == other
 		else:
-			return False
+			_comparison_error(self, other, '==')
+
+	def __ne__(self, other: object) -> bool:
+		if isinstance(other, (Frequency, Period)):
+			return not self.__eq__(other)
+		else:
+			_comparison_error(self, other, '!=')
+
+	def __gt__(self, other: object) -> bool:
+		if isinstance(other, Frequency):
+			# TODO(aki): Need some reasonable Ɛ here
+			return self._value > other._value
+		elif isinstance(other, Period):
+			return self.period > other
+		else:
+			_comparison_error(self, other, '>')
+
+	def __ge__(self, other: object) -> bool:
+		if isinstance(other, Frequency):
+			# TODO(aki): Need some reasonable Ɛ here
+			return self._value >= other._value
+		elif isinstance(other, Period):
+			return self.period >= other
+		else:
+			_comparison_error(self, other, '>=')
 
 	def __repr__(self) -> str:
 		return f'(frequency {self})'
@@ -341,6 +397,22 @@ class Period:
 			)
 		return Frequency(rep / self._value)
 
+	def __lt__(self, other: object) -> bool:
+		if isinstance(other, Period):
+			return self._value < other._value
+		elif isinstance(other, Frequency):
+			return self.frequency < other
+		else:
+			_comparison_error(self, other, '<')
+
+	def __le__(self, other: object) -> bool:
+		if isinstance(other, Period):
+			return self._value <= other._value
+		elif isinstance(other, Frequency):
+			return self.frequency <= other
+		else:
+			_comparison_error(self, other, '<=')
+
 	def __eq__(self, other: object) -> bool:
 		if isinstance(other, Period):
 			# TODO(aki): Need some reasonable Ɛ here
@@ -348,7 +420,29 @@ class Period:
 		elif isinstance(other, Frequency):
 			return self.frequency == other
 		else:
-			return False
+			_comparison_error(self, other, '==')
+
+	def __ne__(self, other: object) -> bool:
+		if isinstance(other, (Frequency, Period)):
+			return not self.__eq__(other)
+		else:
+			_comparison_error(self, other, '!=')
+
+	def __gt__(self, other: object) -> bool:
+		if isinstance(other, Period):
+			return self._value > other._value
+		elif isinstance(other, Frequency):
+			return self.frequency > other
+		else:
+			_comparison_error(self, other, '>')
+
+	def __ge__(self, other: object) -> bool:
+		if isinstance(other, Period):
+			return self._value >= other._value
+		elif isinstance(other, Frequency):
+			return self.frequency >= other
+		else:
+			_comparison_error(self, other, '>=')
 
 	def __repr__(self) -> str:
 		return f'(period {self})'

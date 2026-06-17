@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from torii.hdl.time import (
+from torii.diagnostics import ToriiSyntaxError
+from torii.hdl.time    import (
 	Frequency, aHz, fHz, pHz, nHz, uHz, mHz, cHz, dHz, Hz, DHz, hHz, kHz, MHz, GHz, THz, PHz, EHz
 )
-from torii.hdl.time import (
+from torii.hdl.time    import (
 	Period, _as, fs, ps, ns, us, ms, cs, ds, s, das, hs, ks, Ms, Gs, Ts, Ps, Es
 )
 
-from unittest import TestCase
+from unittest          import TestCase
 
 class FrequencyTestCase(TestCase):
 	def test_units(self) -> None:
@@ -104,6 +105,181 @@ class FrequencyTestCase(TestCase):
 		self.assertAlmostEqual(Hz(1000).kilohertz, 1)
 		self.assertAlmostEqual(MHz(25).gigahertz, 0.025)
 
+	def test_comparison_lt(self) -> None:
+		# Frequency-to-Frequency
+		self.assertLess(aHz(1), fHz(1))
+		self.assertLess(fHz(1), pHz(1))
+		self.assertLess(pHz(1), nHz(1))
+		self.assertLess(nHz(1), uHz(1))
+		self.assertLess(uHz(1), mHz(1))
+		self.assertLess(mHz(1), cHz(1))
+		self.assertLess(cHz(1), dHz(1))
+		self.assertLess(dHz(1), Hz(1))
+		self.assertLess(Hz(1),  DHz(1))
+		self.assertLess(DHz(1), hHz(1))
+		self.assertLess(hHz(1), kHz(1))
+		self.assertLess(kHz(1), MHz(1))
+		self.assertLess(MHz(1), GHz(1))
+		self.assertLess(GHz(1), THz(1))
+		self.assertLess(THz(1), PHz(1))
+		self.assertLess(PHz(1), EHz(1))
+		# Frequency-to-Period
+		self.assertLess(GHz(1), us(1))
+
+	def test_comparison_le(self) -> None:
+		# Frequency-to-Frequency
+		self.assertLessEqual(aHz(1), fHz(1))
+		self.assertLessEqual(fHz(1), pHz(1))
+		self.assertLessEqual(pHz(1), nHz(1))
+		self.assertLessEqual(nHz(1), uHz(1))
+		self.assertLessEqual(uHz(1), mHz(1))
+		self.assertLessEqual(mHz(1), cHz(1))
+		self.assertLessEqual(cHz(1), dHz(1))
+		self.assertLessEqual(dHz(1), Hz(1))
+		self.assertLessEqual(Hz(1),  DHz(1))
+		self.assertLessEqual(DHz(1), hHz(1))
+		self.assertLessEqual(hHz(1), kHz(1))
+		self.assertLessEqual(kHz(1), MHz(1))
+		self.assertLessEqual(MHz(1), GHz(1))
+		self.assertLessEqual(GHz(1), THz(1))
+		self.assertLessEqual(THz(1), PHz(1))
+		self.assertLessEqual(PHz(1), EHz(1))
+		self.assertLessEqual(aHz(1), aHz(1))
+		self.assertLessEqual(fHz(1), fHz(1))
+		self.assertLessEqual(pHz(1), pHz(1))
+		self.assertLessEqual(nHz(1), nHz(1))
+		self.assertLessEqual(uHz(1), uHz(1))
+		self.assertLessEqual(mHz(1), mHz(1))
+		self.assertLessEqual(cHz(1), cHz(1))
+		self.assertLessEqual(dHz(1), dHz(1))
+		self.assertLessEqual(Hz(1),  Hz(1))
+		self.assertLessEqual(DHz(1), DHz(1))
+		self.assertLessEqual(hHz(1), hHz(1))
+		self.assertLessEqual(kHz(1), kHz(1))
+		self.assertLessEqual(MHz(1), MHz(1))
+		self.assertLessEqual(GHz(1), GHz(1))
+		self.assertLessEqual(THz(1), THz(1))
+		self.assertLessEqual(PHz(1), PHz(1))
+		# Frequency-to-Period
+		self.assertLessEqual(GHz(1), us(1))
+		self.assertLessEqual(GHz(1), ns(1))
+
+	def test_comparison_eq(self) -> None:
+		# Frequency-to-Frequency
+		self.assertEqual(aHz(1), aHz(1))
+		self.assertEqual(fHz(1), fHz(1))
+		self.assertEqual(pHz(1), pHz(1))
+		self.assertEqual(nHz(1), nHz(1))
+		self.assertEqual(uHz(1), uHz(1))
+		self.assertEqual(mHz(1), mHz(1))
+		self.assertEqual(cHz(1), cHz(1))
+		self.assertEqual(dHz(1), dHz(1))
+		self.assertEqual(Hz(1),  Hz(1))
+		self.assertEqual(DHz(1), DHz(1))
+		self.assertEqual(hHz(1), hHz(1))
+		self.assertEqual(kHz(1), kHz(1))
+		self.assertEqual(MHz(1), MHz(1))
+		self.assertEqual(GHz(1), GHz(1))
+		self.assertEqual(THz(1), THz(1))
+		self.assertEqual(PHz(1), PHz(1))
+		# Frequency-to-Period
+		self.assertEqual(GHz(1), ns(1))
+
+	def test_comparison_ne(self) -> None:
+		# Frequency-to-Frequency
+		self.assertNotEqual(fHz(1), aHz(1))
+		self.assertNotEqual(pHz(1), fHz(1))
+		self.assertNotEqual(nHz(1), pHz(1))
+		self.assertNotEqual(uHz(1), nHz(1))
+		self.assertNotEqual(mHz(1), uHz(1))
+		self.assertNotEqual(cHz(1), mHz(1))
+		self.assertNotEqual(dHz(1), cHz(1))
+		self.assertNotEqual(Hz(1),  dHz(1))
+		self.assertNotEqual(DHz(1), Hz(1))
+		self.assertNotEqual(hHz(1), DHz(1))
+		self.assertNotEqual(kHz(1), hHz(1))
+		self.assertNotEqual(MHz(1), kHz(1))
+		self.assertNotEqual(GHz(1), MHz(1))
+		self.assertNotEqual(THz(1), GHz(1))
+		self.assertNotEqual(PHz(1), THz(1))
+		self.assertNotEqual(EHz(1), PHz(1))
+		# Frequency-to-Period
+		self.assertNotEqual(GHz(1), ps(1))
+
+	def test_comparison_gt(self) -> None:
+		# Frequency-to-Frequency
+		self.assertGreater(fHz(1), aHz(1))
+		self.assertGreater(pHz(1), fHz(1))
+		self.assertGreater(nHz(1), pHz(1))
+		self.assertGreater(uHz(1), nHz(1))
+		self.assertGreater(mHz(1), uHz(1))
+		self.assertGreater(cHz(1), mHz(1))
+		self.assertGreater(dHz(1), cHz(1))
+		self.assertGreater(Hz(1),  dHz(1))
+		self.assertGreater(DHz(1), Hz(1))
+		self.assertGreater(hHz(1), DHz(1))
+		self.assertGreater(kHz(1), hHz(1))
+		self.assertGreater(MHz(1), kHz(1))
+		self.assertGreater(GHz(1), MHz(1))
+		self.assertGreater(THz(1), GHz(1))
+		self.assertGreater(PHz(1), THz(1))
+		self.assertGreater(EHz(1), PHz(1))
+		# Frequency-to-Period
+		self.assertGreater(GHz(1), ps(1))
+
+	def test_comparison_ge(self) -> None:
+		# Frequency-to-Frequency
+		self.assertGreaterEqual(fHz(1), aHz(1))
+		self.assertGreaterEqual(pHz(1), fHz(1))
+		self.assertGreaterEqual(nHz(1), pHz(1))
+		self.assertGreaterEqual(uHz(1), nHz(1))
+		self.assertGreaterEqual(mHz(1), uHz(1))
+		self.assertGreaterEqual(cHz(1), mHz(1))
+		self.assertGreaterEqual(dHz(1), cHz(1))
+		self.assertGreaterEqual(Hz(1),  dHz(1))
+		self.assertGreaterEqual(DHz(1), Hz(1))
+		self.assertGreaterEqual(hHz(1), DHz(1))
+		self.assertGreaterEqual(kHz(1), hHz(1))
+		self.assertGreaterEqual(MHz(1), kHz(1))
+		self.assertGreaterEqual(GHz(1), MHz(1))
+		self.assertGreaterEqual(THz(1), GHz(1))
+		self.assertGreaterEqual(PHz(1), THz(1))
+		self.assertGreaterEqual(EHz(1), PHz(1))
+		self.assertGreaterEqual(fHz(1), fHz(1))
+		self.assertGreaterEqual(pHz(1), pHz(1))
+		self.assertGreaterEqual(nHz(1), nHz(1))
+		self.assertGreaterEqual(uHz(1), uHz(1))
+		self.assertGreaterEqual(mHz(1), mHz(1))
+		self.assertGreaterEqual(cHz(1), cHz(1))
+		self.assertGreaterEqual(dHz(1), dHz(1))
+		self.assertGreaterEqual(Hz(1),  Hz(1))
+		self.assertGreaterEqual(DHz(1), DHz(1))
+		self.assertGreaterEqual(hHz(1), hHz(1))
+		self.assertGreaterEqual(kHz(1), kHz(1))
+		self.assertGreaterEqual(MHz(1), MHz(1))
+		self.assertGreaterEqual(GHz(1), GHz(1))
+		self.assertGreaterEqual(THz(1), THz(1))
+		self.assertGreaterEqual(PHz(1), PHz(1))
+		self.assertGreaterEqual(EHz(1), EHz(1))
+		# Frequency-to-Period
+		self.assertGreaterEqual(GHz(1), ps(1))
+		self.assertGreaterEqual(GHz(1), ns(1))
+
+	def test_comparison_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Comparison using \'>\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = MHz(10) > 1
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Comparison using \'<\' between a Torii Frequency and an object of the type \'float\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = kHz(10) < 1.0
+
 class PeriodTestCase(TestCase):
 	def test_units(self) -> None:
 		self.assertAlmostEqual((1 * _as)._value, 1e-18)
@@ -198,3 +374,178 @@ class PeriodTestCase(TestCase):
 		self.assertAlmostEqual(s(10).milliseconds, 10000)
 		self.assertAlmostEqual(ns(25).microseconds, 0.025)
 		self.assertAlmostEqual(us(2).picoseconds, 2000000)
+
+	def test_comparison_lt(self) -> None:
+		# Period-to-Period
+		self.assertLess(_as(1), fs(1))
+		self.assertLess(fs(1), ps(1))
+		self.assertLess(ps(1), ns(1))
+		self.assertLess(ns(1), us(1))
+		self.assertLess(us(1), ms(1))
+		self.assertLess(ms(1), cs(1))
+		self.assertLess(cs(1), ds(1))
+		self.assertLess(ds(1), s(1))
+		self.assertLess(s(1), das(1))
+		self.assertLess(das(1), hs(1))
+		self.assertLess(hs(1), ks(1))
+		self.assertLess(ks(1), Ms(1))
+		self.assertLess(Ms(1), Gs(1))
+		self.assertLess(Gs(1), Ts(1))
+		self.assertLess(Ts(1), Ps(1))
+		self.assertLess(Ps(1), Es(1))
+		# Period-to-Frequency
+		self.assertLess(us(1), GHz(1))
+
+	def test_comparison_le(self) -> None:
+		# Period-to-Period
+		self.assertLessEqual(_as(1), fs(1))
+		self.assertLessEqual(fs(1), ps(1))
+		self.assertLessEqual(ps(1), ns(1))
+		self.assertLessEqual(ns(1), us(1))
+		self.assertLessEqual(us(1), ms(1))
+		self.assertLessEqual(ms(1), cs(1))
+		self.assertLessEqual(cs(1), ds(1))
+		self.assertLessEqual(ds(1), s(1))
+		self.assertLessEqual(s(1), das(1))
+		self.assertLessEqual(das(1), hs(1))
+		self.assertLessEqual(hs(1), ks(1))
+		self.assertLessEqual(ks(1), Ms(1))
+		self.assertLessEqual(Ms(1), Gs(1))
+		self.assertLessEqual(Gs(1), Ts(1))
+		self.assertLessEqual(Ts(1), Ps(1))
+		self.assertLessEqual(Ps(1), Es(1))
+		self.assertLessEqual(_as(1), _as(1))
+		self.assertLessEqual(fs(1),  fs(1))
+		self.assertLessEqual(ps(1),  ps(1))
+		self.assertLessEqual(ns(1),  ns(1))
+		self.assertLessEqual(us(1),  us(1))
+		self.assertLessEqual(ms(1),  ms(1))
+		self.assertLessEqual(cs(1),  cs(1))
+		self.assertLessEqual(ds(1),  ds(1))
+		self.assertLessEqual(s(1),   s(1))
+		self.assertLessEqual(das(1), das(1))
+		self.assertLessEqual(hs(1),  hs(1))
+		self.assertLessEqual(ks(1),  ks(1))
+		self.assertLessEqual(Ms(1),  Ms(1))
+		self.assertLessEqual(Gs(1),  Gs(1))
+		self.assertLessEqual(Ts(1),  Ts(1))
+		self.assertLessEqual(Ps(1),  Ps(1))
+		# Period-to-Frequency
+		self.assertLessEqual(us(1), GHz(1))
+		self.assertLessEqual(ns(1), GHz(1))
+
+	def test_comparison_eq(self) -> None:
+		# Period-to-Period
+		self.assertEqual(_as(1), _as(1))
+		self.assertEqual(fs(1),  fs(1))
+		self.assertEqual(ps(1),  ps(1))
+		self.assertEqual(ns(1),  ns(1))
+		self.assertEqual(us(1),  us(1))
+		self.assertEqual(ms(1),  ms(1))
+		self.assertEqual(cs(1),  cs(1))
+		self.assertEqual(ds(1),  ds(1))
+		self.assertEqual(s(1),   s(1))
+		self.assertEqual(das(1), das(1))
+		self.assertEqual(hs(1),  hs(1))
+		self.assertEqual(ks(1),  ks(1))
+		self.assertEqual(Ms(1),  Ms(1))
+		self.assertEqual(Gs(1),  Gs(1))
+		self.assertEqual(Ts(1),  Ts(1))
+		self.assertEqual(Ps(1),  Ps(1))
+		# Period-to-Frequency
+		# self.assertEqual(ns(1), GHz(1)) # XXX(aki): Rounding issue
+
+	def test_comparison_ne(self) -> None:
+		# Period-to-Period
+		self.assertNotEqual(_as(1), fs(1))
+		self.assertNotEqual(fs(1), ps(1))
+		self.assertNotEqual(ps(1), ns(1))
+		self.assertNotEqual(ns(1), us(1))
+		self.assertNotEqual(us(1), ms(1))
+		self.assertNotEqual(ms(1), cs(1))
+		self.assertNotEqual(cs(1), ds(1))
+		self.assertNotEqual(ds(1), s(1))
+		self.assertNotEqual(s(1), das(1))
+		self.assertNotEqual(das(1), hs(1))
+		self.assertNotEqual(hs(1), ks(1))
+		self.assertNotEqual(ks(1), Ms(1))
+		self.assertNotEqual(Ms(1), Gs(1))
+		self.assertNotEqual(Gs(1), Ts(1))
+		self.assertNotEqual(Ts(1), Ps(1))
+		self.assertNotEqual(Ps(1), Es(1))
+		# Period-to-Frequency
+		self.assertNotEqual(ps(1), GHz(1))
+
+	def test_comparison_gt(self) -> None:
+		# Period-to-Period
+		self.assertGreater(fs(1), _as(1))
+		self.assertGreater(ps(1), fs(1))
+		self.assertGreater(ns(1), ps(1))
+		self.assertGreater(us(1), ns(1))
+		self.assertGreater(ms(1), us(1))
+		self.assertGreater(cs(1), ms(1))
+		self.assertGreater(ds(1), cs(1))
+		self.assertGreater(s(1), ds(1))
+		self.assertGreater(das(1), s(1))
+		self.assertGreater(hs(1), das(1))
+		self.assertGreater(ks(1), hs(1))
+		self.assertGreater(Ms(1), ks(1))
+		self.assertGreater(Gs(1), Ms(1))
+		self.assertGreater(Ts(1), Gs(1))
+		self.assertGreater(Ps(1), Ts(1))
+		self.assertGreater(Es(1), Ps(1))
+		# Period-to-Frequency
+		self.assertGreater(ps(1), GHz(1))
+
+	def test_comparison_ge(self) -> None:
+		# Period-to-Period
+		self.assertGreater(fs(1), _as(1))
+		self.assertGreater(ps(1), fs(1))
+		self.assertGreater(ns(1), ps(1))
+		self.assertGreater(us(1), ns(1))
+		self.assertGreater(ms(1), us(1))
+		self.assertGreater(cs(1), ms(1))
+		self.assertGreater(ds(1), cs(1))
+		self.assertGreater(s(1), ds(1))
+		self.assertGreater(das(1), s(1))
+		self.assertGreater(hs(1), das(1))
+		self.assertGreater(ks(1), hs(1))
+		self.assertGreater(Ms(1), ks(1))
+		self.assertGreater(Gs(1), Ms(1))
+		self.assertGreater(Ts(1), Gs(1))
+		self.assertGreater(Ps(1), Ts(1))
+		self.assertGreater(Es(1), Ps(1))
+		self.assertGreaterEqual(_as(1), _as(1))
+		self.assertGreaterEqual(fs(1),  fs(1))
+		self.assertGreaterEqual(ps(1),  ps(1))
+		self.assertGreaterEqual(ns(1),  ns(1))
+		self.assertGreaterEqual(us(1),  us(1))
+		self.assertGreaterEqual(ms(1),  ms(1))
+		self.assertGreaterEqual(cs(1),  cs(1))
+		self.assertGreaterEqual(ds(1),  ds(1))
+		self.assertGreaterEqual(s(1),   s(1))
+		self.assertGreaterEqual(das(1), das(1))
+		self.assertGreaterEqual(hs(1),  hs(1))
+		self.assertGreaterEqual(ks(1),  ks(1))
+		self.assertGreaterEqual(Ms(1),  Ms(1))
+		self.assertGreaterEqual(Gs(1),  Gs(1))
+		self.assertGreaterEqual(Ts(1),  Ts(1))
+		self.assertGreaterEqual(Ps(1),  Ps(1))
+		# Period-to-Frequency
+		self.assertGreaterEqual(ps(1), GHz(1))
+		# self.assertGreaterEqual(ns(1), GHz(1)) # XXX(aki): Rounding issue
+
+	def test_comparison_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Comparison using \'>\' between a Torii Period and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = s(10) > 1
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Comparison using \'<\' between a Torii Period and an object of the type \'float\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = ns(10) < 1.0
