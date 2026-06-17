@@ -234,14 +234,89 @@ class Frequency:
 	def __hash__(self) -> int:
 		return hash(self._value)
 
-	def __rtruediv__(self, rep: int | float) -> 'Period':
-		if rep == 1:
-			warn(
-				'Consider using the `.period` attribute to get this Frequency as a Period',
-				ToriiSyntaxWarning,
-				stacklevel = 2
-			)
-		return Period(rep / self._value)
+	def __add__(self, other: object) -> 'Frequency':
+		if isinstance(other, Frequency):
+			return Frequency(self._value + other._value, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '+')
+
+	def __sub__(self, other: object) -> 'Frequency':
+		if isinstance(other, Frequency):
+			return Frequency(self._value - other._value, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '-')
+
+	def __mul__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			return Frequency(self._value * other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '*')
+
+	def __truediv__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			return Frequency(self._value / other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '/')
+
+	# TODO(aki):
+	# This doesn't really behave as expected, for example, if you have 5kHz and do a `// 2`, you will still get 2.5kHz.
+	# What we likely need to do here is scale the value after division and then floor if the scaled value is fractional
+	def __floordiv__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			return Frequency(self._value // other, src_loc_at = 1)
+		else:
+			_operator_error(self, other, '//')
+
+	# NOTE(aki):
+	# We specify the reflected `/` and `//` operators so we can catch the case where the user
+	# is trying to convert to a Period
+	def __rtruediv__(self, other: object) -> NoReturn:
+		if isinstance(other, (int, float)):
+			_reciprocal_error(self, other, '/')
+		else:
+			_operator_error(self, other, '/')
+
+	def __rfloordiv__(self, other) -> NoReturn:
+		if isinstance(other, (int, float)):
+			_reciprocal_error(self, other, '//')
+		else:
+			_operator_error(self, other, '//')
+
+	def __iadd__(self, other: object) -> 'Frequency':
+		if isinstance(other, Frequency):
+			self._value += other._value
+			return self
+		else:
+			_operator_error(self, other, '+=')
+
+	def __isub__(self, other: object) -> 'Frequency':
+		if isinstance(other, Frequency):
+			self._value -= other._value
+			return self
+		else:
+			_operator_error(self, other, '-=')
+
+	def __imul__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			self._value *= other
+			return self
+		else:
+			_operator_error(self, other, '*=')
+
+	def __itruediv__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			self._value /= other
+			return self
+		else:
+			_operator_error(self, other, '/=')
+
+	# TODO(aki): See note on `Frequency.__floordiv__`
+	def __ifloordiv__(self, other: object) -> 'Frequency':
+		if isinstance(other, (int, float)):
+			self._value //= other
+			return self
+		else:
+			_operator_error(self, other, '//=')
 
 	def __lt__(self, other: object) -> bool:
 		if isinstance(other, Frequency):

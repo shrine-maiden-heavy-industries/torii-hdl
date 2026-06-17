@@ -280,6 +280,176 @@ class FrequencyTestCase(TestCase):
 		):
 			_ = kHz(10) < 1.0
 
+	def test_add(self) -> None:
+		self.assertEqual(MHz(10) + MHz(15), MHz(25))
+
+	def test_add_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\+\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = MHz(1) + 5
+
+	def test_sub(self) -> None:
+		self.assertEqual(MHz(1) - kHz(10), kHz(990))
+
+	def test_sub_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'-\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			_ = kHz(10) - 1
+
+	def test_mul(self) -> None:
+		self.assertEqual(MHz(1) * 1000, GHz(1))
+
+	def test_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\*\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			_ = Hz(1) * MHz(5)
+
+	def test_truediv(self) -> None:
+		self.assertEqual(GHz(1) / 10000, kHz(100))
+
+	def test_truediv_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			_ = THz(10) / uHz(8)
+
+	def test_floordiv(self) -> None:
+		self.assertEqual(MHz(80) // 2, MHz(40))
+
+	def test_floordiv_wrong(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			_ = MHz(10) // Hz(2)
+
+	def test_rtruediv(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the period of a Torii Frequency use the \'\.period\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 1 / MHz(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the period of a Torii Frequency use the \'\.period\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 5 / MHz(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/\' between a Torii Frequency and an object of the type \'object\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			_ = object() / MHz(10)
+
+	def test_rfloordiv(self) -> None:
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the period of a Torii Frequency use the \'\.period\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 1 // MHz(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^To get the period of a Torii Frequency use the \'\.period\' attribute \(test_time\.py, line \d+\)$'
+		):
+			_ = 5 // MHz(10)
+
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//\' between a Torii Frequency and an object of the type \'object\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			_ = object() // MHz(10)
+
+	def test_iadd(self) -> None:
+		val = MHz(10)
+		self.assertEqual(val, MHz(10))
+		val += MHz(8)
+		self.assertEqual(val, MHz(18))
+
+	def test_iadd_wrong(self) -> None:
+		val = kHz(100)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\+=\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val += 11
+
+	def test_isub(self) -> None:
+		val = kHz(150)
+		self.assertEqual(val, kHz(150))
+		val -= Hz(100)
+		self.assertEqual(val, kHz(149.9))
+
+	def test_isub_wrong(self) -> None:
+		val = GHz(1)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'-=\' between a Torii Frequency and an object of the type \'int\' is not supported'
+			r' \(test_time\.py, line \d+\)$'
+		):
+			val -= 80
+
+	def test_imul(self) -> None:
+		val = GHz(1)
+		self.assertEqual(val, GHz(1))
+		val *= 10
+		self.assertEqual(val, GHz(10))
+
+	def test_imul_wrong(self) -> None:
+		val = MHz(10)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'\*=\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			val *= kHz(2)
+
+	def test_itruediv(self) -> None:
+		val = MHz(50)
+		self.assertEqual(val, MHz(50))
+		val /= 2
+		self.assertEqual(val, MHz(25))
+
+	def test_itruediv_wrong(self) -> None:
+		val = THz(2)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'/=\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			val /= MHz(25)
+
+	def test_ifloordiv(self) -> None:
+		val = kHz(30)
+		self.assertEqual(val, kHz(30))
+		val //= 4
+		self.assertEqual(val, kHz(7.5))
+
+	def test_ifloordiv_wrong(self) -> None:
+		val = uHz(158)
+		with self.assertRaisesRegex(
+			ToriiSyntaxError,
+			r'^Use of the operator \'//=\' between a Torii Frequency and an object of the type \'Frequency\' is not'
+			r' supported \(test_time\.py, line \d+\)$'
+		):
+			val //= fHz(2)
+
 class PeriodTestCase(TestCase):
 	def test_units(self) -> None:
 		self.assertAlmostEqual((1 * _as)._value, 1e-18)
