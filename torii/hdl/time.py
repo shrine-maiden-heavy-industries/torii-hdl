@@ -54,7 +54,7 @@ def _truncate(value: float, dig: int) -> int | float:
 		return int(value)
 	return round(value, dig)
 
-def _auto_scale(value: float, unit_scale: tuple[str, ...], dig: int) -> str:
+def _auto_scale(value: float, unit_scale: tuple[str, ...], dig: int) -> tuple[str, int | float]:
 	'''
 	Automatically scale the input value to the closest whole unit and return it as a formatted string.
 
@@ -71,8 +71,8 @@ def _auto_scale(value: float, unit_scale: tuple[str, ...], dig: int) -> str:
 
 	Returns
 	-------
-	str
-		The formatted string of the scaled value.
+	tuple[str, int | float]
+		The selected unit scale and the value for it
 	'''
 
 	adjusted_value = (value / ATTO)
@@ -81,7 +81,7 @@ def _auto_scale(value: float, unit_scale: tuple[str, ...], dig: int) -> str:
 	power = pow(1000, scale)
 	fixed = round(adjusted_value / power, dig)
 
-	return f'{_truncate(fixed, dig)}{unit_scale[scale]}'
+	return (unit_scale[scale], _truncate(fixed, dig))
 
 def _parse_format_spec(format_spec: str, unit_scale: tuple[str, ...]) -> tuple[str, int, bool]:
 	'''
@@ -301,7 +301,8 @@ class Frequency:
 			case 'EHz':
 				return f'{_truncate(self._value / EXA, dig)}{"" if strip else "EHz"}'
 			case _:
-				return _auto_scale(self._value, self._unit_scale, dig)
+				scale, value = _auto_scale(self._value, self._unit_scale, dig)
+				return f'{value}{scale}'
 
 class Period:
 	'''
@@ -481,7 +482,8 @@ class Period:
 			case 'Es':
 				return f'{_truncate(self._value / EXA, dig)}{"" if strip else "Es"}'
 			case _:
-				return _auto_scale(self._value, self._unit_scale, dig)
+				scale, value = _auto_scale(self._value, self._unit_scale, dig)
+				return f'{value}{scale}'
 
 
 _U = TypeVar('_U', bound = Frequency | Period | int | float)
