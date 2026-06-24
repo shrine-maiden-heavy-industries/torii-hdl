@@ -10,7 +10,7 @@ from functools       import reduce, wraps
 from inspect         import get_annotations, isclass
 from typing          import Any, TypeAlias, get_args, get_origin
 
-from ..diagnostics   import AttributeError, IndexError, KeyError, ToriiSyntaxError
+from ..diagnostics   import AttributeError, IndexError, ToriiSyntaxError
 from ..util          import _check_name, tracer, union
 from ..util.string   import _get_best_matching
 from .ast            import Cat, Shape, ShapeCastT, Signal, SignalSet, Value, ValueCastable
@@ -451,7 +451,9 @@ class Record(ValueCastable):
 			shape, direction = self.layout[field]
 			if not isinstance(shape, Layout) and direction == Direction.NONE:
 				raise AttributeError(
-					message = f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction',
+					message = (
+						f'Cannot connect field \'{field}\' of {rec_name(self)} because it does not have a direction'
+					),
 					src_loc = tracer.get_src_loc(src_loc_at = src_loc_at)
 				)
 
