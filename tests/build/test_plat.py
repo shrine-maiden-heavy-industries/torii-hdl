@@ -8,7 +8,7 @@ from ..utils           import ToriiTestSuiteCase
 class MockPlatform(Platform):
 	resources  = []
 	connectors = []
-
+	toolchain = None
 	required_tools = []
 
 	def toolchain_prepare(self, fragment, name, **kwargs):
