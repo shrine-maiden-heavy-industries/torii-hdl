@@ -1,0 +1,294 @@
+div.highlight {
+    border-radius: 5px;
+}
+
+div.admonition {
+    border-radius: 0px 0px 5px 5px;
+}
+
+p.admonition-title {
+    border-radius: 5px 5px 0px 0px;
+}
+
+code.literal {
+    border-radius: 5px;
+}
+
+div.sidebar-container {
+    width: 20em;
+}
+
+div.toc-drawer {
+    width: 20em;
+}
+
+div.multiver {
+	background-color: var(--color-brand-primary);
+	color: var(--color-background-secondary);
+}
+
+aside.multiver-content a {
+	color: var(--color-background-secondary);
+	text-decoration-color: var(--color-background-secondary);
+}
+
+aside.multiver-content a:hover {
+	color: var(--color-background-secondary);
+}
+
+svg.WaveDrom {
+    padding: 10px;
+    border-radius: .2em;
+    background: var(--color-inline-code-background);
+    border: 1px solid var(--color-sidebar-background-border);
+    margin: 10px auto;
+    display: block;
+    width: 95%;
+}
+
+svg.WaveDrom text {
+    color: var(--color-foreground-primary);
+    fill: var(--color-foreground-primary);
+    font-size: var(--font-size--small);
+    text-align: center;
+    fill-opacity: 1;
+    font-family: var(--font-stack--monospace);
+}
+
+svg.WaveDrom .h1, .h2, .h3, .h4, .h5, .h6 {
+	line-height: 1.25;
+	font-family: var(--font-stack--headings);
+	font-weight: bold;
+}
+
+svg.WaveDrom .h1 {
+	font-size: 2.5em;
+}
+
+svg.WaveDrom .h2 {
+	font-size: 2em;
+}
+
+svg.WaveDrom .h3 {
+	font-size: 1.5em;
+}
+
+svg.WaveDrom .h4 {
+	font-size: 1.25em;
+}
+
+svg.WaveDrom .h5 {
+	font-size: 1.125em;
+}
+
+svg.WaveDrom .h6 {
+	font-size: 1em;
+}
+
+svg.WaveDrom .muted {
+	fill: var(--color-foreground-muted);
+}
+
+svg.WaveDrom .warning {
+	fill: var(--color-admonition-title--warning);
+}
+
+svg.WaveDrom .error {
+	fill: var(--color-admonition-title--error);
+}
+
+svg.WaveDrom .info {
+	fill: var(--color-admonition-title--note);
+}
+
+svg.WaveDrom .success {
+	fill: var(--color-admonition-title--tip);
+}
+
+svg.WaveDrom .s1 {
+	fill: none;
+	stroke: var(--color-foreground-primary);
+	stroke-width: 1;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-opacity: 1;
+	stroke-dasharray: none;
+}
+
+svg.WaveDrom .s2 {
+	fill: none;
+	stroke: var(--color-foreground-primary);
+	stroke-width: 0.5;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-opacity: 1;
+	stroke-dasharray: none;
+}
+
+svg.WaveDrom .s3 {
+	color: var(--color-foreground-primary);
+	fill: none;
+	stroke: var(--color-foreground-primary);
+	stroke-width: 1;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-opacity: 1;
+	stroke-dasharray: 1, 3;
+	stroke-dashoffset: 0;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s4 {
+	color: var(--color-foreground-primary);
+	fill: none;
+	stroke: var(--color-foreground-primary);
+	stroke-width: 1;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-opacity: 1;
+	stroke-dasharray: none;
+	stroke-dashoffset: 0;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s5 {
+	fill: var(--color-background-primary);
+	stroke: none;
+}
+
+svg.WaveDrom .s6 {
+	fill: var(--color-foreground-primary);
+	fill-opacity: 1;
+	stroke: none;
+}
+
+svg.WaveDrom .s7 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-background-primary);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s8 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s9 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background--warning);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s10 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background--note);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s11 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-highlighted-background);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s12 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background--hint);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s13 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background--important);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s14 {
+	color: var(--color-foreground-primary);
+	fill: var(--color-admonition-title-background--attention);
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: none;
+	stroke-width: 1px;
+	marker: none;
+	visibility: visible;
+	display: inline;
+	overflow: visible;
+}
+
+svg.WaveDrom .s15 {
+	fill: var(--color-admonition-title--seealso);
+	fill-opacity: 1;
+	stroke: none;
+}
+
+svg.WaveDrom .s16 {
+	fill: none;
+	stroke: var(--color-admonition-title--seealso);
+	stroke-width: 1;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-opacity: 1;
+	stroke-dasharray: none;
+}
